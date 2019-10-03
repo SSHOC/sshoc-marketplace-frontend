@@ -1,0 +1,16 @@
+.nav {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.items {
+  display: flex;
+  list-style: none;
+  margin: 1rem;
+  padding: 0;
+}
+
+.item {
+  margin: 1rem;
+}
