@@ -44,3 +44,25 @@ yarn mockserver
 ```
 
 Contributions should follow the [project's guidelines](/CONTRIBUTING.md).
+
+## Component library
+
+You can view components in isolation in storybook:
+
+```shell
+yarn start:storybook
+```
+
+To run a static storybook build:
+
+```shell
+yarn build:storybook && yarn serve:storybook
+```
+
+Or simply run the Docker container:
+
+```shell
+docker-compose -f docker-compose-storybook.yml up --build -d
+```
+
+Storybook will run on port 9009.

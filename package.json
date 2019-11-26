@@ -17,6 +17,13 @@
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
+    "@storybook/addon-a11y": "^5.2.6",
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-knobs": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/preset-create-react-app": "^1.3.1",
+    "@storybook/react": "^5.2.6",
     "@testing-library/cypress": "^4.2.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.1.3",
@@ -97,6 +104,12 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.stories.{js,jsx,ts,tsx}"
+    ]
+  },
   "lint-staged": {
     "{src,cypress}/**/*.{js,jsx,ts,tsx}": [
       "eslint",
@@ -119,6 +132,7 @@
   "proxy": "http://localhost:8080",
   "scripts": {
     "build": "react-scripts build",
+    "build:storybook": "build-storybook",
     "cm": "git-cz",
     "cy:open": "cross-env CYPRESS_CRASH_REPORTS=0 cypress open",
     "cy:run": "cross-env CYPRESS_CRASH_REPORTS=0 cypress run",
@@ -129,7 +143,9 @@
     "pretest:e2e:run": "yarn build",
     "release": "standard-version",
     "serve": "serve --no-clipboard --single --listen 3000 build",
+    "serve:storybook": "serve --no-clipboard --listen 9009 storybook-static",
     "start": "react-scripts start",
+    "start:storybook": "start-storybook",
     "test": "react-scripts test",
     "test:coverage": "yarn test --coverage --watchAll=false",
     "test:e2e": "is-ci && yarn test:e2e:run || yarn test:e2e:dev",

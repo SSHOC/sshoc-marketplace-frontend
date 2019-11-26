@@ -22,3 +22,5 @@ yarn-error.log*
 
 cypress/screenshots
 cypress/videos
+
+storybook-static
