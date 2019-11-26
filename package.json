@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@styled-system/css": "^5.0.23",
+    "@styled-system/variant": "^5.1.2",
+    "polished": "^3.4.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "styled-components": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
@@ -30,6 +34,11 @@
     "serve": "^11.2.0",
     "standard-version": "^7.0.0",
     "start-server-and-test": "^1.10.0"
+  },
+  "babelMacros": {
+    "styledComponents": {
+      "pure": true
+    }
   },
   "browserslist": {
     "production": [
@@ -62,8 +71,25 @@
     "extends": [
       "react-app",
       "plugin:cypress/recommended",
-      "prettier"
-    ]
+      "prettier",
+      "prettier/react"
+    ],
+    "rules": {
+      "no-restricted-imports": [
+        "error",
+        {
+          "paths": [
+            {
+              "name": "styled-components",
+              "message": "Please import from styled-components/macro."
+            }
+          ],
+          "patterns": [
+            "!styled-components/macro"
+          ]
+        }
+      ]
+    }
   },
   "husky": {
     "hooks": {
@@ -72,7 +98,7 @@
     }
   },
   "lint-staged": {
-    "{src,cypress}/**/*.{js,ts}": [
+    "{src,cypress}/**/*.{js,jsx,ts,tsx}": [
       "eslint",
       "prettier --write",
       "git add"
@@ -96,7 +122,7 @@
     "cm": "git-cz",
     "cy:open": "cross-env CYPRESS_CRASH_REPORTS=0 cypress open",
     "cy:run": "cross-env CYPRESS_CRASH_REPORTS=0 cypress run",
-    "format": "prettier --write \"{src,cypress}/**/*.{js,ts,css,json,md}\"",
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,json,md}\" --ignore-path .gitignore",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "mockserver": "node server",
