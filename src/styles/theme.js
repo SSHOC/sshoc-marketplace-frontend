@@ -1,15 +1,16 @@
 import { transparentize } from 'polished'
+import 'typeface-poppins'
 
 const baseColors = {
   black: '#373a3c',
   grey: {
     // 100: '',
     // 200: '',
-    300: '#e6e6e6',
+    300: '#ececec',
     400: '#d1d1d1',
     500: '#dddddd',
-    // 600: '',
-    700: '#a7a7a7',
+    600: '#a7a7a7',
+    // 700: '',
     800: '#777777',
     900: '#575858',
   },
@@ -19,9 +20,9 @@ const baseColors = {
     // 200: '',
     300: '#57afff',
     // 400: '',
-    500: '#4249f5',
+    500: '#4d80fa',
     // 600: '',
-    700: '#4d80fa',
+    700: '#4249f5',
     // 800: '',
     // 900: '',
   },
@@ -33,10 +34,10 @@ const colors = {
   background: baseColors.white,
   border: baseColors.grey['500'],
   // highlight: '',
-  // muted: '',
+  muted: baseColors.grey['600'],
   primary: baseColors.blue['500'],
   secondary: '',
-  // subtle: '',
+  subtle: baseColors.grey['300'],
   text: baseColors.black,
   modes: {
     dark: {},
@@ -47,10 +48,10 @@ export const theme = {
   breakpoints: ['40em', '52em', '64em'],
   colors,
   fonts: {
-    body: 'system-ui, sans-serif',
+    body: 'Poppins, system-ui, sans-serif',
     heading: 'inherit',
   },
-  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
+  fontSizes: [12, 14, 16, 20, 24, 32, 40, 48, 64],
   fontWeights: {
     body: 400,
     bold: 700,
@@ -59,6 +60,7 @@ export const theme = {
   lineHeights: {
     body: 1.5,
     heading: 1.125,
+    small: 1.125,
   },
   radii: [0, 2, 4, 7, '50%'],
   shadows: {

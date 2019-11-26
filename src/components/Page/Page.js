@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import Box from '../../elements/Box/Box'
+import Grid from '../../elements/Grid/Grid'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
-const Layout = styled(Box)({
-  display: 'grid',
+const Layout = styled(Grid)({
   gridTemplateRows: 'auto 1fr auto',
   minHeight: '100vh',
   overflowX: 'hidden',

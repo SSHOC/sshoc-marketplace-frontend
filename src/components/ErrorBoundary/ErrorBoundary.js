@@ -1,5 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import Flex from '../../elements/Flex/Flex'
+import Link from '../../elements/Link/Link'
+import Text from '../../elements/Text/Text'
+
+const Centered = styled(Flex)({
+  alignItems: 'center',
+  height: '100%',
+  justifyContent: 'center',
+})
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -19,10 +28,12 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <p>
-          Ooops, something went wrong. Click <Link to="/">here</Link> to return
-          home.
-        </p>
+        <Centered>
+          <Text>
+            Ooops, something went wrong. Click <Link to="/">here</Link> to
+            return home.
+          </Text>
+        </Centered>
       )
     }
 
