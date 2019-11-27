@@ -1,10 +1,47 @@
+import css from '@styled-system/css'
 import React from 'react'
+import 'styled-components/macro'
+import SearchForm from '../../components/SearchForm/SearchForm'
 import Container from '../../elements/Container/Container'
+import Link from '../../elements/Link/Link'
+import Main from '../../elements/Main/Main'
+import Text from '../../elements/Text/Text'
+import BackgroundImage from '../../images/bg_home.png'
+import BackgroundImageHiDPI from '../../images/bg_home@2x.png'
+import { useNavigationFocus } from '../../utils'
 
-const HomePage = () => (
-  <Container>
-    <h1>Home</h1>
-  </Container>
-)
+const HomePage = () => {
+  const focusRef = useNavigationFocus()
+
+  return (
+    <Main
+      css={{
+        // TODO: Proper media query, or use <img srcset /> or <picture />
+        backgroundImage: `url(${
+          window.devicePixelRatio >= 1 ? BackgroundImageHiDPI : BackgroundImage
+        })`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
+      }}
+      ref={focusRef}
+    >
+      <Container>
+        <Container css={css({ maxWidth: 'narrow', my: 5 })}>
+          <h1 css={css({ fontSize: 4, fontWeight: 'normal' })}>
+            <span css={css({ fontSize: 6 })}>SSHOC</span> Marketplace
+          </h1>
+          <Text css={css({ lineHeight: 'large' })}>
+            Several sentences: What user can find on this website? For whom it
+            was created? Who has made this website? Place for some key sentences
+            which will help users to understand what is this website for.{' '}
+            <Link to="/about">Read more&hellip;</Link>
+          </Text>
+          <SearchForm />
+        </Container>
+      </Container>
+    </Main>
+  )
+}
 
 export default HomePage

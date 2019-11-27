@@ -8,16 +8,31 @@ import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Text from '../../elements/Text/Text'
 
-const NavLink = styled(Link)(
+const NavLink = styled(Link).attrs({ variant: 'nav' })(
   css({
-    color: 'black',
-    mr: 4,
+    color: 'text',
+    px: 3,
+    py: 3,
+    '&:hover': {
+      bg: 'subtler',
+      color: 'primary',
+    },
+    '&:active': {
+      color: 'text',
+    },
   })
 )
 
 const Footer = () => (
   <Box as="footer" css={css({ bg: 'subtle', color: 'black' })}>
-    <Container as={Flex} css={{ justifyContent: 'space-between' }}>
+    <Container
+      as={Flex}
+      css={css({
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        py: 0,
+      })}
+    >
       <nav>
         <FlexList>
           <li>

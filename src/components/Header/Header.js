@@ -16,7 +16,8 @@ const Logo = () => (
         alignItems: 'center',
         flexDirection: 'column',
         lineHeight: 'small',
-        py: 4,
+        my: 3,
+        py: 3,
         ':hover': {
           borderBottomColor: 'transparent',
         },
@@ -38,9 +39,16 @@ const Logo = () => (
   </nav>
 )
 
-const NavLink = styled(Link)(
+const NavLink = styled(Link).attrs({ variant: 'nav' })(
   css({
-    ml: 5,
+    px: 4,
+    py: 3,
+    '&:hover': {
+      bg: 'subtler',
+    },
+    '&:focus': {
+      position: 'relative',
+    },
   })
 )
 
@@ -48,9 +56,10 @@ const Header = () => (
   <Box
     as="header"
     css={css({
-      borderBottomColor: 'border',
+      borderBottomColor: 'subtle',
       borderBottomStyle: 'solid',
       borderBottomWidth: 1,
+      position: 'relative',
     })}
   >
     <Container
@@ -67,7 +76,7 @@ const Header = () => (
           alignItems: 'flex-end',
           alignSelf: 'stretch',
           flexDirection: 'column',
-          justifyContent: 'space-evenly',
+          justifyContent: 'space-between',
         }}
       >
         <nav>&nbsp;</nav>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 const isAbsoluteURL = url => {
@@ -10,7 +10,7 @@ const isAbsoluteURL = url => {
   }
 }
 
-const Link = React.forwardRef(({ children, href, to, ...props }, ref) => {
+const Link = forwardRef(({ children, href, to, ...props }, ref) => {
   const destination = href || to
 
   if (isAbsoluteURL(destination)) {

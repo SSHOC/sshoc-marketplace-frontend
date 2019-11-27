@@ -5,6 +5,7 @@
   "dependencies": {
     "@styled-system/css": "^5.0.23",
     "@styled-system/variant": "^5.1.2",
+    "downshift": "^3.4.2",
     "polished": "^3.4.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
