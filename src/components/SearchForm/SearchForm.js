@@ -6,8 +6,9 @@ import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Select from '../../elements/Select/Select'
+import { getSearchParams } from '../../utils/getSearchParams'
 
-const SearchForm = () => {
+const SearchForm = props => {
   const history = useHistory()
 
   const [category, setCategory] = useState('')
@@ -16,15 +17,12 @@ const SearchForm = () => {
   const handleSubmit = event => {
     event.preventDefault()
 
-    const queryParams = new URLSearchParams()
-    if (category) {
-      queryParams.set('categories', category)
-    }
-    if (query) {
-      queryParams.set('q', query)
-    }
-
-    history.push(`/search?${queryParams.toString()}`)
+    history.push(
+      getSearchParams({
+        categories: category,
+        query,
+      })
+    )
   }
 
   return (
@@ -40,6 +38,7 @@ const SearchForm = () => {
       })}
       onSubmit={handleSubmit}
       role="search"
+      {...props}
     >
       <Select
         aria-label="Categories"

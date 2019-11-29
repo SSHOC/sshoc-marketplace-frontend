@@ -15,7 +15,7 @@ const Button = styled('button')(
     cursor: 'pointer',
     display: 'inline-flex',
     fontFamily: 'body',
-    fontSize: 2,
+    fontSize: 3,
     justifyContent: 'space-between',
     lineHeight: 'body',
     px: 3,
@@ -79,7 +79,7 @@ const Button = styled('button')(
     prop: 'size',
     variants: {
       large: {
-        fontSize: 3,
+        fontSize: 4,
       },
       small: {
         fontSize: 1,

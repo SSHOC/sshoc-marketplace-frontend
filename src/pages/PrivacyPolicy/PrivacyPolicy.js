@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../../elements/Container/Container'
+import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'
 import { useNavigationFocus } from '../../utils'
 
@@ -9,7 +10,7 @@ const PrivacyPolicyPage = () => {
   return (
     <Main ref={focusRef}>
       <Container>
-        <h1>PrivacyPolicy</h1>
+        <Heading>PrivacyPolicy</Heading>
       </Container>
     </Main>
   )

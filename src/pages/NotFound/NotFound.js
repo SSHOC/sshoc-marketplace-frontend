@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../../elements/Container/Container'
+import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'
 import { useNavigationFocus } from '../../utils'
 
@@ -9,7 +10,7 @@ const NotFoundPage = () => {
   return (
     <Main ref={focusRef}>
       <Container>
-        <h1>Not Found</h1>
+        <Heading>Not Found</Heading>
       </Container>
     </Main>
   )

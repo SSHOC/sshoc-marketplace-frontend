@@ -6,15 +6,15 @@ import Container from '../../elements/Container/Container'
 import Flex from '../../elements/Flex/Flex'
 import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
+import Stack from '../../elements/Stack/Stack'
 // import { useColorMode } from '../../styles'
 
 const Logo = () => (
   <nav>
-    <Flex
+    <Stack
       as={Link}
       css={css({
         alignItems: 'center',
-        flexDirection: 'column',
         lineHeight: 'small',
         my: 3,
         py: 3,
@@ -24,18 +24,19 @@ const Logo = () => (
       })}
       to="/"
     >
-      <span css={css({ fontSize: 6, fontWeight: 'bold' })}>SSHOC</span>
+      <span css={css({ fontSize: 8, fontWeight: 'bold' })}>SSHOC</span>
       <span
         css={css({
           color: 'muted',
           fontSize: 1,
           letterSpacing: 4.5,
           textTransform: 'uppercase',
+          mr: -4.5,
         })}
       >
         Marketplace
       </span>
-    </Flex>
+    </Stack>
   </nav>
 )
 
@@ -69,19 +70,25 @@ const Header = () => (
         justifyContent: 'space-between',
         py: 0,
       })}
+      variant="wide"
     >
       <Logo />
-      <Flex
+      <Stack
         css={{
           alignItems: 'flex-end',
           alignSelf: 'stretch',
-          flexDirection: 'column',
           justifyContent: 'space-between',
         }}
       >
         <nav>&nbsp;</nav>
         <nav>
           <FlexList>
+            <li>
+              <NavLink to="/search?categories=datasets">Datasets</NavLink>
+            </li>
+            <li>
+              <NavLink to="/search?categories=solutions">Solutions</NavLink>
+            </li>
             <li>
               <NavLink to="/search?categories=tools">Tools</NavLink>
             </li>
@@ -90,18 +97,23 @@ const Header = () => (
                 Training Materials
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/search?categories=datasets">Datasets</NavLink>
-            </li>
-            <li>
-              <NavLink to="/search?categories=solutions">Solutions</NavLink>
+            <li css={css({ alignItems: 'center', display: 'flex', mx: 2 })}>
+              <div
+                role="separator"
+                css={css({
+                  borderRightColor: 'border',
+                  borderRightWidth: 1,
+                  borderRightStyle: 'solid',
+                  height: '60%',
+                })}
+              />
             </li>
             <li>
               <NavLink to="/about">About the SSHOC</NavLink>
             </li>
           </FlexList>
         </nav>
-      </Flex>
+      </Stack>
     </Container>
   </Box>
 )

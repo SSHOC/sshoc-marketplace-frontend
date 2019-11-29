@@ -32,6 +32,7 @@ const Footer = () => (
         justifyContent: 'space-between',
         py: 0,
       })}
+      variant="wide"
     >
       <nav>
         <FlexList>

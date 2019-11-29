@@ -12,7 +12,8 @@ const baseColors = {
     600: '#a7a7a7',
     // 700: '',
     800: '#777777',
-    900: '#575858',
+    900: '#606265',
+    // 950: '#575858',
   },
   white: '#ffffff',
   blue: {
@@ -35,7 +36,7 @@ const colors = {
   background: baseColors.white,
   border: baseColors.grey['500'],
   // highlight: '',
-  muted: baseColors.grey['600'],
+  muted: baseColors.grey['800'],
   primary: baseColors.blue['500'],
   primaryActive: baseColors.blue['800'],
   primaryHover: baseColors.blue['700'],
@@ -56,12 +57,19 @@ export const theme = {
     body: 'Poppins, system-ui, sans-serif',
     heading: 'inherit',
   },
-  fontSizes: [12, 14, 16, 20, 24, 32, 40, 48, 64],
+  fontSizes: [12, 14, 15, 16, 20, 22, 24, 32, 40, 48, 64],
   fontWeights: {
+    extraBold: 800,
+    extraLight: 200,
+    black: 900,
     body: 400,
     bold: 700,
-    heading: 700,
-    normal: 400,
+    heading: 500,
+    light: 300,
+    medium: 500,
+    regular: 400,
+    semiBold: 600,
+    thin: 100,
   },
   gradients: {
     primary: `linear-gradient(to right, ${baseColors.blue['300']}, ${
@@ -83,11 +91,14 @@ export const theme = {
   sizes: {
     container: 1600,
     narrow: 1000,
+    sidebar: 300,
+    wide: 1900,
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   text: {
     body: {
       fontFamily: 'body',
+      fontSize: 2,
       fontWeight: 'body',
       lineHeight: 'body',
     },

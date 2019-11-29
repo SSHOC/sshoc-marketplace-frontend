@@ -67,8 +67,8 @@ const Select = forwardRef(
     {
       checkSelected,
       className,
-      items,
       initialValue,
+      items,
       onChange,
       variant,
       ...props
@@ -85,8 +85,8 @@ const Select = forwardRef(
     } = useSelect({
       defaultSelectedItem: initialValue || items[0],
       items,
+      itemToString: item => (item ? item.label : ''),
       onSelectedItemChange: ({ selectedItem }) => onChange(selectedItem),
-      // itemToString,
     })
 
     return (

@@ -8,9 +8,6 @@ const Link = styled(RelativeOrAbsoluteLink)(
     appearance: 'none',
     bg: 'transparent',
     border: 'none',
-    borderBottomColor: 'transparent',
-    borderBottomStyle: 'solid',
-    borderBottomWidth: 2,
     color: 'primary',
     cursor: 'pointer',
     fontFamily: 'inherit',
@@ -18,12 +15,12 @@ const Link = styled(RelativeOrAbsoluteLink)(
     outline: 'none',
     p: 0,
     textDecoration: 'none',
-    transition: 'border-bottom-color 0.2s ease-out, box-shadow 0.2s ease-out',
+    transition: 'box-shadow 0.2s ease-out, color 0.2s ease-out',
     '&:focus': {
       boxShadow: 'outline',
     },
     '&:hover': {
-      borderBottomColor: 'currentColor',
+      color: 'primaryHover',
     },
     '&:active': {
       color: 'text',
@@ -32,8 +29,8 @@ const Link = styled(RelativeOrAbsoluteLink)(
   variant({
     variants: {
       nav: {
-        borderBottomStyle: 'none',
         display: 'inline-block',
+        fontSize: 3,
       },
     },
   })

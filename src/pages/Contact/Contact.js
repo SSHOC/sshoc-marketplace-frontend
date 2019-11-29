@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../../elements/Container/Container'
+import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'
 import { useNavigationFocus } from '../../utils'
 
@@ -9,7 +10,7 @@ const ContactPage = () => {
   return (
     <Main ref={focusRef}>
       <Container>
-        <h1>Contact</h1>
+        <Heading>Contact</Heading>
       </Container>
     </Main>
   )
