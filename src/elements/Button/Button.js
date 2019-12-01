@@ -37,7 +37,7 @@ const Button = styled('button')(
       color: 'text',
     },
     '&[disabled]': {
-      color: 'subtle',
+      color: 'muted',
       pointerEvents: 'none',
     },
   }),
@@ -60,17 +60,19 @@ const Button = styled('button')(
       },
       primary: {
         bg: 'primary',
-        borderColor: 'primary',
+        borderColor: 'background',
         color: 'subtlest',
         '&:hover': {
           bg: 'primaryHover',
-          borderColor: 'primaryHover',
           color: 'subtlest',
         },
         '&:active': {
           bg: 'primaryActive',
-          borderColor: 'primaryActive',
           color: 'subtlest',
+        },
+        '&[disabled]': {
+          color: 'white',
+          pointerEvents: 'none',
         },
       },
     },
@@ -80,6 +82,8 @@ const Button = styled('button')(
     variants: {
       large: {
         fontSize: 4,
+        px: 5,
+        py: 3,
       },
       small: {
         fontSize: 1,

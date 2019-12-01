@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stefanprobst/menu-button": "^0.5.4-c",
     "@styled-system/css": "^5.0.23",
     "@styled-system/variant": "^5.1.2",
     "downshift": "^3.4.2",

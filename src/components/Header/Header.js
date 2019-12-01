@@ -84,16 +84,16 @@ const Header = () => (
         <nav>
           <FlexList>
             <li>
-              <NavLink to="/search?categories=datasets">Datasets</NavLink>
+              <NavLink to="/search?categories=dataset">Datasets</NavLink>
             </li>
             <li>
-              <NavLink to="/search?categories=solutions">Solutions</NavLink>
+              <NavLink to="/search?categories=solution">Solutions</NavLink>
             </li>
             <li>
-              <NavLink to="/search?categories=tools">Tools</NavLink>
+              <NavLink to="/search?categories=tool">Tools</NavLink>
             </li>
             <li>
-              <NavLink to="/search?categories=training-materials">
+              <NavLink to="/search?categories=training-material">
                 Training Materials
               </NavLink>
             </li>

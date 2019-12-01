@@ -1,14 +1,7 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import Flex from '../../elements/Flex/Flex'
+import Centered from '../../elements/Centered/Centered'
 import Link from '../../elements/Link/Link'
 import Text from '../../elements/Text/Text'
-
-const Centered = styled(Flex)({
-  alignItems: 'center',
-  height: '100%',
-  justifyContent: 'center',
-})
 
 class ErrorBoundary extends React.Component {
   state = {

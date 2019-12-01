@@ -1,38 +1,34 @@
 import css from '@styled-system/css'
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import 'styled-components/macro'
 import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
-import { getSearchParams } from '../../utils/getSearchParams'
+import { useQueryParams } from '../../utils'
 
 const SearchBar = ({
   categories,
   page,
   query: currentQuery,
-  sortField,
+  sort,
   ...props
 }) => {
-  const history = useHistory()
-
+  const [queryParams, setQueryParams] = useQueryParams()
   const [query, setQuery] = useState(currentQuery || '')
 
   const handleSubmit = event => {
     event.preventDefault()
-
-    history.push(
-      getSearchParams({
-        // categories,
-        // page,
-        query,
-        // sortField,
-      })
-    )
+    setQueryParams({ query }, '/search')
   }
 
   return (
-    <Flex as="form" onSubmit={handleSubmit} role="search" {...props}>
+    <Flex
+      as="form"
+      css={css({ my: 2 })}
+      onSubmit={handleSubmit}
+      role="search"
+      {...props}
+    >
       <Input
         aria-label="Search term"
         css={css({ flex: 1, mx: 1 })}

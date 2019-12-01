@@ -4,7 +4,7 @@ import { configureStore } from '../../store/configureStore'
 import { GlobalStyles, ThemeProvider } from '../../styles'
 import App from '../App/App'
 
-const store = configureStore()
+const store = configureStore({})
 
 const Root = () => (
   <Provider store={store}>

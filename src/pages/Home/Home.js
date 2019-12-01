@@ -28,7 +28,7 @@ const HomePage = () => {
       ref={focusRef}
     >
       <Container>
-        <Container css={css({ my: 5 })} variant="narrow">
+        <Container css={css({ my: 6 })} variant="narrow">
           <Heading
             as="h1"
             css={css({ fontWeight: 'regular', mb: 3 })}

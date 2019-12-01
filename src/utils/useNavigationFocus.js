@@ -6,7 +6,7 @@ export const useNavigationFocus = () => {
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.focus()
+      ref.current.focus({ preventScroll: true })
     }
   }, [ref])
 

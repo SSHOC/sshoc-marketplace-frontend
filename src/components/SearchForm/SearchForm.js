@@ -1,27 +1,25 @@
 import css from '@styled-system/css'
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import 'styled-components/macro'
 import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Select from '../../elements/Select/Select'
-import { getSearchParams } from '../../utils/getSearchParams'
+import { useQueryParams } from '../../utils'
 
 const SearchForm = props => {
-  const history = useHistory()
-
+  const [queryParams, setQueryParams] = useQueryParams()
   const [category, setCategory] = useState('')
   const [query, setQuery] = useState('')
 
   const handleSubmit = event => {
     event.preventDefault()
-
-    history.push(
-      getSearchParams({
+    setQueryParams(
+      {
         categories: category,
         query,
-      })
+      },
+      '/search'
     )
   }
 

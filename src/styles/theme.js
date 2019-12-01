@@ -94,7 +94,7 @@ export const theme = {
     sidebar: 300,
     wide: 1900,
   },
-  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  space: [0, 4, 8, 16, 32, 48, 64, 128, 256, 512],
   text: {
     body: {
       fontFamily: 'body',
@@ -107,5 +107,8 @@ export const theme = {
       fontWeight: 'heading',
       lineHeight: 'heading',
     },
+  },
+  zIndices: {
+    select: 100,
   },
 }

@@ -35,6 +35,7 @@ const Menu = styled('ul')(props =>
       boxShadow: 'outline',
       outline: 'none',
     },
+    zIndex: 'select',
   })
 )
 

@@ -15,7 +15,8 @@ const Link = styled(RelativeOrAbsoluteLink)(
     outline: 'none',
     p: 0,
     textDecoration: 'none',
-    transition: 'box-shadow 0.2s ease-out, color 0.2s ease-out',
+    transition:
+      'background-color 0.2s ease-out, box-shadow 0.2s ease-out, color 0.2s ease-out',
     '&:focus': {
       boxShadow: 'outline',
     },
@@ -24,6 +25,10 @@ const Link = styled(RelativeOrAbsoluteLink)(
     },
     '&:active': {
       color: 'text',
+    },
+    '&[disabled]': {
+      color: 'muted',
+      pointerEvents: 'none',
     },
   }),
   variant({
