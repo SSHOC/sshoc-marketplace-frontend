@@ -33,7 +33,7 @@ yarn start
 To run the production build locally:
 
 ```shell
-yarn build && yarn serve
+REACT_APP_API_BASE_URL=http://localhost:8080 yarn build && yarn serve
 ```
 
 Also, make sure to have either the mock server or the development build of the
