@@ -39,8 +39,11 @@ const SearchResult = ({ result }) => (
           mb: 2,
         })}
       >
-        <Link to={`/${result.category}s/${result.id}`}>
-          <Heading as="h3" css={css({ flex: 1, mr: 2 })} variant="h4">
+        <Link
+          css={css({ flex: 1, mr: 2 })}
+          to={`/${result.category}s/${result.id}`}
+        >
+          <Heading as="h3" variant="h4">
             {/* FIXME: Should be label, not name (like in the /tool response) */}
             {result.label || result.name}
           </Heading>
