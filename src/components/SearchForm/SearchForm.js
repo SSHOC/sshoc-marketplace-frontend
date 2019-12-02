@@ -6,6 +6,7 @@ import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Select from '../../elements/Select/Select'
 import { useQueryParams } from '../../utils'
+import { ITEM_CATEGORY } from '../../constants'
 
 const SearchForm = props => {
   const [queryParams, setQueryParams] = useQueryParams()
@@ -46,10 +47,10 @@ const SearchForm = props => {
         }}
         items={[
           { label: 'All Categories', value: '' },
-          { label: 'Datasets', value: 'datasets' },
-          { label: 'Solutions', value: 'solutions' },
-          { label: 'Tools', value: 'tools' },
-          { label: 'Training Materials', value: 'training-materials' },
+          ...Object.entries(ITEM_CATEGORY).map(([value, label]) => ({
+            label,
+            value,
+          })),
         ]}
         onChange={category => setCategory(category.value)}
       />
