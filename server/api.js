@@ -12,18 +12,18 @@ const ITEM_CATEGORIES = {
   TRAINING_MATERIALS: ['training-material'],
 }
 
+const asc = field => (a, b) => a[field] > b[field]
+const desc = field => (a, b) => a[field] < b[field]
+
 const SORT_FIELDS = {
   score: {
-    field: 'id', // we don't have match score
-    compare: (a, b) => a < b,
+    compare: asc('id'), // we don't have match score, so sort by id
   },
   name: {
-    field: 'label',
-    compare: (a, b) => a < b,
+    compare: asc('label'),
   },
   'modified-on': {
-    field: 'lastInfoUpdate',
-    compare: (a, b) => a > b,
+    compare: desc('lastInfoUpdate'),
   },
 }
 
@@ -59,11 +59,21 @@ api.get('/item-search', (req, res) => {
   const results = allResults.slice((page - 1) * perpage, page * perpage)
 
   if (order) {
-    if (!SORT_FIELDS.includes(order)) {
+    if (!Object.keys(SORT_FIELDS).includes(order)) {
       return res.status(400).send('Bad request: invalid sort field')
     }
-    results.sort((a, b) => a[order] < b[order])
+    results.sort(SORT_FIELDS[order].compare)
   }
+
+  const resultsByCategory = results.reduce((acc, result) => {
+    if (!acc[result.category]) {
+      acc[result.category] = {
+        count: 0,
+      }
+    }
+    acc[result.category].count++
+    return acc
+  }, {})
 
   res.send({
     hits: allResults.length,
@@ -72,6 +82,7 @@ api.get('/item-search', (req, res) => {
     page,
     pages: Math.ceil(allResults.length / perpage),
     items: results,
+    categories: resultsByCategory,
   })
 })
 
