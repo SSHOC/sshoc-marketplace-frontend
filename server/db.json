@@ -1,0 +1,646 @@
+{
+  "1": {
+    "id": 1,
+    "label": "Gephi",
+    "description": "Gephi is the leading visualization and exploration software for all kinds of graphs and networks.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "role": { "code": "founder", "label": "Founder" }
+      },
+      {
+        "actor": {
+          "id": 5,
+          "name": "John Smith",
+          "website": "https://example.com/",
+          "email": "john@example.com",
+          "affiliations": [
+            {
+              "id": 3,
+              "name": "SSHOC project consortium",
+              "website": "https://sshopencloud.eu/",
+              "email": null,
+              "affiliations": []
+            }
+          ]
+        },
+        "role": { "code": "author", "label": "Author" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 1,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "software",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Software",
+          "notation": "Software",
+          "definition": "Software",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/software",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 2,
+        "type": {
+          "code": "ease-of-use",
+          "label": "Ease of use",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "Moderate",
+          "vocabulary": {
+            "code": "ease-of-use",
+            "label": "Ease of Use Concept Scheme",
+            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Moderate",
+          "notation": "Moderate",
+          "definition": "The product is moderate to use by its intended users.",
+          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Moderate",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 3,
+        "type": {
+          "code": "activity",
+          "label": "Activity",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "Capture",
+          "vocabulary": {
+            "code": "tadirah-research-activity",
+            "label": "TaDiRAH Research Activity",
+            "description": "Research activities are usually applied to one or several research objects. An article about modeling of manuscript properties would therefore be tagged with the tags \"Modeling\" and \"Manuscript\". A plain text editor would be tagged with the tags \"Writing\" and \"Code\" and \"Text\".",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "1 Capture",
+          "notation": "Capture",
+          "definition": "Capture generally refers to the activity of creating digital surrogates of existing cultural artefacts, or expressing existing artifacts in a digital representation (digitization). This could be a manual process (as in Transcribing) or an automated procedure (as in Imaging or DataRecognition). Such capture precedes Enrichment and Analysis, at least from a systematic point of view, if not in practice. The \"1\" is not part of the term, but used to indicate the term's order in the research process.",
+          "uri": "http://tadirah.dariah.eu/researchactivity/instances/Capture",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 4,
+        "type": {
+          "code": "material",
+          "label": "Material",
+          "allowedVocabularies": null
+        },
+        "value": "oil",
+        "concept": null
+      }
+    ],
+    "category": "tool"
+  },
+  "2": {
+    "id": 2,
+    "label": "Stata",
+    "description": "Stata is the solution for your data science needs. Obtain and manipulate data. Explore. Visualize. Model. Make inferences. Collect your results into reproducible reports.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 2,
+          "name": "Gertrude Stein",
+          "website": null,
+          "email": null,
+          "affiliations": []
+        },
+        "role": { "code": "author", "label": "Author" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 5,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "software",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Software",
+          "notation": "Software",
+          "definition": "Software",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/software",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 6,
+        "type": {
+          "code": "ease-of-use",
+          "label": "Ease of use",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "Easy",
+          "vocabulary": {
+            "code": "ease-of-use",
+            "label": "Ease of Use Concept Scheme",
+            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Easy",
+          "notation": "Easy",
+          "definition": "The product is easy to use by its intended users.",
+          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Easy",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 7,
+        "type": {
+          "code": "activity",
+          "label": "Activity",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "Analysis",
+          "vocabulary": {
+            "code": "tadirah-research-activity",
+            "label": "TaDiRAH Research Activity",
+            "description": "Research activities are usually applied to one or several research objects. An article about modeling of manuscript properties would therefore be tagged with the tags \"Modeling\" and \"Manuscript\". A plain text editor would be tagged with the tags \"Writing\" and \"Code\" and \"Text\".",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "4 Analysis",
+          "notation": "Analysis",
+          "definition": "This general research goal refers to the activity of extracting any kind of information from open or closed, structured or unstructured collections of data, of discovering recurring phenomena, units, elements, patterns, groupings, and the like. This can refer to structural, formal or semantic aspects of data. Analysis also includes methods used to visualize results. Methods and techniques related to this goal may be considered to follow Capture and Enrichment; however, Enrichment depends upon assumptions, research questions and results related to Analysis. The \"4\" is not part of the term, but used to indicate the term's relative order in the research process.",
+          "uri": "http://tadirah.dariah.eu/researchactivity/instances/Analysis",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 8,
+        "type": {
+          "code": "material",
+          "label": "Material",
+          "allowedVocabularies": null
+        },
+        "value": "Lorem ipsum",
+        "concept": null
+      }
+    ],
+    "category": "tool"
+  },
+  "3": {
+    "id": 3,
+    "label": "WebSty",
+    "description": "Stylometric analysis tool.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 3,
+          "name": "SSHOC project consortium",
+          "website": "https://sshopencloud.eu/",
+          "email": null,
+          "affiliations": []
+        },
+        "role": { "code": "author", "label": "Author" }
+      },
+      {
+        "actor": {
+          "id": 5,
+          "name": "John Smith",
+          "website": "https://example.com/",
+          "email": "john@example.com",
+          "affiliations": [
+            {
+              "id": 3,
+              "name": "SSHOC project consortium",
+              "website": "https://sshopencloud.eu/",
+              "email": null,
+              "affiliations": []
+            }
+          ]
+        },
+        "role": { "code": "contributor", "label": "Contributor" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 9,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "service",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Service",
+          "notation": "Service",
+          "definition": "Service",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/service",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 10,
+        "type": {
+          "code": "ease-of-use",
+          "label": "Ease of use",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "Easy",
+          "vocabulary": {
+            "code": "ease-of-use",
+            "label": "Ease of Use Concept Scheme",
+            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Easy",
+          "notation": "Easy",
+          "definition": "The product is easy to use by its intended users.",
+          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Easy",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "tool"
+  },
+  "4": {
+    "id": 4,
+    "label": "Gephi: an open source software for exploring and manipulating networks.",
+    "description": "",
+    "contributors": [
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "role": { "code": "author", "label": "Author" }
+      },
+      {
+        "actor": {
+          "id": 5,
+          "name": "John Smith",
+          "website": "https://example.com/",
+          "email": "john@example.com",
+          "affiliations": [
+            {
+              "id": 3,
+              "name": "SSHOC project consortium",
+              "website": "https://sshopencloud.eu/",
+              "email": null,
+              "affiliations": []
+            }
+          ]
+        },
+        "role": { "code": "author", "label": "Author" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 11,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "paper",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Paper",
+          "notation": "Paper",
+          "definition": "Paper",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/paper",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 12,
+        "type": {
+          "code": "object-format",
+          "label": "Object format",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "application/pdf",
+          "vocabulary": {
+            "code": "iana-mime-type",
+            "label": "IANA mime/type",
+            "description": "[RFC2046] specifies that Media Types (formerly known as MIME types) and Media Subtypes will be assigned and listed by the IANA.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "application/pdf",
+          "notation": "application/pdf",
+          "definition": "Portable Document Format",
+          "uri": "http://www.iana.org/assignments/media-types/application/pdf",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 13,
+        "type": {
+          "code": "language",
+          "label": "Languege",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "eng",
+          "vocabulary": {
+            "code": "iso-639-3",
+            "label": "ISO 639-3",
+            "description": "ISO 639-3 is a set of codes that defines three-letter identifiers for all known human languages. At the core of ISO 639-3 are the individual languages already accounted for in ISO 639-2. The large number of living languages in the initial inventory of ISO 639-3 beyond those already included in ISO 639-2 was derived primarily from Ethnologue (15th edition). Additional extinct, ancient, historic, and constructed languages were obtained from the Linguist List.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "eng",
+          "notation": "English",
+          "definition": "English (English)",
+          "uri": "http://iso639-3.sil.org/code/eng",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 14,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "tutorial",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Tutorial",
+          "notation": "Tutorial",
+          "definition": "Tutorial",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/tutorial",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 15,
+        "type": {
+          "code": "object-format",
+          "label": "Object format",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "video/mp4",
+          "vocabulary": {
+            "code": "iana-mime-type",
+            "label": "IANA mime/type",
+            "description": "[RFC2046] specifies that Media Types (formerly known as MIME types) and Media Subtypes will be assigned and listed by the IANA.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "video/mp4",
+          "notation": "video/mp4",
+          "definition": "MPEG-4 Video file",
+          "uri": "http://www.iana.org/assignments/media-types/video/mp4",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 16,
+        "type": {
+          "code": "activity",
+          "label": "Activity",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "ActivityType-Collecting",
+          "vocabulary": {
+            "code": "nemo-activity-type",
+            "label": "NeMO Concept Scheme",
+            "description": "",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "3.1 Collecting",
+          "notation": "Collecting",
+          "definition": "Collecting refers to the Activity Type of systematically and methodically acquiring and bringing together specific objects of a particular interest, in order to build groups of them (collections).",
+          "uri": "http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "training-material"
+  },
+  "5": {
+    "id": 7,
+    "label": "Introduction to GEPHI",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 2,
+          "name": "Gertrude Stein",
+          "website": null,
+          "email": null,
+          "affiliations": []
+        },
+        "role": { "code": "author", "label": "Author" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 20,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "tutorial",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Tutorial",
+          "notation": "Tutorial",
+          "definition": "Tutorial",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/tutorial",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 21,
+        "type": {
+          "code": "object-format",
+          "label": "Object format",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "video/mp4",
+          "vocabulary": {
+            "code": "iana-mime-type",
+            "label": "IANA mime/type",
+            "description": "[RFC2046] specifies that Media Types (formerly known as MIME types) and Media Subtypes will be assigned and listed by the IANA.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "video/mp4",
+          "notation": "video/mp4",
+          "definition": "MPEG-4 Video file",
+          "uri": "http://www.iana.org/assignments/media-types/video/mp4",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 22,
+        "type": {
+          "code": "activity",
+          "label": "Activity",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "ActivityType-Collecting",
+          "vocabulary": {
+            "code": "nemo-activity-type",
+            "label": "NeMO Concept Scheme",
+            "description": "",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "3.1 Collecting",
+          "notation": "Collecting",
+          "definition": "Collecting refers to the Activity Type of systematically and methodically acquiring and bringing together specific objects of a particular interest, in order to build groups of them (collections).",
+          "uri": "http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "training-material"
+  },
+  "6": {
+    "id": 8,
+    "label": "Webinar on DH",
+    "description": "",
+    "contributors": [
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "role": { "code": "author", "label": "Author" }
+      },
+      {
+        "actor": {
+          "id": 5,
+          "name": "John Smith",
+          "website": "https://example.com/",
+          "email": "john@example.com",
+          "affiliations": [
+            {
+              "id": 3,
+              "name": "SSHOC project consortium",
+              "website": "https://sshopencloud.eu/",
+              "email": null,
+              "affiliations": []
+            }
+          ]
+        },
+        "role": { "code": "author", "label": "Author" }
+      }
+    ],
+    "properties": [
+      {
+        "id": 23,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "webinar",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Webinar",
+          "notation": "Webinar",
+          "definition": "Webinar",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/webinar",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "training-material"
+  }
+}
