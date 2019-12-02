@@ -27,22 +27,26 @@ const SORT_FIELDS = {
   },
 }
 
+const getAll = arr => (Array.isArray(arr) ? arr : arr && [arr])
+
 api.get('/item-search', (req, res) => {
   const { categories: _categories = [], q = '', order } = req.query
 
-  if (!_categories.every(category => ITEM_CATEGORIES.ALL.includes(category))) {
+  if (
+    !getAll(_categories).every(category =>
+      ITEM_CATEGORIES.ALL.includes(category)
+    )
+  ) {
     return res.status(400).send('Bad request: invalid category')
   }
 
-  const categories = req.query.categories || ITEM_CATEGORIES.ALL
+  const categories = getAll(req.query.categories) || ITEM_CATEGORIES.ALL
 
   const perpage = parseInt(req.query.perpage, 10) || DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page, 10) || 1
 
   const searchTerms = q.toLowerCase().split(/\s+/)
 
-  console.log({ searchTerms })
-  console.log({ db: Object.values(db) })
   const allResults = Object.values(db).filter(
     item =>
       searchTerms.every(
