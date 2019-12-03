@@ -17,7 +17,7 @@ const SearchResultsHeader = ({
 }) => {
   const sortFields = [
     { value: '', label: 'Sort by score' },
-    { value: 'name', label: 'Sort by name' },
+    { value: 'label', label: 'Sort by name' },
     { value: 'modified-on', label: 'Sort by last modification' },
   ]
   const currentSortField = sortFields.find(field => field.value === sort)

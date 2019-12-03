@@ -44,8 +44,7 @@ const SearchResult = ({ result }) => (
           to={`/${result.category}s/${result.id}`}
         >
           <Heading as="h3" variant="h4">
-            {/* FIXME: Should be label, not name (like in the /tool response) */}
-            {result.label || result.name}
+            {result.label}
           </Heading>
         </Link>
         <Badge>{ITEM_CATEGORY[result.category]}</Badge>
