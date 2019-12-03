@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+    labels:
+      - traefik.backend=marketplace
+      - traefik.frontend.rule=Host:marketplace.sisyphos.arz.oeaw.ac.at
+      - traefik.docker.network=web
+      - traefik.port=3000
+    networks:      
+      - web
+      
+networks:
+  web:
+    external:
+      name: web
