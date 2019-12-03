@@ -20,6 +20,7 @@ const Input = styled('input')(
     '&:focus': {
       boxShadow: 'outline',
       outline: 'none',
+      zIndex: 'focus',
     },
     '&:hover': {
       bg: 'subtler',

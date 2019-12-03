@@ -127,7 +127,12 @@ const SearchPage = () => {
               />
             ) : request.status === REQUEST_STATUS.PENDING ? (
               <Centered css={css({ color: 'primary' })}>
-                <Spinner aria-label="Loading" height="6em" width="6em" />
+                <Spinner
+                  aria-label="Loading"
+                  delayed
+                  height="6em"
+                  width="6em"
+                />
               </Centered>
             ) : request.status === REQUEST_STATUS.FAILED ? (
               <Centered>

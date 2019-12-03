@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components/macro'
+import styled, { css, keyframes } from 'styled-components/macro'
 
 const rotate = keyframes({
   from: {
@@ -14,7 +14,7 @@ const fadeIn = keyframes({
   from: {
     opacity: 0,
   },
-  '50%': {
+  '25%': {
     opacity: 0,
   },
   to: {
@@ -48,8 +48,14 @@ const Donut = props => (
 )
 
 const Spinner = styled(Donut)`
-  animation-name: ${rotate}, ${fadeIn};
-  animation-duration: 0.5s, 3s;
+  /* animation-name: ${rotate}, ${fadeIn}; */
+  animation-name: ${props =>
+    props.delayed
+      ? css`
+          ${rotate}, ${fadeIn}
+        `
+      : rotate};
+  animation-duration: 0.5s, 4s;
   animation-iteration-count: infinite, 1;
   animation-timing-function: linear;
 `

@@ -45,6 +45,7 @@ const DropdownList = styled(MenuItems)(
     '&:focus, &:focus-within': {
       boxShadow: 'outline',
       outline: 'none',
+      zIndex: 'focus',
     },
     // We cannot use styled(MenuButton) directly because of
     // https://github.com/reach/reach-ui/issues/119

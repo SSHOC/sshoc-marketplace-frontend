@@ -8,8 +8,10 @@ const Badge = styled(Box)(
     borderStyle: 'solid',
     borderWidth: 1,
     color: 'grey.800',
+    display: 'inline-flex',
     fontSize: 0,
     px: 2,
+    userSelect: 'none',
   })
 )
 

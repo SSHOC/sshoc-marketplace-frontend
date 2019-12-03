@@ -52,7 +52,7 @@ const ItemDetails = ({ request, resource }) => {
   if (request.status === REQUEST_STATUS.PENDING) {
     return (
       <Centered css={css({ color: 'primary' })}>
-        <Spinner aria-label="Loading" height="6em" width="6em" />
+        <Spinner aria-label="Loading" delayed height="6em" width="6em" />
       </Centered>
     )
   }

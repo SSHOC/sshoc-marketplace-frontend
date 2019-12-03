@@ -27,6 +27,7 @@ const Button = styled('button')(
     '&:focus': {
       boxShadow: 'outline',
       outline: 'none',
+      zIndex: 'focus',
     },
     '&:hover': {
       bg: 'subtler',

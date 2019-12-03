@@ -34,6 +34,7 @@ const ButtonGroup = forwardRef((props, ref) => (
     {React.Children.map(props.children, child =>
       React.cloneElement(child, {
         className: [child.props.className, props.className].join(),
+        variant: child.props.variant || props.variant,
       })
     )}
   </Container>

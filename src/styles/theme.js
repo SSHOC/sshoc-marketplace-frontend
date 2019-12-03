@@ -110,5 +110,6 @@ export const theme = {
   },
   zIndices: {
     select: 100,
+    focus: 500,
   },
 }
