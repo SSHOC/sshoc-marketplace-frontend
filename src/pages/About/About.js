@@ -169,14 +169,15 @@ const About = () => (
 
 const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
   css({
+    borderLeftColor: 'subtle',
+    borderLeftStyle: 'solid',
+    borderLeftWidth: 6,
     color: 'muted',
     display: 'flex',
     fontSize: 2,
     justifyContent: 'space-between',
     p: 4,
-    borderLeftColor: 'subtle',
-    borderLeftStyle: 'solid',
-    borderLeftWidth: 6,
+    transition: 'border-color 0.2s ease-out',
     '&:hover': {
       bg: 'subtlest',
       borderLeftColor: 'primary',
