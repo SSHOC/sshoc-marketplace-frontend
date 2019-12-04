@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    args:
-      REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+      args:
+        REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
     labels:
       - traefik.backend=marketplace
       - traefik.frontend.rule=Host:marketplace.sisyphos.arz.oeaw.ac.at
