@@ -6,7 +6,9 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn --silent
 
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH /usr/src/app/node_modules/.bin:${PATH}
+
+ARG REACT_APP_API_BASE_URL
 
 COPY src ./src
 COPY public ./public
