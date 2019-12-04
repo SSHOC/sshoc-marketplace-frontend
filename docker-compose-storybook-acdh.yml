@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile-storybook
+    labels:
+      - traefik.backend=marketplace-storybook
+      - traefik.frontend.rule=Host:marketplace-storybook.sisyphos.arz.oeaw.ac.at
+      - traefik.docker.network=web
+      - traefik.port=9009
+    networks:
+      - web
+
+networks:
+  web:
+    external:
+      name: web
