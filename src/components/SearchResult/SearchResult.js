@@ -14,17 +14,17 @@ const SearchResult = ({ result }) => (
   <Flex
     css={css({
       bg: 'subtler',
-      p: 4,
       mb: 1,
+      p: 4,
       position: 'relative',
       '&:after': {
+        bg: 'inherit',
         content: '""',
+        height: '100%',
+        left: '100%',
         position: 'absolute',
         top: 0,
-        left: '100%',
-        height: '100%',
         width: '100vw',
-        bg: 'inherit',
       },
     })}
   >

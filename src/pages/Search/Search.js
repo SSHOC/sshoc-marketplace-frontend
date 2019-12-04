@@ -11,7 +11,7 @@ import Container from '../../elements/Container/Container'
 import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'
-import Spinner from '../../elements/Spinner/Spinner'
+import Placeholder from '../../elements/Placeholder/Placeholder'
 import Stack from '../../elements/Stack/Stack'
 import Text from '../../elements/Text/Text'
 import BackgroundImage from '../../images/bg_search.png'
@@ -19,7 +19,36 @@ import BackgroundImageHiDPI from '../../images/bg_search@2x.png'
 import { fetchSearchResults } from '../../store/actions/items'
 import { REQUEST_STATUS } from '../../store/constants'
 import { selectors } from '../../store/reducers'
-import { useNavigationFocus, useQueryParams } from '../../utils'
+import { range, useNavigationFocus, useQueryParams } from '../../utils'
+
+const SearchResultPlaceholder = () => (
+  <Flex
+    css={css({
+      bg: 'subtler',
+      color: 'muted',
+      mb: 1,
+      p: 4,
+      position: 'relative',
+      '&:after': {
+        bg: 'inherit',
+        content: '""',
+        height: '100%',
+        left: '100%',
+        position: 'absolute',
+        top: 0,
+        width: '100vw',
+      },
+    })}
+  >
+    <div css={{ flexBasis: 80, flexGrow: 0 }}>
+      <Placeholder.Icon />
+    </div>
+    <div css={{ flex: 1 }}>
+      <Placeholder.Heading />
+      <Placeholder.Text />
+    </div>
+  </Flex>
+)
 
 const TotalSearchResults = ({ request }) =>
   request.info && request.info.hits != null ? (
@@ -125,15 +154,21 @@ const SearchPage = () => {
                 results={results}
                 sort={sort}
               />
-            ) : request.status === REQUEST_STATUS.PENDING ? (
-              <Centered css={css({ color: 'primary' })}>
-                <Spinner
-                  aria-label="Loading"
-                  delayed
-                  height="6em"
-                  width="6em"
-                />
-              </Centered>
+            ) : // We also show loading state on idle to avoid flashing empty space
+            [REQUEST_STATUS.IDLE, REQUEST_STATUS.PENDING].includes(
+                request.status
+              ) ? (
+              <>
+                {/* TODO: Dont copy <SearchResults /> and <SearchResult /> containers */}
+                <Flex css={{ height: 80 }} />
+                <Stack as="ul">
+                  {range(10).map(i => (
+                    <li key={`_placeholder${i}`}>
+                      <SearchResultPlaceholder />
+                    </li>
+                  ))}
+                </Stack>
+              </>
             ) : request.status === REQUEST_STATUS.FAILED ? (
               <Centered>
                 <Text>
