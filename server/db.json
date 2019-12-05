@@ -642,5 +642,167 @@
       }
     ],
     "category": "training-material"
+  },
+  "9": {
+    "id": 9,
+    "label": "Austin Crime Data",
+    "description": "This dataset includes Part 1 crimes for 2014 and 2015. Data is provided by the Austin Police Department and may differ from official APD crime data due to the variety of reporting and collection methods used.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 1,
+          "name": "Austrian Academy of Sciences",
+          "website": "https://www.oeaw.ac.at/",
+          "email": null,
+          "affiliations": []
+        },
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
+      },
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "ord": 1,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
+      }
+    ],
+    "properties": [
+      {
+        "id": 21,
+        "ord": 0,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "dataset",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Dataset",
+          "notation": "Dataset",
+          "definition": "Dataset",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/dataset",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 22,
+        "ord": 1,
+        "type": {
+          "code": "language",
+          "label": "Languege",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "eng",
+          "vocabulary": {
+            "code": "iso-639-3",
+            "label": "ISO 639-3",
+            "description": "ISO 639-3 is a set of codes that defines three-letter identifiers for all known human languages. At the core of ISO 639-3 are the individual languages already accounted for in ISO 639-2. The large number of living languages in the initial inventory of ISO 639-3 beyond those already included in ISO 639-2 was derived primarily from Ethnologue (15th edition). Additional extinct, ancient, historic, and constructed languages were obtained from the Linguist List.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "eng",
+          "notation": "English",
+          "definition": "English (English)",
+          "uri": "http://iso639-3.sil.org/code/eng",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "dataset"
+  },
+  "10": {
+    "id": 10,
+    "label": "Consortium of European Social Science Data Archives",
+    "description": "The CESSDA Data Catalogue contains the metadata of all data in the holdings of CESSDA'a service providers. It is a one-stop-shop for search and discovery, enabling effective access to European social science research data.",
+    "contributors": [
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "ord": 0,
+        "role": {
+          "code": "provider",
+          "label": "Provider"
+        }
+      }
+    ],
+    "properties": [
+      {
+        "id": 23,
+        "ord": 0,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "data-catalogue",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Data Catalogue",
+          "notation": "Data Catalogue",
+          "definition": "Data Catalogue",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/data-catalogue",
+          "relatedConcepts": null
+        }
+      },
+      {
+        "id": 24,
+        "ord": 1,
+        "type": {
+          "code": "activity",
+          "label": "Activity",
+          "allowedVocabularies": null
+        },
+        "value": null,
+        "concept": {
+          "code": "ActivityType-Seeking",
+          "vocabulary": {
+            "code": "nemo-activity-type",
+            "label": "NeMO Concept Scheme",
+            "description": "",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Seeking",
+          "notation": "",
+          "definition": "",
+          "uri": "http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Seeking",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "category": "dataset"
   }
 }
