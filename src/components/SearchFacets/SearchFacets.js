@@ -30,9 +30,11 @@ const SearchFacets = ({ categories, count, page, query, sort }) => {
       ? categories.concat(event.target.value)
       : categories.filter(category => category !== event.target.value)
 
+    // Always reset to first page, so we don't end up on a page larger
+    // than Math.ceil((results.length / pageSize)) when deselecting a category
     setQueryParams({
       categories: updatedCategories,
-      page,
+      page: undefined,
       query,
       sort,
     })

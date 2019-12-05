@@ -63,7 +63,7 @@ const SearchPage = () => {
   const { categories, page, query, sort } = useMemo(
     () => ({
       categories: queryParams.getAll('categories'),
-      page: queryParams.get('page'),
+      page: parseInt(queryParams.get('page'), 10) || 1,
       query: queryParams.get('query'),
       sort: queryParams.get('sort'),
     }),
