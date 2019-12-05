@@ -40,7 +40,7 @@ const SearchResultPlaceholder = () => (
       },
     })}
   >
-    <div css={{ flexBasis: 80, flexGrow: 0 }}>
+    <div css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
       <Placeholder.Icon />
     </div>
     <div css={{ flex: 1 }}>

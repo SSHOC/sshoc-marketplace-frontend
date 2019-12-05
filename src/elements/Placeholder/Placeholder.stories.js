@@ -17,7 +17,7 @@ export const searchResult = () => (
       p: 4,
     })}
   >
-    <div style={{ flexBasis: 80, flexGrow: 0 }}>
+    <div style={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
       <Placeholder.Icon />
     </div>
     <div style={{ flex: 1 }}>

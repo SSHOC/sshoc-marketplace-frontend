@@ -15,7 +15,7 @@ const ItemDetails = ({ request, resource }) => {
     return (
       <>
         <Flex>
-          <Box css={{ flexBasis: 100, flexGrow: 0 }}>
+          <Box css={{ flexBasis: 100, flexGrow: 0, flexShrink: 0 }}>
             <Icon icon={resource.category} width="5em" height="5em" />
           </Box>
           <Box>

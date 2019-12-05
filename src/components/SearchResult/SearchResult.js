@@ -28,7 +28,7 @@ const SearchResult = ({ result }) => (
       },
     })}
   >
-    <Box css={{ flexBasis: 80, flexGrow: 0 }}>
+    <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
       <Icon icon={result.category} width="3em" height="3em" />
     </Box>
     <Box css={{ flex: 1 }}>
