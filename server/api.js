@@ -65,7 +65,7 @@ api.get('/item-search', (req, res) => {
     results.sort(SORT_FIELDS[order].compare)
   }
 
-  const resultsByCategory = results.reduce((acc, result) => {
+  const resultsByCategory = allResults.reduce((acc, result) => {
     if (!acc[result.category]) {
       acc[result.category] = {
         count: 0,
