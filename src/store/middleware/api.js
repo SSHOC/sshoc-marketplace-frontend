@@ -14,7 +14,7 @@ const createApiMiddleware = fetch => ({
   if (action.type !== API_REQUEST) return
 
   const {
-    // collections,
+    collections,
     fetchPolicy = FETCH_POLICY.CACHE_AND_NETWORK,
     next: {
       IDLE: onAbort,
@@ -24,7 +24,6 @@ const createApiMiddleware = fetch => ({
     },
     normalize,
     request,
-    // resources,
   } = action.meta
 
   const cacheKey = createCacheKey(request)
@@ -54,12 +53,12 @@ const createApiMiddleware = fetch => ({
   dispatch({
     type: onStart,
     payload: { abort },
-    meta: { cacheKey, timestamp },
+    meta: { cacheKey, collections, timestamp },
   })
   dispatch({
     type: API_REQUEST.PENDING,
     payload: { abort },
-    meta: { cacheKey, timestamp },
+    meta: { cacheKey, collections, timestamp },
   })
 
   try {
@@ -94,31 +93,34 @@ const createApiMiddleware = fetch => ({
     dispatch({
       type: onSuccess,
       payload: { entities, resources },
-      meta: { cacheKey, info, response, timestamp },
+      meta: { cacheKey, collections, info, response, timestamp },
     })
     dispatch({
       type: API_REQUEST.SUCCEEDED,
       payload: { entities, resources },
-      meta: { cacheKey, info, response, timestamp },
+      meta: { cacheKey, collections, info, response, timestamp },
     })
   } catch (error) {
     const timestamp = Date.now()
 
     if (error.name === 'AbortError') {
-      dispatch({ type: onAbort, meta: { cacheKey, timestamp } })
-      dispatch({ type: API_REQUEST.IDLE, meta: { cacheKey, timestamp } })
+      dispatch({ type: onAbort, meta: { cacheKey, collections, timestamp } })
+      dispatch({
+        type: API_REQUEST.IDLE,
+        meta: { cacheKey, collections, timestamp },
+      })
     } else {
       dispatch({
         type: onError,
         error: true,
         payload: error,
-        meta: { cacheKey, timestamp },
+        meta: { cacheKey, collections, timestamp },
       })
       dispatch({
         type: API_REQUEST.FAILED,
         error: true,
         payload: error,
-        meta: { cacheKey, timestamp },
+        meta: { cacheKey, collections, timestamp },
       })
     }
   }

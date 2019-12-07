@@ -50,9 +50,11 @@ const SearchResultPlaceholder = () => (
   </Flex>
 )
 
-const TotalSearchResults = ({ request }) =>
+const TotalSearchResults = ({ collection, request }) =>
   request.info && request.info.hits != null ? (
     <span css={css({ fontSize: 6 })}>({request.info.hits})</span>
+  ) : collection.info && collection.info.hits ? (
+    <span css={css({ fontSize: 6 })}>({collection.info.hits})</span>
   ) : null
 
 const SearchPage = () => {
@@ -76,6 +78,16 @@ const SearchPage = () => {
       query: {
         categories,
         page,
+        query,
+        sort,
+      },
+    })
+  )
+  const collection = useSelector(state =>
+    selectors.itemCollections.selectCollectionByName(state, {
+      name: fetchSearchResults,
+      query: {
+        categories,
         query,
         sort,
       },
@@ -127,7 +139,8 @@ const SearchPage = () => {
           paths={[{ label: 'Home', value: '/' }, { label: 'Search results' }]}
         />
         <Heading variant="h1" css={css({ mt: 4 })}>
-          Search results <TotalSearchResults request={request} />
+          Search results{' '}
+          <TotalSearchResults collection={collection} request={request} />
         </Heading>
         <Flex css={css({ mt: 6 })}>
           <aside
@@ -139,9 +152,10 @@ const SearchPage = () => {
           >
             <SearchFacets
               categories={categories}
-              count={(request.info && request.info.categories) || {}}
+              collection={collection}
               page={page}
               query={query}
+              request={request}
               setQueryParams={setQueryParams}
               sort={sort}
             />

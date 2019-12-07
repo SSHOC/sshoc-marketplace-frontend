@@ -9,23 +9,37 @@ import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Separator from '../../elements/Separator/Separator'
 
-const CategoryCheckbox = ({ category, categories, count, label, onChange }) => (
-  <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
-    <Checkbox
-      checked={categories.includes(category)}
-      onChange={onChange}
-      value={category}
-    >
-      {label} {count && count.count ? `(${count.count})` : null}
-    </Checkbox>
-  </Flex>
-)
+const CategoryCheckbox = ({
+  category,
+  categories,
+  collection,
+  label,
+  onChange,
+  request,
+}) => {
+  const count =
+    request.info?.categories?.[category]?.count ??
+    collection.info?.categories?.[category]?.count
+
+  return (
+    <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
+      <Checkbox
+        checked={categories.includes(category)}
+        onChange={onChange}
+        value={category}
+      >
+        {label} {count ? `(${count})` : null}
+      </Checkbox>
+    </Flex>
+  )
+}
 
 const SearchFacets = ({
   categories,
-  count,
+  collection,
   page,
   query,
+  request,
   setQueryParams,
   sort,
 }) => {
@@ -72,10 +86,11 @@ const SearchFacets = ({
         <CategoryCheckbox
           category={category}
           categories={categories}
-          count={count[category]}
+          collection={collection}
           key={category}
-          onChange={handleChangeCategories}
           label={label}
+          onChange={handleChangeCategories}
+          request={request}
         />
       ))}
     </Box>

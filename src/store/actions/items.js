@@ -72,6 +72,12 @@ export const fetchSearchResults = ({ categories, page, query, sort }) => ({
     ...API.search({ categories, page, query, sort }),
   },
   meta: {
+    collections: [
+      {
+        name: 'fetchSearchResults',
+        query: { categories, query, sort },
+      },
+    ],
     next: FETCH_RESOURCE,
     normalize: createNormalizer('items'),
     request: {

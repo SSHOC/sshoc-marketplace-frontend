@@ -1,4 +1,5 @@
 export * from './createCacheKey'
+export * from './createCollectionSlice'
 export * from './createNormalizer'
 export * from './createRequestSlice'
 export * from './createResourceSlice'
