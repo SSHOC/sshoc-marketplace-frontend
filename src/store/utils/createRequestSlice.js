@@ -32,7 +32,7 @@ export const createRequestSlice = () => {
       }
 
       case API_REQUEST.SUCCEEDED: {
-        const { resources } = action.payload
+        const { entities } = action.payload
         const { cacheKey, info, response, timestamp } = action.meta
         return {
           ...state,
@@ -42,9 +42,9 @@ export const createRequestSlice = () => {
             error: null,
             info,
             lastSucceeded: timestamp,
-            resources: Object.entries(resources).reduce(
-              (acc, [resourceName, resources]) => {
-                acc[resourceName] = Object.keys(resources)
+            resources: Object.entries(entities).reduce(
+              (acc, [resourceName, entities]) => {
+                acc[resourceName] = entities
                 return acc
               },
               {}
