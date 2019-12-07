@@ -44,7 +44,10 @@ const Option = styled('li')(
   props =>
     css({
       bg: props.highlighted ? 'subtler' : 'transparent',
-      color: props.highlighted || props.selected ? 'primary' : 'text',
+      color:
+        props.highlighted || (props.checkSelected && props.selected)
+          ? 'primary'
+          : 'text',
       cursor: 'pointer',
       display: 'flex',
       px: 3,
@@ -110,6 +113,7 @@ const Select = forwardRef(
           {isOpen
             ? items.map((item, index) => (
                 <Option
+                  checkSelected={checkSelected}
                   highlighted={highlightedIndex === index}
                   key={item.value}
                   selected={selectedItem.value === item.value}
