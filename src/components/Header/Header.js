@@ -40,8 +40,17 @@ const Logo = () => (
   </nav>
 )
 
+const NavItem = styled(Flex).attrs({ as: 'li' })({
+  alignItems: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+})
+
 const NavLink = styled(Link).attrs({ variant: 'nav' })(
   css({
+    alignItems: 'center',
+    display: 'inline-flex',
+    flex: 1,
     px: 4,
     py: 3,
     '&:hover': {
@@ -83,21 +92,23 @@ const Header = () => (
         <nav>&nbsp;</nav>
         <nav>
           <FlexList>
-            <li>
+            <NavItem>
               <NavLink to="/search?categories=dataset">Datasets</NavLink>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <NavLink to="/search?categories=solution">Solutions</NavLink>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <NavLink to="/search?categories=tool">Tools</NavLink>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <NavLink to="/search?categories=training-material">
                 Training Materials
               </NavLink>
-            </li>
-            <li css={css({ alignItems: 'center', display: 'flex', mx: 2 })}>
+            </NavItem>
+            <NavItem
+              css={css({ alignItems: 'center', display: 'flex', mx: 2 })}
+            >
               <div
                 role="separator"
                 css={css({
@@ -107,10 +118,10 @@ const Header = () => (
                   height: '60%',
                 })}
               />
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <NavLink to="/about">About the SSHOC</NavLink>
-            </li>
+            </NavItem>
           </FlexList>
         </nav>
       </Stack>
