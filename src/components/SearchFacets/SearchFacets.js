@@ -16,7 +16,7 @@ const CategoryCheckbox = ({ category, categories, count, label, onChange }) => (
       onChange={onChange}
       value={category}
     >
-      {label} {count ? `(${count.count})` : null}
+      {label} {count && count.count ? `(${count.count})` : null}
     </Checkbox>
   </Flex>
 )
