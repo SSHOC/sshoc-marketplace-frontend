@@ -86,7 +86,10 @@ const SearchResults = ({ categories, info, page, query, results, sort }) => {
       <Pagination
         css={css({ alignSelf: 'flex-end', my: 4 })}
         currentPage={page}
-        onPageChange={handlePageChange}
+        onPageChange={page => {
+          handlePageChange(page)
+          window.scrollTo(0, 0)
+        }}
         totalPages={info.pages}
       />
     </>
