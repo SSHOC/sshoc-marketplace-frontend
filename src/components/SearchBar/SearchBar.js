@@ -4,16 +4,15 @@ import 'styled-components/macro'
 import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
-import { useQueryParams } from '../../utils'
 
 const SearchBar = ({
   categories,
   page,
   query: currentQuery,
+  setQueryParams,
   sort,
   ...props
 }) => {
-  const [queryParams, setQueryParams] = useQueryParams()
   const [query, setQuery] = useState(currentQuery || '')
 
   const handleSubmit = event => {

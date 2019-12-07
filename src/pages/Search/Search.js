@@ -58,7 +58,7 @@ const TotalSearchResults = ({ request }) =>
 const SearchPage = () => {
   const dispatch = useDispatch()
   const focusRef = useNavigationFocus()
-  const [queryParams] = useQueryParams()
+  const [queryParams, setQueryParams] = useQueryParams()
 
   const { categories, page, query, sort } = useMemo(
     () => ({
@@ -120,6 +120,7 @@ const SearchPage = () => {
           css={{ alignSelf: 'flex-end', width: '50%' }}
           page={page}
           query={query}
+          setQueryParams={setQueryParams}
           sort={sort}
         />
         <Breadcrumbs
@@ -141,6 +142,7 @@ const SearchPage = () => {
               count={(request.info && request.info.categories) || {}}
               page={page}
               query={query}
+              setQueryParams={setQueryParams}
               sort={sort}
             />
           </aside>
@@ -152,6 +154,7 @@ const SearchPage = () => {
                 page={page}
                 query={query}
                 results={results}
+                setQueryParams={setQueryParams}
                 sort={sort}
               />
             ) : // We also show loading state on idle to avoid flashing empty space

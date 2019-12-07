@@ -8,7 +8,6 @@ import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Separator from '../../elements/Separator/Separator'
-import { useQueryParams } from '../../utils'
 
 const CategoryCheckbox = ({ category, categories, count, label, onChange }) => (
   <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
@@ -22,9 +21,14 @@ const CategoryCheckbox = ({ category, categories, count, label, onChange }) => (
   </Flex>
 )
 
-const SearchFacets = ({ categories, count, page, query, sort }) => {
-  const [queryParams, setQueryParams] = useQueryParams()
-
+const SearchFacets = ({
+  categories,
+  count,
+  page,
+  query,
+  setQueryParams,
+  sort,
+}) => {
   const handleChangeCategories = event => {
     const updatedCategories = event.target.checked
       ? categories.concat(event.target.value)

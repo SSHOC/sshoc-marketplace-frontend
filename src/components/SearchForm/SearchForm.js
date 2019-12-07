@@ -9,7 +9,7 @@ import { useQueryParams } from '../../utils'
 import { ITEM_CATEGORY } from '../../constants'
 
 const SearchForm = props => {
-  const [queryParams, setQueryParams] = useQueryParams()
+  const [, setQueryParams] = useQueryParams()
   const [category, setCategory] = useState('')
   const [query, setQuery] = useState('')
 

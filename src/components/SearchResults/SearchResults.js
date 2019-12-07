@@ -4,7 +4,6 @@ import 'styled-components/macro'
 import Flex from '../../elements/Flex/Flex'
 import Select from '../../elements/Select/Select'
 import Stack from '../../elements/Stack/Stack'
-import { useQueryParams } from '../../utils'
 import Pagination from '../Pagination/Pagination'
 import SearchResult from '../SearchResult/SearchResult'
 
@@ -46,9 +45,15 @@ const SearchResultsHeader = ({
   )
 }
 
-const SearchResults = ({ categories, info, page, query, results, sort }) => {
-  const [queryParams, setQueryParams] = useQueryParams()
-
+const SearchResults = ({
+  categories,
+  info,
+  page,
+  query,
+  results,
+  setQueryParams,
+  sort,
+}) => {
   const handlePageChange = page => {
     setQueryParams({
       categories,
