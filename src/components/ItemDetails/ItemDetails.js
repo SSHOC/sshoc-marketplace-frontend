@@ -39,7 +39,7 @@ const ItemDetails = ({ request, resource }) => {
             </Box>
           </Box>
         </Flex>
-        <Box css={css({ mt: 6 })}>
+        <Box css={css({ my: 6 })}>
           <Heading as="h2" css={css({ my: 3 })} variant="h4">
             Description
           </Heading>
