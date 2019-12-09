@@ -9,7 +9,7 @@ const Page = ({ children }) => (
     css={{
       gridTemplateRows: 'auto 1fr auto',
       minHeight: '100vh',
-      overflowX: 'hidden',
+      overflow: 'hidden',
     }}
   >
     <Header />
