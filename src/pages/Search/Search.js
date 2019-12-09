@@ -178,7 +178,7 @@ const SearchPage = () => {
               <>
                 {/* TODO: Dont copy <SearchResults /> and <SearchResult /> containers */}
                 <Flex css={{ height: 80 }} />
-                <Stack as="ul">
+                <Stack as="ul" aria-busy aria-live="polite">
                   {range(10).map(i => (
                     <li key={`_placeholder${i}`}>
                       <SearchResultPlaceholder />
