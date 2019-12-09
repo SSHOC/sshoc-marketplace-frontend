@@ -1,4 +1,4 @@
-export const createCacheKey = ({ method = 'get', name, query }) => {
+export const createCacheKey = ({ name, query }) => {
   const keys = Object.keys(query)
   keys.sort()
   const sorted = keys.reduce((acc, key) => {
@@ -6,5 +6,5 @@ export const createCacheKey = ({ method = 'get', name, query }) => {
     return acc
   }, {})
 
-  return [name, method.toUpperCase(), JSON.stringify(sorted)].join('::')
+  return [name, JSON.stringify(sorted)].join('::')
 }
