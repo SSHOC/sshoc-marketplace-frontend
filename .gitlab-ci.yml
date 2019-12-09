@@ -1,0 +1,59 @@
+stages:
+  - build
+  - validate
+  - test
+  - package
+
+variables:
+  CYPRESS_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/Cypress'
+  YARN_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/yarn'
+
+cache: &global_cache
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .cache/yarn
+    - .cache/Cypress
+
+install:
+  stage: build
+  image: node:10-alpine
+  script:
+    - yarn --frozen-lockfile --silent
+
+validate:
+  image: node:10-alpine
+  stage: validate
+  cache:
+    <<: *global_cache
+    policy: pull
+  script:
+    - yarn --frozen-lockfile --silent
+    - yarn commitlint --from=master --to=$CI_COMMIT_SHA
+    - yarn format
+    - yarn lint
+
+test:
+  stage: test
+  image: node:10-alpine
+  cache:
+    <<: *global_cache
+    policy: pull
+  script:
+    - yarn --frozen-lockfile --silent
+    - yarn test
+
+test:e2e:
+  stage: test
+  image: cypress/base:10
+  cache:
+    <<: *global_cache
+    policy: pull
+  script:
+    - yarn --frozen-lockfile --silent
+    - yarn test:e2e
+  artifacts:
+    when: on_failure
+    paths:
+      - cypress/screenshots
+      - cypress/videos
+    expire_in: 1 day

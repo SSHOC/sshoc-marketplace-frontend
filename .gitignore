@@ -24,3 +24,6 @@ cypress/screenshots
 cypress/videos
 
 storybook-static
+
+# CI cache
+.cache
