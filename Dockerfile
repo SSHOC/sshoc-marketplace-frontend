@@ -4,7 +4,7 @@ FROM node:10-alpine as build
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
-RUN yarn --production --silent
+RUN yarn --frozen-lockfile --production --silent
 
 ENV PATH /usr/src/app/node_modules/.bin:${PATH}
 
