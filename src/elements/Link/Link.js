@@ -36,6 +36,7 @@ const Link = styled(RelativeOrAbsoluteLink)(
       nav: {
         display: 'inline-block',
         fontSize: 3,
+        textAlign: 'center',
       },
     },
   })
