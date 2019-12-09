@@ -8,14 +8,16 @@ variables:
   CYPRESS_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/Cypress'
   YARN_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/yarn'
 
-cache: &global_cache
-  key: $CI_COMMIT_REF_SLUG
-  paths:
-    - .cache/yarn
-    - .cache/Cypress
+.cache:
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .cache/yarn
+      - .cache/Cypress
 
 install:
   stage: build
+  extends: .cache
   image: node:10-alpine
   script:
     - yarn --frozen-lockfile --silent
@@ -23,8 +25,8 @@ install:
 validate:
   image: node:10-alpine
   stage: validate
+  extends: .cache
   cache:
-    <<: *global_cache
     policy: pull
   script:
     - yarn --frozen-lockfile --silent
@@ -35,8 +37,8 @@ validate:
 test:
   stage: test
   image: node:10-alpine
+  extends: .cache
   cache:
-    <<: *global_cache
     policy: pull
   script:
     - yarn --frozen-lockfile --silent
@@ -45,8 +47,8 @@ test:
 test:e2e:
   stage: test
   image: cypress/base:10
+  extends: .cache
   cache:
-    <<: *global_cache
     policy: pull
   script:
     - yarn --frozen-lockfile --silent
