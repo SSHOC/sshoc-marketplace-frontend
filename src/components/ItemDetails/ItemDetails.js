@@ -84,6 +84,7 @@ const ItemDetails = ({ request, resource }) => {
           </Heading>
           <Text css={css({ lineHeight: 'large' })}>{resource.description}</Text>
         </Box>
+        <RelatedItems items={resource.relatedItems} />
       </>
     )
   }

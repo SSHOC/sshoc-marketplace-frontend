@@ -11,28 +11,19 @@ import Link from '../../elements/Link/Link'
 import Text from '../../elements/Text/Text'
 import { truncate } from '../../utils'
 
-const MAX_DESCRIPTION_LENGTH = 400
+const MAX_DESCRIPTION_LENGTH = 200
 
-const SearchResult = ({ result }) => (
+// TODO: pretty much duplicated from <SearchResult />
+const RelatedItem = ({ item }) => (
   <Flex
     css={css({
       bg: 'subtler',
       mb: 1,
       p: 4,
-      position: 'relative',
-      '&:after': {
-        bg: 'inherit',
-        content: '""',
-        height: '100%',
-        left: '100%',
-        position: 'absolute',
-        top: 0,
-        width: '100vw',
-      },
     })}
   >
     <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
-      <Icon icon={result.category} width="3em" height="3em" />
+      <Icon icon={item.category} width="3em" height="3em" />
     </Box>
     <Box css={{ flex: 1 }}>
       <Flex
@@ -44,18 +35,19 @@ const SearchResult = ({ result }) => (
       >
         <Link
           css={css({ flex: 1, mr: 2 })}
-          to={`/${result.category}s/${result.id}`}
+          to={`/${item.category}s/${item.id}`}
         >
           <Heading as="h3" variant="h4">
-            {result.label}
+            {item.label}
           </Heading>
         </Link>
-        <Badge>{ITEM_CATEGORY[result.category]}</Badge>
+        <Badge>{ITEM_CATEGORY[item.category]}</Badge>
       </Flex>
+
       <Box css={css({ my: 2 })}>
         <Text css={css({ color: 'grey.900' })} variant="small">
           <span css={css({ color: 'grey.800' })}>Contributors: </span>
-          {(result.contributors || [])
+          {(item.contributors || [])
             .map(contributor => contributor.actor.name)
             .join(', ')}
         </Text>
@@ -64,14 +56,12 @@ const SearchResult = ({ result }) => (
           What goes here?
         </Text>
       </Box>
+
       <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>
-        {truncate(result.description, { length: MAX_DESCRIPTION_LENGTH })}
+        {truncate(item.description, { length: MAX_DESCRIPTION_LENGTH })}
       </Text>
-      <Flex css={css({ justifyContent: 'flex-end' })}>
-        <Link to={`/${result.category}s/${result.id}`}>Read more</Link>
-      </Flex>
     </Box>
   </Flex>
 )
 
-export default SearchResult
+export default RelatedItem
