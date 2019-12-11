@@ -1,4 +1,5 @@
 export * from './range'
+export * from './truncate'
 export * from './useLocalStorage'
 export * from './useNavigationFocus'
 export * from './useQueryParams'
