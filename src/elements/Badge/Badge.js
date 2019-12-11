@@ -12,6 +12,8 @@ const Badge = styled(Box)(
     fontSize: 0,
     px: 2,
     userSelect: 'none',
+    textAlign: 'center',
+    whiteSpace: 'pre',
   })
 )
 
