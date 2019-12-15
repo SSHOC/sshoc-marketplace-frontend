@@ -1,11 +1,17 @@
 import css from '@styled-system/css'
 import React from 'react'
 import 'styled-components/macro'
+import Centered from '../../elements/Centered/Centered'
 import Flex from '../../elements/Flex/Flex'
 import Select from '../../elements/Select/Select'
 import Stack from '../../elements/Stack/Stack'
+import Text from '../../elements/Text/Text'
+import { REQUEST_STATUS } from '../../store/constants'
+import { range } from '../../utils'
 import Pagination from '../Pagination/Pagination'
-import SearchResult from '../SearchResult/SearchResult'
+import SearchResult, {
+  SearchResultPlaceholder,
+} from '../SearchResult/SearchResult'
 
 const SearchResultsHeader = ({
   info,
@@ -45,17 +51,62 @@ const SearchResultsHeader = ({
   )
 }
 
+const SearchResultsList = ({ request, results }) => {
+  if (results && results.length) {
+    return (
+      <Stack as="ul">
+        {results.map(result => (
+          <li key={result.id}>
+            <SearchResult result={result} />
+          </li>
+        ))}
+      </Stack>
+    )
+  }
+
+  // We also show loading state on idle to avoid flashing empty space
+  if ([REQUEST_STATUS.IDLE, REQUEST_STATUS.PENDING].includes(request.status)) {
+    return (
+      <Stack as="ul" aria-busy aria-live="polite">
+        {range(10).map(i => (
+          <li key={`_placeholder${i}`}>
+            <SearchResultPlaceholder />
+          </li>
+        ))}
+      </Stack>
+    )
+  }
+
+  if (request.status === REQUEST_STATUS.FAILED) {
+    return (
+      <Centered>
+        <Text>Oh no! {request.error ? request.error.message : null}</Text>
+      </Centered>
+    )
+  }
+
+  if (request.status === REQUEST_STATUS.SUCCEEDED) {
+    return (
+      <Centered>
+        <Text>Nothing found</Text>
+      </Centered>
+    )
+  }
+
+  return null
+}
+
 const SearchResults = ({
-  categories,
-  info,
-  page,
-  query,
+  className,
+  request,
   results,
-  setQueryParams,
-  sort,
+  searchParams,
+  setSearchParams,
 }) => {
+  const { categories, page, query, sort } = searchParams
+
   const handlePageChange = page => {
-    setQueryParams({
+    setSearchParams({
       categories,
       page,
       query,
@@ -64,7 +115,7 @@ const SearchResults = ({
   }
 
   const handleSortChange = sort => {
-    setQueryParams({
+    setSearchParams({
       categories,
       page,
       query,
@@ -73,21 +124,15 @@ const SearchResults = ({
   }
 
   return (
-    <>
+    <Stack className={className}>
       <SearchResultsHeader
-        info={info}
+        info={request.info}
         onPageChange={handlePageChange}
         onSortChange={handleSortChange}
         page={page}
         sort={sort}
       />
-      <Stack as="ul">
-        {results.map(result => (
-          <li key={result.id}>
-            <SearchResult result={result} />
-          </li>
-        ))}
-      </Stack>
+      <SearchResultsList request={request} results={results} />
       <Pagination
         css={css({ alignSelf: 'flex-end', my: 4 })}
         currentPage={page}
@@ -95,9 +140,9 @@ const SearchResults = ({
           handlePageChange(page)
           window.scrollTo(0, 0)
         }}
-        totalPages={info.pages}
+        totalPages={request.info.pages}
       />
-    </>
+    </Stack>
   )
 }
 

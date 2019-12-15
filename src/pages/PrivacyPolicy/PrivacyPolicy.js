@@ -1,28 +1,25 @@
-import css from '@styled-system/css'
 import React from 'react'
 import 'styled-components/macro'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import Breadcrumbs from '../../elements/Breadcrumbs/Breadcrumbs'
-import Container from '../../elements/Container/Container'
-import Flex from '../../elements/Flex/Flex'
-import Heading from '../../elements/Heading/Heading'
+import PrivacyPolicyScreen from '../../components/PrivacyPolicyScreen/PrivacyPolicyScreen'
+import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
-import { useNavigationFocus } from '../../utils'
+import { useNavigationFocus, useSearchParams } from '../../utils'
 
 const PrivacyPolicyPage = () => {
   const focusRef = useNavigationFocus()
+  const [, setSearchParams] = useSearchParams()
 
   return (
     <Main ref={focusRef}>
-      <Container as={Flex} css={{ flexDirection: 'column' }}>
-        <SearchBar css={{ alignSelf: 'flex-end', width: '50%' }} />
-        <Breadcrumbs
-          paths={[{ label: 'Home', value: '/' }, { label: `Privacy Policy` }]}
-        />
-        <Heading variant="h1" css={css({ mt: 4 })}>
-          PrivacyPolicy
-        </Heading>
-      </Container>
+      <Screen
+        breadcrumbs={[
+          { label: 'Home', value: '/' },
+          { label: `Privacy Policy` },
+        ]}
+        setSearchParams={setSearchParams}
+      >
+        <PrivacyPolicyScreen />
+      </Screen>
     </Main>
   )
 }

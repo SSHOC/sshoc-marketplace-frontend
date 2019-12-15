@@ -9,7 +9,7 @@ const SearchBar = ({
   categories,
   page,
   query: currentQuery,
-  setQueryParams,
+  setSearchParams,
   sort,
   ...props
 }) => {
@@ -17,7 +17,7 @@ const SearchBar = ({
 
   const handleSubmit = event => {
     event.preventDefault()
-    setQueryParams({ query }, '/search')
+    setSearchParams({ query }, '/search')
   }
 
   return (

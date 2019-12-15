@@ -1,36 +1,51 @@
 import css from '@styled-system/css'
 import React from 'react'
-import 'styled-components/macro'
-import { ITEM_CATEGORY } from '../../constants'
+import styled from 'styled-components/macro'
 import Badge from '../../elements/Badge/Badge'
 import Box from '../../elements/Box/Box'
 import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
+import Placeholder from '../../elements/Placeholder/Placeholder'
 import Text from '../../elements/Text/Text'
 import { truncate } from '../../utils'
 
 const MAX_DESCRIPTION_LENGTH = 400
 
+const SearchResultContainer = styled(Flex)(
+  css({
+    bg: 'subtler',
+    color: 'muted',
+    mb: 1,
+    p: 4,
+    position: 'relative',
+    '&:after': {
+      bg: 'inherit',
+      content: '""',
+      height: '100%',
+      left: '100%',
+      position: 'absolute',
+      top: 0,
+      width: '100vw',
+    },
+  })
+)
+
+export const SearchResultPlaceholder = () => (
+  <SearchResultContainer>
+    <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
+      <Placeholder.Icon />
+    </Box>
+    <Box css={{ flex: 1 }}>
+      <Placeholder.Heading />
+      <Placeholder.Text />
+    </Box>
+  </SearchResultContainer>
+)
+
 const SearchResult = ({ result }) => (
-  <Flex
-    css={css({
-      bg: 'subtler',
-      mb: 1,
-      p: 4,
-      position: 'relative',
-      '&:after': {
-        bg: 'inherit',
-        content: '""',
-        height: '100%',
-        left: '100%',
-        position: 'absolute',
-        top: 0,
-        width: '100vw',
-      },
-    })}
-  >
+  <SearchResultContainer>
     <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
       <Icon icon={result.category} width="3em" height="3em" />
     </Box>
@@ -50,7 +65,13 @@ const SearchResult = ({ result }) => (
             {result.label}
           </Heading>
         </Link>
-        <Badge>{ITEM_CATEGORY[result.category]}</Badge>
+        <Badge>
+          {
+            result.properties.find(
+              property => property.type.code === 'object-type'
+            ).concept.label
+          }
+        </Badge>
       </Flex>
       <Box css={css({ my: 2 })}>
         <Text css={css({ color: 'grey.900' })} variant="small">
@@ -71,7 +92,7 @@ const SearchResult = ({ result }) => (
         <Link to={`/${result.category}s/${result.id}`}>Read more</Link>
       </Flex>
     </Box>
-  </Flex>
+  </SearchResultContainer>
 )
 
 export default SearchResult

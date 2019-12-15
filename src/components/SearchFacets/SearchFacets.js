@@ -35,14 +35,13 @@ const CategoryCheckbox = ({
 }
 
 const SearchFacets = ({
-  categories,
   collection,
-  page,
-  query,
   request,
-  setQueryParams,
-  sort,
+  searchParams,
+  setSearchParams,
 }) => {
+  const { categories, query, sort } = searchParams
+
   const handleChangeCategories = event => {
     const updatedCategories = event.target.checked
       ? categories.concat(event.target.value)
@@ -50,7 +49,7 @@ const SearchFacets = ({
 
     // Always reset to first page, so we don't end up on a page larger
     // than Math.ceil((results.length / pageSize)) when deselecting a category
-    setQueryParams({
+    setSearchParams({
       categories: updatedCategories,
       page: undefined,
       query,

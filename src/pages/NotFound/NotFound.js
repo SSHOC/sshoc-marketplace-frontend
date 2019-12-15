@@ -1,4 +1,5 @@
 import React from 'react'
+import 'styled-components/macro'
 import Container from '../../elements/Container/Container'
 import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'

@@ -5,17 +5,17 @@ import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Select from '../../elements/Select/Select'
-import { useQueryParams } from '../../utils'
+import { useSearchParams } from '../../utils'
 import { ITEM_CATEGORY } from '../../constants'
 
 const SearchForm = props => {
-  const [, setQueryParams] = useQueryParams()
+  const [, setSearchParams] = useSearchParams()
   const [category, setCategory] = useState('')
   const [query, setQuery] = useState('')
 
   const handleSubmit = event => {
     event.preventDefault()
-    setQueryParams(
+    setSearchParams(
       {
         categories: category,
         query,

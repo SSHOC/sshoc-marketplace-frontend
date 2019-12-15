@@ -10,6 +10,7 @@ import Link from '../../elements/Link/Link'
 import Spinner from '../../elements/Spinner/Spinner'
 import Text from '../../elements/Text/Text'
 import { REQUEST_STATUS } from '../../store/constants'
+import Markdown from '../Markdown/Markdown'
 import RelatedItems from '../RelatedItems/RelatedItems'
 
 const ItemContributors = ({ contributors }) => {
@@ -46,7 +47,6 @@ const ItemContributors = ({ contributors }) => {
               </span>
             </>
           ) : null}
-
           {i < contributors.length - 1 && ', '}
         </>
       ))}

@@ -17,7 +17,6 @@ const HomePage = () => {
   return (
     <Main
       css={{
-        // TODO: Proper media query, or use <img srcset /> or <picture />
         backgroundImage: `url(${
           window.devicePixelRatio >= 1 ? BackgroundImageHiDPI : BackgroundImage
         })`,
