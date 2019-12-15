@@ -9,7 +9,7 @@ import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
 import Placeholder from '../../elements/Placeholder/Placeholder'
 import Text from '../../elements/Text/Text'
-import { truncate } from '../../utils'
+import PlainText from '../PlainText/PainText'
 
 const MAX_DESCRIPTION_LENGTH = 400
 
@@ -86,7 +86,9 @@ const SearchResult = ({ result }) => (
         </Text>
       </Box>
       <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>
-        {truncate(result.description, { length: MAX_DESCRIPTION_LENGTH })}
+        <PlainText maxLength={MAX_DESCRIPTION_LENGTH}>
+          {result.description}
+        </PlainText>
       </Text>
       <Flex css={css({ justifyContent: 'flex-end' })}>
         <Link to={`/${result.category}s/${result.id}`}>Read more</Link>

@@ -16,8 +16,14 @@
     "react-scripts": "^3.3.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "rehype-react": "^4.0.1",
+    "remark-parse": "^7.0.2",
+    "remark-rehype": "^5.0.0",
+    "remark-stringify": "^7.0.4",
+    "strip-markdown": "^3.1.1",
     "styled-components": "^5.0.0-rc.2",
-    "typeface-poppins": "^0.0.72"
+    "typeface-poppins": "^0.0.72",
+    "unified": "^8.4.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",

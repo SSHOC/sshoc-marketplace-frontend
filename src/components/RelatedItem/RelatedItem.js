@@ -9,7 +9,7 @@ import Heading from '../../elements/Heading/Heading'
 import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
 import Text from '../../elements/Text/Text'
-import { truncate } from '../../utils'
+import PlainText from '../PlainText/PainText'
 
 const MAX_DESCRIPTION_LENGTH = 200
 
@@ -58,7 +58,9 @@ const RelatedItem = ({ item }) => (
       </Box>
 
       <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>
-        {truncate(item.description, { length: MAX_DESCRIPTION_LENGTH })}
+        <PlainText maxLength={MAX_DESCRIPTION_LENGTH}>
+          {item.description}
+        </PlainText>
       </Text>
     </Box>
   </Flex>
