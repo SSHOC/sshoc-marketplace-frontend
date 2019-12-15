@@ -91,7 +91,13 @@ const Dropdown = ({ className, links, size, variant }) => {
 
   if (links.length < 2) {
     return (
-      <Button as={Link} size={size} to={path} variant={variant}>
+      <Button
+        as={Link}
+        disabled={!path}
+        size={size}
+        to={path}
+        variant={variant}
+      >
         {label}
       </Button>
     )
@@ -102,7 +108,13 @@ const Dropdown = ({ className, links, size, variant }) => {
       {({ isOpen }) => (
         <>
           <ButtonGroup className={className} ref={anchorRef}>
-            <Button as={Link} size={size} to={path} variant={variant}>
+            <Button
+              as={Link}
+              disabled={!path}
+              size={size}
+              to={path}
+              variant={variant}
+            >
               {label}
             </Button>
             <DropdownButton
