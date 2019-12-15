@@ -9,15 +9,19 @@ const ItemSidebar = ({ resource }) => {
   if (!resource) return null
 
   const properties = resource.properties.reduce((acc, property) => {
-    acc[property.type.code] = property
+    const { code, label } = property.type
+    const value = property.value ?? property.concept?.label
+
+    const { values = [] } = acc[code] || {}
+
+    acc[code] = {
+      label,
+      values: value != null ? [...values, value] : values,
+    }
     return acc
   }, {})
 
-  // FIXME: Shouldn't those be required fields?
-  const type =
-    properties['object-type'] &&
-    properties['object-type'].concept &&
-    properties['object-type'].concept.label
+  const [type] = properties['object-type'].values
 
   const links = [
     {
@@ -50,12 +54,13 @@ const ItemSidebar = ({ resource }) => {
             return (
               <li css={css({ fontSize: 1 })} key={code}>
                 <span css={css({ color: 'muted', mr: 2 })}>
-                  {property.type.label}:
+                  {property.label}:
                 </span>
                 {/* FIXME: Is this correct? i.e. we either have freeform value, or concept.label? */}
-                {property.value ||
-                  (property.concept && property.concept.label) ||
-                  null}
+                {property.values
+                  .filter(Boolean)
+                  .sort()
+                  .join(', ')}
               </li>
             )
           })}
