@@ -43,7 +43,8 @@ const DropdownList = styled(MenuItems)(
     transition: 'box-shadow 0.2s ease-out',
     whiteSpace: 'nowrap',
     '&:focus, &:focus-within': {
-      boxShadow: 'outline',
+      boxShadow: theme =>
+        [theme.shadows.small, theme.shadows.outline].join(', '),
       outline: 'none',
       zIndex: 'focus',
     },

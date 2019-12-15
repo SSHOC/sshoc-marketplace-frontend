@@ -32,7 +32,8 @@ const Menu = styled('ul')(props =>
     transition: 'box-shadow 0.2s ease-out',
     whiteSpace: 'nowrap',
     '&:focus': {
-      boxShadow: 'outline',
+      boxShadow: theme =>
+        [theme.shadows.small, theme.shadows.outline].join(', '),
       outline: 'none',
       zIndex: 'focus',
     },
