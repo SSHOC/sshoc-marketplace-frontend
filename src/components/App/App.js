@@ -7,7 +7,6 @@ import Home from '../../pages/Home/Home'
 import NotFound from '../../pages/NotFound/NotFound'
 import PrivacyPolicy from '../../pages/PrivacyPolicy/PrivacyPolicy'
 import Search from '../../pages/Search/Search'
-import Solution from '../../pages/Solution/Solution'
 import Tool from '../../pages/Tool/Tool'
 import TrainingMaterial from '../../pages/TrainingMaterial/TrainingMaterial'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -24,7 +23,6 @@ const App = () => (
           <Route component={Dataset} path="/datasets/:id" />
           <Route component={PrivacyPolicy} path="/privacy-policy" />
           <Route component={Search} path="/search" />
-          <Route component={Solution} path="/solutions/:id" />
           <Route component={Tool} path="/tools/:id" />
           <Route component={TrainingMaterial} path="/training-materials/:id" />
           <Route component={NotFound} />

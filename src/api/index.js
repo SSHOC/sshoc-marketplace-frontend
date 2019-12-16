@@ -6,11 +6,6 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
     method: 'get',
     path: `${prefix}/datasets/${id}`,
   }),
-  getSolutionById: ({ id }) => ({
-    baseUrl,
-    method: 'get',
-    path: `${prefix}/solutions/${id}`,
-  }),
   getToolById: ({ id }) => ({
     baseUrl,
     method: 'get',

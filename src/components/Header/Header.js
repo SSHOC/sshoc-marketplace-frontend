@@ -96,9 +96,6 @@ const Header = () => (
               <NavLink to="/search?categories=dataset">Datasets</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/search?categories=solution">Solutions</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink to="/search?categories=tool">Tools</NavLink>
             </NavItem>
             <NavItem>

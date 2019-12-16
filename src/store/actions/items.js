@@ -18,22 +18,6 @@ export const fetchDataset = ({ id }) => ({
 })
 fetchDataset.toString = () => 'fetchDataset'
 
-export const fetchSolution = ({ id }) => ({
-  type: API_REQUEST,
-  payload: {
-    ...API.getSolutionById({ id }),
-  },
-  meta: {
-    next: FETCH_RESOURCE,
-    normalize: createNormalizer(),
-    request: {
-      name: 'fetchSolution',
-      query: { id },
-    },
-  },
-})
-fetchSolution.toString = () => 'fetchSolution'
-
 export const fetchTool = ({ id }) => ({
   type: API_REQUEST,
   payload: {
