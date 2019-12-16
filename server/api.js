@@ -86,6 +86,38 @@ api.get('/item-search', (req, res) => {
   })
 })
 
+api.get('/datasets', (req, res) => {
+  const perpage = parseInt(req.query.perpage, 10) || DEFAULT_PAGE_SIZE
+  const page = parseInt(req.query.page, 10) || 1
+
+  const allDatasets = Object.values(db).filter(item =>
+    ITEM_CATEGORIES.DATASETS.includes(item.category)
+  )
+
+  const datasets = allDatasets.slice((page - 1) * perpage, page * perpage)
+
+  res.send({
+    hits: allDatasets.length,
+    count: datasets.length,
+    perpage,
+    page,
+    pages: Math.ceil(allDatasets.length / perpage),
+    datasets,
+  })
+})
+
+api.get('/datasets/:id', (req, res) => {
+  const id = req.params.id
+
+  const item = db[id]
+
+  if (!item || !ITEM_CATEGORIES.DATASETS.includes(item.category)) {
+    return res.status(404).send('Not found')
+  }
+
+  return res.send(item)
+})
+
 api.get('/tools', (req, res) => {
   const perpage = parseInt(req.query.perpage, 10) || DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page, 10) || 1
