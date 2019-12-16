@@ -67,7 +67,7 @@ const SearchScreenContainer = ({ searchParams, setSearchParams }) => {
 }
 
 const SearchResultsCount = ({ count }) =>
-  count ? <span css={{ fontSize: 6 }}>({count})</span> : null
+  count ? <span css={css({ fontSize: 6 })}>({count})</span> : null
 
 const Sidebar = styled('aside')(
   css({
