@@ -1,19 +1,11 @@
 {
   "1": {
     "id": 1,
+    "category": "tool",
     "label": "Gephi",
-    "description": "Gephi is the leading visualization and exploration software for all kinds of graphs and networks.",
+    "version": null,
+    "description": "**Gephi** is the leading visualization and exploration software for all kinds of graphs and networks.",
     "contributors": [
-      {
-        "actor": {
-          "id": 4,
-          "name": "CESSDA",
-          "website": "https://www.cessda.eu/",
-          "email": "cessda@cessda.eu",
-          "affiliations": []
-        },
-        "role": { "code": "founder", "label": "Founder" }
-      },
       {
         "actor": {
           "id": 5,
@@ -30,16 +22,40 @@
             }
           ]
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
+      },
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "ord": 1,
+        "role": {
+          "code": "founder",
+          "label": "Founder"
+        }
       }
     ],
     "properties": [
       {
         "id": 1,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -60,34 +76,20 @@
       },
       {
         "id": 2,
-        "type": {
-          "code": "ease-of-use",
-          "label": "Ease of use",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "Moderate",
-          "vocabulary": {
-            "code": "ease-of-use",
-            "label": "Ease of Use Concept Scheme",
-            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "Moderate",
-          "notation": "Moderate",
-          "definition": "The product is moderate to use by its intended users.",
-          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Moderate",
-          "relatedConcepts": null
-        }
-      },
-      {
-        "id": 3,
+        "ord": 1,
         "type": {
           "code": "activity",
           "label": "Activity",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "nemo-activity-type",
+              "label": "NeMO Concept Scheme"
+            },
+            {
+              "code": "tadirah-activity",
+              "label": "TaDiRAH Activities"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -107,21 +109,92 @@
         }
       },
       {
-        "id": 4,
+        "id": 3,
+        "ord": 2,
         "type": {
           "code": "material",
           "label": "Material",
-          "allowedVocabularies": null
+          "allowedVocabularies": []
         },
         "value": "oil",
         "concept": null
       }
     ],
-    "category": "tool"
+    "accessibleAt": "https://gephi.org/",
+    "relatedItems": [
+      {
+        "id": 4,
+        "category": "training-material",
+        "label": "Gephi: an open source software for exploring and manipulating networks.",
+        "description": "",
+        "relation": {
+          "code": "is-documented-by",
+          "label": "Is documented by"
+        }
+      },
+      {
+        "id": 5,
+        "category": "training-material",
+        "label": "Introduction to GEPHI",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "relation": {
+          "code": "is-documented-by",
+          "label": "Is documented by"
+        }
+      },
+      {
+        "id": 3,
+        "category": "tool",
+        "label": "WebSty",
+        "description": "Stylometric analysis tool.",
+        "relation": {
+          "code": "is-related-to",
+          "label": "Is related to"
+        }
+      }
+    ],
+    "informationContributors": [
+      {
+        "id": 2,
+        "username": "Oleg M. Erg"
+      },
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [
+      {
+        "id": 1,
+        "body": "Gephi also appears in Project Bamboo's DiRT, a registry of digital tools suitable for academic research. DiRT contains a wide range of tools and software searchable by task, such as annotation, content management, collaborative research, or authoring. It is an excellent resource for Digital Humanists seeking the right tool for the task at hand.",
+        "creator": {
+          "id": 3,
+          "username": "Amy Domański"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      },
+      {
+        "id": 2,
+        "body": "View Gephi in DiRT: <http://dirt.projectbamboo.org/resources/gephi>\n\nView the full site: <http://dirt.projectbamboo.org>\n",
+        "creator": {
+          "id": 1,
+          "username": "Olga Yones"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      }
+    ],
+    "olderVersions": [],
+    "newerVersions": [],
+    "repository": "https://github.com/gephi/gephi"
   },
   "2": {
     "id": 2,
+    "category": "tool",
     "label": "Stata",
+    "version": null,
     "description": "Stata is the solution for your data science needs. Obtain and manipulate data. Explore. Visualize. Model. Make inferences. Collect your results into reproducible reports.",
     "contributors": [
       {
@@ -132,16 +205,26 @@
           "email": null,
           "affiliations": []
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
       }
     ],
     "properties": [
       {
-        "id": 5,
+        "id": 4,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -161,35 +244,21 @@
         }
       },
       {
-        "id": 6,
-        "type": {
-          "code": "ease-of-use",
-          "label": "Ease of use",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "Easy",
-          "vocabulary": {
-            "code": "ease-of-use",
-            "label": "Ease of Use Concept Scheme",
-            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "Easy",
-          "notation": "Easy",
-          "definition": "The product is easy to use by its intended users.",
-          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Easy",
-          "relatedConcepts": null
-        }
-      },
-      {
-        "id": 7,
+        "id": 5,
+        "ord": 1,
         "type": {
           "code": "activity",
           "label": "Activity",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "nemo-activity-type",
+              "label": "NeMO Concept Scheme"
+            },
+            {
+              "code": "tadirah-activity",
+              "label": "TaDiRAH Activities"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -209,21 +278,36 @@
         }
       },
       {
-        "id": 8,
+        "id": 6,
+        "ord": 2,
         "type": {
           "code": "material",
           "label": "Material",
-          "allowedVocabularies": null
+          "allowedVocabularies": []
         },
         "value": "Lorem ipsum",
         "concept": null
       }
     ],
-    "category": "tool"
+    "accessibleAt": "https://www.stats.com/",
+    "relatedItems": [],
+    "informationContributors": [
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [],
+    "olderVersions": [],
+    "newerVersions": [],
+    "repository": null
   },
   "3": {
     "id": 3,
+    "category": "tool",
     "label": "WebSty",
+    "version": null,
     "description": "Stylometric analysis tool.",
     "contributors": [
       {
@@ -234,7 +318,11 @@
           "email": null,
           "affiliations": []
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
       },
       {
         "actor": {
@@ -252,16 +340,26 @@
             }
           ]
         },
-        "role": { "code": "contributor", "label": "Contributor" }
+        "ord": 1,
+        "role": {
+          "code": "contributor",
+          "label": "Contributor"
+        }
       }
     ],
     "properties": [
       {
-        "id": 9,
+        "id": 7,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -279,49 +377,65 @@
           "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/service",
           "relatedConcepts": null
         }
-      },
+      }
+    ],
+    "accessibleAt": "http://ws.clarin-pl.eu/websty.shtml?en",
+    "relatedItems": [
       {
-        "id": 10,
-        "type": {
-          "code": "ease-of-use",
-          "label": "Ease of use",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "Easy",
-          "vocabulary": {
-            "code": "ease-of-use",
-            "label": "Ease of Use Concept Scheme",
-            "description": "Ease of use is a straightforward concept scheme – it's a measurement of how easy the product is to use by its intended users.",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "Easy",
-          "notation": "Easy",
-          "definition": "The product is easy to use by its intended users.",
-          "uri": "http://sshopencloud.eu/marketplaceontology/ease-of-use/instances/Easy",
-          "relatedConcepts": null
+        "id": 1,
+        "category": "tool",
+        "label": "Gephi",
+        "description": "**Gephi** is the leading visualization and exploration software for all kinds of graphs and networks.",
+        "relation": {
+          "code": "relates-to",
+          "label": "Relates to"
         }
       }
     ],
-    "category": "tool"
+    "informationContributors": [
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      },
+      {
+        "id": 2,
+        "username": "Oleg M. Erg"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [
+      {
+        "id": 3,
+        "body": "Texts similarity analysis",
+        "creator": {
+          "id": 1,
+          "username": "Olga Yones"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      },
+      {
+        "id": 4,
+        "body": "I like it!",
+        "creator": {
+          "id": 3,
+          "username": "Amy Domański"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      }
+    ],
+    "olderVersions": [],
+    "newerVersions": [],
+    "repository": null
   },
   "4": {
     "id": 4,
+    "category": "training-material",
     "label": "Gephi: an open source software for exploring and manipulating networks.",
+    "version": null,
     "description": "",
     "contributors": [
-      {
-        "actor": {
-          "id": 4,
-          "name": "CESSDA",
-          "website": "https://www.cessda.eu/",
-          "email": "cessda@cessda.eu",
-          "affiliations": []
-        },
-        "role": { "code": "author", "label": "Author" }
-      },
       {
         "actor": {
           "id": 5,
@@ -338,16 +452,40 @@
             }
           ]
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
+      },
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "ord": 1,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
       }
     ],
     "properties": [
       {
-        "id": 11,
+        "id": 8,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -367,11 +505,17 @@
         }
       },
       {
-        "id": 12,
+        "id": 9,
+        "ord": 1,
         "type": {
           "code": "object-format",
           "label": "Object format",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "iana-mime-type",
+              "label": "IANA mime/type"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -391,11 +535,17 @@
         }
       },
       {
-        "id": 13,
+        "id": 10,
+        "ord": 2,
         "type": {
           "code": "language",
-          "label": "Languege",
-          "allowedVocabularies": null
+          "label": "Language",
+          "allowedVocabularies": [
+            {
+              "code": "iso-639-3",
+              "label": "ISO 639-3"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -413,85 +563,54 @@
           "uri": "http://iso639-3.sil.org/code/eng",
           "relatedConcepts": null
         }
-      },
+      }
+    ],
+    "accessibleAt": "",
+    "relatedItems": [
       {
-        "id": 14,
-        "type": {
-          "code": "object-type",
-          "label": "Object type",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "tutorial",
-          "vocabulary": {
-            "code": "object-type",
-            "label": "Object Type Concept Scheme",
-            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "Tutorial",
-          "notation": "Tutorial",
-          "definition": "Tutorial",
-          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/tutorial",
-          "relatedConcepts": null
-        }
-      },
-      {
-        "id": 15,
-        "type": {
-          "code": "object-format",
-          "label": "Object format",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "video/mp4",
-          "vocabulary": {
-            "code": "iana-mime-type",
-            "label": "IANA mime/type",
-            "description": "[RFC2046] specifies that Media Types (formerly known as MIME types) and Media Subtypes will be assigned and listed by the IANA.",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "video/mp4",
-          "notation": "video/mp4",
-          "definition": "MPEG-4 Video file",
-          "uri": "http://www.iana.org/assignments/media-types/video/mp4",
-          "relatedConcepts": null
-        }
-      },
-      {
-        "id": 16,
-        "type": {
-          "code": "activity",
-          "label": "Activity",
-          "allowedVocabularies": null
-        },
-        "value": null,
-        "concept": {
-          "code": "ActivityType-Collecting",
-          "vocabulary": {
-            "code": "nemo-activity-type",
-            "label": "NeMO Concept Scheme",
-            "description": "",
-            "accessibleAt": null,
-            "concepts": null
-          },
-          "label": "3.1 Collecting",
-          "notation": "Collecting",
-          "definition": "Collecting refers to the Activity Type of systematically and methodically acquiring and bringing together specific objects of a particular interest, in order to build groups of them (collections).",
-          "uri": "http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting",
-          "relatedConcepts": null
+        "id": 1,
+        "category": "tool",
+        "label": "Gephi",
+        "description": "**Gephi** is the leading visualization and exploration software for all kinds of graphs and networks.",
+        "relation": {
+          "code": "documents",
+          "label": "Documents"
         }
       }
     ],
-    "category": "training-material"
+    "informationContributors": [
+      {
+        "id": 2,
+        "username": "Oleg M. Erg"
+      },
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [
+      {
+        "id": 5,
+        "body": "Lorem ipsum ...",
+        "creator": {
+          "id": 1,
+          "username": "Olga Yones"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      }
+    ],
+    "olderVersions": [],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
   },
-  "5": {
+  "7": {
     "id": 7,
+    "category": "training-material",
     "label": "Introduction to GEPHI",
+    "version": "3.0",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     "contributors": [
       {
@@ -502,16 +621,26 @@
           "email": null,
           "affiliations": []
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
       }
     ],
     "properties": [
       {
-        "id": 20,
+        "id": 17,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -531,11 +660,17 @@
         }
       },
       {
-        "id": 21,
+        "id": 18,
+        "ord": 1,
         "type": {
           "code": "object-format",
           "label": "Object format",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "iana-mime-type",
+              "label": "IANA mime/type"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -555,11 +690,21 @@
         }
       },
       {
-        "id": 22,
+        "id": 19,
+        "ord": 2,
         "type": {
           "code": "activity",
           "label": "Activity",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "nemo-activity-type",
+              "label": "NeMO Concept Scheme"
+            },
+            {
+              "code": "tadirah-activity",
+              "label": "TaDiRAH Activities"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -579,23 +724,70 @@
         }
       }
     ],
-    "category": "training-material"
+    "accessibleAt": "https://www.youtube.com/watch?v=2FqM4gKeNO4",
+    "relatedItems": [],
+    "informationContributors": [
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [
+      {
+        "id": 7,
+        "body": "Thanks for sharing this - very useful!",
+        "creator": {
+          "id": 3,
+          "username": "Amy Domański"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      },
+      {
+        "id": 8,
+        "body": "I was looking to do something graph theory related for my senior capstone, so it was kinda discouraging to hear *GePhi* isn't good for analysis. Can you suggest any free Windows-friendly programs that can do analysis for me? (Connectivity, diameter, etc.)",
+        "creator": {
+          "id": 1,
+          "username": "Olga Yones"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      },
+      {
+        "id": 9,
+        "body": "Awesome. Thank you!",
+        "creator": {
+          "id": 2,
+          "username": "Oleg M. Erg"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      }
+    ],
+    "olderVersions": [
+      {
+        "id": 6,
+        "label": "Introduction to GEPHI",
+        "version": "2.0"
+      },
+      {
+        "id": 5,
+        "label": "Introduction to GEPHI",
+        "version": "1.0"
+      }
+    ],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
   },
-  "6": {
+  "8": {
     "id": 8,
+    "category": "training-material",
     "label": "Webinar on DH",
+    "version": null,
     "description": "",
     "contributors": [
-      {
-        "actor": {
-          "id": 4,
-          "name": "CESSDA",
-          "website": "https://www.cessda.eu/",
-          "email": "cessda@cessda.eu",
-          "affiliations": []
-        },
-        "role": { "code": "author", "label": "Author" }
-      },
       {
         "actor": {
           "id": 5,
@@ -612,16 +804,40 @@
             }
           ]
         },
-        "role": { "code": "author", "label": "Author" }
+        "ord": 0,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
+      },
+      {
+        "actor": {
+          "id": 4,
+          "name": "CESSDA",
+          "website": "https://www.cessda.eu/",
+          "email": "cessda@cessda.eu",
+          "affiliations": []
+        },
+        "ord": 1,
+        "role": {
+          "code": "author",
+          "label": "Author"
+        }
       }
     ],
     "properties": [
       {
-        "id": 23,
+        "id": 20,
+        "ord": 0,
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -641,11 +857,30 @@
         }
       }
     ],
-    "category": "training-material"
+    "accessibleAt": "",
+    "relatedItems": [],
+    "informationContributors": [
+      {
+        "id": 2,
+        "username": "Oleg M. Erg"
+      },
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [],
+    "olderVersions": [],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
   },
   "9": {
     "id": 9,
+    "category": "dataset",
     "label": "Austin Crime Data",
+    "version": null,
     "description": "This dataset includes Part 1 crimes for 2014 and 2015. Data is provided by the Austin Police Department and may differ from official APD crime data due to the variety of reporting and collection methods used.",
     "contributors": [
       {
@@ -684,7 +919,12 @@
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -708,8 +948,13 @@
         "ord": 1,
         "type": {
           "code": "language",
-          "label": "Languege",
-          "allowedVocabularies": null
+          "label": "Language",
+          "allowedVocabularies": [
+            {
+              "code": "iso-639-3",
+              "label": "ISO 639-3"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -729,11 +974,48 @@
         }
       }
     ],
-    "category": "dataset"
+    "accessibleAt": "https://console.cloud.google.com/marketplace/details/city-of-austin/austin-crime",
+    "relatedItems": [
+      {
+        "id": 10,
+        "category": "dataset",
+        "label": "Consortium of European Social Science Data Archives",
+        "description": "The CESSDA Data Catalogue contains the metadata of all data in the holdings of CESSDA'a service providers. It is a one-stop-shop for search and discovery, enabling effective access to European social science research data.",
+        "relation": {
+          "code": "is-mentioned-in",
+          "label": "Is mentioned in"
+        }
+      }
+    ],
+    "informationContributors": [
+      {
+        "id": 3,
+        "username": "Amy Domański"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [
+      {
+        "id": 10,
+        "body": "Lorem ipsum ...",
+        "creator": {
+          "id": 1,
+          "username": "Olga Yones"
+        },
+        "dateCreated": "2019-12-16 11:49 UTC",
+        "dateLastUpdated": null
+      }
+    ],
+    "olderVersions": [],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
   },
   "10": {
     "id": 10,
+    "category": "dataset",
     "label": "Consortium of European Social Science Data Archives",
+    "version": null,
     "description": "The CESSDA Data Catalogue contains the metadata of all data in the holdings of CESSDA'a service providers. It is a one-stop-shop for search and discovery, enabling effective access to European social science research data.",
     "contributors": [
       {
@@ -758,7 +1040,12 @@
         "type": {
           "code": "object-type",
           "label": "Object type",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -783,7 +1070,16 @@
         "type": {
           "code": "activity",
           "label": "Activity",
-          "allowedVocabularies": null
+          "allowedVocabularies": [
+            {
+              "code": "nemo-activity-type",
+              "label": "NeMO Concept Scheme"
+            },
+            {
+              "code": "tadirah-activity",
+              "label": "TaDiRAH Activities"
+            }
+          ]
         },
         "value": null,
         "concept": {
@@ -803,6 +1099,79 @@
         }
       }
     ],
-    "category": "dataset"
+    "accessibleAt": "https://datacatalogue.cessda.eu/",
+    "relatedItems": [
+      {
+        "id": 9,
+        "category": "dataset",
+        "label": "Austin Crime Data",
+        "description": "This dataset includes Part 1 crimes for 2014 and 2015. Data is provided by the Austin Police Department and may differ from official APD crime data due to the variety of reporting and collection methods used.",
+        "relation": {
+          "code": "mentions",
+          "label": "Mentions"
+        }
+      }
+    ],
+    "informationContributors": [
+      {
+        "id": 1,
+        "username": "Olga Yones"
+      }
+    ],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [],
+    "olderVersions": [],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
+  },
+  "11": {
+    "id": 11,
+    "category": "dataset",
+    "label": "Test dataset with markdown description",
+    "version": null,
+    "description": "Description\n\nLorem *ipsum* `class` [example](http://example.com)\n\n  * **Item 1**\n  *\n\n  |    Element    |  Abbreviation   |     Expansion     |\n  |---------------|-----------------|-------------------|\n  | Abbreviation  | `.abbreviation` | `*[]:`            |\n  | Code fence    | `.codefence`    | ``` ... ``` |\n  | Explicit link | `.link`         | `[]()`            |\n\n```js\nconst hello = 'world';\n```\n",
+    "contributors": [],
+    "properties": [
+      {
+        "id": 25,
+        "ord": 0,
+        "type": {
+          "code": "object-type",
+          "label": "Object type",
+          "allowedVocabularies": [
+            {
+              "code": "object-type",
+              "label": "Object Type Concept Scheme"
+            }
+          ]
+        },
+        "value": null,
+        "concept": {
+          "code": "dataset",
+          "vocabulary": {
+            "code": "object-type",
+            "label": "Object Type Concept Scheme",
+            "description": "Object Type defines a category (type) of an object and its subtype in SSH Open Cloud Marketplace.",
+            "accessibleAt": null,
+            "concepts": null
+          },
+          "label": "Dataset",
+          "notation": "Dataset",
+          "definition": "Dataset",
+          "uri": "http://sshopencloud.eu/marketplaceontology/object-type/instances/dataset",
+          "relatedConcepts": null
+        }
+      }
+    ],
+    "accessibleAt": null,
+    "relatedItems": [],
+    "informationContributors": [],
+    "lastInfoUpdate": "2019-12-16 11:49 UTC",
+    "comments": [],
+    "olderVersions": [],
+    "newerVersions": [],
+    "dateCreated": null,
+    "dateLastUpdated": null
   }
 }
