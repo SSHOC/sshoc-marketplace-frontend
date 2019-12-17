@@ -68,7 +68,7 @@ test:e2e:
   services:
     - docker:dind
   tags:
-    - sshoc-backend
+    - sshoc-frontend
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_TLS_CERTDIR: ''
