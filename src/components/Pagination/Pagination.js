@@ -1,112 +1,163 @@
 import css from '@styled-system/css'
-import React from 'react'
-import 'styled-components/macro'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components/macro'
 import Box from '../../elements/Box/Box'
 import Chevron from '../../elements/Chevron/Chevron'
 import Flex from '../../elements/Flex/Flex'
+import Input from '../../elements/Input/Input'
 import Link from '../../elements/Link/Link'
+import { range } from '../../utils'
 
-// const range = n => [...Array(n).keys()]
+const MAX_PAGES = 10
 
-// const MAX_PAGES = 10
+const getPages = (currentPage, totalPages, maxPages = MAX_PAGES) => {
+  if (!totalPages || totalPages < 2) return []
 
-// const getPages = (currentPage, totalPages) => {
-//   let first = currentPage - MAX_PAGES / 2
-//   let last = currentPage + MAX_PAGES / 2
+  let firstPage = 1
+  let lastPage = totalPages
 
-//   if (first < 1) {
-//     last = last + (1 - first)
-//     first = 1
-//   }
-//   if (last > totalPages) {
-//     first = first - (last - totalPages)
-//     last = totalPages
-//   }
-//   if (first < 1) {
-//     first = 1
-//   }
+  if (totalPages > maxPages) {
+    const maxPagesBeforeCurrentPage = Math.floor(maxPages / 2)
+    const maxPagesAfterCurrentPage = Math.ceil(maxPages / 2)
 
-//   return range(last + 1 - first).map(page => page + first)
-// }
+    if (currentPage <= maxPagesBeforeCurrentPage) {
+      lastPage = maxPages
+    } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
+      firstPage = totalPages - maxPages + 1
+    } else {
+      firstPage = currentPage - maxPagesBeforeCurrentPage
+      lastPage = currentPage + maxPagesAfterCurrentPage
+    }
+  }
 
-// const Input = ({ currentPage }) => {
-//   const [page, setPage] = React.useState(currentPage)
+  return range(lastPage + 1 - firstPage).map(page => page + firstPage)
+}
 
-//   return (
-//     <form
-//       onSubmit={event => {
-//         event.preventDefault()
-//       }}
-//     >
-//       <input
-//         // disabled={(currentPage || 1) < 2}
-//         css={css({
-//           bg: 'transparent',
-//           border: 'none',
-//           borderBottomColor: 'muted',
-//           borderBottomStyle: 'solid',
-//           borderTopColor: 'transparent',
-//           borderTopStyle: 'solid',
-//           borderWidth: 1,
-//           color: 'primary',
-//           mx: 4,
-//           px: 1,
-//           textAlign: 'right',
-//           width: '3em',
-//           '&::placeholder': {
-//             color: 'grey.600',
-//           },
-//           '&[disabled]': {
-//             pointerEvents: 'none',
-//           },
-//           '&:hover': {
-//             borderBottomColor: 'primary',
-//             borderWidth: 2,
-//             color: 'primary',
-//           },
-//           '&:focus': {
-//             borderBottomColor: 'muted',
-//             borderWidth: 2,
-//             color: 'text',
-//           },
-//         })}
-//         placeholder={currentPage}
-//         value={page}
-//       />
-//       )
-//     </form>
-//   )
-// }
+const PageInput = ({ currentPage, disabled, onPageChange, totalPages }) => {
+  const [page, setPage] = useState(currentPage)
 
-const Pagination = ({ currentPage, onPageChange, totalPages, ...props }) => (
-  <Box as="nav" {...props}>
-    <Flex css={css({ listStyle: 'none', m: 0, p: 0 })} as="ol">
-      <li>
-        <Link
-          as="button"
-          css={css({ alignItems: 'center', display: 'inline-flex', mr: 2 })}
-          rel="prev"
-          disabled={(currentPage || 1) < 2}
-          onClick={() => onPageChange(currentPage - 1)}
-          type="button"
-        >
-          <Chevron direction="left" /> Prev
-        </Link>
-      </li>
-      <li>
-        <Link
-          as="button"
-          css={css({ alignItems: 'center', display: 'inline-flex', ml: 2 })}
-          disabled={(currentPage || 1) >= totalPages || !totalPages}
-          rel="next"
-          onClick={() => onPageChange(currentPage + 1)}
-          type="button"
-        >
-          Next <Chevron direction="right" />
-        </Link>
-      </li>
-    </Flex>
-  </Box>
+  useEffect(() => {
+    setPage(currentPage)
+  }, [currentPage])
+
+  const handleChange = event => {
+    const selectedPage = parseInt(event.target.value, 10)
+
+    // TODO: Should we prevent entering invalid page numbers, i.e. > totalPages?
+    if (Number.isInteger(selectedPage)) {
+      setPage(selectedPage)
+    }
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+
+    if (page > totalPages) {
+      onPageChange(totalPages)
+    } else if (page < 0) {
+      onPageChange(1)
+    } else {
+      onPageChange(page)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Input
+        disabled={disabled}
+        css={css({
+          textAlign: 'right',
+          width: '3em',
+        })}
+        onChange={handleChange}
+        placeholder={currentPage}
+        value={page}
+      />
+    </form>
+  )
+}
+
+const LinkButton = styled(Link).attrs({ as: 'button', type: 'button' })(props =>
+  css({
+    alignItems: 'center',
+    borderBottomColor: props.active ? 'primary' : 'transparent',
+    borderBottomStyle: 'solid',
+    borderBottomWidth: 2,
+    display: 'inline-flex',
+    mx: 2,
+  })
 )
+
+const Pagination = ({
+  currentPage,
+  onPageChange,
+  totalPages,
+  variant,
+  ...props
+}) => {
+  if (currentPage < 1) {
+    currentPage = 1
+  } else if (currentPage > totalPages) {
+    currentPage = totalPages
+  }
+
+  return (
+    <Box aria-label="Search results pages" as="nav" {...props}>
+      <Flex
+        css={css({ alignItems: 'center', listStyle: 'none', m: 0, p: 0 })}
+        as="ol"
+      >
+        <li>
+          <LinkButton
+            aria-label="Previous page"
+            disabled={currentPage < 2}
+            onClick={() => {
+              if (currentPage > 1) {
+                onPageChange(currentPage - 1)
+              }
+            }}
+            rel="prev"
+          >
+            <Chevron direction="left" /> Prev
+          </LinkButton>
+        </li>
+        {variant === 'links' ? (
+          getPages(currentPage, totalPages).map(page => (
+            <li key={page}>
+              <LinkButton
+                active={currentPage === page}
+                aria-label={`Page ${page}`}
+                onClick={() => onPageChange(page)}
+              >
+                {page}
+              </LinkButton>
+            </li>
+          ))
+        ) : variant === 'input' ? (
+          <PageInput
+            currentPage={currentPage}
+            disabled={!totalPages || totalPages < 2}
+            onPageChange={onPageChange}
+            totalPages={totalPages}
+          />
+        ) : null}
+        <li>
+          <LinkButton
+            aria-label="Next page"
+            disabled={currentPage >= totalPages || !totalPages}
+            onClick={() => {
+              if (totalPages && totalPages > currentPage) {
+                onPageChange(currentPage + 1)
+              }
+            }}
+            rel="next"
+          >
+            Next <Chevron direction="right" />
+          </LinkButton>
+        </li>
+      </Flex>
+    </Box>
+  )
+}
 
 export default Pagination

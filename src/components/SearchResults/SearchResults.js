@@ -29,7 +29,6 @@ const SearchResultsHeader = ({
 
   return (
     <Flex
-      as="form"
       css={css({
         alignItems: 'center',
         height: 80,
@@ -46,6 +45,7 @@ const SearchResultsHeader = ({
         currentPage={page}
         onPageChange={onPageChange}
         totalPages={info.pages}
+        variant="input"
       />
     </Flex>
   )
@@ -141,6 +141,7 @@ const SearchResults = ({
           window.scrollTo(0, 0)
         }}
         totalPages={request.info.pages}
+        variant="links"
       />
     </Stack>
   )
