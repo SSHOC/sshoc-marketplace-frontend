@@ -1,7 +1,9 @@
-version: "2"
+version: '2'
 
 services:
   frontend:
+    image: registry.gitlab.com/stefan.probst/ci-test/frontend:latest
+    container_name: sshoc-marketplace-frontend-frontend
     build:
       context: .
       dockerfile: Dockerfile
