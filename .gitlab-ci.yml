@@ -72,28 +72,30 @@ test:e2e:
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_TLS_CERTDIR: ''
-    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $DOCKER_RELEASE_IMAGE || true
-    - docker build --cache-from $DOCKER_RELEASE_IMAGE --tag
-      $DOCKER_CURRENT_IMAGE --tag $DOCKER_RELEASE_IMAGE .
+    - docker build --cache-from $DOCKER_RELEASE_IMAGE --build-arg
+      REACT_APP_API_BASE_URL --tag $DOCKER_CURRENT_IMAGE --tag
+      $DOCKER_RELEASE_IMAGE .
     - docker push $DOCKER_CURRENT_IMAGE
     - docker push $DOCKER_RELEASE_IMAGE
 
-package:master:
+package:master:acdh:
   stage: package
   extends: .docker
   variables:
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_SHORT_SHA
+    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   only:
     - master
 
-package:tags:
+package:tags:acdh:
   stage: package
   extends: .docker
   variables:
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
+    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   only:
     - tags
