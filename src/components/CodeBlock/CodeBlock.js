@@ -13,7 +13,7 @@ const CodeBlock = ({ children, className }) => {
   return (
     <Highlight
       {...defaultProps}
-      code={children.trim()}
+      code={children.join('').trim()}
       language={language}
       theme={theme}
     >

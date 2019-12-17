@@ -11,6 +11,7 @@ const processor = unified()
   .use(stringify)
 
 const PlainText = ({ children, maxLength }) => {
+  // FIXME: check if rendering sync w/ processor.processSync is less jumpy
   const [plainText, setPlainText] = useState(null)
 
   useEffect(() => {

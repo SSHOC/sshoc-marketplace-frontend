@@ -6350,7 +6350,7 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
-detab@^2.0.0:
+detab@^2.0.0, detab@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/detab/-/detab-2.0.2.tgz#074970d1a807b045d0258a4235df5928dd683561"
   integrity sha512-Q57yPrxScy816TTE1P/uLRXLDKjXhvYTbfxS/e6lPD+YrqghbsMlGB9nQzj/zVtSPaF0DFPSdO916EWO4sQUyQ==
@@ -15872,6 +15872,11 @@ unist-builder@^1.0.1:
   integrity sha512-v6xbUPP7ILrT15fHGrNyHc1Xda8H3xVhP7/HAIotHOhVPjH5dCXA097C3Rry1Q2O+HbOLCao4hfPB+EYEjHgVg==
   dependencies:
     object-assign "^4.1.0"
+
+unist-builder@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/unist-builder/-/unist-builder-2.0.2.tgz#f24abd96f703925f03df175c1e4143f79e348839"
+  integrity sha512-I4TpMKqInirL3CG23f1bZyGE/UJecAYHcv586XMLqIkC0iUkI1hi+WZENoaKwdguC0O8nDaYRhHtWjuSjN4HDw==
 
 unist-util-generated@^1.1.0:
   version "1.1.5"
