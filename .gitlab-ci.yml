@@ -72,6 +72,7 @@ test:e2e:
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_TLS_CERTDIR: ''
+    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
