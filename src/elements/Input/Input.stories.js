@@ -6,3 +6,5 @@ export default {
 }
 
 export const basic = () => <Input placeholder="Placeholder" />
+
+export const disabled = () => <Input disabled placeholder="Placeholder" />

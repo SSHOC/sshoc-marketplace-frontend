@@ -28,6 +28,13 @@ const Input = styled('input')(
     '&:invalid, &:required': {
       borderColor: 'highlight',
     },
+    '&[disabled]': {
+      color: 'subtle',
+      pointerEvents: 'none',
+    },
+    '&[disabled]::placeholder': {
+      color: 'subtle',
+    },
   })
 )
 
