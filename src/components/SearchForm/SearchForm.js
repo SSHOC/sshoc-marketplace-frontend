@@ -11,7 +11,7 @@ import { ITEM_CATEGORY } from '../../constants'
 const categories = [
   { label: 'All Categories', value: '' },
   ...Object.entries(ITEM_CATEGORY).map(([value, label]) => ({
-    label,
+    label: `${label}s`,
     value,
   })),
 ]
