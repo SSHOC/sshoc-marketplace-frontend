@@ -31,7 +31,7 @@ const DatasetPage = () => {
           { label: 'Home', value: '/' },
           {
             label: 'Datasets',
-            value: '/search?categories=dataset',
+            value: '/search?categories=dataset&sort=label',
           },
           { label: `Details` },
         ]}

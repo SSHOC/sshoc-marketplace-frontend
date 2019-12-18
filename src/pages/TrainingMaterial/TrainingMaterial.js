@@ -31,7 +31,7 @@ const TrainingMaterialPage = () => {
           { label: 'Home', value: '/' },
           {
             label: 'Training Materials',
-            value: '/search?categories=training-material',
+            value: '/search?categories=training-material&sort=label',
           },
           { label: `Details` },
         ]}

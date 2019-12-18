@@ -29,7 +29,7 @@ const ToolPage = () => {
       <Screen
         breadcrumbs={[
           { label: 'Home', value: '/' },
-          { label: 'Tools', value: '/search?categories=tool' },
+          { label: 'Tools', value: '/search?categories=tool&sort=label' },
           { label: `Details` },
         ]}
         setSearchParams={setSearchParams}
