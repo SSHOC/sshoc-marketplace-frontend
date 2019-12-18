@@ -1,5 +1,5 @@
 import detab from 'detab'
-import { createElement, Fragment, useEffect, useState } from 'react'
+import { createElement, Fragment } from 'react'
 import rehypeReact from 'rehype-react'
 import markdown from 'remark-parse'
 import remark2rehype from 'remark-rehype'
@@ -47,16 +47,9 @@ const processor = unified()
   // .use(sanitize)
   .use(rehypeReact, { components, createElement, Fragment })
 
+// TODO: should we cache plaintext and rendered markdown descriptions in redux
+// (and possibly immediately process them on fetch)?
 const Markdown = ({ children }) => {
-  // FIXME: check if rendering sync w/ processor.processSync is less jumpy
-  const [markdown, setMarkdown] = useState(null)
-
-  useEffect(() => {
-    processor.process(children).then(processed => {
-      setMarkdown(processed.contents)
-    })
-  }, [children])
-
-  return markdown
+  return processor.processSync(children).contents
 }
 export default Markdown

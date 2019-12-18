@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import markdown from 'remark-parse'
 import stringify from 'remark-stringify'
 import strip from 'strip-markdown'
@@ -10,21 +9,12 @@ const processor = unified()
   .use(strip)
   .use(stringify)
 
+// TODO: should we cache plaintext and rendered markdown descriptions in redux
+// (and possibly immediately process them on fetch)?
 const PlainText = ({ children, maxLength }) => {
-  // FIXME: check if rendering sync w/ processor.processSync is less jumpy
-  const [plainText, setPlainText] = useState(null)
+  const plainText = String(processor.processSync(children))
 
-  useEffect(() => {
-    processor.process(children).then(processed => {
-      if (maxLength) {
-        setPlainText(truncate(String(processed), { length: maxLength }))
-      } else {
-        setPlainText(String(processed))
-      }
-    })
-  }, [children, maxLength])
-
-  return plainText
+  return maxLength ? truncate(plainText, { length: maxLength }) : plainText
 }
 
 export default PlainText
