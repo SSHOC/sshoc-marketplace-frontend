@@ -91,6 +91,7 @@ export const theme = {
   sizes: {
     container: 1600,
     narrow: 1000,
+    row: 80,
     sidebar: 300,
     wide: 1900,
   },
