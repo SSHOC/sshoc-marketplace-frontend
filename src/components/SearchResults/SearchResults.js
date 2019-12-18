@@ -1,6 +1,7 @@
 import css from '@styled-system/css'
 import React from 'react'
 import 'styled-components/macro'
+import { SORT_FIELDS } from '../../constants'
 import Centered from '../../elements/Centered/Centered'
 import Flex from '../../elements/Flex/Flex'
 import Select from '../../elements/Select/Select'
@@ -13,43 +14,47 @@ import SearchResult, {
   SearchResultPlaceholder,
 } from '../SearchResult/SearchResult'
 
+const sortFields = Object.entries(SORT_FIELDS).map(([value, label]) => ({
+  value,
+  label: `Sort by ${label}`,
+}))
+
+const SortSelect = ({ onSortChange, sort }) => {
+  const currentSortField = sortFields.find(field => field.value === sort)
+
+  return (
+    <Select
+      css={{ minWidth: 265 }}
+      items={sortFields}
+      onChange={onSortChange}
+      selectedItem={currentSortField}
+    />
+  )
+}
+
 const SearchResultsHeader = ({
   info,
   onPageChange,
   onSortChange,
   page,
   sort,
-}) => {
-  const sortFields = [
-    { value: '', label: 'Sort by score' },
-    { value: 'label', label: 'Sort by name' },
-    { value: 'modified-on', label: 'Sort by last modification' },
-  ]
-  const currentSortField = sortFields.find(field => field.value === sort)
-
-  return (
-    <Flex
-      css={css({
-        alignItems: 'center',
-        height: 80,
-        justifyContent: 'space-between',
-      })}
-    >
-      <Select
-        css={{ minWidth: 265 }}
-        initialValue={currentSortField}
-        items={sortFields}
-        onChange={onSortChange}
-      />
-      <Pagination
-        currentPage={page}
-        onPageChange={onPageChange}
-        totalPages={info.pages}
-        variant="input"
-      />
-    </Flex>
-  )
-}
+}) => (
+  <Flex
+    css={css({
+      alignItems: 'center',
+      height: 80,
+      justifyContent: 'space-between',
+    })}
+  >
+    <SortSelect onSortChange={onSortChange} sort={sort || ''} />
+    <Pagination
+      currentPage={page}
+      onPageChange={onPageChange}
+      totalPages={info.pages}
+      variant="input"
+    />
+  </Flex>
+)
 
 const SearchResultsList = ({ request, results }) => {
   if (results && results.length) {

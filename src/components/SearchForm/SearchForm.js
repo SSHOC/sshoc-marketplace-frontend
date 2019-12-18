@@ -8,16 +8,24 @@ import Select from '../../elements/Select/Select'
 import { useSearchParams } from '../../utils'
 import { ITEM_CATEGORY } from '../../constants'
 
+const categories = [
+  { label: 'All Categories', value: '' },
+  ...Object.entries(ITEM_CATEGORY).map(([value, label]) => ({
+    label,
+    value,
+  })),
+]
+
 const SearchForm = props => {
   const [, setSearchParams] = useSearchParams()
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(categories[0])
   const [query, setQuery] = useState('')
 
   const handleSubmit = event => {
     event.preventDefault()
     setSearchParams(
       {
-        categories: category,
+        categories: category.value,
         query,
       },
       '/search'
@@ -45,14 +53,9 @@ const SearchForm = props => {
         css={{
           minWidth: 200,
         }}
-        items={[
-          { label: 'All Categories', value: '' },
-          ...Object.entries(ITEM_CATEGORY).map(([value, label]) => ({
-            label,
-            value,
-          })),
-        ]}
-        onChange={category => setCategory(category.value)}
+        items={categories}
+        onChange={setCategory}
+        selectedItem={category}
       />
       <Input
         aria-label="Search term"

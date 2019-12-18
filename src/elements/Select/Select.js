@@ -73,9 +73,9 @@ const Select = forwardRef(
     {
       checkSelected,
       className,
-      initialValue,
       items,
       onChange,
+      selectedItem,
       variant,
       ...props
     },
@@ -87,12 +87,11 @@ const Select = forwardRef(
       getToggleButtonProps,
       highlightedIndex,
       isOpen,
-      selectedItem,
     } = useSelect({
-      defaultSelectedItem: initialValue || items[0],
       items,
       itemToString: item => (item ? item.label : ''),
       onSelectedItemChange: ({ selectedItem }) => onChange(selectedItem),
+      selectedItem,
     })
 
     return (

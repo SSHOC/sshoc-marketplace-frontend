@@ -5,3 +5,9 @@ export const ITEM_CATEGORY = {
   tool: 'Tool',
   'training-material': 'Training Material',
 }
+
+export const SORT_FIELDS = {
+  '': 'score',
+  label: 'name',
+  'modified-on': 'last modification',
+}
