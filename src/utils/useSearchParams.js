@@ -14,5 +14,13 @@ export const useSearchParams = () => {
     [queryParams]
   )
 
-  return [searchParams, setQueryParams]
+  const setSearchParams = ({ categories, page, query, sort }) =>
+    setQueryParams({
+      categories,
+      page: page === 1 ? undefined : page,
+      query,
+      sort,
+    })
+
+  return [searchParams, setSearchParams]
 }
