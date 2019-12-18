@@ -10,6 +10,7 @@ import Link from '../../elements/Link/Link'
 import Spinner from '../../elements/Spinner/Spinner'
 import Text from '../../elements/Text/Text'
 import { REQUEST_STATUS } from '../../store/constants'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import Markdown from '../Markdown/Markdown'
 import RelatedItems from '../RelatedItems/RelatedItems'
 
@@ -102,7 +103,7 @@ const ItemDetails = ({ request, resource }) => {
   if (request.status === REQUEST_STATUS.FAILED) {
     return (
       <Centered>
-        <Text>Oh no! {request.error ? request.error.message : null}</Text>
+        <ErrorMessage level="error" message={request.error?.message} />
       </Centered>
     )
   }
@@ -110,7 +111,7 @@ const ItemDetails = ({ request, resource }) => {
   if (request.status === REQUEST_STATUS.SUCCEEDED) {
     return (
       <Centered>
-        <Text>Not found</Text>
+        <ErrorMessage level="info" message="Not found" />
       </Centered>
     )
   }

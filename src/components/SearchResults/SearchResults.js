@@ -6,9 +6,9 @@ import Centered from '../../elements/Centered/Centered'
 import Flex from '../../elements/Flex/Flex'
 import Select from '../../elements/Select/Select'
 import Stack from '../../elements/Stack/Stack'
-import Text from '../../elements/Text/Text'
 import { REQUEST_STATUS } from '../../store/constants'
 import { range } from '../../utils'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import Pagination from '../Pagination/Pagination'
 import SearchResult, {
   SearchResultPlaceholder,
@@ -87,7 +87,7 @@ const SearchResultsList = ({ request, results }) => {
   if (request.status === REQUEST_STATUS.FAILED) {
     return (
       <Centered>
-        <Text>Oh no! {request.error ? request.error.message : null}</Text>
+        <ErrorMessage level="error" message={request.error?.message} />
       </Centered>
     )
   }
@@ -95,7 +95,7 @@ const SearchResultsList = ({ request, results }) => {
   if (request.status === REQUEST_STATUS.SUCCEEDED) {
     return (
       <Centered>
-        <Text>Nothing found</Text>
+        <ErrorMessage level="info" message="Nothing found" />
       </Centered>
     )
   }
