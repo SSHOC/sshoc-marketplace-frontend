@@ -124,7 +124,8 @@ const SearchResults = ({
   const handleSortChange = sort => {
     setSearchParams({
       categories,
-      page,
+      // TODO: should we reset page when sort order changes or not?
+      // page,
       query,
       sort: sort.value,
     })
