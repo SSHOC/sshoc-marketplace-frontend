@@ -42,7 +42,9 @@ const SearchResultsHeader = ({
   <Flex
     css={css({
       alignItems: 'center',
-      height: 'row',
+      flexBasis: 'row',
+      flexGrow: 0,
+      flexShrink: 0,
       justifyContent: 'space-between',
     })}
   >

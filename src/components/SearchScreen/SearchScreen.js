@@ -89,7 +89,7 @@ export const SearchScreen = ({
       Search results{' '}
       <SearchResultsCount count={request.info?.hits ?? collection.info?.hits} />
     </Heading>
-    <Flex css={css({ mt: 6 })}>
+    <Flex css={css({ height: '100%', mt: 6 })}>
       <Sidebar>
         <SearchFacets
           collection={collection}
