@@ -1,7 +1,9 @@
-version: "2"
+version: '2'
 
 services:
   storybook:
+    image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/storybook:latest
+    container_name: sshoc-marketplace-frontend-storybook
     build:
       context: .
       dockerfile: Dockerfile-storybook

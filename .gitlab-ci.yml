@@ -70,7 +70,6 @@ test:e2e:
   tags:
     - sshoc-frontend
   variables:
-    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_TLS_CERTDIR: ''
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -82,20 +81,40 @@ test:e2e:
     - docker push $DOCKER_CURRENT_IMAGE
     - docker push $DOCKER_RELEASE_IMAGE
 
-package:master:acdh:
+package:frontend:master:acdh:
   stage: package
   extends: .docker
   variables:
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_SHORT_SHA
     REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   only:
     - master
 
-package:tags:acdh:
+package:frontend:tags:acdh:
   stage: package
   extends: .docker
   variables:
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
     REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+  only:
+    - tags
+
+package:storybook:master:acdh:
+  stage: package
+  extends: .docker
+  variables:
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
+    DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_SHORT_SHA
+  only:
+    - master
+
+package:storybook:tags:acdh:
+  stage: package
+  extends: .docker
+  variables:
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
+    DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_TAG
   only:
     - tags
