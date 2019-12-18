@@ -6,8 +6,9 @@ export const ITEM_CATEGORY = {
   'training-material': 'Training Material',
 }
 
+export const DEFAULT_SORT_FIELD = 'score'
 export const SORT_FIELDS = {
-  '': 'score',
+  score: 'score',
   label: 'name',
   'modified-on': 'last modification',
 }

@@ -48,7 +48,7 @@ const SearchResultsHeader = ({
       justifyContent: 'space-between',
     })}
   >
-    <SortSelect onSortChange={onSortChange} sort={sort || ''} />
+    <SortSelect onSortChange={onSortChange} sort={sort} />
     <Pagination
       currentPage={page}
       onPageChange={onPageChange}
