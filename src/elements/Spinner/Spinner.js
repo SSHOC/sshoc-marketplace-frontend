@@ -22,7 +22,7 @@ const fadeIn = keyframes({
   },
 })
 
-const Donut = props => (
+const Donut = ({ delayed, ...props }) => (
   <svg
     aria-busy
     aria-live="polite"
