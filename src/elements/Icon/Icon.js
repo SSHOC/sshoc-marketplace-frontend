@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react'
 
+// TODO: avoid repeating gradient definitions
+// (and elements with same id on a page when using icon more than once)
 const getPath = icon => {
   switch (icon) {
     case 'dataset':
