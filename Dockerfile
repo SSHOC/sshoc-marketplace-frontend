@@ -17,8 +17,9 @@ RUN yarn build
 # serve
 FROM node:10-alpine
 
+COPY serve.json /usr/share
 COPY --from=build /usr/src/app/build /usr/share/app
 
 EXPOSE 3000
 
-CMD ["npx", "serve", "-s", "-n", "-l", "3000", "/usr/share/app"]
+CMD ["npx", "serve", "-c", "/usr/share/serve.json", "-l", "3000", "-n", "-s", "/usr/share/app"]
