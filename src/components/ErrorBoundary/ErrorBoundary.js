@@ -1,7 +1,7 @@
 import React from 'react'
 import Centered from '../../elements/Centered/Centered'
 import Link from '../../elements/Link/Link'
-import Text from '../../elements/Text/Text'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -22,10 +22,10 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <Centered>
-          <Text>
-            Ooops, something went wrong. Click <Link to="/">here</Link> to
+          <ErrorMessage level="error">
+            Sorry, something went wrong. Click <Link to="/">here</Link> to
             return home.
-          </Text>
+          </ErrorMessage>
         </Centered>
       )
     }

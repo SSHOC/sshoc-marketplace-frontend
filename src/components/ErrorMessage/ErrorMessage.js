@@ -3,8 +3,11 @@ import React from 'react'
 import 'styled-components/macro'
 import Text from '../../elements/Text/Text'
 
-const ErrorMessage = ({ level = 'info', message }) => (
-  <Text css={css({ fontSize: 4 })}>{message}</Text>
+// TODO: error levels
+const ErrorMessage = ({ children, level = 'info' }) => (
+  <Text css={css({ fontSize: 4 })}>
+    {children || 'Sorry, something went wrong'}
+  </Text>
 )
 
 export default ErrorMessage

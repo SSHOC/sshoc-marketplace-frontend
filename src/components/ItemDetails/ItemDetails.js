@@ -103,7 +103,7 @@ const ItemDetails = ({ request, resource }) => {
   if (request.status === REQUEST_STATUS.FAILED) {
     return (
       <Centered>
-        <ErrorMessage level="error" message={request.error?.message} />
+        <ErrorMessage level="error">{request.error?.message}</ErrorMessage>
       </Centered>
     )
   }
@@ -111,7 +111,7 @@ const ItemDetails = ({ request, resource }) => {
   if (request.status === REQUEST_STATUS.SUCCEEDED) {
     return (
       <Centered>
-        <ErrorMessage level="info" message="Not found" />
+        <ErrorMessage level="info">Not found</ErrorMessage>
       </Centered>
     )
   }
