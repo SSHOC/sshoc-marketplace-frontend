@@ -82,7 +82,14 @@ const DropdownList = styled(MenuItems)(
 
 const DropdownLink = MenuLink
 
-const Dropdown = ({ className, links, size, variant }) => {
+const Dropdown = ({
+  'aria-label': ariaLabel,
+  className,
+  links,
+  size,
+  variant,
+  ...props
+}) => {
   const { path, label } = links[0]
 
   // Workaround @reach/menu-button missing options to position popover
@@ -107,7 +114,7 @@ const Dropdown = ({ className, links, size, variant }) => {
     <DropdownMenu>
       {({ isOpen }) => (
         <>
-          <ButtonGroup className={className} ref={anchorRef}>
+          <ButtonGroup className={className} ref={anchorRef} {...props}>
             <Button
               as={Link}
               disabled={!path}
@@ -118,6 +125,7 @@ const Dropdown = ({ className, links, size, variant }) => {
               {label}
             </Button>
             <DropdownButton
+              aria-label={ariaLabel}
               anchorEl={anchorRef}
               disabled={links.length < 2}
               variant={variant}

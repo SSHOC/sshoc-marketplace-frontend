@@ -40,7 +40,12 @@ const ItemSidebar = ({ resource }) => {
 
   return (
     <>
-      <Dropdown links={links} size="large" variant="primary" />
+      <Dropdown
+        aria-label="Versions"
+        links={links}
+        size="large"
+        variant="primary"
+      />
       <Heading as="h2" css={css({ mt: 6 })} variant="h4">
         Details
       </Heading>

@@ -7,6 +7,7 @@ import Box from '../Box/Box'
 import Button from '../Button/Button'
 import Checkmark from '../Checkmark/Checkmark'
 import Chevron from '../Chevron/Chevron'
+import Invisible from '../Invisible/Invisible'
 
 // TODO: Let's see if we need to put the popover into a Portal
 
@@ -71,6 +72,7 @@ const Option = styled('li')(
 const Select = forwardRef(
   (
     {
+      'aria-label': ariaLabel,
       checkSelected,
       className,
       items,
@@ -83,6 +85,7 @@ const Select = forwardRef(
   ) => {
     const {
       getItemProps,
+      getLabelProps,
       getMenuProps,
       getToggleButtonProps,
       highlightedIndex,
@@ -95,7 +98,11 @@ const Select = forwardRef(
     })
 
     return (
-      <Box css={css({ display: 'inline-block', position: 'relative' })}>
+      <Box
+        css={css({ display: 'inline-block', position: 'relative' })}
+        {...props}
+      >
+        <Invisible aria-label={ariaLabel} as="label" {...getLabelProps()} />
         <Button
           className={className}
           css={css({ bg: isOpen ? 'subtler' : undefined })}

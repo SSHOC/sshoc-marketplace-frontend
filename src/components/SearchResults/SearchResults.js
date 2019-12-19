@@ -26,6 +26,7 @@ const SortSelect = ({ onSortChange, sort }) => {
 
   return (
     <Select
+      aria-label="Search results sort order"
       css={{ minWidth: 265 }}
       items={sortFields}
       onChange={onSortChange}

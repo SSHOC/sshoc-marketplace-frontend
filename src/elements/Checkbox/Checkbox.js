@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react'
 import 'styled-components/macro'
 import Box from '../Box/Box'
 import Checkmark from '../Checkmark/Checkmark'
+import Invisible from '../Invisible/Invisible'
 
 const Checkbox = forwardRef(
   (
@@ -41,8 +42,9 @@ const Checkbox = forwardRef(
       })}
       {...props}
     >
-      <input
+      <Invisible
         aria-label={ariaLabel}
+        as="input"
         checked={checked}
         css={{
           height: 1,
