@@ -1,3 +1,4 @@
+export * from './createPages'
 export * from './createMockItem'
 export * from './pick'
 export * from './range'

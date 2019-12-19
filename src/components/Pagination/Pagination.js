@@ -6,32 +6,7 @@ import Chevron from '../../elements/Chevron/Chevron'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Link from '../../elements/Link/Link'
-import { range } from '../../utils'
-
-const MAX_PAGES = 10
-
-const getPages = (currentPage, totalPages, maxPages = MAX_PAGES) => {
-  if (!totalPages || totalPages < 2) return []
-
-  let firstPage = 1
-  let lastPage = totalPages
-
-  if (totalPages > maxPages) {
-    const maxPagesBeforeCurrentPage = Math.floor(maxPages / 2)
-    const maxPagesAfterCurrentPage = Math.ceil(maxPages / 2)
-
-    if (currentPage <= maxPagesBeforeCurrentPage) {
-      lastPage = maxPages
-    } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
-      firstPage = totalPages - maxPages + 1
-    } else {
-      firstPage = currentPage - maxPagesBeforeCurrentPage
-      lastPage = currentPage + maxPagesAfterCurrentPage
-    }
-  }
-
-  return range(lastPage + 1 - firstPage).map(page => page + firstPage)
-}
+import { createPages } from '../../utils'
 
 const PageInput = ({ currentPage, disabled, onPageChange, totalPages }) => {
   const [page, setPage] = useState(currentPage)
@@ -64,6 +39,7 @@ const PageInput = ({ currentPage, disabled, onPageChange, totalPages }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Input
+        aria-label="Jump to page"
         disabled={disabled}
         css={css({
           textAlign: 'right',
@@ -85,13 +61,14 @@ const LinkButton = styled(Link).attrs({ as: 'button', type: 'button' })(props =>
     borderBottomWidth: 2,
     display: 'inline-flex',
     mx: 2,
+    pointerEvents: props.active ? 'none' : undefined,
   })
 )
 
 const Pagination = ({
-  currentPage,
+  currentPage = 1,
   onPageChange,
-  totalPages,
+  totalPages = 0,
   variant,
   ...props
 }) => {
@@ -102,7 +79,7 @@ const Pagination = ({
   }
 
   return (
-    <Box aria-label="Search results pages" as="nav" {...props}>
+    <Box as="nav" {...props}>
       <Flex
         css={css({ alignItems: 'center', listStyle: 'none', m: 0, p: 0 })}
         as="ol"
@@ -122,24 +99,30 @@ const Pagination = ({
           </LinkButton>
         </li>
         {variant === 'links' ? (
-          getPages(currentPage, totalPages).map(page => (
-            <li key={page}>
-              <LinkButton
-                active={currentPage === page}
-                aria-label={`Page ${page}`}
-                onClick={() => onPageChange(page)}
-              >
-                {page}
-              </LinkButton>
+          createPages({ currentPage, totalPages }).map((page, i) => (
+            <li key={i}>
+              {page === 0 ? (
+                <span>&hellip;</span>
+              ) : (
+                <LinkButton
+                  active={currentPage === page}
+                  aria-label={`Page ${page}`}
+                  onClick={() => onPageChange(page)}
+                >
+                  {page}
+                </LinkButton>
+              )}
             </li>
           ))
         ) : variant === 'input' ? (
-          <PageInput
-            currentPage={currentPage}
-            disabled={!totalPages || totalPages < 2}
-            onPageChange={onPageChange}
-            totalPages={totalPages}
-          />
+          <li>
+            <PageInput
+              currentPage={currentPage}
+              disabled={!totalPages || totalPages < 2}
+              onPageChange={onPageChange}
+              totalPages={totalPages}
+            />
+          </li>
         ) : null}
         <li>
           <LinkButton
