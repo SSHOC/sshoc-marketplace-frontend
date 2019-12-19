@@ -73,6 +73,8 @@ test:e2e:
     DOCKER_TLS_CERTDIR: ''
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+.frontend:
   script:
     - docker pull $DOCKER_RELEASE_IMAGE || true
     - docker build --cache-from $DOCKER_RELEASE_IMAGE --build-arg
@@ -81,9 +83,19 @@ test:e2e:
     - docker push $DOCKER_CURRENT_IMAGE
     - docker push $DOCKER_RELEASE_IMAGE
 
+.storybook:
+  script:
+    - docker pull $DOCKER_RELEASE_IMAGE || true
+    - docker build -f Dockerfile-storybook --cache-from $DOCKER_RELEASE_IMAGE
+      --tag $DOCKER_CURRENT_IMAGE --tag $DOCKER_RELEASE_IMAGE .
+    - docker push $DOCKER_CURRENT_IMAGE
+    - docker push $DOCKER_RELEASE_IMAGE
+
 package:frontend:master:acdh:
   stage: package
-  extends: .docker
+  extends:
+    - .docker
+    - .frontend
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_SHORT_SHA
@@ -93,7 +105,9 @@ package:frontend:master:acdh:
 
 package:frontend:tags:acdh:
   stage: package
-  extends: .docker
+  extends:
+    - .docker
+    - .frontend
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
@@ -103,7 +117,9 @@ package:frontend:tags:acdh:
 
 package:storybook:master:acdh:
   stage: package
-  extends: .docker
+  extends:
+    - .docker
+    - .storybook
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_SHORT_SHA
@@ -112,7 +128,9 @@ package:storybook:master:acdh:
 
 package:storybook:tags:acdh:
   stage: package
-  extends: .docker
+  extends:
+    - .docker
+    - .storybook
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_TAG
