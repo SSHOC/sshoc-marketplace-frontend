@@ -9,7 +9,7 @@ import Heading from '../../elements/Heading/Heading'
 import { fetchSearchResults } from '../../store/actions/items'
 import { selectors } from '../../store/reducers'
 
-const SearchScreenContainer = ({ searchParams, setSearchParams }) => {
+const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
   const dispatch = useDispatch()
 
   const { categories, page, query, sort } = searchParams
@@ -58,10 +58,10 @@ const SearchScreenContainer = ({ searchParams, setSearchParams }) => {
   return (
     <SearchScreen
       collection={collection}
+      onSearchParamsChange={onSearchParamsChange}
       request={request}
       results={results}
       searchParams={searchParams}
-      setSearchParams={setSearchParams}
     />
   )
 }
@@ -79,10 +79,10 @@ const Sidebar = styled('aside')(
 
 export const SearchScreen = ({
   collection,
+  onSearchParamsChange,
   request,
   results,
   searchParams,
-  setSearchParams,
 }) => (
   <>
     <Heading variant="h1" css={css({ mt: 4 })}>
@@ -93,17 +93,17 @@ export const SearchScreen = ({
       <Sidebar>
         <SearchFacets
           collection={collection}
+          onSearchParamsChange={onSearchParamsChange}
           request={request}
           searchParams={searchParams}
-          setSearchParams={setSearchParams}
         />
       </Sidebar>
       <SearchResults
         css={{ flex: 3 }}
+        onSearchParamsChange={onSearchParamsChange}
         request={request}
         results={results}
         searchParams={searchParams}
-        setSearchParams={setSearchParams}
       />
     </Flex>
   </>

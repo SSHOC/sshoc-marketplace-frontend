@@ -32,7 +32,7 @@ const ToolPage = () => {
           { label: 'Tools', value: '/search?categories=tool&sort=label' },
           { label: `Details` },
         ]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <ItemScreen fetchItem={fetchTool} id={id} />
       </Screen>

@@ -35,7 +35,7 @@ const DatasetPage = () => {
           },
           { label: `Details` },
         ]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <ItemScreen fetchItem={fetchDataset} id={id} />
       </Screen>

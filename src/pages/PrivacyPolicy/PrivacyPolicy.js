@@ -16,7 +16,7 @@ const PrivacyPolicyPage = () => {
           { label: 'Home', value: '/' },
           { label: `Privacy Policy` },
         ]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <PrivacyPolicyScreen />
       </Screen>

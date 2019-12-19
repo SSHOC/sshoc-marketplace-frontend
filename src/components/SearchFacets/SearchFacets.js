@@ -36,9 +36,9 @@ const CategoryCheckbox = ({
 
 const SearchFacets = ({
   collection,
+  onSearchParamsChange,
   request,
   searchParams,
-  setSearchParams,
 }) => {
   const { categories, query, sort } = searchParams
 
@@ -49,9 +49,9 @@ const SearchFacets = ({
 
     // Always reset to first page, so we don't end up on a page larger
     // than Math.ceil((results.length / pageSize)) when deselecting a category
-    setSearchParams({
+    onSearchParamsChange({
       categories: updatedCategories,
-      page: undefined,
+      // page,
       query,
       sort,
     })

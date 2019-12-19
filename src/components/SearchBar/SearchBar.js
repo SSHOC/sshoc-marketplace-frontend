@@ -7,9 +7,9 @@ import Input from '../../elements/Input/Input'
 
 const SearchBar = ({
   categories,
+  onSearchParamsChange,
   page,
   query: currentQuery,
-  setSearchParams,
   sort,
   ...props
 }) => {
@@ -17,7 +17,7 @@ const SearchBar = ({
 
   const handleSubmit = event => {
     event.preventDefault()
-    setSearchParams({ query }, '/search')
+    onSearchParamsChange({ query }, '/search')
   }
 
   return (

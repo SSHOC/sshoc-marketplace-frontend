@@ -35,7 +35,7 @@ const TrainingMaterialPage = () => {
           },
           { label: `Details` },
         ]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <ItemScreen fetchItem={fetchTrainingMaterial} id={id} />
       </Screen>

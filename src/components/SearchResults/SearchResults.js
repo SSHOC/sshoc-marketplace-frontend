@@ -1,7 +1,7 @@
 import css from '@styled-system/css'
 import React from 'react'
 import 'styled-components/macro'
-import { SORT_FIELDS } from '../../constants'
+import { DEFAULT_SORT_FIELD, SORT_FIELDS } from '../../constants'
 import Centered from '../../elements/Centered/Centered'
 import Flex from '../../elements/Flex/Flex'
 import Select from '../../elements/Select/Select'
@@ -20,7 +20,9 @@ const sortFields = Object.entries(SORT_FIELDS).map(([value, label]) => ({
 }))
 
 const SortSelect = ({ onSortChange, sort }) => {
-  const currentSortField = sortFields.find(field => field.value === sort)
+  const currentSortField =
+    sortFields.find(field => field.value === sort) ||
+    sortFields.find(field => field.value === DEFAULT_SORT_FIELD)
 
   return (
     <Select
@@ -50,6 +52,7 @@ const SearchResultsHeader = ({
   >
     <SortSelect onSortChange={onSortChange} sort={sort} />
     <Pagination
+      aria-label="Search results pages"
       currentPage={page}
       onPageChange={onPageChange}
       totalPages={info.pages}
@@ -87,7 +90,7 @@ const SearchResultsList = ({ request, results }) => {
   if (request.status === REQUEST_STATUS.FAILED) {
     return (
       <Centered>
-        <ErrorMessage level="error" message={request.error?.message} />
+        <ErrorMessage level="error">{request.error?.message}</ErrorMessage>
       </Centered>
     )
   }
@@ -95,7 +98,7 @@ const SearchResultsList = ({ request, results }) => {
   if (request.status === REQUEST_STATUS.SUCCEEDED) {
     return (
       <Centered>
-        <ErrorMessage level="info" message="Nothing found" />
+        <ErrorMessage level="info">Nothing found</ErrorMessage>
       </Centered>
     )
   }
@@ -105,15 +108,15 @@ const SearchResultsList = ({ request, results }) => {
 
 const SearchResults = ({
   className,
+  onSearchParamsChange,
   request,
   results,
   searchParams,
-  setSearchParams,
 }) => {
   const { categories, page, query, sort } = searchParams
 
   const handlePageChange = page => {
-    setSearchParams({
+    onSearchParamsChange({
       categories,
       page,
       query,
@@ -122,7 +125,7 @@ const SearchResults = ({
   }
 
   const handleSortChange = sort => {
-    setSearchParams({
+    onSearchParamsChange({
       categories,
       // TODO: should we reset page when sort order changes or not?
       // page,
@@ -142,6 +145,7 @@ const SearchResults = ({
       />
       <SearchResultsList request={request} results={results} />
       <Pagination
+        aria-label="Search results pages"
         css={css({ alignSelf: 'flex-end', my: 4 })}
         currentPage={page}
         onPageChange={page => {

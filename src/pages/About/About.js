@@ -25,7 +25,7 @@ const AboutPage = () => {
     >
       <Screen
         breadcrumbs={[{ label: 'Home', value: '/' }, { label: `About` }]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <AboutScreen />
       </Screen>

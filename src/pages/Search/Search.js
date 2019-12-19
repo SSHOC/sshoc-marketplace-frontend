@@ -28,12 +28,12 @@ const SearchPage = () => {
           { label: 'Home', value: '/' },
           { label: 'Search results' },
         ]}
+        onSearchParamsChange={setSearchParams}
         searchParams={searchParams}
-        setSearchParams={setSearchParams}
       >
         <SearchScreen
+          onSearchParamsChange={setSearchParams}
           searchParams={searchParams}
-          setSearchParams={setSearchParams}
         />
       </Screen>
     </Main>

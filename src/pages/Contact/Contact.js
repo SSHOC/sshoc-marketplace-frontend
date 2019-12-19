@@ -13,7 +13,7 @@ const ContactPage = () => {
     <Main ref={focusRef}>
       <Screen
         breadcrumbs={[{ label: 'Home', value: '/' }, { label: `Contact` }]}
-        setSearchParams={setSearchParams}
+        onSearchParamsChange={setSearchParams}
       >
         <ContactScreen />
       </Screen>
