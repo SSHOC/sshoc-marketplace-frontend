@@ -7,8 +7,8 @@ import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Main from '../../elements/Main/Main'
 import Text from '../../elements/Text/Text'
-import BackgroundImage from '../../images/bg_home.png'
-import BackgroundImageHiDPI from '../../images/bg_home@2x.png'
+import BackgroundImage from '../../images/bg_home.jpg'
+import BackgroundImageHiDPI from '../../images/bg_home@2x.jpg'
 import { useNavigationFocus } from '../../utils'
 
 const HomePage = () => {

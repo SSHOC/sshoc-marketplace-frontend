@@ -3,8 +3,8 @@ import 'styled-components/macro'
 import Screen from '../../components/Screen/Screen'
 import SearchScreen from '../../components/SearchScreen/SearchScreen'
 import Main from '../../elements/Main/Main'
-import BackgroundImage from '../../images/bg_search.png'
-import BackgroundImageHiDPI from '../../images/bg_search@2x.png'
+import BackgroundImage from '../../images/bg_search.jpg'
+import BackgroundImageHiDPI from '../../images/bg_search@2x.jpg'
 import { useNavigationFocus, useSearchParams } from '../../utils'
 
 const SearchPage = () => {

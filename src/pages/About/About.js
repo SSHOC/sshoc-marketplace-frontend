@@ -3,8 +3,8 @@ import 'styled-components/macro'
 import AboutScreen from '../../components/AboutScreen/AboutScreen'
 import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
-import BackgroundImage from '../../images/bg_about.png'
-import BackgroundImageHiDPI from '../../images/bg_about@2x.png'
+import BackgroundImage from '../../images/bg_about.jpg'
+import BackgroundImageHiDPI from '../../images/bg_about@2x.jpg'
 import { useNavigationFocus, useSearchParams } from '../../utils'
 
 const AboutPage = () => {
