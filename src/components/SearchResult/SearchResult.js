@@ -57,14 +57,13 @@ const SearchResult = ({ result }) => (
           mb: 2,
         })}
       >
-        <Link
-          css={css({ flex: 1, mr: 2 })}
-          to={`/${result.category}s/${result.id}`}
-        >
-          <Heading as="h3" variant="h4">
-            {result.label}
-          </Heading>
-        </Link>
+        <Box css={css({ flex: 1, mr: 2 })}>
+          <Link to={`/${result.category}s/${result.id}`}>
+            <Heading as="h3" css={{ display: 'inline-block' }} variant="h4">
+              {result.label}
+            </Heading>
+          </Link>
+        </Box>
         <Badge>
           {
             result.properties.find(
