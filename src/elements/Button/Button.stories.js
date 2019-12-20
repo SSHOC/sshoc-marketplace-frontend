@@ -38,6 +38,11 @@ export const variants = () => (
       <Button {...actions}>Basic</Button>
     </div>
     <div style={{ marginBottom: 10 }}>
+      <Button {...actions} variant="outline">
+        Outline
+      </Button>
+    </div>
+    <div style={{ marginBottom: 10 }}>
       <Button {...actions} variant="primary">
         Primary
       </Button>
@@ -63,6 +68,11 @@ export const disabled = () => (
     <div style={{ marginBottom: 10 }}>
       <Button {...actions} disabled>
         Disabled Basic
+      </Button>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <Button {...actions} disabled variant="outline">
+        Disabled Outline
       </Button>
     </div>
     <div style={{ marginBottom: 10 }}>

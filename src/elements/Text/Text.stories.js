@@ -22,15 +22,32 @@ export const regular = () => (
   </>
 )
 
-export const small = () => (
+export const paragraph = () => (
   <>
-    <Text variant="small">
+    <Text variant="paragraph">
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem cum
       fuga officia suscipit, voluptatibus quidem et velit nihil, inventore
       aliquid nostrum numquam, fugit atque incidunt pariatur nisi commodi error
       in.
     </Text>
-    <Text variant="small">
+    <Text variant="paragraph">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem cum
+      fuga officia suscipit, voluptatibus quidem et velit nihil, inventore
+      aliquid nostrum numquam, fugit atque incidunt pariatur nisi commodi error
+      in.
+    </Text>
+  </>
+)
+
+export const small = () => (
+  <>
+    <Text size="small">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem cum
+      fuga officia suscipit, voluptatibus quidem et velit nihil, inventore
+      aliquid nostrum numquam, fugit atque incidunt pariatur nisi commodi error
+      in.
+    </Text>
+    <Text size="small">
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem cum
       fuga officia suscipit, voluptatibus quidem et velit nihil, inventore
       aliquid nostrum numquam, fugit atque incidunt pariatur nisi commodi error

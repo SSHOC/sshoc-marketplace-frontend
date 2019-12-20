@@ -20,7 +20,7 @@ const ItemContributors = ({ contributors }) => {
   }
 
   return (
-    <Text css={css({ color: 'grey.900' })} variant="small">
+    <Text css={css({ color: 'grey.900' })} size="small">
       <span css={css({ color: 'grey.800' })}>Contributors: </span>
       {contributors.map((contributor, i) => (
         <>
@@ -72,7 +72,7 @@ const ItemDetails = ({ request, resource }) => {
             </Heading>
             <Box>
               <ItemContributors contributors={resource.contributors} />
-              <Text css={css({ color: 'grey.400' })} variant="small">
+              <Text css={css({ color: 'grey.400' })} size="small">
                 <span>More Metadata: </span>
                 What goes here?
               </Text>

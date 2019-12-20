@@ -1,10 +1,15 @@
+import css from '@styled-system/css'
 import detab from 'detab'
-import { createElement, Fragment } from 'react'
+import React, { createElement, Fragment } from 'react'
 import rehypeReact from 'rehype-react'
 import markdown from 'remark-parse'
 import remark2rehype from 'remark-rehype'
+import 'styled-components/macro'
 import unified from 'unified'
 import u from 'unist-builder'
+import Heading from '../../elements/Heading/Heading'
+import Link from '../../elements/Link/Link'
+import Text from '../../elements/Text/Text'
 import CodeBlock from '../CodeBlock/CodeBlock'
 
 const handlers = {
@@ -35,8 +40,17 @@ const handlers = {
 }
 
 const components = {
+  a: Link,
   code: CodeBlock,
+  // FIXME: heading margins
+  h1: props => <Heading as="h1" variant="h1" css={css({ my: 2 })} {...props} />,
+  h2: props => <Heading as="h2" variant="h2" css={css({ my: 2 })} {...props} />,
+  h3: props => <Heading as="h3" variant="h3" css={css({ my: 2 })} {...props} />,
+  h4: props => <Heading as="h4" variant="h4" css={css({ my: 2 })} {...props} />,
+  h5: props => <Heading as="h5" variant="h5" css={css({ my: 2 })} {...props} />,
   inlineCode: 'code',
+  p: props => <Text variant="paragraph" {...props} />,
+  strong: props => <strong css={css({ fontWeight: 'semiBold' })} {...props} />,
 }
 
 const processor = unified()

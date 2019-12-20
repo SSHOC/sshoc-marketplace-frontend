@@ -14,7 +14,7 @@ export const palette = () => (
   <FlexList>
     <li>
       <Stack css={css({ alignItems: 'center', mx: 2 })}>
-        <Text variant="small">primary</Text>
+        <Text size="small">primary</Text>
         <Box css={css({ width: 50, height: 50, bg: 'primary', my: 1 })} />
         <Box css={css({ width: 50, height: 50, bg: 'primaryActive', my: 1 })} />
         <Box css={css({ width: 50, height: 50, bg: 'primaryHover', my: 1 })} />
@@ -22,7 +22,7 @@ export const palette = () => (
     </li>
     <li>
       <Stack css={css({ alignItems: 'center', mx: 2 })}>
-        <Text variant="small">grey</Text>
+        <Text size="small">grey</Text>
         <Box css={css({ width: 50, height: 50, bg: 'black', my: 1 })} />
         <Box css={css({ width: 50, height: 50, bg: 'muted', my: 1 })} />
         <Box css={css({ width: 50, height: 50, bg: 'border', my: 1 })} />

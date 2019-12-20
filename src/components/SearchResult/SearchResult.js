@@ -73,13 +73,13 @@ const SearchResult = ({ result }) => (
         </Badge>
       </Flex>
       <Box css={css({ my: 2 })}>
-        <Text css={css({ color: 'grey.900' })} variant="small">
+        <Text css={css({ color: 'grey.900' })} size="small">
           <span css={css({ color: 'grey.800' })}>Contributors: </span>
           {(result.contributors || [])
             .map(contributor => contributor.actor.name)
             .join(', ')}
         </Text>
-        <Text css={css({ color: 'grey.400' })} variant="small">
+        <Text css={css({ color: 'grey.400' })} size="small">
           <span>More Metadata: </span>
           What goes here?
         </Text>

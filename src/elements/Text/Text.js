@@ -11,6 +11,14 @@ const Text = styled(Box)(
   }),
   variant({
     variants: {
+      paragraph: {
+        my: 3,
+      },
+    },
+  }),
+  variant({
+    prop: 'size',
+    variants: {
       small: {
         fontSize: 0,
       },

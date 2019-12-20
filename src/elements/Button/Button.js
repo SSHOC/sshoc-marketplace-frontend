@@ -59,6 +59,25 @@ const Button = styled('button')(
           color: 'subtlest',
         },
       },
+      outline: {
+        bg: 'transparent',
+        borderColor: 'primary',
+        color: 'primary',
+        '&:hover': {
+          bg: 'transparent',
+          borderColor: 'primaryHover',
+          color: 'primaryHover',
+        },
+        '&:active': {
+          bg: 'transparent',
+          borderColor: 'primaryActive',
+          color: 'primaryActive',
+        },
+        '&[disabled]': {
+          color: 'muted',
+          pointerEvents: 'none',
+        },
+      },
       primary: {
         bg: 'primary',
         borderColor: 'background',

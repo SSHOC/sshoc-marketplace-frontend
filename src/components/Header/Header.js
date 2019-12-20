@@ -30,8 +30,8 @@ const Logo = () => (
           color: 'muted',
           fontSize: 1,
           letterSpacing: 4.5,
-          textTransform: 'uppercase',
           mr: -4.5,
+          textTransform: 'uppercase',
         })}
       >
         Marketplace

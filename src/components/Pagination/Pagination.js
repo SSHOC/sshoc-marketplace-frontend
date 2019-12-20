@@ -1,7 +1,6 @@
 import css from '@styled-system/css'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
-import Box from '../../elements/Box/Box'
 import Chevron from '../../elements/Chevron/Chevron'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
@@ -79,7 +78,7 @@ const Pagination = ({
   }
 
   return (
-    <Box as="nav" {...props}>
+    <Flex as="nav" css={{ alignItems: 'center' }} {...props}>
       <Flex
         css={css({ alignItems: 'center', listStyle: 'none', m: 0, p: 0 })}
         as="ol"
@@ -102,7 +101,7 @@ const Pagination = ({
           createPages({ currentPage, totalPages }).map((page, i) => (
             <li key={i}>
               {page === 0 ? (
-                <span>&hellip;</span>
+                <span css={css({ mx: 2 })}>&hellip;</span>
               ) : (
                 <LinkButton
                   active={currentPage === page}
@@ -139,7 +138,7 @@ const Pagination = ({
           </LinkButton>
         </li>
       </Flex>
-    </Box>
+    </Flex>
   )
 }
 
