@@ -1,6 +1,11 @@
 import css from '@styled-system/css'
 import React from 'react'
-import { NavLink as RouterNavLink, Route, Switch } from 'react-router-dom'
+import {
+  NavLink as RouterNavLink,
+  Route,
+  Switch,
+  useRouteMatch,
+} from 'react-router-dom'
 import styled from 'styled-components/macro'
 import Box from '../../elements/Box/Box'
 import Flex from '../../elements/Flex/Flex'
@@ -159,7 +164,7 @@ const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
   })
 )
 
-const SideNav = () => (
+const SideNav = ({ url }) => (
   <aside
     css={css({
       bg: 'subtler',
@@ -181,38 +186,42 @@ const SideNav = () => (
     <nav>
       <Stack as="ul">
         <li>
-          <NavLink exact to="/about">
+          <NavLink exact to={url}>
             About the SSHOC
           </NavLink>
         </li>
         <li>
-          <NavLink to="/about/news">New functionalities</NavLink>
+          <NavLink to={`${url}/news`}>New functionalities</NavLink>
         </li>
         <li>
-          <NavLink to="/about/faq">Frequently asked questions</NavLink>
+          <NavLink to={`${url}/faq`}>Frequently asked questions</NavLink>
         </li>
       </Stack>
     </nav>
   </aside>
 )
 
-const AboutScreen = () => (
-  <Flex css={css({ flex: 1, mt: 3 })}>
-    <SideNav />
-    <Box css={css({ flex: 4, p: 5 })}>
-      <Switch>
-        <Route path="/about/news">
-          <div>News</div>
-        </Route>
-        <Route path="/about/faq">
-          <div>F.A.Q.</div>
-        </Route>
-        <Route>
-          <About />
-        </Route>
-      </Switch>
-    </Box>
-  </Flex>
-)
+const AboutScreen = () => {
+  const { path, url } = useRouteMatch()
+
+  return (
+    <Flex css={css({ flex: 1, mt: 3 })}>
+      <SideNav url={url} />
+      <Box css={css({ flex: 4, p: 5 })}>
+        <Switch>
+          <Route path={`${path}/news`}>
+            <div>News</div>
+          </Route>
+          <Route path={`${path}/faq`}>
+            <div>F.A.Q.</div>
+          </Route>
+          <Route>
+            <About />
+          </Route>
+        </Switch>
+      </Box>
+    </Flex>
+  )
+}
 
 export default AboutScreen
