@@ -66,3 +66,11 @@ docker-compose -f docker-compose-storybook.yml up --build -d
 ```
 
 Storybook will run on port 9009.
+
+## Previews
+
+A development version of the client is deployed at
+[https://sshoc-marketplace.acdh-dev.oeaw.ac.at](https://sshoc-marketplace.acdh-dev.oeaw.ac.at)
+
+A storybook instance is deployed at
+[https://sshoc-marketplace-storybook.acdh-dev.oeaw.ac.at](https://sshoc-marketplace-storybook.acdh-dev.oeaw.ac.at)
