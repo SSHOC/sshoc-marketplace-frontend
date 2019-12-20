@@ -1,10 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import HomeScreen from './HomeScreen'
 
 export default {
   title: 'Screens|Home',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const basic = () => <HomeScreen />

@@ -1,10 +1,10 @@
 import React from 'react'
+import { withMemoryRouter } from '../../utils'
 import PrivacyPolicyScreen from './PrivacyPolicyScreen'
-import { StaticRouter as Router } from 'react-router-dom'
 
 export default {
   title: 'Screens|PrivacyPolicy',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const basic = () => <PrivacyPolicyScreen />

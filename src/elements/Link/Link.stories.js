@@ -1,11 +1,11 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import Link from './Link'
 
 export default {
   title: 'Elements|Link',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const actions = {

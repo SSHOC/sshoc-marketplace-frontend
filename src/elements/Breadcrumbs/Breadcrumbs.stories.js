@@ -1,10 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import Breadcrumbs from './Breadcrumbs'
 
 export default {
   title: 'Elements|Breadcrumbs',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const home = () => (

@@ -1,10 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import SearchForm from './SearchForm'
 
 export default {
   title: 'Components|SearchForm',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const basic = () => <SearchForm />

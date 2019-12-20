@@ -1,11 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
-import { createMockItem } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils'
 import RelatedItem from './RelatedItem'
 
 export default {
   title: 'Components|RelatedItem',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const resource = () => <RelatedItem item={createMockItem(1)} />

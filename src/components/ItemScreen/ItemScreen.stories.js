@@ -1,12 +1,11 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils'
 import { ItemScreen } from './ItemScreen'
 
 export default {
   title: 'Screens|Item',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const idle = () => (

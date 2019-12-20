@@ -1,11 +1,11 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
 import 'styled-components/macro'
+import { withMemoryRouter } from '../../utils'
 import Dropdown from './Dropdown'
 
 export default {
   title: 'Elements|Dropdown',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const links = [

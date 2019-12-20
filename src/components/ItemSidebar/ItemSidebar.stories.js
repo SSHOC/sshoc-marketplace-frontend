@@ -1,11 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
-import { createMockItem } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils'
 import ItemSidebar from './ItemSidebar'
 
 export default {
   title: 'Components|ItemSidebar',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const resource = () => <ItemSidebar resource={createMockItem(1)} />

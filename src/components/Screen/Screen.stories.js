@@ -1,11 +1,11 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import Screen from './Screen'
 
 export default {
   title: 'Components|Screen',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const actions = {

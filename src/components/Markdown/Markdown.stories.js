@@ -1,10 +1,10 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import Markdown from './Markdown'
 
 export default {
   title: 'Components|Markdown',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const markdown = `

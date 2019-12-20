@@ -1,10 +1,10 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { withMemoryRouter } from '../../utils'
 import AboutScreen from './AboutScreen'
 
 export default {
   title: 'Screens|About',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const basic = () => <AboutScreen />

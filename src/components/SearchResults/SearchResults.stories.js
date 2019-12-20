@@ -1,15 +1,14 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
 import 'styled-components/macro'
 import Flex from '../../elements/Flex/Flex'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem, range } from '../../utils'
+import { createMockItem, range, withMemoryRouter } from '../../utils'
 import SearchResults from './SearchResults'
 
 export default {
   title: 'Components|SearchResults',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const actions = {

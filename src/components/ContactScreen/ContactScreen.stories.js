@@ -1,10 +1,9 @@
 import React from 'react'
+import { withMemoryRouter } from '../../utils'
 import ContactScreen from './ContactScreen'
-import { StaticRouter as Router } from 'react-router-dom'
-
 export default {
   title: 'Screens|Contact',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 export const basic = () => <ContactScreen />

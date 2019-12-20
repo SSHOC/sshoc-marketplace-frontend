@@ -1,12 +1,12 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
 import { ITEM_CATEGORY } from '../../constants'
+import { withMemoryRouter } from '../../utils'
 import SearchFacets from './SearchFacets'
 
 export default {
   title: 'Components|SearchFacets',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const actions = {

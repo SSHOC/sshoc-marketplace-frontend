@@ -1,14 +1,13 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
 import { range } from 'rxjs'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils'
 import { SearchScreen } from './SearchScreen'
 
 export default {
   title: 'Screens|Search',
-  decorators: [storyFn => <Router>{storyFn()}</Router>],
+  decorators: [withMemoryRouter],
 }
 
 const actions = {
