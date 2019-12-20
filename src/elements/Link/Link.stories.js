@@ -1,14 +1,12 @@
 import { action } from '@storybook/addon-actions'
-import { addDecorator } from '@storybook/react'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Link from './Link'
 
 export default {
   title: 'Elements|Link',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 const actions = {
   onClick: action('onClick'),

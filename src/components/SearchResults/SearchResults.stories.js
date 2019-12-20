@@ -1,5 +1,4 @@
 import { action } from '@storybook/addon-actions'
-import { addDecorator } from '@storybook/react'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'styled-components/macro'
@@ -10,9 +9,8 @@ import SearchResults from './SearchResults'
 
 export default {
   title: 'Components|SearchResults',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 const actions = {
   onSearchParamsChange: action('onSearchParamsChange'),

@@ -1,14 +1,12 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import Screen from './Screen'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { addDecorator } from '@storybook/react'
+import Screen from './Screen'
 
 export default {
   title: 'Components|Screen',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 const actions = {
   onSearchParamsChange: action('onSearchParamsChange'),

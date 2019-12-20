@@ -19,6 +19,10 @@ export const error = () => (
   <ItemDetails request={{ info: {}, status: REQUEST_STATUS.FAILED }} />
 )
 
+export const empty = () => (
+  <ItemDetails request={{ info: {}, status: REQUEST_STATUS.SUCCEEDED }} />
+)
+
 export const resource = () => (
   <ItemDetails
     request={{ info: {}, status: REQUEST_STATUS.SUCCEEDED }}

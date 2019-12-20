@@ -1,13 +1,11 @@
-import { addDecorator } from '@storybook/react'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Markdown from './Markdown'
 
 export default {
   title: 'Components|Markdown',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 const markdown = `
   # Heading1

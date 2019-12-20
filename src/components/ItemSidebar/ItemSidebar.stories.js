@@ -1,4 +1,3 @@
-import { addDecorator } from '@storybook/react'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { createMockItem } from '../../utils'
@@ -6,9 +5,8 @@ import ItemSidebar from './ItemSidebar'
 
 export default {
   title: 'Components|ItemSidebar',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 export const resource = () => <ItemSidebar resource={createMockItem(1)} />
 

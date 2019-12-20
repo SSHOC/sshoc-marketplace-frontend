@@ -1,4 +1,3 @@
-import { addDecorator } from '@storybook/react'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'styled-components/macro'
@@ -6,9 +5,8 @@ import Dropdown from './Dropdown'
 
 export default {
   title: 'Elements|Dropdown',
+  decorators: [storyFn => <Router>{storyFn()}</Router>],
 }
-
-addDecorator(storyFn => <Router>{storyFn()}</Router>)
 
 const links = [
   { path: '#apples', label: 'Apples' },
