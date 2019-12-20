@@ -1,3 +1,4 @@
+import css from '@styled-system/css'
 import React from 'react'
 import 'styled-components/macro'
 import SearchBar from '../../components/SearchBar/SearchBar'
@@ -11,7 +12,10 @@ const Screen = ({
   onSearchParamsChange,
   searchParams,
 }) => (
-  <Container as={Flex} css={{ flexDirection: 'column', height: '100%', pb: 0 }}>
+  <Container
+    as={Flex}
+    css={css({ flexDirection: 'column', height: '100%', pb: 0 })}
+  >
     <SearchBar
       css={{ alignSelf: 'flex-end', width: '50%' }}
       onSearchParamsChange={onSearchParamsChange}
