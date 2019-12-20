@@ -47,7 +47,9 @@ const components = {
   h2: props => <Heading as="h4" variant="h5" css={css({ my: 2 })} {...props} />,
   h3: props => <Heading as="h5" variant="h6" css={css({ my: 2 })} {...props} />,
   inlineCode: 'code',
-  p: props => <Text variant="paragraph" {...props} />,
+  p: props => (
+    <Text css={css({ lineHeight: 'large' })} variant="paragraph" {...props} />
+  ),
   strong: props => <strong css={css({ fontWeight: 'semiBold' })} {...props} />,
 }
 
