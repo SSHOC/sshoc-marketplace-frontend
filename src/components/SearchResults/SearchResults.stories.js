@@ -67,7 +67,7 @@ export const empty = () => (
   </Container>
 )
 
-export const results = () => (
+export const resources = () => (
   <Container>
     <SearchResults
       css={{ flex: 1 }}
