@@ -24,6 +24,11 @@ const Heading = styled('h1')(
       h5: {
         fontSize: 3,
       },
+      h6: {
+        fontSize: 3,
+        fontStyle: 'italic',
+        fontWeight: 'regular',
+      },
     },
   })
 )

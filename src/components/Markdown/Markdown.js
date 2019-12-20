@@ -42,12 +42,10 @@ const handlers = {
 const components = {
   a: Link,
   code: CodeBlock,
-  // FIXME: heading margins
-  h1: props => <Heading as="h1" variant="h1" css={css({ my: 2 })} {...props} />,
-  h2: props => <Heading as="h2" variant="h2" css={css({ my: 2 })} {...props} />,
-  h3: props => <Heading as="h3" variant="h3" css={css({ my: 2 })} {...props} />,
-  h4: props => <Heading as="h4" variant="h4" css={css({ my: 2 })} {...props} />,
-  h5: props => <Heading as="h5" variant="h5" css={css({ my: 2 })} {...props} />,
+  // FIXME: heading margins; also: do we need more than 3 heading levels?
+  h1: props => <Heading as="h3" variant="h4" css={css({ my: 2 })} {...props} />,
+  h2: props => <Heading as="h4" variant="h5" css={css({ my: 2 })} {...props} />,
+  h3: props => <Heading as="h5" variant="h6" css={css({ my: 2 })} {...props} />,
   inlineCode: 'code',
   p: props => <Text variant="paragraph" {...props} />,
   strong: props => <strong css={css({ fontWeight: 'semiBold' })} {...props} />,
