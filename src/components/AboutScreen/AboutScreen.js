@@ -164,6 +164,9 @@ const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
   })
 )
 
+const createPath = (basepath, path) =>
+  [basepath, path].join(basepath.endsWith('/') ? '' : '/')
+
 const SideNav = ({ url }) => (
   <aside
     css={css({
@@ -191,10 +194,12 @@ const SideNav = ({ url }) => (
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${url}/news`}>New functionalities</NavLink>
+          <NavLink to={createPath(url, 'news')}>New functionalities</NavLink>
         </li>
         <li>
-          <NavLink to={`${url}/faq`}>Frequently asked questions</NavLink>
+          <NavLink to={createPath(url, 'faq')}>
+            Frequently asked questions
+          </NavLink>
         </li>
       </Stack>
     </nav>
@@ -209,10 +214,10 @@ const AboutScreen = () => {
       <SideNav url={url} />
       <Box css={css({ flex: 4, p: 5 })}>
         <Switch>
-          <Route path={`${path}/news`}>
+          <Route path={createPath(path, 'news')}>
             <div>News</div>
           </Route>
-          <Route path={`${path}/faq`}>
+          <Route path={createPath(path, 'faq')}>
             <div>F.A.Q.</div>
           </Route>
           <Route>
