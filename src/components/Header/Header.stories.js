@@ -1,6 +1,6 @@
 import React from 'react'
+import { StaticRouter as Router } from 'react-router-dom'
 import Header from './Header'
-import { BrowserRouter as Router } from 'react-router-dom'
 
 export default {
   title: 'Components|Header',

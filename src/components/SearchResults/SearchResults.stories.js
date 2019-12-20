@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { StaticRouter as Router } from 'react-router-dom'
 import 'styled-components/macro'
 import Flex from '../../elements/Flex/Flex'
 import { REQUEST_STATUS } from '../../store/constants'

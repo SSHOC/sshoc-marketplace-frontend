@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { StaticRouter as Router } from 'react-router-dom'
 import Markdown from './Markdown'
 
 export default {
