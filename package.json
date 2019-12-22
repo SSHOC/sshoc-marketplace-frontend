@@ -156,7 +156,7 @@
     "format:fix": "yarn prettier --write",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "mockserver": "node server",
+    "mockserver": "node mockserver",
     "preanalyze": "yarn build",
     "pretest:e2e:run": "yarn build",
     "prettier": "prettier --config package.json  \"{src,cypress}/**/*.{js,jsx,ts,tsx,css,json,md}\" --ignore-path .gitignore",
