@@ -8,7 +8,7 @@ export const ITEM_CATEGORY = {
 
 export const DEFAULT_SORT_FIELD = 'score'
 export const SORT_FIELDS = {
-  score: 'score',
+  score: 'relevance',
   label: 'name',
   'modified-on': 'last modification',
 }
