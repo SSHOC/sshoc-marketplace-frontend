@@ -3,6 +3,7 @@ import React from 'react'
 import 'styled-components/macro'
 import Dropdown from '../../elements/Dropdown/Dropdown'
 import Heading from '../../elements/Heading/Heading'
+import Icon from '../../elements/Icon/Icon'
 import Stack from '../../elements/Stack/Stack'
 
 const ItemSidebar = ({ resource }) => {
@@ -25,7 +26,20 @@ const ItemSidebar = ({ resource }) => {
 
   const links = [
     {
-      label: `Go to ${type || 'Resource'}`,
+      label: (
+        <>
+          Go to {type || 'Resource'}{' '}
+          <Icon
+            css={css({
+              alignSelf: 'flex-start',
+              ml: '0.25em',
+              p: '1px',
+            })}
+            icon="link"
+            width="0.6em"
+          />
+        </>
+      ),
       path: resource.accessibleAt,
     },
     ...(resource.olderVersions || []).map(({ id, label, version }) => ({
