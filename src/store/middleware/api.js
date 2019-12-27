@@ -16,6 +16,7 @@ const createApiMiddleware = fetch => ({
   const {
     collections,
     fetchPolicy = FETCH_POLICY.CACHE_AND_NETWORK,
+    getErrorMessage,
     next: {
       IDLE: onAbort,
       FAILED: onError,
@@ -82,7 +83,12 @@ const createApiMiddleware = fetch => ({
     })
 
     if (!response.ok) {
-      throw new HttpError(response)
+      const { statusCode, statusText } = response
+      const errorMessage = getErrorMessage
+        ? await getErrorMessage(response)
+        : statusText
+
+      throw new HttpError(statusCode, errorMessage, { response })
     }
 
     const data = await response[format]()

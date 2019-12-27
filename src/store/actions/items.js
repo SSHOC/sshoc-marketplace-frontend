@@ -1,4 +1,4 @@
-import API from '../../api'
+import API, { getErrorMessage } from '../../api'
 import { API_REQUEST, FETCH_RESOURCE } from '../constants'
 import { createNormalizer } from '../utils'
 
@@ -8,6 +8,7 @@ export const fetchDataset = ({ id }) => ({
     ...API.getDatasetById({ id }),
   },
   meta: {
+    getErrorMessage,
     next: FETCH_RESOURCE,
     normalize: createNormalizer(),
     request: {
@@ -24,6 +25,7 @@ export const fetchTool = ({ id }) => ({
     ...API.getToolById({ id }),
   },
   meta: {
+    getErrorMessage,
     next: FETCH_RESOURCE,
     normalize: createNormalizer(),
     request: {
@@ -40,6 +42,7 @@ export const fetchTrainingMaterial = ({ id }) => ({
     ...API.getTrainingMaterialById({ id }),
   },
   meta: {
+    getErrorMessage,
     next: FETCH_RESOURCE,
     normalize: createNormalizer(),
     request: {
@@ -62,6 +65,7 @@ export const fetchSearchResults = ({ categories, page, query, sort }) => ({
         query: { categories, query, sort },
       },
     ],
+    getErrorMessage,
     next: FETCH_RESOURCE,
     normalize: createNormalizer('items'),
     request: {

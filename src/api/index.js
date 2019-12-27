@@ -29,4 +29,19 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
   }),
 })
 
+export const getErrorMessage = async response => {
+  const contentType = response.headers.get('content-type') || ''
+
+  if (contentType.includes('application/json')) {
+    try {
+      const { error: errorMessage } = (await response.json()) || {}
+      if (errorMessage) {
+        return [response.statusText, errorMessage].join(': ')
+      }
+    } catch (e) {}
+  }
+
+  return response.statusText
+}
+
 export default createMarketplaceAPI({ baseUrl: API_BASE_URL })
