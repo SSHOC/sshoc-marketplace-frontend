@@ -5,6 +5,7 @@ const Centered = styled(Flex)({
   alignItems: 'center',
   height: '100%',
   justifyContent: 'center',
+  textAlign: 'center',
 })
 
 export default Centered
