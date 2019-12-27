@@ -1,5 +1,5 @@
-import { ITEM_CATEGORY } from '../constants'
-import { pick } from './pick'
+import { ITEM_CATEGORY } from '../../constants'
+import { pick } from '../pick'
 
 export const createMockItem = id => ({
   id,

@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions'
 import React from 'react'
 import { range } from 'rxjs'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem, withMemoryRouter } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils/test'
 import { SearchScreen } from './SearchScreen'
 
 export default {

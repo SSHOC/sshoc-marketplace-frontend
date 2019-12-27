@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
 import { ITEM_CATEGORY } from '../../constants'
-import { withMemoryRouter } from '../../utils'
+import { withMemoryRouter } from '../../utils/test'
 import SearchFacets from './SearchFacets'
 
 export default {

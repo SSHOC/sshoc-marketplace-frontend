@@ -1,6 +1,6 @@
 import React from 'react'
 import 'styled-components/macro'
-import { withMemoryRouter } from '../../utils'
+import { withMemoryRouter } from '../../utils/test'
 import Dropdown from './Dropdown'
 
 export default {

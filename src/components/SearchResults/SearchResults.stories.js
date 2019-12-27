@@ -3,7 +3,8 @@ import React from 'react'
 import 'styled-components/macro'
 import Flex from '../../elements/Flex/Flex'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem, range, withMemoryRouter } from '../../utils'
+import { range } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils/test'
 import SearchResults from './SearchResults'
 
 export default {

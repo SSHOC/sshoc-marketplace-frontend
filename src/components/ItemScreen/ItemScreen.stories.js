@@ -1,6 +1,6 @@
 import React from 'react'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem, withMemoryRouter } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils/test'
 import { ItemScreen } from './ItemScreen'
 
 export default {

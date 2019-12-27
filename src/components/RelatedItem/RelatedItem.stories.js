@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMockItem, withMemoryRouter } from '../../utils'
+import { createMockItem, withMemoryRouter } from '../../utils/test'
 import RelatedItem from './RelatedItem'
 
 export default {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withMemoryRouter } from '../../utils'
+import { withMemoryRouter } from '../../utils/test'
 import HomeScreen from './HomeScreen'
 
 export default {

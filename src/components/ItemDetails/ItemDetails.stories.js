@@ -1,6 +1,6 @@
 import React from 'react'
 import { REQUEST_STATUS } from '../../store/constants'
-import { createMockItem } from '../../utils'
+import { createMockItem } from '../../utils/test'
 import ItemDetails from './ItemDetails'
 
 export default {

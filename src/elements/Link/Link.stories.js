@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import React from 'react'
-import { withMemoryRouter } from '../../utils'
+import { withMemoryRouter } from '../../utils/test'
 import Link from './Link'
 
 export default {
