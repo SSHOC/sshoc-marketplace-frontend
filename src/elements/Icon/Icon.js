@@ -138,6 +138,17 @@ const getPath = icon => {
         ),
       }
 
+    case 'link':
+      return {
+        viewBox: '0 0 10.247 10.247',
+        path: (
+          <path
+            d="M7.319 5.855h.732v4.392H0V2.2h4.392v.732H.732v6.587h6.587zM4.392 0l.912.912h3.514L3.427 6.3l.518.518 5.364-5.364v3.463l.939.939V0H4.392z"
+            fill="currentColor"
+          />
+        ),
+      }
+
     case 'tool':
       return {
         viewBox: '0 0 47.691 40.749',
