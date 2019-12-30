@@ -16,8 +16,8 @@ export const palette = () => (
       <Stack css={css({ alignItems: 'center', mx: 2 })}>
         <Text size="small">primary</Text>
         <Box css={css({ width: 50, height: 50, bg: 'primary', my: 1 })} />
-        <Box css={css({ width: 50, height: 50, bg: 'primaryActive', my: 1 })} />
         <Box css={css({ width: 50, height: 50, bg: 'primaryHover', my: 1 })} />
+        <Box css={css({ width: 50, height: 50, bg: 'primaryActive', my: 1 })} />
       </Stack>
     </li>
     <li>
