@@ -13,7 +13,11 @@ const Input = styled('input')(
     fontSize: 3,
     px: 3,
     py: 2,
-    transition: 'background-color 0.2s ease-out, box-shadow 0.2s ease-out',
+    transition: theme =>
+      [
+        `background-color ${theme.transitions.default}`,
+        `box-shadow ${theme.transitions.default}`,
+      ].join(', '),
     '&::placeholder': {
       color: 'muted',
     },

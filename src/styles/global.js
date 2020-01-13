@@ -11,7 +11,11 @@ export const GlobalStyles = createGlobalStyle(
       color: 'text',
       margin: 0,
       textRendering: 'optimizeLegibility',
-      transition: 'background-color 0.2s ease-out, color 0.2s ease-out',
+      transition: theme =>
+        [
+          `background-color ${theme.transitions.default}`,
+          `color ${theme.transitions.default}`,
+        ].join(', '),
       variant: 'text.body',
     },
   })

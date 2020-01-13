@@ -140,7 +140,7 @@ const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
     fontSize: 2,
     justifyContent: 'space-between',
     p: 4,
-    transition: 'border-color 0.2s ease-out',
+    transition: theme => `border-color ${theme.transitions.default}`,
     '&:hover': {
       bg: 'subtlest',
       borderLeftColor: 'primary',

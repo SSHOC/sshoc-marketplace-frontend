@@ -13,7 +13,7 @@ const Triangle = ({ direction = 'down', ...props }) => (
     aria-hidden
     css={{
       transform: `rotate(${rotate[direction]}deg)`,
-      transition: 'transform 0.2s ease-out',
+      transition: theme => `transform ${theme.transitions.default}`,
     }}
     height="1em"
     viewBox="0 0 16 16"

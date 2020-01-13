@@ -40,7 +40,7 @@ const DropdownList = styled(MenuItems)(
     minWidth: '100%',
     py: 2,
     overflowY: 'auto',
-    transition: 'box-shadow 0.2s ease-out',
+    transition: theme => `box-shadow ${theme.transitions.default}`,
     whiteSpace: 'nowrap',
     '&:focus, &:focus-within': {
       boxShadow: theme =>
@@ -58,7 +58,11 @@ const DropdownList = styled(MenuItems)(
       px: 3,
       py: 2,
       textDecoration: 'initial',
-      transition: 'background-color 0.2s ease-out, color 0.2s ease-out',
+      transition: theme =>
+        [
+          `background-color ${theme.transitions.default}`,
+          `color ${theme.transitions.default}`,
+        ].join(', '),
     },
     '& [data-reach-menu-item][data-selected]': {
       bg: 'subtler',

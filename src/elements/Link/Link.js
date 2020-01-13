@@ -15,8 +15,12 @@ const Link = styled(RelativeOrAbsoluteLink)(
     outline: 'none',
     p: 0,
     textDecoration: 'none',
-    transition:
-      'background-color 0.2s ease-out, box-shadow 0.2s ease-out, color 0.2s ease-out',
+    transition: theme =>
+      [
+        `background-color ${theme.transitions.default}`,
+        `box-shadow ${theme.transitions.default}`,
+        `color ${theme.transitions.default}`,
+      ].join(', '),
     '&:focus': {
       boxShadow: 'outline',
     },

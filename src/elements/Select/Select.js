@@ -30,7 +30,7 @@ const Menu = styled('ul')(props =>
     px: 0,
     py: 2,
     overflowY: 'auto',
-    transition: 'box-shadow 0.2s ease-out',
+    transition: theme => `box-shadow ${theme.transitions.default}`,
     whiteSpace: 'nowrap',
     '&:focus': {
       boxShadow: theme =>

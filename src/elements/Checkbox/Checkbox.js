@@ -25,7 +25,11 @@ const Checkbox = forwardRef(
         cursor: 'pointer',
         display: 'inline-flex',
         mr: 1,
-        transition: 'box-shadow 0.2s ease-out, color 0.2s ease-out',
+        transition: theme =>
+          [
+            `box-shadow ${theme.transitions.default}`,
+            `color ${theme.transitions.default}`,
+          ].join(', '),
         userSelect: 'none',
         verticalAlign: 'top',
         '&:hover': {
@@ -74,8 +78,11 @@ const Checkbox = forwardRef(
           justifyContent: 'center',
           mr: 2,
           pointerEvents: 'none',
-          transition:
-            'background-color 0.2s ease-out, border-color 0.2s ease-out',
+          transition: theme =>
+            [
+              `background-color ${theme.transitions.default}`,
+              `border-color ${theme.transitions.default}`,
+            ].join(', '),
           width: 16,
           'input[type=checkbox]:focus + &': {
             boxShadow: 'outline',
@@ -86,7 +93,7 @@ const Checkbox = forwardRef(
         <Checkmark
           css={{
             opacity: checked ? 1 : 0,
-            transition: 'opacity 0.2s ease-out',
+            transition: theme => `opacity ${theme.transitions.default}`,
           }}
           height="12"
           width="12"

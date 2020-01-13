@@ -109,6 +109,9 @@ export const theme = {
       lineHeight: 'heading',
     },
   },
+  transitions: {
+    default: '0.2s ease-out',
+  },
   zIndices: {
     select: 100,
     focus: 500,
