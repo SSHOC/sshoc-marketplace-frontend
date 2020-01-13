@@ -171,8 +171,9 @@ const SideNav = ({ url }) => (
   <aside
     css={css({
       bg: 'subtler',
-      flex: 1,
-      minWidth: 'sidebar',
+      flexBasis: 'sidebar',
+      flexGrow: 1,
+      flexShrink: 0,
       mr: 4,
       position: 'relative',
       '&::before': {

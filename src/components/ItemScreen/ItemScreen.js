@@ -33,7 +33,9 @@ export const ItemScreen = ({ request, resource }) => (
     <Box css={{ flex: 3 }}>
       <ItemDetails request={request} resource={resource} />
     </Box>
-    <aside css={css({ flex: 1, minWidth: 'sidebar', pl: 4 })}>
+    <aside
+      css={css({ flexBasis: 'sidebar', flexGrow: 1, flexShrink: 0, pl: 4 })}
+    >
       <ItemSidebar resource={resource} />
     </aside>
   </Flex>

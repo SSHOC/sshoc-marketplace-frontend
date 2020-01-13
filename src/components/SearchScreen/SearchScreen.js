@@ -71,8 +71,9 @@ const SearchResultsCount = ({ count }) =>
 
 const Sidebar = styled('aside')(
   css({
-    flex: 1,
-    minWidth: 'sidebar',
+    flexBasis: 'sidebar',
+    flexGrow: 1,
+    flexShrink: 0,
     pr: 4,
   })
 )
