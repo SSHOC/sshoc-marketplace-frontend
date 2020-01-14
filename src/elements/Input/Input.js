@@ -11,6 +11,7 @@ const Input = styled('input')(
     color: 'text',
     fontFamily: 'body',
     fontSize: 3,
+    minWidth: 0,
     px: 3,
     py: 2,
     transition: theme =>
