@@ -51,7 +51,7 @@ const colors = {
 }
 
 export const theme = {
-  breakpoints: ['40em', '52em', '64em'],
+  breakpoints: ['40em', '54em', '64em'],
   colors,
   fonts: {
     body: 'Poppins, system-ui, sans-serif',
