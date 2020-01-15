@@ -13,10 +13,9 @@ const HomeScreen = () => (
       <span css={css({ fontSize: 8 })}>SSHOC</span> Marketplace
     </Heading>
     <Text css={css({ lineHeight: 'large' })}>
-      Several sentences: What user can find on this website? For whom it was
-      created? Who has made this website? Place for some key sentences which
-      will help users to understand what is this website for.{' '}
-      <Link to="/about">Read more&hellip;</Link>
+      Discover new resources for your research in Social Sciences and
+      Humanities: tools, services, training materials and datasets,
+      contextualised. <Link to="/about">Read more&hellip;</Link>
     </Text>
     <SearchForm />
   </Container>

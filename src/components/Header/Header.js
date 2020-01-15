@@ -119,7 +119,7 @@ const Header = () => (
               />
             </NavItem>
             <NavItem>
-              <NavLink to="/about">About the SSHOC</NavLink>
+              <NavLink to="/about">About</NavLink>
             </NavItem>
           </FlexList>
         </nav>

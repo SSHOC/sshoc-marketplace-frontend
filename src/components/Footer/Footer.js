@@ -37,7 +37,7 @@ const Footer = () => (
       <nav>
         <FlexList>
           <li>
-            <NavLink to="/about">About the SSHOC</NavLink>
+            <NavLink to="/about">About</NavLink>
           </li>
           <li>
             <NavLink to="/privacy-policy">Privacy policy</NavLink>
