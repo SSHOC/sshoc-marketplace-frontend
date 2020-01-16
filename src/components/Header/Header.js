@@ -7,36 +7,14 @@ import Flex from '../../elements/Flex/Flex'
 import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
+import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
 // import { useColorMode } from '../../styles'
 
 const Logo = () => (
   <nav>
-    <Stack
-      as={Link}
-      css={css({
-        alignItems: 'center',
-        lineHeight: 'small',
-        my: 3,
-        py: 3,
-        ':hover': {
-          borderBottomColor: 'transparent',
-        },
-      })}
-      to="/"
-    >
-      <span css={css({ fontSize: 8, fontWeight: 'bold' })}>SSHOC</span>
-      <span
-        css={css({
-          color: 'muted',
-          fontSize: 1,
-          letterSpacing: 4.5,
-          mr: -4.5,
-          textTransform: 'uppercase',
-        })}
-      >
-        Marketplace
-      </span>
-    </Stack>
+    <Link css={css({ display: 'block', lineHeight: 1, my: 3 })} to="/">
+      <SSHOCMPLogo />
+    </Link>
   </nav>
 )
 
