@@ -55,30 +55,30 @@ const About = () => (
       <ListItem>
         <BulletPoint>01</BulletPoint>
         <Paragraph css={css({ flex: 1 })}>
-          <strong>Curation</strong> - This portal thrives on a curation process
-          that makes it easy to discover the most appropriate results for each
-          request, so that researchers can discover the best resources for the
-          digital aspects of their work. The curation process relies on three
-          components: automatic integration of data sources to keep the platform
-          up to date, moderation and the contribution of the SSH community
-          itself.
+          <strong>Curation</strong> &mdash; This portal thrives on a curation
+          process that makes it easy to discover the most appropriate results
+          for each request, so that researchers can discover the best resources
+          for the digital aspects of their work. The curation process relies on
+          three components: automatic integration of data sources to keep the
+          platform up to date, moderation and the contribution of the SSH
+          community itself.
         </Paragraph>
       </ListItem>
       <ListItem>
         <BulletPoint>02</BulletPoint>
         <Paragraph css={css({ flex: 1 })}>
-          <strong>Community</strong> - The content available in the SSH Open
-          Marketplace and its contextualisation is the result of collaborative
-          work that is characterised by a user-centric view. Features that allow
-          contributions, feedback and comments are implemented to ensure that
-          the portal mirrors real research practices.
+          <strong>Community</strong> &mdash; The content available in the SSH
+          Open Marketplace and its contextualisation is the result of
+          collaborative work that is characterised by a user-centric view.
+          Features that allow contributions, feedback and comments are
+          implemented to ensure that the portal mirrors real research practices.
         </Paragraph>
       </ListItem>
       <ListItem>
         <BulletPoint>03</BulletPoint>
         <Paragraph css={css({ flex: 1 })}>
-          <strong>Contextualisation</strong> - The portal puts all items into
-          context. This contextualisation will help to adapt and reuse the
+          <strong>Contextualisation</strong> &mdash; The portal puts all items
+          into context. This contextualisation will help to adapt and reuse the
           content of the SSH Open Marketplace, no matter if they are a piece of
           software, a dataset, a research workflow or scientific article.
         </Paragraph>
@@ -107,8 +107,7 @@ const About = () => (
     <Paragraph>
       For any questions relating to the development of the SSH Open Marketplace
       or the SSHOC project, please visit the{' '}
-      <Link to="https://www.sshopencloud.eu/">website</Link>
-      or contact{' '}
+      <Link to="https://www.sshopencloud.eu/">website</Link> or contact{' '}
       <Link to="mailto:info@sshopencloud.eu">info@sshopencloud.eu</Link>.
     </Paragraph>
     <Paragraph css={css({ mb: 6 })}>
