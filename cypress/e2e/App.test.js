@@ -1,6 +1,6 @@
 describe('App', () => {
   it('is just a placeholder', () => {
     cy.visit('/')
-    cy.contains('SSHOC Marketplace')
+    cy.contains('Social Sciences & Humanities Open Marketplace')
   })
 })
