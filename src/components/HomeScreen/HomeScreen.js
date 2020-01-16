@@ -9,8 +9,8 @@ import Text from '../../elements/Text/Text'
 
 const HomeScreen = () => (
   <Container css={css({ my: 6 })} variant="narrow">
-    <Heading as="h1" css={css({ fontWeight: 'regular', mb: 3 })} variant="h2">
-      <span css={css({ fontSize: 8 })}>SSHOC</span> Marketplace
+    <Heading as="h1" css={css({ fontSize: 26, mb: 4 })} variant="h2">
+      Social Sciences &amp; Humanities Open Marketplace
     </Heading>
     <Text css={css({ lineHeight: 'large' })}>
       Discover new resources for your research in Social Sciences and
