@@ -39,13 +39,16 @@ const PageInput = ({ currentPage, disabled, onPageChange, totalPages }) => {
     <form onSubmit={handleSubmit}>
       <Input
         aria-label="Jump to page"
-        disabled={disabled}
         css={css({
           textAlign: 'right',
           width: '3em',
         })}
+        disabled={disabled}
+        max={totalPages}
+        min={1}
         onChange={handleChange}
         placeholder={currentPage}
+        type="number"
         value={page}
       />
     </form>
