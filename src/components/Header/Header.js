@@ -12,7 +12,11 @@ import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
 
 const Logo = () => (
   <nav>
-    <Link css={css({ display: 'block', lineHeight: 1, my: 3 })} to="/">
+    <Link
+      aria-label="Home"
+      css={css({ display: 'block', lineHeight: 1, my: 3 })}
+      to="/"
+    >
       <SSHOCMPLogo />
     </Link>
   </nav>
