@@ -23,7 +23,7 @@
     "remark-rehype": "^5.0.0",
     "remark-stringify": "^7.0.4",
     "strip-markdown": "^3.1.1",
-    "styled-components": "^5.0.0-rc.2",
+    "styled-components": "^5.0.0",
     "typeface-poppins": "^0.0.72",
     "unified": "^8.4.2",
     "unist-builder": "^2.0.2"
