@@ -37,7 +37,9 @@ const About = () => (
   <>
     <Title>About</Title>
 
-    <SectionTitle>What is the SSH Open Marketplace?</SectionTitle>
+    <SectionTitle id="what-is-the-sshomp">
+      What is the SSH Open Marketplace?
+    </SectionTitle>
     <Paragraph css={css({ mb: 6 })}>
       The Social Sciences and Humanities Open Marketplace, built as part of the{' '}
       <Link to="https://www.sshopencloud.eu/">
@@ -50,7 +52,7 @@ const About = () => (
       research data life cycle.
     </Paragraph>
 
-    <SectionTitle>Key aspects</SectionTitle>
+    <SectionTitle id="key-aspects">Key aspects</SectionTitle>
     <Stack as="ul" css={css({ mb: 4 })}>
       <ListItem>
         <BulletPoint>01</BulletPoint>
@@ -85,7 +87,7 @@ const About = () => (
       </ListItem>
     </Stack>
 
-    <SectionTitle>Relation to EOSC</SectionTitle>
+    <SectionTitle id="relation-to-eosc">Relation to EOSC</SectionTitle>
     <Paragraph css={css({ mb: 6 })}>
       The SSH Open Marketplace is a Social Sciences and Humanities-friendly
       component for the European Open Science Cloud (EOSC) since the SSHOC
@@ -95,7 +97,7 @@ const About = () => (
       facilitate fluid exchange of tools, services, data and knowledge.
     </Paragraph>
 
-    <SectionTitle>In development</SectionTitle>
+    <SectionTitle id="in-development">In development</SectionTitle>
     <Paragraph css={css({ mb: 6 })}>
       The development of the portal takes place within Work Package 7 (WP7) of
       the larger SSHOC project and is led by the DARIAH ERIC. An alpha release
@@ -103,7 +105,7 @@ const About = () => (
       same year. The final release is expected for December 2021.
     </Paragraph>
 
-    <SectionTitle>Contact us</SectionTitle>
+    <SectionTitle id="contact-us">Contact us</SectionTitle>
     <Paragraph>
       For any questions relating to the development of the SSH Open Marketplace
       or the SSHOC project, please visit the{' '}
