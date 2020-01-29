@@ -22,4 +22,6 @@ COPY --from=build /usr/src/app/build /usr/share/app
 
 EXPOSE 3000
 
+USER node
+
 CMD ["npx", "serve", "-c", "/usr/share/serve.json", "-l", "3000", "-n", "-s", "/usr/share/app"]
