@@ -91,10 +91,10 @@ const Checkbox = forwardRef(
         })}
       >
         <Checkmark
-          css={{
+          css={css({
             opacity: checked ? 1 : 0,
             transition: theme => `opacity ${theme.transitions.default}`,
-          }}
+          })}
           height="12"
           width="12"
         />
