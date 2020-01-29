@@ -17,6 +17,12 @@ const HomeScreen = () => (
       Humanities: tools, services, training materials and datasets,
       contextualised. <Link to="/about">Read more&hellip;</Link>
     </Text>
+    <Text css={css({ fontWeight: 'bold', lineHeight: 'large', my: 3 })}>
+      SSH Open Marketplace is under development and the current content is
+      subject to change.
+      <br />
+      Alpha release is planned for June 2020.
+    </Text>
     <SearchForm />
   </Container>
 )
