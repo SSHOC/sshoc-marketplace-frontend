@@ -102,7 +102,9 @@ const Select = forwardRef(
         css={css({ display: 'inline-block', position: 'relative' })}
         {...props}
       >
-        <Invisible aria-label={ariaLabel} as="label" {...getLabelProps()} />
+        <Invisible as="label" {...getLabelProps()}>
+          ariaLabel
+        </Invisible>
         <Button
           className={className}
           css={css({ bg: isOpen ? 'subtler' : undefined })}
@@ -116,7 +118,19 @@ const Select = forwardRef(
             direction={isOpen ? 'up' : 'down'}
           />
         </Button>
-        <Menu open={isOpen} {...getMenuProps()}>
+        <Menu
+          open={isOpen}
+          {...getMenuProps(
+            // FIXME: Workaround for downshift adding aria-activedescendent
+            // even when menu is closed and no <li> elements are on the page.
+            // Avoids lighthouse complaining.
+            isOpen
+              ? undefined
+              : {
+                  'aria-activedescendant': null,
+                }
+          )}
+        >
           {isOpen
             ? items.map((item, index) => (
                 <Option
