@@ -138,6 +138,17 @@ const getPath = icon => {
         ),
       }
 
+    case 'hamburger':
+      return {
+        path: (
+          <g fill="currentColor">
+            <rect y="0" width="100%" height="20%" rx="5%" ry="5%" />
+            <rect y="40%" width="100%" height="20%" rx="5%" ry="5%" />
+            <rect y="80%" width="100%" height="20%" rx="5%" ry="5%" />
+          </g>
+        ),
+      }
+
     case 'link':
       return {
         viewBox: '0 0 10.247 10.247',
