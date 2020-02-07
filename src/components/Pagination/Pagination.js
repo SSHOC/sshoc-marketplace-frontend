@@ -42,6 +42,11 @@ const PageInput = ({ currentPage, disabled, onPageChange, totalPages }) => {
         css={css({
           textAlign: 'right',
           width: '3em',
+          '-moz-appearance': 'textfield',
+          '::-webkit-inner-spin-button,::-webkit-outer-spin-button': {
+            '-webkit-appearance': 'none',
+            m: 0,
+          },
         })}
         disabled={disabled}
         max={totalPages}
