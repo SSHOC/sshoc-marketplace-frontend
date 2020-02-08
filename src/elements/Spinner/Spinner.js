@@ -48,7 +48,6 @@ const Donut = ({ delayed, ...props }) => (
 )
 
 const Spinner = styled(Donut)`
-  /* animation-name: ${rotate}, ${fadeIn}; */
   animation-name: ${props =>
     props.delayed
       ? css`
