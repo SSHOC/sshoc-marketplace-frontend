@@ -3,10 +3,10 @@ import 'styled-components/macro'
 import Container from '../../elements/Container/Container'
 import Heading from '../../elements/Heading/Heading'
 import Main from '../../elements/Main/Main'
-import { useNavigationFocus } from '../../utils'
+import { useNavigationFocusScroll } from '../../utils'
 
 const NotFoundPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
 
   return (
     <Main ref={focusRef}>

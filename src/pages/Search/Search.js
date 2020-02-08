@@ -5,10 +5,10 @@ import SearchScreen from '../../components/SearchScreen/SearchScreen'
 import Main from '../../elements/Main/Main'
 import BackgroundImage from '../../images/bg_search.jpg'
 import BackgroundImageHiDPI from '../../images/bg_search@2x.jpg'
-import { useNavigationFocus, useSearchParams } from '../../utils'
+import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
 const SearchPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
   const [searchParams, setSearchParams] = useSearchParams()
 
   return (

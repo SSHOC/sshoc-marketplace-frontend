@@ -3,10 +3,10 @@ import 'styled-components/macro'
 import PrivacyPolicyScreen from '../../components/PrivacyPolicyScreen/PrivacyPolicyScreen'
 import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
-import { useNavigationFocus, useSearchParams } from '../../utils'
+import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
 const PrivacyPolicyPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
   const [, setSearchParams] = useSearchParams()
 
   return (

@@ -5,12 +5,11 @@ import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
 import BackgroundImage from '../../images/bg_about.jpg'
 import BackgroundImageHiDPI from '../../images/bg_about@2x.jpg'
-import { useHashScroll, useNavigationFocus, useSearchParams } from '../../utils'
+import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
 const AboutPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
   const [, setSearchParams] = useSearchParams()
-  useHashScroll()
 
   return (
     <Main

@@ -3,10 +3,10 @@ import 'styled-components/macro'
 import ContactScreen from '../../components/ContactScreen/ContactScreen'
 import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
-import { useNavigationFocus, useSearchParams } from '../../utils'
+import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
 const ContactPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
   const [, setSearchParams] = useSearchParams()
 
   return (

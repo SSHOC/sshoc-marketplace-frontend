@@ -7,10 +7,10 @@ import Main from '../../elements/Main/Main'
 import BackgroundImage from '../../images/bg_details.jpg'
 import BackgroundImageHiDPI from '../../images/bg_details@2x.jpg'
 import { fetchTrainingMaterial } from '../../store/actions/items'
-import { useNavigationFocus, useSearchParams } from '../../utils'
+import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
 const TrainingMaterialPage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
   const { id } = useParams()
   const [, setSearchParams] = useSearchParams()
 

@@ -5,10 +5,10 @@ import Container from '../../elements/Container/Container'
 import Main from '../../elements/Main/Main'
 import BackgroundImage from '../../images/bg_home.jpg'
 import BackgroundImageHiDPI from '../../images/bg_home@2x.jpg'
-import { useNavigationFocus } from '../../utils'
+import { useNavigationFocusScroll } from '../../utils'
 
 const HomePage = () => {
-  const focusRef = useNavigationFocus()
+  const focusRef = useNavigationFocusScroll()
 
   return (
     <Main
