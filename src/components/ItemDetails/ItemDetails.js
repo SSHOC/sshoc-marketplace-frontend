@@ -1,5 +1,5 @@
 import css from '@styled-system/css'
-import React from 'react'
+import React, { Fragment } from 'react'
 import 'styled-components/macro'
 import Box from '../../elements/Box/Box'
 import Centered from '../../elements/Centered/Centered'
@@ -23,7 +23,7 @@ const ItemContributors = ({ contributors }) => {
     <Text css={css({ color: 'grey.900' })} size="small">
       <span css={css({ color: 'grey.800' })}>Contributors: </span>
       {contributors.map((contributor, i) => (
-        <>
+        <Fragment key={contributor.actor.id}>
           {contributor.actor.website ? (
             <span>
               <Link css={css({ color: 'text' })} to={contributor.actor.website}>
@@ -49,7 +49,7 @@ const ItemContributors = ({ contributors }) => {
             </>
           ) : null}
           {i < contributors.length - 1 && ', '}
-        </>
+        </Fragment>
       ))}
     </Text>
   )
