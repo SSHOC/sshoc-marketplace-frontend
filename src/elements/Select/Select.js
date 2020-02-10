@@ -77,7 +77,7 @@ const Select = forwardRef(
       className,
       items,
       onChange,
-      selectedItem,
+      selectedItem = items[0],
       variant,
       ...props
     },
@@ -107,7 +107,7 @@ const Select = forwardRef(
         </Invisible>
         <Button
           className={className}
-          css={css({ bg: isOpen ? 'subtler' : undefined })}
+          css={css(isOpen && !variant ? { bg: 'subtler' } : {})}
           ref={ref}
           variant={variant}
           {...getToggleButtonProps()}
