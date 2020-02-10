@@ -1,9 +1,10 @@
 import css from '@styled-system/css'
-import React from 'react'
+import React, { Fragment } from 'react'
 import 'styled-components/macro'
 import Dropdown from '../../elements/Dropdown/Dropdown'
 import Heading from '../../elements/Heading/Heading'
 import Icon from '../../elements/Icon/Icon'
+import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 
 const ItemSidebar = ({ resource }) => {
@@ -70,16 +71,30 @@ const ItemSidebar = ({ resource }) => {
           .map(code => {
             const property = properties[code]
 
+            // FIXME: See sshoc-marketplace#40
+            const values = property.values
+              .filter(Boolean)
+              .sort()
+              .map((value, i, values) => {
+                const element = /^https?:\/\//.test(value) ? (
+                  <Link to={value}>{value}</Link>
+                ) : (
+                  <span>{value}</span>
+                )
+                return (
+                  <Fragment key={value}>
+                    {element}
+                    {i === values.length - 1 ? null : ', '}
+                  </Fragment>
+                )
+              })
+
             return (
               <li css={css({ fontSize: 1 })} key={code}>
                 <span css={css({ color: 'muted', mr: 2 })}>
                   {property.label}:
                 </span>
-                {/* FIXME: Is this correct? i.e. we either have freeform value, or concept.label? */}
-                {property.values
-                  .filter(Boolean)
-                  .sort()
-                  .join(', ')}
+                {values}
               </li>
             )
           })}

@@ -48,7 +48,7 @@ const ItemContributors = ({ contributors }) => {
               </span>
             </>
           ) : null}
-          {i < contributors.length - 1 && ', '}
+          {i === contributors.length - 1 ? null : ', '}
         </Fragment>
       ))}
     </Text>
