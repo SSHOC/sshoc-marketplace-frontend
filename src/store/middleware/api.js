@@ -65,6 +65,7 @@ const createApiMiddleware = fetch => ({
   try {
     const {
       baseUrl,
+      body,
       format = 'json',
       headers,
       method,
@@ -74,6 +75,7 @@ const createApiMiddleware = fetch => ({
 
     const url = createUrl({ baseUrl, path, query })
     const response = await fetch(url, {
+      body: body !== undefined ? JSON.stringify(body) : undefined,
       headers: {
         Accept: 'application/json',
         ...headers,
