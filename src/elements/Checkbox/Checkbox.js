@@ -51,6 +51,7 @@ const Checkbox = forwardRef(
         as="input"
         checked={checked}
         css={{
+          cursor: 'pointer',
           height: 1,
           margin: -1,
           opacity: 0,
