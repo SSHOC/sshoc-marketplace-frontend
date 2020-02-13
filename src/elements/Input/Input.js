@@ -23,9 +23,11 @@ const Input = styled('input')(
       color: 'muted',
     },
     '&:focus': {
-      boxShadow: 'outline',
       outline: 'none',
       zIndex: 'focus',
+    },
+    '&:focus.focus-visible': {
+      boxShadow: 'outline',
     },
     '&:hover': {
       bg: 'subtler',

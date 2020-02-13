@@ -8,6 +8,7 @@
     "@styled-system/variant": "^5.1.2",
     "detab": "^2.0.2",
     "downshift": "^3.4.2",
+    "focus-visible": "^5.0.2",
     "lodash-es": "^4.17.15",
     "polished": "^3.4.2",
     "prism-react-renderer": "^1.0.2",

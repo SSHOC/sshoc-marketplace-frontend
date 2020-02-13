@@ -29,9 +29,11 @@ const Button = styled('button')(
       ].join(', '),
     whiteSpace: 'nowrap',
     '&:focus': {
-      boxShadow: 'outline',
       outline: 'none',
       zIndex: 'focus',
+    },
+    '&:focus.focus-visible': {
+      boxShadow: 'outline',
     },
     '&:hover': {
       bg: 'subtler',

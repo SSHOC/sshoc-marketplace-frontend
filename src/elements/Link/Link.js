@@ -21,7 +21,7 @@ const Link = styled(RelativeOrAbsoluteLink)(
         `box-shadow ${theme.transitions.default}`,
         `color ${theme.transitions.default}`,
       ].join(', '),
-    '&:focus': {
+    '&:focus.focus-visible': {
       boxShadow: 'outline',
     },
     '&:hover': {

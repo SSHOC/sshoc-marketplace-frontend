@@ -33,10 +33,13 @@ const Menu = styled('ul')(props =>
     transition: theme => `box-shadow ${theme.transitions.default}`,
     whiteSpace: 'nowrap',
     '&:focus': {
-      boxShadow: theme =>
-        [theme.shadows.small, theme.shadows.outline].join(', '),
+      boxShadow: theme => theme.shadows.small,
       outline: 'none',
       zIndex: 'focus',
+    },
+    '&:focus.focus-visible': {
+      boxShadow: theme =>
+        [theme.shadows.small, theme.shadows.outline].join(', '),
     },
     zIndex: 'select',
   })

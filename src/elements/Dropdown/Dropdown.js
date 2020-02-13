@@ -43,10 +43,13 @@ const DropdownList = styled(MenuItems)(
     transition: theme => `box-shadow ${theme.transitions.default}`,
     whiteSpace: 'nowrap',
     '&:focus, &:focus-within': {
-      boxShadow: theme =>
-        [theme.shadows.small, theme.shadows.outline].join(', '),
+      boxShadow: theme => theme.shadows.small,
       outline: 'none',
       zIndex: 'focus',
+    },
+    '&:focus.focus-visible, &:focus-within.focus-visible': {
+      boxShadow: theme =>
+        [theme.shadows.small, theme.shadows.outline].join(', '),
     },
     // We cannot use styled(MenuButton) directly because of
     // https://github.com/reach/reach-ui/issues/119

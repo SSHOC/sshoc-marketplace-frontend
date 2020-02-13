@@ -85,8 +85,10 @@ const Checkbox = forwardRef(
             ].join(', '),
           width: 16,
           'input[type=checkbox]:focus + &': {
-            boxShadow: 'outline',
             outline: 'none',
+          },
+          'input[type=checkbox]:focus.focus-visible + &': {
+            boxShadow: 'outline',
           },
         })}
       >
