@@ -1,4 +1,4 @@
-export const createNormalizer = (field, resourceType = 'items') => data => {
+export const createNormalizer = ({ field, resourceType = 'items' }) => data => {
   // single resource // TODO: This is a bit weird
   if (!field) {
     return {

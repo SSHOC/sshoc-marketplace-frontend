@@ -4,6 +4,7 @@ import {
   createRequestSlice,
   createResourceSlice,
 } from '../utils'
+import userReducer, * as userSelectors from './user'
 
 const {
   reducer: itemCollectionReducer,
@@ -19,27 +20,22 @@ const {
   selectors: requestSelectors,
 } = createRequestSlice()
 
+const mapSelectors = (selectors, slice) =>
+  Object.entries(selectors).reduce((acc, [name, selector]) => {
+    acc[name] = (state, ...options) => selector(state[slice], ...options)
+    return acc
+  }, {})
+
 export const selectors = {
-  items: Object.entries(itemSelectors).reduce((acc, [name, selector]) => {
-    acc[name] = (state, ...options) => selector(state.items, ...options)
-    return acc
-  }, {}),
-  itemCollections: Object.entries(itemCollectionSelectors).reduce(
-    (acc, [name, selector]) => {
-      acc[name] = (state, ...options) =>
-        selector(state.itemCollections, ...options)
-      return acc
-    },
-    {}
-  ),
-  requests: Object.entries(requestSelectors).reduce((acc, [name, selector]) => {
-    acc[name] = (state, ...options) => selector(state.requests, ...options)
-    return acc
-  }, {}),
+  items: mapSelectors(itemSelectors, 'items'),
+  itemCollections: mapSelectors(itemCollectionSelectors, 'itemCollections'),
+  requests: mapSelectors(requestSelectors, 'requests'),
+  user: mapSelectors(userSelectors, 'user'),
 }
 
 export default combineReducers({
   items: itemReducer,
   itemCollections: itemCollectionReducer,
   requests: requestReducer,
+  user: userReducer,
 })

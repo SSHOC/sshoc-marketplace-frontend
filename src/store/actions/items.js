@@ -10,7 +10,7 @@ export const fetchDataset = ({ id }) => ({
   meta: {
     getErrorMessage,
     next: FETCH_RESOURCE,
-    normalize: createNormalizer(),
+    normalize: createNormalizer({}),
     request: {
       name: 'fetchDataset',
       query: { id },
@@ -27,7 +27,7 @@ export const fetchTool = ({ id }) => ({
   meta: {
     getErrorMessage,
     next: FETCH_RESOURCE,
-    normalize: createNormalizer(),
+    normalize: createNormalizer({}),
     request: {
       name: 'fetchTool',
       query: { id },
@@ -44,7 +44,7 @@ export const fetchTrainingMaterial = ({ id }) => ({
   meta: {
     getErrorMessage,
     next: FETCH_RESOURCE,
-    normalize: createNormalizer(),
+    normalize: createNormalizer({}),
     request: {
       name: 'fetchTrainingMaterial',
       query: { id },
@@ -67,7 +67,7 @@ export const fetchSearchResults = ({ categories, page, query, sort }) => ({
     ],
     getErrorMessage,
     next: FETCH_RESOURCE,
-    normalize: createNormalizer('items'),
+    normalize: createNormalizer({ field: 'items' }),
     request: {
       name: 'fetchSearchResults',
       query: { categories, page, query, sort },

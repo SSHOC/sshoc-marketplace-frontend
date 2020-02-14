@@ -27,6 +27,15 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
       q: query,
     },
   }),
+  userLogin: ({ username, password }) => ({
+    baseUrl,
+    method: 'post',
+    path: `${prefix}/login`,
+    body: {
+      username,
+      password,
+    },
+  }),
 })
 
 export const getErrorMessage = async response => {

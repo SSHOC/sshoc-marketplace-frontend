@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const db = require('./db.json')
+const users = require('./users.json')
 
 const api = Router()
 
@@ -188,6 +189,23 @@ api.get('/training-materials/:id', (req, res) => {
   }
 
   return res.send(item)
+})
+
+api.post('/login', (req, res) => {
+  const { username, password } = req.body || {}
+
+  const match = Object.values(users).find(
+    user => user.name === username && user.password === password
+  )
+
+  if (match) {
+    return res.send({
+      ...match,
+      token: '1234',
+    })
+  }
+
+  res.status(401).end()
 })
 
 module.exports = api
