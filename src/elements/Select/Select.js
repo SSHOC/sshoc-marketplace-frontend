@@ -37,6 +37,7 @@ const Menu = styled('ul')(props =>
       outline: 'none',
       zIndex: 'focus',
     },
+    userSelect: 'none',
     '&:focus.focus-visible': {
       boxShadow: theme =>
         [theme.shadows.small, theme.shadows.outline].join(', '),

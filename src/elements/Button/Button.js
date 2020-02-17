@@ -27,6 +27,7 @@ const Button = styled('button')(
         `box-shadow ${theme.transitions.default}`,
         `color ${theme.transitions.default}`,
       ].join(', '),
+    userSelect: 'none',
     whiteSpace: 'nowrap',
     '&:focus': {
       outline: 'none',

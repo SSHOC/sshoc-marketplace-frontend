@@ -41,6 +41,7 @@ const DropdownList = styled(MenuItems)(
     py: 2,
     overflowY: 'auto',
     transition: theme => `box-shadow ${theme.transitions.default}`,
+    userSelect: 'none',
     whiteSpace: 'nowrap',
     '&:focus, &:focus-within': {
       boxShadow: theme => theme.shadows.small,
