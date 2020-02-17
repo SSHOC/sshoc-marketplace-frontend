@@ -1,4 +1,6 @@
 export * from './createPages'
+export * from './createPath'
+export * from './formatDate'
 export * from './pick'
 export * from './range'
 export * from './truncate'

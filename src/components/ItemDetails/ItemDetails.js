@@ -10,6 +10,7 @@ import Link from '../../elements/Link/Link'
 import Spinner from '../../elements/Spinner/Spinner'
 import Text from '../../elements/Text/Text'
 import { REQUEST_STATUS } from '../../store/constants'
+import { formatDate } from '../../utils'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import Markdown from '../Markdown/Markdown'
 import RelatedItems from '../RelatedItems/RelatedItems'
@@ -73,8 +74,18 @@ const ItemDetails = ({ request, resource }) => {
             <Box>
               <ItemContributors contributors={resource.contributors} />
               <Text css={css({ color: 'grey.400' })} size="small">
-                <span>More Metadata: </span>
-                What goes here?
+                <span>Activities: </span>
+                {resource.properties
+                  .filter(property => property.type.code === 'activity')
+                  .map(property => property.concept?.label ?? property.value)
+                  .join(', ')}
+              </Text>
+              <Text css={css({ color: 'grey.400' })} size="small">
+                {resource.lastInfoUpdate ? (
+                  <span>
+                    Last modified on {formatDate(resource.lastInfoUpdate)}
+                  </span>
+                ) : null}
               </Text>
             </Box>
           </Box>

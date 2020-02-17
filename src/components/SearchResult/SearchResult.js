@@ -80,9 +80,17 @@ const SearchResult = ({ result }) => (
             .join(', ')}
         </Text>
         <Text css={css({ color: 'grey.400' })} size="small">
-          <span>More Metadata: </span>
-          What goes here?
+          <span>Activities: </span>
+          {result.properties
+            .filter(property => property.type.code === 'activity')
+            .map(property => property.concept?.label ?? property.value)
+            .join(', ')}
         </Text>
+        {/* <Text css={css({ color: 'grey.400' })} size="small">
+          {result.lastInfoUpdate ? (
+            <span>Last modified on {formatDate(result.lastInfoUpdate)}</span>
+          ) : null}
+        </Text> */}
       </Box>
       <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>
         <PlainText maxLength={MAX_DESCRIPTION_LENGTH}>
