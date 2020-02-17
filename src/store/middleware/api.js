@@ -5,6 +5,9 @@ import { createCacheKey, createUrl, HttpError } from '../utils'
 // TODO: separate concerns into multiple middleware (request caching, response normalization)
 // TODO: maybe use normalizr w/ schema
 
+const DEFAULT_ACCEPT = 'application/json'
+const DEFAULT_CONTENT_TYPE = 'application/json'
+
 const createApiMiddleware = fetch => ({
   dispatch,
   getState,
@@ -77,7 +80,8 @@ const createApiMiddleware = fetch => ({
     const response = await fetch(url, {
       body: body !== undefined ? JSON.stringify(body) : undefined,
       headers: {
-        Accept: 'application/json',
+        Accept: DEFAULT_ACCEPT,
+        'Content-Type': DEFAULT_CONTENT_TYPE,
         ...headers,
       },
       method,

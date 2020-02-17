@@ -1,4 +1,4 @@
-export const createCacheKey = ({ name, query }) => {
+export const createCacheKey = ({ name, query = {} }) => {
   const keys = Object.keys(query)
   keys.sort()
   const sorted = keys.reduce((acc, key) => {

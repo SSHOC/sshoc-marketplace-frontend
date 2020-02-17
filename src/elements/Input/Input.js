@@ -1,5 +1,6 @@
 import css from '@styled-system/css'
 import styled from 'styled-components/macro'
+import variant from '@styled-system/variant'
 
 const Input = styled('input')(
   css({
@@ -41,6 +42,16 @@ const Input = styled('input')(
     },
     '&[disabled]::placeholder': {
       color: 'subtle',
+    },
+  }),
+  variant({
+    prop: 'size',
+    variants: {
+      small: {
+        fontSize: 1,
+        px: 2,
+        py: 1,
+      },
     },
   })
 )

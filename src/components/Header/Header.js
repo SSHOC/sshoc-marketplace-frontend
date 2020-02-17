@@ -8,13 +8,13 @@ import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
-// import { useColorMode } from '../../styles'
+import LoginForm from '../LoginForm/LoginForm'
 
 const Logo = () => (
   <nav>
     <Link
       aria-label="Home"
-      css={css({ display: 'block', lineHeight: 1, my: 3 })}
+      css={css({ display: 'block', lineHeight: 1, my: 3, mx: 3 })}
       to="/"
     >
       <SSHOCMPLogo />
@@ -60,6 +60,7 @@ const Header = () => (
         alignItems: 'center',
         justifyContent: 'space-between',
         py: 0,
+        px: 1,
       })}
       variant="wide"
     >
@@ -71,7 +72,9 @@ const Header = () => (
           justifyContent: 'space-between',
         }}
       >
-        <nav>&nbsp;</nav>
+        <Flex css={css({ alignItems: 'stretch', height: 40, py: 1 })}>
+          <LoginForm />
+        </Flex>
         <nav>
           <FlexList>
             <NavItem>
