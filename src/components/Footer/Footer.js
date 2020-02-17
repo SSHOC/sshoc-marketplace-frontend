@@ -34,8 +34,8 @@ const Footer = () => (
       })}
       variant="wide"
     >
-      <nav>
-        <FlexList>
+      <nav css={{ flexShrink: 0 }}>
+        <FlexList css={{ alignItems: 'center' }}>
           <li>
             <NavLink to="/about">About</NavLink>
           </li>
@@ -47,7 +47,11 @@ const Footer = () => (
           </li>
         </FlexList>
       </nav>
-      <Text>Copyright</Text>
+      <Text css={css({ fontSize: 'tiny', ml: 4, my: 2 })}>
+        The SSH Open Marketplace is developed as part of the "Social Sciences
+        and Humanities Open Cloud" SSHOC project, European Union's Horizon 2020
+        project call H2020-INFRAEOSC-04-2018, grant agreement #823782.
+      </Text>
     </Container>
   </Box>
 )

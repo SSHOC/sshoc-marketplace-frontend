@@ -50,6 +50,9 @@ const colors = {
   },
 }
 
+const fontSizes = [12, 14, 15, 16, 20, 22, 24, 32, 40, 48, 64]
+fontSizes.tiny = 10
+
 export const theme = {
   breakpoints: ['40em', '54em', '64em'],
   colors,
@@ -57,7 +60,7 @@ export const theme = {
     body: 'Poppins, system-ui, sans-serif',
     heading: 'inherit',
   },
-  fontSizes: [12, 14, 15, 16, 20, 22, 24, 32, 40, 48, 64],
+  fontSizes,
   fontWeights: {
     extraBold: 800,
     extraLight: 200,
