@@ -13,6 +13,7 @@ import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 import Text from '../../elements/Text/Text'
+// import { createPath } from '../../utils'
 
 const Title = styled(Heading).attrs({ as: 'h1' })(css({ mb: 5 }))
 
@@ -153,9 +154,6 @@ const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
     },
   })
 )
-
-// const createPath = (basepath, path) =>
-//   [basepath, path].join(basepath.endsWith('/') ? '' : '/')
 
 const SideNav = ({ url }) => (
   <aside
