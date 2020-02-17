@@ -25,7 +25,8 @@
     "remark-stringify": "^7.0.4",
     "strip-markdown": "^3.1.1",
     "styled-components": "^5.0.0",
-    "typeface-poppins": "^0.0.72",
+    "typeface-open-sans": "^0.0.75",
+    "typeface-ubuntu": "^0.0.65",
     "unified": "^8.4.2",
     "unist-builder": "^2.0.2"
   },

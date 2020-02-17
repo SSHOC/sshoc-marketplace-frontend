@@ -1,5 +1,6 @@
 import { transparentize } from 'polished'
-import 'typeface-poppins'
+import 'typeface-open-sans'
+import 'typeface-ubuntu'
 
 const baseColors = {
   black: '#373a3c',
@@ -13,20 +14,22 @@ const baseColors = {
     // 700: '',
     800: '#777777',
     900: '#606265',
-    // 950: '#575858',
   },
   white: '#ffffff',
   blue: {
     // 100: '',
     // 200: '',
-    300: '#57afff',
+    // 300: '',
     // 400: '',
-    500: '#4d80fa',
+    500: '#0085ca',
     // 600: '',
-    600: '#4249f5',
-    700: '#3364db',
-    800: '#2755c4',
+    // 600: '',
+    // 700: '',
+    800: '#00558c',
     // 900: '',
+  },
+  orange: {
+    500: '#ff9e1b',
   },
 }
 
@@ -37,9 +40,9 @@ const colors = {
   border: baseColors.grey['500'],
   // highlight: '',
   muted: baseColors.grey['800'],
-  primary: baseColors.blue['500'],
-  primaryActive: baseColors.blue['800'],
-  primaryHover: baseColors.blue['700'],
+  primary: baseColors.blue['800'],
+  primaryActive: baseColors.blue['500'],
+  primaryHover: baseColors.blue['500'],
   secondary: '',
   subtle: baseColors.grey['300'],
   subtler: baseColors.grey['200'],
@@ -50,15 +53,15 @@ const colors = {
   },
 }
 
-const fontSizes = [12, 14, 15, 16, 20, 22, 24, 32, 40, 48, 64]
-fontSizes.tiny = 10
+const fontSizes = [10, 12, 13, 14, 18, 20, 22, 30, 38, 46, 62]
+fontSizes.tiny = 9
 
 export const theme = {
   breakpoints: ['40em', '54em', '64em'],
   colors,
   fonts: {
-    body: 'Poppins, system-ui, sans-serif',
-    heading: 'inherit',
+    body: '"Open Sans", system-ui, sans-serif',
+    heading: 'Ubuntu, system-ui, sans-serif',
   },
   fontSizes,
   fontWeights: {
@@ -75,8 +78,8 @@ export const theme = {
     thin: 100,
   },
   gradients: {
-    primary: `linear-gradient(to right, ${baseColors.blue['300']}, ${
-      baseColors.blue['600']
+    primary: `linear-gradient(to right, ${baseColors.blue['500']}, ${
+      baseColors.blue['800']
     })`,
   },
   lineHeights: {
