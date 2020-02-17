@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components/macro'
 
 export const GlobalStyles = createGlobalStyle(
   css({
-    '*, *::after, *::body': {
+    '*, *::after, *::before': {
       boxSizing: 'border-box',
     },
     body: {
@@ -17,6 +17,10 @@ export const GlobalStyles = createGlobalStyle(
           `color ${theme.transitions.default}`,
         ].join(', '),
       variant: 'text.body',
+    },
+    '::selection': {
+      bg: 'primary',
+      color: 'white',
     },
   })
 )
