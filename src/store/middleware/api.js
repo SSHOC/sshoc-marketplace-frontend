@@ -76,12 +76,19 @@ const createApiMiddleware = fetch => ({
       query,
     } = action.payload
 
+    const defaultHeaders = {
+      Accept: DEFAULT_ACCEPT,
+    }
+
+    if (['post', 'put'].includes(method.toLowerCase())) {
+      defaultHeaders['Content-Type'] = DEFAULT_CONTENT_TYPE
+    }
+
     const url = createUrl({ baseUrl, path, query })
     const response = await fetch(url, {
       body: body !== undefined ? JSON.stringify(body) : undefined,
       headers: {
-        Accept: DEFAULT_ACCEPT,
-        'Content-Type': DEFAULT_CONTENT_TYPE,
+        ...defaultHeaders,
         ...headers,
       },
       method,

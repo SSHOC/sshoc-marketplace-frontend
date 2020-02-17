@@ -5,7 +5,7 @@ const authMiddleware = ({ getState }) => next => action => {
     return next(action)
   }
 
-  if (!action.meta?.requiresAuthentication) {
+  if (!action.payload?.requiresAuthentication) {
     return next(action)
   }
 
