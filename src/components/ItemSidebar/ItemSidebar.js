@@ -59,7 +59,11 @@ const ItemSidebar = ({ resource }) => {
         aria-label="Versions"
         links={links}
         size="large"
-        variant="primary"
+        // TODO: This whole ui element is a bit weird, since
+        // `accessibleAt` can be empty, in which case we want to
+        // disable the button, but we might still get older/newerVersions
+        // for which we need the dropdown
+        variant={resource.accessibleAt ? 'primary' : undefined}
       />
       <Heading as="h2" css={css({ mt: 6 })} variant="h4">
         Details
