@@ -122,19 +122,7 @@ const Select = forwardRef(
             direction={isOpen ? 'up' : 'down'}
           />
         </Button>
-        <Menu
-          open={isOpen}
-          {...getMenuProps(
-            // FIXME: Workaround for downshift adding aria-activedescendent
-            // even when menu is closed and no <li> elements are on the page.
-            // Avoids lighthouse complaining.
-            isOpen
-              ? undefined
-              : {
-                  'aria-activedescendant': null,
-                }
-          )}
-        >
+        <Menu open={isOpen} {...getMenuProps()}>
           {isOpen
             ? items.map((item, index) => (
                 <Option
