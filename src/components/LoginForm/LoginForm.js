@@ -45,6 +45,7 @@ const LoginForm = () => {
   ) : (
     <Flex as="form" onSubmit={onLogin}>
       <Input
+        aria-label="Username"
         css={css({ mr: 2 })}
         onChange={event => setUsername(event.target.value)}
         placeholder="Username"
@@ -52,6 +53,7 @@ const LoginForm = () => {
         value={username}
       />
       <Input
+        aria-label="Password"
         css={css({ mr: 2 })}
         onChange={event => setPassword(event.target.value)}
         placeholder="Password"
