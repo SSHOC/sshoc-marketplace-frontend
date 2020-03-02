@@ -42,3 +42,11 @@ export const USER_LOGIN = {
 }
 USER_LOGIN.toJSON = () => 'USER_LOGIN'
 USER_LOGIN.toString = () => 'USER_LOGIN'
+
+export const REMOVE_TOAST = 'REMOVE_TOAST'
+export const SHOW_TOAST = 'SHOW_TOAST'
+export const NOTIFICATION_LEVEL = {
+  ERROR: 'ERROR',
+  INFO: 'INFO',
+  WARN: 'WARN',
+}

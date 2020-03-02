@@ -139,7 +139,7 @@ const createApiMiddleware = fetch => ({
         type: API_REQUEST.FAILED,
         error: true,
         payload: error,
-        meta: { cacheKey, collections, timestamp },
+        meta: { cacheKey, collections, notification: false, timestamp },
       })
     }
   }
