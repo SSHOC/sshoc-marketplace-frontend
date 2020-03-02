@@ -99,6 +99,7 @@ export const theme = {
     narrow: 1000,
     row: 80,
     sidebar: 300,
+    toast: 400,
     wide: 1900,
   },
   space: [0, 4, 8, 16, 32, 48, 64, 128, 256, 512],

@@ -4,6 +4,7 @@ import {
   createRequestSlice,
   createResourceSlice,
 } from '../utils'
+import toastReducer, * as toastSelectors from './toast'
 import userReducer, * as userSelectors from './user'
 
 const {
@@ -30,6 +31,7 @@ export const selectors = {
   items: mapSelectors(itemSelectors, 'items'),
   itemCollections: mapSelectors(itemCollectionSelectors, 'itemCollections'),
   requests: mapSelectors(requestSelectors, 'requests'),
+  toasts: mapSelectors(toastSelectors, 'toasts'),
   user: mapSelectors(userSelectors, 'user'),
 }
 
@@ -37,5 +39,6 @@ export default combineReducers({
   items: itemReducer,
   itemCollections: itemCollectionReducer,
   requests: requestReducer,
+  toasts: toastReducer,
   user: userReducer,
 })
