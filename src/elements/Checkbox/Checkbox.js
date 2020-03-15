@@ -12,6 +12,7 @@ const Checkbox = forwardRef(
       checked,
       children,
       label,
+      name,
       onChange,
       value,
       ...props
@@ -59,6 +60,7 @@ const Checkbox = forwardRef(
           position: 'absolute',
           width: 1,
         }}
+        name={name}
         onChange={onChange}
         ref={ref}
         type="checkbox"

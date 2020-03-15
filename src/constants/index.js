@@ -6,6 +6,12 @@ export const ITEM_CATEGORY = {
   dataset: 'Dataset',
 }
 
+export const ITEM_FACETS = {
+  'object-type': 'Types',
+  activity: 'Activities',
+  keyword: 'Keywords',
+}
+
 export const DEFAULT_SORT_FIELD = 'score'
 export const SORT_FIELDS = {
   score: 'relevance',

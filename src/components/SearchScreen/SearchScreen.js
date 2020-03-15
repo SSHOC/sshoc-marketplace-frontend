@@ -12,13 +12,14 @@ import { selectors } from '../../store/reducers'
 const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
   const dispatch = useDispatch()
 
-  const { categories, page, query, sort } = searchParams
+  const { categories, facets, page, query, sort } = searchParams
 
   const request = useSelector(state =>
     selectors.requests.selectRequestByName(state, {
       name: fetchSearchResults,
       query: {
         categories,
+        facets,
         page,
         query,
         sort,
@@ -43,17 +44,19 @@ const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
   // alternatively, use custom hook for something more linter-friendly,
   // or just use useDeepCompareEffect
   const categoriesHash = JSON.stringify(categories)
+  const facetsHash = JSON.stringify(facets)
   useEffect(() => {
     dispatch(
       fetchSearchResults({
         categories,
+        facets,
         page,
         query,
         sort,
       })
     )
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [categoriesHash, dispatch, page, query, sort])
+  }, [categoriesHash, dispatch, facetsHash, page, query, sort])
 
   return (
     <SearchScreen
