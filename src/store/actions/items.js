@@ -53,10 +53,16 @@ export const fetchTrainingMaterial = ({ id }) => ({
 })
 fetchTrainingMaterial.toString = () => 'fetchTrainingMaterial'
 
-export const fetchSearchResults = ({ categories, page, query, sort }) => ({
+export const fetchSearchResults = ({
+  categories,
+  facets,
+  page,
+  query,
+  sort,
+}) => ({
   type: API_REQUEST,
   payload: {
-    ...API.search({ categories, page, query, sort }),
+    ...API.search({ categories, facets, page, query, sort }),
   },
   meta: {
     collections: [
@@ -70,7 +76,7 @@ export const fetchSearchResults = ({ categories, page, query, sort }) => ({
     normalize: createNormalizer({ field: 'items' }),
     request: {
       name: 'fetchSearchResults',
-      query: { categories, page, query, sort },
+      query: { categories, facets, page, query, sort },
     },
   },
 })

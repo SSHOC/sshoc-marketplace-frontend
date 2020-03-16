@@ -16,12 +16,16 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
     method: 'get',
     path: `${prefix}/training-materials/${id}`,
   }),
-  search: ({ categories, page, query, sort }) => ({
+  search: ({ categories, facets, page, query, sort }) => ({
     baseUrl,
     method: 'get',
     path: `${prefix}/item-search`,
     query: {
       categories,
+      ...Object.entries(facets).reduce((acc, [key, values]) => {
+        acc[`f.${key}`] = values
+        return acc
+      }, {}),
       order: sort,
       page,
       q: query,

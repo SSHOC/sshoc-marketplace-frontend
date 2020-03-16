@@ -1,7 +1,7 @@
 import css from '@styled-system/css'
-import React from 'react'
+import React, { Fragment } from 'react'
 import 'styled-components/macro'
-import { ITEM_CATEGORY } from '../../constants'
+import { ITEM_CATEGORY, ITEM_FACETS } from '../../constants'
 import Box from '../../elements/Box/Box'
 import Checkbox from '../../elements/Checkbox/Checkbox'
 import Flex from '../../elements/Flex/Flex'
@@ -13,12 +13,12 @@ const CategoryCheckbox = ({
   category,
   categories,
   collection,
+  info,
   label,
   onChange,
-  request,
 }) => {
   const count =
-    request.info?.categories?.[category]?.count ??
+    info?.categories?.[category]?.count ??
     collection.info?.categories?.[category]?.count
 
   return (
@@ -34,23 +34,62 @@ const CategoryCheckbox = ({
   )
 }
 
+const FacetCheckbox = ({ checked, count, label, name, onChange }) => (
+  <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
+    <Checkbox checked={checked} name={name} onChange={onChange} value={label}>
+      {label} ({count})
+    </Checkbox>
+  </Flex>
+)
+
 const SearchFacets = ({
   collection,
   onSearchParamsChange,
   request,
   searchParams,
 }) => {
-  const { categories, query, sort } = searchParams
+  const { categories, facets, query, sort } = searchParams
+  const { info } = request || {}
+  const possibleFacets = info?.facets || collection?.info?.facets || {}
 
   const handleChangeCategories = event => {
-    const updatedCategories = event.target.checked
-      ? categories.concat(event.target.value)
-      : categories.filter(category => category !== event.target.value)
+    const { checked, value } = event.target
+
+    const updatedCategories = checked
+      ? categories.concat(value)
+      : categories.filter(category => category !== value)
 
     // Always reset to first page, so we don't end up on a page larger
     // than Math.ceil((results.length / pageSize)) when deselecting a category
     onSearchParamsChange({
       categories: updatedCategories,
+      facets,
+      // page,
+      query,
+      sort,
+    })
+  }
+
+  const handleFacetChange = event => {
+    const { checked, name, value } = event.target
+
+    const prevFacet = facets[name] || []
+    const nextFacet = checked
+      ? prevFacet.concat(value)
+      : prevFacet.filter(f => f !== value)
+
+    const nextFacets = {
+      ...facets,
+      [name]: [...new Set(nextFacet)].sort(),
+    }
+
+    if (!nextFacet.length) {
+      delete nextFacets[name]
+    }
+
+    onSearchParamsChange({
+      categories,
+      facets: nextFacets,
       // page,
       query,
       sort,
@@ -86,12 +125,37 @@ const SearchFacets = ({
           category={category}
           categories={categories}
           collection={collection}
+          info={info}
           key={category}
           label={label}
           onChange={handleChangeCategories}
-          request={request}
         />
       ))}
+
+      {Object.entries(possibleFacets).map(([key, value]) => {
+        const checkedFacets = facets[key] || []
+
+        return (
+          <Fragment key={key}>
+            <Heading as="h3" variant="h5" css={css({ mt: 4, mb: 3 })}>
+              {ITEM_FACETS[key]}
+            </Heading>
+
+            {Object.entries(value).map(([label, { count, checked }]) => (
+              <FacetCheckbox
+                // we use the URL state for `checked`, not the server response,
+                // so we don't need to wait for the backend to change the checkbox state
+                checked={checkedFacets.includes(label)}
+                count={count}
+                key={label}
+                label={label}
+                name={key}
+                onChange={handleFacetChange}
+              />
+            ))}
+          </Fragment>
+        )
+      })}
     </Box>
   )
 }
