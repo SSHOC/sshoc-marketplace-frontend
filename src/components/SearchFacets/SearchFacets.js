@@ -63,7 +63,7 @@ const SearchFacets = ({
     // than Math.ceil((results.length / pageSize)) when deselecting a category
     onSearchParamsChange({
       categories: updatedCategories,
-      facets,
+      // facets,
       // page,
       query,
       sort,
