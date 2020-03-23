@@ -8,6 +8,7 @@ import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Separator from '../../elements/Separator/Separator'
+import { pluralize } from '../../utils'
 
 const CategoryCheckbox = ({
   category,
@@ -28,7 +29,7 @@ const CategoryCheckbox = ({
         onChange={onChange}
         value={category}
       >
-        {label}s {count ? `(${count})` : null}
+        {pluralize(label)} {count ? `(${count})` : null}
       </Checkbox>
     </Flex>
   )
@@ -61,6 +62,8 @@ const SearchFacets = ({
 
     // Always reset to first page, so we don't end up on a page larger
     // than Math.ceil((results.length / pageSize)) when deselecting a category
+    // Also reset facets, so we don't have stale values that will always
+    // produce an empty result set because they are invalid for the selected categories
     onSearchParamsChange({
       categories: updatedCategories,
       // facets,
@@ -137,9 +140,11 @@ const SearchFacets = ({
 
         return (
           <Fragment key={key}>
-            <Heading as="h3" variant="h5" css={css({ mt: 4, mb: 3 })}>
-              {ITEM_FACETS[key]}
-            </Heading>
+            {Object.keys(value).length ? (
+              <Heading as="h3" variant="h5" css={css({ mt: 4, mb: 3 })}>
+                {ITEM_FACETS[key]}
+              </Heading>
+            ) : null}
 
             {Object.entries(value).map(([label, { count, checked }]) => (
               <FacetCheckbox

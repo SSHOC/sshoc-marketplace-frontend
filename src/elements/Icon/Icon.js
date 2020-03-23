@@ -4,6 +4,140 @@ import React, { forwardRef } from 'react'
 // (and elements with same id on a page when using icon more than once)
 const getPath = icon => {
   switch (icon) {
+    case 'activity':
+      return {
+        viewBox: '0 0 50.48 43.128',
+        path: (
+          <>
+            <defs>
+              <radialGradient
+                id="icon_activity_svg__a"
+                cx={33.611}
+                cy={29.464}
+                r={21.513}
+                gradientTransform="matrix(.984 0 0 .984 .325 .327)"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset={0.001} stopColor="#575757" />
+                <stop offset={1} stopColor="#828282" stopOpacity={0.302} />
+              </radialGradient>
+              <radialGradient
+                id="icon_activity_svg__b"
+                cx={15.184}
+                cy={37.251}
+                fx={22.204}
+                fy={25.952}
+                r={13.302}
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset={0.001} stopColor="#575757" />
+                <stop offset={0.307} stopColor="#5b5b5b" stopOpacity={0.816} />
+                <stop offset={0.613} stopColor="#676767" stopOpacity={0.631} />
+                <stop offset={0.919} stopColor="#7b7b7b" stopOpacity={0.447} />
+                <stop offset={1} stopColor="#828282" stopOpacity={0.4} />
+              </radialGradient>
+              <linearGradient
+                id="icon_activity_svg__c"
+                x1={0.5}
+                y1={0.087}
+                x2={0.5}
+                y2={0.976}
+                gradientUnits="objectBoundingBox"
+              >
+                <stop offset={0} stopColor="#bb5dff" />
+                <stop offset={0.502} stopColor="#7a43d4" />
+                <stop offset={1} stopColor="#5e34a8" />
+              </linearGradient>
+              <style>
+                {
+                  '.icon_activity_svg__b{fill:#fbfbfa}.icon_activity_svg__d{fill:#ddd}'
+                }
+              </style>
+            </defs>
+            <path
+              d="M51.177 9.588H19.243a5.382 5.382 0 00-5.366 5.366v31.232a5.382 5.382 0 005.366 5.366h31.934a5.382 5.382 0 005.366-5.366V14.954a5.382 5.382 0 00-5.366-5.366z"
+              transform="translate(-6.063 -8.423)"
+              fill="url(#icon_activity_svg__a)"
+            />
+            <path
+              className="icon_activity_svg__b"
+              d="M44.001 0H12.066A5.382 5.382 0 006.7 5.366v31.232a5.382 5.382 0 005.366 5.366h31.935a5.382 5.382 0 005.366-5.366V5.366A5.382 5.382 0 0044.001 0z"
+            />
+            <path
+              d="M49.367 5.366A5.382 5.382 0 0044.001 0H12.066A5.382 5.382 0 006.7 5.366V8.16h42.667z"
+              fill="#424242"
+            />
+            <circle
+              className="icon_activity_svg__b"
+              cx={1.428}
+              cy={1.428}
+              transform="translate(9.731 2.914)"
+              r={1.428}
+            />
+            <circle
+              className="icon_activity_svg__b"
+              cx={1.428}
+              cy={1.428}
+              transform="translate(14.419 2.914)"
+              r={1.428}
+            />
+            <circle
+              className="icon_activity_svg__b"
+              cx={1.428}
+              cy={1.428}
+              transform="translate(18.706 2.914)"
+              r={1.428}
+            />
+            <path
+              className="icon_activity_svg__d"
+              d="M43.18 33.215H30.41a.877.877 0 01-.874-.874.877.877 0 01.874-.874h12.77a.877.877 0 01.874.874.877.877 0 01-.874.874zM43.18 37.201H30.41a.877.877 0 01-.874-.874.877.877 0 01.874-.874h12.77a.877.877 0 01.874.874.877.877 0 01-.874.874z"
+            />
+            <path
+              d="M23.856 48.687H6.513a2.773 2.773 0 01-2.765-2.765V28.58a2.773 2.773 0 012.765-2.765h17.343a2.773 2.773 0 012.764 2.765v17.342a2.773 2.773 0 01-2.764 2.765z"
+              transform="translate(-3.019 -13.3)"
+              fill="url(#icon_activity_svg__b)"
+            />
+            <path
+              d="M23.257 47.556H5.027a2.328 2.328 0 01-2.321-2.321V27a2.328 2.328 0 012.321-2.321h18.23A2.328 2.328 0 0125.578 27v18.23a2.328 2.328 0 01-2.321 2.326z"
+              transform="translate(-2.706 -12.96)"
+              fill="url(#icon_activity_svg__c)"
+            />
+            <path
+              d="M31.113 14.799a1.582 1.582 0 01-1.577-1.577 1.582 1.582 0 011.577-1.577 1.582 1.582 0 011.577 1.577 1.582 1.582 0 01-1.577 1.577z"
+              fill="#bb5dff"
+            />
+            <path
+              className="icon_activity_svg__d"
+              d="M30.724 29.26a1.582 1.582 0 01-1.577-1.577 1.582 1.582 0 011.577-1.577 1.582 1.582 0 011.577 1.577 1.582 1.582 0 01-1.577 1.577z"
+            />
+            <path
+              d="M43.18 19.036H30.41a.877.877 0 01-.874-.874.877.877 0 01.874-.874h12.77a.877.877 0 01.874.874.877.877 0 01-.874.874z"
+              fill="#7a43d4"
+            />
+            <path
+              d="M43.18 23.021H30.41a.877.877 0 01-.874-.874.877.877 0 01.874-.874h12.77a.877.877 0 01.874.874.877.877 0 01-.874.874z"
+              fill="#5e34a8"
+            />
+            <path
+              d="M6.928 28.298l1.945-2.341a5.24 5.24 0 003.016 1.25c1.031 0 1.468-.337 1.468-.913 0-.615-.654-.814-1.746-1.25l-1.608-.673a3.812 3.812 0 01-2.6-3.592c0-2.2 1.984-4.008 4.8-4.008a6.2 6.2 0 014.286 1.726l-1.707 2.143a4.249 4.249 0 00-2.58-.933c-.833 0-1.349.3-1.349.873 0 .615.734.833 1.905 1.29l1.568.615a3.545 3.545 0 012.521 3.532c0 2.183-1.826 4.128-5.04 4.128a7.47 7.47 0 01-4.879-1.847z"
+              strokeLinejoin="round"
+              strokeMiterlimit={10}
+              strokeWidth={0.35}
+              fill="#5813bc"
+              stroke="#5813bc"
+            />
+            <path
+              d="M6.189 27.495l1.946-2.341a5.24 5.24 0 003.016 1.25c1.031 0 1.468-.337 1.468-.912 0-.615-.654-.814-1.746-1.25l-1.607-.675a3.812 3.812 0 01-2.6-3.592c0-2.2 1.984-4.008 4.8-4.008a6.2 6.2 0 014.286 1.726l-1.707 2.143a4.249 4.249 0 00-2.58-.933c-.833 0-1.349.3-1.349.873 0 .615.734.833 1.905 1.29l1.568.615a3.545 3.545 0 012.522 3.535c0 2.183-1.826 4.128-5.04 4.128a7.47 7.47 0 01-4.882-1.849z"
+              fill="#fff"
+              stroke="#fff"
+              strokeLinejoin="round"
+              strokeMiterlimit={10}
+              strokeWidth={0.35}
+            />
+          </>
+        ),
+      }
+
     case 'dataset':
       return {
         viewBox: '0 0 47.695 40.749',

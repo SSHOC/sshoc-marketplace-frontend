@@ -32,7 +32,6 @@ const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
       query: {
         categories,
         query,
-        sort,
       },
     })
   )

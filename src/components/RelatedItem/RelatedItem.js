@@ -41,6 +41,14 @@ const RelatedItem = ({ item }) => (
             {item.label}
           </Heading>
         </Link>
+        {/* FIXME: We don't get additional metadata for related items */}
+        {/* <Badge>
+          {
+            item.properties.find(
+              property => property.type.code === 'object-type'
+            ).concept.label
+          }
+        </Badge> */}
         <Badge>{ITEM_CATEGORY[item.category]}</Badge>
       </Flex>
 
@@ -51,10 +59,14 @@ const RelatedItem = ({ item }) => (
             .map(contributor => contributor.actor.name)
             .join(', ')}
         </Text>
-        <Text css={css({ color: 'grey.400' })} size="small">
-          <span>More Metadata: </span>
-          What goes here?
-        </Text>
+        {/* FIXME: We don't get additional metadata for related items */}
+        {/* <Text css={css({ color: 'grey.900' })} size="small">
+          <span css={css({ color: 'grey.800' })}>Activities: </span>
+          {item.properties
+            .filter(property => property.type.code === 'activity')
+            .map(property => property.concept?.label ?? property.value)
+            .join(', ')}
+        </Text> */}
       </Box>
 
       <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>

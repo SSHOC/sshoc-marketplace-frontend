@@ -56,6 +56,25 @@ const ItemContributors = ({ contributors }) => {
   )
 }
 
+const ResourceSpecificDetails = ({ resource }) => {
+  switch (resource.category) {
+    case 'activity':
+      return (
+        <pre>
+          {JSON.stringify(resource.composedOf.map(c => c.label), null, 2)}
+        </pre>
+      )
+    case 'dataset':
+      return null
+    case 'tool':
+      return null
+    case 'training-material':
+      return null
+    default:
+      return null
+  }
+}
+
 const ItemDetails = ({ request, resource }) => {
   if (resource) {
     return (
@@ -73,14 +92,14 @@ const ItemDetails = ({ request, resource }) => {
             </Heading>
             <Box>
               <ItemContributors contributors={resource.contributors} />
-              <Text css={css({ color: 'grey.400' })} size="small">
-                <span>Activities: </span>
+              <Text css={css({ color: 'grey.900' })} size="small">
+                <span css={css({ color: 'grey.800' })}>Activities: </span>
                 {resource.properties
                   .filter(property => property.type.code === 'activity')
                   .map(property => property.concept?.label ?? property.value)
                   .join(', ')}
               </Text>
-              <Text css={css({ color: 'grey.400' })} size="small">
+              <Text css={css({ color: 'grey.800' })} size="small">
                 {resource.lastInfoUpdate ? (
                   <span>
                     Last modified on {formatDate(resource.lastInfoUpdate)}
@@ -99,6 +118,7 @@ const ItemDetails = ({ request, resource }) => {
           </Text>
         </Box>
         <RelatedItems items={resource.relatedItems} />
+        <ResourceSpecificDetails resource={resource} />
       </>
     )
   }

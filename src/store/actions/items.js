@@ -2,6 +2,23 @@ import API, { getErrorMessage } from '../../api'
 import { API_REQUEST, FETCH_RESOURCE } from '../constants'
 import { createNormalizer } from '../utils'
 
+export const fetchActivity = ({ id }) => ({
+  type: API_REQUEST,
+  payload: {
+    ...API.getActivityById({ id }),
+  },
+  meta: {
+    getErrorMessage,
+    next: FETCH_RESOURCE,
+    normalize: createNormalizer({}),
+    request: {
+      name: 'fetchActivity',
+      query: { id },
+    },
+  },
+})
+fetchActivity.toString = () => 'fetchActivity'
+
 export const fetchDataset = ({ id }) => ({
   type: API_REQUEST,
   payload: {
@@ -68,7 +85,7 @@ export const fetchSearchResults = ({
     collections: [
       {
         name: 'fetchSearchResults',
-        query: { categories, query, sort },
+        query: { categories, query },
       },
     ],
     getErrorMessage,

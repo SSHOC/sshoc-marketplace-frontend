@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import About from '../../pages/About/About'
+import Activity from '../../pages/Activity/Activity'
 import Contact from '../../pages/Contact/Contact'
 import Dataset from '../../pages/Dataset/Dataset'
 import Home from '../../pages/Home/Home'
@@ -17,6 +18,7 @@ const App = () => (
     <ErrorBoundary>
       <Switch>
         <Route component={Home} exact path="/" />
+        <Route component={Activity} path="/activities/:id" />
         <Route component={About} path="/about" />
         <Route component={Contact} path="/contact" />
         <Route component={Dataset} path="/datasets/:id" />

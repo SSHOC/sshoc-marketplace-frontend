@@ -1,6 +1,7 @@
 import css from '@styled-system/css'
 import React from 'react'
 import styled from 'styled-components/macro'
+import { ITEM_CATEGORY } from '../../constants'
 import Box from '../../elements/Box/Box'
 import Container from '../../elements/Container/Container'
 import Flex from '../../elements/Flex/Flex'
@@ -8,6 +9,7 @@ import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
+import { pluralize } from '../../utils'
 import LoginForm from '../LoginForm/LoginForm'
 
 const Logo = () => (
@@ -77,19 +79,13 @@ const Header = () => (
         </Flex>
         <nav>
           <FlexList>
-            <NavItem>
-              <NavLink to="/search?categories=tool&sort=label">Tools</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/search?categories=training-material&sort=label">
-                Training Materials
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/search?categories=dataset&sort=label">
-                Datasets
-              </NavLink>
-            </NavItem>
+            {Object.entries(ITEM_CATEGORY).map(([key, label]) => (
+              <NavItem key={key}>
+                <NavLink to={`/search?categories=${key}&sort=label`}>
+                  {pluralize(label)}
+                </NavLink>
+              </NavItem>
+            ))}
             <NavItem
               css={css({ alignItems: 'center', display: 'flex', mx: 2 })}
             >
