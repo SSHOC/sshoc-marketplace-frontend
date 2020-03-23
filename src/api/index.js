@@ -36,6 +36,16 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
       q: query,
     },
   }),
+  searchConcepts: ({ page, query, types }) => ({
+    baseUrl,
+    method: 'get',
+    path: `${prefix}/concept-search`,
+    query: {
+      page,
+      q: query,
+      types,
+    },
+  }),
   userLogin: ({ username, password }) => ({
     baseUrl,
     method: 'post',

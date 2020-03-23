@@ -11,10 +11,18 @@ const {
   reducer: itemCollectionReducer,
   selectors: itemCollectionSelectors,
 } = createCollectionSlice('items')
+const {
+  reducer: conceptCollectionReducer,
+  selectors: conceptCollectionSelectors,
+} = createCollectionSlice('concepts')
 
 const { reducer: itemReducer, selectors: itemSelectors } = createResourceSlice(
   'items'
 )
+const {
+  reducer: conceptReducer,
+  selectors: conceptSelectors,
+} = createResourceSlice('concepts')
 
 const {
   reducer: requestReducer,
@@ -28,6 +36,11 @@ const mapSelectors = (selectors, slice) =>
   }, {})
 
 export const selectors = {
+  concepts: mapSelectors(conceptSelectors, 'concepts'),
+  conceptCollections: mapSelectors(
+    conceptCollectionSelectors,
+    'conceptCollections'
+  ),
   items: mapSelectors(itemSelectors, 'items'),
   itemCollections: mapSelectors(itemCollectionSelectors, 'itemCollections'),
   requests: mapSelectors(requestSelectors, 'requests'),
@@ -36,6 +49,8 @@ export const selectors = {
 }
 
 export default combineReducers({
+  concepts: conceptReducer,
+  conceptCollections: conceptCollectionReducer,
   items: itemReducer,
   itemCollections: itemCollectionReducer,
   requests: requestReducer,

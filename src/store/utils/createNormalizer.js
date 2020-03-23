@@ -1,9 +1,14 @@
-export const createNormalizer = ({ field, resourceType = 'items' }) => data => {
+export const createNormalizer = ({
+  field,
+  resourceType = 'items',
+  // some resources have `code` instead of `id`
+  idKey = 'id',
+}) => data => {
   // single resource // TODO: This is a bit weird
   if (!field) {
     return {
-      entities: { [resourceType]: [data.id] },
-      resources: { [resourceType]: { [data.id]: data } },
+      entities: { [resourceType]: [data[idKey]] },
+      resources: { [resourceType]: { [data[idKey]]: data } },
     }
   }
 
@@ -11,8 +16,9 @@ export const createNormalizer = ({ field, resourceType = 'items' }) => data => {
 
   const entities = []
   const resources = collection.reduce((acc, resource) => {
-    entities.push(resource.id)
-    acc[resource.id] = resource
+    const id = resource[idKey]
+    entities.push(id)
+    acc[id] = resource
     return acc
   }, {})
 
