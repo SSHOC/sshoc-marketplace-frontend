@@ -1,16 +1,20 @@
 import css from '@styled-system/css'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import { ITEM_CATEGORY } from '../../constants'
 import Box from '../../elements/Box/Box'
+import Button from '../../elements/Button/Button'
 import Container from '../../elements/Container/Container'
 import Flex from '../../elements/Flex/Flex'
 import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
+import { userLogin, userLogout } from '../../store/actions/user'
+import { REQUEST_STATUS } from '../../store/constants'
+import { selectors } from '../../store/reducers'
 import { pluralize } from '../../utils'
-import LoginForm from '../LoginForm/LoginForm'
 
 const Logo = () => (
   <nav>
@@ -77,7 +81,7 @@ const Header = () => (
         }}
       >
         <Flex css={css({ alignItems: 'stretch', height: 40, py: 1 })}>
-          <LoginForm />
+          <LoginBar />
         </Flex>
         <nav>
           <FlexList>
@@ -116,5 +120,40 @@ const Separator = () => (
     />
   </NavItem>
 )
+
+const LoginBar = () => {
+  const dispatch = useDispatch()
+
+  const currentUser = useSelector(selectors.user.selectCurrentUser)
+  const loginRequest = useSelector(state =>
+    selectors.requests.selectRequestByName(state, { name: userLogin })
+  )
+  const loginStatus = loginRequest.status
+
+  const onLogout = () => {
+    dispatch(userLogout())
+  }
+
+  return loginStatus === REQUEST_STATUS.PENDING ? (
+    <Flex>
+      <Flex css={css({ alignItems: 'center', mr: 2 })}>Logging in&hellip;</Flex>
+    </Flex>
+  ) : currentUser.name ? (
+    <Flex>
+      <Flex css={css({ alignItems: 'center', mr: 2 })}>
+        Logged in as {currentUser.name}
+      </Flex>
+      <Button onClick={onLogout} size="small" variant="primary">
+        Logout
+      </Button>
+    </Flex>
+  ) : (
+    <Flex>
+      <Button as={Link} size="small" to="/login" variant="primary">
+        Login
+      </Button>
+    </Flex>
+  )
+}
 
 export default Header
