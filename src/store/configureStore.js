@@ -8,5 +8,7 @@ export const configureStore = ({ fetch = window.fetch, initialState }) =>
   createStore(
     rootReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(...configureMiddleware({ fetch })))
+    composeWithDevTools({ serialize: { error: true } })(
+      applyMiddleware(...configureMiddleware({ fetch }))
+    )
   )
