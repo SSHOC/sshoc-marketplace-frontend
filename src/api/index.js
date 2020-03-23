@@ -27,7 +27,7 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
     path: `${prefix}/item-search`,
     query: {
       categories,
-      ...Object.entries(facets).reduce((acc, [key, values]) => {
+      ...Object.entries(facets || {}).reduce((acc, [key, values]) => {
         acc[`f.${key}`] = values
         return acc
       }, {}),

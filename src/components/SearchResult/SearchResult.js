@@ -88,7 +88,7 @@ const SearchResult = ({ result }) => (
             .join(', ')}
         </Text>
       </Box>
-      <Text css={css({ fontSize: 1, lineHeight: 'large', my: 3 })}>
+      <Text css={css({ fontSize: 14, lineHeight: 'large', my: 3 })}>
         <PlainText maxLength={MAX_DESCRIPTION_LENGTH}>
           {result.description}
         </PlainText>

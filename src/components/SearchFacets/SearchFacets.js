@@ -23,7 +23,7 @@ const CategoryCheckbox = ({
     collection.info?.categories?.[category]?.count
 
   return (
-    <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
+    <Flex css={css({ justifyContent: 'space-between', my: 2, fontSize: 15 })}>
       <Checkbox
         checked={categories.includes(category)}
         onChange={onChange}
@@ -36,7 +36,7 @@ const CategoryCheckbox = ({
 }
 
 const FacetCheckbox = ({ checked, count, label, name, onChange }) => (
-  <Flex css={css({ justifyContent: 'space-between', my: 2 })}>
+  <Flex css={css({ justifyContent: 'space-between', my: 2, fontSize: 15 })}>
     <Checkbox checked={checked} name={name} onChange={onChange} value={label}>
       {label} ({count})
     </Checkbox>
@@ -119,7 +119,11 @@ const SearchFacets = ({
       <Separator />
 
       {/* TODO: fieldset+legend */}
-      <Heading as="h3" variant="h5" css={css({ mt: 4, mb: 3 })}>
+      <Heading
+        as="h3"
+        variant="h5"
+        css={css({ my: 4, textTransform: 'uppercase' })}
+      >
         Categories
       </Heading>
 
@@ -135,15 +139,23 @@ const SearchFacets = ({
         />
       ))}
 
-      {Object.entries(possibleFacets).map(([key, value]) => {
+      {Object.entries(possibleFacets).map(([key, value], i, arr) => {
         const checkedFacets = facets[key] || []
+        const facetCount = Object.keys(value).length
 
         return (
           <Fragment key={key}>
-            {Object.keys(value).length ? (
-              <Heading as="h3" variant="h5" css={css({ mt: 4, mb: 3 })}>
-                {ITEM_FACETS[key]}
-              </Heading>
+            {facetCount ? (
+              <Fragment>
+                <Separator css={css({ my: 4 })} />
+                <Heading
+                  as="h3"
+                  variant="h5"
+                  css={css({ my: 4, textTransform: 'uppercase' })}
+                >
+                  {ITEM_FACETS[key]}
+                </Heading>
+              </Fragment>
             ) : null}
 
             {Object.entries(value).map(([label, { count, checked }]) => (

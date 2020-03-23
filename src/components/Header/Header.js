@@ -86,19 +86,11 @@ const Header = () => (
                 </NavLink>
               </NavItem>
             ))}
-            <NavItem
-              css={css({ alignItems: 'center', display: 'flex', mx: 2 })}
-            >
-              <div
-                role="separator"
-                css={css({
-                  borderRightColor: 'border',
-                  borderRightWidth: 1,
-                  borderRightStyle: 'solid',
-                  height: '60%',
-                })}
-              />
+            <Separator />
+            <NavItem>
+              <NavLink to="/browse">Browse</NavLink>
             </NavItem>
+            <Separator />
             <NavItem>
               <NavLink to="/about">About</NavLink>
             </NavItem>
@@ -107,6 +99,20 @@ const Header = () => (
       </Stack>
     </Container>
   </Box>
+)
+
+const Separator = () => (
+  <NavItem css={css({ alignItems: 'center', display: 'flex', mx: 2 })}>
+    <div
+      role="separator"
+      css={css({
+        borderRightColor: 'border',
+        borderRightWidth: 1,
+        borderRightStyle: 'solid',
+        height: '60%',
+      })}
+    />
+  </NavItem>
 )
 
 export default Header

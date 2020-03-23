@@ -1,8 +1,9 @@
 import css from '@styled-system/css'
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components/macro'
 import Box from '../../elements/Box/Box'
 import Container from '../../elements/Container/Container'
+import Divider from '../../elements/Divider/Divider'
 import Flex from '../../elements/Flex/Flex'
 import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
@@ -24,36 +25,43 @@ const NavLink = styled(Link).attrs({ variant: 'nav' })(
 )
 
 const Footer = () => (
-  <Box as="footer" css={css({ bg: 'subtle', color: 'black' })}>
-    <Container
-      as={Flex}
-      css={css({
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        py: 0,
-      })}
-      variant="wide"
-    >
-      <nav css={{ flexShrink: 0 }}>
-        <FlexList css={{ alignItems: 'center' }}>
-          <li>
-            <NavLink to="/about">About</NavLink>
-          </li>
-          <li>
-            <NavLink to="/privacy-policy">Privacy policy</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li>
-        </FlexList>
-      </nav>
-      <Text css={css({ fontSize: 'tiny', ml: 4, my: 2 })}>
-        The SSH Open Marketplace is developed as part of the "Social Sciences
-        and Humanities Open Cloud" SSHOC project, European Union's Horizon 2020
-        project call H2020-INFRAEOSC-04-2018, grant agreement #823782.
-      </Text>
+  <Fragment>
+    <Container variant="wide" css={css({ width: '100%' })}>
+      <Divider />
+      <Container css={css({ py: 6 })}>
+        <Text css={css({ fontSize: 1, maxWidth: 680 })}>
+          The SSH Open Marketplace is developed as part of the "Social Sciences
+          and Humanities Open Cloud" SSHOC project, European Union's Horizon
+          2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.
+        </Text>
+      </Container>
     </Container>
-  </Box>
+    <Box as="footer" css={css({ bg: 'subtle', color: 'black' })}>
+      <Container
+        as={Flex}
+        css={css({
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          py: 0,
+        })}
+        variant="wide"
+      >
+        <nav css={{ flexShrink: 0 }}>
+          <FlexList css={{ alignItems: 'center' }}>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+            <li>
+              <NavLink to="/privacy-policy">Privacy policy</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact</NavLink>
+            </li>
+          </FlexList>
+        </nav>
+      </Container>
+    </Box>
+  </Fragment>
 )
 
 export default Footer

@@ -11,6 +11,7 @@ const Badge = styled(Box)(
     display: 'inline-flex',
     fontSize: 0,
     px: 2,
+    py: 1,
     userSelect: 'none',
     textAlign: 'center',
     whiteSpace: 'pre',
