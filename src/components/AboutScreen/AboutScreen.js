@@ -163,6 +163,7 @@ const SideNav = ({ url }) => (
       flexGrow: 0,
       flexShrink: 1,
       mr: 4,
+      mb: -16,
       position: 'relative',
       '&::before': {
         bg: 'inherit',

@@ -32,7 +32,7 @@ const BrowseContainer = () => {
 
   const request = useSelector(state =>
     selectors.requests.selectRequestByName(state, {
-      name: fetchSearchResults.name,
+      name: fetchSearchResults,
       query: defaultSearchParams,
     })
   )
@@ -55,7 +55,9 @@ const BrowseContainer = () => {
   const keywords = facets['keyword'] || {}
   const objectTypes = facets['object-type'] || {}
 
-  const isLoading = !items && request.status === REQUEST_STATUS.PENDING
+  const isLoading =
+    !items &&
+    [REQUEST_STATUS.IDLE, REQUEST_STATUS.PENDING].includes(request.status)
 
   return (
     <Browse
@@ -108,12 +110,13 @@ const SidePanel = styled('aside')(
     ml: 48,
     position: 'relative',
     '&::after': {
+      bg: 'inherit',
       content: '""',
-      position: 'absolute',
+      height: '100%',
       left: '100%',
+      position: 'absolute',
       top: 0,
       width: '100vw',
-      bg: 'subtlest',
     },
   })
 )
