@@ -53,7 +53,7 @@ const colors = {
   },
 }
 
-const fontSizes = [10, 12, 13, 14, 18, 20, 22, 30, 38, 46, 62]
+const fontSizes = [10, 12, 14, 15, 18, 20, 22, 30, 38, 46, 62]
 fontSizes.tiny = 9
 
 export const theme = {

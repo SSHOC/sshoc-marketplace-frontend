@@ -35,6 +35,8 @@ const NavLink = styled(Link).attrs({ variant: 'nav' })(
     alignItems: 'center',
     display: 'inline-flex',
     flex: 1,
+    fontFamily: 'heading',
+    fontSize: 15,
     px: 4,
     py: 3,
     '&:hover': {

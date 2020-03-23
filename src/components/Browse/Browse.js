@@ -59,6 +59,10 @@ const BrowseContainer = () => {
     !items &&
     [REQUEST_STATUS.IDLE, REQUEST_STATUS.PENDING].includes(request.status)
 
+  if (request.status === REQUEST_STATUS.FAILED) {
+    return null
+  }
+
   return (
     <Browse
       activityTypes={activityTypes}
@@ -157,7 +161,7 @@ const List = styled('ul')(
 const ListItem = styled('li')(
   css({
     mr: 30,
-    mb: 15,
+    lineHeight: 2.5,
   })
 )
 
@@ -165,7 +169,7 @@ const Link = styled(RouterLink)(
   css({
     color: 'primary',
     fontFamily: 'heading',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 400,
     textDecoration: 'none',
   })
