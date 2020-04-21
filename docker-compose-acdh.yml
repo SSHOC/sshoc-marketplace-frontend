@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 services:
   frontend:
@@ -14,6 +14,8 @@ services:
       - traefik.frontend.rule=Host:marketplace.sisyphos.arz.oeaw.ac.at
       - traefik.docker.network=web
       - traefik.port=3000
+      - ID=15819
+      - BackendConnection=none
     networks:
       - web
 

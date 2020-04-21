@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 services:
   storybook:
@@ -12,6 +12,8 @@ services:
       - traefik.frontend.rule=Host:marketplace-storybook.sisyphos.arz.oeaw.ac.at
       - traefik.docker.network=web
       - traefik.port=9009
+      - ID=15830
+      - BackendConnection=none
     networks:
       - web
 
