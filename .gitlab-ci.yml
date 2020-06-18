@@ -5,8 +5,8 @@ stages:
   - package
 
 variables:
-  CYPRESS_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/Cypress'
-  YARN_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/yarn'
+  CYPRESS_CACHE_FOLDER: "${CI_PROJECT_DIR}/.cache/Cypress"
+  YARN_CACHE_FOLDER: "${CI_PROJECT_DIR}/.cache/yarn"
 
 .cache:
   cache:
@@ -18,7 +18,7 @@ variables:
 install:
   stage: build
   extends: .cache
-  image: node:10-alpine
+  image: node:12-alpine
   script:
     - yarn --frozen-lockfile --silent
   only:
@@ -26,20 +26,20 @@ install:
       - yarn.lock
 
 validate:
-  image: node:10-alpine
+  image: node:12-alpine
   stage: validate
   extends: .cache
   cache:
     policy: pull
   script:
     - yarn --frozen-lockfile --silent
-    - yarn commitlint --from=master --to=$CI_COMMIT_SHA
+    - yarn commitlint --from=main --to=$CI_COMMIT_SHA
     - yarn format
     - yarn lint
 
 test:
   stage: test
-  image: node:10-alpine
+  image: node:12-alpine
   extends: .cache
   cache:
     policy: pull
@@ -49,7 +49,7 @@ test:
 
 test:e2e:
   stage: test
-  image: cypress/base:10
+  image: cypress/base:12
   extends: .cache
   cache:
     policy: pull
@@ -70,7 +70,7 @@ test:e2e:
   tags:
     - sshoc-frontend
   variables:
-    DOCKER_TLS_CERTDIR: ''
+    DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
@@ -91,7 +91,7 @@ test:e2e:
     - docker push $DOCKER_CURRENT_IMAGE
     - docker push $DOCKER_RELEASE_IMAGE
 
-package:frontend:master:acdh:
+package:frontend:main:acdh:
   stage: package
   extends:
     - .docker
@@ -101,7 +101,7 @@ package:frontend:master:acdh:
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_SHORT_SHA
     REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
   only:
-    - master
+    - main
 
 package:frontend:tags:acdh:
   stage: package
@@ -109,13 +109,13 @@ package:frontend:tags:acdh:
     - .docker
     - .frontend
   variables:
-    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:release
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
-    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+    REACT_APP_API_BASE_URL: https://marketplace-api-prod.sisyphos.arz.oeaw.ac.at
   only:
     - tags
 
-package:storybook:master:acdh:
+package:storybook:main:acdh:
   stage: package
   extends:
     - .docker
@@ -124,7 +124,7 @@ package:storybook:master:acdh:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_SHORT_SHA
   only:
-    - master
+    - main
 
 package:storybook:tags:acdh:
   stage: package
@@ -132,7 +132,7 @@ package:storybook:tags:acdh:
     - .docker
     - .storybook
   variables:
-    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:latest
+    DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:release
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/storybook:$CI_COMMIT_TAG
   only:
     - tags

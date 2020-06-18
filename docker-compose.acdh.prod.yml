@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  frontend:
+    image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/frontend:release
+    container_name: sshoc-marketplace-frontend-frontend-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: https://marketplace-api-prod.sisyphos.arz.oeaw.ac.at
+    labels:
+      - traefik.backend=marketplace-prod
+      - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at
+      - traefik.docker.network=web
+      - traefik.port=3000
+      - ID=15819
+      - BackendConnection=none
+    networks:
+      - web
+
+networks:
+  web:
+    external:
+      name: web

@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  storybook:
+    image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/storybook:release
+    container_name: sshoc-marketplace-frontend-storybook-prod
+    build:
+      context: .
+      dockerfile: Dockerfile-storybook
+    labels:
+      - traefik.backend=marketplace-storybook-prod
+      - traefik.frontend.rule=Host:marketplace-storybook-prod.sisyphos.arz.oeaw.ac.at
+      - traefik.docker.network=web
+      - traefik.port=9009
+      - ID=15830
+      - BackendConnection=none
+    networks:
+      - web
+
+networks:
+  web:
+    external:
+      name: web
