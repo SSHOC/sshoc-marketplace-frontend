@@ -4,9 +4,6 @@ services:
   storybook:
     image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/storybook:latest
     container_name: sshoc-marketplace-frontend-storybook
-    build:
-      context: .
-      dockerfile: Dockerfile-storybook
     labels:
       - traefik.backend=marketplace-storybook
       - traefik.frontend.rule=Host:marketplace-storybook.sisyphos.arz.oeaw.ac.at
