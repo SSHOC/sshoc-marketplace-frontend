@@ -6,7 +6,7 @@ services:
     container_name: sshoc-marketplace-frontend-frontend-prod
     labels:
       - traefik.backend=marketplace-prod
-      - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at
+      - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at,sshoc-marketplace.acdh.oeaw.ac.at
       - traefik.docker.network=web
       - traefik.port=3000
       - ID=15819
