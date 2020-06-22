@@ -6,7 +6,7 @@ import Heading from '../../elements/Heading/Heading'
 import LoginForm from '../LoginForm/LoginForm'
 
 const HomeScreen = () => (
-  <Container css={css({ my: 6 })} variant="narrow">
+  <Container css={css({ my: 6, p: 0, width: '100%' })}>
     <Heading as="h1" css={css({ fontSize: 26, mb: 4 })} variant="h2">
       Social Sciences &amp; Humanities Open Marketplace
     </Heading>

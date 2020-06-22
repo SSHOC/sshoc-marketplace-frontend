@@ -69,7 +69,10 @@ const ItemSidebar = ({ resource }) => {
         Details
       </Heading>
 
-      <Stack as="ul" css={css({ lineHeight: 'large', my: 3 })}>
+      <Stack
+        as="ul"
+        css={css({ lineHeight: 'large', my: 3, overflowWrap: 'anywhere' })}
+      >
         {Object.keys(properties)
           .sort()
           .map(code => {

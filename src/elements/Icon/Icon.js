@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react'
 // (and elements with same id on a page when using icon more than once)
 const getPath = icon => {
   switch (icon) {
-    case 'activity':
+    case 'workflow':
       return {
         viewBox: '0 0 50.48 43.128',
         path: (

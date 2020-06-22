@@ -30,7 +30,7 @@ const WorkflowPage = () => {
         breadcrumbs={[
           { label: 'Home', value: '/' },
           {
-            label: 'Activities',
+            label: 'Workflows',
             value: '/search?categories=workflow&sort=label',
           },
           { label: `Details` },

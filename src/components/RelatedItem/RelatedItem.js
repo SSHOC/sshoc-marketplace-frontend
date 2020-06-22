@@ -23,6 +23,7 @@ const RelatedItem = ({ item }) => (
     })}
   >
     <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
+      {/* NOTE: we cannot use a thumbnail here, because related items don't include properties */}
       <Icon icon={item.category} width="3em" height="3em" />
     </Box>
     <Box css={{ flex: 1 }}>

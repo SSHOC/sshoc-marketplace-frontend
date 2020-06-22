@@ -1,11 +1,11 @@
 import css from '@styled-system/css'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import 'styled-components/macro'
 import Box from '../../elements/Box/Box'
 import Centered from '../../elements/Centered/Centered'
+import Chevron from '../../elements/Chevron/Chevron'
 import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
-import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
 import Spinner from '../../elements/Spinner/Spinner'
 import Text from '../../elements/Text/Text'
@@ -59,6 +59,7 @@ const ItemContributors = ({ contributors }) => {
 const ResourceSpecificDetails = ({ resource }) => {
   switch (resource.category) {
     case 'workflow':
+      // return <pre>{JSON.stringify(resource, null, 2)}</pre>
       return null
     case 'dataset':
       return null
@@ -71,15 +72,113 @@ const ResourceSpecificDetails = ({ resource }) => {
   }
 }
 
+const ImageCarousel = ({ images }) => {
+  const [selected, setSelected] = useState(0)
+
+  if (!images) return null
+
+  const urls = images.map(image => image.value)
+
+  return (
+    <div css={css({ my: 6 })}>
+      <div
+        css={css({
+          height: 480,
+          border: '1px solid #ddd',
+        })}
+      >
+        <div
+          css={css({
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          })}
+        >
+          <img
+            src={urls[selected]}
+            alt=""
+            css={css({ objectFit: 'contain', maxHeight: '100%', p: 4 })}
+          />
+        </div>
+      </div>
+      <div
+        css={css({
+          display: 'flex',
+          justifyContent: 'space-between',
+          border: '1px solid #ddd',
+          borderTop: 0,
+        })}
+      >
+        <button
+          css={css({
+            p: 3,
+            background: 'none',
+            border: 0,
+            appearance: 'none',
+            cursor: 'pointer',
+            outline: 'none',
+          })}
+          onClick={() => {
+            setSelected(selected => (selected + 1) % images.length)
+          }}
+        >
+          <Chevron aria-label="Previous" direction="left" />
+        </button>
+        <div css={css({ display: 'flex' })}>
+          {urls.map((src, i) => (
+            <img
+              key={i}
+              css={css({
+                height: 60,
+                objectFit: 'cover',
+                mx: 1,
+                borderLeft: '1px solid #ddd',
+                borderRight: '1px solid #ddd',
+              })}
+              alt=""
+              src={src}
+            />
+          ))}
+        </div>
+        <button
+          css={css({
+            p: 3,
+            background: 'none',
+            border: 0,
+            appearance: 'none',
+            cursor: 'pointer',
+            outline: 'none',
+          })}
+          onClick={() => {
+            setSelected(selected => (selected + 1) % images.length)
+          }}
+        >
+          <Chevron aria-label="Next" direction="right" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 const ItemDetails = ({ request, resource }) => {
   if (resource) {
+    const thumbnail = resource.properties.find(
+      property => property.type.code === 'thumbnail'
+    )?.value
+
     return (
       <>
         <Flex>
           <Box css={{ flexBasis: 100, flexGrow: 0, flexShrink: 0 }}>
-            <Icon icon={resource.category} width="5em" height="5em" />
+            <img
+              src={thumbnail}
+              style={{ objectFit: 'cover', width: '100%' }}
+              alt=""
+            />
           </Box>
-          <Box>
+          <Box css={css({ ml: 3 })}>
             <Heading as="h1" css={css({ mb: 4 })} variant="h2">
               {resource.label}{' '}
               <span css={css({ fontSize: 4, ml: 2 })}>
@@ -113,8 +212,13 @@ const ItemDetails = ({ request, resource }) => {
             <Markdown>{resource.description}</Markdown>
           </Text>
         </Box>
-        <RelatedItems items={resource.relatedItems} />
+        <ImageCarousel
+          images={resource.properties.filter(
+            property => property.type.code === 'media'
+          )}
+        />
         <ResourceSpecificDetails resource={resource} />
+        <RelatedItems items={resource.relatedItems} />
       </>
     )
   }

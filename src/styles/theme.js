@@ -98,7 +98,7 @@ export const theme = {
     container: 1600,
     narrow: 1000,
     row: 80,
-    sidebar: 300,
+    sidebar: 360,
     toast: 400,
     wide: 1900,
   },
