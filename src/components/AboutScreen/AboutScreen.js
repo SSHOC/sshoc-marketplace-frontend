@@ -160,7 +160,7 @@ const NavLink = styled(Link).attrs({ as: RouterNavLink, variant: 'nav' })(
     fontSize: 2,
     justifyContent: 'space-between',
     p: 4,
-    transition: theme => `border-color ${theme.transitions.default}`,
+    transition: (theme) => `border-color ${theme.transitions.default}`,
     '&:hover': {
       bg: 'subtlest',
       borderLeftColor: 'primary',
@@ -365,7 +365,7 @@ const Team = () => (
       and how responsibilities will be shared among partners in the long run.
     </Paragraph>
     <Paragraph css={css({ mb: 6 })}>
-      For more information on legal and data protection issues, please consult
+      For more information on legal and data protection issues, please consult{' '}
       <Link to="/privacy-policy">
         our &quot;legal notice&quot; and &quot;privacy policy&quot; sections
       </Link>
