@@ -1,10 +1,10 @@
 import { API_BASE_URL } from '../constants'
 
 const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
-  getActivityById: ({ id }) => ({
+  getWorkflowById: ({ id }) => ({
     baseUrl,
     method: 'get',
-    path: `${prefix}/activities/${id}`,
+    path: `${prefix}/workflows/${id}`,
   }),
   getDatasetById: ({ id }) => ({
     baseUrl,

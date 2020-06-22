@@ -6,10 +6,10 @@ import Screen from '../../components/Screen/Screen'
 import Main from '../../elements/Main/Main'
 import BackgroundImage from '../../images/bg_details.png'
 import BackgroundImageHiDPI from '../../images/bg_details@2x.png'
-import { fetchActivity } from '../../store/actions/items'
+import { fetchWorkflow } from '../../store/actions/items'
 import { useNavigationFocusScroll, useSearchParams } from '../../utils'
 
-const ActivityPage = () => {
+const WorkflowPage = () => {
   const focusRef = useNavigationFocusScroll()
   const { id } = useParams()
   const [, setSearchParams] = useSearchParams()
@@ -31,16 +31,16 @@ const ActivityPage = () => {
           { label: 'Home', value: '/' },
           {
             label: 'Activities',
-            value: '/search?categories=activity&sort=label',
+            value: '/search?categories=workflow&sort=label',
           },
           { label: `Details` },
         ]}
         onSearchParamsChange={setSearchParams}
       >
-        <ItemScreen fetchItem={fetchActivity} id={id} />
+        <ItemScreen fetchItem={fetchWorkflow} id={id} />
       </Screen>
     </Main>
   )
 }
 
-export default ActivityPage
+export default WorkflowPage

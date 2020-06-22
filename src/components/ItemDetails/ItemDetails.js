@@ -58,12 +58,8 @@ const ItemContributors = ({ contributors }) => {
 
 const ResourceSpecificDetails = ({ resource }) => {
   switch (resource.category) {
-    case 'activity':
-      return (
-        <pre>
-          {JSON.stringify(resource.composedOf.map(c => c.label), null, 2)}
-        </pre>
-      )
+    case 'workflow':
+      return null
     case 'dataset':
       return null
     case 'tool':

@@ -2,22 +2,22 @@ import API, { getErrorMessage } from '../../api'
 import { API_REQUEST, FETCH_RESOURCE } from '../constants'
 import { createNormalizer } from '../utils'
 
-export const fetchActivity = ({ id }) => ({
+export const fetchWorkflow = ({ id }) => ({
   type: API_REQUEST,
   payload: {
-    ...API.getActivityById({ id }),
+    ...API.getWorkflowById({ id }),
   },
   meta: {
     getErrorMessage,
     next: FETCH_RESOURCE,
     normalize: createNormalizer({}),
     request: {
-      name: 'fetchActivity',
+      name: 'fetchWorkflow',
       query: { id },
     },
   },
 })
-fetchActivity.toString = () => 'fetchActivity'
+fetchWorkflow.toString = () => 'fetchWorkflow'
 
 export const fetchDataset = ({ id }) => ({
   type: API_REQUEST,
