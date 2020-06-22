@@ -111,7 +111,7 @@ package:frontend:tags:acdh:
   variables:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:release
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
-    REACT_APP_API_BASE_URL: https://sshoc-marketplace-api.acdh.oeaw.ac.at
+    REACT_APP_API_BASE_URL: https://marketplace-api.sshopencloud.eu
   only:
     - tags
 
