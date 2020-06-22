@@ -8,6 +8,7 @@ import Flex from '../../elements/Flex/Flex'
 import FlexList from '../../elements/FlexList/FlexList'
 import Link from '../../elements/Link/Link'
 import Text from '../../elements/Text/Text'
+import EuFlag from '../../images/eu-flag.jpg'
 
 const NavLink = styled(Link).attrs({ variant: 'nav' })(
   css({
@@ -28,8 +29,9 @@ const Footer = () => (
   <Fragment>
     <Container variant="wide" css={css({ width: '100%' })}>
       <Divider />
-      <Container css={css({ py: 6 })}>
-        <Text css={css({ fontSize: 1, maxWidth: 680 })}>
+      <Container css={css({ py: 6, display: 'flex', alignItems: 'center' })}>
+        <img src={EuFlag} alt="" height="36" />
+        <Text css={css({ fontSize: 1, maxWidth: 680, ml: 2 })}>
           The SSH Open Marketplace is developed as part of the "Social Sciences
           and Humanities Open Cloud" SSHOC project, European Union's Horizon
           2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.
