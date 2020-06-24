@@ -397,10 +397,7 @@ const Team = () => (
         CNRS: Nicolas Larrousse, Clara Petitfils, Suzanne Dumouchel
       </ListItem>
       <ListItem>CNR: Cesare Concordia</ListItem>
-      <ListItem>
-        FORTH: Chryssoula Bekiari, Maria Theodoridou, Athina Kritsotaki, Eleni
-        Tsoulouha
-      </ListItem>
+      <ListItem>FORTH: Chryssoula Bekiari, Athina Kritsotaki</ListItem>
     </Stack>
   </>
 )
