@@ -142,11 +142,6 @@ const About = () => (
       <Link to="https://www.sshopencloud.eu/">website</Link> or contact{' '}
       <Link to="mailto:info@sshopencloud.eu">info@sshopencloud.eu</Link>.
     </Paragraph>
-    <Paragraph css={css({ mb: 6 })}>
-      If you want to actively follow the development of the SSH Open
-      Marketplace, have a look at our{' '}
-      <Link to="https://gitlab.gwdg.de/sshoc">GitLab instance</Link>.
-    </Paragraph>
   </>
 )
 
