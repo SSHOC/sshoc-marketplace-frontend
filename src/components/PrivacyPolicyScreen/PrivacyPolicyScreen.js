@@ -86,7 +86,7 @@ const PrivacyPolicyScreen = () => (
     <Paragraph>
       <div>Austrian Academy of Sciences</div>
       <div>
-        Body corporate organized under public law (BGBl 569/1921 idF BGBl I
+        Corporate body organized under public law (BGBl 569/1921 idF BGBl I
         130/2003)
       </div>
       <div>
@@ -116,7 +116,7 @@ const PrivacyPolicyScreen = () => (
 
     <Paragraph>
       The ACDH-CH is a consortium member of CLARIAH-AT (http://clariah.at). In
-      SSHOC ACDH-CH is a member of the SSHOC partner DARIAH-EU.
+      SSHOC, ACDH-CH is a member of the SSHOC partner DARIAH-EU.
     </Paragraph>
 
     <Paragraph>
@@ -128,7 +128,7 @@ const PrivacyPolicyScreen = () => (
       <div>Vice president: Univ.-Doz. Dr. phil. Michael Alram</div>
       <div>
         Class presidents: Univ.-Prof. Dr. phil. Oliver Jens Schmitt, Univ.-Prof.
-        Dipl.-Ing. Dr.techn. Georg Brasseur
+        Dipl.-Ing. Dr. techn. Georg Brasseur
       </div>
       <div>
         Supervisory body: Academy council. For more information, please visit{' '}
@@ -156,8 +156,7 @@ const PrivacyPolicyScreen = () => (
 
     <Paragraph>
       The Austrian Academy of Sciences does not take responsibility for the
-      topicality, correctness, completeness or quality of the provided
-      information.
+      nature, accuracy, entirety or quality of the provided information.
     </Paragraph>
 
     <Paragraph>
@@ -190,6 +189,15 @@ const PrivacyPolicyScreen = () => (
       avoid attribution stacking or license stacking, but we do consider
       attribution to be an essential information to be provided by data
       aggregators. This section of our website will be updated accordingly.
+    </Paragraph>
+
+    <SectionTitle css={css({ mt: 6 })}>Data privacy notice</SectionTitle>
+    <Paragraph>
+      Please find the ÖAW's detailed data privacy statement{' '}
+      <Link to="https://www.oeaw.ac.at/die-oeaw/datenschutz/">here</Link>. The
+      contact data published in the context of the imprint duty may not be used
+      to send promotional or informational material not explicitly requested. We
+      explicitly disagree with this usage.
     </Paragraph>
   </>
 )

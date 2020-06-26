@@ -122,7 +122,7 @@ const SearchResults = ({
       page,
       query,
       sort,
-      facets
+      facets,
     })
   }
 
