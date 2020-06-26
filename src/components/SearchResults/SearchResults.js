@@ -114,7 +114,7 @@ const SearchResults = ({
   results,
   searchParams,
 }) => {
-  const { categories, page, query, sort } = searchParams
+  const { categories, page, query, sort, facets } = searchParams
 
   const handlePageChange = page => {
     onSearchParamsChange({
@@ -122,6 +122,7 @@ const SearchResults = ({
       page,
       query,
       sort,
+      facets
     })
   }
 
@@ -132,6 +133,7 @@ const SearchResults = ({
       // page,
       query,
       sort: sort.value,
+      facets,
     })
   }
 
