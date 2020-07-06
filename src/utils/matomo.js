@@ -3,15 +3,12 @@ import { useHistory } from 'react-router-dom'
 
 export default function useMatomo() {
   const history = useHistory()
-  const previousLocation = useRef(null)
+  const previousPathname = useRef(null)
 
   useEffect(() => {
     const trackPageView = (location = window.location) => {
       if (!window._paq) return
 
-      if (previousLocation.current !== null) {
-        window._paq.push(['setReferrerUrl', previousLocation.current])
-      }
       /**
        * note that matomo will use a stale `window.location` reference if not
        * using `setCustomUrl`
@@ -21,13 +18,18 @@ export default function useMatomo() {
       const pathname = location.pathname.endsWith('/')
         ? location.pathname
         : location.pathname + '/'
+      // don't log when only query params change
+      if (previousPathname.current === pathname) return
+      if (previousPathname.current !== null) {
+        window._paq.push(['setReferrerUrl', previousPathname.current])
+      }
       window._paq.push(['setCustomUrl', pathname])
       window._paq.push(['setDocumentTitle', `Page ${pathname}`])
       window._paq.push(['deleteCustomVariables', 'page'])
       window._paq.push(['setGenerationTimeMs', 0])
       window._paq.push(['trackPageView'])
-      previousLocation.current = pathname
-      // window._paq.push(['enableLinkTracking']);
+      previousPathname.current = pathname
+      window._paq.push(['enableLinkTracking'])
     }
 
     trackPageView()

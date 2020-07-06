@@ -1,5 +1,5 @@
 import css from '@styled-system/css'
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'styled-components/macro'
 import { DEFAULT_SORT_FIELD, SORT_FIELDS } from '../../constants'
 import Centered from '../../elements/Centered/Centered'
@@ -115,6 +115,49 @@ const SearchResults = ({
   searchParams,
 }) => {
   const { categories, page, query, sort, facets } = searchParams
+
+  // track searches with matomo
+  const categoriesHash = JSON.stringify(categories)
+  const facetsHash = JSON.stringify(facets)
+  useEffect(() => {
+    if (
+      window._paq &&
+      request.status === REQUEST_STATUS.SUCCEEDED &&
+      request.info
+    ) {
+      const { hits } = request.info
+      // don't log empty searches // TODO: or should we?
+      if (query || categories.length || Object.keys(facets).length) {
+        // TODO: is there *any* support for multiple search categories in matomo?
+        const selectedCategories = `categories: ${categories.join(', ') ||
+          '<empty>'}`
+        const selectedTypes = `types: ${facets['object-type']?.join(', ') ||
+          '<empty>'}`
+        const selectedActivities = `activities: ${facets['activity']?.join(
+          ', '
+        ) || '<empty>'}`
+        const selectedSources = `sources: ${facets['source']?.join(', ') ||
+          '<empty>'}`
+        const selectedKeywords = `keywords: ${facets['keyword']?.join(', ') ||
+          '<empty>'}`
+        const filters = [
+          selectedCategories,
+          selectedActivities,
+          selectedTypes,
+          selectedSources,
+          selectedKeywords,
+        ].join(' / ')
+        window._paq.push([
+          'trackSiteSearch',
+          // matomo won't register an empty searchterm as a site search, so we set to "empty"
+          query || '<empty>',
+          filters || false,
+          hits,
+        ])
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [request.status, request.info, query, categoriesHash, facetsHash])
 
   const handlePageChange = page => {
     onSearchParamsChange({
