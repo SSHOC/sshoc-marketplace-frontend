@@ -202,7 +202,7 @@ const BrowseActivityTypes = ({ activityTypes, isLoading }) => (
         {Object.entries(activityTypes)
           .slice(0, MAX_BROWSE_LINKS)
           .map(([activityType, { count }]) => (
-            <ListItem>
+            <ListItem key={activityType}>
               <Link
                 to={`/search?facets=${JSON.stringify({
                   activity: [activityType],
@@ -231,7 +231,7 @@ const BrowseKeywords = ({ keywords, isLoading }) => (
         {Object.entries(keywords)
           .slice(0, MAX_BROWSE_LINKS)
           .map(([keyword, { count }]) => (
-            <ListItem>
+            <ListItem key={keyword}>
               <Link
                 to={`/search?facets=${JSON.stringify({
                   keyword: [keyword],
@@ -260,7 +260,7 @@ const BrowseObjectTypes = ({ objectTypes, isLoading }) => (
         {Object.entries(objectTypes)
           .slice(0, MAX_BROWSE_LINKS)
           .map(([objectType, { count }]) => (
-            <ListItem>
+            <ListItem key={objectType}>
               <Link
                 to={`/search?facets=${JSON.stringify({
                   'object-type': [objectType],
@@ -287,7 +287,7 @@ const LastAdded = ({ items, isLoading }) => (
     ) : (
       <List>
         {(items || []).slice(0, MAX_LAST_ADDED).map((item, i) => (
-          <Fragment>
+          <Fragment key={i}>
             <li>
               <Item item={item} />
               {i === items.length - 1 ? null : <Divider css={css({ my: 4 })} />}
