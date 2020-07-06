@@ -78,7 +78,8 @@ test:e2e:
   script:
     - docker pull $DOCKER_RELEASE_IMAGE || true
     - docker build --cache-from $DOCKER_RELEASE_IMAGE --build-arg
-      REACT_APP_API_BASE_URL --tag $DOCKER_CURRENT_IMAGE --tag
+      REACT_APP_API_BASE_URL --build-arg REACT_APP_MATOMO_BASE_URL --build-arg
+      REACT_APP_MATOMO_SITE_ID --tag $DOCKER_CURRENT_IMAGE --tag
       $DOCKER_RELEASE_IMAGE .
     - docker push $DOCKER_CURRENT_IMAGE
     - docker push $DOCKER_RELEASE_IMAGE
@@ -112,6 +113,8 @@ package:frontend:tags:acdh:
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:release
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
     REACT_APP_API_BASE_URL: https://marketplace-api.sshopencloud.eu
+    REACT_APP_MATOMO_BASE_URL: https://matomo.acdh.oeaw.ac.at/
+    REACT_APP_MATOMO_SITE_ID: 179
   rules:
     - if: '$CI_COMMIT_TAG != null'
 

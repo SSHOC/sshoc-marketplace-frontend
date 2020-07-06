@@ -9,6 +9,8 @@ RUN yarn --frozen-lockfile --production --silent
 ENV PATH /usr/src/app/node_modules/.bin:${PATH}
 
 ARG REACT_APP_API_BASE_URL
+ARG REACT_APP_MATOMO_BASE_URL
+ARG REACT_APP_MATOMO_SITE_ID
 
 COPY src ./src
 COPY public ./public

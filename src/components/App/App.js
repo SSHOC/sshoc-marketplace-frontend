@@ -14,26 +14,31 @@ import TrainingMaterial from '../../pages/TrainingMaterial/TrainingMaterial'
 import Workflow from '../../pages/Workflow/Workflow'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Page from '../Page/Page'
+import useMatomo from '../../utils/matomo'
 
-const App = () => (
-  <Page>
-    <ErrorBoundary>
-      <Switch>
-        <Route component={Home} exact path="/" />
-        <Route component={About} path="/about" />
-        <Route component={Browse} path="/browse" />
-        <Route component={Contact} path="/contact" />
-        <Route component={Dataset} path="/datasets/:id" />
-        <Route component={Login} path="/login" />
-        <Route component={PrivacyPolicy} path="/privacy-policy" />
-        <Route component={Search} path="/search" />
-        <Route component={Tool} path="/tools/:id" />
-        <Route component={TrainingMaterial} path="/training-materials/:id" />
-        <Route component={Workflow} path="/workflows/:id" />
-        <Route component={NotFound} />
-      </Switch>
-    </ErrorBoundary>
-  </Page>
-)
+const App = () => {
+  useMatomo()
+
+  return (
+    <Page>
+      <ErrorBoundary>
+        <Switch>
+          <Route component={Home} exact path="/" />
+          <Route component={About} path="/about" />
+          <Route component={Browse} path="/browse" />
+          <Route component={Contact} path="/contact" />
+          <Route component={Dataset} path="/datasets/:id" />
+          <Route component={Login} path="/login" />
+          <Route component={PrivacyPolicy} path="/privacy-policy" />
+          <Route component={Search} path="/search" />
+          <Route component={Tool} path="/tools/:id" />
+          <Route component={TrainingMaterial} path="/training-materials/:id" />
+          <Route component={Workflow} path="/workflows/:id" />
+          <Route component={NotFound} />
+        </Switch>
+      </ErrorBoundary>
+    </Page>
+  )
+}
 
 export default App
