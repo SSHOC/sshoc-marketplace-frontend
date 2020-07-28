@@ -23,7 +23,8 @@ const PrivacyPolicyScreen = () => (
       uses data while browsing this website or using our API. We are committed
       to ensuring that your personal details are protected when you use our
       website, or API. If you have any questions about how we use your personal
-      information or comply with data protection legislation, please contact us.
+      information or comply with data protection legislation, please{' '}
+      <Link to="/contact">contact us</Link>.
     </Paragraph>
 
     <SectionHeading>What information do we collect?</SectionHeading>
@@ -34,8 +35,7 @@ const PrivacyPolicyScreen = () => (
       information may include content you view, the date and time that you
       viewed the content or your location information associated with your IP
       address. The SSH Open Marketplace uses this information to improve the
-      structure and content of our website. More information on how Matomo uses
-      data when you use the SSH Open Marketplace can be found on this page.
+      structure and content of our website.
     </Paragraph>
     <Paragraph>
       <strong>Contact and login details</strong> We collect contact information

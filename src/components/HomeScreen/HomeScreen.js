@@ -23,8 +23,8 @@ const HomeScreen = () => (
         SSH Open Marketplace is under development and the current content is
         subject to change.
         <br />
-        Alpha release is{' '}
-        <Link to="/about#in-development">planned for June 2020</Link>.
+        Beta release is{' '}
+        <Link to="/about#in-development">planned for December 2020</Link>.
       </Text>
       <SearchForm />
     </Container>
