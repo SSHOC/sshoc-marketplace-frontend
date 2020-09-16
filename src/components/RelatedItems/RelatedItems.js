@@ -7,7 +7,7 @@ import Grid from '../../elements/Grid/Grid'
 import Separator from '../../elements/Separator/Separator'
 import RelatedItem from '../RelatedItem/RelatedItem'
 
-const RelatedItems = ({ items }) => {
+const RelatedItems = ({ items, itemCategories }) => {
   if (!items || !items.length) {
     return null
   }
@@ -31,7 +31,7 @@ const RelatedItems = ({ items }) => {
         >
           {items.map(item => (
             <li key={item.id}>
-              <RelatedItem item={item} />
+              <RelatedItem item={item} itemCategories={itemCategories} />
             </li>
           ))}
         </Grid>
