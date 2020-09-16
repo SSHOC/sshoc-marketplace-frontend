@@ -34,6 +34,7 @@ const SearchPage = () => {
         <SearchScreen
           onSearchParamsChange={setSearchParams}
           searchParams={searchParams}
+          focusRef={focusRef}
         />
       </Screen>
     </Main>

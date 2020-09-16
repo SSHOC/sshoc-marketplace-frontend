@@ -48,6 +48,7 @@ const SearchFacets = ({
   request,
   searchParams,
   itemCategories,
+  focusRef,
 }) => {
   const { categories, facets, query, sort } = searchParams
   const { info } = request || {}
@@ -80,6 +81,10 @@ const SearchFacets = ({
       query,
       sort,
     })
+
+    if (focusRef && focusRef.current) {
+      focusRef.current.scrollIntoView()
+    }
   }
 
   const handleFacetChange = event => {
@@ -106,6 +111,10 @@ const SearchFacets = ({
       query,
       sort,
     })
+
+    if (focusRef && focusRef.current) {
+      focusRef.current.scrollIntoView()
+    }
   }
 
   return (

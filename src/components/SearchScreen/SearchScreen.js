@@ -10,7 +10,11 @@ import { fetchSearchResults } from '../../store/actions/items'
 import { fetchItemCategories } from '../../store/actions/itemCategories'
 import { selectors } from '../../store/reducers'
 
-const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
+const SearchScreenContainer = ({
+  onSearchParamsChange,
+  searchParams,
+  focusRef,
+}) => {
   const dispatch = useDispatch()
 
   const { categories, facets, page, query, sort } = searchParams
@@ -74,6 +78,7 @@ const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
       results={results}
       searchParams={searchParams}
       itemCategories={itemCategories}
+      focusRef={focusRef}
     />
   )
 }
@@ -97,6 +102,7 @@ export const SearchScreen = ({
   results,
   searchParams,
   itemCategories,
+  focusRef,
 }) => (
   <>
     <Heading variant="h1" css={css({ mt: 4 })}>
@@ -111,6 +117,7 @@ export const SearchScreen = ({
           request={request}
           searchParams={searchParams}
           itemCategories={itemCategories}
+          focusRef={focusRef}
         />
       </Sidebar>
       <SearchResults
