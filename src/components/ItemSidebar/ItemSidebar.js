@@ -24,6 +24,8 @@ const ItemSidebar = ({ resource, itemCategories }) => {
   }, {})
 
   const type = itemCategories?.[resource.category] || 'Resource'
+  const [url] = resource.accessibleAt || []
+  if (!url) return null
 
   const links = [
     {
@@ -41,16 +43,8 @@ const ItemSidebar = ({ resource, itemCategories }) => {
           />
         </>
       ),
-      path: resource.accessibleAt,
+      path: url,
     },
-    ...(resource.olderVersions || []).map(({ id, label, version }) => ({
-      label: `${label} ${version}`,
-      path: `/${resource.category}s/${id}`,
-    })),
-    ...(resource.newerVersions || []).map(({ id, label, version }) => ({
-      label: `${label} ${version}`,
-      path: `/${resource.category}s/${id}`,
-    })),
   ]
 
   return (
