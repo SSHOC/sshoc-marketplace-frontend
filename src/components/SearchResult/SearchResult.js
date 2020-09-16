@@ -45,7 +45,7 @@ export const SearchResultPlaceholder = () => (
   </SearchResultContainer>
 )
 
-const SearchResult = ({ result }) => (
+const SearchResult = ({ result, itemCategories }) => (
   <SearchResultContainer>
     <Box css={{ flexBasis: 80, flexGrow: 0, flexShrink: 0 }}>
       <Icon icon={result.category} width="3em" height="3em" />
@@ -65,13 +65,7 @@ const SearchResult = ({ result }) => (
             </Heading>
           </Link>
         </Box>
-        <Badge>
-          {
-            result.properties.find(
-              property => property.type.code === 'object-type'
-            ).concept.label
-          }
-        </Badge>
+        <Badge>{itemCategories?.[result.category] || ''}</Badge>
       </Flex>
       <Box css={css({ my: 2 })}>
         <Text css={css({ color: 'grey.900' })} size="small">

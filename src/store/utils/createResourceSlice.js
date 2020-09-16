@@ -35,6 +35,9 @@ export const createResourceSlice = resourceName => {
       if (!Array.isArray(ids)) return null
       return ids.map(id => state[id]).filter(Boolean)
     },
+    selectAllResources(state) {
+      return state
+    },
   }
 
   return {

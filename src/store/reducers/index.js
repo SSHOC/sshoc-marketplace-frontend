@@ -23,6 +23,10 @@ const {
   reducer: conceptReducer,
   selectors: conceptSelectors,
 } = createResourceSlice('concepts')
+const {
+  reducer: itemCategoriesReducer,
+  selectors: itemCategoriesSelectors,
+} = createResourceSlice('itemCategories')
 
 const {
   reducer: requestReducer,
@@ -43,6 +47,7 @@ export const selectors = {
   ),
   items: mapSelectors(itemSelectors, 'items'),
   itemCollections: mapSelectors(itemCollectionSelectors, 'itemCollections'),
+  itemCategories: mapSelectors(itemCategoriesSelectors, 'itemCategories'),
   requests: mapSelectors(requestSelectors, 'requests'),
   toasts: mapSelectors(toastSelectors, 'toasts'),
   user: mapSelectors(userSelectors, 'user'),
@@ -53,6 +58,7 @@ export default combineReducers({
   conceptCollections: conceptCollectionReducer,
   items: itemReducer,
   itemCollections: itemCollectionReducer,
+  itemCategories: itemCategoriesReducer,
   requests: requestReducer,
   toasts: toastReducer,
   user: userReducer,

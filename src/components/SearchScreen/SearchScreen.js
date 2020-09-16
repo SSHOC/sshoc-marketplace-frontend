@@ -7,12 +7,21 @@ import SearchResults from '../../components/SearchResults/SearchResults'
 import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import { fetchSearchResults } from '../../store/actions/items'
+import { fetchItemCategories } from '../../store/actions/itemCategories'
 import { selectors } from '../../store/reducers'
 
 const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
   const dispatch = useDispatch()
 
   const { categories, facets, page, query, sort } = searchParams
+
+  useEffect(() => {
+    dispatch(fetchItemCategories())
+  }, [dispatch])
+
+  const itemCategories = useSelector(state =>
+    selectors.itemCategories.selectAllResources(state)
+  )
 
   const request = useSelector(state =>
     selectors.requests.selectRequestByName(state, {
@@ -64,6 +73,7 @@ const SearchScreenContainer = ({ onSearchParamsChange, searchParams }) => {
       request={request}
       results={results}
       searchParams={searchParams}
+      itemCategories={itemCategories}
     />
   )
 }
@@ -86,6 +96,7 @@ export const SearchScreen = ({
   request,
   results,
   searchParams,
+  itemCategories,
 }) => (
   <>
     <Heading variant="h1" css={css({ mt: 4 })}>
@@ -107,6 +118,7 @@ export const SearchScreen = ({
         request={request}
         results={results}
         searchParams={searchParams}
+        itemCategories={itemCategories}
       />
     </Flex>
   </>

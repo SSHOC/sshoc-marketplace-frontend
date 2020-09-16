@@ -62,13 +62,13 @@ const SearchResultsHeader = ({
   </Flex>
 )
 
-const SearchResultsList = ({ request, results }) => {
+const SearchResultsList = ({ request, results, itemCategories }) => {
   if (results && results.length) {
     return (
       <Stack as="ul">
         {results.map(result => (
           <li key={result.id}>
-            <SearchResult result={result} />
+            <SearchResult result={result} itemCategories={itemCategories} />
           </li>
         ))}
       </Stack>
@@ -113,6 +113,7 @@ const SearchResults = ({
   request,
   results,
   searchParams,
+  itemCategories,
 }) => {
   const { categories, page, query, sort, facets } = searchParams
 
@@ -189,7 +190,11 @@ const SearchResults = ({
         page={page}
         sort={sort}
       />
-      <SearchResultsList request={request} results={results} />
+      <SearchResultsList
+        request={request}
+        results={results}
+        itemCategories={itemCategories}
+      />
       <Pagination
         aria-label="Search results pages"
         css={css({ alignSelf: 'flex-end', my: 4 })}

@@ -1,6 +1,11 @@
 import { API_BASE_URL } from '../constants'
 
 const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
+  getItemCategories: () => ({
+    baseUrl,
+    method: 'get',
+    path: `${prefix}/items-categories/`,
+  }),
   getWorkflowById: ({ id }) => ({
     baseUrl,
     method: 'get',
