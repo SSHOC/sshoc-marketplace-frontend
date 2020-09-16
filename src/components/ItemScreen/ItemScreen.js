@@ -58,7 +58,11 @@ const ItemScreenContainer = ({ fetchItem, id }) => {
 export const ItemScreen = ({ request, resource, itemCategories }) => (
   <Flex css={css({ my: 6 })}>
     <Box css={{ flex: 3 }}>
-      <ItemDetails request={request} resource={resource} />
+      <ItemDetails
+        request={request}
+        resource={resource}
+        itemCategories={itemCategories}
+      />
     </Box>
     <aside
       css={css({

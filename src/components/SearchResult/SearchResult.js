@@ -9,7 +9,6 @@ import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
 import Placeholder from '../../elements/Placeholder/Placeholder'
 import Text from '../../elements/Text/Text'
-import { pluralize } from '../../utils'
 import PlainText from '../PlainText/PainText'
 
 const MAX_DESCRIPTION_LENGTH = 400
@@ -59,7 +58,7 @@ const SearchResult = ({ result, itemCategories }) => (
         })}
       >
         <Box css={css({ flex: 1, mr: 2 })}>
-          <Link to={`/${pluralize(result.category)}/${result.id}`}>
+          <Link to={`/${result.category}/${result.id}`}>
             <Heading as="h3" css={{ display: 'inline-block' }} variant="h4">
               {result.label}
             </Heading>
@@ -88,9 +87,7 @@ const SearchResult = ({ result, itemCategories }) => (
         </PlainText>
       </Text>
       <Flex css={css({ justifyContent: 'flex-end' })}>
-        <Link to={`/${pluralize(result.category)}/${result.id}`}>
-          Read more
-        </Link>
+        <Link to={`/${result.category}/${result.id}`}>Read more</Link>
       </Flex>
     </Box>
   </SearchResultContainer>

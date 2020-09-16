@@ -1,22 +1,37 @@
 import css from '@styled-system/css'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import 'styled-components/macro'
 import Button from '../../elements/Button/Button'
 import Flex from '../../elements/Flex/Flex'
 import Input from '../../elements/Input/Input'
 import Select from '../../elements/Select/Select'
 import { useSearchParams } from '../../utils'
-import { ITEM_CATEGORY } from '../../constants'
-
-const categories = [
-  { label: 'All Categories', value: '' },
-  ...Object.entries(ITEM_CATEGORY).map(([value, label]) => ({
-    label: `${label}s`,
-    value,
-  })),
-]
+import { fetchItemCategories } from '../../store/actions/itemCategories'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectors } from '../../store/reducers'
 
 const SearchForm = props => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchItemCategories())
+  }, [dispatch])
+
+  const itemCategories = useSelector(state =>
+    selectors.itemCategories.selectAllResources(state)
+  )
+
+  const categories = useMemo(
+    () => [
+      { label: 'All Categories', value: '' },
+      ...Object.entries(itemCategories || {}).map(([value, label]) => ({
+        label,
+        value,
+      })),
+    ],
+    [itemCategories]
+  )
+
   const [, setSearchParams] = useSearchParams()
   const [category, setCategory] = useState(categories[0])
   const [query, setQuery] = useState('')

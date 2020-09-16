@@ -2,7 +2,6 @@ import css from '@styled-system/css'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
-import { ITEM_CATEGORY } from '../../constants'
 import Box from '../../elements/Box/Box'
 import Button from '../../elements/Button/Button'
 import Container from '../../elements/Container/Container'
@@ -14,7 +13,8 @@ import { ReactComponent as SSHOCMPLogo } from '../../images/logo.svg'
 import { userLogin, userLogout } from '../../store/actions/user'
 import { REQUEST_STATUS } from '../../store/constants'
 import { selectors } from '../../store/reducers'
-import { pluralize } from '../../utils'
+import { useEffect } from 'react'
+import { fetchItemCategories } from '../../store/actions/itemCategories'
 
 const Logo = () => (
   <nav>
@@ -52,60 +52,72 @@ const NavLink = styled(Link).attrs({ variant: 'nav' })(
   })
 )
 
-const Header = () => (
-  <Box
-    as="header"
-    css={css({
-      borderBottomColor: 'subtle',
-      borderBottomStyle: 'solid',
-      borderBottomWidth: 1,
-      position: 'relative',
-    })}
-  >
-    <Container
-      as={Flex}
+const Header = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchItemCategories())
+  }, [dispatch])
+
+  const itemCategories = useSelector(state =>
+    selectors.itemCategories.selectAllResources(state)
+  )
+
+  return (
+    <Box
+      as="header"
       css={css({
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        py: 0,
-        px: 1,
+        borderBottomColor: 'subtle',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 1,
+        position: 'relative',
       })}
-      variant="wide"
     >
-      <Logo />
-      <Stack
-        css={{
-          alignItems: 'flex-end',
-          alignSelf: 'stretch',
+      <Container
+        as={Flex}
+        css={css({
+          alignItems: 'center',
           justifyContent: 'space-between',
-        }}
+          py: 0,
+          px: 1,
+        })}
+        variant="wide"
       >
-        <Flex css={css({ alignItems: 'stretch', height: 40, py: 1 })}>
-          <LoginBar />
-        </Flex>
-        <nav>
-          <FlexList>
-            {Object.entries(ITEM_CATEGORY).map(([key, label]) => (
-              <NavItem key={key}>
-                <NavLink to={`/search?categories=${key}&sort=label`}>
-                  {pluralize(label)}
-                </NavLink>
+        <Logo />
+        <Stack
+          css={{
+            alignItems: 'flex-end',
+            alignSelf: 'stretch',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Flex css={css({ alignItems: 'stretch', height: 40, py: 1 })}>
+            <LoginBar />
+          </Flex>
+          <nav>
+            <FlexList>
+              {Object.entries(itemCategories || {}).map(([key, label]) => (
+                <NavItem key={key}>
+                  <NavLink to={`/search?categories=${key}&sort=label`}>
+                    {label}
+                  </NavLink>
+                </NavItem>
+              ))}
+              <Separator />
+              <NavItem>
+                <NavLink to="/browse">Browse</NavLink>
               </NavItem>
-            ))}
-            <Separator />
-            <NavItem>
-              <NavLink to="/browse">Browse</NavLink>
-            </NavItem>
-            <Separator />
-            <NavItem>
-              <NavLink to="/about">About</NavLink>
-            </NavItem>
-          </FlexList>
-        </nav>
-      </Stack>
-    </Container>
-  </Box>
-)
+              <Separator />
+              <NavItem>
+                <NavLink to="/about">About</NavLink>
+              </NavItem>
+            </FlexList>
+          </nav>
+        </Stack>
+      </Container>
+    </Box>
+  )
+}
 
 const Separator = () => (
   <NavItem css={css({ alignItems: 'center', display: 'flex', mx: 2 })}>

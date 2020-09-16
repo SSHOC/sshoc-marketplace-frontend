@@ -110,6 +110,7 @@ export const SearchScreen = ({
           onSearchParamsChange={onSearchParamsChange}
           request={request}
           searchParams={searchParams}
+          itemCategories={itemCategories}
         />
       </Sidebar>
       <SearchResults

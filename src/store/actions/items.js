@@ -53,6 +53,23 @@ export const fetchTool = ({ id }) => ({
 })
 fetchTool.toString = () => 'fetchTool'
 
+export const fetchPublication = ({ id }) => ({
+  type: API_REQUEST,
+  payload: {
+    ...API.getPublicationById({ id }),
+  },
+  meta: {
+    getErrorMessage,
+    next: FETCH_RESOURCE,
+    normalize: createNormalizer({}),
+    request: {
+      name: 'fetchPublication',
+      query: { id },
+    },
+  },
+})
+fetchPublication.toString = () => 'fetchPublication'
+
 export const fetchTrainingMaterial = ({ id }) => ({
   type: API_REQUEST,
   payload: {

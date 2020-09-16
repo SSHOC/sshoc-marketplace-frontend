@@ -1,7 +1,7 @@
 import css from '@styled-system/css'
 import React, { Fragment } from 'react'
 import 'styled-components/macro'
-import Dropdown from '../../elements/Dropdown/Dropdown'
+import Button from '../../elements/Button/Button'
 import Heading from '../../elements/Heading/Heading'
 import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
@@ -25,12 +25,17 @@ const ItemSidebar = ({ resource, itemCategories }) => {
 
   const type = itemCategories?.[resource.category] || 'Resource'
   const [url] = resource.accessibleAt || []
-  if (!url) return null
 
-  const links = [
-    {
-      label: (
-        <>
+  return (
+    <>
+      {url ? (
+        <Button
+          as="a"
+          href={url}
+          size="large"
+          variant="primary"
+          css={css({ mb: 6 })}
+        >
           Go to {type}{' '}
           <Icon
             css={css({
@@ -41,25 +46,9 @@ const ItemSidebar = ({ resource, itemCategories }) => {
             icon="link"
             width="0.6em"
           />
-        </>
-      ),
-      path: url,
-    },
-  ]
-
-  return (
-    <>
-      <Dropdown
-        aria-label="Versions"
-        links={links}
-        size="large"
-        // TODO: This whole ui element is a bit weird, since
-        // `accessibleAt` can be empty, in which case we want to
-        // disable the button, but we might still get older/newerVersions
-        // for which we need the dropdown
-        variant={resource.accessibleAt ? 'primary' : undefined}
-      />
-      <Heading as="h2" css={css({ mt: 6 })} variant="h4">
+        </Button>
+      ) : null}
+      <Heading as="h2" variant="h4">
         Details
       </Heading>
 

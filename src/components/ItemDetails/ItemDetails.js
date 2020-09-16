@@ -162,7 +162,7 @@ const ImageCarousel = ({ images }) => {
   )
 }
 
-const ItemDetails = ({ request, resource }) => {
+const ItemDetails = ({ request, resource, itemCategories }) => {
   if (resource) {
     const thumbnail = resource.properties.find(
       property => property.type.code === 'thumbnail'
@@ -218,7 +218,10 @@ const ItemDetails = ({ request, resource }) => {
           )}
         />
         <ResourceSpecificDetails resource={resource} />
-        <RelatedItems items={resource.relatedItems} />
+        <RelatedItems
+          items={resource.relatedItems}
+          itemCategories={itemCategories}
+        />
       </>
     )
   }

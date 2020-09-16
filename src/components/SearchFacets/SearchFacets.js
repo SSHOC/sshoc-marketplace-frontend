@@ -1,14 +1,13 @@
 import css from '@styled-system/css'
 import React, { Fragment } from 'react'
 import 'styled-components/macro'
-import { ITEM_CATEGORY, ITEM_FACETS } from '../../constants'
+import { ITEM_FACETS } from '../../constants'
 import Box from '../../elements/Box/Box'
 import Checkbox from '../../elements/Checkbox/Checkbox'
 import Flex from '../../elements/Flex/Flex'
 import Heading from '../../elements/Heading/Heading'
 import Link from '../../elements/Link/Link'
 import Separator from '../../elements/Separator/Separator'
-import { pluralize } from '../../utils'
 
 const CategoryCheckbox = ({
   category,
@@ -29,7 +28,7 @@ const CategoryCheckbox = ({
         onChange={onChange}
         value={category}
       >
-        {pluralize(label)} {count ? `(${count})` : null}
+        {label} {count ? `(${count})` : null}
       </Checkbox>
     </Flex>
   )
@@ -48,17 +47,27 @@ const SearchFacets = ({
   onSearchParamsChange,
   request,
   searchParams,
+  itemCategories,
 }) => {
   const { categories, facets, query, sort } = searchParams
   const { info } = request || {}
+
+  function getCategoryResults(category) {
+    return (
+      info?.categories?.[category]?.count ??
+      collection.info?.categories?.[category]?.count
+    )
+  }
+
   const possibleFacets = info?.facets || collection?.info?.facets || {}
+  const possibleCategories = categories.filter(getCategoryResults)
 
   const handleChangeCategories = event => {
     const { checked, value } = event.target
 
     const updatedCategories = checked
-      ? categories.concat(value)
-      : categories.filter(category => category !== value)
+      ? possibleCategories.concat(value)
+      : possibleCategories.filter(category => category !== value)
 
     // Always reset to first page, so we don't end up on a page larger
     // than Math.ceil((results.length / pageSize)) when deselecting a category
@@ -91,7 +100,7 @@ const SearchFacets = ({
     }
 
     onSearchParamsChange({
-      categories,
+      categories: possibleCategories,
       facets: nextFacets,
       // page,
       query,
@@ -127,17 +136,21 @@ const SearchFacets = ({
         Categories
       </Heading>
 
-      {Object.entries(ITEM_CATEGORY).map(([category, label]) => (
-        <CategoryCheckbox
-          category={category}
-          categories={categories}
-          collection={collection}
-          info={info}
-          key={category}
-          label={label}
-          onChange={handleChangeCategories}
-        />
-      ))}
+      {Object.entries(itemCategories || {})
+        .filter(([category]) => {
+          return Boolean(getCategoryResults(category))
+        })
+        .map(([category, label]) => (
+          <CategoryCheckbox
+            category={category}
+            categories={categories}
+            collection={collection}
+            info={info}
+            key={category}
+            label={label}
+            onChange={handleChangeCategories}
+          />
+        ))}
 
       {Object.entries(possibleFacets).map(([key, value], i, arr) => {
         const checkedFacets = facets[key] || []

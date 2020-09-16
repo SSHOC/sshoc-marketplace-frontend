@@ -1,14 +1,16 @@
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || ''
 
+// these are only used for storybook
 export const ITEM_CATEGORY = {
-  tool: 'Tool',
-  'training-material': 'Training Material',
+  'tool-or-service': 'Tools & Services',
+  'training-material': 'Training Materials',
   workflow: 'Workflow',
   dataset: 'Dataset',
+  step: 'Steps',
+  publication: 'Publications',
 }
 
 export const ITEM_FACETS = {
-  'object-type': 'Types',
   activity: 'Activities',
   keyword: 'Keywords',
   source: 'Sources',

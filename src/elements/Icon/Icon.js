@@ -294,7 +294,7 @@ const getPath = icon => {
         ),
       }
 
-    case 'tool':
+    case 'tool-or-service':
       return {
         viewBox: '0 0 47.691 40.749',
         path: (

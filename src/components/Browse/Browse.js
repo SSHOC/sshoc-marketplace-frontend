@@ -14,7 +14,6 @@ import Text from '../../elements/Text/Text'
 import { fetchSearchResults } from '../../store/actions/items'
 import { REQUEST_STATUS } from '../../store/constants'
 import { selectors } from '../../store/reducers'
-import { pluralize } from '../../utils'
 
 const MAX_BROWSE_LINKS = 20
 const MAX_LAST_ADDED = 5
@@ -294,10 +293,7 @@ const Item = ({ item }) => {
         {item.description}
       </Text>
       <Flex css={css({ justifyContent: 'flex-end' })}>
-        <Link
-          css={css({ fontSize: 14 })}
-          to={`/${pluralize(item.category)}/${item.id}`}
-        >
+        <Link css={css({ fontSize: 14 })} to={`/${item.category}/${item.id}`}>
           Read more
         </Link>
       </Flex>

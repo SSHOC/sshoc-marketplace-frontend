@@ -8,6 +8,7 @@ import Home from '../../pages/Home/Home'
 import Login from '../../pages/Login/Login'
 import NotFound from '../../pages/NotFound/NotFound'
 import PrivacyPolicy from '../../pages/PrivacyPolicy/PrivacyPolicy'
+import Publication from '../../pages/Publication/Publication'
 import Search from '../../pages/Search/Search'
 import Tool from '../../pages/Tool/Tool'
 import TrainingMaterial from '../../pages/TrainingMaterial/TrainingMaterial'
@@ -27,13 +28,14 @@ const App = () => {
           <Route component={About} path="/about" />
           <Route component={Browse} path="/browse" />
           <Route component={Contact} path="/contact" />
-          <Route component={Dataset} path="/datasets/:id" />
+          <Route component={Dataset} path="/dataset/:id" />
           <Route component={Login} path="/login" />
           <Route component={PrivacyPolicy} path="/privacy-policy" />
+          <Route component={Publication} path="/publication/:id" />
           <Route component={Search} path="/search" />
-          <Route component={Tool} path="/tools/:id" />
-          <Route component={TrainingMaterial} path="/training-materials/:id" />
-          <Route component={Workflow} path="/workflows/:id" />
+          <Route component={Tool} path="/tool-or-service/:id" />
+          <Route component={TrainingMaterial} path="/training-material/:id" />
+          <Route component={Workflow} path="/workflow/:id" />
           <Route component={NotFound} />
         </Switch>
       </ErrorBoundary>

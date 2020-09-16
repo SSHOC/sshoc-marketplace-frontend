@@ -132,8 +132,6 @@ const SearchResults = ({
         // TODO: is there *any* support for multiple search categories in matomo?
         const selectedCategories = `categories: ${categories.join(', ') ||
           '<empty>'}`
-        const selectedTypes = `types: ${facets['object-type']?.join(', ') ||
-          '<empty>'}`
         const selectedActivities = `activities: ${facets['activity']?.join(
           ', '
         ) || '<empty>'}`
@@ -144,7 +142,6 @@ const SearchResults = ({
         const filters = [
           selectedCategories,
           selectedActivities,
-          selectedTypes,
           selectedSources,
           selectedKeywords,
         ].join(' / ')

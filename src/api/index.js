@@ -16,10 +16,15 @@ const createMarketplaceAPI = ({ baseUrl, prefix = '/api' }) => ({
     method: 'get',
     path: `${prefix}/datasets/${id}`,
   }),
+  getPublicationById: ({ id }) => ({
+    baseUrl,
+    method: 'get',
+    path: `${prefix}/publications/${id}`,
+  }),
   getToolById: ({ id }) => ({
     baseUrl,
     method: 'get',
-    path: `${prefix}/tools/${id}`,
+    path: `${prefix}/tools-services/${id}`,
   }),
   getTrainingMaterialById: ({ id }) => ({
     baseUrl,
