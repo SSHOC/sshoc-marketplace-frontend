@@ -11,10 +11,19 @@ import { selectors } from '../../store/reducers'
 import { createPath } from '../../utils'
 import ItemEditScreen from '../ItemEditScreen/ItemEditScreen'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+import { fetchItemCategories } from '../../store/actions/itemCategories'
 
 const ItemScreenContainer = ({ fetchItem, id }) => {
   const dispatch = useDispatch()
   const { path /*, url */ } = useRouteMatch()
+
+  useEffect(() => {
+    dispatch(fetchItemCategories())
+  }, [dispatch])
+
+  const itemCategories = useSelector(state =>
+    selectors.itemCategories.selectAllResources(state)
+  )
 
   useEffect(() => {
     dispatch(fetchItem({ id }))
@@ -36,13 +45,17 @@ const ItemScreenContainer = ({ fetchItem, id }) => {
         <ItemEditScreen request={request} resource={resource} />
       </ProtectedRoute>
       <Route>
-        <ItemScreen request={request} resource={resource} />
+        <ItemScreen
+          request={request}
+          resource={resource}
+          itemCategories={itemCategories}
+        />
       </Route>
     </Switch>
   )
 }
 
-export const ItemScreen = ({ request, resource }) => (
+export const ItemScreen = ({ request, resource, itemCategories }) => (
   <Flex css={css({ my: 6 })}>
     <Box css={{ flex: 3 }}>
       <ItemDetails request={request} resource={resource} />
@@ -56,7 +69,7 @@ export const ItemScreen = ({ request, resource }) => (
         minWidth: 0,
       })}
     >
-      <ItemSidebar resource={resource} />
+      <ItemSidebar resource={resource} itemCategories={itemCategories} />
     </aside>
   </Flex>
 )

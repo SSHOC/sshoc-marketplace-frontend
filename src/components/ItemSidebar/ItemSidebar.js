@@ -7,7 +7,7 @@ import Icon from '../../elements/Icon/Icon'
 import Link from '../../elements/Link/Link'
 import Stack from '../../elements/Stack/Stack'
 
-const ItemSidebar = ({ resource }) => {
+const ItemSidebar = ({ resource, itemCategories }) => {
   if (!resource) return null
 
   const properties = resource.properties.reduce((acc, property) => {
@@ -23,13 +23,13 @@ const ItemSidebar = ({ resource }) => {
     return acc
   }, {})
 
-  const [type] = properties['object-type'].values
+  const type = itemCategories?.[resource.category] || 'Resource'
 
   const links = [
     {
       label: (
         <>
-          Go to {type || 'Resource'}{' '}
+          Go to {type}{' '}
           <Icon
             css={css({
               alignSelf: 'flex-start',
