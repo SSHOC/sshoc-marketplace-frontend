@@ -4,7 +4,7 @@ import {
   MenuItems,
   MenuLink,
   MenuPopover,
-} from '@stefanprobst/menu-button'
+} from '@reach/menu-button'
 import css from '@styled-system/css'
 import variant from '@styled-system/variant'
 import React from 'react'
@@ -100,10 +100,6 @@ const Dropdown = ({
 }) => {
   const { path, label } = links[0]
 
-  // Workaround @reach/menu-button missing options to position popover
-  // This ref defines the anchor relative to which the menu will be positioned
-  const anchorRef = React.useRef()
-
   if (links.length < 2) {
     return (
       <Button
@@ -122,7 +118,7 @@ const Dropdown = ({
     <DropdownMenu>
       {({ isOpen }) => (
         <>
-          <ButtonGroup className={className} ref={anchorRef} {...props}>
+          <ButtonGroup className={className} {...props}>
             <Button
               as={Link}
               disabled={!path}
@@ -134,7 +130,6 @@ const Dropdown = ({
             </Button>
             <DropdownButton
               aria-label={ariaLabel}
-              anchorEl={anchorRef}
               disabled={links.length < 2}
               variant={variant}
             >
