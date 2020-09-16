@@ -53,7 +53,6 @@ const BrowseContainer = () => {
 
   const activityTypes = facets['activity'] || {}
   const keywords = facets['keyword'] || {}
-  const objectTypes = facets['object-type'] || {}
 
   const isLoading =
     !items &&
@@ -69,18 +68,11 @@ const BrowseContainer = () => {
       isLoading={isLoading}
       items={items}
       keywords={keywords}
-      objectTypes={objectTypes}
     />
   )
 }
 
-export const Browse = ({
-  activityTypes,
-  isLoading,
-  items,
-  keywords,
-  objectTypes,
-}) => (
+export const Browse = ({ activityTypes, isLoading, items, keywords }) => (
   <Flex>
     <div css={{ flex: 1 }}>
       <SectionHeading>Browse</SectionHeading>
@@ -89,7 +81,6 @@ export const Browse = ({
         isLoading={isLoading}
       />
       <BrowseKeywords keywords={keywords} isLoading={isLoading} />
-      <BrowseObjectTypes objectTypes={objectTypes} isLoading={isLoading} />
     </div>
     <SidePanel>
       <SectionHeading>Last added</SectionHeading>
@@ -238,35 +229,6 @@ const BrowseKeywords = ({ keywords, isLoading }) => (
                 })}`}
               >
                 {keyword} ({count})
-              </Link>
-            </ListItem>
-          ))}
-      </List>
-    )}
-  </Section>
-)
-
-const BrowseObjectTypes = ({ objectTypes, isLoading }) => (
-  <Section>
-    <BrowseSectionHeader>
-      <BrowseSectionHeading>Browse by item types</BrowseSectionHeading>
-      <Link to="/browse/object-type">See all</Link>
-    </BrowseSectionHeader>
-    <Line />
-    {isLoading ? (
-      <LoadingMessage />
-    ) : (
-      <List>
-        {Object.entries(objectTypes)
-          .slice(0, MAX_BROWSE_LINKS)
-          .map(([objectType, { count }]) => (
-            <ListItem key={objectType}>
-              <Link
-                to={`/search?facets=${JSON.stringify({
-                  'object-type': [objectType],
-                })}`}
-              >
-                {objectType} ({count})
               </Link>
             </ListItem>
           ))}
