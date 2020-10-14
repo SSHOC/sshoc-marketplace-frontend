@@ -140,7 +140,10 @@ const About = () => (
       For any questions relating to the development of the SSH Open Marketplace
       or the SSHOC project, please visit the{' '}
       <Link to="https://www.sshopencloud.eu/">website</Link> or contact{' '}
-      <Link to="mailto:info@sshopencloud.eu">info@sshopencloud.eu</Link>.
+      <Link to="mailto:sshopenmarketplace@sshopencloud.eu">
+        sshopenmarketplace@sshopencloud.eu
+      </Link>
+      .
     </Paragraph>
   </>
 )
