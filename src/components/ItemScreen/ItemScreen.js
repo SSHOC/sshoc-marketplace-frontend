@@ -1,5 +1,5 @@
 import css from '@styled-system/css'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import 'styled-components/macro'
@@ -12,6 +12,7 @@ import { createPath } from '../../utils'
 import ItemEditScreen from '../ItemEditScreen/ItemEditScreen'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import { fetchItemCategories } from '../../store/actions/itemCategories'
+import Helmet from 'react-helmet'
 
 const ItemScreenContainer = ({ fetchItem, id }) => {
   const dispatch = useDispatch()
@@ -56,26 +57,36 @@ const ItemScreenContainer = ({ fetchItem, id }) => {
 }
 
 export const ItemScreen = ({ request, resource, itemCategories }) => (
-  <Flex css={css({ my: 6 })}>
-    <Box css={{ flex: 3 }}>
-      <ItemDetails
-        request={request}
-        resource={resource}
-        itemCategories={itemCategories}
-      />
-    </Box>
-    <aside
-      css={css({
-        flexBasis: 'sidebar',
-        flexGrow: 0,
-        flexShrink: 1,
-        pl: 4,
-        minWidth: 0,
-      })}
-    >
-      <ItemSidebar resource={resource} itemCategories={itemCategories} />
-    </aside>
-  </Flex>
+  <Fragment>
+    <Helmet
+      title={[
+        resource ? resource.label : undefined,
+        'Social Sciences & Humanities Open Marketplace',
+      ]
+        .filter(Boolean)
+        .join(' | ')}
+    />
+    <Flex css={css({ my: 6 })}>
+      <Box css={{ flex: 3 }}>
+        <ItemDetails
+          request={request}
+          resource={resource}
+          itemCategories={itemCategories}
+        />
+      </Box>
+      <aside
+        css={css({
+          flexBasis: 'sidebar',
+          flexGrow: 0,
+          flexShrink: 1,
+          pl: 4,
+          minWidth: 0,
+        })}
+      >
+        <ItemSidebar resource={resource} itemCategories={itemCategories} />
+      </aside>
+    </Flex>
+  </Fragment>
 )
 
 export default ItemScreenContainer
