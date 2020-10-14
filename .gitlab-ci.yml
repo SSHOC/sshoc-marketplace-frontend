@@ -68,7 +68,7 @@ test:e2e:
   services:
     - docker:dind
   tags:
-    - sshoc-frontend
+    - sshoc-acdh-runner
   variables:
     DOCKER_TLS_CERTDIR: ''
   before_script:
