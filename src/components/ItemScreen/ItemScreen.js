@@ -65,7 +65,13 @@ export const ItemScreen = ({ request, resource, itemCategories }) => (
       ]
         .filter(Boolean)
         .join(' | ')}
-    />
+    >
+      {resource ? <meta property="og:title" content={resource.label} /> : null}
+      <meta
+        property="og:site_name"
+        content={'Social Sciences & Humanities Open Marketplace'}
+      />
+    </Helmet>
     <Flex css={css({ my: 6 })}>
       <Box css={{ flex: 3 }}>
         <ItemDetails
