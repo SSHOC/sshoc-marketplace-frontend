@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 
 services:
   frontend:
@@ -6,7 +6,7 @@ services:
     container_name: sshoc-marketplace-frontend-frontend-prod
     labels:
       - traefik.backend=marketplace-prod
-      - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at,sshoc-marketplace.acdh.oeaw.ac.at,marketplace.sshopencloud.eu
+      - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at,sshoc-marketplace.acdh.oeaw.ac.at,marketplace.sshopencloud.eu,marketplace.sshoc.eu
       - traefik.docker.network=web
       - traefik.port=3000
       - ID=15819
