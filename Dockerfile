@@ -1,29 +1,30 @@
-# build
-FROM node:10-alpine as build
+FROM node:14-alpine
 
 WORKDIR /usr/src/app
 
+# git is needed for openapi-ts-client
+RUN apk update && apk upgrade && apk add --no-cache git
+
 COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile --production --silent
+RUN yarn install --frozen-lockfile --quiet
 
-ENV PATH /usr/src/app/node_modules/.bin:${PATH}
-
-ARG REACT_APP_API_BASE_URL
-ARG REACT_APP_MATOMO_BASE_URL
-ARG REACT_APP_MATOMO_SITE_ID
-
-COPY src ./src
-COPY public ./public
+COPY . .
+ARG NEXT_TELEMETRY_DISABLED=1
+ARG GITLAB_BASE_URL
+ARG GITLAB_REPOSITORY
+ARG GITLAB_REPOSITORY_BRANCH
+ARG GITLAB_ACCESS_TOKEN
+ARG SSHOC_OPENAPI_DOCUMENT_URL
+ARG NEXT_PUBLIC_SSHOC_BASE_URL
+ARG NEXT_PUBLIC_SSHOC_API_BASE_URL
+ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+ARG NEXT_PUBLIC_MATOMO_BASE_URL
+ARG NEXT_PUBLIC_MATOMO_SITE_ID
 RUN yarn build
-
-# serve
-FROM node:10-alpine
-
-COPY serve.json /usr/share
-COPY --from=build /usr/src/app/build /usr/share/app
 
 EXPOSE 3000
 
 USER node
 
-CMD ["npx", "serve", "-c", "/usr/share/serve.json", "-l", "3000", "-n", "-s", "/usr/share/app"]
+# run docker with --init flag to handle SIGTERM/SIGKILL
+CMD ["yarn", "start"]

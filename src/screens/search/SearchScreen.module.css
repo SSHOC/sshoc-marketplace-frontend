@@ -1,0 +1,19 @@
+.grid {
+  grid-template-rows: auto auto auto 1fr;
+}
+
+.leftBleed {
+  grid-column: 1 / span 2;
+}
+
+.rightBleed {
+  grid-column: -3 / span 2;
+}
+
+.mainColumn {
+  grid-column: -10 / span 7;
+}
+
+.sideColumn {
+  grid-column: 3 / span 3;
+}

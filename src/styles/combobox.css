@@ -1,0 +1,17 @@
+/** global styles for `@reach/combobox` */
+:root {
+  /** silence warning */
+  --reach-combobox: 1;
+}
+[data-reach-combobox-option][aria-selected='true'] {
+  @apply bg-gray-50 text-primary-750;
+}
+[data-reach-combobox-option][aria-selected='true']:hover {
+}
+[data-reach-combobox-option][data-highlighted] {
+}
+[data-reach-combobox-option][data-highlighted]:hover {
+}
+[data-user-value] {
+  @apply font-bold;
+}

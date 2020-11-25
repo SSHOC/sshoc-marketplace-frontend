@@ -1,0 +1,66 @@
+:root {
+  --screen-2xs: 320px;
+  --screen-xs: 480px;
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1600px;
+  --screen-3xl: 1920px;
+}
+
+body {
+  @apply font-sans antialiased text-gray-800;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@screen 2xs {
+  html {
+    font-size: 40%;
+  }
+}
+
+@screen xs {
+  html {
+    font-size: 50%;
+  }
+}
+
+@screen sm {
+  html {
+    font-size: 60%;
+  }
+}
+
+@screen md {
+  html {
+    font-size: 70%;
+  }
+}
+
+@screen lg {
+  html {
+    font-size: 70%;
+  }
+}
+
+@screen xl {
+  html {
+    font-size: 80%;
+  }
+}
+
+@screen 2xl {
+  html {
+    font-size: 90%;
+  }
+}
+
+@screen 3xl {
+  html {
+    font-size: 100%;
+  }
+}

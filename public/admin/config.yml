@@ -1,0 +1,122 @@
+site_url: https://marketplace.sshopencloud.eu/
+load_config_file: true
+local_backend: true
+backend:
+  name: gitlab
+  repo: sshoc/sshoc-marketplace-frontend
+  branch: main
+  auth_type: implicit
+  app_id: 715dbe5a99099c436330e3fe439ac38e2c746fbdefc4446558fe6f99c517b8d7
+  api_root: https://gitlab.gwdg.de/api/v4
+  base_url: https://gitlab.gwdg.de
+  auth_endpoint: oauth/authorize
+  squash_merges: true
+  commit_messages:
+    create: "content(create): {{collection}} '{{slug}}'"
+    update: "content(update): {{collection}} '{{slug}}'"
+    delete: "content(delete): {{collection}} '{{slug}}'"
+    uploadMedia: "content(upload): '{{path}}'"
+    deleteMedia: "content(delete): '{{path}}'"
+slug:
+  encoding: ascii
+  clean_accents: true
+media_folder: /public/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    editor:
+      preview: false
+    format: frontmatter
+    files:
+      - name: home
+        label: Home page
+        file: content/pages/home.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+      - name: about
+        label: About page
+        file: content/pages/about.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+      - name: team
+        label: Team page
+        file: content/pages/team.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+      - name: website
+        label: Website page
+        file: content/pages/website.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+      - name: contact
+        label: Contact page
+        file: content/pages/contact.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+      - name: privacy-policy
+        label: Privacy policy page
+        file: content/pages/privacy-policy.mdx
+        format: frontmatter
+        fields:
+          - name: title
+            label: Title
+          - name: body
+            label: Text
+            widget: markdown
+  - name: settings
+    label: Settings
+    editor:
+      preview: false
+    media_folder: assets/images
+    public_folder: assets/images
+    files:
+      - name: metadata
+        label: Metadata
+        file: config/metadata.json
+        fields:
+          - name: url
+            label: URL
+          - name: title
+            label: Title
+          - name: shortTitle
+            label: Short title
+          - name: description
+            label: Description
+          - name: openGraph
+            label: Open Graph
+            widget: object
+            fields:
+              - name: title
+                label: Title
+          - name: twitter
+            label: Twitter
+            widget: object
+            fields:
+              - name: handle
+                label: Handle

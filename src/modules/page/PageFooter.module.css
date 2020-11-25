@@ -1,0 +1,7 @@
+.leftBleed {
+  grid-column: 1 / span 2;
+}
+
+.rightBleed {
+  grid-column: -3 / span 2;
+}

@@ -1,0 +1,15 @@
+.leftBleed {
+  grid-column: 1 / span 2;
+}
+
+.rightBleed {
+  grid-column: -3 / span 2;
+}
+
+.mainColumn {
+  grid-column: 3 / span 7;
+}
+
+.sideColumn {
+  grid-column: -6 / span 3;
+}

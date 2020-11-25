@@ -1,76 +1,67 @@
-# SSHOC Marketplace Frontend
+# SSHOC Marketplace
 
-## How to run
+Client for the [SSHOC Marketplace](https://marketplace.sshopencloud.eu).
 
-You can use Docker to run the app with:
+## Prerequisites
 
-```shell
-docker-compose up --build -d
-```
+You need [`node`](https://nodejs.org/en/download/) and
+[`yarn`](https://classic.yarnpkg.com/en/docs/install) installed.
 
-The container will use [`serve`](https://github.com/zeit/serve) to serve the app
-on port 3000.
+## Development
 
-Note that the app expects the backend server on port 8080.
+Before starting the first time, build an API client with
+`yarn create:sshoc-client`. Start the development server with `yarn dev` and
+visit [http://localhost:3000](http://localhost:3000). Optionally, start a local
+CMS backend with `yarn dev:cms` and access the CMS at
+[http://localhost:3000/admin/index.html](http://localhost:3000/admin/index.html).
 
-## How to contribute
+## Production
 
-Make sure you have [NodeJS](https://nodejs.org/en/) and
-[Yarn](https://yarnpkg.com/lang/en/) installed.
+Produce a static build with `yarn build && yarn export` and serve the `out`
+folder.
 
-Clone the repository and install the project's dependencies:
+### Environment variables
 
-```shell
-yarn
-```
+To configure the build via environment variables, copy `.env.local.example` to
+`.env.production` or `.env.local`. A `.env.local` config will _not_ be committed
+to git, while `.env.{development,production}` will.
 
-Run the development build:
+- `SSHOC_OPENAPI_DOCUMENT_URL` should point to the OpenAPI document for the
+  SSHOC Marketplace API. Defaults to `http://localhost:8080/v3/api-docs`.
+- `GITLAB_BASE_URL` and `GITLAB_REPOSITORY` should point to the frontend
+  repository. This will be used to get "last updated" timestamps for static
+  content pages. When not provided, timestamps will fall back to the current
+  date at build time.
+- `NEXT_PUBLIC_SSHOC_BASE_URL` and `NEXT_PUBLIC_SSHOC_API_BASE_URL` should point
+  to frontend and backend.
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` for ReCaptcha.
+- `NEXT_PUBLIC_MATOMO_BASE_URL` and `NEXT_PUBLIC_MATOMO_SITE_ID` for analytics.
 
-```shell
-yarn start
-```
+### robots.txt
 
-To run the production build locally:
+By default, `robots.txt` disallows all crawlers – change this for production by
+editing `scripts/sitemap.ts`.
 
-```shell
-REACT_APP_API_BASE_URL=http://localhost:8080 yarn build && yarn serve
-```
+### Performance metrics
 
-Also, make sure to have either the mock server or the development build of the
-backend server running at port 8080. You can start the mock server with:
+Currently,
+[performance metrics](https://nextjs.org/docs/advanced-features/measuring-performance)
+are logged to the console. Consider editing `src/pages/_app.tsx` to send them to
+an analytics service.
 
-```shell
-yarn mockserver
-```
+### Page metadata
 
-Contributions should follow the [project's guidelines](/CONTRIBUTING.md).
+Site metadata can be configured in `config/metadata.json`.
 
-## Component library
+## Static page content
 
-You can view components in isolation in storybook:
+Static content for the Home page, About pages, Contact page, and Privacy policy
+page can be edited on
+[/admin/index.html](http://localhost:3000/admin/index.html).
 
-```shell
-yarn start:storybook
-```
+## Docker
 
-To run a static storybook build:
-
-```shell
-yarn build:storybook && yarn serve:storybook
-```
-
-Or simply run the Docker container:
-
-```shell
-docker-compose -f docker-compose-storybook.yml up --build -d
-```
-
-Storybook will run on port 9009.
-
-## Previews
-
-A development version of the client is deployed at
-[https://sshoc-marketplace.acdh-dev.oeaw.ac.at](https://sshoc-marketplace.acdh-dev.oeaw.ac.at)
-
-A storybook instance is deployed at
-[https://sshoc-marketplace-storybook.acdh-dev.oeaw.ac.at](https://sshoc-marketplace-storybook.acdh-dev.oeaw.ac.at)
+You can build a container with `docker-compose build`, and run locally with
+`docker-compose up`, then visit [http://localhost:3000](http://localhost:3000).
+Build configuration should be provided via `.env` file (see
+`.env.local.example`).

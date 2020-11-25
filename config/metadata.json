@@ -1,0 +1,15 @@
+{
+  "url": "https://marketplace.sshopencloud.eu/",
+  "title": "Social Sciences & Humanities Open Marketplace",
+  "shortTitle": "SSHOC Marketplace",
+  "description": "Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.",
+  "image": {
+    "src": "assets/images/logo-maskable.svg"
+  },
+  "openGraph": {
+    "title": "Social Sciences & Humanities Open Marketplace"
+  },
+  "twitter": {
+    "handle": "SSHOpenCloud"
+  }
+}
