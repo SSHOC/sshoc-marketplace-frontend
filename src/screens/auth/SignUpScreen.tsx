@@ -164,7 +164,7 @@ function SignUpForm(): JSX.Element {
               'py-3 px-6 w-40 transition-colors duration-150 rounded',
               isDisabled
                 ? 'bg-gray-200 text-gray-500 pointer-events-none'
-                : 'bg-primary-800',
+                : 'bg-primary-800 text-white',
             )}
           >
             Sign up
