@@ -93,8 +93,8 @@ export default function SearchScreen(): JSX.Element {
           <div className="px-6 pb-12">
             <Title className="space-x-3">
               <span>Search results</span>
-              {Number(results?.count) > 0 ? (
-                <span className="text-2xl font-normal">({results?.count})</span>
+              {Number(results?.hits) > 0 ? (
+                <span className="text-2xl font-normal">({results?.hits})</span>
               ) : null}
               {isFetching ? (
                 <span>
@@ -362,7 +362,7 @@ function ItemSearchLongPagination({
                 passHref
                 shallow={true}
               >
-                <Anchor>{num}</Anchor>
+                <Anchor aria-label={`Page ${num}`}>{num}</Anchor>
               </Link>
             </li>
           )

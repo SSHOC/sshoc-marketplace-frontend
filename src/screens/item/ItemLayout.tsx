@@ -254,6 +254,7 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
       </div>
       <div className="flex justify-center border border-gray-200">
         <button
+          aria-label="Previous image"
           className={cx(
             'inline-flex items-center justify-center px-6',
             media.length === 1
@@ -265,7 +266,12 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
             setIndex((index) => (index > 0 ? index - 1 : media.length - 1))
           }}
         >
-          <svg viewBox="0 0 7.599 14.043" fill={'currentColor'} height="0.8em">
+          <svg
+            aria-hidden
+            viewBox="0 0 7.599 14.043"
+            fill={'currentColor'}
+            height="0.8em"
+          >
             <g transform="translate(7.599) rotate(90)">
               <path
                 className="a"
@@ -283,6 +289,7 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
           ))}
         </ul>
         <button
+          aria-label="Next image"
           className={cx(
             'inline-flex items-center justify-center px-6',
             media.length === 1
@@ -294,7 +301,12 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
             setIndex((index) => (index >= media.length - 1 ? 0 : index + 1))
           }}
         >
-          <svg viewBox="0 0 7.599 14.043" fill={'currentColor'} height="0.8em">
+          <svg
+            aria-hidden
+            viewBox="0 0 7.599 14.043"
+            fill={'currentColor'}
+            height="0.8em"
+          >
             <g transform="translate(0 14.043) rotate(-90)">
               <path d="M14.043,0H0L6.931,7.6Z" transform="translate(0 0)" />
             </g>
