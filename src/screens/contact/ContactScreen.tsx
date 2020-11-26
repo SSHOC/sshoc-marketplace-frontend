@@ -1,8 +1,10 @@
 import cx from 'clsx'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { Fragment, useRef } from 'react'
 import ReCaptcha from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import FormField from '@/modules/form/FormField'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
@@ -80,12 +82,29 @@ function ContactForm() {
   >({
     mode: 'onChange',
   })
+  const router = useRouter()
   const recaptchaRef = useRef<ReCaptcha>(null)
 
   function onSubmit(formData: ContactFormData) {
-    // TODO: where is contact form data sent to?
-    const recaptchaValue = recaptchaRef.current?.getValue()
-    recaptchaRef.current?.reset()
+    // const recaptchaValue = recaptchaRef.current?.getValue()
+    // recaptchaRef.current?.reset()
+
+    return fetch('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error()
+
+        toast.success('Thanks for your message.')
+        router.push({ pathname: '/' })
+      })
+      .catch(() => {
+        toast.error('Failed to deliver message.')
+      })
   }
 
   const isDisabled = !formState.isValid || formState.isSubmitting
@@ -94,6 +113,7 @@ function ContactForm() {
     <Fragment>
       <SubSectionTitle>Contact us</SubSectionTitle>
       <VStack as="form" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <input type="hidden" name="bot" ref={register} />
         <FormField label="Email" error={errors.email}>
           <TextField
             name="email"

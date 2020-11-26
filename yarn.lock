@@ -1662,11 +1662,6 @@
   resolved "https://registry.npmjs.org/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.3.tgz#bcc5577d2da78c820022e1555eaa18dad1efabd7"
   integrity sha512-yvpIwz2e9wgE3qHCujaF3f8fTkZUxmAEsXCpBE9ojl2PaevDgCADADcuLWg7sPrbPuXkCHeHKw0VLVsST6DTSA==
 
-"@next/mdx@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.npmjs.org/@next/mdx/-/mdx-10.0.1.tgz#95f3ddee3c7c6457dd4b1b6cb694921371f7c6d1"
-  integrity sha512-p9EAZwtZnkvgGMj7gYsxYD82/yXXZEo3fruTEhr+xBNEslHehcDYq6nBJUIkbyDu+6WIsNYjTlmhP6Iqqr9cSQ==
-
 "@next/polyfill-module@10.0.3":
   version "10.0.3"
   resolved "https://registry.npmjs.org/@next/polyfill-module/-/polyfill-module-10.0.3.tgz#507e99f6dd351dc4a6e45b63dbd397087ece459a"
@@ -2252,6 +2247,13 @@
   version "14.14.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-14.14.6.tgz#146d3da57b3c636cc0d1769396ce1cfa8991147f"
   integrity sha512-6QlRuqsQ/Ox/aJEQWBEJG7A9+u7oSYl3mem/K8IzxXG/kAGbV1YPD9Bg9Zw3vyxC/YP+zONKwy8hGkSt1jxFMw==
+
+"@types/nodemailer@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.0.tgz#d8c039be3ed685c4719a026455555be82c124b74"
+  integrity sha512-KY7bFWB0MahRZvVW4CuW83qcCDny59pJJ0MQ5ifvfcjNwPlIT0vW4uARO4u1gtkYnWdhSvURegecY/tzcukJcA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -8613,6 +8615,11 @@ node-request-interceptor@^0.5.1:
     "@open-draft/until" "^1.0.3"
     debug "^4.1.1"
     headers-utils "^1.2.0"
+
+nodemailer@^6.4.16:
+  version "6.4.16"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.4.16.tgz#5cb6391b1d79ab7eff32d6f9f48366b5a7117293"
+  integrity sha512-68K0LgZ6hmZ7PVmwL78gzNdjpj5viqBdFqKrTtr9bZbJYj6BRj5W6WGkxXrEnUl3Co3CBXi3CZBUlpV/foGnOQ==
 
 noop-logger@^0.1.1:
   version "0.1.1"
