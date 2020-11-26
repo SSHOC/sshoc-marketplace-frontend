@@ -70,7 +70,7 @@ function Hero() {
         // to add position: relative to content that should be layered above
         className="-z-10 object-cover"
       />
-      <div className="mx-auto max-w-screen-lg mt-24 space-y-6 p-6 relative text-sm">
+      <div className="mx-auto max-w-screen-md xl:max-w-screen-lg mt-24 space-y-6 p-6 relative text-sm">
         <Title>{meta.title}</Title>
         <Mdx>
           <Content />
