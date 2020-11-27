@@ -4,6 +4,8 @@ services:
   frontend:
     image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/frontend:release
     container_name: sshoc-marketplace-frontend-frontend-prod
+    volumes:
+      - image_cache:/usr/src/app/.next/cache/images
     labels:
       - traefik.backend=marketplace-prod
       - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at,sshoc-marketplace.acdh.oeaw.ac.at,marketplace.sshopencloud.eu,marketplace.sshoc.eu
@@ -13,6 +15,9 @@ services:
       - BackendConnection=none
     networks:
       - web
+
+volumes:
+  image_cache:
 
 networks:
   web:

@@ -1,9 +1,11 @@
-version: "2"
+version: '2'
 
 services:
   frontend:
     image: docker.gitlab.gwdg.de/sshoc/sshoc-marketplace-frontend/frontend:latest
     container_name: sshoc-marketplace-frontend-frontend
+    volumes:
+      - image_cache:/usr/src/app/.next/cache/images
     labels:
       - traefik.backend=marketplace
       - traefik.frontend.rule=Host:marketplace.sisyphos.arz.oeaw.ac.at
@@ -13,6 +15,9 @@ services:
       - BackendConnection=none
     networks:
       - web
+
+volumes:
+  image_cache:
 
 networks:
   web:
