@@ -24,7 +24,9 @@ folder.
 
 To configure the build via environment variables, copy `.env.local.example` to
 `.env.production` or `.env.local`. A `.env.local` config will _not_ be committed
-to git, while `.env.{development,production}` will.
+to git, while `.env.{development,production}` will. _Note:_ When using an `.env`
+file to configure `docker-compose`, be aware that values in `.env` take
+precedence over values in `.env.local`.
 
 - `SSHOC_OPENAPI_DOCUMENT_URL` should point to the OpenAPI document for the
   SSHOC Marketplace API. Defaults to `http://localhost:8080/v3/api-docs`.
