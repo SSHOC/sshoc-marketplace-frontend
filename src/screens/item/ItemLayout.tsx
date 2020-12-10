@@ -34,6 +34,8 @@ const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
 type ItemCategory = Exclude<ItemCategoryWithStep, 'step'>
 type ItemProperties = Exclude<Item['properties'], undefined>
 type ItemProperty = ItemProperties[number]
+type ItemContributors = Exclude<Item['contributors'], undefined>
+type ItemContributor = ItemContributors[number]
 type RelatedItems = Exclude<Item['relatedItems'], undefined>
 
 /**
@@ -105,6 +107,7 @@ export default function ItemLayout({
             />
             <ItemPropertiesList
               properties={item.properties as ItemProperties}
+              contributors={item.contributors as ItemContributors}
             />
           </VStack>
         </SideColumn>
@@ -320,7 +323,13 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
 /**
  * Properties.
  */
-function ItemPropertiesList({ properties }: { properties: ItemProperties }) {
+function ItemPropertiesList({
+  properties,
+  contributors,
+}: {
+  properties: ItemProperties
+  contributors: ItemContributors
+}) {
   const groupedProperties = useMemo(() => {
     if (properties === undefined || properties.length === 0) return null
 
@@ -343,6 +352,28 @@ function ItemPropertiesList({ properties }: { properties: ItemProperties }) {
     <VStack className="space-y-4">
       <SubSectionTitle as="h2">Details</SubSectionTitle>
       <VStack as="dl" className="space-y-2 text-sm leading-7">
+        {/* contributors are a top-level field, not a property */}
+        <dt className="inline mr-2 text-gray-500">Contributors:</dt>
+        <dd className="inline">
+          {contributors.map((contributor, index) => {
+            if (contributor == null || contributor.actor == null) return null
+            return (
+              <Fragment
+                key={`${contributor.actor.id}${contributor.role?.code}`}
+              >
+                {index !== 0 ? <span>, </span> : null}
+                {contributor.actor?.website != null ? (
+                  <a href={contributor.actor.website}>
+                    {contributor.actor.name}
+                  </a>
+                ) : (
+                  contributor.actor.name
+                )}
+              </Fragment>
+            )
+          })}
+        </dd>
+
         {sortedLabels.map((label) => {
           const properties = groupedProperties[label]
           return (
