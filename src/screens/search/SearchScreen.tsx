@@ -831,7 +831,7 @@ function ItemSearchResultsList({
     <ul className="divide-y-4 divide-white">
       {items.map((item) => {
         return (
-          <li key={item.id}>
+          <li key={item.persistentId}>
             <ItemSearchResult item={item} />
           </li>
         )
@@ -895,7 +895,7 @@ function ItemSearchResult({
     ?.map((keyword) => keyword.value)
     ?.join(', ')
 
-  const pathname = `/${item.category}/${item.id}`
+  const pathname = `/${item.category}/${item.persistentId}`
 
   return (
     <article className="flex flex-col py-8 pl-16 pr-6 space-y-4">
