@@ -68,9 +68,9 @@ function Hero() {
         quality={100}
         // applies to the <img>, not the <div> container, so we still need
         // to add position: relative to content that should be layered above
-        className="-z-10 object-cover"
+        className="object-cover -z-10"
       />
-      <div className="mx-auto max-w-screen-md xl:max-w-screen-lg mt-24 space-y-6 p-6 relative text-sm">
+      <div className="relative max-w-screen-md p-6 mx-auto mt-24 space-y-6 text-sm xl:max-w-screen-lg">
         <Title>{meta.title}</Title>
         <Mdx>
           <Content />
@@ -81,7 +81,7 @@ function Hero() {
           <SubmitButton className="h-12" />
         </ItemSearchForm>
       </div>
-      <PeopleImage className="mx-auto max-w-screen-xl -mt-12 mb-6" />
+      <PeopleImage className="max-w-screen-xl mx-auto mb-6 -mt-12" />
     </FullWidth>
   )
 }
@@ -172,7 +172,7 @@ function LastAdded({ items }: { items?: Items }) {
         <VStack as="ul" className="divide-y divide-gray-200">
           {items.slice(0, MAX_LAST_ADDED_ITEMS).map((item) => {
             return (
-              <li key={item.id}>
+              <li key={item.persistentId}>
                 <ItemCard item={item} />
               </li>
             )
@@ -227,7 +227,7 @@ function SubSection({
 }: PropsWithChildren<{ title: string; href: LinkProps['href'] }>) {
   return (
     <Fragment>
-      <HStack className="justify-between items-baseline border-b border-gray-200 py-4">
+      <HStack className="items-baseline justify-between py-4 border-b border-gray-200">
         <SubSectionTitle>{title}</SubSectionTitle>
         <Link href={href} passHref>
           <Anchor>See all</Anchor>

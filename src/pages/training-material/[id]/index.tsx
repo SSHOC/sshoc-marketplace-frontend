@@ -25,7 +25,7 @@ export async function getServerSideProps(
   if (id === undefined) return { notFound: true }
 
   try {
-    const trainingMaterial = await getTrainingMaterial({ id })
+    const trainingMaterial = await getTrainingMaterial({ id }, {})
     return { props: { trainingMaterial } }
   } catch {
     /** context.res.statusCode = 404 */

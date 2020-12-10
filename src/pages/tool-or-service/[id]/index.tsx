@@ -23,7 +23,7 @@ export async function getServerSideProps(
   if (id === undefined) return { notFound: true }
 
   try {
-    const tool = await getTool({ id })
+    const tool = await getTool({ id }, {})
     return { props: { tool } }
   } catch {
     /** context.res.statusCode = 404 */

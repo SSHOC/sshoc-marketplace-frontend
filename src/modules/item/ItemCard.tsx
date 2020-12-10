@@ -26,8 +26,11 @@ export default function ItemCard({ item }: { item: Item }): JSX.Element {
           className="flex-shrink-0"
           height="2.5em"
         />
-        <Link href={{ pathname: `/${item.category}/${item.id}` }} passHref>
-          <a className="hover:text-primary-800 transition-colors duration-150">
+        <Link
+          href={{ pathname: `/${item.category}/${item.persistentId}` }}
+          passHref
+        >
+          <a className="transition-colors duration-150 hover:text-primary-800">
             <span>{item.label}</span>
           </a>
         </Link>
@@ -36,7 +39,10 @@ export default function ItemCard({ item }: { item: Item }): JSX.Element {
       <div className="text-sm leading-7 text-gray-600">
         <Plaintext text={item.description} maxLength={MAX_DESCRIPTION_LENGTH} />
       </div>
-      <Link href={{ pathname: `/${item.category}/${item.id}` }} passHref>
+      <Link
+        href={{ pathname: `/${item.category}/${item.persistentId}` }}
+        passHref
+      >
         <Anchor className="self-end text-sm">Read more</Anchor>
       </Link>
     </VStack>

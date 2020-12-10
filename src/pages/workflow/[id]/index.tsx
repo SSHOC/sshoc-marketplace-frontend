@@ -23,7 +23,7 @@ export async function getServerSideProps(
   if (id === undefined) return { notFound: true }
 
   try {
-    const workflow = await getWorkflow({ workflowId: id })
+    const workflow = await getWorkflow({ workflowId: id }, {})
     return { props: { workflow } }
   } catch {
     /** context.res.statusCode = 404 */

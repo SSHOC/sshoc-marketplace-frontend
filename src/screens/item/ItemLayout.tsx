@@ -35,7 +35,6 @@ type ItemCategory = Exclude<ItemCategoryWithStep, 'step'>
 type ItemProperties = Exclude<Item['properties'], undefined>
 type ItemProperty = ItemProperties[number]
 type ItemContributors = Exclude<Item['contributors'], undefined>
-type ItemContributor = ItemContributors[number]
 type RelatedItems = Exclude<Item['relatedItems'], undefined>
 
 /**
@@ -353,26 +352,28 @@ function ItemPropertiesList({
       <SubSectionTitle as="h2">Details</SubSectionTitle>
       <VStack as="dl" className="space-y-2 text-sm leading-7">
         {/* contributors are a top-level field, not a property */}
-        <dt className="inline mr-2 text-gray-500">Contributors:</dt>
-        <dd className="inline">
-          {contributors.map((contributor, index) => {
-            if (contributor == null || contributor.actor == null) return null
-            return (
-              <Fragment
-                key={`${contributor.actor.id}${contributor.role?.code}`}
-              >
-                {index !== 0 ? <span>, </span> : null}
-                {contributor.actor?.website != null ? (
-                  <a href={contributor.actor.website}>
-                    {contributor.actor.name}
-                  </a>
-                ) : (
-                  contributor.actor.name
-                )}
-              </Fragment>
-            )
-          })}
-        </dd>
+        <div>
+          <dt className="inline mr-2 text-gray-500">Contributors:</dt>
+          <dd className="inline">
+            {contributors.map((contributor, index) => {
+              if (contributor == null || contributor.actor == null) return null
+              return (
+                <Fragment
+                  key={`${contributor.actor.id}${contributor.role?.code}`}
+                >
+                  {index !== 0 ? <span>, </span> : null}
+                  {contributor.actor?.website != null ? (
+                    <a href={contributor.actor.website}>
+                      {contributor.actor.name}
+                    </a>
+                  ) : (
+                    contributor.actor.name
+                  )}
+                </Fragment>
+              )
+            })}
+          </dd>
+        </div>
 
         {sortedLabels.map((label) => {
           const properties = groupedProperties[label]

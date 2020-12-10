@@ -25,7 +25,7 @@ export async function getServerSideProps(
   if (id === undefined) return { notFound: true }
 
   try {
-    const publication = await getPublication({ id })
+    const publication = await getPublication({ id }, {})
     return { props: { publication } }
   } catch {
     /** context.res.statusCode = 404 */

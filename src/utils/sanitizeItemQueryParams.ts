@@ -3,9 +3,8 @@ import { ensureScalar } from '@/utils/ensureScalar'
 
 export function sanitizeItemQueryParams(
   params: GetServerSidePropsContext['params'],
-): { id?: number } {
+): { id?: string } {
   if (params === undefined || params.id === undefined) return {}
-  const id = parseInt(ensureScalar(params.id), 10)
-  if (Number.isNaN(id) || id <= 0) return {}
+  const id = ensureScalar(params.id)
   return { id }
 }

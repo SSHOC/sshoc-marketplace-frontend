@@ -23,7 +23,7 @@ export async function getServerSideProps(
   if (id === undefined) return { notFound: true }
 
   try {
-    const dataset = await getDataset({ id })
+    const dataset = await getDataset({ id }, {})
     return { props: { dataset } }
   } catch {
     /** context.res.statusCode = 404 */

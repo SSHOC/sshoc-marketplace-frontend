@@ -41,14 +41,14 @@ export default function RelatedItems({
 
   return (
     <VStack as="section" className="space-y-4">
-      <HStack className="space-x-2 items-baseline">
+      <HStack className="items-baseline space-x-2">
         <SectionTitle>Related</SectionTitle>
         <span className="text-xl text-gray-500">({relatedItems.length})</span>
       </HStack>
       <ul className="grid grid-cols-2 border-t border-b border-gray-200">
         {relatedItems.slice(0, cursor).map((item) => {
           return (
-            <li key={item.id} className="border-t border-gray-200 -mt-px">
+            <li key={item.id} className="-mt-px border-t border-gray-200">
               <RelatedItem item={item} />
             </li>
           )
@@ -73,7 +73,7 @@ export default function RelatedItems({
 }
 
 function RelatedItem({ item }: { item: RelatedItem }): JSX.Element {
-  const pathname = `/${item.category}/${item.id}`
+  const pathname = `/${item.category}/${item.persistentId}`
   return (
     <VStack as="article" className="px-4 py-5 space-y-4">
       <h3 className="flex items-center space-x-4 text-lg font-medium leading-5">
