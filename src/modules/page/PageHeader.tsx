@@ -44,11 +44,13 @@ function MainNavigation(): JSX.Element {
       <FullWidth
         as="nav"
         aria-label="Main menu"
-        className="flex justify-between border-b border-gray-200 items-center"
+        className="flex items-center justify-between border-b border-gray-200"
       >
-        <NavLink href={{ pathname: '/' }}>
-          <Logo aria-label="Home" height="4em" />
-        </NavLink>
+        <Link href={{ pathname: '/' }}>
+          <a>
+            <Logo aria-label="Home" height="6em" />
+          </a>
+        </Link>
         <VStack className="items-end space-y-2">
           <HStack as="ul">
             <li>
@@ -302,7 +304,7 @@ function MenuPopover({
   return (
     <Menu.Items
       static={isStatic}
-      className="absolute right-0 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md z-10"
+      className="absolute right-0 z-10 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md"
     >
       {children}
     </Menu.Items>
@@ -350,13 +352,13 @@ function CreateItemsMenu() {
         <nav>
           <HStack
             as="ul"
-            className="bg-highlight-50 text-sm text-secondary-750 px-6 py-4 justify-end space-x-12"
+            className="justify-end px-6 py-4 space-x-12 text-sm bg-highlight-50 text-secondary-750"
           >
             {Object.keys(itemCategories).map((category) => {
               return (
                 <li key={category}>
                   <Link href={{ pathname: `/${category}/create` }}>
-                    <a className="hover:text-secondary-500 transition-colors duration-150">
+                    <a className="transition-colors duration-150 hover:text-secondary-500">
                       Create{' '}
                       {getSingularItemCategoryLabel(
                         category as Exclude<ItemCategory, 'step'>,
