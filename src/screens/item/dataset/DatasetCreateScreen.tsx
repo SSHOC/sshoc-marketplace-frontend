@@ -275,8 +275,8 @@ function DatasetForm({
 
   function onSubmit(formData: DatasetFormData) {
     const dataset = normalizeFormData(formData)
-    /** return promise to set `formState.isSubmittig' correctly */
-    return createDataset([dataset, { token: session?.accessToken }], {
+    /** return promise to set `formState.isSubmitting' correctly */
+    return createDataset([{}, dataset, { token: session?.accessToken }], {
       onSuccess(dataset) {
         reset()
         toast.success('Successfully created dataset.')

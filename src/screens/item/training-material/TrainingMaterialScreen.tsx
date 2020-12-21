@@ -17,8 +17,9 @@ export default function TrainingMaterialScreen({
    * to allow background refreshing
    */
   const { data } = useGetTrainingMaterial(
-    { id: initialData.id ?? -1 },
-    { enabled: initialData.id !== undefined, initialData },
+    { id: initialData.persistentId! },
+    {},
+    { enabled: initialData.persistentId !== undefined, initialData },
   )
   /** backend does not specify required fields. should be safe here */
   const trainingMaterial = (data ?? initialData) as DeepRequired<

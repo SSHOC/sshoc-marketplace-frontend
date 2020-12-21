@@ -17,8 +17,9 @@ export default function DatasetScreen({
    * to allow background refreshing
    */
   const { data } = useGetDataset(
-    { id: initialData.id ?? -1 },
-    { enabled: initialData.id !== undefined, initialData },
+    { id: initialData.persistentId! },
+    {},
+    { enabled: initialData.persistentId !== undefined, initialData },
   )
   /** backend does not specify required fields. should be safe here */
   const dataset = (data ?? initialData) as DeepRequired<DatasetDto>

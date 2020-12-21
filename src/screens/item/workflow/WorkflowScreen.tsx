@@ -32,8 +32,9 @@ export default function WorkflowScreen({
    * to allow background refreshing
    */
   const { data } = useGetWorkflow(
-    { workflowId: initialData.id ?? -1 },
-    { enabled: initialData.id !== undefined, initialData },
+    { workflowId: initialData.persistentId! },
+    {},
+    { enabled: initialData.persistentId !== undefined, initialData },
   )
   /** backend does not specify required fields. should be safe here */
   const workflow = (data ?? initialData) as DeepRequired<WorkflowDto>
@@ -90,7 +91,7 @@ function Steps({ steps }: { steps: Steps }) {
       }}
     >
       <HStack
-        className="items-baseline space-x-2 p-6"
+        className="items-baseline p-6 space-x-2"
         style={{ gridColumn: '3 / span 7' }}
       >
         <SectionTitle>Steps</SectionTitle>
@@ -115,14 +116,14 @@ function Step({ step, index }: { step: Step; index: number }) {
       <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-100" />
       <HStack
         as="header"
-        className="bg-gray-100 p-6 items-center justify-between"
+        className="items-center justify-between p-6 bg-gray-100"
         style={{ gridColumn: '3 / span 7' }}
       >
-        <HStack className="space-x-6 items-center">
-          <span className="font-bold text-2xl">{index + 1}</span>
-          <div className="w-px bg-gray-300 self-stretch" />
+        <HStack className="items-center space-x-6">
+          <span className="text-2xl font-bold">{index + 1}</span>
+          <div className="self-stretch w-px bg-gray-300" />
           <span>
-            <h3 className="font-bold text-lg">{step.label}</h3>
+            <h3 className="text-lg font-bold">{step.label}</h3>
           </span>
         </HStack>
         <DisclosureButton
@@ -144,7 +145,7 @@ function Step({ step, index }: { step: Step; index: number }) {
       <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-50" />
       <DisclosurePanel
         style={{ gridColumn: '3 / span 7' }}
-        className="bg-gray-50 px-6 py-12 space-y-4"
+        className="px-6 py-12 space-y-4 bg-gray-50"
       >
         <ItemMetadata item={step} />
         <div className="leading-8">

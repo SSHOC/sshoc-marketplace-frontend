@@ -17,8 +17,9 @@ export default function ToolScreen({
    * to allow background refreshing
    */
   const { data } = useGetTool(
-    { id: initialData.id ?? -1 },
-    { enabled: initialData.id !== undefined, initialData },
+    { id: initialData.persistentId! },
+    {},
+    { enabled: initialData.persistentId !== undefined, initialData },
   )
   /** backend does not specify required fields. should be safe here */
   const tool = (data ?? initialData) as DeepRequired<ToolDto>
