@@ -47,8 +47,8 @@ function MainNavigation(): JSX.Element {
         className="flex items-center justify-between border-b border-gray-200"
       >
         <Link href={{ pathname: '/' }}>
-          <a>
-            <Logo aria-label="Home" height="6em" />
+          <a className="mx-8">
+            <Logo aria-label="Home" height="4.5em" />
           </a>
         </Link>
         <VStack className="items-end space-y-2">
