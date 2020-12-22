@@ -650,6 +650,13 @@ function ItemSearchFilterList({
   filter?: Array<string>
   setDetailedFilterList: Dispatch<SetStateAction<ItemSearchFacet | null>>
 }) {
+  /** response shape is different for categories */
+  if (
+    name === 'categories' &&
+    Object.values(values).every((value) => value.count === 0)
+  ) {
+    return null
+  }
   const allValues = Object.entries(values)
   if (allValues.length === 0) return null
   const visibleFilterValues = new Map(allValues.slice(0, 10))
