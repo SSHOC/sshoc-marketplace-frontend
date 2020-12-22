@@ -63,6 +63,10 @@ module.exports = {
         '2xl': px(26),
         '3xl': px(32),
       },
+      /** included by default in tailwind 2.0 */
+      inset: {
+        full: '100%',
+      },
       /** max-widths for readability */
       maxWidth: {
         '65ch': '65ch',

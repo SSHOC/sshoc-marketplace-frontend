@@ -3,7 +3,7 @@ import cx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
-import type { PropsWithChildren } from 'react'
+import type { Ref, PropsWithChildren } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 import FullWidth from '../layout/FullWidth'
 import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
@@ -204,11 +204,55 @@ function AuthButton() {
 
   if (auth.session !== null) {
     return (
-      <div className="flex items-center space-x-6 text-gray-500">
+      <div className="relative flex items-center space-x-6 text-gray-500">
         <p>Signed in as {user?.displayName ?? auth.session.user.username}</p>
-        <NavLinkButton href={{ pathname: '/auth/sign-out' }}>
-          Sign out
-        </NavLinkButton>
+        <Menu>
+          {({ open }) => (
+            <Fragment>
+              <Menu.Button
+                className={cx(
+                  'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-block hover:bg-primary-700',
+                  open ? '' : '',
+                )}
+              >
+                Menu
+              </Menu.Button>
+              <FadeIn show={open} as={Fragment}>
+                {(ref: Ref<HTMLDivElement>) => (
+                  <MenuPopover static className="top-full" popoverRef={ref}>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MenuLink
+                          href={{
+                            pathname: '/contact',
+                            query: {
+                              email: user?.email,
+                              subject: 'Report an issue',
+                              message: `I have found an issue on page ${router.asPath}.\n\nPlease describe:\n\n`,
+                            },
+                          }}
+                          highlighted={active}
+                        >
+                          Report an issue
+                        </MenuLink>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MenuLink
+                          href={{ pathname: '/auth/sign-out' }}
+                          highlighted={active}
+                        >
+                          Sign out
+                        </MenuLink>
+                      )}
+                    </Menu.Item>
+                  </MenuPopover>
+                )}
+              </FadeIn>
+            </Fragment>
+          )}
+        </Menu>
       </div>
     )
   }
@@ -264,7 +308,14 @@ function NavLink({
   )
 }
 
-function FadeIn({ show, children }: PropsWithChildren<{ show: boolean }>) {
+function FadeIn({
+  show,
+  children,
+  as,
+}: PropsWithChildren<{
+  show: boolean
+  as?: React.ElementType
+}>) {
   return (
     <Transition
       show={show}
@@ -274,6 +325,9 @@ function FadeIn({ show, children }: PropsWithChildren<{ show: boolean }>) {
       leave="transition ease-in duration-75"
       leaveFrom="transform opacity-100 scale-100"
       leaveTo="transform opacity-0 scale-95"
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      as={as}
     >
       {children}
     </Transition>
@@ -300,11 +354,23 @@ function MenuButton({
 function MenuPopover({
   children,
   static: isStatic,
-}: PropsWithChildren<{ static: boolean }>) {
+  className,
+  popoverRef,
+}: PropsWithChildren<{
+  static: boolean
+  className?: string
+  popoverRef?: Ref<HTMLDivElement>
+}>) {
   return (
     <Menu.Items
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ref={popoverRef}
       static={isStatic}
-      className="absolute right-0 z-10 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md"
+      className={cx(
+        'absolute right-0 z-20 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md',
+        className,
+      )}
     >
       {children}
     </Menu.Items>

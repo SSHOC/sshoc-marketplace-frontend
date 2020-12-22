@@ -1,7 +1,7 @@
 import cx from 'clsx'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useRef } from 'react'
+import { Fragment, useRef, useEffect } from 'react'
 import ReCaptcha from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -18,6 +18,7 @@ import TextField from '@/modules/ui/TextField'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import type { PageProps } from '@/pages/contact/index'
+import { ensureScalar } from '@/utils/ensureScalar'
 import Content, { metadata } from '@@/content/pages/contact.mdx'
 
 type ContentMetadata = {
@@ -54,9 +55,9 @@ export default function ContactScreen({
             loading="lazy"
             layout="fill"
             quality={100}
-            className="-z-10 object-cover object-right-bottom"
+            className="object-cover object-right-bottom -z-10"
           />
-          <div className="space-y-6 p-6 pb-12 max-w-screen-sm relative">
+          <div className="relative max-w-screen-sm p-6 pb-12 space-y-6">
             <Title>{meta.title}</Title>
             <Mdx>
               <Content />
@@ -77,13 +78,29 @@ type ContactFormData = {
 }
 
 function ContactForm() {
-  const { handleSubmit, register, errors, formState } = useForm<
+  const { handleSubmit, register, errors, formState, setValue } = useForm<
     ContactFormData
   >({
     mode: 'onChange',
   })
   const router = useRouter()
   const recaptchaRef = useRef<ReCaptcha>(null)
+
+  /** pre-populate fields from query params, e.g. for "Report an issue" link */
+  useEffect(() => {
+    if (router.query !== undefined && Object.keys(router.query).length > 0) {
+      const allowedFields = ['subject', 'message', 'email']
+      allowedFields.forEach((field) => {
+        const q = router.query[field]
+        const value = q !== undefined && ensureScalar(q).trim()
+        if (value !== undefined) {
+          setValue(field, value)
+        }
+      })
+      // remove query params from url
+      router.replace({ query: {} }, undefined, { shallow: true })
+    }
+  }, [router.query, router, setValue])
 
   function onSubmit(formData: ContactFormData) {
     // const recaptchaValue = recaptchaRef.current?.getValue()
@@ -135,7 +152,7 @@ function ContactForm() {
             aria-invalid={Boolean(errors.message)}
             ref={register({ required: 'Message is required.' })}
             as="textarea"
-            rows={5}
+            rows={6}
             className="resize-none"
           />
         </FormField>
@@ -149,7 +166,7 @@ function ContactForm() {
             />
           </div>
         ) : null}
-        <HStack className="py-2 justify-end">
+        <HStack className="justify-end py-2">
           <button
             className={cx(
               'w-32 rounded py-3 px-6 transition-colors duration-150',
