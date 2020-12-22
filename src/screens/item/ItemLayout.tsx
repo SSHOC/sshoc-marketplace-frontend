@@ -75,7 +75,7 @@ export default function ItemLayout({
                 label: itemCategories[item.category],
               },
               {
-                pathname: `/${item.category}/${item.id}`,
+                pathname: `/${item.category}/${item.persistentId}`,
                 label: item.label,
               },
             ]}
@@ -107,6 +107,8 @@ export default function ItemLayout({
             <ItemPropertiesList
               properties={item.properties as ItemProperties}
               contributors={item.contributors as ItemContributors}
+              licenses={item.licenses}
+              source={item.source}
             />
           </VStack>
         </SideColumn>
@@ -325,9 +327,13 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
 function ItemPropertiesList({
   properties,
   contributors,
+  licenses,
+  source,
 }: {
   properties: ItemProperties
   contributors: ItemContributors
+  licenses?: Item['licenses']
+  source?: Item['source']
 }) {
   const groupedProperties = useMemo(() => {
     if (properties === undefined || properties.length === 0) return null
@@ -352,29 +358,49 @@ function ItemPropertiesList({
       <SubSectionTitle as="h2">Details</SubSectionTitle>
       <VStack as="dl" className="space-y-2 text-sm leading-7">
         {/* contributors are a top-level field, not a property */}
-        <div>
-          <dt className="inline mr-2 text-gray-500">Contributors:</dt>
-          <dd className="inline">
-            {contributors.map((contributor, index) => {
-              if (contributor == null || contributor.actor == null) return null
-              return (
-                <Fragment
-                  key={`${contributor.actor.id}${contributor.role?.code}`}
-                >
-                  {index !== 0 ? <span>, </span> : null}
-                  {contributor.actor?.website != null ? (
-                    <a href={contributor.actor.website}>
-                      {contributor.actor.name}
-                    </a>
-                  ) : (
-                    contributor.actor.name
-                  )}
-                </Fragment>
-              )
-            })}
-          </dd>
-        </div>
+        {contributors !== undefined && contributors.length > 0 ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Contributors:</dt>
+            <dd className="inline">
+              {contributors.map((contributor, index) => {
+                if (contributor == null || contributor.actor == null)
+                  return null
+                return (
+                  <Fragment
+                    key={`${contributor.actor.id}${contributor.role?.code}`}
+                  >
+                    {index !== 0 ? <span>, </span> : null}
+                    {contributor.actor?.website != null ? (
+                      <a href={contributor.actor.website}>
+                        {contributor.actor.name}
+                      </a>
+                    ) : (
+                      contributor.actor.name
+                    )}
+                  </Fragment>
+                )
+              })}
+            </dd>
+          </div>
+        ) : null}
 
+        {/* source is a top-level field, not a property */}
+        {source !== undefined ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Source:</dt>
+            <dd className="inline">
+              <Fragment key={source.id}>
+                {source.url != null ? (
+                  <a href={source.url}>{source.label}</a>
+                ) : (
+                  source.label
+                )}
+              </Fragment>
+            </dd>
+          </div>
+        ) : null}
+
+        {/* properties */}
         {sortedLabels.map((label) => {
           const properties = groupedProperties[label]
           return (
@@ -393,6 +419,27 @@ function ItemPropertiesList({
             </div>
           )
         })}
+
+        {/* licenses are a top-level field, not a property */}
+        {licenses !== undefined && licenses.length > 0 ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Licenses:</dt>
+            <dd className="inline">
+              {licenses.map((license, index) => {
+                return (
+                  <Fragment key={license.code}>
+                    {index !== 0 ? <span>, </span> : null}
+                    {license.accessibleAt != null ? (
+                      <a href={license.accessibleAt}>{license.label}</a>
+                    ) : (
+                      license.label
+                    )}
+                  </Fragment>
+                )
+              })}
+            </dd>
+          </div>
+        ) : null}
       </VStack>
     </VStack>
   )
