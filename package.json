@@ -6,12 +6,12 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
+    "cms:dev": "netlify-cms-proxy-server",
     "create:favicons": "ts-node -r tsconfig-paths/register -P scripts/tsconfig.json scripts/favicons",
     "create:sshoc-client": "ts-node -r tsconfig-paths/register -P scripts/tsconfig.json scripts/sshoc-client",
     "create:sitemap": "ts-node -r tsconfig-paths/register -P scripts/tsconfig.json scripts/sitemap",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "dev": "next dev",
-    "dev:cms": "netlify-cms-proxy-server",
     "export": "next export",
     "format": "prettier . -l --ignore-path .gitignore",
     "format:fix": "yarn format --write",
