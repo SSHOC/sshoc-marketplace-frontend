@@ -78,9 +78,14 @@ type ContactFormData = {
 }
 
 function ContactForm() {
-  const { handleSubmit, register, errors, formState, setValue } = useForm<
-    ContactFormData
-  >({
+  const {
+    handleSubmit,
+    register,
+    errors,
+    formState,
+    setValue,
+    trigger,
+  } = useForm<ContactFormData>({
     mode: 'onChange',
   })
   const router = useRouter()
@@ -89,18 +94,20 @@ function ContactForm() {
   /** pre-populate fields from query params, e.g. for "Report an issue" link */
   useEffect(() => {
     if (router.query !== undefined && Object.keys(router.query).length > 0) {
-      const allowedFields = ['subject', 'message', 'email']
+      const allowedFields = ['subject', 'message', 'email'] as const
       allowedFields.forEach((field) => {
         const q = router.query[field]
         const value = q !== undefined && ensureScalar(q).trim()
         if (value !== undefined) {
           setValue(field, value)
+          trigger(field)
         }
       })
+
       // remove query params from url
       router.replace({ query: {} }, undefined, { shallow: true })
     }
-  }, [router.query, router, setValue])
+  }, [router.query, router, setValue, trigger])
 
   function onSubmit(formData: ContactFormData) {
     // const recaptchaValue = recaptchaRef.current?.getValue()
