@@ -47,6 +47,7 @@ import ErrorScreen from '@/screens/error/ErrorScreen'
 import styles from '@/screens/search/SearchScreen.module.css'
 import { ensureScalar } from '@/utils/ensureScalar'
 import { useDebounce } from '@/utils/useDebounce'
+import usePagination from '@/utils/usePagination'
 import { Svg as CloseIcon } from '@@/assets/icons/close.svg'
 import { Svg as LinkIcon } from '@@/assets/icons/link.svg'
 import { Svg as NoResultsIcon } from '@@/assets/icons/no-results.svg'
@@ -340,38 +341,47 @@ function ItemSearchLongPagination({
   const currentPage = filter.page ?? 1
   const pages = results?.pages ?? 1
 
-  function getPaginationRange(min = 1, length = 5) {
-    if (length > pages) length = pages
-
-    let start = currentPage - Math.floor(length / 2)
-    start = Math.max(start, min)
-    start = Math.min(start, min + pages - length)
-
-    return Array.from({ length }, (_, i) => start + i)
-  }
+  const items = usePagination({
+    page: currentPage,
+    count: pages,
+  })
 
   if (pages <= 1) return null
 
   return (
     <nav aria-label="Pagination">
       <HStack as="ol" className="items-center space-x-6">
-        <li className="flex items-center">
+        <li className="flex items-center border-b border-transparent">
           <PreviousPageLink currentPage={currentPage} filter={filter} />
         </li>
-        {getPaginationRange().map((num) => {
+        {items.map(({ page, isCurrent }) => {
+          if (page === 'ellipsis')
+            return <span className="select-none">...</span>
+
           return (
-            <li key={num} className="flex items-center">
+            <li key={page} className="flex items-center">
               <Link
-                href={{ query: { ...filter, page: num } }}
+                href={{ query: { ...filter, page } }}
                 passHref
                 shallow={true}
               >
-                <Anchor aria-label={`Page ${num}`}>{num}</Anchor>
+                <Anchor
+                  aria-label={`Page ${page}`}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  className={cx(
+                    'border-b',
+                    isCurrent
+                      ? ['pointer-events-none', 'border-primary-800']
+                      : 'border-transparent',
+                  )}
+                >
+                  {page}
+                </Anchor>
               </Link>
             </li>
           )
         })}
-        <li className="flex items-center">
+        <li className="flex items-center border-b border-transparent">
           <NextPageLink
             currentPage={currentPage}
             pages={pages}
