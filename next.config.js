@@ -38,12 +38,6 @@ const withSvg = createSvgPlugin({
 })
 
 const nextConfig = {
-  experimental: {
-    // modern: true,
-    // optimizeFonts: true,
-    // optimizeImages: true,
-    // scrollRestoration: true,
-  },
   images: {},
   poweredByHeader: false,
   reactStrictMode: true,
