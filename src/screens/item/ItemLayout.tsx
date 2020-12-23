@@ -137,7 +137,7 @@ function ItemThumbnail({
   )
   if (thumbnail !== undefined) {
     return (
-      <img src={thumbnail.value} alt="" className="object-cover w-24 h-24" />
+      <img src={thumbnail.value} alt="" className="object-contain w-24 h-24" />
     )
   }
   return (
