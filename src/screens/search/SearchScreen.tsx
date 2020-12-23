@@ -266,18 +266,22 @@ function ItemSearchPagination({
    * input value is both controlled and uncontrolled:
    * when page in url changes the input should be updated,
    * but when user types in input, page value should only
-   * be reflected in url upon submit, ont immediately on change.
+   * be reflected in url upon submit, not immediately on change.
    */
-  const [input, setInput] = useState(currentPage)
+  const [input, setInput] = useState(String(currentPage))
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.currentTarget.value
-    const page = parseInt(value, 10)
-    if (!Number.isNaN(page) && page > 0 && page <= pages) {
-      setInput(page)
+    if (value === '') {
+      setInput('')
+    } else {
+      const page = parseInt(value, 10)
+      if (!Number.isNaN(page)) {
+        setInput(String(page))
+      }
     }
   }
   useEffect(() => {
-    setInput(currentPage)
+    setInput(String(currentPage))
   }, [currentPage])
 
   function onChangePage(event: FormEvent<HTMLFormElement>) {
