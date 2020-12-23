@@ -4,8 +4,12 @@ import type { LinkProps } from 'next/link'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
-import { useSearchItems } from '@/api/sshoc'
-import type { ItemSearchQuery, ItemSearchResults } from '@/api/sshoc/types'
+import { useGetItemCategories, useSearchItems } from '@/api/sshoc'
+import type {
+  ItemSearchQuery,
+  ItemSearchResults,
+  ItemCategory,
+} from '@/api/sshoc/types'
 import ItemCard from '@/modules/item/ItemCard'
 import FullWidth from '@/modules/layout/FullWidth'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -34,6 +38,7 @@ const meta = metadata as ContentMetadata
 
 const MAX_BROWSE_ITEMS = 20
 const MAX_LAST_ADDED_ITEMS = 5
+const MAX_RECOMMENDED_ITEMS_PER_CATEGORY = 2
 
 type Facets = ItemSearchResults['facets']
 type Items = ItemSearchResults['items']
@@ -91,10 +96,12 @@ function Hero() {
  */
 function SearchResultsView() {
   const { data: searchResults } = useSearchItems({ order: ['modified-on'] })
+
   return (
     <Fragment>
       <MainColumn>
         <Browse facets={searchResults?.facets} />
+        <RecommendedItems />
       </MainColumn>
       <SideColumn>
         <LastAdded items={searchResults?.items} />
@@ -108,6 +115,7 @@ function SearchResultsView() {
  */
 function Browse({ facets }: { facets?: Facets }) {
   if (facets === undefined) return null
+
   return (
     <VStack className="space-y-6">
       <SectionTitle>Browse</SectionTitle>
@@ -188,7 +196,7 @@ function LastAdded({ items }: { items?: Items }) {
  */
 function MainColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('px-6 py-12', styles.mainColumn),
+    section: cx('px-6 py-12 space-y-24', styles.mainColumn),
     bleed: cx(styles.leftBleed),
   }
 
@@ -235,5 +243,73 @@ function SubSection({
       </HStack>
       {children}
     </Fragment>
+  )
+}
+
+/**
+ * Recommended items.
+ *
+ * Recommended items have a keyword "recommended".
+ */
+function RecommendedItems() {
+  const { data: categories = {} } = useGetItemCategories()
+
+  return (
+    <VStack className="space-y-6">
+      <SectionTitle>Recommended</SectionTitle>
+      {Object.entries(categories).map(([category, label]) => {
+        return (
+          <RecommendedItemsForCategory
+            key={category}
+            category={category as ItemCategory}
+            label={label}
+          />
+        )
+      })}
+    </VStack>
+  )
+}
+
+function RecommendedItemsForCategory({
+  category,
+  label,
+}: {
+  category: ItemCategory
+  label: string
+}) {
+  const query: ItemSearchQuery = {
+    'f.keyword': ['recommended'],
+    order: ['modified-on'],
+    perpage: MAX_RECOMMENDED_ITEMS_PER_CATEGORY,
+    categories: [category],
+  }
+  const recommendedItems = useSearchItems(query)
+
+  if (
+    recommendedItems.status !== 'success' ||
+    recommendedItems.data?.items?.length === 0
+  ) {
+    return null
+  }
+
+  return (
+    <SubSection
+      title={label}
+      href={{
+        pathname: '/search',
+        query: {
+          categories: [category],
+          order: ['label'],
+        },
+      }}
+    >
+      <ul className="grid grid-cols-2 gap-8">
+        {recommendedItems.data?.items?.map((item) => (
+          <li key={item.persistentId}>
+            <ItemCard item={item} />
+          </li>
+        ))}
+      </ul>
+    </SubSection>
   )
 }
