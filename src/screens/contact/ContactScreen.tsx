@@ -97,8 +97,8 @@ function ContactForm() {
       const allowedFields = ['subject', 'message', 'email'] as const
       allowedFields.forEach((field) => {
         const q = router.query[field]
-        const value = q !== undefined && ensureScalar(q).trim()
-        if (value !== undefined) {
+        const value = q !== undefined ? ensureScalar(q).trim() : ''
+        if (value !== undefined && value.length) {
           setValue(field, value)
           trigger(field)
         }

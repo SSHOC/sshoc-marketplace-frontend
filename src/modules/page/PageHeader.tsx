@@ -167,6 +167,31 @@ function MainNavigation(): JSX.Element {
     </Fragment>
   )
 }
+function ReportAnIssueButton({
+  user,
+  path,
+}: {
+  user?: { email?: string }
+  path: string
+}) {
+  return (
+    <Link
+      href={{
+        pathname: '/contact',
+        query: {
+          email: user?.email,
+          subject: 'Report an issue',
+          message: `I have found an issue on page ${new URL(
+            path,
+            process.env.NEXT_PUBLIC_SSHOC_BASE_URL,
+          ).toString()}.\n\nPlease describe:\n\n`,
+        },
+      }}
+    >
+      <a>Report an issue</a>
+    </Link>
+  )
+}
 
 function AuthButton() {
   const router = useRouter()
@@ -205,38 +230,22 @@ function AuthButton() {
   if (auth.session !== null) {
     return (
       <div className="relative flex items-center space-x-6 text-gray-500">
-        <p>Signed in as {user?.displayName ?? auth.session.user.username}</p>
+        <ReportAnIssueButton path={router.asPath} user={user} />
         <Menu>
           {({ open }) => (
             <Fragment>
               <Menu.Button
                 className={cx(
                   'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-block hover:bg-primary-700',
+                  'truncate max-w-xs',
                   open ? '' : '',
                 )}
               >
-                Menu
+                Hi, {user?.displayName ?? auth.session?.user.username}
               </Menu.Button>
               <FadeIn show={open} as={Fragment}>
                 {(ref: Ref<HTMLDivElement>) => (
                   <MenuPopover static className="top-full" popoverRef={ref}>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MenuLink
-                          href={{
-                            pathname: '/contact',
-                            query: {
-                              email: user?.email,
-                              subject: 'Report an issue',
-                              message: `I have found an issue on page ${router.asPath}.\n\nPlease describe:\n\n`,
-                            },
-                          }}
-                          highlighted={active}
-                        >
-                          Report an issue
-                        </MenuLink>
-                      )}
-                    </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
                         <MenuLink
@@ -258,14 +267,17 @@ function AuthButton() {
   }
 
   return (
-    <NavLinkButton
-      href={{
-        pathname: '/auth/sign-in',
-        query: redirectPath !== undefined ? { from: redirectPath } : {},
-      }}
-    >
-      Sign in
-    </NavLinkButton>
+    <div className="relative flex items-center space-x-6 text-gray-500">
+      <ReportAnIssueButton path={router.asPath} />
+      <NavLinkButton
+        href={{
+          pathname: '/auth/sign-in',
+          query: redirectPath !== undefined ? { from: redirectPath } : {},
+        }}
+      >
+        Sign in
+      </NavLinkButton>
+    </div>
   )
 }
 
