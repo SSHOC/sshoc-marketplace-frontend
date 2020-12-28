@@ -30,5 +30,14 @@ export default function Markdown({ text }: { text?: string }): JSX.Element {
     return String(markdownProcessor.processSync(text))
   }, [text])
 
-  return <div dangerouslySetInnerHTML={{ __html: html }} />
+  /**
+   * tailwind by default resets heading and list styles.
+   * we use @tailwind/typography plugin to add back default prose styles.
+   */
+  return (
+    <div
+      className="prose max-w-none"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  )
 }

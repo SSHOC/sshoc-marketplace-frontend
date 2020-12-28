@@ -6,12 +6,6 @@ function px(px) {
 }
 
 module.exports = {
-  future: {
-    defaultLineHeights: true,
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-    standardFontWeights: true,
-  },
   purge: ['src/**/*.tsx'],
   theme: {
     extend: {
@@ -63,10 +57,6 @@ module.exports = {
         '2xl': px(26),
         '3xl': px(32),
       },
-      /** included by default in tailwind 2.0 */
-      inset: {
-        full: '100%',
-      },
       /** max-widths for readability */
       maxWidth: {
         '65ch': '65ch',
@@ -83,6 +73,20 @@ module.exports = {
         '2xl': '1600px',
         '3xl': '1920px',
       },
+      /** @tailwindcss/typography plugin */
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.800'),
+            a: {
+              color: theme('colors.primary.800'),
+              '&:hover': {
+                color: theme('colors.primary.700'),
+              },
+            },
+          },
+        },
+      }),
       width: {
         36: '9rem',
       },
@@ -94,5 +98,5 @@ module.exports = {
   variants: {
     // boxShadow: ['responsive', 'hover', 'focus', 'focus-visible']
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }
