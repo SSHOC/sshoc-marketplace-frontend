@@ -322,6 +322,9 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
   )
 }
 
+/** thumbnail and media are already shown, no need to list them in the metadata panel */
+const HIDDEN_PROPERTIES = ['thumbnail', 'media']
+
 /**
  * Properties.
  */
@@ -343,6 +346,8 @@ function ItemPropertiesList({
 
     const grouped: Record<string, Array<ItemProperty>> = {}
     properties.forEach((property) => {
+      if (HIDDEN_PROPERTIES.includes(property.type?.code as string)) return
+
       const label = property.type?.label as string
       if (!Array.isArray(grouped[label])) {
         grouped[label] = []
