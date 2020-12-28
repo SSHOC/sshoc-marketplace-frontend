@@ -109,6 +109,7 @@ export default function ItemLayout({
               contributors={item.contributors as ItemContributors}
               licenses={item.licenses}
               source={item.source}
+              sourceItemId={item.sourceItemId}
             />
           </VStack>
         </SideColumn>
@@ -329,11 +330,13 @@ function ItemPropertiesList({
   contributors,
   licenses,
   source,
+  sourceItemId,
 }: {
   properties: ItemProperties
   contributors: ItemContributors
   licenses?: Item['licenses']
   source?: Item['source']
+  sourceItemId?: Item['sourceItemId']
 }) {
   const groupedProperties = useMemo(() => {
     if (properties === undefined || properties.length === 0) return null
@@ -384,22 +387,6 @@ function ItemPropertiesList({
           </div>
         ) : null}
 
-        {/* source is a top-level field, not a property */}
-        {source != null ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Source:</dt>
-            <dd className="inline">
-              <Fragment key={source.id}>
-                {source.url != null ? (
-                  <a href={source.url}>{source.label}</a>
-                ) : (
-                  source.label
-                )}
-              </Fragment>
-            </dd>
-          </div>
-        ) : null}
-
         {/* properties */}
         {sortedLabels.map((label) => {
           const properties = groupedProperties[label]
@@ -437,6 +424,29 @@ function ItemPropertiesList({
                   </Fragment>
                 )
               })}
+            </dd>
+          </div>
+        ) : null}
+
+        {/* source is a top-level field, not a property */}
+        {source != null ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Source:</dt>
+            <dd className="inline">
+              <Fragment key={source.id}>
+                {source.urlTemplate != null && sourceItemId != null ? (
+                  <a
+                    href={source.urlTemplate.replace(
+                      '{source-item-id}',
+                      sourceItemId,
+                    )}
+                  >
+                    {source.label}
+                  </a>
+                ) : (
+                  source.label
+                )}
+              </Fragment>
             </dd>
           </div>
         ) : null}
