@@ -1,7 +1,7 @@
 import type { ParsedUrlQuery } from 'querystring'
 import { ensureArray } from '@/utils/ensureArray'
 
-export function getScalarQueryParameter(
+export function getArrayQueryParameter(
   param: ParsedUrlQuery[string],
 ): Array<string> | undefined {
   if (param === undefined) return undefined

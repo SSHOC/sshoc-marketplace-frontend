@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
 import type { Ref, PropsWithChildren } from 'react'
 import { Fragment, useEffect, useState } from 'react'
+import { useQueryCache } from 'react-query'
 import FullWidth from '../layout/FullWidth'
 import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
@@ -16,6 +17,7 @@ import VStack from '@/modules/layout/VStack'
 import styles from '@/modules/page/PageHeader.module.css'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
+import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
@@ -196,6 +198,8 @@ function ReportAnIssueButton({
 function AuthButton() {
   const router = useRouter()
   const auth = useAuth()
+  const queryCache = useQueryCache()
+
   const { data: user } = useGetLoggedInUser(
     {
       enabled: auth.session?.accessToken !== undefined,
@@ -227,6 +231,15 @@ function AuthButton() {
     setRedirectPath(getRedirectPath(router.asPath))
   }, [router.asPath])
 
+  function onSignOut() {
+    auth.signOut()
+    /** clear the whole query cache to be on the safe side */
+    queryCache.clear()
+    router.replace(
+      getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
+    )
+  }
+
   if (auth.session !== null) {
     return (
       <div className="relative flex items-center space-x-6 text-gray-500">
@@ -245,15 +258,16 @@ function AuthButton() {
               </Menu.Button>
               <FadeIn show={open} as={Fragment}>
                 {(ref: Ref<HTMLDivElement>) => (
-                  <MenuPopover static className="top-full" popoverRef={ref}>
+                  <MenuPopover
+                    static
+                    className="top-full text-primary-500"
+                    popoverRef={ref}
+                  >
                     <Menu.Item>
                       {({ active }) => (
-                        <MenuLink
-                          href={{ pathname: '/auth/sign-out' }}
-                          highlighted={active}
-                        >
+                        <MenuAction highlighted={active} onClick={onSignOut}>
                           Sign out
-                        </MenuLink>
+                        </MenuAction>
                       )}
                     </Menu.Item>
                   </MenuPopover>
@@ -386,6 +400,25 @@ function MenuPopover({
     >
       {children}
     </Menu.Items>
+  )
+}
+
+function MenuAction({
+  highlighted,
+  onClick,
+  children,
+}: PropsWithChildren<{
+  highlighted: boolean
+  onClick: () => void
+}>) {
+  const classNames = cx(
+    'px-8 py-6 inline-block transition-colors duration-150 text-left',
+    highlighted && 'bg-gray-50',
+  )
+  return (
+    <button className={classNames} onClick={onClick}>
+      {children}
+    </button>
   )
 }
 
