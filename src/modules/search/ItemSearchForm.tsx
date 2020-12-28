@@ -120,7 +120,12 @@ export function ItemAutoCompleteInput({
       aria-label="Search term"
       openOnFocus
       className="relative flex-1"
-      onSelect={setSearchTerm}
+      /**
+       * we need to wrap the selected autosuggest value in quotes.
+       * otherwise, solr will interpret special characters like a minus ("-")
+       * as query language, if the autosuggested term includes such a character.
+       * */
+      onSelect={(value) => setSearchTerm(`"${value}"`)}
     >
       <ComboboxInput
         name="q"
@@ -139,7 +144,7 @@ export function ItemAutoCompleteInput({
       suggestions.suggestions.length > 0 ? (
         <ComboboxPopover
           portal={false}
-          className="absolute z-10 w-full mt-1 bg-white rounded shadow-md border border-gray-200 py-2"
+          className="absolute z-10 w-full py-2 mt-1 bg-white border border-gray-200 rounded shadow-md"
         >
           <ComboboxList className="select-none">
             {suggestions.suggestions
@@ -182,7 +187,7 @@ export function ItemCategoriesSelect(): JSX.Element {
           <FadeIn show={open}>
             <Listbox.Options
               static
-              className="absolute min-w-full overflow-hidden whitespace-no-wrap bg-white rounded shadow-md select-none py-2 border border-gray-200 mt-1"
+              className="absolute min-w-full py-2 mt-1 overflow-hidden whitespace-no-wrap bg-white border border-gray-200 rounded shadow-md select-none"
             >
               {[['', 'All categories']]
                 .concat(Object.entries(itemCategories))
