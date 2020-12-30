@@ -1,22 +1,22 @@
 import type { GetStaticPropsResult } from 'next'
 import { getLastUpdatedTimestamp } from '@/api/git'
-import AboutWebsiteScreen from '@/screens/about/AboutWebsiteScreen'
+import AboutServiceScreen from '@/screens/about/AboutServiceScreen'
 
 export type PageProps = {
   lastUpdatedAt: string
 }
 
 /**
- * About website page.
+ * About service page.
  */
-export default function AboutPage(props: PageProps): JSX.Element {
-  return <AboutWebsiteScreen {...props} />
+export default function AboutServicePage(props: PageProps): JSX.Element {
+  return <AboutServiceScreen {...props} />
 }
 
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<PageProps>
 > {
-  const pageId = 'website'
+  const pageId = 'service'
   const lastUpdatedAt = (await getLastUpdatedTimestamp(pageId)).toISOString()
   return { props: { lastUpdatedAt } }
 }

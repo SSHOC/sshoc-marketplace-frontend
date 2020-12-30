@@ -136,10 +136,10 @@ function MainNavigation(): JSX.Element {
                         <Menu.Item>
                           {({ active }) => (
                             <MenuLink
-                              href={{ pathname: '/about/website' }}
+                              href={{ pathname: '/about/service' }}
                               highlighted={active}
                             >
-                              About the website
+                              About the service
                             </MenuLink>
                           )}
                         </Menu.Item>

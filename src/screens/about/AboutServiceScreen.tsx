@@ -1,6 +1,6 @@
 import type { PageProps } from '@/pages/about/index'
 import AboutLayout from '@/screens/about/AboutLayout'
-import Content, { metadata } from '@@/content/pages/website.mdx'
+import Content, { metadata } from '@@/content/pages/service.mdx'
 
 type ContentMetadata = {
   title: string
@@ -9,14 +9,14 @@ type ContentMetadata = {
 const meta = metadata as ContentMetadata
 
 /**
- * About website screen.
+ * About service screen.
  */
-export default function AboutWebsiteScreen({
+export default function AboutServiceScreen({
   lastUpdatedAt,
 }: PageProps): JSX.Element {
   return (
     <AboutLayout
-      breadcrumb={{ pathname: '/about/website', label: 'About' }}
+      breadcrumb={{ pathname: '/about/service', label: 'About' }}
       title={meta.title}
       lastUpdatedAt={lastUpdatedAt}
     >

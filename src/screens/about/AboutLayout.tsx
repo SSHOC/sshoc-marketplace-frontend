@@ -16,7 +16,7 @@ import { useActiveLink } from '@/utils/useActiveLink'
 
 const links = [
   { label: 'About the project', pathname: '/about' },
-  { label: 'About the website', pathname: '/about/website' },
+  { label: 'About the service', pathname: '/about/service' },
   { label: 'About the team', pathname: '/about/team' },
 ]
 
@@ -52,7 +52,7 @@ export default function AboutLayout({
             styles.sideColumn,
           )}
         >
-          <p className="font-bold text-lg p-6">Find out more</p>
+          <p className="p-6 text-lg font-bold">Find out more</p>
         </div>
         <SideColumn>
           <nav aria-label="Page navigation">
@@ -68,7 +68,7 @@ export default function AboutLayout({
           </nav>
         </SideColumn>
         <MainColumn>
-          <div className="space-y-6 max-w-80ch mx-auto">
+          <div className="mx-auto space-y-6 max-w-80ch">
             <Title>{title}</Title>
             <Mdx>{children}</Mdx>
             <LastUpdatedAt date={lastUpdatedAt} />

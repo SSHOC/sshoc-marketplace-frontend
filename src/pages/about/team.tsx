@@ -9,7 +9,7 @@ export type PageProps = {
 /**
  * About team page.
  */
-export default function AboutPage(props: PageProps): JSX.Element {
+export default function AboutTeamPage(props: PageProps): JSX.Element {
   return <AboutTeamScreen {...props} />
 }
 
