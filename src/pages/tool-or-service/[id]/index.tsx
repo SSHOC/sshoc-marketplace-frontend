@@ -20,13 +20,18 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageProps>> {
   const { id } = sanitizeItemQueryParams(context.params)
 
-  if (id === undefined) return { notFound: true }
+  if (id === undefined) {
+    console.log(
+      `Invalid tool id provided: ${JSON.stringify(context.params?.id)}`,
+    )
+    return { notFound: true }
+  }
 
   try {
     const tool = await getTool({ id }, {})
     return { props: { tool } }
-  } catch {
-    /** context.res.statusCode = 404 */
+  } catch (error) {
+    console.log(`Failed to fetch tool ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }
 }

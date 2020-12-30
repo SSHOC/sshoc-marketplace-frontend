@@ -22,13 +22,18 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageProps>> {
   const { id } = sanitizeItemQueryParams(context.params)
 
-  if (id === undefined) return { notFound: true }
+  if (id === undefined) {
+    console.log(
+      `Invalid publication id provided: ${JSON.stringify(context.params?.id)}`,
+    )
+    return { notFound: true }
+  }
 
   try {
     const publication = await getPublication({ id }, {})
     return { props: { publication } }
-  } catch {
-    /** context.res.statusCode = 404 */
+  } catch (error) {
+    console.log(`Failed to fetch publication ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }
 }

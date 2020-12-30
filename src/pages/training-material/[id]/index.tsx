@@ -22,13 +22,22 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageProps>> {
   const { id } = sanitizeItemQueryParams(context.params)
 
-  if (id === undefined) return { notFound: true }
+  if (id === undefined) {
+    console.log(
+      `Invalid training material id provided: ${JSON.stringify(
+        context.params?.id,
+      )}`,
+    )
+    return { notFound: true }
+  }
 
   try {
     const trainingMaterial = await getTrainingMaterial({ id }, {})
     return { props: { trainingMaterial } }
-  } catch {
-    /** context.res.statusCode = 404 */
+  } catch (error) {
+    console.log(
+      `Failed to fetch training material ${id}: ${JSON.stringify(error)}`,
+    )
     return { notFound: true }
   }
 }

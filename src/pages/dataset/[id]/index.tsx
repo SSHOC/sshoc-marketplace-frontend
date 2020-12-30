@@ -20,13 +20,18 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageProps>> {
   const { id } = sanitizeItemQueryParams(context.params)
 
-  if (id === undefined) return { notFound: true }
+  if (id === undefined) {
+    console.log(
+      `Invalid dataset id provided: ${JSON.stringify(context.params?.id)}`,
+    )
+    return { notFound: true }
+  }
 
   try {
     const dataset = await getDataset({ id }, {})
     return { props: { dataset } }
-  } catch {
-    /** context.res.statusCode = 404 */
+  } catch (error) {
+    console.log(`Failed to fetch dataset ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }
 }

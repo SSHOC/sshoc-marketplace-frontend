@@ -20,13 +20,18 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageProps>> {
   const { id } = sanitizeItemQueryParams(context.params)
 
-  if (id === undefined) return { notFound: true }
+  if (id === undefined) {
+    console.log(
+      `Invalid workflow id provided: ${JSON.stringify(context.params?.id)}`,
+    )
+    return { notFound: true }
+  }
 
   try {
     const workflow = await getWorkflow({ workflowId: id }, {})
     return { props: { workflow } }
-  } catch {
-    /** context.res.statusCode = 404 */
+  } catch (error) {
+    console.log(`Failed to fetch workflow ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }
 }
