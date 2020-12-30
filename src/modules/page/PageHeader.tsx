@@ -412,7 +412,7 @@ function MenuAction({
   onClick: () => void
 }>) {
   const classNames = cx(
-    'px-8 py-6 inline-block transition-colors duration-150 text-left',
+    'px-8 py-6 inline-block transition-colors duration-150 text-left hover:bg-gray-50',
     highlighted && 'bg-gray-50',
   )
   return (
