@@ -6,7 +6,7 @@ function px(px) {
 }
 
 module.exports = {
-  purge: ['src/**/*.tsx'],
+  purge: ['src/**/*.tsx', 'content/**/*.mdx'],
   theme: {
     extend: {
       colors: {
