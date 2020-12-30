@@ -133,6 +133,8 @@ export function ItemAutoCompleteInput({
         onChange={onChange}
         /** value is managed by `@reach/combobox` internally, i.e. when selecting a `ComboboxOption` */
         value={searchTerm}
+        /** don't change input value while navigating suggestions in listbox */
+        autocomplete={false}
         placeholder="Search"
         className={cx(
           'w-full h-full px-4 py-2 border border-gray-200 rounded placeholder-gray-350 hover:bg-gray-50 focus:border-primary-750 transition-colors duration-150',
