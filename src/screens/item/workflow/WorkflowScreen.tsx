@@ -82,7 +82,7 @@ function Steps({ steps }: { steps: Steps }) {
   if (steps.length === 0) return null
   return (
     <div
-      className="grid"
+      className="grid mb-6"
       style={{
         gridColumn: '1 / span 9',
         /** "sub-grid" */
@@ -128,7 +128,7 @@ function Step({ step, index }: { step: Step; index: number }) {
         </HStack>
         <DisclosureButton
           className={cx(
-            'w-36 inline-flex items-center justify-between px-2 py-3 rounded space-x-2 transition-colors duration-150',
+            'w-36 inline-flex items-center justify-between px-2 py-3 rounded space-x-2 transition-colors duration-150 flex-shrink-0',
             isOpen
               ? 'text-gray-100 bg-gray-500'
               : 'text-white bg-secondary-600 hover:bg-secondary-500',
