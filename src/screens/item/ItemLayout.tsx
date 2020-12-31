@@ -7,7 +7,7 @@ import { useGetItemCategories } from '@/api/sshoc'
 import type {
   ItemCategory as ItemCategoryWithStep,
   ItemSearchQuery,
-  Item,
+  Item as GenericItem,
 } from '@/api/sshoc/types'
 import RelatedItems from '@/modules/item/RelatedItems'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -36,6 +36,7 @@ type ItemProperties = Exclude<Item['properties'], undefined>
 type ItemProperty = ItemProperties[number]
 type ItemContributors = Exclude<Item['contributors'], undefined>
 type RelatedItems = Exclude<Item['relatedItems'], undefined>
+type Item = GenericItem & { dateCreated?: string; dateLastUpdated?: string }
 
 /**
  * Shared item details screen.
@@ -110,6 +111,8 @@ export default function ItemLayout({
               licenses={item.licenses}
               source={item.source}
               sourceItemId={item.sourceItemId}
+              dateCreated={item.dateCreated}
+              dateLastUpdated={item.dateLastUpdated}
             />
           </VStack>
         </SideColumn>
@@ -334,12 +337,16 @@ function ItemPropertiesList({
   licenses,
   source,
   sourceItemId,
+  dateCreated,
+  dateLastUpdated,
 }: {
   properties: ItemProperties
   contributors: ItemContributors
   licenses?: Item['licenses']
   source?: Item['source']
   sourceItemId?: Item['sourceItemId']
+  dateCreated?: string
+  dateLastUpdated?: string
 }) {
   const groupedProperties = useMemo(() => {
     if (properties === undefined || properties.length === 0) return null
@@ -388,6 +395,26 @@ function ItemPropertiesList({
                   </Fragment>
                 )
               })}
+            </dd>
+          </div>
+        ) : null}
+
+        {/* dateCreated and dateLastUpdated are top-level fields, not properties */}
+        {dateCreated != null ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Created:</dt>
+            <dd className="inline">
+              <time dateTime={dateCreated}>{formatDate(dateCreated)}</time>
+            </dd>
+          </div>
+        ) : null}
+        {dateLastUpdated != null ? (
+          <div>
+            <dt className="inline mr-2 text-gray-500">Last updated:</dt>
+            <dd className="inline">
+              <time dateTime={dateLastUpdated}>
+                {formatDate(dateLastUpdated)}
+              </time>
             </dd>
           </div>
         ) : null}
