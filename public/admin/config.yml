@@ -20,7 +20,8 @@ backend:
 slug:
   encoding: ascii
   clean_accents: true
-media_folder: /public/assets/images
+# note: gitlab requires no leading slash
+media_folder: public/assets/images
 public_folder: /assets/images
 collections:
   - name: pages
