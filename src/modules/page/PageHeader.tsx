@@ -146,6 +146,16 @@ function MainNavigation(): JSX.Element {
                         <Menu.Item>
                           {({ active }) => (
                             <MenuLink
+                              href={{ pathname: '/about/implementation' }}
+                              highlighted={active}
+                            >
+                              About the implementation
+                            </MenuLink>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <MenuLink
                               href={{ pathname: '/about/team' }}
                               highlighted={active}
                             >
