@@ -17,7 +17,7 @@ import { useActiveLink } from '@/utils/useActiveLink'
 const links = [
   { label: 'About the project', pathname: '/about' },
   { label: 'About the service', pathname: '/about/service' },
-  { label: 'About the implementation', pathname: '/about/implementation' },
+  { label: 'About the technical aspects', pathname: '/about/implementation' },
   { label: 'About the team', pathname: '/about/team' },
 ]
 

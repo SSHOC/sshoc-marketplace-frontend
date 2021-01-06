@@ -61,7 +61,7 @@ collections:
             label: Text
             widget: markdown
       - name: implementation
-        label: About the Technical Stuff page
+        label: About the Technical Aspects page
         file: content/pages/implementation.mdx
         format: frontmatter
         fields:

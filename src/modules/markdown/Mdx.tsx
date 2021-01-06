@@ -38,6 +38,8 @@ const defaultComponents = {
   h3: SubSectionTitle,
   ul: List,
   ol: OrderedList,
+  pre: Pre,
+  code: Code,
 }
 
 function AbsoluteOrRelativeLink({
@@ -85,4 +87,17 @@ function OrderedList({ children, ...props }: ComponentPropsWithoutRef<'ol'>) {
       {children}
     </ol>
   )
+}
+
+function Pre(props: ComponentPropsWithoutRef<'pre'>) {
+  return (
+    <pre
+      {...props}
+      className="py-4 overflow-x-auto font-mono text-sm text-gray-200 bg-gray-800 rounded"
+    />
+  )
+}
+
+function Code(props: ComponentPropsWithoutRef<'code'>) {
+  return <code {...props} className="px-4" />
 }

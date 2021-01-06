@@ -149,7 +149,7 @@ function MainNavigation(): JSX.Element {
                               href={{ pathname: '/about/implementation' }}
                               highlighted={active}
                             >
-                              About the implementation
+                              About the technical aspects
                             </MenuLink>
                           )}
                         </Menu.Item>
