@@ -152,6 +152,5 @@
   "lint-staged": {
     "*.(js|jsx|ts|tsx)": "eslint --cache --fix",
     "*.(css|json|md|mdx)": "prettier --write"
-  },
-  "prettier": "@stefanprobst/prettier-config"
+  }
 }
