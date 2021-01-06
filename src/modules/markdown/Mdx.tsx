@@ -37,6 +37,7 @@ const defaultComponents = {
   h2: SectionTitle,
   h3: SubSectionTitle,
   ul: List,
+  ol: OrderedList,
 }
 
 function AbsoluteOrRelativeLink({
@@ -72,7 +73,15 @@ function isAbsoluteUrl(href: string) {
 
 function List({ children, ...props }: ComponentPropsWithoutRef<'ul'>) {
   return (
-    <ul className="space-y-3 leading-loose" {...props}>
+    <ul className="pl-4 space-y-3 leading-loose list-disc" {...props}>
+      {children}
+    </ul>
+  )
+}
+
+function OrderedList({ children, ...props }: ComponentPropsWithoutRef<'ul'>) {
+  return (
+    <ul className="pl-4 space-y-3 leading-loose list-decimal" {...props}>
       {children}
     </ul>
   )
