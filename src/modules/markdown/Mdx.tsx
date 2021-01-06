@@ -79,10 +79,10 @@ function List({ children, ...props }: ComponentPropsWithoutRef<'ul'>) {
   )
 }
 
-function OrderedList({ children, ...props }: ComponentPropsWithoutRef<'ul'>) {
+function OrderedList({ children, ...props }: ComponentPropsWithoutRef<'ol'>) {
   return (
-    <ul className="pl-4 space-y-3 leading-loose list-decimal" {...props}>
+    <ol className="pl-4 space-y-3 leading-loose list-decimal" {...props}>
       {children}
-    </ul>
+    </ol>
   )
 }
