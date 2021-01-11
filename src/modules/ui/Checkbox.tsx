@@ -35,7 +35,7 @@ function CheckboxComponent(
               : 'border-gray-500',
           )}
         >
-          {checked === true ? <CheckMark /> : null}
+          {checked === true ? <CheckMark className="w-5 h-5" /> : null}
         </div>
         <span>{children}</span>
       </div>
