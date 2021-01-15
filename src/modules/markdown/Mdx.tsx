@@ -5,7 +5,6 @@ import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
 import { SectionTitle } from '../ui/typography/SectionTitle'
 import { SubSectionTitle } from '../ui/typography/SubSectionTitle'
 import { Anchor } from '@/modules/ui/Anchor'
-import { Paragraph } from '@/modules/ui/typography/Paragraph'
 
 type MdxProps = PropsWithChildren<{
   components?: MDXProviderProps['components']
@@ -33,13 +32,9 @@ export default function Mdx({ children, components }: MdxProps): JSX.Element {
 
 const defaultComponents = {
   a: AbsoluteOrRelativeLink,
-  p: Paragraph,
   h2: SectionTitle,
   h3: SubSectionTitle,
-  ul: List,
-  ol: OrderedList,
-  pre: Pre,
-  code: Code,
+  wrapper: Prose,
 }
 
 function AbsoluteOrRelativeLink({
@@ -73,31 +68,6 @@ function isAbsoluteUrl(href: string) {
   }
 }
 
-function List({ children, ...props }: ComponentPropsWithoutRef<'ul'>) {
-  return (
-    <ul className="pl-4 space-y-3 leading-loose list-disc" {...props}>
-      {children}
-    </ul>
-  )
-}
-
-function OrderedList({ children, ...props }: ComponentPropsWithoutRef<'ol'>) {
-  return (
-    <ol className="pl-4 space-y-3 leading-loose list-decimal" {...props}>
-      {children}
-    </ol>
-  )
-}
-
-function Pre(props: ComponentPropsWithoutRef<'pre'>) {
-  return (
-    <pre
-      {...props}
-      className="py-4 overflow-x-auto font-mono text-sm text-gray-200 bg-gray-800 rounded"
-    />
-  )
-}
-
-function Code(props: ComponentPropsWithoutRef<'code'>) {
-  return <code {...props} className="px-4" />
+function Prose(props: ComponentPropsWithoutRef<'div'>) {
+  return <div {...props} className="prose" />
 }

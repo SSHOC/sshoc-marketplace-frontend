@@ -77,12 +77,32 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            maxWidth: '',
             color: theme('colors.gray.800'),
             a: {
               color: theme('colors.primary.800'),
               '&:hover': {
                 color: theme('colors.primary.700'),
               },
+            },
+            h1: {
+              color: theme('colors.gray.800'),
+              fontWeight: '500',
+            },
+            h2: {
+              color: theme('colors.gray.800'),
+              fontWeight: '500',
+            },
+            h3: {
+              color: theme('colors.gray.800'),
+              fontWeight: '500',
+            },
+            h4: {
+              color: theme('colors.gray.800'),
+              fontWeight: '500',
+            },
+            '.grid img': {
+              marginTop: 0,
             },
           },
         },
@@ -98,5 +118,9 @@ module.exports = {
   variants: {
     // boxShadow: ['responsive', 'hover', 'focus', 'focus-visible']
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography')({
+      modifiers: [],
+    }),
+  ],
 }
