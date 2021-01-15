@@ -11,7 +11,7 @@ services:
       - traefik.frontend.rule=Host:marketplace-prod.sisyphos.arz.oeaw.ac.at,sshoc-marketplace.acdh.oeaw.ac.at,marketplace.sshopencloud.eu,marketplace.sshoc.eu
       - traefik.docker.network=web
       - traefik.port=3000
-      - ID=15819
+      - ID=17467
       - BackendConnection=none
     networks:
       - web
