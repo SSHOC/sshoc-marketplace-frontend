@@ -58,6 +58,11 @@ export default function ItemLayout({
     order: ['label'],
   }
 
+  // TODO: allow linking to individual workflow steps
+  const relatedItems = (item.relatedItems as RelatedItems).filter(
+    (item) => item.category !== 'step',
+  )
+
   return (
     <Fragment>
       <Metadata
@@ -97,7 +102,7 @@ export default function ItemLayout({
         </div>
         {children}
         <div className={cx(styles.mainColumn, 'px-6 py-6')}>
-          <RelatedItems items={item.relatedItems as RelatedItems} />
+          <RelatedItems items={relatedItems} />
         </div>
         <SideColumn>
           <VStack className="px-6 pt-6 pb-12 space-y-16">
