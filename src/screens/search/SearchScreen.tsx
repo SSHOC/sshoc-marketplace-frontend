@@ -356,7 +356,11 @@ function ItemSearchLongPagination({
         </li>
         {items.map(({ page, isCurrent }) => {
           if (page === 'ellipsis')
-            return <span className="select-none">...</span>
+            return (
+              <span key={page} className="select-none">
+                ...
+              </span>
+            )
 
           return (
             <li key={page} className="flex items-center">
