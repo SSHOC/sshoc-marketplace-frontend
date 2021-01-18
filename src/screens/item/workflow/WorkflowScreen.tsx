@@ -151,13 +151,23 @@ function Step({ step, index }: { step: Step; index: number }) {
         <div className="leading-8">
           <Markdown text={step.description} />
         </div>
-        {step.relatedItems != null && step.relatedItems.length !== 0 ? (
-          <VStack>
-            <h4 className="font-medium">Resources</h4>
-            <RelatedItems items={step.relatedItems} />
-          </VStack>
-        ) : null}
+        <Related items={step.relatedItems} />
       </DisclosurePanel>
     </Disclosure>
+  )
+}
+
+function Related({ items }: { items?: Array<any> }) {
+  if (items == null) return null
+
+  // TODO: relations to steps
+  const relatedItems = items.filter((item) => item.category !== 'step')
+  if (relatedItems.length === 0) return null
+
+  return (
+    <VStack>
+      <h4 className="sr-only">Resources</h4>
+      <RelatedItems items={relatedItems} />
+    </VStack>
   )
 }
