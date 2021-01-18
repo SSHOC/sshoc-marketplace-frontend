@@ -28,13 +28,14 @@ function EuGrantNote() {
       <b className={cx(styles.leftBleed, 'border-t border-gray-200')} />
       <ContentColumn
         as={HStack}
-        className="space-x-4 px-4 py-24 border-t border-gray-200"
+        className="px-4 py-24 space-x-4 border-t border-gray-200"
       >
         <EuFlag width="2.5em" className="flex-shrink-0" />
-        <p className="text-gray-500 text-xs max-w-screen-sm">
-          The SSH Open Marketplace is developed as part of the „Social Sciences
-          and Humanities Open Cloud” SSHOC project, European Union’s Horizon
-          2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.
+        <p className="max-w-screen-sm text-xs text-gray-500">
+          The SSH Open Marketplace is developed as part of the &quot;Social
+          Sciences and Humanities Open Cloud&apos; SSHOC project, European
+          Union&quot;s Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant
+          agreement #823782.
         </p>
       </ContentColumn>
       <b className={cx(styles.rightBleed, 'border-t border-gray-200')} />
@@ -79,7 +80,7 @@ function NavLink({ href, children }: PropsWithChildren<{ href: UrlObject }>) {
     <Link href={href}>
       <a
         aria-current={isActive ? 'page' : undefined}
-        className="p-4 inline-block text-sm hover:bg-gray-100 transition-colors duration-150"
+        className="inline-block p-4 text-sm transition-colors duration-150 hover:bg-gray-100"
       >
         {children}
       </a>
