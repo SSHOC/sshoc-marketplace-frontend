@@ -200,7 +200,7 @@ function ReportAnIssueButton({
         },
       }}
     >
-      <a>Report an issue</a>
+      <a className="mx-6 my-2">Report an issue</a>
     </Link>
   )
 }
@@ -293,14 +293,17 @@ function AuthButton() {
   return (
     <div className="relative flex items-center space-x-6 text-gray-500">
       <ReportAnIssueButton path={router.asPath} />
-      <NavLinkButton
-        href={{
-          pathname: '/auth/sign-in',
-          query: redirectPath !== undefined ? { from: redirectPath } : {},
-        }}
-      >
-        Sign in
-      </NavLinkButton>
+      {/* Disable login on production deploy. */}
+      {process.env.NEXT_PUBLIC_PRODUCTION_DEPLOY !== '1' ? (
+        <NavLinkButton
+          href={{
+            pathname: '/auth/sign-in',
+            query: redirectPath !== undefined ? { from: redirectPath } : {},
+          }}
+        >
+          Sign in
+        </NavLinkButton>
+      ) : null}
     </div>
   )
 }
