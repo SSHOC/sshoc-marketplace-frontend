@@ -24,7 +24,7 @@
     "postbuild": "yarn create:sitemap",
     "prebuild": "rimraf .next && yarn create:sshoc-client && yarn create:favicons",
     "preexport": "rimraf out",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "test": "jest",
     "test:coverage": "yarn test --coverage"
   },
