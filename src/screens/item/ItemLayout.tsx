@@ -2,7 +2,6 @@ import { Menu } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { Fragment, useMemo, useState } from 'react'
 import type { PropsWithChildren } from 'react'
 import { useGetItemCategories } from '@/api/sshoc'
@@ -105,7 +104,7 @@ export default function ItemLayout({
                   pathname: `/${item.category}/${item.persistentId}/edit`,
                 }}
               >
-                <a className="px-4 py-2 text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+                <a className="px-16 py-4 text-xl text-white transition rounded bg-primary-750 hover:bg-secondary-600">
                   Edit
                 </a>
               </Link>
