@@ -62,7 +62,6 @@ package:frontend:main:acdh:
     NEXT_PUBLIC_SSHOC_BASE_URL: https://sshoc-marketplace.acdh-dev.oeaw.ac.at
     NEXT_PUBLIC_SSHOC_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
     # NEXT_PUBLIC_RECAPTCHA_SITE_KEY:
-    NEXT_PUBLIC_PRODUCTION_DEPLOY: 0
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
 
@@ -82,6 +81,5 @@ package:frontend:tags:acdh:
     # NEXT_PUBLIC_RECAPTCHA_SITE_KEY:
     NEXT_PUBLIC_MATOMO_BASE_URL: https://matomo.acdh.oeaw.ac.at/
     NEXT_PUBLIC_MATOMO_SITE_ID: 179
-    NEXT_PUBLIC_PRODUCTION_DEPLOY: 1
   rules:
     - if: '$CI_COMMIT_TAG != null'

@@ -5,9 +5,5 @@ import SignInScreen from '@/screens/auth/SignInScreen'
  */
 export default function SignInPage(): JSX.Element {
   /* Disable login on production deploy. */
-  return process.env.NEXT_PUBLIC_PRODUCTION_DEPLOY !== '1' ? (
-    <SignInScreen />
-  ) : (
-    <div />
-  )
+  return <SignInScreen />
 }
