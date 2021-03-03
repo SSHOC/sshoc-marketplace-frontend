@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         gray: {
           50: '#FAFAFA',
+          75: '#f9f9f9',
           100: '#F5F5F5',
           200: '#ECECEC',
           250: '#E5E5E5',
@@ -41,9 +42,15 @@ module.exports = {
           75: '#E7F5FF', // input
           100: '#E4F2F8',
           200: '#D0E4EF',
+          300: '#aacee2',
         },
         error: {
+          500: '#D93025',
           600: '#D93025',
+        },
+        success: {
+          500: '#3aa23a',
+          600: '#449d44',
         },
       },
       fontFamily: {

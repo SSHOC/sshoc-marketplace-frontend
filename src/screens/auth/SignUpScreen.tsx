@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useQueryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import { useRegisterOAuth2User } from '@/api/sshoc'
 import { useValidateImplicitGrantTokenWithRegistration } from '@/api/sshoc/client'
 import { useAuth } from '@/modules/auth/AuthContext'
-import FormField from '@/modules/form/FormField'
+import FormField from '@/modules/hook-form/FormField'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import VStack from '@/modules/layout/VStack'
@@ -37,9 +37,9 @@ export default function SignInScreen(): JSX.Element {
             loading="lazy"
             layout="fill"
             quality={100}
-            className="-z-10 object-cover object-right-bottom"
+            className="object-cover object-right-bottom -z-10"
           />
-          <div className="shadow-md rounded-md max-w-xl px-12 py-16 my-12 bg-white space-y-6 relative">
+          <div className="relative max-w-xl px-12 py-16 my-12 space-y-6 bg-white rounded-md shadow-md">
             <Title>Sign up</Title>
             <hr className="border-gray-200" />
             <SignUpForm />
@@ -74,8 +74,8 @@ function SignUpForm(): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
   const { data: registrationData } = useValidateAuthCode()
-  const [registerUser] = useRegisterOAuth2User()
-  const queryCache = useQueryCache()
+  const { mutate: registerUser } = useRegisterOAuth2User()
+  const queryCache = useQueryClient()
   const { register, handleSubmit, errors, reset, formState } = useForm<
     SignUpFormData
   >({ mode: 'onChange' })
@@ -178,10 +178,12 @@ function SignUpForm(): JSX.Element {
 function useValidateAuthCode() {
   const router = useRouter()
   const auth = useAuth()
-  const [
-    validateToken,
-    { data, status, error },
-  ] = useValidateImplicitGrantTokenWithRegistration()
+  const {
+    data,
+    status,
+    error,
+    mutate: validateToken,
+  } = useValidateImplicitGrantTokenWithRegistration()
 
   useEffect(() => {
     if (status !== 'idle') return

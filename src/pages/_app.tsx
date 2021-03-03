@@ -1,3 +1,5 @@
+import { I18nProvider } from '@react-aria/i18n'
+import { useInteractionModality } from '@react-aria/interactions'
 import Layout from '@stefanprobst/next-app-layout'
 import ErrorBoundary from '@stefanprobst/next-error-boundary'
 import type { AppProps, NextWebVitalsMetric } from 'next/app'
@@ -6,14 +8,14 @@ import { Router } from 'next/router'
 import np from 'nprogress'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
-import { QueryCache, ReactQueryCacheProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query-devtools'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { ToastContainer, Slide } from 'react-toastify'
 import AuthProvider from '@/modules/auth/AuthContext'
 import ClientError from '@/modules/error/ClientError'
 import PageLayout from '@/modules/page/PageLayout'
 
-import 'focus-visible'
+// import 'focus-visible'
 import '@/styles/global.css'
 import 'tailwindcss/tailwind.css'
 import '@/styles/nprogress.css'
@@ -65,8 +67,8 @@ Router.events.on('routeChangeError', stopProgressIndicator)
 /**
  * Client side cache for server data.
  */
-const queryCache = new QueryCache({
-  defaultConfig: {
+const queryClient = new QueryClient({
+  defaultOptions: {
     queries: {
       cacheTime: Infinity,
       staleTime: Infinity,
@@ -79,10 +81,14 @@ const queryCache = new QueryCache({
  * Providers.
  */
 function Providers({ children }: PropsWithChildren<unknown>) {
+  useInteractionModality()
+
   return (
-    <ReactQueryCacheProvider queryCache={queryCache}>
-      <AuthProvider>{children}</AuthProvider>
-    </ReactQueryCacheProvider>
+    <I18nProvider locale="en">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>{children}</AuthProvider>
+      </QueryClientProvider>
+    </I18nProvider>
   )
 }
 

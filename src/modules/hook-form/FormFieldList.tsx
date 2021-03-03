@@ -7,7 +7,7 @@ import type {
   // UseFormMethods,
 } from 'react-hook-form'
 import { useFieldArray } from 'react-hook-form'
-import FormFieldErrorMessage from '@/modules/form/FormFieldErrorMessage'
+import FormFieldErrorMessage from '@/modules/hook-form/FormFieldErrorMessage'
 
 type FormFieldListItem = [
   field: Partial<ArrayField>,

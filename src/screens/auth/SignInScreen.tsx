@@ -9,7 +9,7 @@ import {
   useValidateImplicitGrantTokenWithoutRegistration,
 } from '@/api/sshoc/client'
 import { useAuth } from '@/modules/auth/AuthContext'
-import FormField from '@/modules/form/FormField'
+import FormField from '@/modules/hook-form/FormField'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
@@ -38,15 +38,15 @@ export default function SignInScreen(): JSX.Element {
             loading="lazy"
             layout="fill"
             quality={100}
-            className="-z-10 object-cover object-right-bottom"
+            className="object-cover object-right-bottom -z-10"
           />
-          <div className="shadow-md rounded-md max-w-xl px-12 py-16 my-12 bg-white space-y-6 relative">
+          <div className="relative max-w-xl px-12 py-16 my-12 space-y-6 bg-white rounded-md shadow-md">
             <Title>Sign in</Title>
             <hr className="border-gray-200" />
             <SignInForm />
             <HStack className="space-x-2">
               <SubSectionTitle as="h2">Alternative sign in</SubSectionTitle>
-              <div className="border-b border-gray-200 flex-1" />
+              <div className="flex-1 border-b border-gray-200" />
             </HStack>
             <EoscLoginLink />
           </div>
@@ -84,7 +84,7 @@ function SignInForm() {
   const router = useRouter()
   const auth = useAuth()
   useValidateToken()
-  const [signInUser] = useSignInUser()
+  const { mutate: signInUser } = useSignInUser()
   const { handleSubmit, register, errors, formState } = useForm<SignInFormData>(
     {
       mode: 'onChange',
@@ -151,10 +151,11 @@ function SignInForm() {
 function useValidateToken() {
   const router = useRouter()
   const auth = useAuth()
-  const [
-    validateToken,
-    { status, error },
-  ] = useValidateImplicitGrantTokenWithoutRegistration()
+  const {
+    status,
+    error,
+    mutate: validateToken,
+  } = useValidateImplicitGrantTokenWithoutRegistration()
 
   useEffect(() => {
     if (status !== 'idle') return
@@ -244,7 +245,7 @@ function EoscLoginLink() {
   return (
     <div>
       <a
-        className="flex px-4 rounded border border-gray-200 bg-gray-100 font-medium text-sm text-primary-800 justify-between items-center hover:bg-gray-200"
+        className="flex items-center justify-between px-4 text-sm font-medium bg-gray-100 border border-gray-200 rounded text-primary-800 hover:bg-gray-200"
         href={url}
       >
         <span className="w-10">

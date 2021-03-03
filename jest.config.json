@@ -14,7 +14,7 @@
   "testPathIgnorePatterns": ["/node_modules/", "/.next/"],
   "transform": {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-    "^.+\\.(css|jpg|png|svg)$": "<rootDir>/test/stub.ts"
+    "^.+\\.(css|jpg|png|svg)$": "<rootDir>/test/stub.js"
   },
   "transformIgnorePatterns": ["/node_modules/", "^.+\\.module\\.css$"]
 }

@@ -1,0 +1,224 @@
+import { Fragment, useMemo, useState } from 'react'
+import type { QueryObserverResult } from 'react-query'
+
+import type {
+  PaginatedPropertyTypes,
+  PropertyTypeDto,
+  SearchConcept,
+} from '@/api/sshoc'
+import { useGetPropertyTypes, useSearchConcepts } from '@/api/sshoc'
+import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
+import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
+import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
+import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
+import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
+import { FormSection } from '@/modules/form/components/FormSection/FormSection'
+import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
+import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { FormField } from '@/modules/form/FormField'
+import { FormFieldArray } from '@/modules/form/FormFieldArray'
+import { FormFieldCondition } from '@/modules/form/FormFieldCondition'
+
+export interface PropertiesFormSectionProps {
+  initialValues?: any
+}
+
+/**
+ * Form section for item properties.
+ */
+export function PropertiesFormSection(
+  props: PropertiesFormSectionProps,
+): JSX.Element {
+  const propertyTypes = useGetPropertyTypes({
+    /** try to get everything in one go, so we don't need a combobox here */
+    perpage: 50,
+  })
+  const propertyTypesById = useMemo(() => {
+    const map = {} as Record<string, PropertyTypeDto>
+
+    if (propertyTypes.data === undefined) return map
+
+    propertyTypes.data.propertyTypes?.forEach((propertyType) => {
+      if (propertyType.code !== undefined) {
+        map[propertyType.code] = propertyType
+      }
+    })
+
+    return map
+  }, [propertyTypes.data])
+
+  return (
+    <FormSection title={'Properties'}>
+      <FormFieldArray name="properties">
+        {({ fields }) => {
+          return (
+            <FormRecords>
+              {fields.map((name, index) => {
+                return (
+                  <FormRecord key={name}>
+                    <PropertyTypeSelect
+                      name={`${name}.type.code`}
+                      label={'Property type'}
+                      propertyTypes={propertyTypes}
+                    />
+                    <FormFieldCondition
+                      name={`${name}.type.code`}
+                      condition={(id) =>
+                        id !== '' && propertyTypesById[id]?.type === 'concept'
+                      }
+                    >
+                      {(id: string) => {
+                        return (
+                          <PropertyConceptSelect
+                            name={`${name}.concept.uri`}
+                            parentName={name}
+                            label={'Concept'}
+                            propertyTypeId={id}
+                          />
+                        )
+                      }}
+                    </FormFieldCondition>
+                    <FormFieldCondition
+                      name={`${name}.type.code`}
+                      condition={(id) =>
+                        id !== '' && propertyTypesById[id]?.type !== 'concept'
+                      }
+                    >
+                      <FormTextField
+                        name={`${name}.value`}
+                        label={'Value'}
+                        variant="form"
+                        style={{ flex: 1 }}
+                      />
+                    </FormFieldCondition>
+                    <FormFieldRemoveButton
+                      onPress={() => fields.remove(index)}
+                      aria-label={'Remove property'}
+                    />
+                  </FormRecord>
+                )
+              })}
+              <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                {'Add property'}
+              </FormFieldAddButton>
+            </FormRecords>
+          )
+        }}
+      </FormFieldArray>
+    </FormSection>
+  )
+}
+
+interface PropertyTypeSelectProps {
+  name: string
+  label: string
+  propertyTypes: QueryObserverResult<PaginatedPropertyTypes, unknown>
+}
+
+/**
+ * Property type.
+ */
+function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
+  return (
+    <FormSelect
+      name={props.name}
+      label={props.label}
+      items={props.propertyTypes.data?.propertyTypes ?? []}
+      isLoading={props.propertyTypes.isLoading}
+      variant="form"
+    >
+      {(item) => (
+        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      )}
+    </FormSelect>
+  )
+}
+
+interface PropertyConceptSelectProps {
+  name: string
+  parentName: string
+  label: string
+  propertyTypeId?: string
+}
+
+/**
+ * Property concept.
+ *
+ * The form control displays the concept `uri`, but we also need to submit
+ * the concept `id` and vocabulary `id`.
+ */
+function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
+  const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const concepts = useSearchConcepts(
+    {
+      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+      types: [String(props.propertyTypeId)!],
+      q: debouncedSearchTerm,
+      /* vocabs like nemo-activity-type or tadirah-activity can have very many very similarly named entries */
+      // perpage: 50,
+    },
+    {
+      // debouncedsearchTerm.length > 2 &&
+      enabled: props.propertyTypeId != null,
+      keepPreviousData: true,
+    },
+  )
+
+  const conceptsByUri = useMemo(() => {
+    const map: Record<string, SearchConcept> = {}
+
+    if (concepts.data === undefined) return map
+
+    concepts.data.concepts?.forEach((concept) => {
+      if (concept.uri !== undefined) {
+        map[concept.uri] = concept
+      }
+    })
+
+    return map
+  }, [concepts.data])
+
+  return (
+    <Fragment>
+      <FormComboBox
+        name={props.name}
+        label={props.label}
+        items={concepts.data?.concepts ?? []}
+        isLoading={concepts.isLoading}
+        onInputChange={setSearchTerm}
+        variant="form"
+        style={{ flex: 1 }}
+      >
+        {(item) => (
+          <FormComboBox.Item key={item.uri}>{item.label}</FormComboBox.Item>
+        )}
+      </FormComboBox>
+      <FormFieldCondition name={props.name} condition={(id) => id !== ''}>
+        {(id: string) => {
+          const concept = conceptsByUri[id]
+
+          if (concept === undefined) return null
+
+          return (
+            <Fragment>
+              <FormField
+                name={`${props.parentName}.concept.code`}
+                value={concept.code}
+                type="hidden"
+                component="input"
+              />
+              <FormField
+                name={`${props.parentName}.concept.vocabulary.code`}
+                value={concept.vocabulary?.code}
+                type="hidden"
+                component="input"
+              />
+            </Fragment>
+          )
+        }}
+      </FormFieldCondition>
+    </Fragment>
+  )
+}

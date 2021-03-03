@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
 import type { Ref, PropsWithChildren } from 'react'
 import { Fragment, useEffect, useState } from 'react'
-import { useQueryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import FullWidth from '../layout/FullWidth'
 import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
@@ -76,7 +76,7 @@ function MainNavigation(): JSX.Element {
                       )
                     }}
                   >
-                    {label}
+                    {label as string}
                   </NavLink>
                 </li>
               )
@@ -208,7 +208,7 @@ function ReportAnIssueButton({
 function AuthButton() {
   const router = useRouter()
   const auth = useAuth()
-  const queryCache = useQueryCache()
+  const queryClient = useQueryClient()
 
   const { data: user } = useGetLoggedInUser(
     {
@@ -244,7 +244,7 @@ function AuthButton() {
   function onSignOut() {
     auth.signOut()
     /** clear the whole query cache to be on the safe side */
-    queryCache.clear()
+    queryClient.clear()
     router.replace(
       getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
     )

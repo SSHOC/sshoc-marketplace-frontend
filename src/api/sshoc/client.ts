@@ -4,7 +4,7 @@
 
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import type { MutationConfig, MutationResultPair } from 'react-query'
+import type { UseMutationOptions, UseMutationResult } from 'react-query'
 import { useMutation } from 'react-query'
 import type { ImplicitGrantTokenData, OAuthRegistrationDto } from '@/api/sshoc'
 import { request } from '@/api/sshoc'
@@ -51,13 +51,13 @@ export function signInUser([body]: [body: SignInUser.RequestBody]): Promise<
 }
 
 export function useSignInUser(
-  config?: MutationConfig<
+  config?: UseMutationOptions<
     SignInUser.Response.Success,
     SignInUser.Response.Error,
     [SignInUser.RequestBody],
     unknown
   >,
-): MutationResultPair<
+): UseMutationResult<
   SignInUser.Response.Success,
   SignInUser.Response.Error,
   [SignInUser.RequestBody],
@@ -105,13 +105,13 @@ export async function validateImplicitGrantTokenWithoutRegistration([body]: [
 }
 
 export function useValidateImplicitGrantTokenWithoutRegistration(
-  config?: MutationConfig<
+  config?: UseMutationOptions<
     ValidateImplicitGrantTokenWithoutRegistration.Response.Success,
     ValidateImplicitGrantTokenWithoutRegistration.Response.Error,
     [ValidateImplicitGrantTokenWithoutRegistration.RequestBody],
     unknown
   >,
-): MutationResultPair<
+): UseMutationResult<
   ValidateImplicitGrantTokenWithoutRegistration.Response.Success,
   ValidateImplicitGrantTokenWithoutRegistration.Response.Error,
   [ValidateImplicitGrantTokenWithoutRegistration.RequestBody],
@@ -160,13 +160,13 @@ export async function validateImplicitGrantTokenWithRegistration([body]: [
 }
 
 export function useValidateImplicitGrantTokenWithRegistration(
-  config?: MutationConfig<
+  config?: UseMutationOptions<
     ValidateImplicitGrantTokenWithRegistration.Response.Success,
     ValidateImplicitGrantTokenWithRegistration.Response.Error,
     [ValidateImplicitGrantTokenWithRegistration.RequestBody],
     unknown
   >,
-): MutationResultPair<
+): UseMutationResult<
   ValidateImplicitGrantTokenWithRegistration.Response.Success,
   ValidateImplicitGrantTokenWithRegistration.Response.Error,
   [ValidateImplicitGrantTokenWithRegistration.RequestBody],

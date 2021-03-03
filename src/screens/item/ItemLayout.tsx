@@ -1,6 +1,8 @@
 import { Menu } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Fragment, useMemo, useState } from 'react'
 import type { PropsWithChildren } from 'react'
 import { useGetItemCategories } from '@/api/sshoc'
@@ -9,6 +11,7 @@ import type {
   ItemSearchQuery,
   Item as GenericItem,
 } from '@/api/sshoc/types'
+import ProtectedView from '@/modules/auth/ProtectedView'
 import RelatedItems from '@/modules/item/RelatedItems'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
@@ -88,12 +91,25 @@ export default function ItemLayout({
           />
         </Header>
         <VStack className={cx('space-y-12 px-6 py-6', styles.mainColumn)}>
-          <HStack className="items-center space-x-4">
-            <ItemThumbnail
-              category={item.category as ItemCategory}
-              properties={item.properties as ItemProperties}
-            />
-            <Title>{item.label}</Title>
+          <HStack className="items-start justify-between space-x-4">
+            <div className="flex items-center justify-between space-x-4">
+              <ItemThumbnail
+                category={item.category as ItemCategory}
+                properties={item.properties as ItemProperties}
+              />
+              <Title>{item.label}</Title>
+            </div>
+            <ProtectedView>
+              <Link
+                href={{
+                  pathname: `/${item.category}/${item.persistentId}/edit`,
+                }}
+              >
+                <a className="px-4 py-2 text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+                  Edit
+                </a>
+              </Link>
+            </ProtectedView>
           </HStack>
           <ItemDescription description={item.description} />
         </VStack>

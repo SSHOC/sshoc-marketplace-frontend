@@ -51,4 +51,4 @@ public/robots.txt
 public/sitemap.xml
 
 # auto-generated api clients
-src/api/sshoc/index.ts
+# src/api/sshoc/index.ts
