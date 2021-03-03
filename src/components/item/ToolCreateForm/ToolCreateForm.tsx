@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-
 import type { ToolCore, ToolDto } from '@/api/sshoc'
-import { useCreateTool } from '@/api/sshoc'
+import { useCreateTool, useGetItemCategories } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
 
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -28,6 +27,9 @@ export interface ItemFormProps<T> {
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const { category, initialValues } = props
 
+  const categories = useGetItemCategories()
+  const categoryLabel = categories.data?.[category] ?? category
+
   const useItemMutation = useCreateTool
 
   const toast = useToast()
@@ -36,7 +38,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: ToolDto) {
-      toast.success(`Successfully updated ${category}.`)
+      toast.success(`Successfully created ${categoryLabel}.`)
 
       queryClient.invalidateQueries({
         queryKey: ['itemSearch'],
@@ -51,7 +53,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       router.push({ pathname: `/${data.category}/${data.persistentId}` })
     },
     onError() {
-      toast.error(`Failed to update ${category}.`)
+      toast.error(`Failed to create ${categoryLabel}.`)
     },
   })
 

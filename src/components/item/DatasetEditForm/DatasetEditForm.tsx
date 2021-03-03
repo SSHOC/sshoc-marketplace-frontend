@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
-import { useUpdateDataset } from '@/api/sshoc'
+import { useGetItemCategories, useUpdateDataset } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
 
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -31,6 +30,9 @@ export interface ItemFormProps<T> {
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const { id, category, initialValues } = props
 
+  const categories = useGetItemCategories()
+  const categoryLabel = categories.data?.[category] ?? category
+
   const useItemMutation = useUpdateDataset
 
   const toast = useToast()
@@ -39,7 +41,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: DatasetDto) {
-      toast.success(`Successfully updated ${category}.`)
+      toast.success(`Successfully updated ${categoryLabel}.`)
 
       queryClient.invalidateQueries({
         queryKey: ['itemSearch'],
@@ -54,7 +56,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       router.push({ pathname: `/${data.category}/${data.persistentId}` })
     },
     onError() {
-      toast.error(`Failed to update ${category}.`)
+      toast.error(`Failed to update ${categoryLabel}.`)
     },
   })
 
