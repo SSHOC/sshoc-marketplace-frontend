@@ -12,6 +12,7 @@ import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSecti
 import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { validate } from '@/lib/sshoc/validate'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
 
@@ -75,27 +76,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }
 
   function onValidate(values: Partial<ItemFormValues>) {
-    const errors: Partial<Record<keyof typeof values, string>> = {}
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const errors: Partial<Record<keyof typeof values, any>> = {}
 
-    /** Required field `label`. */
-    if (values.label === undefined) {
-      errors.label = 'Label is required.'
-    }
-
-    /** Required field `description`. */
-    if (values.description === undefined) {
-      errors.description = 'Description is required.'
-    }
-
-    /** `sourceItemId` is required when `source` is set. */
-    if (values.source?.id != null && values.sourceItemId == null) {
-      errors.sourceItemId = 'Missing value in Source ID.'
-    }
-
-    /** `source` is required when `sourceItemId` is set. */
-    if (values.sourceItemId != null && values.source?.id == null) {
-      errors.sourceItemId = 'Missing value in Source.'
-    }
+    validate(values, errors)
 
     return errors
   }

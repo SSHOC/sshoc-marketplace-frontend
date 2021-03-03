@@ -32,7 +32,7 @@ export function PropertiesFormSection(
 ): JSX.Element {
   const propertyTypes = useGetPropertyTypes({
     /** try to get everything in one go, so we don't need a combobox here */
-    perpage: 50,
+    perpage: 100,
   })
   const propertyTypesById = useMemo(() => {
     const map = {} as Record<string, PropertyTypeDto>
