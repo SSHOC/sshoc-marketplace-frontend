@@ -30,16 +30,20 @@ export function MainFormSection(): JSX.Element {
             <FormRecords>
               {fields.map((name, index) => {
                 return (
-                  <FormRecord key={name}>
+                  <FormRecord
+                    key={name}
+                    actions={
+                      <FormFieldRemoveButton
+                        onPress={() => fields.remove(index)}
+                        aria-label={'Remove URL'}
+                      />
+                    }
+                  >
                     <FormTextField
                       name={name}
                       label={'Accessible at'}
                       variant="form"
                       style={{ flex: 1 }}
-                    />
-                    <FormFieldRemoveButton
-                      onPress={() => fields.remove(index)}
-                      aria-label={'Remove URL'}
                     />
                   </FormRecord>
                 )

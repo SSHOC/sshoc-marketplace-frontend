@@ -27,7 +27,15 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
             <FormRecords>
               {fields.map((name, index) => {
                 return (
-                  <FormRecord key={name}>
+                  <FormRecord
+                    key={name}
+                    actions={
+                      <FormFieldRemoveButton
+                        onPress={() => fields.remove(index)}
+                        aria-label={'Remove actor'}
+                      />
+                    }
+                  >
                     <ActorRoleSelect
                       name={`${name}.role.code`}
                       label={'Actor role'}
@@ -37,10 +45,6 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       label={'Name'}
                       index={index}
                       initialValues={props.initialValues}
-                    />
-                    <FormFieldRemoveButton
-                      onPress={() => fields.remove(index)}
-                      aria-label={'Remove actor'}
                     />
                   </FormRecord>
                 )
@@ -93,6 +97,12 @@ interface ActorComboBoxProps {
  * Actor.
  */
 function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
+  /**
+   * Populate the input field with the label of the initially selected item (if any),
+   * which triggers a search request. The result set should include the initial item.
+   *
+   * TODO: should the initial value always be included in the combobox options?
+   */
   const initialLabel =
     props.initialValues?.contributors?.[props.index]?.actor.name ?? ''
 

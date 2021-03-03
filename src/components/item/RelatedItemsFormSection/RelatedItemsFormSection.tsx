@@ -29,7 +29,15 @@ export function RelatedItemsFormSection(
             <FormRecords>
               {fields.map((name, index) => {
                 return (
-                  <FormRecord key={name}>
+                  <FormRecord
+                    key={name}
+                    actions={
+                      <FormFieldRemoveButton
+                        onPress={() => fields.remove(index)}
+                        aria-label={'Remove related item'}
+                      />
+                    }
+                  >
                     <RelationTypeSelect
                       name={`${name}.relation.code`}
                       label={'Relation type'}
@@ -39,10 +47,6 @@ export function RelatedItemsFormSection(
                       label={'Item'}
                       initialValues={props.initialValues}
                       index={index}
-                    />
-                    <FormFieldRemoveButton
-                      onPress={() => fields.remove(index)}
-                      aria-label={'Remove related item'}
                     />
                   </FormRecord>
                 )
@@ -95,6 +99,12 @@ interface RelatedItemComboBoxProps {
  * Related item.
  */
 function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
+  /**
+   * Populate the input field with the label of the initially selected item (if any),
+   * which triggers a search request. The result set should include the initial item.
+   *
+   * TODO: should the initial value always be included in the combobox options?
+   */
   const initialLabel =
     props.initialValues?.relatedItems?.[props.index]?.label ?? ''
 

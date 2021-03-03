@@ -831,8 +831,8 @@ export type VocabularyDto = {
   conceptResults?: PaginatedConcepts
 }
 
-// const defaultBaseUrl = 'http://localhost:8080'
-const defaultBaseUrl = 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at'
+const defaultBaseUrl = 'http://localhost:8080'
+// const defaultBaseUrl = 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at'
 
 export { defaultBaseUrl as baseUrl }
 

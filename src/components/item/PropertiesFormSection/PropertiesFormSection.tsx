@@ -56,7 +56,15 @@ export function PropertiesFormSection(
             <FormRecords>
               {fields.map((name, index) => {
                 return (
-                  <FormRecord key={name}>
+                  <FormRecord
+                    key={name}
+                    actions={
+                      <FormFieldRemoveButton
+                        onPress={() => fields.remove(index)}
+                        aria-label={'Remove property'}
+                      />
+                    }
+                  >
                     <PropertyTypeSelect
                       name={`${name}.type.code`}
                       label={'Property type'}
@@ -94,10 +102,6 @@ export function PropertiesFormSection(
                         style={{ flex: 1 }}
                       />
                     </FormFieldCondition>
-                    <FormFieldRemoveButton
-                      onPress={() => fields.remove(index)}
-                      aria-label={'Remove property'}
-                    />
                   </FormRecord>
                 )
               })}
@@ -153,9 +157,14 @@ interface PropertyConceptSelectProps {
  * the concept `id` and vocabulary `id`.
  */
 function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
+  /**
+   * Populate the input field with the label of the initially selected item (if any),
+   * which triggers a search request. The result set should include the initial item.
+   *
+   * TODO: should the initial value always be included in the combobox options?
+   */
   const initialLabel =
     props.initialValues?.properties?.[props.index]?.concept?.label ?? ''
-  console.log(initialLabel)
 
   const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
