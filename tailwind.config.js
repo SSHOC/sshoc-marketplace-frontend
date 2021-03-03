@@ -64,6 +64,12 @@ module.exports = {
         xl: px(20),
         '2xl': px(26),
         '3xl': px(32),
+        'ui-xs': [px(11), { lineHeight: px(14) }],
+        'ui-sm': [px(13), { lineHeight: px(18) }],
+        'ui-base': [px(15), { lineHeight: px(22) }],
+        'ui-lg': [px(17), { lineHeight: px(26) }],
+        'ui-xl': [px(19), { lineHeight: px(26) }],
+        'ui-3xl': [px(28), { lineHeight: px(34) }],
       },
       /** max-widths for readability */
       maxWidth: {
