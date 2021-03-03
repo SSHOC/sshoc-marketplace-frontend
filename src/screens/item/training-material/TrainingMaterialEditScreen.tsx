@@ -41,6 +41,7 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
               id={id}
               category="training-material"
               initialValues={convertToInitialFormValues(trainingMaterial.data)}
+              item={trainingMaterial.data}
             />
           )}
         </ContentColumn>

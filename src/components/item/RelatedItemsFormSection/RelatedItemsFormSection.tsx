@@ -37,6 +37,8 @@ export function RelatedItemsFormSection(
                     <RelatedItemComboBox
                       name={`${name}.objectId`}
                       label={'Item'}
+                      initialValues={props.initialValues}
+                      index={index}
                     />
                     <FormFieldRemoveButton
                       onPress={() => fields.remove(index)}
@@ -85,16 +87,21 @@ function RelationTypeSelect(props: RelationTypeSelectProps): JSX.Element {
 interface RelatedItemComboBoxProps {
   name: string
   label: string
+  initialValues?: any
+  index: number
 }
 
 /**
  * Related item.
  */
 function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
+  const initialLabel =
+    props.initialValues?.relatedItems?.[props.index]?.label ?? ''
+
   // const itemCategories = useGetItemCategories()
   // const [category, setCategory] = useState<ItemCategory | null>(null)
 
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
   const searchResults = useSearchItems(
     {

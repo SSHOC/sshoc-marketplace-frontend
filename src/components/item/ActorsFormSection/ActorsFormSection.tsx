@@ -32,7 +32,12 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       name={`${name}.role.code`}
                       label={'Actor role'}
                     />
-                    <ActorComboBox name={`${name}.actor.id`} label={'Name'} />
+                    <ActorComboBox
+                      name={`${name}.actor.id`}
+                      label={'Name'}
+                      index={index}
+                      initialValues={props.initialValues}
+                    />
                     <FormFieldRemoveButton
                       onPress={() => fields.remove(index)}
                       aria-label={'Remove actor'}
@@ -80,13 +85,18 @@ function ActorRoleSelect(props: ActorRoleSelectProps): JSX.Element {
 interface ActorComboBoxProps {
   name: string
   label: string
+  index: number
+  initialValues?: any
 }
 
 /**
  * Actor.
  */
 function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
-  const [searchTerm, setSearchTerm] = useState('')
+  const initialLabel =
+    props.initialValues?.contributors?.[props.index]?.actor.name ?? ''
+
+  const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedsearchTerm = useDebouncedState(searchTerm, 150).trim()
   const actors = useGetActors(
     { q: debouncedsearchTerm },

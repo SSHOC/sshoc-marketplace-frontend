@@ -37,6 +37,7 @@ export default function ToolEditScreen(): JSX.Element {
               id={id}
               category="tool-or-service"
               initialValues={convertToInitialFormValues(tool.data)}
+              item={tool.data}
             />
           )}
         </ContentColumn>

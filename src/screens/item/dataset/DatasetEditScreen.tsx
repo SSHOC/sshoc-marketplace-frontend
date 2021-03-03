@@ -37,6 +37,7 @@ export default function DatasetEditScreen(): JSX.Element {
               id={id}
               category="dataset"
               initialValues={convertToInitialFormValues(dataset.data)}
+              item={dataset.data}
             />
           )}
         </ContentColumn>

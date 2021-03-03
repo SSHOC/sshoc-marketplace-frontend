@@ -159,6 +159,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
           {...mergeProps(buttonProps, fieldProps)}
           className={styles.button}
           ref={ref}
+          style={props.style}
         >
           <span {...valueProps} className={styles.value}>
             {textValue}

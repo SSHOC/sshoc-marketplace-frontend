@@ -22,6 +22,7 @@ export interface ItemFormProps<T> {
   id: string
   category: ItemCategory
   initialValues?: Partial<T>
+  item?: any
 }
 
 /**
@@ -123,9 +124,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
           >
             <MainFormSection />
             <DateFormSection />
-            <ActorsFormSection />
-            <PropertiesFormSection />
-            <RelatedItemsFormSection />
+            <ActorsFormSection initialValues={props.item} />
+            <PropertiesFormSection initialValues={props.item} />
+            <RelatedItemsFormSection initialValues={props.item} />
             <SourceFormSection />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">

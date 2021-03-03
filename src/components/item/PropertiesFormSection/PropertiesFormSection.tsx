@@ -75,6 +75,8 @@ export function PropertiesFormSection(
                             parentName={name}
                             label={'Concept'}
                             propertyTypeId={id}
+                            initialValues={props.initialValues}
+                            index={index}
                           />
                         )
                       }}
@@ -140,6 +142,8 @@ interface PropertyConceptSelectProps {
   parentName: string
   label: string
   propertyTypeId?: string
+  initialValues?: any
+  index: number
 }
 
 /**
@@ -149,7 +153,11 @@ interface PropertyConceptSelectProps {
  * the concept `id` and vocabulary `id`.
  */
 function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
-  const [searchTerm, setSearchTerm] = useState('')
+  const initialLabel =
+    props.initialValues?.properties?.[props.index]?.concept?.label ?? ''
+  console.log(initialLabel)
+
+  const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
   const concepts = useSearchConcepts(
     {
