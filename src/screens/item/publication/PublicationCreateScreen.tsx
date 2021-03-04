@@ -15,7 +15,7 @@ export default function PublicationCreateScreen(): JSX.Element {
       <GridLayout>
         <ContentColumn
           className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '5 / span 6' }}
+          style={{ gridColumn: '4 / span 8' }}
         >
           <Title>Create publication</Title>
           <ItemForm category="publication" initialValues={{}} />

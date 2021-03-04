@@ -29,7 +29,7 @@ export default function PublicationEditScreen(): JSX.Element {
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn
           className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '5 / span 6' }}
+          style={{ gridColumn: '4 / span 8' }}
         >
           <Title>Edit publication</Title>
           {publication.data === undefined || id == undefined ? (
