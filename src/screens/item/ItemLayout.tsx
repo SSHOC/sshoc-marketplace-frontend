@@ -99,15 +99,26 @@ export default function ItemLayout({
               <Title>{item.label}</Title>
             </div>
             <ProtectedView>
-              <Link
-                href={{
-                  pathname: `/${item.category}/${item.persistentId}/edit`,
-                }}
-              >
-                <a className="px-16 py-4 text-xl text-white transition rounded bg-primary-750 hover:bg-secondary-600">
-                  Edit
-                </a>
-              </Link>
+              <div className="flex flex-col space-y-2 xl:flex-row xl:space-y-0 xl:space-x-4">
+                <Link
+                  href={{
+                    pathname: `/${item.category}/${item.persistentId}/history`,
+                  }}
+                >
+                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-primary-750 hover:bg-secondary-600">
+                    History
+                  </a>
+                </Link>
+                <Link
+                  href={{
+                    pathname: `/${item.category}/${item.persistentId}/edit`,
+                  }}
+                >
+                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-primary-750 hover:bg-secondary-600">
+                    Edit
+                  </a>
+                </Link>
+              </div>
             </ProtectedView>
           </HStack>
           <ItemDescription description={item.description} />
