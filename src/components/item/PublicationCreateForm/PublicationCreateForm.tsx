@@ -11,7 +11,8 @@ import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSecti
 import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
-import { validate } from '@/lib/sshoc/validate'
+import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
+import { validateDateFormFields } from '@/lib/sshoc/validateDateFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
@@ -77,7 +78,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function onValidate(values: Partial<ItemFormValues>) {
     const errors: Partial<Record<keyof typeof values, string>> = {}
 
-    validate(values, errors)
+    validateCommonFormFields(values, errors)
+    validateDateFormFields(values, errors)
 
     return errors
   }

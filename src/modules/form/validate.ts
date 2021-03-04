@@ -14,3 +14,7 @@ export function isUrl(str: string): boolean {
     return false
   }
 }
+
+export function isDate(str: string): boolean {
+  return !Number.isNaN(new Date(str).getDate())
+}

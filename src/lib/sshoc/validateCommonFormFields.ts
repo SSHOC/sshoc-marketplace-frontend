@@ -7,17 +7,14 @@ import type {
 } from '@/api/sshoc'
 import { isUrl } from '@/modules/form/validate'
 
-export function validate<
+export function validateCommonFormFields<
   T extends
     | DatasetCore
     | PublicationCore
     | ToolCore
     | TrainingMaterialCore
     | WorkflowCore
->(
-  values: Partial<T>,
-  errors: Partial<Record<keyof typeof values, any>>,
-): Partial<Record<keyof typeof values, any>> {
+>(values: Partial<T>, errors: Partial<Record<keyof typeof values, any>>): void {
   /** Required field `label`. */
   if (values.label === undefined) {
     errors.label = 'Label is required.'
@@ -164,6 +161,4 @@ export function validate<
   if (values.sourceItemId != null && values.source?.id == null) {
     errors.sourceItemId = 'Missing value in Source.'
   }
-
-  return errors
 }
