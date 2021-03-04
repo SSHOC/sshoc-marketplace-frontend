@@ -6,7 +6,7 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
  */
 export function DateFormSection(): JSX.Element {
   return (
-    <FormSection>
+    <FormSection style={{ alignItems: 'start' }}>
       <FormTextField
         name="dateCreated"
         label={'Date created'}
