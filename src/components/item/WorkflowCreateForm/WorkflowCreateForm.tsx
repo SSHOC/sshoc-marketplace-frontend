@@ -38,7 +38,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: WorkflowDto) {
-      toast.success(`Successfully created ${categoryLabel}.`)
+      toast.success(`Successfully submitted ${categoryLabel}.`)
 
       queryClient.invalidateQueries({
         queryKey: ['itemSearch'],
@@ -53,7 +53,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       router.push({ pathname: `/${data.category}/${data.persistentId}` })
     },
     onError() {
-      toast.error(`Failed to create ${categoryLabel}.`)
+      toast.error(`Failed to submit ${categoryLabel}.`)
     },
   })
 

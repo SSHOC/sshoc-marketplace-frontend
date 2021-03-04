@@ -223,7 +223,7 @@ function CreateActorForm(props: CreateActorFormProps) {
           toast.success('Sucessfully created actor.')
         },
         onError() {
-          toast.error('Failed to create actor.')
+          toast.error('Failed to submit actor.')
         },
         onSettled() {
           props.onDismiss()
