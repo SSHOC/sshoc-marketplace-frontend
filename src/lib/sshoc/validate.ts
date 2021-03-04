@@ -83,6 +83,7 @@ export function validate<
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
       if (
+        property !== undefined &&
         property.type === undefined &&
         (property.value !== undefined || property.concept !== undefined)
       ) {
@@ -101,6 +102,7 @@ export function validate<
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
       if (
+        property !== undefined &&
         property.type !== undefined &&
         property.value === undefined &&
         property.concept === undefined
@@ -120,7 +122,11 @@ export function validate<
   /** Required related item id when relation type is set. */
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
-      if (item.relation !== undefined && item.objectId === undefined) {
+      if (
+        item !== undefined &&
+        item.relation !== undefined &&
+        item.objectId === undefined
+      ) {
         if (errors.relatedItems === undefined) {
           /* @ts-expect-error Untyped empty array. */
           errors.relatedItems = []
@@ -133,13 +139,17 @@ export function validate<
   /** Required relation type when related item id is set. */
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
-      if (item.relation !== undefined && item.relation === undefined) {
+      if (
+        item !== undefined &&
+        item.objectId !== undefined &&
+        item.relation === undefined
+      ) {
         if (errors.relatedItems === undefined) {
           /* @ts-expect-error Untyped empty array. */
           errors.relatedItems = []
         }
         errors.relatedItems[index] = {
-          relation: 'Please select a relation type.',
+          relation: { code: 'Please select a relation type.' },
         }
       }
     })
