@@ -22,7 +22,7 @@ export function FormFieldAddButton(
 
   const styles = {
     button:
-      'transition cursor-default self-start inline-flex space-x-1.5 items-center font-body font-normal font-ui-base text-primary-750 hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
+      'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal font-ui-base text-primary-750 hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
     icon: 'w-2.5 h-2.5',
   }
 

@@ -9,6 +9,9 @@ module.exports = {
   purge: ['src/**/*.tsx', 'content/**/*.mdx'],
   theme: {
     extend: {
+      backgroundSize: {
+        double: '150% 150%',
+      },
       colors: {
         gray: {
           50: '#FAFAFA',
@@ -130,7 +133,9 @@ module.exports = {
     },
   },
   variants: {
-    // boxShadow: ['responsive', 'hover', 'focus', 'focus-visible']
+    extend: {
+      backgroundPosition: ['hover', 'focus'],
+    },
   },
   plugins: [
     require('@tailwindcss/typography')({

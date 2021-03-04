@@ -22,7 +22,7 @@ import '@/styles/nprogress.css'
 /** should use ReactToastify.minimal.css */
 import 'react-toastify/dist/ReactToastify.css'
 import '@/styles/combobox.css'
-import '@reach/dialog/styles.css'
+import '@/styles/dialog.css'
 
 /**
  * Report web vitals.

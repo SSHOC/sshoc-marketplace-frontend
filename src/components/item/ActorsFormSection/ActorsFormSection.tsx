@@ -1,7 +1,15 @@
+import { Dialog } from '@reach/dialog'
 import { useState } from 'react'
 
-import { useGetActors, useGetAllActorRoles } from '@/api/sshoc'
+import { useQueryClient } from 'react-query'
+import { useCreateActor, useGetActors, useGetAllActorRoles } from '@/api/sshoc'
+import type { ActorCore } from '@/api/sshoc'
+import { Button } from '@/elements/Button/Button'
+import { Icon } from '@/elements/Icon/Icon'
+import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
+import { useToast } from '@/elements/Toast/useToast'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { useAuth } from '@/modules/auth/AuthContext'
 import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
@@ -9,7 +17,10 @@ import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
 import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
+import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { Form } from '@/modules/form/Form'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
+import { isEmail, isUrl } from '@/modules/form/validate'
 
 export interface ActorsFormSectionProps {
   initialValues?: any
@@ -19,8 +30,23 @@ export interface ActorsFormSectionProps {
  * Form section for contributors.
  */
 export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
+  const [showCreateNewDialog, setShowCreateNewDialog] = useState(false)
+  function openCreateNewDialog() {
+    setShowCreateNewDialog(true)
+  }
+  function closeCreateNewDialog() {
+    setShowCreateNewDialog(false)
+  }
+
   return (
-    <FormSection title={'Actors'}>
+    <FormSection
+      title={'Actors'}
+      actions={
+        <FormFieldAddButton onPress={openCreateNewDialog}>
+          {'Create new actor'}
+        </FormFieldAddButton>
+      }
+    >
       <FormFieldArray name="contributors">
         {({ fields }) => {
           return (
@@ -56,6 +82,10 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
           )
         }}
       </FormFieldArray>
+      <CreateActorDialog
+        isOpen={showCreateNewDialog}
+        onDismiss={closeCreateNewDialog}
+      />
     </FormSection>
   )
 }
@@ -128,5 +158,173 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
     >
       {(item) => <FormComboBox.Item>{item.name}</FormComboBox.Item>}
     </FormComboBox>
+  )
+}
+
+interface CreateActorDialogProps {
+  isOpen: boolean
+  onDismiss: () => void
+}
+
+/**
+ * Create new actor dialog.
+ */
+function CreateActorDialog(props: CreateActorDialogProps) {
+  return (
+    <Dialog
+      isOpen={props.isOpen}
+      onDismiss={props.onDismiss}
+      className="flex flex-col w-full max-w-screen-lg px-32 py-16 mx-auto bg-white rounded shadow-lg"
+      style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
+      aria-label="Create new actor"
+    >
+      <button
+        onClick={props.onDismiss}
+        className="self-end"
+        aria-label="Close dialog"
+      >
+        <Icon icon={CloseIcon} className="" />
+      </button>
+      <section className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-medium">Create new actor</h2>
+        {/* this form is rendered in a portal, so it's valid html, even though it's a <form> "nested" in another <form>. */}
+        <CreateActorForm onDismiss={props.onDismiss} />
+      </section>
+    </Dialog>
+  )
+}
+
+type ActorFormValues = ActorCore
+
+interface CreateActorFormProps {
+  onDismiss: () => void
+}
+
+/**
+ * Create actor.
+ */
+function CreateActorForm(props: CreateActorFormProps) {
+  const createActor = useCreateActor()
+  const auth = useAuth()
+  const queryClient = useQueryClient()
+  const toast = useToast()
+
+  function onSubmit(values: ActorFormValues) {
+    if (auth.session?.accessToken === undefined) {
+      toast.error('Authentication required.')
+      return Promise.reject()
+    }
+
+    return createActor.mutateAsync(
+      [values, { token: auth.session?.accessToken }],
+      {
+        onSuccess() {
+          queryClient.invalidateQueries(['getActors'])
+          toast.success('Sucessfully created actor.')
+        },
+        onError() {
+          toast.error('Failed to create actor.')
+        },
+        onSettled() {
+          props.onDismiss()
+        },
+      },
+    )
+  }
+
+  function onValidate(values: Partial<ActorFormValues>) {
+    const errors: Partial<Record<keyof typeof values, string>> = {}
+
+    if (values.name === undefined) {
+      errors.name = 'Name is required.'
+    }
+
+    if (values.email !== undefined && !isEmail(values.email)) {
+      errors.email = 'Please provide a valid email address.'
+    }
+
+    if (values.website !== undefined && !isUrl(values.website)) {
+      errors.website = 'Please provide a valid URL.'
+    }
+
+    return errors
+  }
+
+  return (
+    <Form onSubmit={onSubmit} validate={onValidate}>
+      {({ handleSubmit, pristine, invalid, submitting }) => {
+        return (
+          <form
+            noValidate
+            className="flex flex-col space-y-6"
+            onSubmit={handleSubmit}
+          >
+            <FormTextField
+              name="name"
+              label="Name"
+              isRequired
+              variant="form"
+              style={{ flex: 1 }}
+            />
+            <FormTextField
+              name="email"
+              label="Email"
+              variant="form"
+              style={{ flex: 1 }}
+            />
+            <FormTextField
+              name="website"
+              label="Website"
+              variant="form"
+              style={{ flex: 1 }}
+            />
+            <FormFieldArray name="affiliations">
+              {({ fields }) => {
+                return (
+                  <FormRecords>
+                    {fields.map((name, index) => {
+                      return (
+                        <FormRecord
+                          key={name}
+                          actions={
+                            <FormFieldRemoveButton
+                              onPress={() => fields.remove(index)}
+                              aria-label={'Remove affiliation'}
+                            />
+                          }
+                        >
+                          <ActorComboBox
+                            name={`${name}.code`}
+                            label="Affiliation"
+                            index={index}
+                          />
+                        </FormRecord>
+                      )
+                    })}
+                    <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                      {'Add affiliation'}
+                    </FormFieldAddButton>
+                  </FormRecords>
+                )
+              }}
+            </FormFieldArray>
+            <div className="flex justify-end space-x-12">
+              <Button variant="link" onPress={props.onDismiss}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="gradient"
+                isDisabled={
+                  pristine || invalid || submitting || createActor.isLoading
+                }
+              >
+                Create
+              </Button>
+            </div>
+          </form>
+        )
+      }}
+    </Form>
   )
 }
