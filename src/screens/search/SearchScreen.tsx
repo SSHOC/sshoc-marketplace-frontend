@@ -1,4 +1,3 @@
-import { Listbox } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -7,9 +6,10 @@ import type {
   ChangeEvent,
   Dispatch,
   FormEvent,
-  SetStateAction,
+  Key,
   PropsWithChildren,
   Ref,
+  SetStateAction,
 } from 'react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import type { QueryStatus } from 'react-query'
@@ -27,6 +27,7 @@ import {
   itemSortOrders,
   sanitizeItemSearchQuery,
 } from '@/api/sshoc/validation'
+import { Select } from '@/elements/Select/Select'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
@@ -35,8 +36,6 @@ import Metadata from '@/modules/metadata/Metadata'
 import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Checkbox from '@/modules/ui/Checkbox'
-import CheckMark from '@/modules/ui/CheckMark'
-import FadeIn from '@/modules/ui/FadeIn'
 import Header from '@/modules/ui/Header'
 import { ItemCategoryIcon } from '@/modules/ui/ItemCategoryIcon'
 import Spinner from '@/modules/ui/Spinner'
@@ -45,7 +44,6 @@ import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import ErrorScreen from '@/screens/error/ErrorScreen'
 import styles from '@/screens/search/SearchScreen.module.css'
-import { ensureScalar } from '@/utils/ensureScalar'
 import { useDebounce } from '@/utils/useDebounce'
 import usePagination from '@/utils/usePagination'
 import { Svg as CloseIcon } from '@@/assets/icons/close.svg'
@@ -179,70 +177,36 @@ function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
   const router = useRouter()
 
   const currentSortOrder =
-    filter.order !== undefined
-      ? ensureScalar(filter.order) ?? defaultItemSortOrder
-      : defaultItemSortOrder
+    filter.order === undefined ? defaultItemSortOrder : filter.order[0]
 
-  /** no need for local state since we are storing state in the url */
-  // const [sortOrder, setSortOrder] = useState<ItemSortOrder>(currentSortOrder)
-
-  function onSubmit(order: ItemSortOrder) {
+  function onSubmit(order: Key) {
     const query = { ...filter }
     if (order === defaultItemSortOrder) {
       delete query.order
     } else {
-      query.order = [order]
+      query.order = [order as ItemSortOrder]
     }
     router.push({ query }, undefined, { shallow: true })
   }
 
   /** we don't get labels for sort order from the backend */
-  const label = {
+  const labels = {
     score: 'relevance',
     label: 'name',
     'modified-on': 'last modification',
   }
 
+  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+
   return (
-    <Listbox value={currentSortOrder} onChange={onSubmit}>
-      {({ open }) => (
-        <div className="relative w-64">
-          <Listbox.Button className="inline-flex items-center justify-between w-full h-full p-2 border border-gray-200 divide-x divide-gray-200 rounded hover:text-primary-750 hover:bg-gray-50 focus:bg-gray-50">
-            <span className="px-2">Sort by {label[currentSortOrder]}</span>
-            <span className="inline-flex items-center h-full pl-2 justify-content text-secondary-600">
-              <Triangle />
-            </span>
-          </Listbox.Button>
-          <FadeIn show={open}>
-            <Listbox.Options
-              static
-              className="absolute min-w-full py-2 mt-1 overflow-hidden whitespace-no-wrap bg-white border border-gray-200 rounded shadow-md select-none"
-            >
-              {itemSortOrders.map((order) => {
-                return (
-                  <Listbox.Option key={order} value={order} as={Fragment}>
-                    {({ active, selected }) => (
-                      <li
-                        className={cx(
-                          'px-4 py-3 flex space-x-2 items-center',
-                          active === true && 'bg-gray-50',
-                          selected === true && 'text-primary-750',
-                        )}
-                      >
-                        <span className="w-6">
-                          {selected === true ? <CheckMark /> : null}
-                        </span>
-                        <span>Sort by {label[order]}</span>
-                      </li>
-                    )}
-                  </Listbox.Option>
-                )
-              })}
-            </Listbox.Options>
-          </FadeIn>
-        </div>
-      )}
-    </Listbox>
+    <Select
+      aria-label="Sort order"
+      items={items}
+      onSelectionChange={onSubmit}
+      selectedKey={currentSortOrder}
+    >
+      {(item) => <Select.Item key={item.id}>Sort by {item.label}</Select.Item>}
+    </Select>
   )
 }
 
