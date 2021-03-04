@@ -481,9 +481,7 @@ function CreateItemsMenu() {
                   <Link href={{ pathname: `/${category}/create` }}>
                     <a className="transition-colors duration-150 hover:text-secondary-500">
                       Create{' '}
-                      {getSingularItemCategoryLabel(
-                        category as Exclude<ItemCategory, 'step'>,
-                      )}
+                      {getSingularItemCategoryLabel(category as ItemCategory)}
                     </a>
                   </Link>
                 </li>

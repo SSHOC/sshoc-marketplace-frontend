@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import type { PublicationCore, PublicationDto } from '@/api/sshoc'
-import { useGetItemCategories, useCreatePublication } from '@/api/sshoc'
+import { useCreatePublication } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
-
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
@@ -15,6 +14,7 @@ import { useToast } from '@/elements/Toast/useToast'
 import { validate } from '@/lib/sshoc/validate'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
+import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
 export type ItemFormValues = PublicationCore
 
@@ -29,8 +29,7 @@ export interface ItemFormProps<T> {
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const { category, initialValues } = props
 
-  const categories = useGetItemCategories()
-  const categoryLabel = categories.data?.[category] ?? category
+  const categoryLabel = getSingularItemCategoryLabel(category)
 
   const useItemMutation = useCreatePublication
 

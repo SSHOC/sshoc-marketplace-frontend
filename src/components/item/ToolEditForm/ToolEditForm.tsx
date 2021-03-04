@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import type { ToolCore, ToolDto } from '@/api/sshoc'
-import { useUpdateTool, useGetItemCategories } from '@/api/sshoc'
+import { useUpdateTool } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
-
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
@@ -14,6 +13,7 @@ import { useToast } from '@/elements/Toast/useToast'
 import { validate } from '@/lib/sshoc/validate'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
+import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
 export type ItemFormValues = ToolCore
 
@@ -30,8 +30,7 @@ export interface ItemFormProps<T> {
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const { id, category, initialValues } = props
 
-  const categories = useGetItemCategories()
-  const categoryLabel = categories.data?.[category] ?? category
+  const categoryLabel = getSingularItemCategoryLabel(category)
 
   const useItemMutation = useUpdateTool
 
