@@ -11,6 +11,7 @@ export interface ButtonProps extends AriaButtonProps {
   isPressed?: boolean
   /** @default "primary" */
   variant?: 'primary' | 'gradient' | 'link' | 'header' | 'nav'
+  className?: string
 }
 
 function Button(
@@ -99,6 +100,7 @@ function Button(
       'inline-flex items-center justify-center space-x-1.5 font-body font-normal cursor-default focus:outline-none select-none',
       variant.button.default,
       variant.button.states[isDisabled ? 'disabled' : 'enabled'],
+      props.className,
     ),
     spinner: variant.spinner,
   }

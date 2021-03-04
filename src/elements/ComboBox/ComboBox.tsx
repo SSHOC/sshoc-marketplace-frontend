@@ -38,6 +38,7 @@ export interface ComboBoxProps<T>
   // loadingState?: 'loading'
   shouldFocusWrap?: boolean
   hideSelectionIcon?: boolean
+  hideButton?: boolean
   /** @default "default" */
   variant?: 'default' | 'search' | 'form'
   style?: CSSProperties
@@ -144,7 +145,7 @@ export function ComboBox<T extends object>(
     container: 'inline-flex relative',
     inputContainer: cx(
       'w-64',
-      'inline-flex min-w-0 items-center justify-between rounded border border-gray-300',
+      'transition inline-flex min-w-0 items-center justify-between rounded border border-gray-300',
       variant.inputContainer,
     ),
     input: cx(
@@ -162,7 +163,7 @@ export function ComboBox<T extends object>(
       state.isOpen && 'rotate-180',
       variant.icon,
     ),
-    spinnerContainer: 'inline-flex items-center justify-center',
+    spinnerContainer: 'inline-flex items-center justify-center mx-4',
     spinner: 'w-4 h-4 text-primary-750',
   }
 
@@ -190,9 +191,11 @@ export function ComboBox<T extends object>(
               <ProgressSpinner className={styles.spinner} />
             </span>
           ) : null}
-          <button {...buttonProps} className={styles.button} ref={triggerRef}>
-            <Icon icon={TriangleIcon} className={styles.icon} />
-          </button>
+          {props.hideButton !== true ? (
+            <button {...buttonProps} className={styles.button} ref={triggerRef}>
+              <Icon icon={TriangleIcon} className={styles.icon} />
+            </button>
+          ) : null}
         </div>
         <Popover
           popoverRef={popoverRef}

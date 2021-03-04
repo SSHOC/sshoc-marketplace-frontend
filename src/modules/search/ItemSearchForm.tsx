@@ -1,242 +1,149 @@
-import { Listbox } from '@headlessui/react'
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from '@reach/combobox'
-import cx from 'clsx'
 import { useRouter } from 'next/router'
-import type {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-} from 'react'
-import { createContext, Fragment, useContext, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
-import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
-import CheckMark from '@/modules/ui/CheckMark'
-import FadeIn from '@/modules/ui/FadeIn'
-import Triangle from '@/modules/ui/Triangle'
-import { useDebounce } from '@/utils/useDebounce'
+import { ItemCategory } from '@/api/sshoc/types'
+import { Button } from '@/elements/Button/Button'
+import { HighlightedText } from '@/elements/HighlightedText/HighlightedText'
+import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
+import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
+import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
+import { Form } from '@/modules/form/Form'
 
-type ItemSearchFormData = {
-  categories?: Exclude<ItemCategory, 'step'> | ''
+interface SearchFormValues {
   q?: string
+  category?: ItemCategory
 }
 
-const MIN_AUTOCOMPLETE_LENGTH = 3
-
-const ItemSearchFormContext = createContext<
-  [ItemSearchFormData, Dispatch<SetStateAction<ItemSearchFormData>>] | null
->(null)
-
-function useItemSearchFormContext() {
-  const value = useContext(ItemSearchFormContext)
-
-  if (value === null) {
-    throw new Error(
-      '`useItemSearchFormContext` must be nested inside a `ItemSearchFormContext.Provider`.',
-    )
-  }
-
-  return value
+export interface ItemSearchFormProps {
+  children?: ReactNode
+  className?: string
 }
 
-export default function ItemSearchForm({
-  children,
-  className,
-}: ComponentPropsWithoutRef<'form'>): JSX.Element {
+export default function ItemSearchForm(
+  props: ItemSearchFormProps,
+): JSX.Element {
   const router = useRouter()
-  const [formData, setFormData] = useState<ItemSearchFormData>({})
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const query: ItemSearchQuery = sanitizeFormData(formData)
-    router.push({ pathname: '/search', query }, undefined, {
-      shallow: router.pathname === '/search',
+  function onSubmit(values: SearchFormValues) {
+    router.push({
+      pathname: '/search',
+      query: {
+        q: values.q !== undefined && values.q.length > 0 ? values.q : undefined,
+        categories:
+          values.category !== undefined && values.category.length > 0
+            ? [values.category]
+            : undefined,
+      },
     })
   }
 
   return (
-    <form
-      className={cx('flex bg-white', className)}
-      role="search"
-      autoComplete="off"
-      onSubmit={onSubmit}
+    <Form onSubmit={onSubmit}>
+      {({ handleSubmit }) => {
+        return (
+          <form
+            onSubmit={handleSubmit}
+            role="search"
+            className={props.className}
+          >
+            {props.children}
+          </form>
+        )
+      }}
+    </Form>
+  )
+}
+
+export function ItemCategorySelect(): JSX.Element {
+  const categories = useGetItemCategories()
+  const itemCategories = useMemo(() => {
+    const items = [{ id: '', label: 'All categories' }]
+
+    if (categories.data === undefined) return items
+
+    Object.entries(categories.data).forEach(([id, label]) => {
+      items.push({ id, label })
+    })
+
+    return items
+  }, [categories.data])
+
+  return (
+    <FormSelect
+      name="category"
+      aria-label="Category"
+      isLoading={categories.isLoading}
+      items={itemCategories}
+      /** Use explicit "All categories" option, not placeholder text as initial value. */
+      defaultSelectedKey=""
+      variant="search"
     >
-      <ItemSearchFormContext.Provider value={[formData, setFormData]}>
-        {children}
-      </ItemSearchFormContext.Provider>
-    </form>
+      {(item) => <FormSelect.Item key={item.id}>{item.label}</FormSelect.Item>}
+    </FormSelect>
   )
 }
 
-/** avoid empty queries like `?q=&categories=` */
-function sanitizeFormData(query: Record<string, unknown>) {
-  return Object.fromEntries(
-    Object.entries(query).filter(([key, value]) => {
-      return value !== ''
-    }),
-  )
+export interface ItemSearchComboBoxProps {
+  variant?: 'invisible'
 }
 
-export function ItemAutoCompleteInput({
-  initialValue = '',
-  className,
-}: {
-  initialValue?: string
-  className?: string
-}): JSX.Element {
-  const [formData, setFormData] = useItemSearchFormContext()
+export function ItemSearchComboBox(
+  props: ItemSearchComboBoxProps,
+): JSX.Element {
+  const defaultSearchTerm = useQueryParam('q', false) ?? ''
 
-  const searchTerm = formData.q ?? initialValue
-  function setSearchTerm(searchTerm: string) {
-    setFormData((prev) => ({ ...prev, q: searchTerm }))
-  }
-
-  /** debounce autocomplete requests */
-  const autocompleteTerm = useDebounce(searchTerm.trim(), 150)
-  const { data: suggestions } = useAutocompleteItems(
-    { q: autocompleteTerm },
+  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm)
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const items = useAutocompleteItems(
+    { q: debouncedSearchTerm },
     {
-      enabled: autocompleteTerm.length >= MIN_AUTOCOMPLETE_LENGTH,
+      /** backend requires non-empty search phrase */
+      enabled: debouncedSearchTerm.length > 0,
       keepPreviousData: true,
     },
   )
-
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.currentTarget.value)
-  }
-
-  /** in case the backend does not limit suggestions */
-  const MAX_SUGGESTIONS = 10
+  const suggestions =
+    items.data?.suggestions?.map((suggestion) => ({ suggestion })) ?? []
 
   return (
-    <Combobox
+    <FormComboBox
+      name="q"
       aria-label="Search term"
-      openOnFocus
-      className="relative flex-1"
-      /**
-       * we need to wrap the selected autosuggest value in quotes.
-       * otherwise, solr will interpret special characters like a minus ("-")
-       * as query language, if the autosuggested term includes such a character.
-       * */
-      onSelect={(value) => setSearchTerm(`"${value}"`)}
+      allowsCustomValue
+      items={suggestions}
+      // isLoading={items.isLoading}
+      defaultInputValue={defaultSearchTerm}
+      onInputChange={setSearchTerm}
+      variant="search"
+      hideSelectionIcon
+      hideButton
+      style={
+        props.variant === 'invisible'
+          ? { borderWidth: 0, flex: 1 }
+          : { flex: 1 }
+      }
     >
-      <ComboboxInput
-        name="q"
-        type="search"
-        onChange={onChange}
-        /** value is managed by `@reach/combobox` internally, i.e. when selecting a `ComboboxOption` */
-        value={searchTerm}
-        /** don't change input value while navigating suggestions in listbox */
-        autocomplete={false}
-        placeholder="Search"
-        className={cx(
-          'w-full h-full px-4 py-2 border border-gray-200 rounded placeholder-gray-350 hover:bg-gray-50 focus:border-primary-750 transition-colors duration-150',
-          className,
-        )}
-      />
-      {autocompleteTerm.length >= MIN_AUTOCOMPLETE_LENGTH &&
-      suggestions?.suggestions !== undefined &&
-      suggestions.suggestions.length > 0 ? (
-        <ComboboxPopover
-          portal={false}
-          className="absolute z-10 w-full py-2 mt-1 bg-white border border-gray-200 rounded shadow-md"
-        >
-          <ComboboxList className="select-none">
-            {suggestions.suggestions
-              .slice(0, MAX_SUGGESTIONS)
-              .map((suggestion) => (
-                <ComboboxOption
-                  key={suggestion}
-                  value={suggestion}
-                  className="px-4 py-2 truncate hover:bg-gray-50"
-                />
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      ) : null}
-    </Combobox>
+      {(item) => (
+        <FormComboBox.Item key={item.suggestion} textValue={item.suggestion}>
+          <HighlightedText
+            text={item.suggestion}
+            searchPhrase={debouncedSearchTerm}
+          />
+        </FormComboBox.Item>
+      )}
+    </FormComboBox>
   )
 }
 
-export function ItemCategoriesSelect(): JSX.Element {
-  const { data: itemCategories = {} } = useGetItemCategories({})
-  const [formData, setFormData] = useItemSearchFormContext()
-
-  const selectedCategory = formData.categories ?? ''
-  function setSelectedCategory(category: Exclude<ItemCategory, 'step'> | '') {
-    setFormData((prev) => ({ ...prev, categories: category }))
-  }
-
-  return (
-    <Listbox value={selectedCategory} onChange={setSelectedCategory}>
-      {({ open }) => (
-        <div className="relative w-64">
-          <Listbox.Button className="inline-flex items-center justify-between w-full h-full p-2 border border-gray-200 divide-x divide-gray-200 rounded hover:text-primary-750 hover:bg-gray-50 focus:bg-gray-50">
-            <span className="px-2">
-              {itemCategories[selectedCategory] ?? 'All categories'}
-            </span>
-            <span className="inline-flex items-center h-full pl-2 justify-content text-secondary-600">
-              <Triangle />
-            </span>
-          </Listbox.Button>
-          <FadeIn show={open}>
-            <Listbox.Options
-              static
-              className="absolute min-w-full py-2 mt-1 overflow-hidden whitespace-no-wrap bg-white border border-gray-200 rounded shadow-md select-none"
-            >
-              {[['', 'All categories']]
-                .concat(Object.entries(itemCategories))
-                .map(([category, label]) => {
-                  return (
-                    <Listbox.Option
-                      key={category}
-                      value={category}
-                      as={Fragment}
-                    >
-                      {({ active, selected }) => (
-                        <li
-                          className={cx(
-                            'px-4 py-3 flex space-x-2 items-center',
-                            active === true && 'bg-gray-50',
-                            selected === true && 'text-primary-750',
-                          )}
-                        >
-                          <span className="w-6">
-                            {selected === true ? <CheckMark /> : null}
-                          </span>
-                          <span>{label}</span>
-                        </li>
-                      )}
-                    </Listbox.Option>
-                  )
-                })}
-            </Listbox.Options>
-          </FadeIn>
-        </div>
-      )}
-    </Listbox>
-  )
+export interface SubmitButtonProps {
+  className?: string
 }
 
-export function SubmitButton({
-  className,
-}: ComponentPropsWithoutRef<'button'>): JSX.Element {
+export function SubmitButton(props: SubmitButtonProps): JSX.Element {
   return (
-    <button
-      type="submit"
-      className={cx(
-        'text-lg text-white rounded w-36 bg-gradient-to-r from-secondary-500 to-primary-800 hover:from-secondary-600 hover:to-secondary-600 focus:from-primary-750 focus:to-primary-750 transition-colors duration-150',
-        className,
-      )}
-    >
-      Search
-    </button>
+    <Button type="submit" variant="gradient" className={props.className}>
+      Submit
+    </Button>
   )
 }

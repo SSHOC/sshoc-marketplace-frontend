@@ -13,6 +13,7 @@ module.exports = {
         double: '150% 150%',
       },
       colors: {
+        inherit: 'inherit',
         gray: {
           50: '#FAFAFA',
           75: '#fcfcfc',
@@ -36,6 +37,7 @@ module.exports = {
         },
         /** light blue */
         secondary: {
+          350: '#57afff',
           500: '#1B9ADD',
           600: '#0085CA',
           700: '#1C7CD5',

@@ -1,5 +1,6 @@
 import { I18nProvider } from '@react-aria/i18n'
 import { useInteractionModality } from '@react-aria/interactions'
+import { SSRProvider } from '@react-aria/ssr'
 import Layout from '@stefanprobst/next-app-layout'
 import ErrorBoundary from '@stefanprobst/next-error-boundary'
 import type { AppProps, NextWebVitalsMetric } from 'next/app'
@@ -84,11 +85,13 @@ function Providers({ children }: PropsWithChildren<unknown>) {
   useInteractionModality()
 
   return (
-    <I18nProvider locale="en">
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>{children}</AuthProvider>
-      </QueryClientProvider>
-    </I18nProvider>
+    <SSRProvider>
+      <I18nProvider locale="en">
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryClientProvider>
+      </I18nProvider>
+    </SSRProvider>
   )
 }
 

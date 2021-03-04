@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import VStack from '@/modules/layout/VStack'
 import ItemSearchForm, {
-  ItemAutoCompleteInput,
+  ItemSearchComboBox,
   SubmitButton,
 } from '@/modules/search/ItemSearchForm'
 
@@ -14,8 +14,7 @@ import ItemSearchForm, {
 export default function Header({
   image,
   children,
-  initialValue,
-}: PropsWithChildren<{ image?: string; initialValue?: string }>): JSX.Element {
+}: PropsWithChildren<{ image?: string }>): JSX.Element {
   return (
     <Fragment>
       <ContentColumn>
@@ -26,15 +25,12 @@ export default function Header({
             layout="fill"
             loading="lazy"
             quality={100}
-            className="-z-10 object-top object-cover"
+            className="object-cover object-top -z-10"
           />
         ) : null}
-        <VStack className="space-y-6 p-6 relative">
-          <ItemSearchForm className="rounded space-x-2 p-1 my-4 self-end max-w-screen-md w-full border border-gray-200">
-            <ItemAutoCompleteInput
-              className="border-none"
-              initialValue={initialValue}
-            />
+        <VStack className="relative p-6 space-y-6">
+          <ItemSearchForm className="flex items-center self-end w-full max-w-screen-md px-2 py-1 my-4 space-x-2 bg-white border border-gray-200 rounded">
+            <ItemSearchComboBox variant="invisible" />
             <SubmitButton className="h-10" />
           </ItemSearchForm>
           {children}

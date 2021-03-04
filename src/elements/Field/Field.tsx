@@ -37,7 +37,11 @@ export function Field(props: FieldProps): JSX.Element {
   }
 
   if (props.label === undefined && props.validationState === undefined) {
-    return <Fragment>{props.children}</Fragment>
+    return (
+      <div className={styles.field} style={props.style}>
+        {props.children}
+      </div>
+    )
   }
 
   return (

@@ -79,10 +79,7 @@ export default function SearchScreen(): JSX.Element {
     <Fragment>
       <Metadata title="Search results" />
       <GridLayout className={styles.grid}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          initialValue={query.q}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },

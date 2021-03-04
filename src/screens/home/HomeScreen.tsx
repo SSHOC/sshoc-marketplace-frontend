@@ -18,8 +18,8 @@ import VStack from '@/modules/layout/VStack'
 import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
 import ItemSearchForm, {
-  ItemAutoCompleteInput,
-  ItemCategoriesSelect,
+  ItemCategorySelect,
+  ItemSearchComboBox,
   SubmitButton,
 } from '@/modules/search/ItemSearchForm'
 import { Anchor } from '@/modules/ui/Anchor'
@@ -80,10 +80,10 @@ function Hero() {
         <Mdx>
           <Content />
         </Mdx>
-        <ItemSearchForm className="px-8 py-3 space-x-2 text-base rounded-md shadow-md">
-          <ItemCategoriesSelect />
-          <ItemAutoCompleteInput />
-          <SubmitButton className="h-12" />
+        <ItemSearchForm className="flex px-8 py-3 space-x-2 text-base bg-white rounded-md shadow-md">
+          <ItemCategorySelect />
+          <ItemSearchComboBox />
+          <SubmitButton />
         </ItemSearchForm>
       </div>
       <PeopleImage className="max-w-screen-xl mx-auto mb-6 -mt-12" />
