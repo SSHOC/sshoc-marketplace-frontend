@@ -1,16 +1,26 @@
+import { useState } from 'react'
 import { useGetSources } from '@/api/sshoc'
+import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
-import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+
+export interface SoureFormSectionProps {
+  initialValues?: any
+}
 
 /**
  * Form section for item source.
  */
-export function SourceFormSection(): JSX.Element {
+export function SourceFormSection(props: SoureFormSectionProps): JSX.Element {
   return (
     <FormSection title={'Source'}>
       <div className="flex space-x-4">
-        <SourceSelect name="source.id" label={'Source'} />
+        <SourceComboBox
+          name="source.id"
+          label={'Source'}
+          initialValues={props.initialValues}
+        />
         <FormTextField
           name="sourceItemId"
           label={'Source ID'}
@@ -25,23 +35,34 @@ export function SourceFormSection(): JSX.Element {
 interface SourceSelectProps {
   name: string
   label: string
+  initialValues?: any
 }
 
 /**
  * Source.
  */
-function SourceSelect(props: SourceSelectProps): JSX.Element {
-  const sources = useGetSources({})
+function SourceComboBox(props: SourceSelectProps): JSX.Element {
+  const initialLabel = props.initialValues?.source?.id ?? ''
+  const [searchTerm, setSearchTerm] = useState(initialLabel)
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const sources = useGetSources(
+    { q: debouncedSearchTerm },
+    {
+      // enabled: debouncedSearchTerm.length > 2,
+      keepPreviousData: true,
+    },
+  )
 
   return (
-    <FormSelect
+    <FormComboBox
       name={props.name}
       label={props.label}
       items={sources.data?.sources ?? []}
+      onInputChange={setSearchTerm}
       isLoading={sources.isLoading}
       variant="form"
     >
-      {(item) => <FormSelect.Item>{item.label}</FormSelect.Item>}
-    </FormSelect>
+      {(item) => <FormComboBox.Item>{item.label}</FormComboBox.Item>}
+    </FormComboBox>
   )
 }
