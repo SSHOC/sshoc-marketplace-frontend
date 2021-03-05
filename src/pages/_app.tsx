@@ -97,13 +97,17 @@ function Providers({ children }: PropsWithChildren<unknown>) {
 /**
  * App shell.
  */
-export default function App({ Component, pageProps }: AppProps): JSX.Element {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppProps): JSX.Element {
   return (
     <Fragment>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <ErrorBoundary fallback={ClientError}>
+      <ErrorBoundary fallback={ClientError} resetOnChange={[router.asPath]}>
         <Providers {...pageProps}>
           <Layout {...pageProps} default={PageLayout}>
             <Component {...pageProps} />
