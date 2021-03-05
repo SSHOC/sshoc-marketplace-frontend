@@ -43,8 +43,12 @@ export function convertToInitialFormValues(
   | ToolCore
   | TrainingMaterialCore
   | WorkflowCore {
-  return {
-    ...item,
+  const initialValues = {
+    label: item.label,
+    version: item.version,
+    description: item.description,
+    accessibleAt: item.accessibleAt,
+    licenses: item.licenses, // deprecated?
     /**
      * Only ids needed.
      */
@@ -78,7 +82,7 @@ export function convertToInitialFormValues(
       }
     }),
     /**
-     * FIXME: figure out what this is, and why it it incompatible
+     * Only ids needed. Also, fields are non-null.
      */
     externalIds: item.externalIds?.map((id) => {
       return {
@@ -92,5 +96,15 @@ export function convertToInitialFormValues(
     source: {
       id: item.source?.id,
     },
+    sourceItemId: item.sourceItemId,
   }
+
+  if (['dataset', 'publication'].includes(item.category!)) {
+    // @ts-expect-error items are not discriminated unions
+    initialValues.dateCreated = item.dateCreated
+    // @ts-expect-error items are not discriminated unions
+    initialValues.dateLastUpdated = item.dateLastUpdated
+  }
+
+  return initialValues
 }
