@@ -188,6 +188,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
           >
             {pages[state.page]}
             <div className="flex items-center justify-end space-x-6">
+              <pre>{JSON.stringify(pristine)}</pre>
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
@@ -202,7 +203,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', true)
                     }}
                     isDisabled={
-                      pristine || invalid || submitting || create.isLoading
+                      /* FIXME: handle `pristine` for multi-step form || */
+                      invalid || submitting || create.isLoading
                     }
                     variant="link"
                   >
@@ -214,7 +216,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', undefined)
                     }}
                     isDisabled={
-                      pristine || invalid || submitting || create.isLoading
+                      /* FIXME: pristine || */
+                      invalid || submitting || create.isLoading
                     }
                   >
                     {isAllowedToPublish ? 'Publish' : 'Submit'}
