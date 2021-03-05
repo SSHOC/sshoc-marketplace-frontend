@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
 import { useCreateDataset } from '@/api/sshoc'
-import type { ItemCategory } from '@/api/sshoc/types'
+import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
@@ -17,7 +17,9 @@ import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
-export type ItemFormValues = DatasetCore
+export interface ItemFormValues extends DatasetCore {
+  draft?: boolean
+}
 
 export interface ItemFormProps<T> {
   category: ItemCategory
@@ -52,14 +54,26 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       //   queryKey: ['getDataset', { id: data.persistentId }],
       // })
 
-      router.push({ pathname: `/${data.category}/${data.persistentId}` })
+      /**
+       * if the item is published (i.e. submitted as admin), redirect to details page.
+       */
+      if (data.status === 'approved') {
+        router.push({ pathname: `/${data.category}/${data.persistentId}` })
+      } else {
+        // TODO: redirect to separate page explaining that the submmited item is in moderation queue
+        const query: ItemSearchQuery = {
+          categories: [data.category!],
+          order: ['label'],
+        }
+        router.push({ pathname: '/search', query })
+      }
     },
     onError() {
       toast.error(`Failed to submit ${categoryLabel}.`)
     },
   })
 
-  function onSubmit(values: ItemFormValues) {
+  function onSubmit({ draft, ...values }: ItemFormValues) {
     if (auth.session?.accessToken == null) {
       toast.error('Authentication required.')
       return Promise.reject()
@@ -72,7 +86,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       delete values.source
     }
 
-    return create.mutateAsync([{}, values, { token: auth.session.accessToken }])
+    return create.mutateAsync([
+      { draft },
+      values,
+      { token: auth.session.accessToken },
+    ])
   }
 
   function onValidate(values: Partial<ItemFormValues>) {
@@ -95,7 +113,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       validate={onValidate}
       initialValues={initialValues}
     >
-      {({ handleSubmit, pristine, invalid, submitting }) => {
+      {({ handleSubmit, form, pristine, invalid, submitting }) => {
         return (
           <form
             onSubmit={handleSubmit}
@@ -114,6 +132,21 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
               </Button>
               <Button
                 type="submit"
+                onPress={() => {
+                  form.change('draft', true)
+                }}
+                isDisabled={
+                  pristine || invalid || submitting || create.isLoading
+                }
+                variant="link"
+              >
+                Save as draft
+              </Button>
+              <Button
+                type="submit"
+                onPress={() => {
+                  form.change('draft', undefined)
+                }}
                 isDisabled={
                   pristine || invalid || submitting || create.isLoading
                 }
