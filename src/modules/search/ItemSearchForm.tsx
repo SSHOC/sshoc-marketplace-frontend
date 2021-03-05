@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { ReactNode, useMemo, useState } from 'react'
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
-import { ItemCategory } from '@/api/sshoc/types'
+import { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'
 import { HighlightedText } from '@/elements/HighlightedText/HighlightedText'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
@@ -26,16 +26,16 @@ export default function ItemSearchForm(
   const router = useRouter()
 
   function onSubmit(values: SearchFormValues) {
-    router.push({
-      pathname: '/search',
-      query: {
-        q: values.q !== undefined && values.q.length > 0 ? values.q : undefined,
-        categories:
-          values.category !== undefined && values.category.length > 0
-            ? [values.category]
-            : undefined,
-      },
-    })
+    const query: ItemSearchQuery = {}
+
+    if (values.q !== undefined && values.q.length > 0) {
+      query.q = values.q
+    }
+    if (values.category !== undefined && values.category.length > 0) {
+      query.categories = [values.category]
+    }
+
+    router.push({ pathname: '/search', query })
   }
 
   return (
