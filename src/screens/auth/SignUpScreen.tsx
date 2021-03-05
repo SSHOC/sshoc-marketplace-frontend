@@ -1,22 +1,24 @@
-import cx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
 import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import { useRegisterOAuth2User } from '@/api/sshoc'
 import { useValidateImplicitGrantTokenWithRegistration } from '@/api/sshoc/client'
+import { Button } from '@/elements/Button/Button'
+import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { useAuth } from '@/modules/auth/AuthContext'
-import FormField from '@/modules/hook-form/FormField'
+import { FormCheckBox } from '@/modules/form/components/FormCheckBox/FormCheckBox'
+import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { Form } from '@/modules/form/Form'
+import { FormField } from '@/modules/form/FormField'
+import { isEmail } from '@/modules/form/validate'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
 import { Anchor } from '@/modules/ui/Anchor'
-import Checkbox from '@/modules/ui/Checkbox'
-import TextField from '@/modules/ui/TextField'
 import { Title } from '@/modules/ui/typography/Title'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
@@ -73,29 +75,16 @@ type SignUpFormData = {
 function SignUpForm(): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
-  const { data: registrationData } = useValidateAuthCode()
-  const { mutate: registerUser } = useRegisterOAuth2User()
+  const registration = useValidateAuthCode()
+  const registerUser = useRegisterOAuth2User()
   const queryCache = useQueryClient()
-  const { register, handleSubmit, errors, reset, formState } = useForm<
-    SignUpFormData
-  >({ mode: 'onChange' })
-  useEffect(() => {
-    if (registrationData !== undefined) {
-      reset({
-        id: registrationData.id,
-        displayName: registrationData.displayName,
-        email: registrationData.email,
-      })
-    }
-  }, [registrationData, reset])
 
   function onSubmit(formData: SignUpFormData) {
-    if (registrationData === undefined) return
-    const { token } = registrationData
+    if (registration.data === undefined) return
+    const { token } = registration.data
     if (token === null) return
 
-    /** return promise to set formState.isSubmitting correctly */
-    return registerUser([formData, { token }], {
+    return registerUser.mutateAsync([formData, { token }], {
       onSuccess(userData) {
         auth.signIn(token)
         /**
@@ -116,62 +105,80 @@ function SignUpForm(): JSX.Element {
     })
   }
 
-  const isDisabled =
-    registrationData === undefined ||
-    registrationData.token === null ||
-    !formState.isValid ||
-    formState.isSubmitting
+  function onValidate(values: Partial<SignUpFormData>) {
+    const errors: Partial<Record<keyof typeof values, string>> = {}
+
+    if (values.displayName === undefined) {
+      errors.displayName = 'Display name is required.'
+    }
+
+    if (values.email === undefined) {
+      errors.email = 'Email is required.'
+    } else if (!isEmail(values.email)) {
+      errors.email = 'Please enter a valid email address.'
+    }
+
+    if (values.acceptedRegulations !== true) {
+      errors.acceptedRegulations = 'Accepting the privacy policy is required.'
+    }
+
+    return errors
+  }
+
+  if (registration.status !== 'success' || registration.data === undefined) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <ProgressSpinner />
+      </div>
+    )
+  }
+
+  const initialValues = {
+    id: registration.data.id,
+    displayName: registration.data.displayName,
+    email: registration.data.email,
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="hidden" name="id" ref={register({ required: true })} />
-      <VStack className="space-y-6">
-        <FormField label="Name" error={errors.displayName}>
-          <TextField
-            name="displayName"
-            aria-invalid={Boolean(errors.displayName)}
-            ref={register({ required: 'Name is required.' })}
-          />
-        </FormField>
-        <FormField label="Email" error={errors.email}>
-          <TextField
-            type="email"
-            name="email"
-            aria-invalid={Boolean(errors.email)}
-            ref={register({ required: 'Email is required.' })}
-          />
-        </FormField>
-        <FormField error={errors.acceptedRegulations}>
-          <Checkbox
-            name="acceptedRegulations"
-            aria-invalid={Boolean(errors.acceptedRegulations)}
-            ref={register({
-              required: 'Accepting the privacy policy is required.',
-            })}
-          >
-            I have read and understood the{' '}
-            <Link href={{ pathname: '/privacy-policy' }} passHref>
-              <Anchor>Privacy policy</Anchor>
-            </Link>{' '}
-            and I accept it.
-          </Checkbox>
-        </FormField>
-        <div className="self-end py-2">
-          <button
-            type="submit"
-            disabled={isDisabled}
-            className={cx(
-              'py-3 px-6 w-40 transition-colors duration-150 rounded',
-              isDisabled
-                ? 'bg-gray-200 text-gray-500 pointer-events-none'
-                : 'bg-primary-800 text-white',
-            )}
-          >
-            Sign up
-          </button>
-        </div>
-      </VStack>
-    </form>
+    <Form
+      onSubmit={onSubmit}
+      validate={onValidate}
+      initialValues={initialValues}
+    >
+      {({ handleSubmit, pristine, submitting, invalid }) => {
+        return (
+          <form onSubmit={handleSubmit}>
+            <FormField type="hidden" name="id" component="input" />
+            <VStack className="space-y-6">
+              <FormTextField name="displayName" label="Name" />
+              <FormTextField type="email" name="email" label="Email" />
+              <FormCheckBox name="acceptedRegulations">
+                I have read and understood the{' '}
+                <Link href={{ pathname: '/privacy-policy' }} passHref>
+                  <Anchor>Privacy policy</Anchor>
+                </Link>{' '}
+                and I accept it.
+              </FormCheckBox>
+              <div className="self-end py-2">
+                <Button
+                  type="submit"
+                  isDisabled={
+                    registration.data === undefined ||
+                    registration.data.token === null ||
+                    pristine ||
+                    submitting ||
+                    invalid
+                  }
+                  className="w-40 px-6 py-3 transition-colors duration-150 rounded"
+                >
+                  Sign up
+                </Button>
+              </div>
+            </VStack>
+          </form>
+        )
+      }}
+    </Form>
   )
 }
 

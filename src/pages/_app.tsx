@@ -22,7 +22,6 @@ import 'tailwindcss/tailwind.css'
 import '@/styles/nprogress.css'
 /** should use ReactToastify.minimal.css */
 import 'react-toastify/dist/ReactToastify.css'
-import '@/styles/combobox.css'
 import '@/styles/dialog.css'
 
 /**

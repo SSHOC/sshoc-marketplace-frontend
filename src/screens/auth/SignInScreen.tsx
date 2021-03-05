@@ -1,21 +1,21 @@
-import cx from 'clsx'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import {
   useSignInUser,
   useValidateImplicitGrantTokenWithoutRegistration,
 } from '@/api/sshoc/client'
+import { Button } from '@/elements/Button/Button'
 import { useAuth } from '@/modules/auth/AuthContext'
-import FormField from '@/modules/hook-form/FormField'
+import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { Form } from '@/modules/form/Form'
+import { isEmail } from '@/modules/form/validate'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
-import TextField from '@/modules/ui/TextField'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
@@ -84,16 +84,10 @@ function SignInForm() {
   const router = useRouter()
   const auth = useAuth()
   useValidateToken()
-  const { mutate: signInUser } = useSignInUser()
-  const { handleSubmit, register, errors, formState } = useForm<SignInFormData>(
-    {
-      mode: 'onChange',
-    },
-  )
+  const signInUser = useSignInUser()
 
   function onSubmit(formData: SignInFormData) {
-    /** return promise to set formState.isSubmitting correctly */
-    return signInUser([formData], {
+    return signInUser.mutateAsync([formData], {
       onSuccess({ token }) {
         if (token !== null) {
           auth.signIn(token)
@@ -111,40 +105,40 @@ function SignInForm() {
     })
   }
 
-  const isDisabled = !formState.isValid || formState.isSubmitting
+  function onValidate(values: Partial<SignInFormData>) {
+    const errors: Partial<Record<keyof typeof values, string>> = {}
+
+    if (values.username === undefined) {
+      errors.username = 'Username is required.'
+    }
+
+    if (values.password === undefined) {
+      errors.password = 'Password is required.'
+    }
+
+    return errors
+  }
 
   return (
-    <VStack as="form" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      <FormField label="Username" error={errors.username}>
-        <TextField
-          name="username"
-          aria-invalid={Boolean(errors.username)}
-          ref={register({ required: 'Username is required.' })}
-        />
-      </FormField>
-      <FormField label="Password" error={errors.password}>
-        <TextField
-          name="password"
-          type="password"
-          aria-invalid={Boolean(errors.password)}
-          ref={register({ required: 'Password is required.' })}
-        />
-      </FormField>
-      <div className="self-end py-2">
-        <button
-          type="submit"
-          disabled={isDisabled}
-          className={cx(
-            'py-3 px-6 w-40 rounded transition-colors duration-150',
-            isDisabled
-              ? 'pointer-events-none text-gray-500 bg-gray-200'
-              : 'text-white bg-primary-800 hover:bg-primary-700',
-          )}
-        >
-          Sign in
-        </button>
-      </div>
-    </VStack>
+    <Form onSubmit={onSubmit} validate={onValidate}>
+      {({ handleSubmit, pristine, submitting, invalid }) => {
+        return (
+          <VStack as="form" onSubmit={handleSubmit} className="space-y-5">
+            <FormTextField name="username" label="Username" />
+            <FormTextField name="password" label="Password" type="password" />
+            <div className="self-end py-2">
+              <Button
+                type="submit"
+                isDisabled={pristine || invalid || submitting}
+                className="w-40 px-6 py-3 transition-colors duration-150 rounded"
+              >
+                Sign in
+              </Button>
+            </div>
+          </VStack>
+        )
+      }}
+    </Form>
   )
 }
 

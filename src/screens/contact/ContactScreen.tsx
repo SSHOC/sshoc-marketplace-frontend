@@ -1,11 +1,14 @@
-import cx from 'clsx'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useRef, useEffect } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import ReCaptcha from 'react-google-recaptcha'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import FormField from '@/modules/hook-form/FormField'
+import { Button } from '@/elements/Button/Button'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
+import { FormTextArea } from '@/modules/form/components/FormTextArea/FormTextArea'
+import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { Form } from '@/modules/form/Form'
+import { FormField } from '@/modules/form/FormField'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
@@ -13,12 +16,8 @@ import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
-// import LastUpdatedAt from '@/modules/ui/LastUpdatedAt'
-import TextField from '@/modules/ui/TextField'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
-import type { PageProps } from '@/pages/contact/index'
-import { ensureScalar } from '@/utils/ensureScalar'
 import Content, { metadata } from '@@/content/pages/contact.mdx'
 
 type ContentMetadata = {
@@ -30,9 +29,7 @@ const meta = metadata as ContentMetadata
 /**
  * Contact screen.
  */
-export default function ContactScreen({
-  lastUpdatedAt,
-}: PageProps): JSX.Element {
+export default function ContactScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata title={meta.title} />
@@ -63,7 +60,6 @@ export default function ContactScreen({
               <Content />
             </Mdx>
             <ContactForm />
-            {/* <LastUpdatedAt date={lastUpdatedAt} /> */}
           </div>
         </section>
       </GridLayout>
@@ -78,36 +74,18 @@ type ContactFormData = {
 }
 
 function ContactForm() {
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-    setValue,
-    trigger,
-  } = useForm<ContactFormData>({
-    mode: 'onChange',
-  })
   const router = useRouter()
   const recaptchaRef = useRef<ReCaptcha>(null)
 
   /** pre-populate fields from query params, e.g. for "Report an issue" link */
-  useEffect(() => {
-    if (router.query !== undefined && Object.keys(router.query).length > 0) {
-      const allowedFields = ['subject', 'message', 'email'] as const
-      allowedFields.forEach((field) => {
-        const q = router.query[field]
-        const value = q !== undefined ? ensureScalar(q).trim() : ''
-        if (value !== undefined && value.length) {
-          setValue(field, value)
-          trigger(field)
-        }
-      })
+  const email = useQueryParam('email', false)
+  const subject = useQueryParam('subject', false)
+  const message = useQueryParam('message', false)
 
-      // remove query params from url
-      router.replace({ query: {} }, undefined, { shallow: true })
-    }
-  }, [router.query, router, setValue, trigger])
+  useEffect(() => {
+    // remove query params from url
+    router.replace({ query: {} }, undefined, { shallow: true })
+  }, [router])
 
   function onSubmit(formData: ContactFormData) {
     // const recaptchaValue = recaptchaRef.current?.getValue()
@@ -131,63 +109,50 @@ function ContactForm() {
       })
   }
 
-  const isDisabled = !formState.isValid || formState.isSubmitting
+  if (router.isReady !== true) {
+    return null
+  }
+
+  const initialValues = {
+    email,
+    subject,
+    message,
+  }
 
   return (
     <Fragment>
       <SubSectionTitle>Contact us</SubSectionTitle>
-      <VStack as="form" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <input type="hidden" name="bot" ref={register} />
-        <FormField label="Email" error={errors.email}>
-          <TextField
-            name="email"
-            type="email"
-            aria-invalid={Boolean(errors.email)}
-            ref={register({ required: 'Email is required.' })}
-          />
-        </FormField>
-        <FormField label="Subject" error={errors.subject}>
-          <TextField
-            name="subject"
-            aria-invalid={Boolean(errors.subject)}
-            ref={register({ required: 'Subject is required.' })}
-          />
-        </FormField>
-        <FormField label="Message" error={errors.message}>
-          <TextField
-            name="message"
-            aria-invalid={Boolean(errors.message)}
-            ref={register({ required: 'Message is required.' })}
-            as="textarea"
-            rows={6}
-            className="resize-none"
-          />
-        </FormField>
-        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY !== undefined ? (
-          <div className="py-2">
-            <ReCaptcha
-              ref={recaptchaRef}
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              hl="en"
-              size="normal"
-            />
-          </div>
-        ) : null}
-        <HStack className="justify-end py-2">
-          <button
-            className={cx(
-              'w-32 rounded py-3 px-6 transition-colors duration-150',
-              isDisabled
-                ? 'bg-gray-200 text-gray-500 pointer-events-none'
-                : 'bg-primary-800 text-white hover:bg-primary-700',
-            )}
-            disabled={isDisabled}
-            type="submit"
-          >
-            Send
-          </button>
-        </HStack>
-      </VStack>
+      <Form onSubmit={onSubmit} initialValues={initialValues}>
+        {({ handleSubmit, pristine, invalid, submitting }) => {
+          return (
+            <VStack as="form" onSubmit={handleSubmit} className="space-y-4">
+              <FormField type="hidden" name="bot" component="input" />
+              <FormTextField name="email" type="email" label="Email" />
+              <FormTextField name="subject" label="Subject" />
+              <FormTextArea name="message" label="Message" rows={6} />
+              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY !== undefined ? (
+                <div className="py-2">
+                  <ReCaptcha
+                    ref={recaptchaRef}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                    hl="en"
+                    size="normal"
+                  />
+                </div>
+              ) : null}
+              <HStack className="justify-end py-2">
+                <Button
+                  className="w-32 px-6 py-3 transition-colors duration-150 rounded"
+                  isDisabled={pristine || invalid || submitting}
+                  type="submit"
+                >
+                  Send
+                </Button>
+              </HStack>
+            </VStack>
+          )
+        }}
+      </Form>
     </Fragment>
   )
 }
