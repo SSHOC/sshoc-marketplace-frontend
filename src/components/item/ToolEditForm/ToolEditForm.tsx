@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-import type { ToolCore, ToolDto } from '@/api/sshoc'
-import { useUpdateTool } from '@/api/sshoc'
+import {
+  ToolCore,
+  ToolDto,
+  useGetLoggedInUser,
+  useUpdateTool,
+} from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
@@ -39,10 +43,19 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const toast = useToast()
   const router = useRouter()
   const auth = useAuth()
+  const user = useGetLoggedInUser()
+  const isAllowedToPublish =
+    user.data?.role !== undefined
+      ? ['administrator', 'moderator'].includes(user.data.role)
+      : false
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: ToolDto) {
-      toast.success(`Successfully submitted ${categoryLabel}.`)
+      toast.success(
+        `Successfully ${
+          isAllowedToPublish ? 'published' : 'submitted'
+        } ${categoryLabel}.`,
+      )
 
       queryClient.invalidateQueries({
         queryKey: ['itemSearch'],
@@ -69,7 +82,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       }
     },
     onError() {
-      toast.error(`Failed to submit ${categoryLabel}.`)
+      toast.error(
+        `Failed to ${
+          isAllowedToPublish ? 'publish' : 'submit'
+        } ${categoryLabel}.`,
+      )
     },
   })
 
@@ -149,7 +166,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                   pristine || invalid || submitting || create.isLoading
                 }
               >
-                Submit
+                {isAllowedToPublish ? 'Publish' : 'Submit'}
               </Button>
             </div>
           </form>
