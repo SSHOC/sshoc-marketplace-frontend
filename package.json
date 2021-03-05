@@ -25,7 +25,7 @@
     "test:coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@headlessui/react": "^0.3.1",
+    "@headlessui/react": "0.2.0",
     "@reach/accordion": "^0.11.2",
     "@reach/dialog": "^0.11.2",
     "@reach/disclosure": "^0.11.2",
@@ -65,7 +65,7 @@
     "@react-stately/tooltip": "^3.0.2",
     "@react-stately/tree": "^3.1.2",
     "@stefanprobst/next-app-layout": "^1.0.1",
-    "@stefanprobst/next-error-boundary": "^1.0.5",
+    "@stefanprobst/next-error-boundary": "^1.0.7",
     "@stefanprobst/next-page-metadata": "^1.0.7",
     "@stefanprobst/next-svg": "^1.0.4",
     "@stefanprobst/remark-excerpt": "^1.0.2",

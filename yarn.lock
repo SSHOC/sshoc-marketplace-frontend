@@ -1240,10 +1240,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@headlessui/react@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.npmjs.org/@headlessui/react/-/react-0.3.1.tgz#62d8df3b49f7e212f81f7fa4ba3cefb8945720ec"
-  integrity sha512-GnAVXCLmDs3CFvmvYo4Iu/LqAWVIoS+bGo+eMADnbWgF8BeMX13sWMyb8eOdj7N9nqY9QA2AsMzqYdAIbbsRIw==
+"@headlessui/react@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@headlessui/react/-/react-0.2.0.tgz#a31f90892d736243ba91c1474f534b3256d0c538"
+  integrity sha512-YV+vF+QhTRcspydPdHF3ZXe+FkOiJpRdqMjjFIIX9bSdT2O2T7GurgKQdGgamNUM+B99MZBOTRqxS8Dlh485eg==
 
 "@internationalized/message@3.0.0-alpha.0":
   version "3.0.0-alpha.0"
@@ -2373,10 +2373,10 @@
   resolved "https://registry.npmjs.org/@stefanprobst/next-app-layout/-/next-app-layout-1.0.1.tgz#cb4cfa89045d8ee6f118981f127e377463417048"
   integrity sha512-hfnIsSd6VmkfbSYED58h0vR8LLdBhHCBzuFNIIxsaNk7bMu1eN40i05pRk7pXpKCbXzHso6RbU6am35sPBU/Fw==
 
-"@stefanprobst/next-error-boundary@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-1.0.5.tgz#e5710249d2e4d74b1f7c419a11c529ac73504ba2"
-  integrity sha512-hxvjeNGanyayKzM9Hur+LIU8k1XVgqCGJBgKiK4bakK6q9u5R8eGxuAEGVP7ZZXWTBSPx6hlnjoNDvwVVwWzOw==
+"@stefanprobst/next-error-boundary@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-1.0.7.tgz#e9ceb03963dee0fd787c345ed50cd1eee0560bd0"
+  integrity sha512-UAAAL+wNKWGRywmpAIYuGRaT2lh4GI1IIRFh1NG1gNAp4wALspESno9rVSU4Q8udnNvwye7MXirPL+zfrDAT1A==
 
 "@stefanprobst/next-page-metadata@^1.0.7":
   version "1.0.7"
