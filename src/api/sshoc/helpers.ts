@@ -106,5 +106,12 @@ export function convertToInitialFormValues(
     initialValues.dateLastUpdated = item.dateLastUpdated
   }
 
+  if (item.category === 'workflow') {
+    // @ts-expect-error items are not discriminated unions
+    initialValues.composedOf = item.composedOf?.map((step) =>
+      convertToInitialFormValues(step),
+    )
+  }
+
   return initialValues
 }

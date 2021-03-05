@@ -1,4 +1,7 @@
+import type { Config as FormConfig } from 'final-form'
 import { useRouter } from 'next/router'
+import type { ReactNode } from 'react'
+import { Fragment, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import {
   useCreateWorkflow,
@@ -12,6 +15,7 @@ import { MainFormSection } from '@/components/item/MainFormSection/MainFormSecti
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
 import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFormSection'
+import { WorkflowStepsFormSection } from '@/components/item/WorkflowStepsFormSection/WorkflowStepsFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
 import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
@@ -108,7 +112,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     ])
   }
 
-  function onValidate(values: Partial<ItemFormValues>) {
+  function onValidateWorkflow(values: Partial<ItemFormValues>) {
     const errors: Partial<Record<keyof typeof values, string>> = {}
 
     validateCommonFormFields(values, errors)
@@ -120,11 +124,60 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     router.push('/')
   }
 
+  /**
+   *  Multi-page form.
+   * */
+  const [state, setState] = useState({ page: 0, values: initialValues })
+
+  const pages = [
+    <FormPage key="workflow-page" onValidate={onValidateWorkflow}>
+      <MainFormSection />
+      <ActorsFormSection />
+      <PropertiesFormSection />
+      <RelatedItemsFormSection />
+      <SourceFormSection />
+    </FormPage>,
+    <FormPage key="steps-page">
+      <WorkflowStepsFormSection />
+    </FormPage>,
+  ]
+
+  const activePage = pages[state.page]
+  const isLastPage = state.page === pages.length - 1
+
+  function nextPage(values: Partial<ItemFormValues>) {
+    setState((state) => ({
+      values,
+      page: Math.min(state.page + 1, pages.length - 1),
+    }))
+  }
+
+  function previousPage() {
+    setState((state) => ({
+      values: state.values,
+      page: Math.max(state.page - 1, 0),
+    }))
+  }
+
+  function handleSubmit(values: Partial<ItemFormValues>) {
+    if (isLastPage) {
+      return onSubmit(values)
+    } else {
+      nextPage(values)
+    }
+  }
+
+  function validate(values: Partial<ItemFormValues>) {
+    return typeof activePage.props.onValidate === 'function'
+      ? activePage.props.onValidate(values)
+      : undefined
+  }
+
   return (
     <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validate={validate}
+      initialValues={state.values}
     >
       {({ handleSubmit, form, pristine, invalid, submitting }) => {
         return (
@@ -133,42 +186,58 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             noValidate
             className="flex flex-col space-y-12"
           >
-            <MainFormSection />
-            <ActorsFormSection />
-            <PropertiesFormSection />
-            <RelatedItemsFormSection />
-            <SourceFormSection />
+            {pages[state.page]}
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                onPress={() => {
-                  form.change('draft', true)
-                }}
-                isDisabled={
-                  pristine || invalid || submitting || create.isLoading
-                }
-                variant="link"
-              >
-                Save as draft
-              </Button>
-              <Button
-                type="submit"
-                onPress={() => {
-                  form.change('draft', undefined)
-                }}
-                isDisabled={
-                  pristine || invalid || submitting || create.isLoading
-                }
-              >
-                {isAllowedToPublish ? 'Publish' : 'Submit'}
-              </Button>
+              {state.page > 0 ? (
+                <Button onPress={previousPage}>Previous</Button>
+              ) : null}
+              {isLastPage ? (
+                <Fragment>
+                  <Button
+                    type="submit"
+                    onPress={() => {
+                      form.change('draft', true)
+                    }}
+                    isDisabled={
+                      pristine || invalid || submitting || create.isLoading
+                    }
+                    variant="link"
+                  >
+                    Save as draft
+                  </Button>
+                  <Button
+                    type="submit"
+                    onPress={() => {
+                      form.change('draft', undefined)
+                    }}
+                    isDisabled={
+                      pristine || invalid || submitting || create.isLoading
+                    }
+                  >
+                    {isAllowedToPublish ? 'Publish' : 'Submit'}
+                  </Button>
+                </Fragment>
+              ) : (
+                <Button type="submit" isDisabled={invalid}>
+                  Next
+                </Button>
+              )}
             </div>
           </form>
         )
       }}
     </Form>
   )
+}
+
+interface FormPageProps {
+  onValidate?: FormConfig<ItemFormValues>['validate']
+  children: ReactNode
+}
+
+function FormPage(props: FormPageProps) {
+  return <Fragment>{props.children}</Fragment>
 }
