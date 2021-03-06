@@ -2349,15 +2349,15 @@
   resolved "https://registry.npmjs.org/@stefanprobst/commitlint-config/-/commitlint-config-1.0.1.tgz#2d45b0e78cab4bed22f4938e8ff598a52cd1caae"
   integrity sha512-xLVA1z8WpEExdxvQmovhrm919RAT5+0VzMVJN1GVz4ZlmuxCIk6kTbcqmgXeh0rdyea/ZtPQBpRmUHi3N/DMkw==
 
-"@stefanprobst/eslint-config-next-component@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@stefanprobst/eslint-config-next-component/-/eslint-config-next-component-1.0.5.tgz#30dad1ea227d973150b5c1ab229414395d980e4e"
-  integrity sha512-rOZ3bWT0ub2mnpvgyyCOtWmkEqQWzIP0cqT0mp6zlLdE7u8+WI6ROc60VnLfJFS54rg/4JrDr9AhWehqvn6fHA==
+"@stefanprobst/eslint-config-next-component@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@stefanprobst/eslint-config-next-component/-/eslint-config-next-component-1.0.9.tgz#fd245565da5fde1bf3da8ae268aa27cc918abb7c"
+  integrity sha512-jcQJ+Cs8j1oCvAzhLr4wfA6Im97SZf1xYlCpgGYw5/n4npShnl1X37Hhmk2z4aaFlEqP++90XtloVT8toP/oNA==
 
-"@stefanprobst/eslint-config-next@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@stefanprobst/eslint-config-next/-/eslint-config-next-1.0.8.tgz#12e00b075645a1132539b8580095fb40eddf7995"
-  integrity sha512-T4a0XuPvW5ygfZBAbxNOWMUoDkGNbkDlr0VEiZvq+9Ggx5meGVITtjCxvvYYc3E48FYue3VKHbE0BUW/LDERlg==
+"@stefanprobst/eslint-config-next@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@stefanprobst/eslint-config-next/-/eslint-config-next-1.0.9.tgz#7e729df6fabddafc22e64ce8efb7cb02460dac03"
+  integrity sha512-H19FeXjYsk0KOY+kLTkerMjrDoAMQKpEVwnDmWLsDO9Wv+TEJsfhvdje53/xwsR0xDYOyZv1BMIvykLlMDk+vw==
 
 "@stefanprobst/favicons@^1.0.6":
   version "1.0.6"
@@ -2407,10 +2407,10 @@
     "@svgr/webpack" "^5.4.0"
     url-loader "^4.1.0"
 
-"@stefanprobst/prettier-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@stefanprobst/prettier-config/-/prettier-config-1.0.0.tgz#bbb92657e75ba8e523f7285d69d6a5523f3d1a4a"
-  integrity sha512-VnNYylt6BIi9THAY8bGgp4oas1xNC8+2MIRXD1uCbYwgUbEdz9jRmFbDJaj//gjLLsz3/gqh31kPs7PdUJ8C8Q==
+"@stefanprobst/prettier-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@stefanprobst/prettier-config/-/prettier-config-1.0.1.tgz#4121a97e86deb7f103794a2075e0a5155321ff32"
+  integrity sha512-9pi/jRU+TRwlCJ48RCOhipKMjkbZfl+K1jnpV19w4ldm9eojaSo9HT5bWEJTkTCd2LBuHmbfsLpe6MYN6BwJSg==
 
 "@stefanprobst/remark-excerpt@^1.0.2":
   version "1.0.2"
@@ -5189,6 +5189,11 @@ eslint-plugin-react@^7.21.5:
     prop-types "^15.7.2"
     resolve "^1.18.1"
     string.prototype.matchall "^4.0.2"
+
+eslint-plugin-simple-import-sort@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-7.0.0.tgz#a1dad262f46d2184a90095a60c66fef74727f0f8"
+  integrity sha512-U3vEDB5zhYPNfxT5TYR7u01dboFZp+HNpnGhkDB2g/2E4wZ/g1Q9Ton8UwCLfRV9yAKyYqDh62oHOamvkFxsvw==
 
 eslint-plugin-testing-library@^3.10.0:
   version "3.10.0"

@@ -12,4 +12,6 @@
 
 <!--- If you are seeing an error, please include the full error message. -->
 
-/label ~bug
+---
+
+/label ~"status::needs-review" /milestone %"Curation module implemented"
