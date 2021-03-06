@@ -68,7 +68,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getWorkflows'],
       })
       queryClient.invalidateQueries({
-        queryKey: ['getWorkflow', { id: data.persistentId }],
+        queryKey: ['getWorkflow', { workflowId: data.persistentId }],
       })
 
       /**
