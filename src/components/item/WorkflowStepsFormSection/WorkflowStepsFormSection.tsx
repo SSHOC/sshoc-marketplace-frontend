@@ -19,7 +19,7 @@ export function WorkflowStepsFormSection(): JSX.Element {
   return (
     <section className="flex flex-col space-y-2">
       <strong className="mb-6 text-error-500">
-        Editing and sorting workflow steps is not yet implemented.
+        Editing and creating workflow steps is not yet implemented.
       </strong>
 
       <FormField name="label" subscription={{ value: true }}>
@@ -45,7 +45,7 @@ export function WorkflowStepsFormSection(): JSX.Element {
         {({ fields }) => {
           return (
             <div className="flex flex-col ml-8 space-y-2">
-              {fields.map((name) => {
+              {fields.map((name, index) => {
                 return (
                   <FormField
                     key={name}
@@ -59,14 +59,31 @@ export function WorkflowStepsFormSection(): JSX.Element {
                             {input.value}
                           </h3>
                           <div className="flex self-end space-x-8 text-primary-750">
-                            <Button variant="link">
+                            <Button
+                              onPress={() => {
+                                fields.move(index, Math.max(0, index - 1))
+                              }}
+                              isDisabled={index === 0}
+                              variant="link"
+                            >
                               <Icon
                                 icon={TriangleIcon}
                                 className="w-2.5 h-2.5 transform rotate-180"
                               />
                               <span>Move up</span>
                             </Button>
-                            <Button variant="link">
+                            <Button
+                              onPress={() => {
+                                fields.move(
+                                  index,
+                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  Math.min(fields.length! - 1, index + 1),
+                                )
+                              }}
+                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                              isDisabled={index === fields.length! - 1}
+                              variant="link"
+                            >
                               <Icon
                                 icon={TriangleIcon}
                                 className="w-2.5 h-2.5"
@@ -77,7 +94,12 @@ export function WorkflowStepsFormSection(): JSX.Element {
                               <Icon icon={PlusIcon} className="w-2.5 h-2.5" />
                               <span>Add a substep</span>
                             </Button>
-                            <Button variant="link">
+                            <Button
+                              onPress={() => {
+                                fields.remove(index)
+                              }}
+                              variant="link"
+                            >
                               <Icon icon={CrossIcon} className="w-2.5 h-2.5" />
                               <span>Delete</span>
                             </Button>
