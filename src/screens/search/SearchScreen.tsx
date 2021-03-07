@@ -205,7 +205,11 @@ function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => <Select.Item key={item.id}>Sort by {item.label}</Select.Item>}
+      {(item) => (
+        <Select.Item key={item.id} textValue={item.label}>
+          Sort by {item.label}
+        </Select.Item>
+      )}
     </Select>
   )
 }
