@@ -25,6 +25,8 @@ export default function ItemSearchForm(
   const router = useRouter()
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
     const values: SearchFormValues = Object.fromEntries(
       new FormData(event.currentTarget),
     )

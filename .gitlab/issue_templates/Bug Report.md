@@ -14,4 +14,5 @@
 
 ---
 
-/label ~"status::needs-review" /milestone %"Curation module implemented"
+/label ~"status::needs-review"  
+/milestone %"Curation module implemented"
