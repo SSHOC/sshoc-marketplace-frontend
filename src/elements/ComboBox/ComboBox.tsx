@@ -39,6 +39,8 @@ export interface ComboBoxProps<T>
   shouldFocusWrap?: boolean
   hideSelectionIcon?: boolean
   hideButton?: boolean
+  /** @default "text" */
+  type?: 'text' | 'search'
   /** @default "default" */
   variant?: 'default' | 'search' | 'form'
   style?: CSSProperties

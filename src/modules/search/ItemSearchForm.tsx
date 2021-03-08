@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router'
-import { ReactNode, useMemo, useState } from 'react'
+import { FormEvent, ReactNode, useMemo, useState } from 'react'
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
 import { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'
 import { HighlightedText } from '@/elements/HighlightedText/HighlightedText'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
-import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
-import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
-import { Form } from '@/modules/form/Form'
+import { ComboBox } from '@/elements/ComboBox/ComboBox'
+import { Select } from '@/elements/Select/Select'
 
 interface SearchFormValues {
   q?: string
@@ -25,13 +24,17 @@ export default function ItemSearchForm(
 ): JSX.Element {
   const router = useRouter()
 
-  function onSubmit(values: SearchFormValues) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    const values: SearchFormValues = Object.fromEntries(
+      new FormData(event.currentTarget),
+    )
+
     const query: ItemSearchQuery = {}
 
-    if (values.q !== undefined && values.q.length > 0) {
+    if (values.q != null && values.q.length > 0) {
       query.q = values.q
     }
-    if (values.category !== undefined && values.category.length > 0) {
+    if (values.category != null && values.category.length > 0) {
       query.categories = [values.category]
     }
 
@@ -39,19 +42,9 @@ export default function ItemSearchForm(
   }
 
   return (
-    <Form onSubmit={onSubmit}>
-      {({ handleSubmit }) => {
-        return (
-          <form
-            onSubmit={handleSubmit}
-            role="search"
-            className={props.className}
-          >
-            {props.children}
-          </form>
-        )
-      }}
-    </Form>
+    <form onSubmit={onSubmit} role="search" className={props.className}>
+      {props.children}
+    </form>
   )
 }
 
@@ -70,7 +63,7 @@ export function ItemCategorySelect(): JSX.Element {
   }, [categories.data])
 
   return (
-    <FormSelect
+    <Select
       name="category"
       aria-label="Category"
       isLoading={categories.isLoading}
@@ -79,8 +72,8 @@ export function ItemCategorySelect(): JSX.Element {
       defaultSelectedKey=""
       variant="search"
     >
-      {(item) => <FormSelect.Item key={item.id}>{item.label}</FormSelect.Item>}
-    </FormSelect>
+      {(item) => <Select.Item key={item.id}>{item.label}</Select.Item>}
+    </Select>
   )
 }
 
@@ -107,15 +100,16 @@ export function ItemSearchComboBox(
     items.data?.suggestions?.map((suggestion) => ({ suggestion })) ?? []
 
   return (
-    <FormComboBox
+    <ComboBox
       name="q"
       aria-label="Search term"
       allowsCustomValue
       items={suggestions}
-      // isLoading={items.isLoading}
+      isLoading={items.isLoading}
       defaultInputValue={defaultSearchTerm}
       onInputChange={setSearchTerm}
       variant="search"
+      type="search"
       hideSelectionIcon
       hideButton
       style={
@@ -125,14 +119,14 @@ export function ItemSearchComboBox(
       }
     >
       {(item) => (
-        <FormComboBox.Item key={item.suggestion} textValue={item.suggestion}>
+        <ComboBox.Item key={item.suggestion} textValue={item.suggestion}>
           <HighlightedText
             text={item.suggestion}
             searchPhrase={debouncedSearchTerm}
           />
-        </FormComboBox.Item>
+        </ComboBox.Item>
       )}
-    </FormComboBox>
+    </ComboBox>
   )
 }
 
