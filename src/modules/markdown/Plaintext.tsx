@@ -1,6 +1,7 @@
 import excerpt from '@stefanprobst/remark-excerpt'
 import { Fragment, useMemo } from 'react'
 import markdown from 'remark-parse'
+import gfm from 'remark-gfm'
 import toMarkdown from 'remark-stringify'
 import strip from 'strip-markdown'
 import unified from 'unified'
@@ -10,7 +11,7 @@ import unified from 'unified'
  * to match what is used for static content pages, but currently
  * this does not have a treeshakeable export.
  */
-const markdownProcessor = unified().use(markdown).use(toMarkdown)
+const markdownProcessor = unified().use(markdown).use(gfm).use(toMarkdown)
 
 /**
  * removes markdown formatting from text.
