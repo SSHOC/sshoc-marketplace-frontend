@@ -80,6 +80,17 @@ module.exports = {
       maxWidth: {
         '65ch': '65ch',
         '80ch': '80ch',
+        64: px(192),
+      },
+      minWidth: {
+        64: px(192),
+      },
+      width: {
+        3.75: px(15),
+        36: '9rem',
+      },
+      height: {
+        3.75: px(15),
       },
       /** see custom properties in global.css */
       screens: {
@@ -126,9 +137,6 @@ module.exports = {
           },
         },
       }),
-      width: {
-        36: '9rem',
-      },
       zIndex: {
         '-10': '-10',
       },
