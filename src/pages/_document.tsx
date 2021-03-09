@@ -52,6 +52,7 @@ export default class Document extends NextDocument {
  */
 function Matomo() {
   if (
+    process.env.NODE_ENV !== 'production' ||
     process.env.NEXT_PUBLIC_MATOMO_BASE_URL === undefined ||
     process.env.NEXT_PUBLIC_MATOMO_SITE_ID === undefined
   ) {
@@ -81,6 +82,6 @@ function Matomo() {
           s.parentNode.insertBefore(g, s)
         })()`,
       }}
-    ></script>
+    />
   )
 }
