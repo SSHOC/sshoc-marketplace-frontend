@@ -8,22 +8,25 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
 
 export interface SoureFormSectionProps {
   initialValues?: any
+  prefix?: string
 }
 
 /**
  * Form section for item source.
  */
 export function SourceFormSection(props: SoureFormSectionProps): JSX.Element {
+  const prefix = props.prefix ?? ''
+
   return (
     <FormSection title={'Source'}>
       <div className="flex space-x-4">
         <SourceComboBox
-          name="source.id"
+          name={`${prefix}source.id`}
           label={'Source'}
           initialValues={props.initialValues}
         />
         <FormTextField
-          name="sourceItemId"
+          name={`${prefix}sourceItemId`}
           label={'Source ID'}
           variant="form"
           style={{ flex: 1 }}

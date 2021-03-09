@@ -24,12 +24,15 @@ import { isEmail, isUrl } from '@/modules/form/validate'
 
 export interface ActorsFormSectionProps {
   initialValues?: any
+  prefix?: string
 }
 
 /**
  * Form section for contributors.
  */
 export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
+  const prefix = props.prefix ?? ''
+
   const [showCreateNewDialog, setShowCreateNewDialog] = useState(false)
   function openCreateNewDialog() {
     setShowCreateNewDialog(true)
@@ -47,7 +50,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
         </FormFieldAddButton>
       }
     >
-      <FormFieldArray name="contributors">
+      <FormFieldArray name={`${prefix}contributors`}>
         {({ fields }) => {
           return (
             <FormRecords>

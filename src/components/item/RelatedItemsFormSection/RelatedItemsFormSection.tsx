@@ -13,6 +13,7 @@ import { FormFieldArray } from '@/modules/form/FormFieldArray'
 
 export interface RelatedItemsFormSectionProps {
   initialValues?: any
+  prefix?: string
 }
 
 /**
@@ -21,9 +22,11 @@ export interface RelatedItemsFormSectionProps {
 export function RelatedItemsFormSection(
   props: RelatedItemsFormSectionProps,
 ): JSX.Element {
+  const prefix = props.prefix ?? ''
+
   return (
     <FormSection title={'Related items'}>
-      <FormFieldArray name="relatedItems">
+      <FormFieldArray name={`${prefix}relatedItems`}>
         {({ fields }) => {
           return (
             <FormRecords>

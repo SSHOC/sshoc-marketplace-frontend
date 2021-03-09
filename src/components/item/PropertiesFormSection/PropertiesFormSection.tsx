@@ -22,6 +22,7 @@ import { FormFieldCondition } from '@/modules/form/FormFieldCondition'
 
 export interface PropertiesFormSectionProps {
   initialValues?: any
+  prefix?: string
 }
 
 /**
@@ -30,6 +31,8 @@ export interface PropertiesFormSectionProps {
 export function PropertiesFormSection(
   props: PropertiesFormSectionProps,
 ): JSX.Element {
+  const prefix = props.prefix ?? ''
+
   const propertyTypes = useGetPropertyTypes({
     /** try to get everything in one go, so we don't need a combobox here */
     perpage: 100,
@@ -50,7 +53,7 @@ export function PropertiesFormSection(
 
   return (
     <FormSection title={'Properties'}>
-      <FormFieldArray name="properties">
+      <FormFieldArray name={`${prefix}properties`}>
         {({ fields }) => {
           return (
             <FormRecords>
