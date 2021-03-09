@@ -12,6 +12,7 @@ import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSecti
 import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { validateDateFormFields } from '@/lib/sshoc/validateDateFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -87,18 +88,13 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     },
   })
 
-  function onSubmit({ draft, ...values }: ItemFormValues) {
+  function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
     if (auth.session?.accessToken == null) {
       toast.error('Authentication required.')
       return Promise.reject()
     }
 
-    /**
-     * Backend crashes with `source: {}`.
-     */
-    if (values.source && values.source.id === undefined) {
-      delete values.source
-    }
+    const values = sanitizeFormValues(unsanitized)
 
     return create.mutateAsync([
       { draft },

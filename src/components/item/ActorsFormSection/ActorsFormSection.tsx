@@ -212,11 +212,13 @@ function CreateActorForm(props: CreateActorFormProps) {
   const queryClient = useQueryClient()
   const toast = useToast()
 
-  function onSubmit(values: ActorFormValues) {
+  function onSubmit(unsanitized: ActorFormValues) {
     if (auth.session?.accessToken === undefined) {
       toast.error('Authentication required.')
       return Promise.reject()
     }
+
+    const values = sanitizeActorFormValues(unsanitized)
 
     return createActor.mutateAsync(
       [values, { token: auth.session.accessToken }],
@@ -330,4 +332,11 @@ function CreateActorForm(props: CreateActorFormProps) {
       }}
     </Form>
   )
+}
+
+function sanitizeActorFormValues(values: ActorFormValues) {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  values.affiliations = values.affiliations?.filter((v) => v != null)
+
+  return values
 }
