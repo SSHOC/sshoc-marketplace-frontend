@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
-import { Fragment, useEffect } from 'react'
 import type { PropsWithChildren } from 'react'
+import { Fragment, useEffect } from 'react'
+
 import { useAuth } from '@/modules/auth/AuthContext'
 
 export default function ProtectedScreen({

@@ -1,6 +1,7 @@
-import Link from 'next/link'
 import type { LinkProps } from 'next/link'
+import Link from 'next/link'
 import { Fragment } from 'react'
+
 import { useActiveLink } from '@/utils/useActiveLink'
 
 type Item = {

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useMemo } from 'react'
 import { toast } from 'react-toastify'
+
 import {
   useSignInUser,
   useValidateImplicitGrantTokenWithoutRegistration,

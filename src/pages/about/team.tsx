@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+
 import { getLastUpdatedTimestamp } from '@/api/git'
 import AboutTeamScreen from '@/screens/about/AboutTeamScreen'
 

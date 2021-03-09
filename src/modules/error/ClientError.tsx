@@ -1,4 +1,5 @@
 import { useError } from '@stefanprobst/next-error-boundary'
+
 import ErrorScreen from '@/screens/error/ErrorScreen'
 
 /**

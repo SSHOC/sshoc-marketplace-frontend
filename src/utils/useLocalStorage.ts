@@ -1,7 +1,13 @@
 import { useCallback, useState } from 'react'
 
 /** JSON serializable */
-type Json = null | boolean | string | number | Json[] | { [key: string]: Json }
+type Json =
+  | null
+  | boolean
+  | string
+  | number
+  | Array<Json>
+  | { [key: string]: Json }
 
 type ValueOrSetter<T> = T | ((previousValue: T) => T)
 

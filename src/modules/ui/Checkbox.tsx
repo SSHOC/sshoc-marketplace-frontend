@@ -1,7 +1,8 @@
 import VisuallyHidden from '@reach/visually-hidden'
 import cx from 'clsx'
-import type { ComponentPropsWithoutRef, Ref } from 'react'
-import { ChangeEvent, forwardRef, useState } from 'react'
+import type { ChangeEvent, ComponentPropsWithoutRef, Ref } from 'react'
+import { forwardRef, useState } from 'react'
+
 import CheckMark from '@/modules/ui/CheckMark'
 
 function CheckboxComponent(

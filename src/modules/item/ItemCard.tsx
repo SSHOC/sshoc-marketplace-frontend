@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+
 import type { ItemCategory, ItemSearchResults } from '@/api/sshoc/types'
 import ItemMetadata from '@/modules/item/ItemMetadata'
 import VStack from '@/modules/layout/VStack'

@@ -3,9 +3,11 @@
  */
 
 /** Object keys. */
-type Keys<T> = {
-  [K in keyof T]: K
-}[keyof T][]
+type Keys<T> = Array<
+  {
+    [K in keyof T]: K
+  }[keyof T]
+>
 
 /**
  * Returns object keys, works with unions as keys.
@@ -13,9 +15,11 @@ type Keys<T> = {
 export const keys = Object.keys as <T>(obj: T) => Keys<T>
 
 /** Object values. */
-type Values<T> = {
-  [K in keyof T]: T[K]
-}[keyof T][]
+type Values<T> = Array<
+  {
+    [K in keyof T]: T[K]
+  }[keyof T]
+>
 
 /**
  * Returns object values, works with unions as keys.
@@ -23,9 +27,11 @@ type Values<T> = {
 export const values = Object.values as <T>(obj: T) => Values<T>
 
 /** Object entries. */
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]]
-}[keyof T][]
+type Entries<T> = Array<
+  {
+    [K in keyof T]: [K, T[K]]
+  }[keyof T]
+>
 
 /**
  * Returns object entries, works with unions as keys.

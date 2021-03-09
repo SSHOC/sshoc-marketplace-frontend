@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
+
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
-import { useActiveLink } from '@/utils/useActiveLink'
 import type { UrlObject } from '@/utils/useActiveLink'
+import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
 
 const links = [

@@ -1,8 +1,9 @@
 import { JsonLd } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
-import { useGetTrainingMaterial } from '@/api/sshoc'
+
 import type { TrainingMaterialDto } from '@/api/sshoc'
+import { useGetTrainingMaterial } from '@/api/sshoc'
 import type { PageProps } from '@/pages/training-material/[id]/index'
 import ItemLayout from '@/screens/item/ItemLayout'
 
@@ -22,9 +23,8 @@ export default function TrainingMaterialScreen({
     { enabled: initialData.persistentId !== undefined, initialData },
   )
   /** backend does not specify required fields. should be safe here */
-  const trainingMaterial = (data ?? initialData) as DeepRequired<
-    TrainingMaterialDto
-  >
+  const trainingMaterial = (data ??
+    initialData) as DeepRequired<TrainingMaterialDto>
 
   return (
     <Fragment>

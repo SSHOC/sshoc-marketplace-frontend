@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { getDataset } from '@/api/sshoc'
+
 import type { DatasetDto } from '@/api/sshoc'
+import { getDataset } from '@/api/sshoc'
 import DatasetScreen from '@/screens/item/dataset/DatasetScreen'
 import { sanitizeItemQueryParams } from '@/utils/sanitizeItemQueryParams'
 

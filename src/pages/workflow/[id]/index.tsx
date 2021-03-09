@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { getWorkflow } from '@/api/sshoc'
+
 import type { WorkflowDto } from '@/api/sshoc'
+import { getWorkflow } from '@/api/sshoc'
 import WorkflowScreen from '@/screens/item/workflow/WorkflowScreen'
 import { sanitizeItemQueryParams } from '@/utils/sanitizeItemQueryParams'
 

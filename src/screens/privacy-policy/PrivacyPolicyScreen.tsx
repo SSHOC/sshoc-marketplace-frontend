@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Mdx from '@/modules/markdown/Mdx'

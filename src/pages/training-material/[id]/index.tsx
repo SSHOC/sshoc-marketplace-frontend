@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { getTrainingMaterial } from '@/api/sshoc'
+
 import type { TrainingMaterialDto } from '@/api/sshoc'
+import { getTrainingMaterial } from '@/api/sshoc'
 import TrainingMaterialScreen from '@/screens/item/training-material/TrainingMaterialScreen'
 import { sanitizeItemQueryParams } from '@/utils/sanitizeItemQueryParams'
 

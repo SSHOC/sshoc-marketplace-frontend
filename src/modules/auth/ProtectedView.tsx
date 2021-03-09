@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
+
 import { useAuth } from '@/modules/auth/AuthContext'
 
 export default function ProtectedView({

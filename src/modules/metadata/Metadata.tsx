@@ -1,11 +1,12 @@
-import Meta from '@stefanprobst/next-page-metadata'
 import type { PageMetadataProps } from '@stefanprobst/next-page-metadata'
+import Meta from '@stefanprobst/next-page-metadata'
+
 import { useCanonicalUrl } from '@/modules/metadata/useCanonicalUrl'
 import {
-  title as siteTitle,
-  url as siteUrl,
   openGraph,
+  title as siteTitle,
   twitter,
+  url as siteUrl,
 } from '@@/config/metadata.json'
 
 export type { PageMetadata } from '@stefanprobst/next-page-metadata'

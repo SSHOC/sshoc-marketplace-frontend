@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-import {
-  PublicationCore,
-  PublicationDto,
-  useCreatePublication,
-  useGetLoggedInUser,
-} from '@/api/sshoc'
+
+import type { PublicationCore, PublicationDto } from '@/api/sshoc'
+import { useCreatePublication, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'

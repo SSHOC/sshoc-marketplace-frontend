@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-import {
-  ToolCore,
-  ToolDto,
-  useCreateTool,
-  useGetLoggedInUser,
-} from '@/api/sshoc'
+
+import type { ToolCore, ToolDto } from '@/api/sshoc'
+import { useCreateTool, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'

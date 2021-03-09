@@ -1,7 +1,7 @@
 import excerpt from '@stefanprobst/remark-excerpt'
 import { Fragment, useMemo } from 'react'
-import markdown from 'remark-parse'
 import gfm from 'remark-gfm'
+import markdown from 'remark-parse'
 import toMarkdown from 'remark-stringify'
 import strip from 'strip-markdown'
 import unified from 'unified'

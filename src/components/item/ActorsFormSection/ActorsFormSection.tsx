@@ -1,9 +1,9 @@
 import { Dialog } from '@reach/dialog'
 import { useState } from 'react'
-
 import { useQueryClient } from 'react-query'
-import { useCreateActor, useGetActors, useGetAllActorRoles } from '@/api/sshoc'
+
 import type { ActorCore } from '@/api/sshoc'
+import { useCreateActor, useGetActors, useGetAllActorRoles } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
@@ -216,7 +216,7 @@ function CreateActorForm(props: CreateActorFormProps) {
     }
 
     return createActor.mutateAsync(
-      [values, { token: auth.session?.accessToken }],
+      [values, { token: auth.session.accessToken }],
       {
         onSuccess() {
           queryClient.invalidateQueries(['getActors'])

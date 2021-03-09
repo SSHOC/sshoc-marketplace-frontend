@@ -1,12 +1,12 @@
 import { Menu, Transition } from '@headlessui/react'
 import cx from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
-import type { Ref, PropsWithChildren } from 'react'
+import { useRouter } from 'next/router'
+import type { PropsWithChildren, Ref } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
-import FullWidth from '../layout/FullWidth'
+
 import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -22,6 +22,8 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
+
+import FullWidth from '../layout/FullWidth'
 
 /**
  * Page header.

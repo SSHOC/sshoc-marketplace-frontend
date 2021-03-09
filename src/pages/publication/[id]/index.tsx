@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { getPublication } from '@/api/sshoc'
+
 import type { PublicationDto } from '@/api/sshoc'
+import { getPublication } from '@/api/sshoc'
 import PublicationScreen from '@/screens/item/publication/PublicationScreen'
 import { sanitizeItemQueryParams } from '@/utils/sanitizeItemQueryParams'
 

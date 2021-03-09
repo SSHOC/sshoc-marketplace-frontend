@@ -1,14 +1,16 @@
 import cx from 'clsx'
 import Link from 'next/link'
-import { Fragment } from 'react'
 import type { PropsWithChildren } from 'react'
-import ContentColumn from '../layout/ContentColumn'
+import { Fragment } from 'react'
+
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import styles from '@/modules/page/PageFooter.module.css'
-import { useActiveLink } from '@/utils/useActiveLink'
 import type { UrlObject } from '@/utils/useActiveLink'
+import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as EuFlag } from '@@/assets/images/eu.svg'
+
+import ContentColumn from '../layout/ContentColumn'
 
 /**
  * Page footer.

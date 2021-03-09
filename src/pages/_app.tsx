@@ -1,3 +1,11 @@
+// import 'focus-visible'
+import '@/styles/global.css'
+import 'tailwindcss/tailwind.css'
+import '@/styles/nprogress.css'
+/** should use ReactToastify.minimal.css */
+import 'react-toastify/dist/ReactToastify.css'
+import '@/styles/dialog.css'
+
 import { I18nProvider } from '@react-aria/i18n'
 import { useInteractionModality } from '@react-aria/interactions'
 import { SSRProvider } from '@react-aria/ssr'
@@ -11,18 +19,11 @@ import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { ToastContainer, Slide } from 'react-toastify'
+import { Slide, ToastContainer } from 'react-toastify'
+
 import AuthProvider from '@/modules/auth/AuthContext'
 import ClientError from '@/modules/error/ClientError'
 import PageLayout from '@/modules/page/PageLayout'
-
-// import 'focus-visible'
-import '@/styles/global.css'
-import 'tailwindcss/tailwind.css'
-import '@/styles/nprogress.css'
-/** should use ReactToastify.minimal.css */
-import 'react-toastify/dist/ReactToastify.css'
-import '@/styles/dialog.css'
 
 /**
  * Report web vitals.

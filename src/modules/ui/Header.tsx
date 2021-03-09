@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
+
 import ContentColumn from '@/modules/layout/ContentColumn'
 import VStack from '@/modules/layout/VStack'
 import ItemSearchForm, {

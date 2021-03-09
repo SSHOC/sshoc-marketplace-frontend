@@ -1,6 +1,6 @@
 import { mergeProps } from '@react-aria/utils'
+import type { CSSProperties } from 'react'
 
-import { CSSProperties } from 'react'
 import type { TextFieldProps } from '@/elements/TextField/TextField'
 import { TextField } from '@/elements/TextField/TextField'
 import { FormField } from '@/modules/form/FormField'

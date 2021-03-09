@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
+
 import { useRegisterOAuth2User } from '@/api/sshoc'
 import { useValidateImplicitGrantTokenWithRegistration } from '@/api/sshoc/client'
 import { Button } from '@/elements/Button/Button'

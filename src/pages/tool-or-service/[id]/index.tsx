@@ -1,6 +1,7 @@
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { getTool } from '@/api/sshoc'
+
 import type { ToolDto } from '@/api/sshoc'
+import { getTool } from '@/api/sshoc'
 import ToolScreen from '@/screens/item/tool/ToolScreen'
 import { sanitizeItemQueryParams } from '@/utils/sanitizeItemQueryParams'
 

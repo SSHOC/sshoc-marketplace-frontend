@@ -1,8 +1,9 @@
 import { JsonLd } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
-import { useGetPublication } from '@/api/sshoc'
+
 import type { PublicationDto } from '@/api/sshoc'
+import { useGetPublication } from '@/api/sshoc'
 import type { PageProps } from '@/pages/publication/[id]/index'
 import ItemLayout from '@/screens/item/ItemLayout'
 

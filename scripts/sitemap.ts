@@ -1,4 +1,5 @@
 import generate from '@stefanprobst/next-sitemap'
+
 import { log } from '@/utils/log'
 import { url as baseUrl } from '@@/config/metadata.json'
 

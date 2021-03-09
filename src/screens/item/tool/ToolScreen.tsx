@@ -1,6 +1,7 @@
 import { JsonLd } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
+
 import type { ToolDto } from '@/api/sshoc'
 import { useGetTool } from '@/api/sshoc'
 import type { PageProps } from '@/pages/tool-or-service/[id]/index'

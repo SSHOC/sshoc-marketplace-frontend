@@ -1,4 +1,5 @@
 import type { ParsedUrlQuery } from 'querystring'
+
 import { ensureScalar } from '@/utils/ensureScalar'
 
 export function getScalarQueryParameter(

@@ -1,10 +1,12 @@
-import { MDXProvider } from '@mdx-js/react'
 import type { MDXProviderProps } from '@mdx-js/react'
+import { MDXProvider } from '@mdx-js/react'
 import Link from 'next/link'
 import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
+
+import { Anchor } from '@/modules/ui/Anchor'
+
 import { SectionTitle } from '../ui/typography/SectionTitle'
 import { SubSectionTitle } from '../ui/typography/SubSectionTitle'
-import { Anchor } from '@/modules/ui/Anchor'
 
 type MdxProps = PropsWithChildren<{
   components?: MDXProviderProps['components']

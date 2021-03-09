@@ -1,6 +1,7 @@
 import decode from 'jwt-decode'
 import type { PropsWithChildren } from 'react'
 import { createContext, useContext, useMemo } from 'react'
+
 import { useLocalStorage } from '@/utils/useLocalStorage'
 
 type DecodedToken = {

@@ -4,11 +4,12 @@ import type { LinkProps } from 'next/link'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
+
 import { useGetItemCategories, useSearchItems } from '@/api/sshoc'
 import type {
+  ItemCategory,
   ItemSearchQuery,
   ItemSearchResults,
-  ItemCategory,
 } from '@/api/sshoc/types'
 import ItemCard from '@/modules/item/ItemCard'
 import FullWidth from '@/modules/layout/FullWidth'
@@ -287,7 +288,7 @@ function RecommendedItemsForCategory({
 
   if (
     recommendedItems.status !== 'success' ||
-    recommendedItems.data?.items?.length === 0
+    recommendedItems.data.items?.length === 0
   ) {
     return null
   }
@@ -304,7 +305,7 @@ function RecommendedItemsForCategory({
       }}
     >
       <ul className="grid grid-cols-2 gap-8">
-        {recommendedItems.data?.items?.map((item) => (
+        {recommendedItems.data.items?.map((item) => (
           <li key={item.persistentId}>
             <ItemCard item={item} />
           </li>

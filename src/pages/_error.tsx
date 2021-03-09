@@ -1,4 +1,5 @@
 import NextError from 'next/error'
+
 import ErrorScreen from '@/screens/error/ErrorScreen'
 
 type InternalErrorPageProps = {

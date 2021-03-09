@@ -1,4 +1,5 @@
 import type { ParsedUrlQuery } from 'querystring'
+
 import { ensureArray } from '@/utils/ensureArray'
 
 export function getArrayQueryParameter(

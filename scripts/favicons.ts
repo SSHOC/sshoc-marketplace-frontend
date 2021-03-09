@@ -1,6 +1,7 @@
 import generate from '@stefanprobst/favicons'
+
 import { log } from '@/utils/log'
-import { image, title, shortTitle } from '@@/config/metadata.json'
+import { image, shortTitle, title } from '@@/config/metadata.json'
 
 generate({
   inputFilePath: image.src,

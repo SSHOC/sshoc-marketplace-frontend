@@ -1,6 +1,7 @@
 import type { LinkProps } from 'next/link'
-import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
+import { useRouter } from 'next/router'
+
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 
 export type UrlObject = Exclude<LinkProps['href'], string>

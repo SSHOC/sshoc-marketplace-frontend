@@ -6,6 +6,7 @@
 
 import type { UseMutationOptions, UseMutationResult } from 'react-query'
 import { useMutation } from 'react-query'
+
 import type { ImplicitGrantTokenData, OAuthRegistrationDto } from '@/api/sshoc'
 import { request } from '@/api/sshoc'
 
@@ -28,9 +29,9 @@ export namespace SignInUser {
   export type RequestBody = LoginData
 }
 
-export function signInUser([body]: [body: SignInUser.RequestBody]): Promise<
-  SignInUser.Response.Success
-> {
+export function signInUser([body]: [
+  body: SignInUser.RequestBody,
+]): Promise<SignInUser.Response.Success> {
   return request({
     path: '/api/auth/sign-in',
     options: {

@@ -1,6 +1,6 @@
 import { mergeProps } from '@react-aria/utils'
+import type { CSSProperties } from 'react'
 
-import { CSSProperties } from 'react'
 import type { ComboBoxProps } from '@/elements/ComboBox/ComboBox'
 import { ComboBox } from '@/elements/ComboBox/ComboBox'
 import { FormField } from '@/modules/form/FormField'

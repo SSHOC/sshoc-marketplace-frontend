@@ -2,13 +2,14 @@ import { Menu } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { Fragment, useMemo, useState } from 'react'
 import type { PropsWithChildren } from 'react'
+import { Fragment, useMemo, useState } from 'react'
+
 import { useGetItemCategories } from '@/api/sshoc'
 import type {
+  Item as GenericItem,
   ItemCategory as ItemCategoryWithStep,
   ItemSearchQuery,
-  Item as GenericItem,
 } from '@/api/sshoc/types'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import RelatedItems from '@/modules/item/RelatedItems'
@@ -270,9 +271,7 @@ function AccessibleAtLinks({
 function ItemMedia({ properties }: { properties: ItemProperties }) {
   const [index, setIndex] = useState(0)
 
-  const media = properties?.filter(
-    (property) => property.type?.code === 'media',
-  )
+  const media = properties.filter((property) => property.type?.code === 'media')
 
   if (media === undefined || media.length === 0) return null
 
@@ -416,7 +415,7 @@ function ItemPropertiesList({
                     key={`${contributor.actor.id}${contributor.role?.code}`}
                   >
                     {index !== 0 ? <span>, </span> : null}
-                    {contributor.actor?.website != null ? (
+                    {contributor.actor.website != null ? (
                       <a href={contributor.actor.website}>
                         {contributor.actor.name}
                       </a>

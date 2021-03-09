@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-import {
-  TrainingMaterialCore,
-  TrainingMaterialDto,
-  useGetLoggedInUser,
-  useUpdateTrainingMaterial,
-} from '@/api/sshoc'
+
+import type { TrainingMaterialCore, TrainingMaterialDto } from '@/api/sshoc'
+import { useGetLoggedInUser, useUpdateTrainingMaterial } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'

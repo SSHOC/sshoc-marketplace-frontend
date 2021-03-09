@@ -1,9 +1,10 @@
-import { promises as fs, existsSync } from 'fs'
-import { join } from 'path'
 import { loadEnvConfig } from '@next/env'
 import prettierConfig from '@stefanprobst/prettier-config'
+import { existsSync, promises as fs } from 'fs'
 import fetch from 'node-fetch'
 import { generate } from 'openapi-ts-client'
+import { join } from 'path'
+
 import { log } from '@/utils/log'
 
 /** load environment variables from `.env.local` */

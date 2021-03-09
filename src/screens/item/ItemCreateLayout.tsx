@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
 

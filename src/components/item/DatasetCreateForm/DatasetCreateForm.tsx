@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
-import {
-  DatasetCore,
-  DatasetDto,
-  useCreateDataset,
-  useGetLoggedInUser,
-} from '@/api/sshoc'
+
+import type { DatasetCore, DatasetDto } from '@/api/sshoc'
+import { useCreateDataset, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'

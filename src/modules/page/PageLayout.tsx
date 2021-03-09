@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react'
+
 import PageFooter from '@/modules/page/PageFooter'
 import PageHeader from '@/modules/page/PageHeader'
 import styles from '@/modules/page/PageLayout.module.css'

@@ -1,6 +1,6 @@
 import { mergeProps } from '@react-aria/utils'
+import type { CSSProperties } from 'react'
 
-import { CSSProperties } from 'react'
 import type { SelectProps } from '@/elements/Select/Select'
 import { Select } from '@/elements/Select/Select'
 import { FormField } from '@/modules/form/FormField'

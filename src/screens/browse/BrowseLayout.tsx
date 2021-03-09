@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Fragment } from 'react'
 import type { PropsWithChildren } from 'react'
+import { Fragment } from 'react'
+
 import { useSearchItems } from '@/api/sshoc'
 import type { ItemSearchQuery } from '@/api/sshoc/types'
 import ContentColumn from '@/modules/layout/ContentColumn'

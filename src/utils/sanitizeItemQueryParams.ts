@@ -1,4 +1,5 @@
 import type { GetServerSidePropsContext } from 'next'
+
 import { ensureScalar } from '@/utils/ensureScalar'
 
 export function sanitizeItemQueryParams(

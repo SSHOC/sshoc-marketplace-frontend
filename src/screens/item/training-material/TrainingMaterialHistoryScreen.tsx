@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
-import { ItemHistory } from '../ItemHistory'
+
 import { useGetTrainingMaterial } from '@/api/sshoc'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import ContentColumn from '@/modules/layout/ContentColumn'
@@ -9,6 +9,8 @@ import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import { Title } from '@/modules/ui/typography/Title'
+
+import { ItemHistory } from '../ItemHistory'
 
 /**
  * Training material history screen.

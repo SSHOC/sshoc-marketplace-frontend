@@ -1,4 +1,5 @@
 import { posix } from 'path'
+
 import { log } from '@/utils/log'
 
 const gitlabBaseUrl = process.env.GITLAB_BASE_URL ?? 'https://gitlab.com'
