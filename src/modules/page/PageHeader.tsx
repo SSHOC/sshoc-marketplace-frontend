@@ -202,7 +202,7 @@ function ReportAnIssueButton({
         },
       }}
     >
-      <a className="mx-6 my-2">Report an issue</a>
+      <a className="mx-6 my-2 text-gray-550">Report an issue</a>
     </Link>
   )
 }

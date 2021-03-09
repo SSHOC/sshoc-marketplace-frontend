@@ -33,7 +33,7 @@ function EuGrantNote() {
         className="px-4 py-24 space-x-4 border-t border-gray-200"
       >
         <EuFlag width="2.5em" className="flex-shrink-0" />
-        <p className="max-w-screen-sm text-xs text-gray-500">
+        <p className="max-w-screen-sm text-xs text-gray-550">
           The SSH Open Marketplace is developed as part of the &quot;Social
           Sciences and Humanities Open Cloud&apos; SSHOC project, European
           Union&quot;s Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant
