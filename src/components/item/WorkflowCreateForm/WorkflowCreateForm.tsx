@@ -3,11 +3,12 @@ import { useRouter } from 'next/router'
 import type { ReactNode } from 'react'
 import { Fragment, useState } from 'react'
 import { useQueryClient } from 'react-query'
+
+import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
 import {
+  useCreateStep,
   useCreateWorkflow,
   useGetLoggedInUser,
-  WorkflowCore,
-  WorkflowDto,
 } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -18,6 +19,7 @@ import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFor
 import { WorkflowStepsFormSection } from '@/components/item/WorkflowStepsFormSection/WorkflowStepsFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
@@ -25,6 +27,7 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 
 export interface ItemFormValues extends WorkflowCore {
   draft?: boolean
+  composedOf?: Array<StepCore & { persistentId?: string }>
 }
 
 export interface ItemFormProps<T> {
@@ -39,6 +42,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const { category, initialValues } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
+  const stepLabel = getSingularItemCategoryLabel('step')
 
   const useItemMutation = useCreateWorkflow
 
@@ -51,7 +55,14 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       ? ['administrator', 'moderator'].includes(user.data.role)
       : false
   const queryClient = useQueryClient()
-  const create = useItemMutation({
+  const createStep = useCreateStep({
+    onError() {
+      toast.error(
+        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
+      )
+    },
+  })
+  const createWorkflow = useItemMutation({
     onSuccess(data: WorkflowDto) {
       toast.success(
         `Successfully ${
@@ -92,24 +103,40 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     },
   })
 
-  function onSubmit({ draft, ...values }: ItemFormValues) {
+  async function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
     if (auth.session?.accessToken == null) {
       toast.error('Authentication required.')
       return Promise.reject()
     }
 
-    /**
-     * Backend crashes with `source: {}`.
-     */
-    if (values.source && values.source.id === undefined) {
-      delete values.source
-    }
+    const values = sanitizeFormValues(unsanitized)
 
-    return create.mutateAsync([
+    /**
+     * Workflow steps need to be handled separately.
+     */
+    const { composedOf, ...workflow } = values
+
+    const createdWorkflow = await createWorkflow.mutateAsync([
       { draft },
-      values,
+      workflow,
       { token: auth.session.accessToken },
     ])
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const workflowId = createdWorkflow.persistentId!
+
+    if (composedOf !== undefined) {
+      await Promise.all(
+        composedOf.map((step) => {
+          return createStep.mutateAsync([
+            { workflowId },
+            { draft },
+            sanitizeFormValues(step),
+            { token: auth.session?.accessToken },
+          ])
+        }),
+      )
+      // TODO: what should happen if any step creation fails? delete the whole workflow and show an error?
+    }
   }
 
   function onValidateWorkflow(values: Partial<ItemFormValues>) {
@@ -128,6 +155,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
    *  Multi-page form.
    * */
   const [state, setState] = useState({ page: 0, values: initialValues })
+  /**
+   * final-form `pristine` only reflects registered fields, i.e. those currently
+   * rendered. for multipage forms we need to keep track of this ourselves.
+   */
+  // const [isFormPristine, setFormPristine] = useState(true)
 
   const pages = [
     <FormPage key="workflow-page" onValidate={onValidateWorkflow}>
@@ -138,12 +170,13 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       <SourceFormSection />
     </FormPage>,
     <FormPage key="steps-page">
-      <WorkflowStepsFormSection />
+      <WorkflowStepsFormSection onPreviousPage={previousPage} />
     </FormPage>,
   ]
 
   const activePage = pages[state.page]
   const isLastPage = state.page === pages.length - 1
+  const [pageStatus, setPageStatus] = useState(Array(pages.length).fill(true))
 
   function nextPage(values: Partial<ItemFormValues>) {
     setState((state) => ({
@@ -188,7 +221,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
           >
             {pages[state.page]}
             <div className="flex items-center justify-end space-x-6">
-              <pre>{JSON.stringify(pristine)}</pre>
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
@@ -203,8 +235,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', true)
                     }}
                     isDisabled={
-                      /* FIXME: handle `pristine` for multi-step form || */
-                      invalid || submitting || create.isLoading
+                      pageStatus.some((pristine) => pristine === false) ||
+                      invalid ||
+                      submitting ||
+                      createWorkflow.isLoading
                     }
                     variant="link"
                   >
@@ -216,15 +250,27 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', undefined)
                     }}
                     isDisabled={
-                      /* FIXME: pristine || */
-                      invalid || submitting || create.isLoading
+                      pageStatus.some((pristine) => pristine === false) ||
+                      invalid ||
+                      submitting ||
+                      createWorkflow.isLoading
                     }
                   >
                     {isAllowedToPublish ? 'Publish' : 'Submit'}
                   </Button>
                 </Fragment>
               ) : (
-                <Button type="submit" isDisabled={invalid}>
+                <Button
+                  type="submit"
+                  onPress={() => {
+                    setPageStatus((status) => {
+                      const newStatus = [...status]
+                      newStatus[state.page] = pristine
+                      return newStatus
+                    })
+                  }}
+                  isDisabled={invalid}
+                >
                   Next
                 </Button>
               )}
