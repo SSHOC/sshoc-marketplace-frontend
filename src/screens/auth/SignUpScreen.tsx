@@ -154,11 +154,17 @@ function SignUpForm(): JSX.Element {
               <FormTextField name="displayName" label="Name" />
               <FormTextField type="email" name="email" label="Email" />
               <FormCheckBox name="acceptedRegulations">
-                I have read and understood the{' '}
-                <Link href={{ pathname: '/privacy-policy' }} passHref>
-                  <Anchor>Privacy policy</Anchor>
-                </Link>{' '}
-                and I accept it.
+                <span>I have read and understood the</span>
+                <Anchor
+                  href={new URL(
+                    '/privacy-policy',
+                    process.env.NEXT_PUBLIC_SSHOC_BASE_URL,
+                  ).toString()}
+                  target="_blank"
+                >
+                  Privacy policy
+                </Anchor>
+                <span>and I accept it.</span>
               </FormCheckBox>
               <div className="self-end py-2">
                 <Button

@@ -60,7 +60,7 @@ export function CheckBoxBase(props: CheckBoxBaseProps): JSX.Element {
       isDisabled ? 'text-gray-350' : 'text-gray-800',
       variant === 'facet' && 'flex-1',
     ),
-    text: 'flex-1 inline-flex justify-between',
+    text: 'flex-1 inline-flex justify-between space-x-1',
   }
 
   return (
