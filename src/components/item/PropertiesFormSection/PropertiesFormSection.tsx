@@ -76,7 +76,10 @@ export function PropertiesFormSection(
                     <FormFieldCondition
                       name={`${name}.type.code`}
                       condition={(id) =>
-                        id !== '' && propertyTypesById[id].type === 'concept'
+                        id !== '' &&
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        propertyTypesById[id] !== undefined &&
+                        propertyTypesById[id].type === 'concept'
                       }
                     >
                       {(id: string) => {
@@ -95,7 +98,10 @@ export function PropertiesFormSection(
                     <FormFieldCondition
                       name={`${name}.type.code`}
                       condition={(id) =>
-                        id !== '' && propertyTypesById[id].type !== 'concept'
+                        id !== '' &&
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        propertyTypesById[id] !== undefined &&
+                        propertyTypesById[id].type !== 'concept'
                       }
                     >
                       <FormTextField
