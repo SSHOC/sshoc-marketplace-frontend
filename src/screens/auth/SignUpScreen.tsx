@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -40,7 +39,7 @@ export default function SignInScreen(): JSX.Element {
             loading="lazy"
             layout="fill"
             quality={100}
-            className="object-cover object-right-bottom -z-10"
+            className="object-contain object-right-bottom -z-10"
           />
           <div className="relative max-w-xl px-12 py-16 my-12 space-y-6 bg-white rounded-md shadow-md">
             <Title>Sign up</Title>
