@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import type { FormEvent, ReactNode } from 'react'
+import type { FormEvent, Key, ReactNode } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
@@ -83,11 +83,13 @@ export function ItemCategorySelect(): JSX.Element {
 
 export interface ItemSearchComboBoxProps {
   variant?: 'invisible'
+  shouldSubmitOnSelect?: boolean
 }
 
 export function ItemSearchComboBox(
   props: ItemSearchComboBoxProps,
 ): JSX.Element {
+  const router = useRouter()
   const defaultSearchTerm = useQueryParam('q', false)
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm ?? '')
 
@@ -100,6 +102,7 @@ export function ItemSearchComboBox(
     if (searchTerm.length === 0 && defaultSearchTerm !== undefined) {
       setSearchTerm(defaultSearchTerm)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultSearchTerm])
 
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
@@ -114,6 +117,16 @@ export function ItemSearchComboBox(
   const suggestions =
     items.data?.suggestions?.map((suggestion) => ({ suggestion })) ?? []
 
+  function onSelectionChange(key: Key | null) {
+    if (
+      props.shouldSubmitOnSelect === true &&
+      key != null &&
+      String(key).length > 0
+    ) {
+      router.push({ pathname: '/search', query: { q: key } })
+    }
+  }
+
   return (
     <ComboBox
       name="q"
@@ -123,6 +136,7 @@ export function ItemSearchComboBox(
       isLoading={items.isLoading}
       inputValue={searchTerm}
       onInputChange={setSearchTerm}
+      onSelectionChange={onSelectionChange}
       variant="search"
       type="search"
       hideSelectionIcon
