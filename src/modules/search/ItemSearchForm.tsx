@@ -1,13 +1,15 @@
 import { useRouter } from 'next/router'
-import { FormEvent, ReactNode, useMemo, useState } from 'react'
+import type { FormEvent, ReactNode } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
-import { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'
+import { ComboBox } from '@/elements/ComboBox/ComboBox'
 import { HighlightedText } from '@/elements/HighlightedText/HighlightedText'
+import { Select } from '@/elements/Select/Select'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
-import { ComboBox } from '@/elements/ComboBox/ComboBox'
-import { Select } from '@/elements/Select/Select'
 
 interface SearchFormValues {
   q?: string
@@ -86,14 +88,25 @@ export interface ItemSearchComboBoxProps {
 export function ItemSearchComboBox(
   props: ItemSearchComboBoxProps,
 ): JSX.Element {
-  const defaultSearchTerm = useQueryParam('q', false) ?? ''
+  const defaultSearchTerm = useQueryParam('q', false)
+  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm ?? '')
 
-  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm)
+  /**
+   * When the page is server-rendered, query parameters (i.e. the default search string)
+   * is only available after hydration. If the search input field is still pristine, we
+   * update the input value.
+   */
+  useEffect(() => {
+    if (searchTerm.length === 0 && defaultSearchTerm !== undefined) {
+      setSearchTerm(defaultSearchTerm)
+    }
+  }, [defaultSearchTerm])
+
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
   const items = useAutocompleteItems(
     { q: debouncedSearchTerm },
     {
-      /** backend requires non-empty search phrase */
+      /** Backend requires non-empty search phrase. */
       enabled: debouncedSearchTerm.length > 0,
       keepPreviousData: true,
     },
@@ -108,7 +121,7 @@ export function ItemSearchComboBox(
       allowsCustomValue
       items={suggestions}
       isLoading={items.isLoading}
-      defaultInputValue={defaultSearchTerm}
+      inputValue={searchTerm}
       onInputChange={setSearchTerm}
       variant="search"
       type="search"
