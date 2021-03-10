@@ -84,7 +84,9 @@ export function ComboBox<T extends object>(
 
   const placeholder =
     props.allowsEmptyCollection === true
-      ? props.emptyCollectionPlaceholder ?? 'No results'
+      ? props.isLoading === true
+        ? 'Loading...'
+        : props.emptyCollectionPlaceholder ?? 'No results'
       : undefined
 
   /**
@@ -220,7 +222,7 @@ export function ComboBox<T extends object>(
             menuProps={listBoxProps}
             state={state}
             isDisabled={props.isDisabled}
-            isLoading={props.isLoading}
+            // isLoading={props.isLoading}
             placeholder={placeholder}
             shouldFocusWrap={props.shouldFocusWrap}
             variant={props.variant}

@@ -51,7 +51,8 @@ export function ListBoxBase<T extends object>(
       'py-2 max-h-64 border border-gray-300 rounded overflow-x-hidden overflow-y-auto flex flex-col bg-white focus:outline-none',
       variant === 'search' ? '' : '',
     ),
-    placeholder: 'italic',
+    placeholder:
+      'font-body font-normal text-ui-base px-4 py-2 cursor-default select-none italic',
     loading: 'inline-flex items-center justify-center py-2 text-secondary-600',
     spinner: 'w-4 h-4',
   }
