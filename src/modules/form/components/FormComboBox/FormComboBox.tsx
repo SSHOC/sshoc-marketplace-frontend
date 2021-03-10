@@ -28,7 +28,7 @@ export function FormComboBox<T>(props: FormComboBoxProps<T>): JSX.Element {
               onBlur: input.onBlur,
               onFocus: input.onFocus,
               onSelectionChange: input.onChange,
-              defaultSelectedKey: meta.initial,
+              selectedKey: input.value,
             })}
             {...getFormFieldValidationState(meta)}
           />

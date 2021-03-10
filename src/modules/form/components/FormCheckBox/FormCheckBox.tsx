@@ -22,7 +22,7 @@ export function FormCheckBox(props: FormCheckBoxProps): JSX.Element {
               onBlur: input.onBlur,
               onFocus: input.onFocus,
               onChange: input.onChange,
-              defaultSelected: meta.initial,
+              isSelected: input.checked,
             })}
             {...getFormFieldValidationState(meta)}
           />

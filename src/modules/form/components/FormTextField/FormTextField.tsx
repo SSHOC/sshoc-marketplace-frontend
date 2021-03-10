@@ -24,7 +24,7 @@ export function FormTextField(props: FormTextFieldProps): JSX.Element {
               onBlur: input.onBlur,
               onFocus: input.onFocus,
               onChange: input.onChange,
-              defaultValue: meta.initial,
+              value: input.value,
             })}
             {...getFormFieldValidationState(meta)}
           />

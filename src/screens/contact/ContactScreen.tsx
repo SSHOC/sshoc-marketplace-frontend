@@ -83,13 +83,6 @@ function ContactForm() {
   const subject = useQueryParam('subject', false)
   const message = useQueryParam('message', false)
 
-  useEffect(() => {
-    // remove query params from url
-    if (router.isReady && Object.keys(router.query).length > 0) {
-      router.replace({ query: {} }, undefined, { shallow: true })
-    }
-  }, [router])
-
   function onSubmit(formData: ContactFormData) {
     // const recaptchaValue = recaptchaRef.current?.getValue()
     // recaptchaRef.current?.reset()

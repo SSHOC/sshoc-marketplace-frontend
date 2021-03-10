@@ -37,7 +37,7 @@ export function FormAutoSuggest<T>(
               onBlur: input.onBlur,
               onFocus: input.onFocus,
               onInputChange: input.onChange,
-              defaultInputValue: meta.initial,
+              inputValue: input.value,
             })}
             {...getFormFieldValidationState(meta)}
           />
