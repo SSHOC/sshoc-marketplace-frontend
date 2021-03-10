@@ -37,6 +37,7 @@ export interface ComboBoxProps<T>
   necessityIndicator?: NecessityIndicator
   // loadingState?: 'loading'
   shouldFocusWrap?: boolean
+  allowsEmptyCollection?: boolean
   hideSelectionIcon?: boolean
   hideButton?: boolean
   /** @default "text" */
@@ -82,9 +83,9 @@ export function ComboBox<T extends object>(
 
   /**
    * When `items` are populated async, `useComboBoxState` does not correctly update
-   * the `inputValue`, because it only tracks changes to `selectedKey` (which is available
-   * initially with `defaultSelectedKey`), but not changes to `selectedItem`, which
-   * will be `null` initially, and changes once the `items` have been loaded.
+   * the `inputValue`, because it only tracks changes to `selectedKey`, but not
+   * changes to `selectedItem`, which will be `null` initially, and changes once
+   * the `items` have been loaded.
    *
    * @see https://github.com/adobe/react-spectrum/issues/1645
    */

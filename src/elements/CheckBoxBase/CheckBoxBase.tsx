@@ -60,7 +60,10 @@ export function CheckBoxBase(props: CheckBoxBaseProps): JSX.Element {
       isDisabled ? 'text-gray-350' : 'text-gray-800',
       variant === 'facet' && 'flex-1',
     ),
-    text: 'flex-1 inline-flex justify-between space-x-1',
+    icon: 'h-full',
+    text: cx(
+      variant === 'facet' && 'flex-1 inline-flex justify-between space-x-1',
+    ),
   }
 
   return (
@@ -75,9 +78,9 @@ export function CheckBoxBase(props: CheckBoxBaseProps): JSX.Element {
       <label className={styles.wrapper}>
         <span className={styles.checkBox}>
           {isIndeterminate ? (
-            <Icon icon={DashIcon} />
+            <Icon icon={DashIcon} className="icon" />
           ) : isSelected ? (
-            <Icon icon={CheckMarkIcon} />
+            <Icon icon={CheckMarkIcon} className="icon" />
           ) : null}
         </span>
         {props.children !== undefined ? (

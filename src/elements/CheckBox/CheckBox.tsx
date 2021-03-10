@@ -10,6 +10,8 @@ import { CheckBoxBase } from '@/elements/CheckBoxBase/CheckBoxBase'
 export interface CheckBoxProps extends AriaCheckboxProps {
   validationMessage?: ReactNode
   necessityIndicator?: NecessityIndicator
+  /** @default "default" */
+  variant?: 'default' | 'form' | 'facet'
 }
 
 /**

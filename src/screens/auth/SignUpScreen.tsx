@@ -153,7 +153,7 @@ function SignUpForm(): JSX.Element {
               <FormTextField name="displayName" label="Name" />
               <FormTextField type="email" name="email" label="Email" />
               <FormCheckBox name="acceptedRegulations">
-                <span>I have read and understood the</span>
+                <span>I have read and understood the </span>
                 <Anchor
                   href={new URL(
                     '/privacy-policy',
@@ -163,7 +163,7 @@ function SignUpForm(): JSX.Element {
                 >
                   Privacy policy
                 </Anchor>
-                <span>and I accept it.</span>
+                <span> and I accept it.</span>
               </FormCheckBox>
               <div className="self-end py-2">
                 <Button

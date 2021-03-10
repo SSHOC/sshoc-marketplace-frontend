@@ -139,6 +139,7 @@ export function ItemSearchComboBox(
       onSelectionChange={onSelectionChange}
       variant="search"
       type="search"
+      allowsEmptyCollection
       hideSelectionIcon
       hideButton
       style={
