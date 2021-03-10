@@ -38,6 +38,7 @@ export interface ComboBoxProps<T>
   // loadingState?: 'loading'
   shouldFocusWrap?: boolean
   allowsEmptyCollection?: boolean
+  emptyCollectionPlaceholder?: string
   hideSelectionIcon?: boolean
   hideButton?: boolean
   /** @default "text" */
@@ -81,11 +82,16 @@ export function ComboBox<T extends object>(
   const { errorMessageProps, fieldProps } = useErrorMessage(props)
   const { buttonProps } = useButton(triggerProps, triggerRef)
 
+  const placeholder =
+    props.allowsEmptyCollection === true
+      ? props.emptyCollectionPlaceholder ?? 'No results'
+      : undefined
+
   /**
-   * When `items` are populated async, `useComboBoxState` does not correctly update
-   * the `inputValue`, because it only tracks changes to `selectedKey`, but not
-   * changes to `selectedItem`, which will be `null` initially, and changes once
-   * the `items` have been loaded.
+   * When `items` are populated async, `useComboBoxState` does not correctly
+   * update the `inputValue` with the selected item's label, because it only
+   * tracks changes to `selectedKey`, but not changes to `selectedItem`, which
+   * will be `null` initially, and changes once the `items` have been loaded.
    *
    * @see https://github.com/adobe/react-spectrum/issues/1645
    */
@@ -215,6 +221,7 @@ export function ComboBox<T extends object>(
             state={state}
             isDisabled={props.isDisabled}
             isLoading={props.isLoading}
+            placeholder={placeholder}
             shouldFocusWrap={props.shouldFocusWrap}
             variant={props.variant}
             hideSelectionIcon={
@@ -234,6 +241,7 @@ interface ListBoxProps<T> {
   menuProps: HTMLAttributes<HTMLElement>
   isDisabled?: boolean
   isLoading?: boolean
+  placeholder?: string
   shouldFocusWrap?: boolean
   /** @default "default" */
   variant?: 'default' | 'search' | 'form'
@@ -276,6 +284,7 @@ function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
       state={state}
       isDisabled={props.isDisabled}
       isLoading={props.isLoading}
+      placeholder={props.placeholder}
       variant={props.variant}
       shouldSelectOnPressUp
       shouldFocusOnHover

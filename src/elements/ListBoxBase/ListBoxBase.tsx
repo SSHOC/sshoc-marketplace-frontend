@@ -16,6 +16,7 @@ export interface ListBoxBaseProps<T> extends AsyncLoadable {
   state: ListState<T>
   listBoxRef: RefObject<HTMLUListElement>
   isDisabled?: boolean
+  placeholder?: string
   shouldSelectOnPressUp?: boolean
   shouldFocusOnHover?: boolean
   shouldUseVirtualFocus?: boolean
@@ -39,6 +40,8 @@ export function ListBoxBase<T extends object>(
   const isLoading = props.isLoading === true
 
   const items = Array.from(state.collection)
+  const placeholder =
+    state.collection.size === 0 ? props.placeholder : undefined
 
   const variant = props.variant ?? 'default'
 
@@ -48,6 +51,7 @@ export function ListBoxBase<T extends object>(
       'py-2 max-h-64 border border-gray-300 rounded overflow-x-hidden overflow-y-auto flex flex-col bg-white focus:outline-none',
       variant === 'search' ? '' : '',
     ),
+    placeholder: 'italic',
     loading: 'inline-flex items-center justify-center py-2 text-secondary-600',
     spinner: 'w-4 h-4',
   }
@@ -97,6 +101,11 @@ export function ListBoxBase<T extends object>(
 
         return null
       })}
+      {placeholder !== undefined ? (
+        <li className={styles.placeholder} role="none">
+          {placeholder}
+        </li>
+      ) : null}
       {isLoading ? (
         <div className={styles.loading}>
           <ProgressSpinner className={styles.spinner} />

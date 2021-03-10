@@ -21,6 +21,7 @@ export interface ListBoxProps<T>
     Validation,
     LabelableProps {
   isDisabled?: boolean
+  placeholder?: string
   validationMessage?: ReactNode
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
@@ -56,6 +57,7 @@ export function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
         state={state}
         isDisabled={props.isDisabled}
         isLoading={props.isLoading}
+        placeholder={props.placeholder}
         variant={props.variant}
       />
     </Field>
