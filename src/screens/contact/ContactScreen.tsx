@@ -85,7 +85,9 @@ function ContactForm() {
 
   useEffect(() => {
     // remove query params from url
-    router.replace({ query: {} }, undefined, { shallow: true })
+    if (router.isReady && Object.keys(router.query).length > 0) {
+      router.replace({ query: {} }, undefined, { shallow: true })
+    }
   }, [router])
 
   function onSubmit(formData: ContactFormData) {
