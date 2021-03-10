@@ -30,7 +30,7 @@ import PageLayout from '@/modules/page/PageLayout'
  */
 export function reportWebVitals(metric: NextWebVitalsMetric): void {
   /** should be dispatched to an analytics service */
-  console.info(metric)
+  // console.info(metric)
 }
 
 /**
