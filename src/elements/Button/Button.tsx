@@ -57,7 +57,7 @@ function Button(
         default: 'transition text-ui-base',
         states: {
           enabled:
-            'text-primary-750 hover:text-secondary-600 focus:text-text-800',
+            'text-primary-750 hover:text-secondary-600 focus:text-gray-800',
           disabled: 'pointer-events-none text-gray-350',
         },
       },

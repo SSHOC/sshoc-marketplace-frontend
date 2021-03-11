@@ -68,7 +68,7 @@ function MainNavigation(): JSX.Element {
                 order: ['label'],
               }
               return (
-                <li key={category}>
+                <li key={category} className="inline-flex">
                   <NavLink
                     href={{ pathname: '/search', query }}
                     isMatching={(href, router) => {
@@ -84,7 +84,7 @@ function MainNavigation(): JSX.Element {
               )
             })}
             <Separator />
-            <li className="relative z-10">
+            <li className="relative z-10 inline-flex">
               <Menu>
                 {({ open }) => (
                   <Fragment>
@@ -118,7 +118,7 @@ function MainNavigation(): JSX.Element {
               </Menu>
             </li>
             <Separator />
-            <li className="relative z-10">
+            <li className="relative z-10 inline-flex">
               <Menu>
                 {({ open }) => (
                   <Fragment>
@@ -202,7 +202,7 @@ function ReportAnIssueButton({
         },
       }}
     >
-      <a className="mx-6 my-2 text-gray-550">Report an issue</a>
+      <a className="mx-6 my-2.5 text-gray-550">Report an issue</a>
     </Link>
   )
 }
@@ -261,7 +261,7 @@ function AuthButton() {
             <Fragment>
               <Menu.Button
                 className={cx(
-                  'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-block hover:bg-primary-700',
+                  'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2.5 px-12 text-sm inline-block hover:bg-primary-700',
                   'truncate max-w-xs',
                   open ? '' : '',
                 )}
@@ -313,7 +313,7 @@ function NavLinkButton({
 }: PropsWithChildren<{ href: UrlObject }>) {
   const isActive = useActiveLink(href)
   const classNames = cx(
-    'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-block hover:bg-primary-700',
+    'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-flex items-center hover:bg-primary-700',
   )
   return (
     <Link href={href}>
@@ -334,7 +334,7 @@ function NavLink({
 }>) {
   const isActive = useActiveLink(href, isMatching)
   const classNames = cx(
-    'px-8 py-6 inline-block hover:bg-gray-50 transition-colors duration-150',
+    'px-8 py-6 hover:bg-gray-50 transition-colors duration-150 text-center inline-flex items-center',
     isActive ? 'text-gray-800' : 'text-primary-500',
   )
   return (
@@ -379,7 +379,7 @@ function MenuButton({
   return (
     <Menu.Button
       className={cx(
-        'inline-block py-6 px-8 transition-colors duration-150',
+        'inline py-6 px-8 transition-colors duration-150',
         isOpen
           ? 'text-white bg-secondary-600 rounded-t'
           : 'text-primary-500 hover:bg-gray-50',
@@ -406,7 +406,7 @@ function MenuPopover({
       ref={popoverRef}
       static={isStatic}
       className={cx(
-        'absolute right-0 z-20 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md',
+        'absolute right-0 top-full z-20 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md',
         className,
       )}
     >
