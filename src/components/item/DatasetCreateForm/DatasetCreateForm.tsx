@@ -13,7 +13,7 @@ import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFor
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
-import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
+import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { validateDateFormFields } from '@/lib/sshoc/validateDateFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -44,6 +44,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const auth = useAuth()
   const user = useGetLoggedInUser()
   const handleErrors = useErrorHandlers()
+  const validateCommonFormFields = useValidateCommonFormFields()
   const isAllowedToPublish =
     user.data?.role !== undefined
       ? ['administrator', 'moderator'].includes(user.data.role)

@@ -1,11 +1,13 @@
 import type {
   DatasetCore,
+  PaginatedPropertyTypes,
   PublicationCore,
   ToolCore,
   TrainingMaterialCore,
   WorkflowCore,
 } from '@/api/sshoc'
-import { isUrl } from '@/modules/form/validate'
+import { useGetPropertyTypes } from '@/api/sshoc'
+import { isDate, isUrl } from '@/modules/form/validate'
 
 export function validateCommonFormFields<
   T extends
@@ -14,7 +16,14 @@ export function validateCommonFormFields<
     | ToolCore
     | TrainingMaterialCore
     | WorkflowCore
->(values: Partial<T>, errors: Partial<Record<keyof typeof values, any>>): void {
+>(
+  values: Partial<T>,
+  errors: Partial<Record<keyof typeof values, any>>,
+  propertyTypes?: Record<
+    string,
+    'string' | 'concept' | 'url' | 'int' | 'float' | 'date' | undefined
+  >,
+): void {
   /** Required field `label`. */
   if (values.label === undefined) {
     errors.label = 'Label is required.'
@@ -28,7 +37,8 @@ export function validateCommonFormFields<
   /** Accesible at field must be a valid URL. */
   if (values.accessibleAt !== undefined) {
     values.accessibleAt.forEach((url, index) => {
-      if (url !== undefined && !isUrl(url)) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (url != null && !isUrl(url)) {
         if (errors.accessibleAt === undefined) {
           /* @ts-expect-error Untyped empty array. */
           errors.accessibleAt = []
@@ -42,7 +52,8 @@ export function validateCommonFormFields<
   if (values.contributors !== undefined) {
     values.contributors.forEach((contributor, index) => {
       if (
-        contributor !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        contributor != null &&
         contributor.role !== undefined &&
         contributor.actor === undefined
       ) {
@@ -61,7 +72,8 @@ export function validateCommonFormFields<
   if (values.contributors !== undefined) {
     values.contributors.forEach((contributor, index) => {
       if (
-        contributor !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        contributor != null &&
         contributor.actor !== undefined &&
         contributor.role === undefined
       ) {
@@ -80,7 +92,8 @@ export function validateCommonFormFields<
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
       if (
-        property !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        property != null &&
         property.type === undefined &&
         (property.value !== undefined || property.concept !== undefined)
       ) {
@@ -95,11 +108,45 @@ export function validateCommonFormFields<
     })
   }
 
+  /** Valid property value. */
+  if (values.properties !== undefined) {
+    values.properties.forEach((property, index) => {
+      if (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        property != null &&
+        property.type !== undefined &&
+        property.value !== undefined
+      ) {
+        const type =
+          property.type.code != null &&
+          propertyTypes != null &&
+          propertyTypes[property.type.code]
+        if (type != null) {
+          if (
+            (type === 'date' && !isDate(property.value)) ||
+            (type === 'url' && !isUrl(property.value)) ||
+            (type === 'int' && !Number.isInteger(Number(property.value))) ||
+            (type === 'float' && !Number.isFinite(Number(property.value)))
+          ) {
+            if (errors.properties === undefined) {
+              /* @ts-expect-error Untyped empty array. */
+              errors.properties = []
+            }
+            errors.properties[index] = {
+              value: `Value must be a valid ${type}.`,
+            }
+          }
+        }
+      }
+    })
+  }
+
   /** Required property value when property type is set. */
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
       if (
-        property !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        property != null &&
         property.type !== undefined &&
         property.value === undefined &&
         property.concept === undefined
@@ -120,7 +167,8 @@ export function validateCommonFormFields<
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
       if (
-        item !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        item != null &&
         item.relation !== undefined &&
         item.objectId === undefined
       ) {
@@ -137,7 +185,8 @@ export function validateCommonFormFields<
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
       if (
-        item !== undefined &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        item != null &&
         item.objectId !== undefined &&
         item.relation === undefined
       ) {
@@ -161,4 +210,36 @@ export function validateCommonFormFields<
   if (values.sourceItemId != null && values.source?.id == null) {
     errors.sourceItemId = 'Missing value in Source.'
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function useValidateCommonFormFields() {
+  const propertyTypes = useGetPropertyTypes(
+    { perpage: 100 },
+    {
+      select: mapPropertyTypes,
+    },
+  )
+
+  function validate(
+    values: Parameters<typeof validateCommonFormFields>[0],
+    errors: Parameters<typeof validateCommonFormFields>[1],
+  ) {
+    return validateCommonFormFields(values, errors, propertyTypes.data as any)
+  }
+
+  return validate
+}
+
+function mapPropertyTypes(response: PaginatedPropertyTypes) {
+  const map: Record<
+    string,
+    'string' | 'concept' | 'url' | 'int' | 'float' | 'date' | undefined
+  > = {}
+  response.propertyTypes?.forEach((propertyType) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const id = propertyType.code!
+    map[id] = propertyType.type
+  })
+  return map
 }
