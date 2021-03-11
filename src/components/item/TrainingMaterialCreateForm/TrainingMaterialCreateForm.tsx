@@ -14,6 +14,7 @@ import { useToast } from '@/elements/Toast/useToast'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
+import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import { Form } from '@/modules/form/Form'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
@@ -40,6 +41,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
   const user = useGetLoggedInUser()
+  const handleErrors = useErrorHandlers()
   const isAllowedToPublish =
     user.data?.role !== undefined
       ? ['administrator', 'moderator'].includes(user.data.role)
@@ -72,12 +74,16 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         router.push({ pathname: '/success' })
       }
     },
-    onError() {
+    onError(error) {
       toast.error(
         `Failed to ${
           isAllowedToPublish ? 'publish' : 'submit'
         } ${categoryLabel}.`,
       )
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
     },
   })
 
