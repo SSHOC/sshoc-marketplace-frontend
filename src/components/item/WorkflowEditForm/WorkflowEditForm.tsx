@@ -1,9 +1,12 @@
+import { useButton } from '@react-aria/button'
+import type { AriaButtonProps } from '@react-types/button'
+import cx from 'clsx'
 import type { Config as FormConfig } from 'final-form'
 import get from 'lodash.get'
 import set from 'lodash.set'
 import { useRouter } from 'next/router'
 import type { FC } from 'react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
@@ -27,6 +30,7 @@ import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormField
 import { useAuth } from '@/modules/auth/AuthContext'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import { Form } from '@/modules/form/Form'
+import { Title } from '@/modules/ui/typography/Title'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
 export type PageKey = 'workflow' | 'steps' | 'step'
@@ -271,18 +275,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     }))
   }
 
-  function onPreviousPage() {
-    setState((state) => ({
-      ...state,
-      page:
-        state.page === 'steps'
-          ? 'workflow'
-          : state.page === 'step'
-          ? 'steps'
-          : state.page,
-    }))
-  }
-
   function onSetPage(page: PageKey, prefix = '', onReset?: () => void) {
     setState((state) => ({
       ...state,
@@ -302,7 +294,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }
 
   function handleSubmit(values: Partial<ItemFormValues>) {
-    if (state.page === 'steps') {
+    if (currentPageKey === 'steps') {
       return onSubmit(values)
     } else {
       onNextPage(values)
@@ -354,21 +346,90 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             noValidate
             className="flex flex-col space-y-12"
           >
+            <div className="flex items-center justify-between space-x-12">
+              <Title>
+                {currentPageKey === 'step' ? 'Add step' : 'Edit workflow'}
+              </Title>
+              {currentPageKey !== 'step' ? (
+                <div className="flex items-center space-x-12">
+                  <ActionButton
+                    onPress={() => {
+                      updatePageStatus(pristine)
+                      onSetPage('workflow')
+                    }}
+                    isDisabled={currentPageKey === 'workflow'}
+                    className={cx(
+                      'group inline-flex items-center space-x-4 font-body focus:outline-none',
+                      currentPageKey === 'workflow'
+                        ? 'pointer-events-none'
+                        : '',
+                    )}
+                  >
+                    <span
+                      className={cx(
+                        'w-8 h-8 transition flex items-center justify-center flex-shrink-0 border rounded-full text-sm ',
+                        currentPageKey === 'workflow'
+                          ? 'text-white bg-secondary-600 border-secondary-600'
+                          : 'text-gray-600 bg-gray-50 border-gray-300 group-hover:text-white group-hover:bg-secondary-600 group-hover:border-secondary-600 group-focus:text-white group-focus:bg-secondary-600 group-focus:border-secondary-600',
+                      )}
+                    >
+                      1
+                    </span>
+                    <span
+                      className={cx(
+                        currentPageKey === 'workflow'
+                          ? 'text-gray-800'
+                          : 'text-primary-750',
+                        'transition group-hover:text-secondary-600',
+                      )}
+                    >
+                      Workflow details
+                    </span>
+                  </ActionButton>
+                  <ActionButton
+                    type="submit"
+                    onPress={() => {
+                      updatePageStatus(pristine)
+                    }}
+                    isDisabled={currentPageKey === 'steps' || invalid}
+                    className={cx(
+                      'group inline-flex items-center space-x-4 font-body focus:outline-none',
+                      currentPageKey === 'steps' || invalid
+                        ? 'pointer-events-none'
+                        : '',
+                    )}
+                  >
+                    <span
+                      className={cx(
+                        'w-8 h-8 transition flex items-center justify-center flex-shrink-0 border rounded-full text-sm',
+                        currentPageKey === 'steps'
+                          ? 'text-white bg-secondary-600 border-secondary-600'
+                          : 'text-gray-600 bg-gray-50 border-gray-300 group-hover:text-white group-hover:bg-secondary-600 group-hover:border-secondary-600 group-focus:text-white group-focus:bg-secondary-600 group-focus:border-secondary-600',
+                      )}
+                    >
+                      2
+                    </span>
+                    <span
+                      className={cx(
+                        currentPageKey === 'steps'
+                          ? 'text-gray-800'
+                          : invalid
+                          ? 'text-gray-800'
+                          : 'text-primary-750',
+                        'transition group-hover:text-secondary-600',
+                      )}
+                    >
+                      Workflow steps
+                    </span>
+                  </ActionButton>
+                </div>
+              ) : null}
+            </div>
             <Page onSetPage={onSetPage} prefix={state.prefix} />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
-              {currentPageKey === 'steps' ? (
-                <Button
-                  onPress={() => {
-                    updatePageStatus(pristine)
-                    onPreviousPage()
-                  }}
-                >
-                  Previous
-                </Button>
-              ) : null}
               {currentPageKey === 'steps' ? (
                 <Fragment>
                   <Button
@@ -405,22 +466,30 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     {isAllowedToPublish ? 'Publish' : 'Submit'}
                   </Button>
                 </Fragment>
-              ) : (
+              ) : currentPageKey === 'step' ? (
                 <Button
                   type="submit"
                   onPress={() => {
                     /** mark step as dirty on submit. yuck! */
-                    if (currentPageKey === 'step') {
-                      const prefix = state.prefix?.slice(0, -1)
-                      if (prefix != null && prefix.length > 0) {
-                        const step = get(values, prefix)
-                        if (step != null) {
-                          console.log('Setting step to dirty')
-                          step.dirty = !pristine
-                        }
+                    const prefix = state.prefix?.slice(0, -1)
+                    if (prefix != null && prefix.length > 0) {
+                      const step = get(values, prefix)
+                      if (step != null) {
+                        console.log('Setting step to dirty')
+                        step.dirty = !pristine
                       }
                     }
 
+                    updatePageStatus(pristine)
+                  }}
+                  isDisabled={invalid}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  onPress={() => {
                     updatePageStatus(pristine)
                   }}
                   isDisabled={invalid}
@@ -472,5 +541,20 @@ function WorkflowStepPage(props: FormPageProps) {
       <RelatedItemsFormSection prefix={prefix} />
       <SourceFormSection prefix={prefix} />
     </Fragment>
+  )
+}
+
+interface ActionButtonProps extends AriaButtonProps {
+  className?: string
+}
+
+function ActionButton({ className, ...props }: ActionButtonProps) {
+  const ref = useRef<HTMLButtonElement>(null)
+  const { buttonProps } = useButton(props, ref)
+
+  return (
+    <button className={className} {...buttonProps} ref={ref}>
+      {props.children}
+    </button>
   )
 }

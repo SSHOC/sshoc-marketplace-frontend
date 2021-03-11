@@ -8,7 +8,6 @@ import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
-import { Title } from '@/modules/ui/typography/Title'
 
 /**
  * Edit workflow screen.
@@ -32,9 +31,8 @@ export default function WorkflowEditScreen(): JSX.Element {
           className="px-6 py-12 space-y-12"
           style={{ gridColumn: '4 / span 8' }}
         >
-          <Title>Edit workflow</Title>
           {workflow.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="h-full flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
           ) : (
