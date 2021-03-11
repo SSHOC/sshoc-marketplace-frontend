@@ -3,7 +3,7 @@ import { useQueryClient } from 'react-query'
 
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
 import { useGetLoggedInUser, useUpdateDataset } from '@/api/sshoc'
-import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
@@ -73,12 +73,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       if (data.status === 'approved') {
         router.push({ pathname: `/${data.category}/${data.persistentId}` })
       } else {
-        // TODO: redirect to separate page explaining that the submmited item is in moderation queue
-        const query: ItemSearchQuery = {
-          categories: [data.category!],
-          order: ['label'],
-        }
-        router.push({ pathname: '/search', query })
+        router.push({ pathname: '/success' })
       }
     },
     onError() {

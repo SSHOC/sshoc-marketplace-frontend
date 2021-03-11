@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useEffect, useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import ReCaptcha from 'react-google-recaptcha'
 import { toast } from 'react-toastify'
 
