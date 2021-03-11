@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Fragment } from 'react'
 
 import type {
@@ -56,15 +57,33 @@ interface ItemVersionProps {
     | Exclude<ItemHistoryProps['item']['olderVersions'], undefined>[number]
 }
 
+/**
+ * TODO: which versions is a user is allowed to see?
+ * i.e. which requests for an item version will not error?
+ */
 function ItemVersion(props: ItemVersionProps) {
   const { version } = props
 
   return (
     <article className="px-4 py-4 border border-gray-200 rounded bg-gray-75">
-      <h3 className="font-bold text-primary-750">
-        {version.label}
-        {version.version != null ? ` ${`${version.version}`}` : null}
-      </h3>
+      <Link
+        href={{
+          pathname: [
+            '',
+            version.category,
+            version.persistentId,
+            'version',
+            version.id,
+          ].join('/'),
+        }}
+      >
+        <a>
+          <h3 className="font-bold text-primary-750">
+            {version.label}
+            {version.version != null ? ` ${`${version.version}`}` : null}
+          </h3>
+        </a>
+      </Link>
     </article>
   )
 }
