@@ -59,7 +59,7 @@ export default function PublicationHistoryScreen(): JSX.Element {
         >
           <Title>Publication version history</Title>
           {publication.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

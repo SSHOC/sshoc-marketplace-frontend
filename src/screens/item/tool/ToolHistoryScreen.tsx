@@ -55,7 +55,7 @@ export default function ToolHistoryScreen(): JSX.Element {
         >
           <Title>Tool version history</Title>
           {tool.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

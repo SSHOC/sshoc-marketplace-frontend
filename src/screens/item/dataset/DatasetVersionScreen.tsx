@@ -42,7 +42,7 @@ export default function DatasetVersionScreen(): JSX.Element {
 
   if (dataset.data === undefined) {
     return (
-      <div>
+      <div className="flex flex-col items-center justify-center h-full">
         <ProgressSpinner />
       </div>
     )

@@ -59,7 +59,7 @@ export default function TrainingMaterialHistoryScreen(): JSX.Element {
         >
           <Title>Training material version history</Title>
           {trainingMaterial.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

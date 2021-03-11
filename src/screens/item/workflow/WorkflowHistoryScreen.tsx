@@ -59,7 +59,7 @@ export default function WorkflowHistoryScreen(): JSX.Element {
         >
           <Title>Workflow version history</Title>
           {workflow.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

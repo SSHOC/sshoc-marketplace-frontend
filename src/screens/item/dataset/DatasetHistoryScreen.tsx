@@ -55,7 +55,7 @@ export default function DatasetHistoryScreen(): JSX.Element {
         >
           <Title>Dataset version history</Title>
           {dataset.data === undefined || id == undefined ? (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

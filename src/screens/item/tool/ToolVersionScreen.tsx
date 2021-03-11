@@ -42,7 +42,7 @@ export default function ToolVersionScreen(): JSX.Element {
 
   if (tool.data === undefined) {
     return (
-      <div>
+      <div className="flex flex-col items-center justify-center h-full">
         <ProgressSpinner />
       </div>
     )
