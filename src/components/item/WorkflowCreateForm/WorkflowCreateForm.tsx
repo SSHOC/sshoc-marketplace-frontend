@@ -1,7 +1,9 @@
 import type { Config as FormConfig } from 'final-form'
+import get from 'lodash.get'
+import set from 'lodash.set'
 import { useRouter } from 'next/router'
-import type { ReactNode } from 'react'
-import { Fragment, useState } from 'react'
+import type { FC } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
@@ -24,6 +26,8 @@ import { validateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { Form } from '@/modules/form/Form'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
+
+export type PageKey = 'workflow' | 'steps' | 'step'
 
 export interface ItemFormValues extends WorkflowCore {
   draft?: boolean
@@ -63,37 +67,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     },
   })
   const createWorkflow = useItemMutation({
-    onSuccess(data: WorkflowDto) {
-      toast.success(
-        `Successfully ${
-          isAllowedToPublish ? 'published' : 'submitted'
-        } ${categoryLabel}.`,
-      )
-
-      queryClient.invalidateQueries({
-        queryKey: ['itemSearch'],
-      })
-      queryClient.invalidateQueries({
-        queryKey: ['getWorkflows'],
-      })
-      // queryClient.invalidateQueries({
-      //   queryKey: ['getWorkflow', { id: data.persistentId }],
-      // })
-
-      /**
-       * if the item is published (i.e. submitted as admin), redirect to details page.
-       */
-      if (data.status === 'approved') {
-        router.push({ pathname: `/${data.category}/${data.persistentId}` })
-      } else {
-        // TODO: redirect to separate page explaining that the submmited item is in moderation queue
-        const query: ItemSearchQuery = {
-          categories: [data.category!],
-          order: ['label'],
-        }
-        router.push({ pathname: '/search', query })
-      }
-    },
     onError() {
       toast.error(
         `Failed to ${
@@ -102,6 +75,43 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       )
     },
   })
+
+  /**
+   * We cannot invalidate cache and redirect in a useMutation onSuccess callback,
+   * since the whole operation is not atomic, but consists of multiple requests.
+   */
+  function onSuccess(data: WorkflowDto) {
+    toast.success(
+      `Successfully ${
+        isAllowedToPublish ? 'published' : 'submitted'
+      } ${categoryLabel}.`,
+    )
+
+    queryClient.invalidateQueries({
+      queryKey: ['itemSearch'],
+    })
+    queryClient.invalidateQueries({
+      queryKey: ['getWorkflows'],
+    })
+    // queryClient.invalidateQueries({
+    //   queryKey: ['getWorkflow', { workflowId: data.persistentId }],
+    // })
+
+    /**
+     * if the item is published (i.e. submitted as admin), redirect to details page.
+     */
+    if (data.status === 'approved') {
+      router.push({ pathname: `/${data.category}/${data.persistentId}` })
+    } else {
+      // TODO: redirect to separate page explaining that the submmited item is in moderation queue
+      const query: ItemSearchQuery = {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        categories: [data.category!],
+        order: ['label'],
+      }
+      router.push({ pathname: '/search', query })
+    }
+  }
 
   async function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
     if (auth.session?.accessToken == null) {
@@ -121,23 +131,38 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       workflow,
       { token: auth.session.accessToken },
     ])
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const workflowId = createdWorkflow.persistentId!
 
-    if (composedOf !== undefined) {
-      await Promise.all(
-        composedOf.map((step) => {
-          return createStep.mutateAsync([
-            { workflowId },
-            { draft },
-            sanitizeFormValues(step),
-            { token: auth.session?.accessToken },
-          ])
-        }),
-      )
-      // TODO: what should happen if any step creation fails? delete the whole workflow and show an error?
-    }
+    /**
+     * We cannot dispatch all at once with Promise,all because this crashes the backend.
+     * create/update step operations must be run sequentially.
+     *
+     * Also, no need to supply `stepNo` since every steps is newly created.
+     * Also, no need to check for `dirty` flag.
+     */
+    await (composedOf ?? []).reduce((operations, step) => {
+      return operations.then(() => {
+        return createStep.mutateAsync([
+          { workflowId },
+          { draft },
+          sanitizeFormValues(step),
+          { token: auth.session?.accessToken },
+        ])
+      })
+    }, Promise.resolve() as any)
+
+    /** This will only get called when the above didn't throw. */
+    onSuccess(createdWorkflow)
   }
+
+  const [state, setState] = useState<{
+    page: PageKey
+    prefix?: string
+    onReset?: () => void
+    values?: Partial<ItemFormValues>
+  }>({ page: 'workflow', prefix: '', values: initialValues })
 
   function onValidateWorkflow(values: Partial<ItemFormValues>) {
     const errors: Partial<Record<keyof typeof values, string>> = {}
@@ -146,64 +171,130 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
     return errors
   }
+  function onValidateWorkflowStep(values: Partial<ItemFormValues>) {
+    const errors: Partial<Record<keyof typeof values, string>> = {}
+
+    const prefix = state.prefix?.slice(0, -1)
+    if (prefix == null || prefix.length === 0) return errors
+
+    const step = get(values, prefix)
+    if (step == null) return errors
+    validateCommonFormFields(step, errors)
+
+    return set({}, prefix, errors)
+  }
+
+  const pages: Record<
+    PageKey,
+    {
+      Page: FC<FormPageProps>
+      onValidate?: FormConfig<ItemFormValues>['validate']
+    }
+  > = {
+    workflow: {
+      Page: WorkflowPage,
+      onValidate: onValidateWorkflow,
+    },
+    steps: {
+      Page: WorkflowStepsPage,
+    },
+    step: {
+      Page: WorkflowStepPage,
+      onValidate: onValidateWorkflowStep,
+    },
+  }
+
+  // const pageKeys = Object.keys(pages)
+  // const pageCount = pageKeys.length
+  const currentPageKey = state.page
+  const currentPage = pages[currentPageKey]
+  const { Page, onValidate } = currentPage
+
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [currentPageKey])
+
+  function onNextPage(values: Partial<ItemFormValues>) {
+    setState((state) => ({
+      ...state,
+      values,
+      page:
+        state.page === 'workflow'
+          ? 'steps'
+          : state.page === 'step'
+          ? 'steps'
+          : state.page,
+    }))
+  }
+
+  function onPreviousPage() {
+    setState((state) => ({
+      ...state,
+      page:
+        state.page === 'steps'
+          ? 'workflow'
+          : state.page === 'step'
+          ? 'steps'
+          : state.page,
+    }))
+  }
+
+  function onSetPage(page: PageKey, prefix = '', onReset?: () => void) {
+    setState((state) => ({
+      ...state,
+      page,
+      prefix,
+      onReset,
+    }))
+  }
 
   function onCancel() {
-    router.push('/')
-  }
-
-  /**
-   *  Multi-page form.
-   * */
-  const [state, setState] = useState({ page: 0, values: initialValues })
-  /**
-   * final-form `pristine` only reflects registered fields, i.e. those currently
-   * rendered. for multipage forms we need to keep track of this ourselves.
-   */
-  // const [isFormPristine, setFormPristine] = useState(true)
-
-  const pages = [
-    <FormPage key="workflow-page" onValidate={onValidateWorkflow}>
-      <MainFormSection />
-      <ActorsFormSection />
-      <PropertiesFormSection />
-      <RelatedItemsFormSection />
-      <SourceFormSection />
-    </FormPage>,
-    <FormPage key="steps-page">
-      <WorkflowStepsFormSection onPreviousPage={previousPage} />
-    </FormPage>,
-  ]
-
-  const activePage = pages[state.page]
-  const isLastPage = state.page === pages.length - 1
-  const [pageStatus, setPageStatus] = useState(Array(pages.length).fill(true))
-
-  function nextPage(values: Partial<ItemFormValues>) {
-    setState((state) => ({
-      values,
-      page: Math.min(state.page + 1, pages.length - 1),
-    }))
-  }
-
-  function previousPage() {
-    setState((state) => ({
-      values: state.values,
-      page: Math.max(state.page - 1, 0),
-    }))
+    if (currentPageKey === 'step') {
+      state.onReset?.()
+      onSetPage('steps', '', undefined)
+    } else {
+      router.push('/')
+    }
   }
 
   function handleSubmit(values: Partial<ItemFormValues>) {
-    if (isLastPage) {
+    if (state.page === 'steps') {
       return onSubmit(values)
     } else {
-      nextPage(values)
+      onNextPage(values)
     }
   }
 
   function validate(values: Partial<ItemFormValues>) {
-    return typeof activePage.props.onValidate === 'function'
-      ? activePage.props.onValidate(values)
-      : undefined
+    return typeof onValidate === 'function' ? onValidate(values) : undefined
+  }
+
+  /**
+   * Keep track if pristine state for all pages, because final-form will
+   * (i) calculate `pristine` only for the currently registered (i.e. rendered)
+   * fields, and (ii) recalculate when going back to a previously visited page
+   * by comparing to the current initialValues.
+   */
+  const [pageStatus, setPageStatus] = useState<Record<PageKey, boolean>>({
+    workflow: true,
+    steps: true,
+    step: true,
+  })
+
+  function updatePageStatus(pristine: boolean) {
+    setPageStatus((status) => {
+      return {
+        ...status,
+        [state.page]: status[state.page] && pristine,
+      }
+    })
+  }
+
+  function isFormPristine(isCurrentPagePristine: boolean) {
+    return (
+      isCurrentPagePristine &&
+      Object.values(pageStatus).every((pristine) => pristine === true)
+    )
   }
 
   return (
@@ -219,15 +310,22 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             noValidate
             className="flex flex-col space-y-12"
           >
-            {pages[state.page]}
+            <Page onSetPage={onSetPage} prefix={state.prefix} />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
-              {state.page > 0 ? (
-                <Button onPress={previousPage}>Previous</Button>
+              {currentPageKey === 'steps' ? (
+                <Button
+                  onPress={() => {
+                    updatePageStatus(pristine)
+                    onPreviousPage()
+                  }}
+                >
+                  Previous
+                </Button>
               ) : null}
-              {isLastPage ? (
+              {currentPageKey === 'steps' ? (
                 <Fragment>
                   <Button
                     type="submit"
@@ -235,10 +333,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', true)
                     }}
                     isDisabled={
-                      pageStatus.some((pristine) => pristine === false) ||
+                      isFormPristine(pristine) ||
                       invalid ||
                       submitting ||
-                      createWorkflow.isLoading
+                      createWorkflow.isLoading ||
+                      createStep.isLoading
                     }
                     variant="link"
                   >
@@ -250,10 +349,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', undefined)
                     }}
                     isDisabled={
-                      pageStatus.some((pristine) => pristine === false) ||
+                      isFormPristine(pristine) ||
                       invalid ||
                       submitting ||
-                      createWorkflow.isLoading
+                      createWorkflow.isLoading ||
+                      createStep.isLoading
                     }
                   >
                     {isAllowedToPublish ? 'Publish' : 'Submit'}
@@ -263,11 +363,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 <Button
                   type="submit"
                   onPress={() => {
-                    setPageStatus((status) => {
-                      const newStatus = [...status]
-                      newStatus[state.page] = pristine
-                      return newStatus
-                    })
+                    /** note: no need to mark step as dirty */
+
+                    updatePageStatus(pristine)
                   }}
                   isDisabled={invalid}
                 >
@@ -283,10 +381,40 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 }
 
 interface FormPageProps {
-  onValidate?: FormConfig<ItemFormValues>['validate']
-  children: ReactNode
+  onSetPage: (page: PageKey, prefix?: string, onReset?: () => void) => void
+  prefix?: string
 }
 
-function FormPage(props: FormPageProps) {
-  return <Fragment>{props.children}</Fragment>
+function WorkflowPage() {
+  return (
+    <Fragment>
+      <MainFormSection />
+      <ActorsFormSection />
+      <PropertiesFormSection />
+      <RelatedItemsFormSection />
+      <SourceFormSection />
+    </Fragment>
+  )
+}
+
+function WorkflowStepsPage(props: FormPageProps) {
+  return (
+    <Fragment>
+      <WorkflowStepsFormSection onSetPage={props.onSetPage} />
+    </Fragment>
+  )
+}
+
+function WorkflowStepPage(props: FormPageProps) {
+  const prefix = props.prefix ?? ''
+
+  return (
+    <Fragment>
+      <MainFormSection prefix={prefix} />
+      <ActorsFormSection prefix={prefix} />
+      <PropertiesFormSection prefix={prefix} />
+      <RelatedItemsFormSection prefix={prefix} />
+      <SourceFormSection prefix={prefix} />
+    </Fragment>
+  )
 }

@@ -21,7 +21,11 @@ export interface ItemFormValues extends WorkflowCore {
 }
 
 export interface WorkflowStepsFormSectionProps {
-  onPreviousPage: () => void
+  onSetPage: (
+    page: 'workflow' | 'steps' | 'step',
+    prefix?: string,
+    onReset?: () => void, // when step creation/editing is canceled
+  ) => void
 }
 
 /**
@@ -32,10 +36,6 @@ export function WorkflowStepsFormSection(
 ): JSX.Element {
   return (
     <section className="flex flex-col space-y-2">
-      <strong className="mb-6 text-error-500">
-        Editing and creating workflow steps is not yet implemented.
-      </strong>
-
       <FormFieldArray name="composedOf">
         {({ fields }) => {
           return (
@@ -50,14 +50,30 @@ export function WorkflowStepsFormSection(
                       <div className="flex self-end space-x-8 text-primary-750">
                         <Button
                           onPress={() => {
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            const lastIndex = fields.length!
+
                             fields.push(undefined)
+
+                            props.onSetPage(
+                              'step',
+                              `${fields.name}.${lastIndex}.`,
+                              () => {
+                                fields.remove(lastIndex)
+                              },
+                            )
                           }}
                           variant="link"
                         >
                           <Icon icon={PlusIcon} className="w-2.5 h-2.5" />
                           <span>Add a step</span>
                         </Button>
-                        <Button onPress={props.onPreviousPage} variant="link">
+                        <Button
+                          onPress={() => {
+                            props.onSetPage('workflow')
+                          }}
+                          variant="link"
+                        >
                           Edit
                         </Button>
                       </div>
@@ -72,7 +88,6 @@ export function WorkflowStepsFormSection(
                       key={name}
                       className="flex flex-col px-4 py-3 space-y-3 border border-gray-200 rounded bg-gray-75"
                     >
-                      <WorkflowStepForm name={name} />
                       <FormField
                         name={`${name}.label`}
                         subscription={{ value: true }}
@@ -114,10 +129,10 @@ export function WorkflowStepsFormSection(
                           <Icon icon={TriangleIcon} className="w-2.5 h-2.5" />
                           <span>Move down</span>
                         </Button>
-                        <Button variant="link">
+                        {/* <Button variant="link">
                           <Icon icon={PlusIcon} className="w-2.5 h-2.5" />
                           <span>Add a substep</span>
-                        </Button>
+                        </Button> */}
                         <Button
                           onPress={() => {
                             fields.remove(index)
@@ -127,7 +142,21 @@ export function WorkflowStepsFormSection(
                           <Icon icon={CrossIcon} className="w-2.5 h-2.5" />
                           <span>Delete</span>
                         </Button>
-                        <Button variant="link">Edit</Button>
+                        <Button
+                          onPress={() => {
+                            const currentValue = fields.value[index]
+                            props.onSetPage(
+                              'step',
+                              `${fields.name}.${index}.`,
+                              () => {
+                                fields.update(index, currentValue)
+                              },
+                            )
+                          }}
+                          variant="link"
+                        >
+                          Edit
+                        </Button>
                       </div>
                     </div>
                   )
@@ -137,32 +166,6 @@ export function WorkflowStepsFormSection(
           )
         }}
       </FormFieldArray>
-    </section>
-  )
-}
-
-interface WorkflowStepFormProps {
-  name: string
-}
-
-function WorkflowStepForm(props: WorkflowStepFormProps) {
-  const prefix = props.name + '.'
-
-  return (
-    <section className="flex flex-col space-y-12">
-      <MainFormSection prefix={prefix} />
-      <ActorsFormSection prefix={prefix} />
-      <PropertiesFormSection prefix={prefix} />
-      <RelatedItemsFormSection prefix={prefix} />
-      <SourceFormSection prefix={prefix} />
-      <div className="flex items-center justify-end space-x-6">
-        {/* <Button onPress={onCancel} variant="link">
-          Cancel
-        </Button>
-        <Button type="submit" isDisabled={pristine || invalid}>
-          Submit
-        </Button> */}
-      </div>
     </section>
   )
 }
