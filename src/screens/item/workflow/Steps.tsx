@@ -5,9 +5,10 @@ import {
 } from '@reach/disclosure'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { WorkflowDto } from '@/api/sshoc'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import ItemMetadata from '@/modules/item/ItemMetadata'
 import RelatedItems from '@/modules/item/RelatedItems'
 import HStack from '@/modules/layout/HStack'
@@ -52,14 +53,30 @@ export default function Steps({ steps }: { steps: Steps }): JSX.Element | null {
 }
 
 function Step({ step, index }: { step: Step; index: number }) {
+  const stepId = useQueryParam('step', false)
+
   const [isOpen, setOpen] = useState(false)
 
   function toggleOpen() {
     setOpen((prev) => !prev)
   }
 
+  /** if a step query parameter has been provided, open the disclosure in case the id matches. */
+  useEffect(() => {
+    if (stepId != null && step.persistentId === stepId) {
+      setOpen(true)
+    }
+  }, [step, stepId])
+
   return (
-    <Disclosure defaultOpen={false}>
+    <Disclosure
+      open={isOpen}
+      /**
+       * This will apply `step-${step.persistentId}--button` as the disclosure button id,
+       * and `step-${step.persistentId}--panel` as the panel id.
+       */
+      id={`step-${step.persistentId}`}
+    >
       <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-100" />
       <HStack
         as="header"
@@ -74,7 +91,6 @@ function Step({ step, index }: { step: Step; index: number }) {
           </span>
         </HStack>
         <DisclosureButton
-          id={`step-${step.persistentId}`}
           className={cx(
             'w-36 inline-flex items-center justify-between px-2 py-3 rounded space-x-2 transition-colors duration-150 flex-shrink-0',
             isOpen
