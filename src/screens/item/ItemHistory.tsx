@@ -80,6 +80,7 @@ interface ItemVersionProps {
 function ItemVersion(props: ItemVersionProps) {
   const { version } = props
   type ItemCategory = Exclude<typeof version.category, 'step' | undefined>
+  const category = version.category as ItemCategory
 
   const router = useRouter()
   const auth = useAuth()
@@ -112,9 +113,7 @@ function ItemVersion(props: ItemVersionProps) {
       getAllKey: 'getWorkflows',
     },
   }
-  const { op, getByIdKey, getAllKey } = operations[
-    version.category as ItemCategory
-  ]
+  const { op, getByIdKey, getAllKey } = operations[category]
   const revert = op({
     onSuccess() {
       toast.success('Successfully reverted to version.')
@@ -122,7 +121,14 @@ function ItemVersion(props: ItemVersionProps) {
       queryClient.invalidateQueries({ queryKey: ['itemSearch'] })
       queryClient.invalidateQueries({ queryKey: [getAllKey] })
       queryClient.invalidateQueries({
-        queryKey: [getByIdKey, version.persistentId],
+        queryKey: [
+          getByIdKey,
+          {
+            [category === 'workflow'
+              ? 'workflowId'
+              : 'id']: version.persistentId,
+          },
+        ],
       })
 
       router.push({
