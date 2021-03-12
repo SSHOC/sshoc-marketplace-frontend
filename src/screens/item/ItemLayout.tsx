@@ -381,7 +381,7 @@ function ItemPropertiesList({
   dateLastUpdated?: string
 }) {
   const groupedProperties = useMemo(() => {
-    if (properties === undefined || properties.length === 0) return null
+    if (properties === undefined || properties.length === 0) return {}
 
     const grouped: Record<string, Array<ItemProperty>> = {}
     properties.forEach((property) => {
@@ -396,9 +396,18 @@ function ItemPropertiesList({
     return grouped
   }, [properties])
 
-  if (groupedProperties === null) return null
-
   const sortedLabels = Object.keys(groupedProperties).sort()
+
+  if (
+    sortedLabels.length === 0 &&
+    (contributors == null || contributors.length === 0) &&
+    dateCreated == null &&
+    dateLastUpdated == null &&
+    (licenses == null || licenses.length === 0) &&
+    source == null
+  ) {
+    return null
+  }
 
   return (
     <VStack className="space-y-4">
