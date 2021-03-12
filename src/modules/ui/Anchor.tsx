@@ -12,7 +12,7 @@ function AnchorComponent(
     <a
       ref={ref}
       className={cx(
-        'text-primary-800 hover:text-primary-700 transition-colors duration-150',
+        'text-primary-750 hover:text-secondary-600 transition-colors duration-150',
         className,
       )}
       {...props}
