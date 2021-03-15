@@ -1,8 +1,10 @@
+import { useGetAllItemSources } from '@/api/sshoc'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
 import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
 import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
+import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextArea } from '@/modules/form/components/FormTextArea/FormTextArea'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
@@ -70,6 +72,69 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           )
         }}
       </FormFieldArray>
+      <FormFieldArray name="externalIds">
+        {({ fields }) => {
+          return (
+            <FormRecords>
+              {fields.map((name, index) => {
+                return (
+                  <FormRecord
+                    key={name}
+                    actions={
+                      <FormFieldRemoveButton
+                        onPress={() => fields.remove(index)}
+                        aria-label={'Remove external ID'}
+                      />
+                    }
+                  >
+                    <ExternalIdServiceSelect
+                      name={`${name}.serviceIdentifier`}
+                      label="ID Service"
+                    />
+                    <FormTextField
+                      name={`${name}.identifier`}
+                      label="Identifier"
+                      variant="form"
+                      style={{ flex: 1 }}
+                    />
+                  </FormRecord>
+                )
+              })}
+              <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                {'Add external ID'}
+              </FormFieldAddButton>
+            </FormRecords>
+          )
+        }}
+      </FormFieldArray>
     </FormSection>
+  )
+}
+
+export interface ExternalIdServiceSelectProps {
+  name: string
+  label: string
+}
+
+/**
+ * External item ID.
+ */
+function ExternalIdServiceSelect(
+  props: ExternalIdServiceSelectProps,
+): JSX.Element {
+  const sources = useGetAllItemSources()
+
+  return (
+    <FormSelect
+      name={props.name}
+      label={props.label}
+      items={sources.data ?? []}
+      isLoading={sources.isLoading}
+      variant="form"
+    >
+      {(item) => (
+        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      )}
+    </FormSelect>
   )
 }

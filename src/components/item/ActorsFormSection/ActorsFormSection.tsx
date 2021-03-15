@@ -6,7 +6,6 @@ import type { ActorCore } from '@/api/sshoc'
 import {
   useCreateActor,
   useGetActors,
-  useGetActorSource,
   useGetAllActorRoles,
   useGetAllActorSources,
 } from '@/api/sshoc'
@@ -429,6 +428,9 @@ export interface ExternalIdServiceSelectProps {
   label: string
 }
 
+/**
+ * External actor ID.
+ */
 function ExternalIdServiceSelect(
   props: ExternalIdServiceSelectProps,
 ): JSX.Element {
