@@ -3,7 +3,13 @@ import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { ActorCore } from '@/api/sshoc'
-import { useCreateActor, useGetActors, useGetAllActorRoles } from '@/api/sshoc'
+import {
+  useCreateActor,
+  useGetActors,
+  useGetActorSource,
+  useGetAllActorRoles,
+  useGetAllActorSources,
+} from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
@@ -238,7 +244,7 @@ function CreateActorForm(props: CreateActorFormProps) {
   }
 
   function onValidate(values: Partial<ActorFormValues>) {
-    const errors: Partial<Record<keyof typeof values, string>> = {}
+    const errors: Partial<Record<keyof typeof values, any>> = {}
 
     if (values.name === undefined) {
       errors.name = 'Name is required.'
@@ -250,6 +256,46 @@ function CreateActorForm(props: CreateActorFormProps) {
 
     if (values.website !== undefined && !isUrl(values.website)) {
       errors.website = 'Please provide a valid URL.'
+    }
+
+    if (values.externalIds !== undefined) {
+      values.externalIds.forEach((id, index) => {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id != null &&
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id.serviceIdentifier != null &&
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id.identifier == null
+        ) {
+          if (errors.externalIds === undefined) {
+            errors.externalIds = []
+          }
+          errors.externalIds[index] = {
+            identifier: 'ID is required.',
+          }
+        }
+      })
+    }
+
+    if (values.externalIds !== undefined) {
+      values.externalIds.forEach((id, index) => {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id != null &&
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id.identifier != null &&
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          id.serviceIdentifier == null
+        ) {
+          if (errors.externalIds === undefined) {
+            errors.externalIds = []
+          }
+          errors.externalIds[index] = {
+            serviceIdentifier: 'Please select an ID service.',
+          }
+        }
+      })
     }
 
     return errors
@@ -271,6 +317,41 @@ function CreateActorForm(props: CreateActorFormProps) {
               variant="form"
               style={{ flex: 1 }}
             />
+            <FormFieldArray name="externalIds">
+              {({ fields }) => {
+                return (
+                  <FormRecords>
+                    {fields.map((name, index) => {
+                      return (
+                        <FormRecord
+                          key={name}
+                          actions={
+                            <FormFieldRemoveButton
+                              onPress={() => fields.remove(index)}
+                              aria-label={'Remove external ID'}
+                            />
+                          }
+                        >
+                          <ExternalIdServiceSelect
+                            name={`${name}.serviceIdentifier`}
+                            label="ID Service"
+                          />
+                          <FormTextField
+                            name={`${name}.identifier`}
+                            label="Identifier"
+                            variant="form"
+                            style={{ flex: 1 }}
+                          />
+                        </FormRecord>
+                      )
+                    })}
+                    <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                      {'Add external ID'}
+                    </FormFieldAddButton>
+                  </FormRecords>
+                )
+              }}
+            </FormFieldArray>
             <FormTextField
               name="email"
               label="Email"
@@ -337,6 +418,33 @@ function CreateActorForm(props: CreateActorFormProps) {
 function sanitizeActorFormValues(values: ActorFormValues) {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   values.affiliations = values.affiliations?.filter((v) => v != null)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  values.externalIds = values.externalIds?.filter((v) => v != null)
 
   return values
+}
+
+export interface ExternalIdServiceSelectProps {
+  name: string
+  label: string
+}
+
+function ExternalIdServiceSelect(
+  props: ExternalIdServiceSelectProps,
+): JSX.Element {
+  const sources = useGetAllActorSources()
+
+  return (
+    <FormSelect
+      name={props.name}
+      label={props.label}
+      items={sources.data ?? []}
+      isLoading={sources.isLoading}
+      variant="form"
+    >
+      {(item) => (
+        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      )}
+    </FormSelect>
+  )
 }
