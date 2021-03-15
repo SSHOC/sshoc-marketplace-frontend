@@ -201,6 +201,48 @@ export function validateCommonFormFields<
     })
   }
 
+  if (values.externalIds !== undefined) {
+    values.externalIds.forEach((id, index) => {
+      if (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id != null &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id.serviceIdentifier != null &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id.identifier == null
+      ) {
+        if (errors.externalIds === undefined) {
+          /* @ts-expect-error Untyped empty array. */
+          errors.externalIds = []
+        }
+        errors.externalIds[index] = {
+          identifier: 'ID is required.',
+        }
+      }
+    })
+  }
+
+  if (values.externalIds !== undefined) {
+    values.externalIds.forEach((id, index) => {
+      if (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id != null &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id.identifier != null &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        id.serviceIdentifier == null
+      ) {
+        if (errors.externalIds === undefined) {
+          /* @ts-expect-error Untyped empty array. */
+          errors.externalIds = []
+        }
+        errors.externalIds[index] = {
+          serviceIdentifier: 'Please select an ID service.',
+        }
+      }
+    })
+  }
+
   /** `sourceItemId` is required when `source` is set. */
   if (values.source?.id != null && values.sourceItemId == null) {
     errors.sourceItemId = 'Missing value in Source ID.'
