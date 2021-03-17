@@ -225,7 +225,7 @@ function AccessibleAtLinks({
             <Menu.Button
               className={cx(buttonClassNames, 'inline-flex justify-between')}
             >
-              <span className="px-4">Go to {label}</span>
+              <span className="px-4 text-left">Go to {label}</span>
               <span className="pl-3 pr-1 border-l border-primary-500">
                 <Triangle />
               </span>
