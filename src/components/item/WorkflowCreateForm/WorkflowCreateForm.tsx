@@ -124,6 +124,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     } else if (data.status === 'draft') {
       /** Stay on page and don't clear form when saving as draft. */
       // router.push({ pathname: '/' })
+      window.scroll(0, 0)
     } else {
       router.push({ pathname: '/success' })
     }
@@ -171,6 +172,13 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
     /** This will only get called when the above didn't throw. */
     onSuccess(createdWorkflow)
+
+    /**
+     * If `onSubmit` resolves to `undefined` it's a successful submit.
+     * If the promise resolves to something else the submit has failed.
+     * If the promise rejects it's a network error (or similar).
+     */
+    return Promise.resolve()
   }
 
   const [state, setState] = useState<{

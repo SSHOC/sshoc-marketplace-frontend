@@ -80,6 +80,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       } else if (data.status === 'draft') {
         /** Stay on page and don't clear form when saving as draft. */
         // router.push({ pathname: '/' })
+        window.scroll(0, 0)
       } else {
         router.push({ pathname: '/success' })
       }
@@ -97,7 +98,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     },
   })
 
-  function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
+  async function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
     if (auth.session?.accessToken == null) {
       toast.error('Authentication required.')
       return Promise.reject()
@@ -105,12 +106,19 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
     const values = sanitizeFormValues(unsanitized)
 
-    return create.mutateAsync([
+    await create.mutateAsync([
       { id },
       { draft },
       values,
       { token: auth.session.accessToken },
     ])
+
+    /**
+     * If `onSubmit` resolves to `undefined` it's a successful submit.
+     * If the promise resolves to something else the submit has failed.
+     * If the promise rejects it's a network error (or similar).
+     */
+    return Promise.resolve()
   }
 
   function onValidate(values: Partial<ItemFormValues>) {
