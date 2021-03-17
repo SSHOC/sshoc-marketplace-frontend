@@ -56,7 +56,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     onSuccess(data: DatasetDto) {
       toast.success(
         `Successfully ${
-          isAllowedToPublish ? 'published' : 'submitted'
+          isAllowedToPublish
+            ? 'published'
+            : data.status === 'draft'
+            ? 'saved as draft'
+            : 'submitted'
         } ${categoryLabel}.`,
       )
 
@@ -75,6 +79,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
        */
       if (data.status === 'approved') {
         router.push({ pathname: `/${data.category}/${data.persistentId}` })
+      } else if (data.status === 'draft') {
+        router.push({ pathname: '/' })
       } else {
         router.push({ pathname: '/success' })
       }
