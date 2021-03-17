@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment, useRef } from 'react'
-import ReCaptcha from 'react-google-recaptcha'
+import { Fragment } from 'react'
 import { toast } from 'react-toastify'
 
 import { Button } from '@/elements/Button/Button'
@@ -76,7 +75,6 @@ type ContactFormData = {
 
 function ContactForm() {
   const router = useRouter()
-  const recaptchaRef = useRef<ReCaptcha>(null)
 
   /** pre-populate fields from query params, e.g. for "Report an issue" link */
   const email = useQueryParam('email', false)
@@ -84,9 +82,6 @@ function ContactForm() {
   const message = useQueryParam('message', false)
 
   function onSubmit(formData: ContactFormData) {
-    // const recaptchaValue = recaptchaRef.current?.getValue()
-    // recaptchaRef.current?.reset()
-
     return fetch('/api/contact', {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -126,16 +121,6 @@ function ContactForm() {
               <FormTextField name="email" type="email" label="Email" />
               <FormTextField name="subject" label="Subject" />
               <FormTextArea name="message" label="Message" rows={6} />
-              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY !== undefined ? (
-                <div className="py-2">
-                  <ReCaptcha
-                    ref={recaptchaRef}
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                    hl="en"
-                    size="normal"
-                  />
-                </div>
-              ) : null}
               <HStack className="justify-end py-2">
                 <Button
                   className="w-32 px-6 py-3 transition-colors duration-150 rounded"
