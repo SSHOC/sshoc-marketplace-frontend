@@ -136,7 +136,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     if (data.status === 'approved') {
       router.push({ pathname: `/${data.category}/${data.persistentId}` })
     } else if (data.status === 'draft') {
-      router.push({ pathname: '/' })
+      /** Stay on page and don't clear form when saving as draft. */
+      // router.push({ pathname: '/' })
     } else {
       router.push({ pathname: '/success' })
     }
