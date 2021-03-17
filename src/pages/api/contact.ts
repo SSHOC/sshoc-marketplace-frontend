@@ -33,8 +33,8 @@ export default async function contact(
   }
 
   /** honeypot field */
-  if (formSubmission.bot !== '') {
-    response.status(400).end()
+  if (formSubmission.bot !== undefined) {
+    return response.status(400).end()
   }
 
   const transporter = nodemailer.createTransport({
