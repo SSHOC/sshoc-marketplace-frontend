@@ -5,7 +5,7 @@ import {
 } from '@reach/disclosure'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { WorkflowDto } from '@/api/sshoc'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
@@ -53,6 +53,7 @@ export default function Steps({ steps }: { steps: Steps }): JSX.Element | null {
 }
 
 function Step({ step, index }: { step: Step; index: number }) {
+  const ref = useRef<HTMLButtonElement>(null)
   const stepId = useQueryParam('step', false)
 
   const [isOpen, setOpen] = useState(false)
@@ -65,6 +66,7 @@ function Step({ step, index }: { step: Step; index: number }) {
   useEffect(() => {
     if (stepId != null && step.persistentId === stepId) {
       setOpen(true)
+      ref.current?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [step, stepId])
 
@@ -98,6 +100,7 @@ function Step({ step, index }: { step: Step; index: number }) {
               : 'text-white bg-secondary-600 hover:bg-secondary-500',
           )}
           onClick={toggleOpen}
+          ref={ref}
         >
           <span className="px-4">{isOpen ? 'Collapse' : 'Expand'}</span>{' '}
           <span className={isOpen ? 'transform rotate-180' : ''}>
