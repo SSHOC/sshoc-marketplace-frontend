@@ -112,7 +112,7 @@ export default function SearchScreen(): JSX.Element {
                  * to avoid this, we put a `key` on the form and rerender on every query param change
                  */
                 // formRef.current.reset()
-                router.push({ query: {} }, undefined, { shallow: true })
+                router.push({ query: {} })
               }}
             >
               <span className="text-primary-800">Clear filters</span>
@@ -187,7 +187,7 @@ function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
     } else {
       query.order = [order as ItemSortOrder]
     }
-    router.push({ query }, undefined, { shallow: true })
+    router.push({ query })
   }
 
   /** we don't get labels for sort order from the backend */
@@ -256,7 +256,7 @@ function ItemSearchPagination({
     const input = new FormData(event.currentTarget).get('page') as string
     const page = parseInt(input, 10)
     if (!Number.isNaN(page) && page > 0 && page <= pages) {
-      router.push({ query: { ...filter, page } }, undefined, { shallow: true })
+      router.push({ query: { ...filter, page } })
     }
   }
 
@@ -330,11 +330,7 @@ function ItemSearchLongPagination({
 
           return (
             <li key={page} className="flex items-center">
-              <Link
-                href={{ query: { ...filter, page } }}
-                passHref
-                shallow={true}
-              >
+              <Link href={{ query: { ...filter, page } }} passHref>
                 <Anchor
                   aria-label={`Page ${page}`}
                   aria-current={isCurrent ? 'page' : undefined}
@@ -390,11 +386,7 @@ function PreviousPageLink({
     )
   }
   return (
-    <Link
-      href={{ query: { ...filter, page: currentPage - 1 } }}
-      passHref
-      shallow={true}
-    >
+    <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
       <Anchor rel="prev" className="inline-flex items-center">
         {label}
       </Anchor>
@@ -431,11 +423,7 @@ function NextPageLink({
     )
   }
   return (
-    <Link
-      href={{ query: { ...filter, page: currentPage + 1 } }}
-      passHref
-      shallow={false}
-    >
+    <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
       <Anchor rel="next" className="inline-flex items-center">
         {label}
       </Anchor>
@@ -521,7 +509,7 @@ function ItemSearchFilterDetailedForm({
     }
     /** reset page */
     delete query.page
-    router.push({ query }, undefined, { shallow: true })
+    router.push({ query })
   }
 
   /**
@@ -583,7 +571,7 @@ function ItemSearchFilterForm({
     } as ItemSearchQuery
     /** reset page */
     delete query.page
-    router.push({ query }, undefined, { shallow: true })
+    router.push({ query })
   }
 
   /**
