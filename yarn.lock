@@ -8766,7 +8766,7 @@ onetime@^5.1.0:
 
 "openapi-ts-client@git+https://github.com/stefanprobst/openapi-ts-client":
   version "0.1.0"
-  resolved "git+https://github.com/stefanprobst/openapi-ts-client#e8475ec231fe0b3028426f095aeade1f4b97944a"
+  resolved "git+https://github.com/stefanprobst/openapi-ts-client#6f2d334e70e08bffd0723250767a71311afe13eb"
   dependencies:
     got "^11.6.0"
     lodash.camelcase "^4.3.0"

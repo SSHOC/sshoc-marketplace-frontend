@@ -61,10 +61,7 @@ export default function ItemLayout({
     order: ['label'],
   }
 
-  // TODO: allow linking to individual workflow steps
-  const relatedItems = (item.relatedItems as RelatedItems).filter(
-    (item) => item.category !== 'step',
-  )
+  const relatedItems = item.relatedItems as RelatedItems
 
   return (
     <Fragment>

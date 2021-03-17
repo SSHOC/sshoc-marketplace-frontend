@@ -2,6 +2,9 @@
  * Log message to console.
  */
 const log = {
+  info(message: string): void {
+    console.info('ℹ️', message)
+  },
   success(message: string): void {
     console.info('✅', message)
   },

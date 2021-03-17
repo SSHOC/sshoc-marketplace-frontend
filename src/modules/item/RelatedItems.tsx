@@ -15,7 +15,7 @@ import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
 
 const Plaintext = dynamic(() => import('@/modules/markdown/Plaintext'))
 
-type ItemCategory = Exclude<ItemCategoryWithStep, 'step'>
+type ItemCategory = ItemCategoryWithStep
 type RelatedItems = Exclude<Item['relatedItems'], undefined>
 type RelatedItem = RelatedItems[number]
 
@@ -74,7 +74,13 @@ export default function RelatedItems({
 }
 
 function RelatedItem({ item }: { item: RelatedItem }): JSX.Element {
-  const pathname = `/${item.category}/${item.persistentId}`
+  const pathname =
+    item.category === 'step'
+      ? `/workflow/${(item as any).workflowId}` // RelatedStepDto has workflowId, but this isn't exposed via openapi docs
+      : `/${item.category}/${item.persistentId}`
+  /** link to step via `step` query param on workflow page */
+  const query = item.category === 'step' ? { step: item.persistentId } : {}
+
   return (
     <VStack as="article" className="px-4 py-5 space-y-4">
       <h3 className="flex items-center space-x-4 text-lg font-medium leading-5">
@@ -83,7 +89,7 @@ function RelatedItem({ item }: { item: RelatedItem }): JSX.Element {
           height="2.5em"
           className="flex-shrink-0"
         />
-        <Link href={{ pathname }}>
+        <Link href={{ pathname, query }}>
           <a className="hover:text-primary-700">{item.label}</a>
         </Link>
       </h3>
@@ -93,7 +99,7 @@ function RelatedItem({ item }: { item: RelatedItem }): JSX.Element {
           maxLength={MAX_RELATED_ITEMS_DESCRIPTION}
         />
       </div>
-      <Link href={{ pathname }} passHref>
+      <Link href={{ pathname, query }} passHref>
         <Anchor className="self-end text-sm" aria-label={item.label}>
           Read more
         </Anchor>

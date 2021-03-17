@@ -191,6 +191,7 @@ function ItemVersion(props: ItemVersionProps) {
           ) : null}
         </ProtectedView>
         <ProtectedView roles={['moderator', 'administrator']}>
+          {/** TODO: also need to check that this version has already been approved before reverting (?) */}
           {props.isCurrentApprovedVersion !== true ? (
             <Button variant="link" onPress={onRevert}>
               Revert to this version

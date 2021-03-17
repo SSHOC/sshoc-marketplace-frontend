@@ -109,7 +109,7 @@ function Step({ step, index }: { step: Step; index: number }) {
       <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-50" />
       <DisclosurePanel
         style={{ gridColumn: '3 / span 7' }}
-        className="px-6 py-12 space-y-4 bg-gray-50"
+        className="px-6 py-12 space-y-12 bg-gray-50"
       >
         <ItemMetadata item={step} />
         <div className="leading-8">
@@ -124,8 +124,7 @@ function Step({ step, index }: { step: Step; index: number }) {
 function Related({ items }: { items?: Array<any> }) {
   if (items == null) return null
 
-  // TODO: relations to steps
-  const relatedItems = items.filter((item) => item.category !== 'step')
+  const relatedItems = items
   if (relatedItems.length === 0) return null
 
   return (

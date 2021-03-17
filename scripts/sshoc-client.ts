@@ -17,6 +17,8 @@ const outputFolder = join(process.cwd(), 'src', 'api', 'sshoc')
 const outputFile = join(outputFolder, 'index.ts')
 
 async function run() {
+  log.info(`Generating sshoc api client from ${openApiDocumentUrl}.`)
+
   const response = await fetch(openApiDocumentUrl)
   const openApiDocument = await response.json()
 
