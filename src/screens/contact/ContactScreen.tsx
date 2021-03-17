@@ -9,6 +9,7 @@ import { FormTextArea } from '@/modules/form/components/FormTextArea/FormTextAre
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
 import { Form } from '@/modules/form/Form'
 import { FormField } from '@/modules/form/FormField'
+import { isEmail } from '@/modules/form/validate'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
@@ -100,6 +101,28 @@ function ContactForm() {
       })
   }
 
+  function onValidate(values: Partial<ContactFormData>) {
+    const errors: Partial<Record<keyof typeof values, any>> = {}
+
+    if (
+      values.email == null ||
+      values.email.length === 0 ||
+      !isEmail(values.email)
+    ) {
+      errors.email = 'Please provide a valid email address.'
+    }
+
+    if (values.subject == null || values.subject.length === 0) {
+      errors.subject = 'Please provide a subject.'
+    }
+
+    if (values.message == null || values.message.length === 0) {
+      errors.message = 'What do you want to tell us?'
+    }
+
+    return errors
+  }
+
   if (router.isReady !== true) {
     return null
   }
@@ -113,7 +136,11 @@ function ContactForm() {
   return (
     <Fragment>
       <SubSectionTitle>Contact us</SubSectionTitle>
-      <Form onSubmit={onSubmit} initialValues={initialValues}>
+      <Form
+        onSubmit={onSubmit}
+        validate={onValidate}
+        initialValues={initialValues}
+      >
         {({ handleSubmit, pristine, invalid, submitting }) => {
           return (
             <VStack as="form" onSubmit={handleSubmit} className="space-y-4">
