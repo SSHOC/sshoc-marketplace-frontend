@@ -167,7 +167,7 @@ export interface SubmitButtonProps {
 export function SubmitButton(props: SubmitButtonProps): JSX.Element {
   return (
     <Button type="submit" variant="gradient" className={props.className}>
-      Submit
+      Search
     </Button>
   )
 }
