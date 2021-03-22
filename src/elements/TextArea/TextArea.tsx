@@ -9,6 +9,8 @@ import { TextFieldBase } from '@/elements/TextFieldBase/TextFieldBase'
 export interface TextAreaProps extends AriaTextFieldProps {
   /** @default "default" */
   variant?: 'default' | 'form'
+  /** @default "md" */
+  size?: 'md' | 'lg'
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
   rows?: number

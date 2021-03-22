@@ -46,11 +46,15 @@ export function TextFieldBase(
   const validationState = props.validationState
   const isDisabled = props.isDisabled === true
 
+  const size = props.size ?? 'md'
+
   const variants = {
     default: {
       textField: {
-        default:
-          'text-base px-4 py-2 rounded placeholder-gray-350 border border-gray-300 focus:border-secondary-600 hover:bg-gray-75 hover:border-gray-350',
+        default: cx(
+          'text-base rounded placeholder-gray-350 border border-gray-300 focus:border-secondary-600 hover:bg-gray-75 hover:border-gray-350',
+          size === 'lg' ? 'px-4 py-4' : 'px-4 py-2',
+        ),
         states: {
           enabled: 'text-gray-800',
           disabled: 'pointer-events-none bg-gray-100 text-gray-500',
@@ -61,8 +65,10 @@ export function TextFieldBase(
     },
     form: {
       textField: {
-        default:
-          'text-ui-base px-4 py-3 rounded bg-gray-75 border border-gray-300 placeholder-gray-350 focus:bg-highlight-75 focus:border-secondary-600 focus:placeholder-highlight-300 hover:border-secondary-600 hover:bg-white',
+        default: cx(
+          'text-ui-base rounded bg-gray-75 border border-gray-300 placeholder-gray-350 focus:bg-highlight-75 focus:border-secondary-600 focus:placeholder-highlight-300 hover:border-secondary-600 hover:bg-white',
+          size === 'lg' ? 'px-4 py-4' : 'px-4 py-3',
+        ),
         states: {
           enabled: 'text-gray-800',
           disabled: 'pointer-events-none bg-gray-100 text-gray-500',

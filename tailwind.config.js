@@ -81,6 +81,7 @@ module.exports = {
         '65ch': '65ch',
         '80ch': '80ch',
         64: px(192),
+        '1.5xl': '40rem',
       },
       minWidth: {
         64: px(192),

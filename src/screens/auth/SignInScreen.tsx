@@ -13,10 +13,8 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
 import { Form } from '@/modules/form/Form'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
-import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
-import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
@@ -40,15 +38,23 @@ export default function SignInScreen(): JSX.Element {
             quality={100}
             className="object-contain object-right-bottom -z-10"
           />
-          <div className="relative max-w-xl px-12 py-16 my-12 space-y-6 bg-white rounded-md shadow-md">
-            <Title>Sign in</Title>
+          <div className="relative max-w-1.5xl px-16 py-16 my-12 space-y-8 bg-white rounded-md shadow-md">
+            <Title className="font-bold">Sign in</Title>
             <hr className="border-gray-200" />
-            <SignInForm />
-            <HStack className="space-x-2">
-              <SubSectionTitle as="h2">Alternative sign in</SubSectionTitle>
-              <div className="flex-1 border-b border-gray-200" />
-            </HStack>
+            <p>
+              Sign in with EOSC using existing accounts such as{' '}
+              <span className="font-bold">Google</span>,{' '}
+              <span className="font-bold">Dariah</span>,{' '}
+              <span className="font-bold">eduTEAMS</span> and multiple academic
+              accounts.
+            </p>
             <EoscLoginLink />
+            <div className="flex items-baseline space-x-4">
+              <span className="text-xl font-bold">or</span>
+              <span className="flex-1 border-b border-gray-200" />
+            </div>
+            <p>Sign in with a local account.</p>
+            <SignInForm />
           </div>
         </ContentColumn>
       </GridLayout>
@@ -124,13 +130,26 @@ function SignInForm() {
       {({ handleSubmit, pristine, submitting, invalid }) => {
         return (
           <VStack as="form" onSubmit={handleSubmit} className="space-y-5">
-            <FormTextField name="username" label="Username" />
-            <FormTextField name="password" label="Password" type="password" />
-            <div className="self-end py-2">
+            <FormTextField
+              name="username"
+              label="Username"
+              isRequired
+              variant="form"
+              size="lg"
+            />
+            <FormTextField
+              name="password"
+              label="Password"
+              type="password"
+              isRequired
+              variant="form"
+              size="lg"
+            />
+            <div className="self-end py-3">
               <Button
                 type="submit"
                 isDisabled={pristine || invalid || submitting}
-                className="w-40 px-6 py-3 transition-colors duration-150 rounded"
+                variant="gradient"
               >
                 Sign in
               </Button>
@@ -239,7 +258,7 @@ function EoscLoginLink() {
   return (
     <div>
       <a
-        className="flex items-center justify-between px-4 text-sm font-medium bg-gray-100 border border-gray-200 rounded text-primary-800 hover:bg-gray-200"
+        className="flex items-center justify-between px-4 text-sm font-medium bg-gray-100 border border-gray-200 rounded shadow text-primary-800 hover:bg-gray-200"
         href={url}
       >
         <span className="w-10">
