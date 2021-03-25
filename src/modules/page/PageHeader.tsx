@@ -181,6 +181,7 @@ function MainNavigation(): JSX.Element {
     </Fragment>
   )
 }
+
 function ReportAnIssueButton({
   user,
   path,
@@ -249,6 +250,18 @@ function AuthButton() {
     queryClient.clear()
     router.replace(
       getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
+    )
+  }
+
+  /* Disable login on production deploy. */
+  if (
+    process.env.NEXT_PUBLIC_SSHOC_BASE_URL ===
+    'https://marketplace.sshopencloud.eu'
+  ) {
+    return (
+      <div className="relative flex items-center space-x-6 text-gray-500">
+        <ReportAnIssueButton path={router.asPath} user={user} />
+      </div>
     )
   }
 
