@@ -832,7 +832,7 @@ export type DatasetCore = {
 }
 
 // const defaultBaseUrl = 'http://localhost:8080'
-const defaultBaseUrl = 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at'
+const defaultBaseUrl = process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
 
 export { defaultBaseUrl as baseUrl }
 
