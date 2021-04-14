@@ -144,6 +144,7 @@ export default function ItemLayout({
               sourceItemId={item.sourceItemId}
               dateCreated={item.dateCreated}
               dateLastUpdated={item.dateLastUpdated}
+              externalIds={item.externalIds}
             />
           </VStack>
         </SideColumn>
@@ -364,11 +365,11 @@ const ADDITIONAL_HIDDEN_PROPERTIES = ['thumbnail', 'media']
 interface ItemMetadata {
   properties: ItemProperties
   contributors: ItemContributors
-  licenses?: Item['licenses']
   source?: Item['source']
   sourceItemId?: Item['sourceItemId']
   dateCreated?: string
   dateLastUpdated?: string
+  externalIds?: Item['externalIds']
 }
 
 /**
@@ -416,6 +417,7 @@ function useItemMetadata({
   sourceItemId,
   dateCreated,
   dateLastUpdated,
+  externalIds,
 }: ItemMetadata) {
   const metadata: any = {}
 
@@ -599,6 +601,21 @@ function useItemMetadata({
         </div>
       )
     }
+  }
+
+  if (Array.isArray(externalIds) && externalIds.length > 0) {
+    metadata.externalIds = (
+      <ul className="py-8 space-y-6">
+        {externalIds.map((id) => {
+          return (
+            <li key={id.identifier} className="flex space-x-2">
+              <span>{id.identifierService?.label}:</span>
+              <span>ID: {id.identifier}</span>
+            </li>
+          )
+        })}
+      </ul>
+    )
   }
 
   return metadata
