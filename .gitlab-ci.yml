@@ -73,6 +73,10 @@ package:frontend:main:acdh:
     - .docker
     - .frontend
   variables:
+    KUBE_NAMESPACE: sshoc-marketplace-frontend-dev
+    HELM_UPGRADE_EXTRA_ARGS:
+      '--set service.url=https://sshoc-marketplace.acdh-dev.oeaw.ac.at/ --set
+      service.externalPort=3000 --set service.internalPort=3000'
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:latest
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_SHORT_SHA
     GITLAB_BASE_URL: https://gitlab.gwdg.de
@@ -91,6 +95,10 @@ package:frontend:tags:acdh:
     - .docker
     - .frontend
   variables:
+    KUBE_NAMESPACE: sshoc-marketplace-frontend
+    HELM_UPGRADE_EXTRA_ARGS:
+      '--set service.url=https://sshoc-marketplace.acdh.oeaw.ac.at/ --set
+      service.externalPort=3000 --set service.internalPort=3000'
     DOCKER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:release
     DOCKER_CURRENT_IMAGE: ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_TAG
     GITLAB_BASE_URL: https://gitlab.gwdg.de
