@@ -170,13 +170,13 @@ export function validateCommonFormFields<
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         item != null &&
         item.relation !== undefined &&
-        item.objectId === undefined
+        item.persistentId === undefined
       ) {
         if (errors.relatedItems === undefined) {
           /* @ts-expect-error Untyped empty array. */
           errors.relatedItems = []
         }
-        errors.relatedItems[index] = { objectId: 'Please select an item.' }
+        errors.relatedItems[index] = { persistentId: 'Please select an item.' }
       }
     })
   }
@@ -187,7 +187,7 @@ export function validateCommonFormFields<
       if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         item != null &&
-        item.objectId !== undefined &&
+        item.persistentId !== undefined &&
         item.relation === undefined
       ) {
         if (errors.relatedItems === undefined) {
@@ -207,7 +207,7 @@ export function validateCommonFormFields<
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         id != null &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.serviceIdentifier != null &&
+        id.serviceIdentifier?.code != null &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         id.identifier == null
       ) {
@@ -230,14 +230,14 @@ export function validateCommonFormFields<
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         id.identifier != null &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.serviceIdentifier == null
+        id.serviceIdentifier?.code == null
       ) {
         if (errors.externalIds === undefined) {
           /* @ts-expect-error Untyped empty array. */
           errors.externalIds = []
         }
         errors.externalIds[index] = {
-          serviceIdentifier: 'Please select an ID service.',
+          serviceIdentifier: { code: 'Please select an ID service.' },
         }
       }
     })

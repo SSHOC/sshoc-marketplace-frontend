@@ -263,7 +263,7 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.serviceIdentifier != null &&
+          id.serviceIdentifier?.code != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifier == null
         ) {
@@ -285,13 +285,13 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifier != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.serviceIdentifier == null
+          id.serviceIdentifier?.code == null
         ) {
           if (errors.externalIds === undefined) {
             errors.externalIds = []
           }
           errors.externalIds[index] = {
-            serviceIdentifier: 'Please select an ID service.',
+            serviceIdentifier: { code: 'Please select an ID service.' },
           }
         }
       })

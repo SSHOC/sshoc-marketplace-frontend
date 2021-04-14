@@ -88,7 +88,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                     }
                   >
                     <ExternalIdServiceSelect
-                      name={`${name}.serviceIdentifier`}
+                      name={`${name}.serviceIdentifier.code`}
                       label="ID Service"
                     />
                     <FormTextField

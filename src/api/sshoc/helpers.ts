@@ -74,28 +74,32 @@ export function convertToInitialFormValues(
       }
     }),
     /**
-     * `persistentId` => `objectId`
+     * Only ids needed.
      */
     relatedItems: item.relatedItems?.map((relation) => {
       return {
-        ...relation,
-        objectId: relation.persistentId,
+        id: relation.id,
+        persistentId: relation.persistentId,
+        relation: relation.relation && { code: relation.relation.code },
       }
     }),
     /**
      * Only ids needed. Also, fields are non-null.
      */
     externalIds: item.externalIds?.map((id) => {
-      return {
-        serviceIdentifier: id.identifierService?.code ?? '',
-        identifier: id.identifier ?? '',
+      const identifierService = { code: id.identifierService?.code }
+      const identifier = id.identifier!
+      const externalId = {
+        identifier,
+        serviceIdentifier: identifierService,
       }
+      return externalId
     }),
     /**
      * Only id needed.
      */
-    source: {
-      id: item.source?.id,
+    source: item.source && {
+      id: item.source.id,
     },
     sourceItemId: item.sourceItemId,
   }

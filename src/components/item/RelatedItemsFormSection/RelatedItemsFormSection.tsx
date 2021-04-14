@@ -46,7 +46,7 @@ export function RelatedItemsFormSection(
                       label={'Relation type'}
                     />
                     <RelatedItemComboBox
-                      name={`${name}.objectId`}
+                      name={`${name}.persistentId`}
                       label={'Item'}
                       initialValues={props.initialValues}
                       index={index}

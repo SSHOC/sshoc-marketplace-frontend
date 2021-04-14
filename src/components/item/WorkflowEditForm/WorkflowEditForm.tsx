@@ -440,7 +440,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 </div>
               ) : null}
             </div>
-            <Page onSetPage={onSetPage} prefix={state.prefix} />
+            <Page
+              onSetPage={onSetPage}
+              prefix={state.prefix}
+              item={props.item}
+            />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel
@@ -523,15 +527,16 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 interface FormPageProps {
   onSetPage: (page: PageKey, prefix?: string, onReset?: () => void) => void
   prefix?: string
+  item?: WorkflowDto
 }
 
-function WorkflowPage() {
+function WorkflowPage(props: FormPageProps) {
   return (
     <Fragment>
       <MainFormSection />
-      <ActorsFormSection />
-      <PropertiesFormSection />
-      <RelatedItemsFormSection />
+      <ActorsFormSection initialValues={props.item} />
+      <PropertiesFormSection initialValues={props.item} />
+      <RelatedItemsFormSection initialValues={props.item} />
       <SourceFormSection />
     </Fragment>
   )
