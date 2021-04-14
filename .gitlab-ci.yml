@@ -24,12 +24,15 @@ install:
       - yarn.lock
 
 .docker:
-  image: docker:stable
+  image: docker:19-dind
   services:
-    - docker:dind
+    - name: docker:19-dind
+      command: ['--mtu=1450']
   tags:
-    - sshoc-acdh-runner
+    - cluster
   variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ''
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
