@@ -150,7 +150,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             <ActorsFormSection initialValues={props.item} />
             <PropertiesFormSection initialValues={props.item} />
             <RelatedItemsFormSection initialValues={props.item} />
-            <SourceFormSection />
+            <SourceFormSection initialValues={props.item} />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel

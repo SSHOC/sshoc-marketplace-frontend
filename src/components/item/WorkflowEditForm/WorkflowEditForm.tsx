@@ -537,7 +537,7 @@ function WorkflowPage(props: FormPageProps) {
       <ActorsFormSection initialValues={props.item} />
       <PropertiesFormSection initialValues={props.item} />
       <RelatedItemsFormSection initialValues={props.item} />
-      <SourceFormSection />
+      <SourceFormSection initialValues={props.item} />
     </Fragment>
   )
 }

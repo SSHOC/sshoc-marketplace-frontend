@@ -332,7 +332,7 @@ function CreateActorForm(props: CreateActorFormProps) {
                           }
                         >
                           <ExternalIdServiceSelect
-                            name={`${name}.serviceIdentifier`}
+                            name={`${name}.serviceIdentifier.code`}
                             label="ID Service"
                           />
                           <FormTextField

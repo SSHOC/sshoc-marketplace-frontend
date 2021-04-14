@@ -9,12 +9,6 @@ import { Svg as TriangleIcon } from '@/elements/icons/small/triangle.svg'
 import { FormField } from '@/modules/form/FormField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 
-import { ActorsFormSection } from '../ActorsFormSection/ActorsFormSection'
-import { MainFormSection } from '../MainFormSection/MainFormSection'
-import { PropertiesFormSection } from '../PropertiesFormSection/PropertiesFormSection'
-import { RelatedItemsFormSection } from '../RelatedItemsFormSection/RelatedItemsFormSection'
-import { SourceFormSection } from '../SourceFormSection/SourceFormSection'
-
 export interface ItemFormValues extends WorkflowCore {
   draft?: boolean
   composedOf?: Array<StepCore & { persistentId?: string }>
