@@ -38,7 +38,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
         name={`${prefix}description`}
         label={'Description'}
         isRequired
-        rows={4}
+        rows={8}
         variant="form"
       />
       <FormFieldArray name={`${prefix}accessibleAt`}>
