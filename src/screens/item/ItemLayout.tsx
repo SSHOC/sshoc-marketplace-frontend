@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { Fragment, useMemo, useState } from 'react'
 
+import type { ActorDto, PropertyDto } from '@/api/sshoc'
 import { useGetItemCategories } from '@/api/sshoc'
 import type {
   Item as GenericItem,
@@ -139,7 +140,6 @@ export default function ItemLayout({
             <ItemPropertiesList
               properties={item.properties as ItemProperties}
               contributors={item.contributors as ItemContributors}
-              licenses={item.licenses}
               source={item.source}
               sourceItemId={item.sourceItemId}
               dateCreated={item.dateCreated}
@@ -354,21 +354,14 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
   )
 }
 
-/** thumbnail and media are already shown, no need to list them in the metadata panel */
-const HIDDEN_PROPERTIES = ['thumbnail', 'media']
-
 /**
- * Properties.
+ * Some properties are marked as `hidden` by the backend.
+ * `thumbnail` and `media` are already shown, so we treat these as additional hidden properties
+ * in the metadata sidepanel.
  */
-function ItemPropertiesList({
-  properties,
-  contributors,
-  licenses,
-  source,
-  sourceItemId,
-  dateCreated,
-  dateLastUpdated,
-}: {
+const ADDITIONAL_HIDDEN_PROPERTIES = ['thumbnail', 'media']
+
+interface ItemMetadata {
   properties: ItemProperties
   contributors: ItemContributors
   licenses?: Item['licenses']
@@ -376,159 +369,30 @@ function ItemPropertiesList({
   sourceItemId?: Item['sourceItemId']
   dateCreated?: string
   dateLastUpdated?: string
-}) {
-  const groupedProperties = useMemo(() => {
-    if (properties === undefined || properties.length === 0) return {}
+}
 
-    const grouped: Record<string, Array<ItemProperty>> = {}
-    properties.forEach((property) => {
-      if (HIDDEN_PROPERTIES.includes(property.type?.code as string)) return
+/**
+ * Properties.
+ */
+function ItemPropertiesList(props: ItemMetadata) {
+  const metadata = useItemMetadata(props)
 
-      const label = property.type?.label as string
-      if (!Array.isArray(grouped[label])) {
-        grouped[label] = []
-      }
-      grouped[label].push(property)
-    })
-    return grouped
-  }, [properties])
-
-  const sortedLabels = Object.keys(groupedProperties).sort()
-
-  if (
-    sortedLabels.length === 0 &&
-    (contributors == null || contributors.length === 0) &&
-    dateCreated == null &&
-    dateLastUpdated == null &&
-    (licenses == null || licenses.length === 0) &&
-    source == null
-  ) {
-    return null
-  }
+  if (metadata == null) return null
 
   return (
-    <VStack className="space-y-4">
-      <SubSectionTitle as="h2">Details</SubSectionTitle>
-      <VStack as="dl" className="space-y-2 text-sm leading-7">
-        {/* contributors are a top-level field, not a property */}
-        {contributors != null && contributors.length > 0 ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Contributors:</dt>
-            <dd className="inline">
-              {contributors.map((contributor, index) => {
-                if (contributor == null || contributor.actor == null)
-                  return null
-                return (
-                  <Fragment
-                    key={`${contributor.actor.id}${contributor.role?.code}`}
-                  >
-                    {index !== 0 ? <span>, </span> : null}
-                    {contributor.actor.website != null ? (
-                      <a href={contributor.actor.website}>
-                        {contributor.actor.name}
-                      </a>
-                    ) : (
-                      contributor.actor.name
-                    )}
-                  </Fragment>
-                )
-              })}
-            </dd>
-          </div>
-        ) : null}
-
-        {/* dateCreated and dateLastUpdated are top-level fields, not properties */}
-        {dateCreated != null ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Created:</dt>
-            <dd className="inline">
-              <time dateTime={dateCreated}>{formatDate(dateCreated)}</time>
-            </dd>
-          </div>
-        ) : null}
-        {dateLastUpdated != null ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Last updated:</dt>
-            <dd className="inline">
-              <time dateTime={dateLastUpdated}>
-                {formatDate(dateLastUpdated)}
-              </time>
-            </dd>
-          </div>
-        ) : null}
-
-        {/* properties */}
-        {sortedLabels.map((label) => {
-          const properties = groupedProperties[label]
-          return (
-            <div key={label}>
-              <dt className="inline mr-2 text-gray-500">{label}:</dt>
-              <dd className="inline">
-                {properties.map((property, index) => {
-                  return (
-                    <Fragment key={property.id}>
-                      {index !== 0 ? <span>, </span> : null}
-                      <ItemPropertyValue property={property} />
-                    </Fragment>
-                  )
-                })}
-              </dd>
-            </div>
-          )
-        })}
-
-        {/* licenses are a top-level field, not a property */}
-        {licenses != null && licenses.length > 0 ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Licenses:</dt>
-            <dd className="inline">
-              {licenses.map((license, index) => {
-                return (
-                  <Fragment key={license.code}>
-                    {index !== 0 ? <span>, </span> : null}
-                    {license.accessibleAt != null ? (
-                      <a href={license.accessibleAt}>{license.label}</a>
-                    ) : (
-                      license.label
-                    )}
-                  </Fragment>
-                )
-              })}
-            </dd>
-          </div>
-        ) : null}
-
-        {/* source is a top-level field, not a property */}
-        {source != null ? (
-          <div>
-            <dt className="inline mr-2 text-gray-500">Source:</dt>
-            <dd className="inline">
-              <Fragment key={source.id}>
-                {source.urlTemplate != null && sourceItemId != null ? (
-                  <a
-                    href={source.urlTemplate.replace(
-                      '{source-item-id}',
-                      sourceItemId,
-                    )}
-                  >
-                    {source.label}
-                  </a>
-                ) : (
-                  source.label
-                )}
-              </Fragment>
-            </dd>
-          </div>
-        ) : null}
-      </VStack>
-    </VStack>
+    <aside className="">
+      <h2 className="text-xl font-medium">Details</h2>
+      <div className="divide-y">{Object.values(metadata)}</div>
+    </aside>
   )
 }
 
 function ItemPropertyValue({ property }: { property: ItemProperty }) {
   switch (property.type?.type) {
     case 'concept':
-      return <a href={property.concept?.uri}>{property.concept?.label}</a>
+      return (
+        <Anchor href={property.concept?.uri}>{property.concept?.label}</Anchor>
+      )
     case 'string':
       return <span>{property.value}</span>
     case 'url':
@@ -543,4 +407,199 @@ function ItemPropertyValue({ property }: { property: ItemProperty }) {
     default:
       return null
   }
+}
+
+function useItemMetadata({
+  properties,
+  contributors,
+  source,
+  sourceItemId,
+  dateCreated,
+  dateLastUpdated,
+}: ItemMetadata) {
+  const metadata: any = {}
+
+  if (Array.isArray(properties) && properties.length > 0) {
+    const grouped: Record<string, Record<string, Array<PropertyDto>>> = {}
+    properties.forEach((property) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const type = property.type!
+      if (
+        type.hidden === true ||
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        ADDITIONAL_HIDDEN_PROPERTIES.includes(type.code!)
+      ) {
+        return
+      }
+
+      const groupName = property.type?.groupName ?? 'Other'
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      grouped[groupName] = grouped[groupName] ?? {}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const label = type.label!
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      grouped[groupName][label] = grouped[groupName][label] ?? []
+      grouped[groupName][label].push(property)
+    })
+    const sorted = Object.entries(grouped)
+      .map(([key, values]) => {
+        const sortedValues = Object.entries(values).sort(([, [a]], [, [b]]) =>
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          a.type!.ord! > b.type!.ord! ? 1 : -1,
+        )
+        return [key, sortedValues] as [
+          string,
+          Array<[string, Array<PropertyDto>]>,
+        ]
+      })
+      .sort(([a], [b]) => (a > b ? 1 : -1))
+    metadata.properties = (
+      <ul className="py-8 space-y-6">
+        {sorted.map(([groupName, entries]) => {
+          return (
+            <li key={groupName} className="flex flex-col space-y-2">
+              <span className="font-bold tracking-wide uppercase text-ui-sm whitespace-nowrap">
+                {groupName}
+              </span>
+              <ul className="flex flex-col space-y-2">
+                {entries.map(([label, properties]) => {
+                  return (
+                    <li key={label}>
+                      <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
+                        {label}:
+                      </span>
+                      <ul className="inline">
+                        {properties.map((property, index) => {
+                          return (
+                            <li key={property.id} className="inline">
+                              {index !== 0 ? ', ' : null}
+                              <ItemPropertyValue property={property} />
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </li>
+                  )
+                })}
+              </ul>
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+
+  if (Array.isArray(contributors) && contributors.length > 0) {
+    const grouped: Record<string, Array<ActorDto>> = {}
+    contributors.forEach((contributor) => {
+      const role = contributor.role?.label
+      if (role != null && contributor.actor != null) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        grouped[role] = grouped[role] ?? []
+        grouped[role].push(contributor.actor)
+      }
+    })
+    const sorted = Object.entries(grouped)
+      .map(([key, value]) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return [key, value.sort((a, b) => a.name!.localeCompare(b.name!))] as [
+          string,
+          Array<ActorDto>,
+        ]
+      })
+      .sort(([a], [b]) => (a > b ? 1 : -1))
+    metadata.contributors = (
+      <ul className="py-8 space-y-6">
+        {sorted.map(([role, actors]) => {
+          return (
+            <li key={role} className="flex flex-col space-y-3">
+              <span className="font-bold tracking-wide uppercase text-ui-sm whitespace-nowrap">
+                {role}
+              </span>
+              <ul className="flex flex-col space-y-2">
+                {actors.map((actor) => {
+                  return (
+                    <li key={actor.id} className="flex flex-col">
+                      <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
+                        {actor.name}
+                      </span>
+                      {actor.email != null ? (
+                        <Anchor href={'mailto:' + actor.email}>
+                          {actor.email}
+                        </Anchor>
+                      ) : null}
+                      {actor.website != null ? (
+                        <Anchor href={actor.website}>Website</Anchor>
+                      ) : null}
+                    </li>
+                  )
+                })}
+              </ul>
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+
+  if (dateCreated != null || dateLastUpdated != null) {
+    metadata.dates = (
+      <dl className="py-8">
+        {dateCreated != null ? (
+          <div>
+            <dt>
+              <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
+                Created:
+              </span>
+            </dt>
+            <dd>
+              <time dateTime={dateCreated}>{formatDate(dateCreated)}</time>
+            </dd>
+          </div>
+        ) : null}
+        {dateLastUpdated != null ? (
+          <div>
+            <dt>
+              <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
+                Created:
+              </span>
+            </dt>
+            <dd>
+              <time dateTime={dateLastUpdated}>
+                {formatDate(dateLastUpdated)}
+              </time>
+            </dd>
+          </div>
+        ) : null}
+      </dl>
+    )
+  }
+
+  if (source != null) {
+    const label = source.label
+
+    if (sourceItemId != null) {
+      metadata.sourceItemId = (
+        <div className="py-8">
+          <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
+            Source:
+          </span>
+          {source.urlTemplate != null ? (
+            <Anchor
+              href={source.urlTemplate.replace(
+                '{source-item-id}',
+                sourceItemId,
+              )}
+            >
+              {label}
+            </Anchor>
+          ) : (
+            <span>{label}</span>
+          )}
+        </div>
+      )
+    }
+  }
+
+  return metadata
 }
