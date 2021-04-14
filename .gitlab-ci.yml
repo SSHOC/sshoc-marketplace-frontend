@@ -2,6 +2,9 @@ stages:
   - build
   - package
 
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+
 variables:
   YARN_CACHE_FOLDER: '${CI_PROJECT_DIR}/.cache/yarn'
 
