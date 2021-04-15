@@ -46,9 +46,9 @@ interface SourceSelectProps {
  * Source.
  */
 function SourceComboBox(props: SourceSelectProps): JSX.Element {
-  const initialLabel = props.initialValues?.source?.id ?? ''
+  const initialLabel = props.initialValues?.source?.label ?? ''
   const [searchTerm, setSearchTerm] = useState(initialLabel)
-  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150)
   const sources = useGetSources(
     { q: debouncedSearchTerm },
     {
