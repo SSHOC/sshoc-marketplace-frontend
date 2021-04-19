@@ -456,7 +456,7 @@ function useItemMetadata({
       })
       .sort(([a], [b]) => (a > b ? 1 : -1))
     metadata.properties = (
-      <ul className="py-8 space-y-6">
+      <ul className="py-8 space-y-6" key="item-properties">
         {sorted.map(([groupName, entries]) => {
           return (
             <li key={groupName} className="flex flex-col space-y-2">
@@ -511,7 +511,7 @@ function useItemMetadata({
       })
       .sort(([a], [b]) => (a > b ? 1 : -1))
     metadata.contributors = (
-      <ul className="py-8 space-y-6">
+      <ul className="py-8 space-y-6" key="item-actors">
         {sorted.map(([role, actors]) => {
           return (
             <li key={role} className="flex flex-col space-y-3">
@@ -546,7 +546,7 @@ function useItemMetadata({
 
   if (dateCreated != null || dateLastUpdated != null) {
     metadata.dates = (
-      <dl className="py-8">
+      <dl className="py-8" key="item-dates">
         {dateCreated != null ? (
           <div>
             <dt>
@@ -582,7 +582,7 @@ function useItemMetadata({
 
     if (sourceItemId != null) {
       metadata.sourceItemId = (
-        <div className="py-8">
+        <div className="py-8" key="item-source">
           <span className="mr-2 font-medium text-gray-500 whitespace-nowrap">
             Source:
           </span>
@@ -605,7 +605,7 @@ function useItemMetadata({
 
   if (Array.isArray(externalIds) && externalIds.length > 0) {
     metadata.externalIds = (
-      <ul className="py-8 space-y-6">
+      <ul className="py-8 space-y-6" key="item-externalids">
         {externalIds.map((id) => {
           return (
             <li key={id.identifier} className="flex space-x-2">

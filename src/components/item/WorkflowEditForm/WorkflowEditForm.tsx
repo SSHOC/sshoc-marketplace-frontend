@@ -552,14 +552,17 @@ function WorkflowStepsPage(props: FormPageProps) {
 
 function WorkflowStepPage(props: FormPageProps) {
   const prefix = props.prefix ?? ''
+  const initialValues = prefix
+    ? get(props.item, prefix.slice(0, -1))
+    : undefined
 
   return (
     <Fragment>
       <MainFormSection prefix={prefix} />
-      <ActorsFormSection prefix={prefix} />
-      <PropertiesFormSection prefix={prefix} />
-      <RelatedItemsFormSection prefix={prefix} />
-      <SourceFormSection prefix={prefix} />
+      <ActorsFormSection prefix={prefix} initialValues={initialValues} />
+      <PropertiesFormSection prefix={prefix} initialValues={initialValues} />
+      <RelatedItemsFormSection prefix={prefix} initialValues={initialValues} />
+      <SourceFormSection prefix={prefix} initialValues={initialValues} />
     </Fragment>
   )
 }
