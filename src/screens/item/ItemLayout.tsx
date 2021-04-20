@@ -296,7 +296,7 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
           className={cx(
             'inline-flex items-center justify-center px-6',
             media.length === 1
-              ? 'text-gray-800 pointer-events-none'
+              ? 'text-gray-550 pointer-events-none'
               : 'text-primary-800',
           )}
           disabled={media.length === 1}
@@ -331,7 +331,7 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
           className={cx(
             'inline-flex items-center justify-center px-6',
             media.length === 1
-              ? 'text-gray-800 pointer-events-none'
+              ? 'text-gray-550 pointer-events-none'
               : 'text-primary-800',
           )}
           disabled={media.length === 1}
@@ -460,14 +460,14 @@ function useItemMetadata({
         {sorted.map(([groupName, entries]) => {
           return (
             <li key={groupName} className="flex flex-col space-y-2">
-              <span className="font-bold tracking-wide uppercase text-gray-550 text-ui-sm whitespace-nowrap">
+              <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
                 {groupName}
               </span>
               <ul className="flex flex-col space-y-2">
                 {entries.map(([label, properties]) => {
                   return (
                     <li key={label}>
-                      <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+                      <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                         {label}:
                       </span>
                       <ul className="inline">
@@ -515,14 +515,14 @@ function useItemMetadata({
         {sorted.map(([role, actors]) => {
           return (
             <li key={role} className="flex flex-col space-y-3">
-              <span className="font-bold tracking-wide uppercase text-gray-550 text-ui-sm whitespace-nowrap">
+              <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
                 {role}
               </span>
               <ul className="flex flex-col space-y-2">
                 {actors.map((actor) => {
                   return (
                     <li key={actor.id} className="flex flex-col">
-                      <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+                      <span className="mr-2 whitespace-nowrap">
                         {actor.name}
                       </span>
                       {actor.email != null ? (
@@ -550,7 +550,7 @@ function useItemMetadata({
         {dateCreated != null ? (
           <div>
             <dt>
-              <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 Created:
               </span>
             </dt>
@@ -562,7 +562,7 @@ function useItemMetadata({
         {dateLastUpdated != null ? (
           <div>
             <dt>
-              <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 Created:
               </span>
             </dt>
@@ -583,7 +583,7 @@ function useItemMetadata({
     if (sourceItemId != null) {
       metadata.sourceItemId = (
         <div className="py-8" key="item-source">
-          <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+          <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
             Source:
           </span>
           {source.urlTemplate != null ? (
@@ -609,7 +609,7 @@ function useItemMetadata({
         {externalIds.map((id) => {
           return (
             <li key={id.identifier} className="flex">
-              <span className="mr-2 font-medium text-gray-800 whitespace-nowrap">
+              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 {id.identifierService?.label}:
               </span>
               <span>{id.identifier}</span>
