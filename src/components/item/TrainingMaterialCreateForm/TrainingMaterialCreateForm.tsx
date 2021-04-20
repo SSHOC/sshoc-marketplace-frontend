@@ -8,7 +8,6 @@ import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFor
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
-import { SourceFormSection } from '@/components/item/SourceFormSection/SourceFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
@@ -147,7 +146,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             <ActorsFormSection />
             <PropertiesFormSection />
             <RelatedItemsFormSection />
-            <SourceFormSection />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel
