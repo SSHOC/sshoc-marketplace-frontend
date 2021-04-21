@@ -16,7 +16,7 @@ import Head from 'next/head'
 import { Router } from 'next/router'
 import np from 'nprogress'
 import type { PropsWithChildren } from 'react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { Slide, ToastContainer } from 'react-toastify'
@@ -66,22 +66,28 @@ Router.events.on('routeChangeComplete', stopProgressIndicator)
 Router.events.on('routeChangeError', stopProgressIndicator)
 
 /**
- * Client side cache for server data.
+ * Create client side cache for server data.
  */
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      cacheTime: Infinity,
-      staleTime: Infinity,
-      structuralSharing: false,
+function createQueryClient() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: Infinity,
+        staleTime: Infinity,
+        structuralSharing: false,
+      },
     },
-  },
-})
+  })
+
+  return queryClient
+}
 
 /**
  * Providers.
  */
 function Providers({ children }: PropsWithChildren<unknown>) {
+  const [queryClient] = useState(() => createQueryClient())
+
   useInteractionModality()
 
   return (
