@@ -926,7 +926,8 @@ export type DatasetCore = {
 }
 
 // const defaultBaseUrl = 'http://localhost:8080'
-const defaultBaseUrl = process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
+const defaultBaseUrl =
+  process.env.SSHOC_API_BASE_URL ?? process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
 
 export { defaultBaseUrl as baseUrl }
 
