@@ -17,8 +17,8 @@ CMS backend with `yarn dev:cms` and access the CMS at
 
 ## Production
 
-Produce a static build with `yarn build && yarn export` and serve the `out`
-folder.
+Produce a production build with `yarn build` and run the server with
+`yarn start`.
 
 ### Environment variables
 
@@ -67,3 +67,9 @@ You can build a container with `docker-compose build`, and run locally with
 `docker-compose up`, then visit [http://localhost:3000](http://localhost:3000).
 Build configuration should be provided via `.env` file (see
 `.env.local.example`).
+
+In order to run both backend and frontend locally with docker, the frontend
+container must be able to reach the backend container network at runtime. You
+can run `docker-compose -f docker-compose.local.yml up --build` (assuming the
+backend container network is up with its default name
+`sshoc-marketplace-backend_default`).
