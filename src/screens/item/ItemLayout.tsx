@@ -32,6 +32,7 @@ import { formatDate } from '@/utils/formatDate'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import type { RequiredFields } from '@/utils/ts/object'
 import { Svg as UrlIcon } from '@@/assets/icons/url.svg'
+import OrcidIcon from '@@/public/assets/images/orcid.svg'
 
 /** lazy load markdown processor */
 const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
@@ -301,7 +302,7 @@ function ItemMedia({ media }: { media: Item['media'] }) {
             />
           ) : (
             <div className="grid place-items-center">
-              <a href={currentMediaUrl} download>
+              <a href={currentMediaUrl} download rel="noopener noreferrer">
                 Download{' '}
                 {current.metadata?.filename ??
                   current.metadata?.location?.sourceUrl ??
@@ -558,10 +559,39 @@ function useItemMetadata({
               </span>
               <ul className="flex flex-col space-y-2">
                 {actors.map((actor) => {
+                  const orcid = actor.externalIds?.find(
+                    (a) => a.identifierService?.code === 'ORCID',
+                  )
                   return (
                     <li key={actor.id} className="flex flex-col">
-                      <span className="mr-2 whitespace-nowrap">
-                        {actor.name}
+                      <span className="flex flex-wrap items-center">
+                        <span className="mr-1.5">{actor.name}</span>
+                        {orcid != null ? (
+                          <a
+                            href={`https://orcid.org/${orcid.identifier}`}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            aria-label="ORCID"
+                            className="flex-shrink-0 mr-1.5"
+                          >
+                            <img
+                              src={OrcidIcon}
+                              alt=""
+                              aria-hidden
+                              className="w-5 h-5"
+                            />
+                          </a>
+                        ) : null}
+                        {Array.isArray(actor.affiliations) &&
+                        actor.affiliations.length > 0 ? (
+                          <span className="mr-1.5 text-gray-550">
+                            {actor.affiliations
+                              .map((affiliation) => {
+                                return affiliation.name
+                              })
+                              .join(', ')}
+                          </span>
+                        ) : null}
                       </span>
                       {actor.email != null ? (
                         <Anchor href={'mailto:' + actor.email}>
@@ -584,9 +614,9 @@ function useItemMetadata({
 
   if (dateCreated != null || dateLastUpdated != null) {
     metadata.dates = (
-      <dl className="py-8" key="item-dates">
+      <dl className="py-8 space-y-2" key="item-dates">
         {dateCreated != null ? (
-          <div>
+          <div className="flex">
             <dt>
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 Created:
@@ -598,10 +628,10 @@ function useItemMetadata({
           </div>
         ) : null}
         {dateLastUpdated != null ? (
-          <div>
+          <div className="flex">
             <dt>
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-                Created:
+                Last updated:
               </span>
             </dt>
             <dd>

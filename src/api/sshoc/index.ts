@@ -1000,7 +1000,7 @@ export async function request<T = unknown>({
       const data = await response.json()
       if (typeof data.message === 'string') {
         message = data.message
-      } else if (data.error !== undefined) {
+      } else if (data.error != null) {
         if (typeof data.error === 'string') {
           message = data.error
         } else if (typeof data.error.message === 'string') {
