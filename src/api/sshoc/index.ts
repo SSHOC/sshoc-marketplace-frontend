@@ -9,13 +9,13 @@
 
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import { useMutation, useQuery } from 'react-query'
 import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 
 export type ActorRoleDto = {
   code?: string
@@ -926,7 +926,8 @@ export type PublicationCore = {
   dateLastUpdated?: string
 }
 
-const defaultBaseUrl = 'http://localhost:8080'
+const defaultBaseUrl =
+  process.env.SSHOC_API_BASE_URL ?? process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
 
 export { defaultBaseUrl as baseUrl }
 
