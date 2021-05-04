@@ -6,6 +6,7 @@ import { useCreateTool, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
+import { MediaFormSection } from '@/components/item/MediaFormSection/MediaFormSection'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
 import { Button } from '@/elements/Button/Button'
@@ -145,6 +146,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             <MainFormSection />
             <ActorsFormSection />
             <PropertiesFormSection />
+            <MediaFormSection />
             <RelatedItemsFormSection />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">

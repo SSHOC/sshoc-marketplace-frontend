@@ -35,5 +35,12 @@ export function sanitizeFormValues<
     delete values.source
   }
 
+  if (Array.isArray(values.media) && values.media.length > 0) {
+    values.media = values.media.map((m) => ({
+      mediaId: m.mediaId,
+      caption: m.caption,
+    }))
+  }
+
   return values
 }

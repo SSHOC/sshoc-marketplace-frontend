@@ -18,6 +18,7 @@ import {
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
+import { MediaFormSection } from '@/components/item/MediaFormSection/MediaFormSection'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
 import { WorkflowStepsFormSection } from '@/components/item/WorkflowStepsFormSection/WorkflowStepsFormSection'
@@ -471,6 +472,7 @@ function WorkflowPage() {
       <MainFormSection />
       <ActorsFormSection />
       <PropertiesFormSection />
+      <MediaFormSection />
       <RelatedItemsFormSection />
     </Fragment>
   )

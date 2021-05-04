@@ -3,15 +3,17 @@ import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import type { ActorDto, PropertyDto } from '@/api/sshoc'
 import { useGetItemCategories } from '@/api/sshoc'
+import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
 import type {
   Item as GenericItem,
   ItemCategory as ItemCategoryWithStep,
   ItemSearchQuery,
 } from '@/api/sshoc/types'
+import DocumentIcon from '@/elements/icons/small/document.svg'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import RelatedItems from '@/modules/item/RelatedItems'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -24,7 +26,6 @@ import Header from '@/modules/ui/Header'
 import { ItemCategoryIcon } from '@/modules/ui/ItemCategoryIcon'
 import Triangle from '@/modules/ui/Triangle'
 import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
-import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/item/ItemLayout.module.css'
 import { formatDate } from '@/utils/formatDate'
@@ -93,7 +94,7 @@ export default function ItemLayout({
             <div className="flex items-center justify-between space-x-4">
               <ItemThumbnail
                 category={item.category as ItemCategory}
-                properties={item.properties as ItemProperties}
+                thumbnail={item.thumbnail}
               />
               <Title>{item.label}</Title>
             </div>
@@ -125,7 +126,7 @@ export default function ItemLayout({
           <ItemDescription description={item.description} />
         </VStack>
         <div className={cx(styles.mainColumn, 'px-6 py-6')}>
-          <ItemMedia properties={item.properties as ItemProperties} />
+          <ItemMedia media={item.media} />
         </div>
         {children}
         <div className={cx(styles.mainColumn, 'px-6 py-6')}>
@@ -162,18 +163,18 @@ function SideColumn({ children }: PropsWithChildren<unknown>) {
  */
 function ItemThumbnail({
   category,
-  properties,
+  thumbnail,
 }: {
   category: ItemCategory
-  properties: ItemProperties
+  thumbnail: Item['thumbnail']
 }) {
-  if (properties === undefined) return null
-  const thumbnail = properties.find(
-    (property) => property.type?.code === 'thumbnail',
-  )
-  if (thumbnail !== undefined) {
+  if (thumbnail != null && thumbnail.mediaId !== undefined) {
     return (
-      <img src={thumbnail.value} alt="" className="object-contain w-24 h-24" />
+      <img
+        src={getMediaFileUrl({ mediaId: thumbnail.mediaId })}
+        alt=""
+        className="object-contain w-24 h-24"
+      />
     )
   }
   return (
@@ -268,26 +269,46 @@ function AccessibleAtLinks({
 /**
  * Item media.
  */
-function ItemMedia({ properties }: { properties: ItemProperties }) {
+function ItemMedia({ media }: { media: Item['media'] }) {
   const [index, setIndex] = useState(0)
-
-  const media = properties.filter((property) => property.type?.code === 'media')
 
   if (media === undefined || media.length === 0) return null
 
   const current = media[index]
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const mediaId = current.metadata!.mediaId!
+  const currentMediaUrl =
+    current.metadata!.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
+  const currentMediaCategory = current.metadata!.category
 
   return (
     <section>
       <SectionTitle className="sr-only">Media</SectionTitle>
       <div className="relative w-full h-64 border border-b-0 border-gray-200">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <img
-            src={current.value}
-            alt=""
-            loading="lazy"
-            className="object-contain w-full h-full"
-          />
+          {currentMediaCategory === 'image' ? (
+            <img
+              src={currentMediaUrl}
+              alt=""
+              loading="lazy"
+              className="object-contain w-full h-full"
+            />
+          ) : currentMediaCategory === 'video' ? (
+            // eslint-disable-next-line jsx-a11y/media-has-caption
+            <video
+              src={currentMediaUrl}
+              className="object-contain w-full h-full"
+            />
+          ) : (
+            <div className="grid place-items-center">
+              <a href={currentMediaUrl} download>
+                Download{' '}
+                {current.metadata?.filename ??
+                  current.metadata?.location?.sourceUrl ??
+                  'document'}
+              </a>
+            </div>
+          )}
         </div>
       </div>
       <div className="flex justify-center border border-gray-200">
@@ -320,11 +341,28 @@ function ItemMedia({ properties }: { properties: ItemProperties }) {
           </svg>
         </button>
         <ul className="flex justify-center flex-1 px-6 space-x-1 border-l border-r border-gray-200">
-          {media.map((m) => (
-            <li key={m.id}>
-              <img src={m.value} alt="" className="h-24 py-2" />
-            </li>
-          ))}
+          {media.map((m, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const mediaId = m.metadata!.mediaId!
+            const hasThumbnail = m.metadata!.hasThumbnail
+            return (
+              <li key={m.metadata?.mediaId}>
+                <button onClick={() => setIndex(index)}>
+                  {hasThumbnail === true ? (
+                    <img
+                      src={getMediaThumbnailUrl({ mediaId })}
+                      alt=""
+                      className="h-24 py-2"
+                    />
+                  ) : (
+                    <div className="grid w-16 h-24 py-2 place-items-center">
+                      <img src={DocumentIcon} alt="" className="w-6 h-6" />
+                    </div>
+                  )}
+                </button>
+              </li>
+            )
+          })}
         </ul>
         <button
           aria-label="Next image"

@@ -102,6 +102,21 @@ export function convertToInitialFormValues(
       id: item.source.id,
     },
     sourceItemId: item.sourceItemId,
+    /**
+     * Only id needed
+     */
+    thumbnail: item.thumbnail,
+    /**
+     * Only id needed, but keep additional info around - will be stripped in `sanitizeFormValues` before submit.
+     */
+    media: item.media?.map((m) => ({
+      caption: m.caption,
+      mediaId: m.metadata?.mediaId,
+      filename: m.metadata?.filename,
+      hasThumbnail: m.metadata?.hasThumbnail,
+      category: m.metadata?.category,
+      location: m.metadata?.location,
+    })),
   }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

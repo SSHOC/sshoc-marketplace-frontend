@@ -8,7 +8,7 @@ import type { UseMutationOptions, UseMutationResult } from 'react-query'
 import { useMutation } from 'react-query'
 
 import type { ImplicitGrantTokenData, OAuthRegistrationDto } from '@/api/sshoc'
-import { request } from '@/api/sshoc'
+import { baseUrl, request } from '@/api/sshoc'
 
 /**
  * Sign in user with username and password.
@@ -174,4 +174,20 @@ export function useValidateImplicitGrantTokenWithRegistration(
   unknown
 > {
   return useMutation(validateImplicitGrantTokenWithRegistration, config)
+}
+
+export function getMediaThumbnailUrl({ mediaId }: { mediaId: string }): string {
+  const url = new URL(
+    `/api/media/thumbnail/${encodeURIComponent(mediaId)}`,
+    baseUrl,
+  )
+  return String(url)
+}
+
+export function getMediaFileUrl({ mediaId }: { mediaId: string }): string {
+  const url = new URL(
+    `/api/media/download/${encodeURIComponent(mediaId)}`,
+    baseUrl,
+  )
+  return String(url)
 }
