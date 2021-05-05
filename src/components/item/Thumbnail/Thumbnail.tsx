@@ -20,7 +20,7 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
   const caption = props.caption
 
   return (
-    <figure className="relative flex flex-col items-center p-2 space-y-2 w-80">
+    <figure className="relative flex flex-col items-center max-w-xs p-2 space-y-2">
       {props.onRemove !== undefined ? (
         <button
           onClick={props.onRemove}
@@ -42,7 +42,9 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
           <img src={DocumentIcon} alt="" className="w-6 h-6" />
         </div>
       )}
-      <figcaption>{caption ?? filename ?? location?.sourceUrl}</figcaption>
+      <figcaption className="break-all">
+        {caption ?? filename ?? location?.sourceUrl}
+      </figcaption>
     </figure>
   )
 }

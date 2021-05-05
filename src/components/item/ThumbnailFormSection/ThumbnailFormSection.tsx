@@ -37,7 +37,7 @@ export function ThumbnailFormSection(
               {input.value != null && input.value !== '' ? (
                 <Thumbnail
                   onRemove={() => input.onChange(null)}
-                  media={input.value}
+                  media={{ ...input.value, hasThumbnail: true }}
                 />
               ) : null}
               <div className="flex items-center space-x-8">
@@ -48,7 +48,10 @@ export function ThumbnailFormSection(
                   isOpen={addThumbnailDialog.isOpen}
                   onDismiss={addThumbnailDialog.close}
                   onSuccess={(mediaInfo, caption) => {
-                    if (mediaInfo.category !== 'image') {
+                    if (
+                      mediaInfo.category !== 'image' ||
+                      mediaInfo.hasThumbnail !== true
+                    ) {
                       throw new MediaError('A thumbnail must be an image.')
                     }
                     input.onChange({ ...mediaInfo, caption })
@@ -59,7 +62,8 @@ export function ThumbnailFormSection(
                   {({ input: media }) => {
                     const images =
                       media.value?.filter(
-                        (m: MediaDetails) => m.category === 'image',
+                        (m: MediaDetails) =>
+                          m.category === 'image' && m.hasThumbnail === true,
                       ) ?? []
                     return (
                       <Fragment>
