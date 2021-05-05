@@ -22,6 +22,7 @@ import { MainFormSection } from '@/components/item/MainFormSection/MainFormSecti
 import { MediaFormSection } from '@/components/item/MediaFormSection/MediaFormSection'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
+import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/ThumbnailFormSection'
 import { WorkflowStepsFormSection } from '@/components/item/WorkflowStepsFormSection/WorkflowStepsFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
@@ -537,6 +538,7 @@ function WorkflowPage(props: FormPageProps) {
       <ActorsFormSection initialValues={props.item} />
       <PropertiesFormSection initialValues={props.item} />
       <MediaFormSection initialValues={props.item} />
+      <ThumbnailFormSection initialValues={props.item} />
       <RelatedItemsFormSection initialValues={props.item} />
     </Fragment>
   )

@@ -172,7 +172,7 @@ function ItemThumbnail({
   if (thumbnail != null && thumbnail.mediaId !== undefined) {
     return (
       <img
-        src={getMediaFileUrl({ mediaId: thumbnail.mediaId })}
+        src={getMediaThumbnailUrl({ mediaId: thumbnail.mediaId })}
         alt=""
         className="object-contain w-24 h-24"
       />
@@ -482,6 +482,7 @@ function useItemMetadata({
       grouped[groupName][label] = grouped[groupName][label] ?? []
       grouped[groupName][label].push(property)
     })
+
     const sorted = Object.entries(grouped)
       .map(([key, values]) => {
         const sortedValues = Object.entries(values).sort(([, [a]], [, [b]]) =>
@@ -494,40 +495,42 @@ function useItemMetadata({
         ]
       })
       .sort(([a], [b]) => (a > b ? 1 : -1))
-    metadata.properties = (
-      <ul className="py-8 space-y-6" key="item-properties">
-        {sorted.map(([groupName, entries]) => {
-          return (
-            <li key={groupName} className="flex flex-col space-y-2">
-              <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
-                {groupName}
-              </span>
-              <ul className="flex flex-col space-y-2">
-                {entries.map(([label, properties]) => {
-                  return (
-                    <li key={label}>
-                      <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-                        {label}:
-                      </span>
-                      <ul className="inline">
-                        {properties.map((property, index) => {
-                          return (
-                            <li key={property.id} className="inline">
-                              {index !== 0 ? ', ' : null}
-                              <ItemPropertyValue property={property} />
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </li>
-                  )
-                })}
-              </ul>
-            </li>
-          )
-        })}
-      </ul>
-    )
+
+    metadata.properties =
+      sorted.length === 0 ? null : (
+        <ul className="py-8 space-y-6" key="item-properties">
+          {sorted.map(([groupName, entries]) => {
+            return (
+              <li key={groupName} className="flex flex-col space-y-2">
+                <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
+                  {groupName}
+                </span>
+                <ul className="flex flex-col space-y-2">
+                  {entries.map(([label, properties]) => {
+                    return (
+                      <li key={label}>
+                        <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
+                          {label}:
+                        </span>
+                        <ul className="inline">
+                          {properties.map((property, index) => {
+                            return (
+                              <li key={property.id} className="inline">
+                                {index !== 0 ? ', ' : null}
+                                <ItemPropertyValue property={property} />
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+            )
+          })}
+        </ul>
+      )
   }
 
   if (Array.isArray(contributors) && contributors.length > 0) {
@@ -540,6 +543,7 @@ function useItemMetadata({
         grouped[role].push(contributor.actor)
       }
     })
+
     const sorted = Object.entries(grouped)
       .map(([key, value]) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -549,67 +553,69 @@ function useItemMetadata({
         ]
       })
       .sort(([a], [b]) => (a > b ? 1 : -1))
-    metadata.contributors = (
-      <ul className="py-8 space-y-6" key="item-actors">
-        {sorted.map(([role, actors]) => {
-          return (
-            <li key={role} className="flex flex-col space-y-3">
-              <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
-                {role}
-              </span>
-              <ul className="flex flex-col space-y-2">
-                {actors.map((actor) => {
-                  const orcid = actor.externalIds?.find(
-                    (a) => a.identifierService?.code === 'ORCID',
-                  )
-                  return (
-                    <li key={actor.id} className="flex flex-col">
-                      <span className="flex flex-wrap items-center">
-                        <span className="mr-1.5">{actor.name}</span>
-                        {orcid != null ? (
-                          <a
-                            href={`https://orcid.org/${orcid.identifier}`}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            aria-label="ORCID"
-                            className="flex-shrink-0 mr-1.5"
-                          >
-                            <img
-                              src={OrcidIcon}
-                              alt=""
-                              aria-hidden
-                              className="w-5 h-5"
-                            />
-                          </a>
+
+    metadata.contributors =
+      sorted.length === 0 ? null : (
+        <ul className="py-8 space-y-6" key="item-actors">
+          {sorted.map(([role, actors]) => {
+            return (
+              <li key={role} className="flex flex-col space-y-3">
+                <span className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
+                  {role}
+                </span>
+                <ul className="flex flex-col space-y-2">
+                  {actors.map((actor) => {
+                    const orcid = actor.externalIds?.find(
+                      (a) => a.identifierService?.code === 'ORCID',
+                    )
+                    return (
+                      <li key={actor.id} className="flex flex-col">
+                        <span className="flex flex-wrap items-center">
+                          <span className="mr-1.5">{actor.name}</span>
+                          {orcid != null ? (
+                            <a
+                              href={`https://orcid.org/${orcid.identifier}`}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              aria-label="ORCID"
+                              className="flex-shrink-0 mr-1.5"
+                            >
+                              <img
+                                src={OrcidIcon}
+                                alt=""
+                                aria-hidden
+                                className="w-5 h-5"
+                              />
+                            </a>
+                          ) : null}
+                          {Array.isArray(actor.affiliations) &&
+                          actor.affiliations.length > 0 ? (
+                            <span className="mr-1.5 text-gray-550">
+                              {actor.affiliations
+                                .map((affiliation) => {
+                                  return affiliation.name
+                                })
+                                .join(', ')}
+                            </span>
+                          ) : null}
+                        </span>
+                        {actor.email != null ? (
+                          <Anchor href={'mailto:' + actor.email}>
+                            {actor.email}
+                          </Anchor>
                         ) : null}
-                        {Array.isArray(actor.affiliations) &&
-                        actor.affiliations.length > 0 ? (
-                          <span className="mr-1.5 text-gray-550">
-                            {actor.affiliations
-                              .map((affiliation) => {
-                                return affiliation.name
-                              })
-                              .join(', ')}
-                          </span>
+                        {actor.website != null ? (
+                          <Anchor href={actor.website}>Website</Anchor>
                         ) : null}
-                      </span>
-                      {actor.email != null ? (
-                        <Anchor href={'mailto:' + actor.email}>
-                          {actor.email}
-                        </Anchor>
-                      ) : null}
-                      {actor.website != null ? (
-                        <Anchor href={actor.website}>Website</Anchor>
-                      ) : null}
-                    </li>
-                  )
-                })}
-              </ul>
-            </li>
-          )
-        })}
-      </ul>
-    )
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+            )
+          })}
+        </ul>
+      )
   }
 
   if (dateCreated != null || dateLastUpdated != null) {
