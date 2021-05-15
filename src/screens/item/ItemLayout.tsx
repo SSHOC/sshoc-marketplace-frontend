@@ -277,10 +277,10 @@ function ItemMedia({ media }: { media: Item['media'] }) {
 
   const current = media[index]
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const mediaId = current.metadata!.mediaId!
+  const mediaId = current.info!.mediaId!
   const currentMediaUrl =
-    current.metadata!.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
-  const currentMediaCategory = current.metadata!.category
+    current.info?.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
+  const currentMediaCategory = current.info?.category
 
   return (
     <section>
@@ -304,8 +304,8 @@ function ItemMedia({ media }: { media: Item['media'] }) {
             <div className="grid place-items-center">
               <a href={currentMediaUrl} download rel="noopener noreferrer">
                 Download{' '}
-                {current.metadata?.filename ??
-                  current.metadata?.location?.sourceUrl ??
+                {current.info?.filename ??
+                  current.info?.location?.sourceUrl ??
                   'document'}
               </a>
             </div>
@@ -343,11 +343,13 @@ function ItemMedia({ media }: { media: Item['media'] }) {
         </button>
         <ul className="flex justify-center flex-1 px-6 space-x-1 border-l border-r border-gray-200">
           {media.map((m, index) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const mediaId = m.metadata!.mediaId!
-            const hasThumbnail = m.metadata!.hasThumbnail
+            const mediaId = m.info?.mediaId
+            const hasThumbnail = m.info?.hasThumbnail
+
+            if (mediaId == null) return null
+
             return (
-              <li key={m.metadata?.mediaId}>
+              <li key={m.info?.mediaId}>
                 <button onClick={() => setIndex(index)}>
                   {hasThumbnail === true ? (
                     <img

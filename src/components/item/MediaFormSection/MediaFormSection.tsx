@@ -45,7 +45,7 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
                           return (
                             <Thumbnail
                               onRemove={() => fields.remove(index)}
-                              media={input.value}
+                              media={input.value.info}
                               caption={input.value.caption}
                             />
                           )
@@ -61,9 +61,7 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
               <AddMediaDialog
                 isOpen={isDialogOpen}
                 onDismiss={closeDialog}
-                onSuccess={(mediaInfo, caption) =>
-                  fields.push({ ...mediaInfo, caption })
-                }
+                onSuccess={(info, caption) => fields.push({ info, caption })}
               />
             </div>
           )
@@ -76,7 +74,7 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
 interface AddMediaDialogProps {
   isOpen: boolean
   onDismiss: () => void
-  onSuccess?: (mediaInfo: MediaDetails, caption?: string) => void
+  onSuccess?: (info: MediaDetails, caption?: string) => void
 }
 
 /**

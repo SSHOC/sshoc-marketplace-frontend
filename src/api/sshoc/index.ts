@@ -17,15 +17,38 @@ import type {
 } from 'react-query'
 import { useMutation, useQuery } from 'react-query'
 
-export type ActorRoleDto = {
+export type LicenseTypeDto = {
   code?: string
   label?: string
 }
 
-export type ActorRoleCore = {
+export type ItemRelationDto = {
   code?: string
-  label: string
-  ord?: number /* int32 */
+  label?: string
+}
+
+export type ItemRelationId = {
+  code?: string
+}
+
+export type ItemBasicDto = {
+  id?: number /* int64 */
+  category?:
+    | 'tool-or-service'
+    | 'training-material'
+    | 'publication'
+    | 'dataset'
+    | 'workflow'
+    | 'step'
+  label?: string
+  version?: string
+  persistentId?: string
+}
+
+export type ItemRelatedItemDto = {
+  subject?: ItemBasicDto
+  object?: ItemBasicDto
+  relation?: ItemRelationDto
 }
 
 export type ActorDto = {
@@ -47,6 +70,41 @@ export type ActorSourceDto = {
   label?: string
 }
 
+export type PaginatedActors = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  actors?: Array<ActorDto>
+}
+
+export type ActorCore = {
+  name?: string
+  externalIds?: Array<ActorExternalIdCore>
+  website?: string
+  email?: string
+  affiliations?: Array<ActorId>
+}
+
+export type ActorExternalIdCore = {
+  identifierService: ActorSourceId
+  identifier: string
+}
+
+export type ActorId = {
+  id?: number /* int64 */
+}
+
+export type ActorSourceId = {
+  code?: string
+}
+
+export type ActorRoleDto = {
+  code?: string
+  label?: string
+}
+
 export type ConceptBasicDto = {
   code?: string
   vocabulary?: VocabularyBasicDto
@@ -54,20 +112,6 @@ export type ConceptBasicDto = {
   notation?: string
   definition?: string
   uri?: string
-}
-
-export type ItemBasicDto = {
-  id?: number /* int64 */
-  category?:
-    | 'tool-or-service'
-    | 'training-material'
-    | 'publication'
-    | 'dataset'
-    | 'workflow'
-    | 'step'
-  label?: string
-  version?: string
-  persistentId?: string
 }
 
 export type ItemContributorDto = {
@@ -81,13 +125,8 @@ export type ItemExternalIdDto = {
 }
 
 export type ItemMediaDto = {
-  metadata?: MediaDetails
+  info?: MediaDetails
   caption?: string
-}
-
-export type ItemRelationDto = {
-  code?: string
-  label?: string
 }
 
 export type ItemSourceDto = {
@@ -106,11 +145,6 @@ export type LicenseDto = {
   accessibleAt?: string
 }
 
-export type LicenseTypeDto = {
-  code?: string
-  label?: string
-}
-
 export type MediaDetails = {
   mediaId?: string /* uuid */
   category?: 'image' | 'video' | 'object' | 'thumbnail'
@@ -122,6 +156,15 @@ export type MediaDetails = {
 
 export type MediaLocation = {
   sourceUrl?: string /* url */
+}
+
+export type PaginatedWorkflows = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  workflows?: Array<WorkflowDto>
 }
 
 export type PropertyDto = {
@@ -163,7 +206,7 @@ export type SourceBasicDto = {
   urlTemplate?: string
 }
 
-export type ToolDto = {
+export type StepDto = {
   id?: number /* int64 */
   category?:
     | 'tool-or-service'
@@ -215,17 +258,41 @@ export type VocabularyBasicDto = {
   accessibleAt?: string
 }
 
-export type PaginatedTools = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  tools?: Array<ToolDto>
-}
-
-export type ActorId = {
+export type WorkflowDto = {
   id?: number /* int64 */
+  category?:
+    | 'tool-or-service'
+    | 'training-material'
+    | 'publication'
+    | 'dataset'
+    | 'workflow'
+    | 'step'
+  label?: string
+  version?: string
+  persistentId?: string
+  description?: string
+  licenses?: Array<LicenseDto>
+  contributors?: Array<ItemContributorDto>
+  properties?: Array<PropertyDto>
+  externalIds?: Array<ItemExternalIdDto>
+  accessibleAt?: Array<string>
+  source?: SourceBasicDto
+  sourceItemId?: string
+  relatedItems?: Array<RelatedItemDto>
+  media?: Array<ItemMediaDto>
+  thumbnail?: ItemThumbnailId
+  informationContributor?: UserDto
+  lastInfoUpdate?: string
+  status?:
+    | 'draft'
+    | 'ingested'
+    | 'suggested'
+    | 'approved'
+    | 'disapproved'
+    | 'deprecated'
+  olderVersions?: Array<ItemBasicDto>
+  newerVersions?: Array<ItemBasicDto>
+  composedOf?: Array<StepDto>
 }
 
 export type ActorRoleId = {
@@ -244,7 +311,7 @@ export type ItemContributorId = {
 }
 
 export type ItemExternalIdCore = {
-  serviceIdentifier: ItemExternalIdId
+  identifierService: ItemExternalIdId
   identifier: string
 }
 
@@ -253,16 +320,16 @@ export type ItemExternalIdId = {
 }
 
 export type ItemMediaCore = {
-  mediaId?: string /* uuid */
+  info?: MediaDetailsId
   caption?: string
-}
-
-export type ItemRelationId = {
-  code?: string
 }
 
 export type LicenseId = {
   code?: string
+}
+
+export type MediaDetailsId = {
+  mediaId?: string /* uuid */
 }
 
 export type PropertyCore = {
@@ -284,6 +351,164 @@ export type SourceId = {
   id?: number /* int64 */
 }
 
+export type StepCore = {
+  label?: string
+  version?: string
+  description?: string
+  licenses?: Array<LicenseId>
+  contributors?: Array<ItemContributorId>
+  externalIds?: Array<ItemExternalIdCore>
+  properties?: Array<PropertyCore>
+  relatedItems?: Array<RelatedItemCore>
+  media?: Array<ItemMediaCore>
+  thumbnail?: ItemThumbnailId
+  accessibleAt?: Array<string>
+  source?: SourceId
+  sourceItemId?: string
+  stepNo?: number /* int32 */
+}
+
+export type VocabularyId = {
+  code?: string
+}
+
+export type WorkflowCore = {
+  label?: string
+  version?: string
+  description?: string
+  licenses?: Array<LicenseId>
+  contributors?: Array<ItemContributorId>
+  externalIds?: Array<ItemExternalIdCore>
+  properties?: Array<PropertyCore>
+  relatedItems?: Array<RelatedItemCore>
+  media?: Array<ItemMediaCore>
+  thumbnail?: ItemThumbnailId
+  accessibleAt?: Array<string>
+  source?: SourceId
+  sourceItemId?: string
+}
+
+export type OAuthRegistrationData = {
+  id?: number /* int64 */
+  displayName?: string
+  email?: string
+  acceptedRegulations?: boolean
+}
+
+export type ConceptRelationDto = {
+  code?: string
+  label?: string
+}
+
+export type PaginatedLicenses = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  licenses?: Array<LicenseDto>
+}
+
+export type ItemSourceCore = {
+  code?: string
+  label: string
+  ord?: number /* int32 */
+}
+
+export type PublicationDto = {
+  id?: number /* int64 */
+  category?:
+    | 'tool-or-service'
+    | 'training-material'
+    | 'publication'
+    | 'dataset'
+    | 'workflow'
+    | 'step'
+  label?: string
+  version?: string
+  persistentId?: string
+  description?: string
+  licenses?: Array<LicenseDto>
+  contributors?: Array<ItemContributorDto>
+  properties?: Array<PropertyDto>
+  externalIds?: Array<ItemExternalIdDto>
+  accessibleAt?: Array<string>
+  source?: SourceBasicDto
+  sourceItemId?: string
+  relatedItems?: Array<RelatedItemDto>
+  media?: Array<ItemMediaDto>
+  thumbnail?: ItemThumbnailId
+  informationContributor?: UserDto
+  lastInfoUpdate?: string
+  status?:
+    | 'draft'
+    | 'ingested'
+    | 'suggested'
+    | 'approved'
+    | 'disapproved'
+    | 'deprecated'
+  olderVersions?: Array<ItemBasicDto>
+  newerVersions?: Array<ItemBasicDto>
+  dateCreated?: string
+  dateLastUpdated?: string
+}
+
+export type PublicationCore = {
+  label?: string
+  version?: string
+  description?: string
+  licenses?: Array<LicenseId>
+  contributors?: Array<ItemContributorId>
+  externalIds?: Array<ItemExternalIdCore>
+  properties?: Array<PropertyCore>
+  relatedItems?: Array<RelatedItemCore>
+  media?: Array<ItemMediaCore>
+  thumbnail?: ItemThumbnailId
+  accessibleAt?: Array<string>
+  source?: SourceId
+  sourceItemId?: string
+  dateCreated?: string
+  dateLastUpdated?: string
+}
+
+export type PaginatedPublications = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  publications?: Array<PublicationDto>
+}
+
+export type ActorRoleCore = {
+  code?: string
+  label: string
+  ord?: number /* int32 */
+}
+
+export type PaginatedSources = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  sources?: Array<SourceDto>
+}
+
+export type SourceDto = {
+  id?: number /* int64 */
+  label?: string
+  url?: string
+  urlTemplate?: string
+  lastHarvestedDate?: string
+}
+
+export type SourceCore = {
+  label?: string
+  url?: string
+  urlTemplate?: string
+}
+
 export type ToolCore = {
   label?: string
   version?: string
@@ -300,8 +525,77 @@ export type ToolCore = {
   sourceItemId?: string
 }
 
-export type VocabularyId = {
+export type ToolDto = {
+  id?: number /* int64 */
+  category?:
+    | 'tool-or-service'
+    | 'training-material'
+    | 'publication'
+    | 'dataset'
+    | 'workflow'
+    | 'step'
+  label?: string
+  version?: string
+  persistentId?: string
+  description?: string
+  licenses?: Array<LicenseDto>
+  contributors?: Array<ItemContributorDto>
+  properties?: Array<PropertyDto>
+  externalIds?: Array<ItemExternalIdDto>
+  accessibleAt?: Array<string>
+  source?: SourceBasicDto
+  sourceItemId?: string
+  relatedItems?: Array<RelatedItemDto>
+  media?: Array<ItemMediaDto>
+  thumbnail?: ItemThumbnailId
+  informationContributor?: UserDto
+  lastInfoUpdate?: string
+  status?:
+    | 'draft'
+    | 'ingested'
+    | 'suggested'
+    | 'approved'
+    | 'disapproved'
+    | 'deprecated'
+  olderVersions?: Array<ItemBasicDto>
+  newerVersions?: Array<ItemBasicDto>
+}
+
+export type PaginatedTools = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  tools?: Array<ToolDto>
+}
+
+export type CountedPropertyType = {
   code?: string
+  label?: string
+  count?: number /* int64 */
+  checked?: boolean
+}
+
+export type PaginatedSearchConcepts = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  q?: string
+  concepts?: Array<SearchConcept>
+  types?: Record<string, CountedPropertyType>
+}
+
+export type SearchConcept = {
+  code?: string
+  vocabulary?: VocabularyId
+  label?: string
+  notation?: string
+  definition?: string
+  uri?: string
+  types?: Array<PropertyTypeId>
 }
 
 export type CheckedCount = {
@@ -352,44 +646,100 @@ export type SearchItem = {
   owner?: string
 }
 
-export type CountedPropertyType = {
-  code?: string
-  label?: string
-  count?: number /* int64 */
-  checked?: boolean
-}
-
-export type PaginatedSearchConcepts = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  q?: string
-  concepts?: Array<SearchConcept>
-  types?: Record<string, CountedPropertyType>
-}
-
-export type SearchConcept = {
-  code?: string
-  vocabulary?: VocabularyId
-  label?: string
-  notation?: string
-  definition?: string
-  uri?: string
-  types?: Array<PropertyTypeId>
-}
-
 export type SuggestedSearchPhrases = {
   phrase?: string
   suggestions?: Array<string>
 }
 
-export type OAuthRegistrationData = {
+export type ItemCommentCore = {
+  body?: string
+}
+
+export type ItemCommentDto = {
   id?: number /* int64 */
-  displayName?: string
-  email?: string
-  acceptedRegulations?: boolean
+  body?: string
+  creator?: UserDto
+  dateCreated?: string
+  dateLastUpdated?: string
+}
+
+export type PaginatedPropertyTypes = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  propertyTypes?: Array<PropertyTypeDto>
+}
+
+export type PropertyTypeCore = {
+  code?: string
+  label?: string
+  type?: 'concept' | 'string' | 'url' | 'int' | 'float' | 'date'
+  groupName?: string
+  hidden?: boolean
+  ord?: number /* int32 */
+  allowedVocabularies?: Array<string>
+}
+
+export type PropertyTypeReorder = {
+  code: string
+  ord?: number /* int32 */
+}
+
+export type PropertyTypesReordering = {
+  shifts: Array<PropertyTypeReorder>
+}
+
+export type Resource = {
+  open?: boolean
+  file?: string /* binary */
+  url?: string /* url */
+  readable?: boolean
+  uri?: string /* uri */
+  filename?: string
+  description?: string
+  inputStream?: {}
+}
+
+export type MediaUploadInfo = {
+  mediaId?: string /* uuid */
+  filename?: string
+  mimeType?: string
+  nextChunkNo?: number /* int32 */
+}
+
+export type LoginData = {
+  username?: string
+  password?: string
+}
+
+export type PaginatedUsers = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  users?: Array<UserDto>
+}
+
+export type ActorSourceCore = {
+  code?: string
+  label: string
+  ord?: number /* int32 */
+}
+
+export type MediaSourceDto = {
+  code?: string
+  serviceUrl?: string
+  mediaCategory?: 'image' | 'video' | 'object' | 'thumbnail'
+}
+
+export type MediaSourceCore = {
+  code?: string
+  serviceUrl?: string
+  mediaCategory?: 'image' | 'video' | 'object' | 'thumbnail'
+  ord?: number /* int32 */
 }
 
 export type ImplicitGrantTokenData = {
@@ -401,6 +751,71 @@ export type OAuthRegistrationDto = {
   id?: number /* int64 */
   displayName?: string
   email?: string
+}
+
+export type DatasetDto = {
+  id?: number /* int64 */
+  category?:
+    | 'tool-or-service'
+    | 'training-material'
+    | 'publication'
+    | 'dataset'
+    | 'workflow'
+    | 'step'
+  label?: string
+  version?: string
+  persistentId?: string
+  description?: string
+  licenses?: Array<LicenseDto>
+  contributors?: Array<ItemContributorDto>
+  properties?: Array<PropertyDto>
+  externalIds?: Array<ItemExternalIdDto>
+  accessibleAt?: Array<string>
+  source?: SourceBasicDto
+  sourceItemId?: string
+  relatedItems?: Array<RelatedItemDto>
+  media?: Array<ItemMediaDto>
+  thumbnail?: ItemThumbnailId
+  informationContributor?: UserDto
+  lastInfoUpdate?: string
+  status?:
+    | 'draft'
+    | 'ingested'
+    | 'suggested'
+    | 'approved'
+    | 'disapproved'
+    | 'deprecated'
+  olderVersions?: Array<ItemBasicDto>
+  newerVersions?: Array<ItemBasicDto>
+  dateCreated?: string
+  dateLastUpdated?: string
+}
+
+export type DatasetCore = {
+  label?: string
+  version?: string
+  description?: string
+  licenses?: Array<LicenseId>
+  contributors?: Array<ItemContributorId>
+  externalIds?: Array<ItemExternalIdCore>
+  properties?: Array<PropertyCore>
+  relatedItems?: Array<RelatedItemCore>
+  media?: Array<ItemMediaCore>
+  thumbnail?: ItemThumbnailId
+  accessibleAt?: Array<string>
+  source?: SourceId
+  sourceItemId?: string
+  dateCreated?: string
+  dateLastUpdated?: string
+}
+
+export type PaginatedDatasets = {
+  hits?: number /* int64 */
+  count?: number /* int32 */
+  page?: number /* int32 */
+  perpage?: number /* int32 */
+  pages?: number /* int32 */
+  datasets?: Array<DatasetDto>
 }
 
 export type TrainingMaterialDto = {
@@ -468,109 +883,6 @@ export type PaginatedTrainingMaterials = {
   trainingMaterials?: Array<TrainingMaterialDto>
 }
 
-export type ItemSourceCore = {
-  code?: string
-  label: string
-  ord?: number /* int32 */
-}
-
-export type DatasetDto = {
-  id?: number /* int64 */
-  category?:
-    | 'tool-or-service'
-    | 'training-material'
-    | 'publication'
-    | 'dataset'
-    | 'workflow'
-    | 'step'
-  label?: string
-  version?: string
-  persistentId?: string
-  description?: string
-  licenses?: Array<LicenseDto>
-  contributors?: Array<ItemContributorDto>
-  properties?: Array<PropertyDto>
-  externalIds?: Array<ItemExternalIdDto>
-  accessibleAt?: Array<string>
-  source?: SourceBasicDto
-  sourceItemId?: string
-  relatedItems?: Array<RelatedItemDto>
-  media?: Array<ItemMediaDto>
-  thumbnail?: ItemThumbnailId
-  informationContributor?: UserDto
-  lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
-  olderVersions?: Array<ItemBasicDto>
-  newerVersions?: Array<ItemBasicDto>
-  dateCreated?: string
-  dateLastUpdated?: string
-}
-
-export type PaginatedDatasets = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  datasets?: Array<DatasetDto>
-}
-
-export type DatasetCore = {
-  label?: string
-  version?: string
-  description?: string
-  licenses?: Array<LicenseId>
-  contributors?: Array<ItemContributorId>
-  externalIds?: Array<ItemExternalIdCore>
-  properties?: Array<PropertyCore>
-  relatedItems?: Array<RelatedItemCore>
-  media?: Array<ItemMediaCore>
-  thumbnail?: ItemThumbnailId
-  accessibleAt?: Array<string>
-  source?: SourceId
-  sourceItemId?: string
-  dateCreated?: string
-  dateLastUpdated?: string
-}
-
-export type PaginatedActors = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  actors?: Array<ActorDto>
-}
-
-export type ActorCore = {
-  name?: string
-  externalIds?: Array<ActorExternalIdCore>
-  website?: string
-  email?: string
-  affiliations?: Array<ActorId>
-}
-
-export type ActorExternalIdCore = {
-  serviceIdentifier: ActorSourceId
-  identifier: string
-}
-
-export type ActorSourceId = {
-  code?: string
-}
-
-export type ActorSourceCore = {
-  code?: string
-  label: string
-  ord?: number /* int32 */
-}
-
 export type PaginatedVocabularies = {
   hits?: number /* int64 */
   count?: number /* int32 */
@@ -588,11 +900,6 @@ export type ConceptDto = {
   definition?: string
   uri?: string
   relatedConcepts?: Array<RelatedConceptDto>
-}
-
-export type ConceptRelationDto = {
-  code?: string
-  label?: string
 }
 
 export type PaginatedConcepts = {
@@ -620,310 +927,6 @@ export type VocabularyDto = {
   accessibleAt?: string
   description?: string
   conceptResults?: PaginatedConcepts
-}
-
-export type PaginatedPropertyTypes = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  propertyTypes?: Array<PropertyTypeDto>
-}
-
-export type PropertyTypeCore = {
-  code?: string
-  label?: string
-  type?: 'concept' | 'string' | 'url' | 'int' | 'float' | 'date'
-  groupName?: string
-  hidden?: boolean
-  ord?: number /* int32 */
-  allowedVocabularies?: Array<string>
-}
-
-export type PropertyTypeReorder = {
-  code: string
-  ord?: number /* int32 */
-}
-
-export type PropertyTypesReordering = {
-  shifts: Array<PropertyTypeReorder>
-}
-
-export type PaginatedSources = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  sources?: Array<SourceDto>
-}
-
-export type SourceDto = {
-  id?: number /* int64 */
-  label?: string
-  url?: string
-  urlTemplate?: string
-  lastHarvestedDate?: string
-}
-
-export type SourceCore = {
-  label?: string
-  url?: string
-  urlTemplate?: string
-}
-
-export type PaginatedLicenses = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  licenses?: Array<LicenseDto>
-}
-
-export type StepDto = {
-  id?: number /* int64 */
-  category?:
-    | 'tool-or-service'
-    | 'training-material'
-    | 'publication'
-    | 'dataset'
-    | 'workflow'
-    | 'step'
-  label?: string
-  version?: string
-  persistentId?: string
-  description?: string
-  licenses?: Array<LicenseDto>
-  contributors?: Array<ItemContributorDto>
-  properties?: Array<PropertyDto>
-  externalIds?: Array<ItemExternalIdDto>
-  accessibleAt?: Array<string>
-  source?: SourceBasicDto
-  sourceItemId?: string
-  relatedItems?: Array<RelatedItemDto>
-  media?: Array<ItemMediaDto>
-  thumbnail?: ItemThumbnailId
-  informationContributor?: UserDto
-  lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
-  olderVersions?: Array<ItemBasicDto>
-  newerVersions?: Array<ItemBasicDto>
-  composedOf?: Array<StepDto>
-}
-
-export type StepCore = {
-  label?: string
-  version?: string
-  description?: string
-  licenses?: Array<LicenseId>
-  contributors?: Array<ItemContributorId>
-  externalIds?: Array<ItemExternalIdCore>
-  properties?: Array<PropertyCore>
-  relatedItems?: Array<RelatedItemCore>
-  media?: Array<ItemMediaCore>
-  thumbnail?: ItemThumbnailId
-  accessibleAt?: Array<string>
-  source?: SourceId
-  sourceItemId?: string
-  stepNo?: number /* int32 */
-}
-
-export type PaginatedWorkflows = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  workflows?: Array<WorkflowDto>
-}
-
-export type WorkflowDto = {
-  id?: number /* int64 */
-  category?:
-    | 'tool-or-service'
-    | 'training-material'
-    | 'publication'
-    | 'dataset'
-    | 'workflow'
-    | 'step'
-  label?: string
-  version?: string
-  persistentId?: string
-  description?: string
-  licenses?: Array<LicenseDto>
-  contributors?: Array<ItemContributorDto>
-  properties?: Array<PropertyDto>
-  externalIds?: Array<ItemExternalIdDto>
-  accessibleAt?: Array<string>
-  source?: SourceBasicDto
-  sourceItemId?: string
-  relatedItems?: Array<RelatedItemDto>
-  media?: Array<ItemMediaDto>
-  thumbnail?: ItemThumbnailId
-  informationContributor?: UserDto
-  lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
-  olderVersions?: Array<ItemBasicDto>
-  newerVersions?: Array<ItemBasicDto>
-  composedOf?: Array<StepDto>
-}
-
-export type WorkflowCore = {
-  label?: string
-  version?: string
-  description?: string
-  licenses?: Array<LicenseId>
-  contributors?: Array<ItemContributorId>
-  externalIds?: Array<ItemExternalIdCore>
-  properties?: Array<PropertyCore>
-  relatedItems?: Array<RelatedItemCore>
-  media?: Array<ItemMediaCore>
-  thumbnail?: ItemThumbnailId
-  accessibleAt?: Array<string>
-  source?: SourceId
-  sourceItemId?: string
-}
-
-export type MediaSourceDto = {
-  code?: string
-  serviceUrl?: string
-  mediaCategory?: 'image' | 'video' | 'object' | 'thumbnail'
-}
-
-export type MediaSourceCore = {
-  code?: string
-  serviceUrl?: string
-  mediaCategory?: 'image' | 'video' | 'object' | 'thumbnail'
-  ord?: number /* int32 */
-}
-
-export type Resource = {
-  url?: string /* url */
-  readable?: boolean
-  filename?: string
-  description?: string
-  uri?: string /* uri */
-  open?: boolean
-  file?: string /* binary */
-  inputStream?: {}
-}
-
-export type MediaUploadInfo = {
-  mediaId?: string /* uuid */
-  filename?: string
-  mimeType?: string
-  nextChunkNo?: number /* int32 */
-}
-
-export type LoginData = {
-  username?: string
-  password?: string
-}
-
-export type PaginatedUsers = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  users?: Array<UserDto>
-}
-
-export type ItemRelatedItemDto = {
-  subject?: ItemBasicDto
-  object?: ItemBasicDto
-  relation?: ItemRelationDto
-}
-
-export type ItemCommentDto = {
-  id?: number /* int64 */
-  body?: string
-  creator?: UserDto
-  dateCreated?: string
-  dateLastUpdated?: string
-}
-
-export type ItemCommentCore = {
-  body?: string
-}
-
-export type PublicationDto = {
-  id?: number /* int64 */
-  category?:
-    | 'tool-or-service'
-    | 'training-material'
-    | 'publication'
-    | 'dataset'
-    | 'workflow'
-    | 'step'
-  label?: string
-  version?: string
-  persistentId?: string
-  description?: string
-  licenses?: Array<LicenseDto>
-  contributors?: Array<ItemContributorDto>
-  properties?: Array<PropertyDto>
-  externalIds?: Array<ItemExternalIdDto>
-  accessibleAt?: Array<string>
-  source?: SourceBasicDto
-  sourceItemId?: string
-  relatedItems?: Array<RelatedItemDto>
-  media?: Array<ItemMediaDto>
-  thumbnail?: ItemThumbnailId
-  informationContributor?: UserDto
-  lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
-  olderVersions?: Array<ItemBasicDto>
-  newerVersions?: Array<ItemBasicDto>
-  dateCreated?: string
-  dateLastUpdated?: string
-}
-
-export type PaginatedPublications = {
-  hits?: number /* int64 */
-  count?: number /* int32 */
-  page?: number /* int32 */
-  perpage?: number /* int32 */
-  pages?: number /* int32 */
-  publications?: Array<PublicationDto>
-}
-
-export type PublicationCore = {
-  label?: string
-  version?: string
-  description?: string
-  licenses?: Array<LicenseId>
-  contributors?: Array<ItemContributorId>
-  externalIds?: Array<ItemExternalIdCore>
-  properties?: Array<PropertyCore>
-  relatedItems?: Array<RelatedItemCore>
-  media?: Array<ItemMediaCore>
-  thumbnail?: ItemThumbnailId
-  accessibleAt?: Array<string>
-  source?: SourceId
-  sourceItemId?: string
-  dateCreated?: string
-  dateLastUpdated?: string
 }
 
 const defaultBaseUrl =
@@ -1003,7 +1006,7 @@ export async function request<T = unknown>({
       } else if (data.error != null) {
         if (typeof data.error === 'string') {
           message = data.error
-        } else if (typeof data.error.message === 'string') {
+        } else if (typeof data.error?.message === 'string') {
           message = data.error.message
         }
       } else if (Array.isArray(data.errors)) {
@@ -1019,6 +1022,2126 @@ export async function request<T = unknown>({
   }
   if (typeof hooks.response === 'function') return hooks.response(response)
   return response[returnType]()
+}
+
+export namespace GetAllLicenseTypes {
+  export namespace Response {
+    export type Success = Array<LicenseTypeDto>
+    export type Error = unknown
+  }
+}
+
+export async function getAllLicenseTypes(
+  requestOptions?: RequestOptions<GetAllLicenseTypes.Response.Success>,
+): Promise<GetAllLicenseTypes.Response.Success> {
+  return request({
+    path: `/api/license-types`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetAllLicenseTypes(
+  options?: UseQueryOptions<
+    GetAllLicenseTypes.Response.Success,
+    GetAllLicenseTypes.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetAllLicenseTypes.Response.Success>,
+): UseQueryResult<
+  GetAllLicenseTypes.Response.Success,
+  GetAllLicenseTypes.Response.Error
+> {
+  return useQuery(
+    ['getAllLicenseTypes'],
+    () => getAllLicenseTypes(requestOptions),
+    options,
+  )
+}
+
+export namespace GetAllItemRelations {
+  export namespace Response {
+    export type Success = Array<ItemRelationDto>
+    export type Error = unknown
+  }
+}
+
+export async function getAllItemRelations(
+  requestOptions?: RequestOptions<GetAllItemRelations.Response.Success>,
+): Promise<GetAllItemRelations.Response.Success> {
+  return request({
+    path: `/api/items-relations`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetAllItemRelations(
+  options?: UseQueryOptions<
+    GetAllItemRelations.Response.Success,
+    GetAllItemRelations.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetAllItemRelations.Response.Success>,
+): UseQueryResult<
+  GetAllItemRelations.Response.Success,
+  GetAllItemRelations.Response.Error
+> {
+  return useQuery(
+    ['getAllItemRelations'],
+    () => getAllItemRelations(requestOptions),
+    options,
+  )
+}
+
+export namespace CreateItemRelatedItem {
+  export type PathParameters = {
+    subjectId: string
+    objectId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = ItemRelatedItemDto
+    export type Error = unknown
+  }
+  export type RequestBody = ItemRelationId
+}
+
+export async function createItemRelatedItem([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: CreateItemRelatedItem.PathParameters,
+  queryParams: CreateItemRelatedItem.QueryParameters,
+  body: CreateItemRelatedItem.RequestBody,
+  requestOptions?: RequestOptions<CreateItemRelatedItem.Response.Success>,
+]): Promise<CreateItemRelatedItem.Response.Success> {
+  return request({
+    path: `/api/items-relations/${encodeURIComponent(
+      pathParams.subjectId,
+    )}/${encodeURIComponent(pathParams.objectId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateItemRelatedItem(
+  options?: UseMutationOptions<
+    CreateItemRelatedItem.Response.Success,
+    CreateItemRelatedItem.Response.Error,
+    [
+      CreateItemRelatedItem.PathParameters,
+      CreateItemRelatedItem.QueryParameters,
+      CreateItemRelatedItem.RequestBody,
+      RequestOptions<CreateItemRelatedItem.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateItemRelatedItem.Response.Success,
+  CreateItemRelatedItem.Response.Error,
+  [
+    CreateItemRelatedItem.PathParameters,
+    CreateItemRelatedItem.QueryParameters,
+    CreateItemRelatedItem.RequestBody,
+    RequestOptions<CreateItemRelatedItem.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createItemRelatedItem, options)
+}
+
+export namespace DeleteItemRelatedItem {
+  export type PathParameters = {
+    subjectId: string
+    objectId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteItemRelatedItem([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: DeleteItemRelatedItem.PathParameters,
+  queryParams: DeleteItemRelatedItem.QueryParameters,
+  requestOptions?: RequestOptions<DeleteItemRelatedItem.Response.Success>,
+]): Promise<DeleteItemRelatedItem.Response.Success> {
+  return request({
+    path: `/api/items-relations/${encodeURIComponent(
+      pathParams.subjectId,
+    )}/${encodeURIComponent(pathParams.objectId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteItemRelatedItem(
+  options?: UseMutationOptions<
+    DeleteItemRelatedItem.Response.Success,
+    DeleteItemRelatedItem.Response.Error,
+    [
+      DeleteItemRelatedItem.PathParameters,
+      DeleteItemRelatedItem.QueryParameters,
+      RequestOptions<DeleteItemRelatedItem.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteItemRelatedItem.Response.Success,
+  DeleteItemRelatedItem.Response.Error,
+  [
+    DeleteItemRelatedItem.PathParameters,
+    DeleteItemRelatedItem.QueryParameters,
+    RequestOptions<DeleteItemRelatedItem.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteItemRelatedItem, options)
+}
+
+export namespace GetActor {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = ActorDto
+    export type Error = unknown
+  }
+}
+
+export async function getActor(
+  pathParams: GetActor.PathParameters,
+  requestOptions?: RequestOptions<GetActor.Response.Success>,
+): Promise<GetActor.Response.Success> {
+  return request({
+    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetActor(
+  pathParams: GetActor.PathParameters,
+  options?: UseQueryOptions<GetActor.Response.Success, GetActor.Response.Error>,
+  requestOptions?: RequestOptions<GetActor.Response.Success>,
+): UseQueryResult<GetActor.Response.Success, GetActor.Response.Error> {
+  return useQuery(
+    ['getActor', pathParams],
+    () => getActor(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateActor {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = ActorDto
+    export type Error = unknown
+  }
+  export type RequestBody = ActorCore
+}
+
+export async function updateActor([pathParams, body, requestOptions]: [
+  pathParams: UpdateActor.PathParameters,
+  body: UpdateActor.RequestBody,
+  requestOptions?: RequestOptions<UpdateActor.Response.Success>,
+]): Promise<UpdateActor.Response.Success> {
+  return request({
+    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateActor(
+  options?: UseMutationOptions<
+    UpdateActor.Response.Success,
+    UpdateActor.Response.Error,
+    [
+      UpdateActor.PathParameters,
+      UpdateActor.RequestBody,
+      RequestOptions<UpdateActor.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateActor.Response.Success,
+  UpdateActor.Response.Error,
+  [
+    UpdateActor.PathParameters,
+    UpdateActor.RequestBody,
+    RequestOptions<UpdateActor.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateActor, options)
+}
+
+export namespace DeleteActor {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteActor([pathParams, requestOptions]: [
+  pathParams: DeleteActor.PathParameters,
+  requestOptions?: RequestOptions<DeleteActor.Response.Success>,
+]): Promise<DeleteActor.Response.Success> {
+  return request({
+    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteActor(
+  options?: UseMutationOptions<
+    DeleteActor.Response.Success,
+    DeleteActor.Response.Error,
+    [DeleteActor.PathParameters, RequestOptions<DeleteActor.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteActor.Response.Success,
+  DeleteActor.Response.Error,
+  [DeleteActor.PathParameters, RequestOptions<DeleteActor.Response.Success>],
+  unknown
+> {
+  return useMutation(deleteActor, options)
+}
+
+export namespace GetActors {
+  export type QueryParameters = {
+    q?: string
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+  }
+  export namespace Response {
+    export type Success = PaginatedActors
+    export type Error = unknown
+  }
+}
+
+export async function getActors(
+  queryParams: GetActors.QueryParameters,
+  requestOptions?: RequestOptions<GetActors.Response.Success>,
+): Promise<GetActors.Response.Success> {
+  return request({
+    path: `/api/actors`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetActors(
+  queryParams: GetActors.QueryParameters,
+  options?: UseQueryOptions<
+    GetActors.Response.Success,
+    GetActors.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetActors.Response.Success>,
+): UseQueryResult<GetActors.Response.Success, GetActors.Response.Error> {
+  return useQuery(
+    ['getActors', queryParams],
+    () => getActors(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateActor {
+  export namespace Response {
+    export type Success = ActorDto
+    export type Error = unknown
+  }
+  export type RequestBody = ActorCore
+}
+
+export async function createActor([body, requestOptions]: [
+  body: CreateActor.RequestBody,
+  requestOptions?: RequestOptions<CreateActor.Response.Success>,
+]): Promise<CreateActor.Response.Success> {
+  return request({
+    path: `/api/actors`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateActor(
+  options?: UseMutationOptions<
+    CreateActor.Response.Success,
+    CreateActor.Response.Error,
+    [CreateActor.RequestBody, RequestOptions<CreateActor.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  CreateActor.Response.Success,
+  CreateActor.Response.Error,
+  [CreateActor.RequestBody, RequestOptions<CreateActor.Response.Success>],
+  unknown
+> {
+  return useMutation(createActor, options)
+}
+
+export namespace GetWorkflows {
+  export type QueryParameters = {
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = PaginatedWorkflows
+    export type Error = unknown
+  }
+}
+
+export async function getWorkflows(
+  queryParams: GetWorkflows.QueryParameters,
+  requestOptions?: RequestOptions<GetWorkflows.Response.Success>,
+): Promise<GetWorkflows.Response.Success> {
+  return request({
+    path: `/api/workflows`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetWorkflows(
+  queryParams: GetWorkflows.QueryParameters,
+  options?: UseQueryOptions<
+    GetWorkflows.Response.Success,
+    GetWorkflows.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetWorkflows.Response.Success>,
+): UseQueryResult<GetWorkflows.Response.Success, GetWorkflows.Response.Error> {
+  return useQuery(
+    ['getWorkflows', queryParams],
+    () => getWorkflows(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateWorkflow {
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+  export type RequestBody = WorkflowCore
+}
+
+export async function createWorkflow([queryParams, body, requestOptions]: [
+  queryParams: CreateWorkflow.QueryParameters,
+  body: CreateWorkflow.RequestBody,
+  requestOptions?: RequestOptions<CreateWorkflow.Response.Success>,
+]): Promise<CreateWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateWorkflow(
+  options?: UseMutationOptions<
+    CreateWorkflow.Response.Success,
+    CreateWorkflow.Response.Error,
+    [
+      CreateWorkflow.QueryParameters,
+      CreateWorkflow.RequestBody,
+      RequestOptions<CreateWorkflow.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateWorkflow.Response.Success,
+  CreateWorkflow.Response.Error,
+  [
+    CreateWorkflow.QueryParameters,
+    CreateWorkflow.RequestBody,
+    RequestOptions<CreateWorkflow.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createWorkflow, options)
+}
+
+export namespace GetStep {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+}
+
+export async function getStep(
+  pathParams: GetStep.PathParameters,
+  queryParams: GetStep.QueryParameters,
+  requestOptions?: RequestOptions<GetStep.Response.Success>,
+): Promise<GetStep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetStep(
+  pathParams: GetStep.PathParameters,
+  queryParams: GetStep.QueryParameters,
+  options?: UseQueryOptions<GetStep.Response.Success, GetStep.Response.Error>,
+  requestOptions?: RequestOptions<GetStep.Response.Success>,
+): UseQueryResult<GetStep.Response.Success, GetStep.Response.Error> {
+  return useQuery(
+    ['getStep', pathParams, queryParams],
+    () => getStep(pathParams, queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateStep {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+  export type RequestBody = StepCore
+}
+
+export async function updateStep([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: UpdateStep.PathParameters,
+  queryParams: UpdateStep.QueryParameters,
+  body: UpdateStep.RequestBody,
+  requestOptions?: RequestOptions<UpdateStep.Response.Success>,
+]): Promise<UpdateStep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateStep(
+  options?: UseMutationOptions<
+    UpdateStep.Response.Success,
+    UpdateStep.Response.Error,
+    [
+      UpdateStep.PathParameters,
+      UpdateStep.QueryParameters,
+      UpdateStep.RequestBody,
+      RequestOptions<UpdateStep.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateStep.Response.Success,
+  UpdateStep.Response.Error,
+  [
+    UpdateStep.PathParameters,
+    UpdateStep.QueryParameters,
+    UpdateStep.RequestBody,
+    RequestOptions<UpdateStep.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateStep, options)
+}
+
+export namespace DeleteStep {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteStep([pathParams, queryParams, requestOptions]: [
+  pathParams: DeleteStep.PathParameters,
+  queryParams: DeleteStep.QueryParameters,
+  requestOptions?: RequestOptions<DeleteStep.Response.Success>,
+]): Promise<DeleteStep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteStep(
+  options?: UseMutationOptions<
+    DeleteStep.Response.Success,
+    DeleteStep.Response.Error,
+    [
+      DeleteStep.PathParameters,
+      DeleteStep.QueryParameters,
+      RequestOptions<DeleteStep.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteStep.Response.Success,
+  DeleteStep.Response.Error,
+  [
+    DeleteStep.PathParameters,
+    DeleteStep.QueryParameters,
+    RequestOptions<DeleteStep.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteStep, options)
+}
+
+export namespace GetStepVersion {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+}
+
+export async function getStepVersion(
+  pathParams: GetStepVersion.PathParameters,
+  requestOptions?: RequestOptions<GetStepVersion.Response.Success>,
+): Promise<GetStepVersion.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(
+      pathParams.stepId,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetStepVersion(
+  pathParams: GetStepVersion.PathParameters,
+  options?: UseQueryOptions<
+    GetStepVersion.Response.Success,
+    GetStepVersion.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetStepVersion.Response.Success>,
+): UseQueryResult<
+  GetStepVersion.Response.Success,
+  GetStepVersion.Response.Error
+> {
+  return useQuery(
+    ['getStepVersion', pathParams],
+    () => getStepVersion(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateStep {
+  export type PathParameters = {
+    workflowId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+  export type RequestBody = StepCore
+}
+
+export async function createStep([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: CreateStep.PathParameters,
+  queryParams: CreateStep.QueryParameters,
+  body: CreateStep.RequestBody,
+  requestOptions?: RequestOptions<CreateStep.Response.Success>,
+]): Promise<CreateStep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}/steps`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateStep(
+  options?: UseMutationOptions<
+    CreateStep.Response.Success,
+    CreateStep.Response.Error,
+    [
+      CreateStep.PathParameters,
+      CreateStep.QueryParameters,
+      CreateStep.RequestBody,
+      RequestOptions<CreateStep.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateStep.Response.Success,
+  CreateStep.Response.Error,
+  [
+    CreateStep.PathParameters,
+    CreateStep.QueryParameters,
+    CreateStep.RequestBody,
+    RequestOptions<CreateStep.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createStep, options)
+}
+
+export namespace CreateSubstep {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+  export type RequestBody = StepCore
+}
+
+export async function createSubstep([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: CreateSubstep.PathParameters,
+  queryParams: CreateSubstep.QueryParameters,
+  body: CreateSubstep.RequestBody,
+  requestOptions?: RequestOptions<CreateSubstep.Response.Success>,
+]): Promise<CreateSubstep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(pathParams.stepId)}/steps`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateSubstep(
+  options?: UseMutationOptions<
+    CreateSubstep.Response.Success,
+    CreateSubstep.Response.Error,
+    [
+      CreateSubstep.PathParameters,
+      CreateSubstep.QueryParameters,
+      CreateSubstep.RequestBody,
+      RequestOptions<CreateSubstep.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateSubstep.Response.Success,
+  CreateSubstep.Response.Error,
+  [
+    CreateSubstep.PathParameters,
+    CreateSubstep.QueryParameters,
+    CreateSubstep.RequestBody,
+    RequestOptions<CreateSubstep.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createSubstep, options)
+}
+
+export namespace RevertStep {
+  export type PathParameters = {
+    workflowId: string
+    stepId: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = StepDto
+    export type Error = unknown
+  }
+}
+
+export async function revertStep([pathParams, requestOptions]: [
+  pathParams: RevertStep.PathParameters,
+  requestOptions?: RequestOptions<RevertStep.Response.Success>,
+]): Promise<RevertStep.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/steps/${encodeURIComponent(
+      pathParams.stepId,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRevertStep(
+  options?: UseMutationOptions<
+    RevertStep.Response.Success,
+    RevertStep.Response.Error,
+    [RevertStep.PathParameters, RequestOptions<RevertStep.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  RevertStep.Response.Success,
+  RevertStep.Response.Error,
+  [RevertStep.PathParameters, RequestOptions<RevertStep.Response.Success>],
+  unknown
+> {
+  return useMutation(revertStep, options)
+}
+
+export namespace PublishWorkflow {
+  export type PathParameters = {
+    workflowId: string
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+}
+
+export async function publishWorkflow([pathParams, requestOptions]: [
+  pathParams: PublishWorkflow.PathParameters,
+  requestOptions?: RequestOptions<PublishWorkflow.Response.Success>,
+]): Promise<PublishWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}/commit`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function usePublishWorkflow(
+  options?: UseMutationOptions<
+    PublishWorkflow.Response.Success,
+    PublishWorkflow.Response.Error,
+    [
+      PublishWorkflow.PathParameters,
+      RequestOptions<PublishWorkflow.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  PublishWorkflow.Response.Success,
+  PublishWorkflow.Response.Error,
+  [
+    PublishWorkflow.PathParameters,
+    RequestOptions<PublishWorkflow.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(publishWorkflow, options)
+}
+
+export namespace GetWorkflowVersion {
+  export type PathParameters = {
+    workflowId: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+}
+
+export async function getWorkflowVersion(
+  pathParams: GetWorkflowVersion.PathParameters,
+  requestOptions?: RequestOptions<GetWorkflowVersion.Response.Success>,
+): Promise<GetWorkflowVersion.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.workflowId,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetWorkflowVersion(
+  pathParams: GetWorkflowVersion.PathParameters,
+  options?: UseQueryOptions<
+    GetWorkflowVersion.Response.Success,
+    GetWorkflowVersion.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetWorkflowVersion.Response.Success>,
+): UseQueryResult<
+  GetWorkflowVersion.Response.Success,
+  GetWorkflowVersion.Response.Error
+> {
+  return useQuery(
+    ['getWorkflowVersion', pathParams],
+    () => getWorkflowVersion(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetWorkflow {
+  export type PathParameters = {
+    workflowId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+}
+
+export async function getWorkflow(
+  pathParams: GetWorkflow.PathParameters,
+  queryParams: GetWorkflow.QueryParameters,
+  requestOptions?: RequestOptions<GetWorkflow.Response.Success>,
+): Promise<GetWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetWorkflow(
+  pathParams: GetWorkflow.PathParameters,
+  queryParams: GetWorkflow.QueryParameters,
+  options?: UseQueryOptions<
+    GetWorkflow.Response.Success,
+    GetWorkflow.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetWorkflow.Response.Success>,
+): UseQueryResult<GetWorkflow.Response.Success, GetWorkflow.Response.Error> {
+  return useQuery(
+    ['getWorkflow', pathParams, queryParams],
+    () => getWorkflow(pathParams, queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateWorkflow {
+  export type PathParameters = {
+    workflowId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+  export type RequestBody = WorkflowCore
+}
+
+export async function updateWorkflow([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: UpdateWorkflow.PathParameters,
+  queryParams: UpdateWorkflow.QueryParameters,
+  body: UpdateWorkflow.RequestBody,
+  requestOptions?: RequestOptions<UpdateWorkflow.Response.Success>,
+]): Promise<UpdateWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateWorkflow(
+  options?: UseMutationOptions<
+    UpdateWorkflow.Response.Success,
+    UpdateWorkflow.Response.Error,
+    [
+      UpdateWorkflow.PathParameters,
+      UpdateWorkflow.QueryParameters,
+      UpdateWorkflow.RequestBody,
+      RequestOptions<UpdateWorkflow.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateWorkflow.Response.Success,
+  UpdateWorkflow.Response.Error,
+  [
+    UpdateWorkflow.PathParameters,
+    UpdateWorkflow.QueryParameters,
+    UpdateWorkflow.RequestBody,
+    RequestOptions<UpdateWorkflow.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateWorkflow, options)
+}
+
+export namespace DeleteWorkflow {
+  export type PathParameters = {
+    workflowId: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteWorkflow([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: DeleteWorkflow.PathParameters,
+  queryParams: DeleteWorkflow.QueryParameters,
+  requestOptions?: RequestOptions<DeleteWorkflow.Response.Success>,
+]): Promise<DeleteWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteWorkflow(
+  options?: UseMutationOptions<
+    DeleteWorkflow.Response.Success,
+    DeleteWorkflow.Response.Error,
+    [
+      DeleteWorkflow.PathParameters,
+      DeleteWorkflow.QueryParameters,
+      RequestOptions<DeleteWorkflow.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteWorkflow.Response.Success,
+  DeleteWorkflow.Response.Error,
+  [
+    DeleteWorkflow.PathParameters,
+    DeleteWorkflow.QueryParameters,
+    RequestOptions<DeleteWorkflow.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteWorkflow, options)
+}
+
+export namespace RevertWorkflow {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = WorkflowDto
+    export type Error = unknown
+  }
+}
+
+export async function revertWorkflow([pathParams, requestOptions]: [
+  pathParams: RevertWorkflow.PathParameters,
+  requestOptions?: RequestOptions<RevertWorkflow.Response.Success>,
+]): Promise<RevertWorkflow.Response.Success> {
+  return request({
+    path: `/api/workflows/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRevertWorkflow(
+  options?: UseMutationOptions<
+    RevertWorkflow.Response.Success,
+    RevertWorkflow.Response.Error,
+    [
+      RevertWorkflow.PathParameters,
+      RequestOptions<RevertWorkflow.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  RevertWorkflow.Response.Success,
+  RevertWorkflow.Response.Error,
+  [
+    RevertWorkflow.PathParameters,
+    RequestOptions<RevertWorkflow.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(revertWorkflow, options)
+}
+
+export namespace RegisterOAuth2User {
+  export namespace Response {
+    export type Success = UserDto
+    export type Error = unknown
+  }
+  export type RequestBody = OAuthRegistrationData
+}
+
+export async function registerOAuth2User([body, requestOptions]: [
+  body: RegisterOAuth2User.RequestBody,
+  requestOptions?: RequestOptions<RegisterOAuth2User.Response.Success>,
+]): Promise<RegisterOAuth2User.Response.Success> {
+  return request({
+    path: `/api/oauth/sign-up`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRegisterOAuth2User(
+  options?: UseMutationOptions<
+    RegisterOAuth2User.Response.Success,
+    RegisterOAuth2User.Response.Error,
+    [
+      RegisterOAuth2User.RequestBody,
+      RequestOptions<RegisterOAuth2User.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  RegisterOAuth2User.Response.Success,
+  RegisterOAuth2User.Response.Error,
+  [
+    RegisterOAuth2User.RequestBody,
+    RequestOptions<RegisterOAuth2User.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(registerOAuth2User, options)
+}
+
+export namespace GetAllConceptRelations {
+  export namespace Response {
+    export type Success = Array<ConceptRelationDto>
+    export type Error = unknown
+  }
+}
+
+export async function getAllConceptRelations(
+  requestOptions?: RequestOptions<GetAllConceptRelations.Response.Success>,
+): Promise<GetAllConceptRelations.Response.Success> {
+  return request({
+    path: `/api/concept-relations`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetAllConceptRelations(
+  options?: UseQueryOptions<
+    GetAllConceptRelations.Response.Success,
+    GetAllConceptRelations.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetAllConceptRelations.Response.Success>,
+): UseQueryResult<
+  GetAllConceptRelations.Response.Success,
+  GetAllConceptRelations.Response.Error
+> {
+  return useQuery(
+    ['getAllConceptRelations'],
+    () => getAllConceptRelations(requestOptions),
+    options,
+  )
+}
+
+export namespace GetLicenses {
+  export type QueryParameters = {
+    q?: string
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+  }
+  export namespace Response {
+    export type Success = PaginatedLicenses
+    export type Error = unknown
+  }
+}
+
+export async function getLicenses(
+  queryParams: GetLicenses.QueryParameters,
+  requestOptions?: RequestOptions<GetLicenses.Response.Success>,
+): Promise<GetLicenses.Response.Success> {
+  return request({
+    path: `/api/licenses`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetLicenses(
+  queryParams: GetLicenses.QueryParameters,
+  options?: UseQueryOptions<
+    GetLicenses.Response.Success,
+    GetLicenses.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetLicenses.Response.Success>,
+): UseQueryResult<GetLicenses.Response.Success, GetLicenses.Response.Error> {
+  return useQuery(
+    ['getLicenses', queryParams],
+    () => getLicenses(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetAllItemSources {
+  export namespace Response {
+    export type Success = Array<ItemSourceDto>
+    export type Error = unknown
+  }
+}
+
+export async function getAllItemSources(
+  requestOptions?: RequestOptions<GetAllItemSources.Response.Success>,
+): Promise<GetAllItemSources.Response.Success> {
+  return request({
+    path: `/api/item-sources`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetAllItemSources(
+  options?: UseQueryOptions<
+    GetAllItemSources.Response.Success,
+    GetAllItemSources.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetAllItemSources.Response.Success>,
+): UseQueryResult<
+  GetAllItemSources.Response.Success,
+  GetAllItemSources.Response.Error
+> {
+  return useQuery(
+    ['getAllItemSources'],
+    () => getAllItemSources(requestOptions),
+    options,
+  )
+}
+
+export namespace CreateItemSource {
+  export namespace Response {
+    export type Success = ItemSourceDto
+    export type Error = unknown
+  }
+  export type RequestBody = ItemSourceCore
+}
+
+export async function createItemSource([body, requestOptions]: [
+  body: CreateItemSource.RequestBody,
+  requestOptions?: RequestOptions<CreateItemSource.Response.Success>,
+]): Promise<CreateItemSource.Response.Success> {
+  return request({
+    path: `/api/item-sources`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateItemSource(
+  options?: UseMutationOptions<
+    CreateItemSource.Response.Success,
+    CreateItemSource.Response.Error,
+    [
+      CreateItemSource.RequestBody,
+      RequestOptions<CreateItemSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateItemSource.Response.Success,
+  CreateItemSource.Response.Error,
+  [
+    CreateItemSource.RequestBody,
+    RequestOptions<CreateItemSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createItemSource, options)
+}
+
+export namespace GetItemSource {
+  export type PathParameters = {
+    sourceCode: string
+  }
+  export namespace Response {
+    export type Success = ItemSourceDto
+    export type Error = unknown
+  }
+}
+
+export async function getItemSource(
+  pathParams: GetItemSource.PathParameters,
+  requestOptions?: RequestOptions<GetItemSource.Response.Success>,
+): Promise<GetItemSource.Response.Success> {
+  return request({
+    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetItemSource(
+  pathParams: GetItemSource.PathParameters,
+  options?: UseQueryOptions<
+    GetItemSource.Response.Success,
+    GetItemSource.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetItemSource.Response.Success>,
+): UseQueryResult<
+  GetItemSource.Response.Success,
+  GetItemSource.Response.Error
+> {
+  return useQuery(
+    ['getItemSource', pathParams],
+    () => getItemSource(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateItemSource {
+  export type PathParameters = {
+    sourceCode: string
+  }
+  export namespace Response {
+    export type Success = ItemSourceDto
+    export type Error = unknown
+  }
+  export type RequestBody = ItemSourceCore
+}
+
+export async function updateItemSource([pathParams, body, requestOptions]: [
+  pathParams: UpdateItemSource.PathParameters,
+  body: UpdateItemSource.RequestBody,
+  requestOptions?: RequestOptions<UpdateItemSource.Response.Success>,
+]): Promise<UpdateItemSource.Response.Success> {
+  return request({
+    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateItemSource(
+  options?: UseMutationOptions<
+    UpdateItemSource.Response.Success,
+    UpdateItemSource.Response.Error,
+    [
+      UpdateItemSource.PathParameters,
+      UpdateItemSource.RequestBody,
+      RequestOptions<UpdateItemSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateItemSource.Response.Success,
+  UpdateItemSource.Response.Error,
+  [
+    UpdateItemSource.PathParameters,
+    UpdateItemSource.RequestBody,
+    RequestOptions<UpdateItemSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateItemSource, options)
+}
+
+export namespace DeleteItemSource {
+  export type PathParameters = {
+    sourceCode: string
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteItemSource([pathParams, requestOptions]: [
+  pathParams: DeleteItemSource.PathParameters,
+  requestOptions?: RequestOptions<DeleteItemSource.Response.Success>,
+]): Promise<DeleteItemSource.Response.Success> {
+  return request({
+    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteItemSource(
+  options?: UseMutationOptions<
+    DeleteItemSource.Response.Success,
+    DeleteItemSource.Response.Error,
+    [
+      DeleteItemSource.PathParameters,
+      RequestOptions<DeleteItemSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteItemSource.Response.Success,
+  DeleteItemSource.Response.Error,
+  [
+    DeleteItemSource.PathParameters,
+    RequestOptions<DeleteItemSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteItemSource, options)
+}
+
+export namespace GetPublication {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+}
+
+export async function getPublication(
+  pathParams: GetPublication.PathParameters,
+  queryParams: GetPublication.QueryParameters,
+  requestOptions?: RequestOptions<GetPublication.Response.Success>,
+): Promise<GetPublication.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetPublication(
+  pathParams: GetPublication.PathParameters,
+  queryParams: GetPublication.QueryParameters,
+  options?: UseQueryOptions<
+    GetPublication.Response.Success,
+    GetPublication.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetPublication.Response.Success>,
+): UseQueryResult<
+  GetPublication.Response.Success,
+  GetPublication.Response.Error
+> {
+  return useQuery(
+    ['getPublication', pathParams, queryParams],
+    () => getPublication(pathParams, queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdatePublication {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+  export type RequestBody = PublicationCore
+}
+
+export async function updatePublication([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: UpdatePublication.PathParameters,
+  queryParams: UpdatePublication.QueryParameters,
+  body: UpdatePublication.RequestBody,
+  requestOptions?: RequestOptions<UpdatePublication.Response.Success>,
+]): Promise<UpdatePublication.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdatePublication(
+  options?: UseMutationOptions<
+    UpdatePublication.Response.Success,
+    UpdatePublication.Response.Error,
+    [
+      UpdatePublication.PathParameters,
+      UpdatePublication.QueryParameters,
+      UpdatePublication.RequestBody,
+      RequestOptions<UpdatePublication.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdatePublication.Response.Success,
+  UpdatePublication.Response.Error,
+  [
+    UpdatePublication.PathParameters,
+    UpdatePublication.QueryParameters,
+    UpdatePublication.RequestBody,
+    RequestOptions<UpdatePublication.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updatePublication, options)
+}
+
+export namespace DeletePublication {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deletePublication([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: DeletePublication.PathParameters,
+  queryParams: DeletePublication.QueryParameters,
+  requestOptions?: RequestOptions<DeletePublication.Response.Success>,
+]): Promise<DeletePublication.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeletePublication(
+  options?: UseMutationOptions<
+    DeletePublication.Response.Success,
+    DeletePublication.Response.Error,
+    [
+      DeletePublication.PathParameters,
+      DeletePublication.QueryParameters,
+      RequestOptions<DeletePublication.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeletePublication.Response.Success,
+  DeletePublication.Response.Error,
+  [
+    DeletePublication.PathParameters,
+    DeletePublication.QueryParameters,
+    RequestOptions<DeletePublication.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deletePublication, options)
+}
+
+export namespace PublishPublication {
+  export type PathParameters = {
+    publicationId: string
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+}
+
+export async function publishPublication([pathParams, requestOptions]: [
+  pathParams: PublishPublication.PathParameters,
+  requestOptions?: RequestOptions<PublishPublication.Response.Success>,
+]): Promise<PublishPublication.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(
+      pathParams.publicationId,
+    )}/commit`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function usePublishPublication(
+  options?: UseMutationOptions<
+    PublishPublication.Response.Success,
+    PublishPublication.Response.Error,
+    [
+      PublishPublication.PathParameters,
+      RequestOptions<PublishPublication.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  PublishPublication.Response.Success,
+  PublishPublication.Response.Error,
+  [
+    PublishPublication.PathParameters,
+    RequestOptions<PublishPublication.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(publishPublication, options)
+}
+
+export namespace GetPublicationVersion {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+}
+
+export async function getPublicationVersion(
+  pathParams: GetPublicationVersion.PathParameters,
+  requestOptions?: RequestOptions<GetPublicationVersion.Response.Success>,
+): Promise<GetPublicationVersion.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetPublicationVersion(
+  pathParams: GetPublicationVersion.PathParameters,
+  options?: UseQueryOptions<
+    GetPublicationVersion.Response.Success,
+    GetPublicationVersion.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetPublicationVersion.Response.Success>,
+): UseQueryResult<
+  GetPublicationVersion.Response.Success,
+  GetPublicationVersion.Response.Error
+> {
+  return useQuery(
+    ['getPublicationVersion', pathParams],
+    () => getPublicationVersion(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace RevertPublication {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+}
+
+export async function revertPublication([pathParams, requestOptions]: [
+  pathParams: RevertPublication.PathParameters,
+  requestOptions?: RequestOptions<RevertPublication.Response.Success>,
+]): Promise<RevertPublication.Response.Success> {
+  return request({
+    path: `/api/publications/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRevertPublication(
+  options?: UseMutationOptions<
+    RevertPublication.Response.Success,
+    RevertPublication.Response.Error,
+    [
+      RevertPublication.PathParameters,
+      RequestOptions<RevertPublication.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  RevertPublication.Response.Success,
+  RevertPublication.Response.Error,
+  [
+    RevertPublication.PathParameters,
+    RequestOptions<RevertPublication.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(revertPublication, options)
+}
+
+export namespace GetPublications {
+  export type QueryParameters = {
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = PaginatedPublications
+    export type Error = unknown
+  }
+}
+
+export async function getPublications(
+  queryParams: GetPublications.QueryParameters,
+  requestOptions?: RequestOptions<GetPublications.Response.Success>,
+): Promise<GetPublications.Response.Success> {
+  return request({
+    path: `/api/publications`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetPublications(
+  queryParams: GetPublications.QueryParameters,
+  options?: UseQueryOptions<
+    GetPublications.Response.Success,
+    GetPublications.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetPublications.Response.Success>,
+): UseQueryResult<
+  GetPublications.Response.Success,
+  GetPublications.Response.Error
+> {
+  return useQuery(
+    ['getPublications', queryParams],
+    () => getPublications(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreatePublication {
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = PublicationDto
+    export type Error = unknown
+  }
+  export type RequestBody = PublicationCore
+}
+
+export async function createPublication([queryParams, body, requestOptions]: [
+  queryParams: CreatePublication.QueryParameters,
+  body: CreatePublication.RequestBody,
+  requestOptions?: RequestOptions<CreatePublication.Response.Success>,
+]): Promise<CreatePublication.Response.Success> {
+  return request({
+    path: `/api/publications`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreatePublication(
+  options?: UseMutationOptions<
+    CreatePublication.Response.Success,
+    CreatePublication.Response.Error,
+    [
+      CreatePublication.QueryParameters,
+      CreatePublication.RequestBody,
+      RequestOptions<CreatePublication.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreatePublication.Response.Success,
+  CreatePublication.Response.Error,
+  [
+    CreatePublication.QueryParameters,
+    CreatePublication.RequestBody,
+    RequestOptions<CreatePublication.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createPublication, options)
 }
 
 export namespace GetActorRole {
@@ -1262,6 +3385,242 @@ export function useCreateActorRole(
   return useMutation(createActorRole, options)
 }
 
+export namespace GetSources {
+  export type QueryParameters = {
+    q?: string
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+  }
+  export namespace Response {
+    export type Success = PaginatedSources
+    export type Error = unknown
+  }
+}
+
+export async function getSources(
+  queryParams: GetSources.QueryParameters,
+  requestOptions?: RequestOptions<GetSources.Response.Success>,
+): Promise<GetSources.Response.Success> {
+  return request({
+    path: `/api/sources`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetSources(
+  queryParams: GetSources.QueryParameters,
+  options?: UseQueryOptions<
+    GetSources.Response.Success,
+    GetSources.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetSources.Response.Success>,
+): UseQueryResult<GetSources.Response.Success, GetSources.Response.Error> {
+  return useQuery(
+    ['getSources', queryParams],
+    () => getSources(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateSource {
+  export namespace Response {
+    export type Success = SourceDto
+    export type Error = unknown
+  }
+  export type RequestBody = SourceCore
+}
+
+export async function createSource([body, requestOptions]: [
+  body: CreateSource.RequestBody,
+  requestOptions?: RequestOptions<CreateSource.Response.Success>,
+]): Promise<CreateSource.Response.Success> {
+  return request({
+    path: `/api/sources`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateSource(
+  options?: UseMutationOptions<
+    CreateSource.Response.Success,
+    CreateSource.Response.Error,
+    [CreateSource.RequestBody, RequestOptions<CreateSource.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  CreateSource.Response.Success,
+  CreateSource.Response.Error,
+  [CreateSource.RequestBody, RequestOptions<CreateSource.Response.Success>],
+  unknown
+> {
+  return useMutation(createSource, options)
+}
+
+export namespace GetSource {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = SourceDto
+    export type Error = unknown
+  }
+}
+
+export async function getSource(
+  pathParams: GetSource.PathParameters,
+  requestOptions?: RequestOptions<GetSource.Response.Success>,
+): Promise<GetSource.Response.Success> {
+  return request({
+    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetSource(
+  pathParams: GetSource.PathParameters,
+  options?: UseQueryOptions<
+    GetSource.Response.Success,
+    GetSource.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetSource.Response.Success>,
+): UseQueryResult<GetSource.Response.Success, GetSource.Response.Error> {
+  return useQuery(
+    ['getSource', pathParams],
+    () => getSource(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateSource {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = SourceDto
+    export type Error = unknown
+  }
+  export type RequestBody = SourceCore
+}
+
+export async function updateSource([pathParams, body, requestOptions]: [
+  pathParams: UpdateSource.PathParameters,
+  body: UpdateSource.RequestBody,
+  requestOptions?: RequestOptions<UpdateSource.Response.Success>,
+]): Promise<UpdateSource.Response.Success> {
+  return request({
+    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateSource(
+  options?: UseMutationOptions<
+    UpdateSource.Response.Success,
+    UpdateSource.Response.Error,
+    [
+      UpdateSource.PathParameters,
+      UpdateSource.RequestBody,
+      RequestOptions<UpdateSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateSource.Response.Success,
+  UpdateSource.Response.Error,
+  [
+    UpdateSource.PathParameters,
+    UpdateSource.RequestBody,
+    RequestOptions<UpdateSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateSource, options)
+}
+
+export namespace DeleteSource {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteSource([pathParams, requestOptions]: [
+  pathParams: DeleteSource.PathParameters,
+  requestOptions?: RequestOptions<DeleteSource.Response.Success>,
+]): Promise<DeleteSource.Response.Success> {
+  return request({
+    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteSource(
+  options?: UseMutationOptions<
+    DeleteSource.Response.Success,
+    DeleteSource.Response.Error,
+    [
+      DeleteSource.PathParameters,
+      RequestOptions<DeleteSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteSource.Response.Success,
+  DeleteSource.Response.Error,
+  [DeleteSource.PathParameters, RequestOptions<DeleteSource.Response.Success>],
+  unknown
+> {
+  return useMutation(deleteSource, options)
+}
+
 export namespace GetTool {
   export type PathParameters = {
     id: string
@@ -1432,6 +3791,99 @@ export function useDeleteTool(
   return useMutation(deleteTool, options)
 }
 
+export namespace RevertTool {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = ToolDto
+    export type Error = unknown
+  }
+}
+
+export async function revertTool([pathParams, requestOptions]: [
+  pathParams: RevertTool.PathParameters,
+  requestOptions?: RequestOptions<RevertTool.Response.Success>,
+]): Promise<RevertTool.Response.Success> {
+  return request({
+    path: `/api/tools-services/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRevertTool(
+  options?: UseMutationOptions<
+    RevertTool.Response.Success,
+    RevertTool.Response.Error,
+    [RevertTool.PathParameters, RequestOptions<RevertTool.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  RevertTool.Response.Success,
+  RevertTool.Response.Error,
+  [RevertTool.PathParameters, RequestOptions<RevertTool.Response.Success>],
+  unknown
+> {
+  return useMutation(revertTool, options)
+}
+
+export namespace PublishTool {
+  export type PathParameters = {
+    toolId: string
+  }
+  export namespace Response {
+    export type Success = ToolDto
+    export type Error = unknown
+  }
+}
+
+export async function publishTool([pathParams, requestOptions]: [
+  pathParams: PublishTool.PathParameters,
+  requestOptions?: RequestOptions<PublishTool.Response.Success>,
+]): Promise<PublishTool.Response.Success> {
+  return request({
+    path: `/api/tools-services/${encodeURIComponent(pathParams.toolId)}/commit`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function usePublishTool(
+  options?: UseMutationOptions<
+    PublishTool.Response.Success,
+    PublishTool.Response.Error,
+    [PublishTool.PathParameters, RequestOptions<PublishTool.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  PublishTool.Response.Success,
+  PublishTool.Response.Error,
+  [PublishTool.PathParameters, RequestOptions<PublishTool.Response.Success>],
+  unknown
+> {
+  return useMutation(publishTool, options)
+}
+
 export namespace GetTools {
   export type QueryParameters = {
     page?: number /* int32 */
@@ -1580,29 +4032,22 @@ export function useGetToolVersion(
   )
 }
 
-export namespace RevertTool {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
+export namespace GetItemCategories {
   export namespace Response {
-    export type Success = ToolDto
+    export type Success = Record<string, string>
     export type Error = unknown
   }
 }
 
-export async function revertTool([pathParams, requestOptions]: [
-  pathParams: RevertTool.PathParameters,
-  requestOptions?: RequestOptions<RevertTool.Response.Success>,
-]): Promise<RevertTool.Response.Success> {
+export async function getItemCategories(
+  requestOptions?: RequestOptions<GetItemCategories.Response.Success>,
+): Promise<GetItemCategories.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    path: `/api/items-categories`,
     baseUrl: undefined,
     query: undefined,
     options: {
-      method: 'put',
+      method: 'get',
       body: undefined,
       headers: {},
     },
@@ -1612,42 +4057,51 @@ export async function revertTool([pathParams, requestOptions]: [
   })
 }
 
-export function useRevertTool(
-  options?: UseMutationOptions<
-    RevertTool.Response.Success,
-    RevertTool.Response.Error,
-    [RevertTool.PathParameters, RequestOptions<RevertTool.Response.Success>],
-    unknown
+export function useGetItemCategories(
+  options?: UseQueryOptions<
+    GetItemCategories.Response.Success,
+    GetItemCategories.Response.Error
   >,
-): UseMutationResult<
-  RevertTool.Response.Success,
-  RevertTool.Response.Error,
-  [RevertTool.PathParameters, RequestOptions<RevertTool.Response.Success>],
-  unknown
+  requestOptions?: RequestOptions<GetItemCategories.Response.Success>,
+): UseQueryResult<
+  GetItemCategories.Response.Success,
+  GetItemCategories.Response.Error
 > {
-  return useMutation(revertTool, options)
+  return useQuery(
+    ['getItemCategories'],
+    () => getItemCategories(requestOptions),
+    options,
+  )
 }
 
-export namespace PublishTool {
-  export type PathParameters = {
-    toolId: string
+/**
+ * Search among concepts.
+ */
+
+export namespace SearchConcepts {
+  export type QueryParameters = {
+    q?: string
+    types?: Array<string>
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+    advanced?: boolean
   }
   export namespace Response {
-    export type Success = ToolDto
+    export type Success = PaginatedSearchConcepts
     export type Error = unknown
   }
 }
 
-export async function publishTool([pathParams, requestOptions]: [
-  pathParams: PublishTool.PathParameters,
-  requestOptions?: RequestOptions<PublishTool.Response.Success>,
-]): Promise<PublishTool.Response.Success> {
+export async function searchConcepts(
+  queryParams: SearchConcepts.QueryParameters,
+  requestOptions?: RequestOptions<SearchConcepts.Response.Success>,
+): Promise<SearchConcepts.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(pathParams.toolId)}/commit`,
+    path: `/api/concept-search`,
     baseUrl: undefined,
-    query: undefined,
+    query: queryParams,
     options: {
-      method: 'post',
+      method: 'get',
       body: undefined,
       headers: {},
     },
@@ -1657,20 +4111,22 @@ export async function publishTool([pathParams, requestOptions]: [
   })
 }
 
-export function usePublishTool(
-  options?: UseMutationOptions<
-    PublishTool.Response.Success,
-    PublishTool.Response.Error,
-    [PublishTool.PathParameters, RequestOptions<PublishTool.Response.Success>],
-    unknown
+export function useSearchConcepts(
+  queryParams: SearchConcepts.QueryParameters,
+  options?: UseQueryOptions<
+    SearchConcepts.Response.Success,
+    SearchConcepts.Response.Error
   >,
-): UseMutationResult<
-  PublishTool.Response.Success,
-  PublishTool.Response.Error,
-  [PublishTool.PathParameters, RequestOptions<PublishTool.Response.Success>],
-  unknown
+  requestOptions?: RequestOptions<SearchConcepts.Response.Success>,
+): UseQueryResult<
+  SearchConcepts.Response.Success,
+  SearchConcepts.Response.Error
 > {
-  return useMutation(publishTool, options)
+  return useQuery(
+    ['searchConcepts', queryParams],
+    () => searchConcepts(queryParams, requestOptions),
+    options,
+  )
 }
 
 /**
@@ -1736,61 +4192,6 @@ export function useSearchItems(
 }
 
 /**
- * Search among concepts.
- */
-
-export namespace SearchConcepts {
-  export type QueryParameters = {
-    q?: string
-    types?: Array<string>
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-    advanced?: boolean
-  }
-  export namespace Response {
-    export type Success = PaginatedSearchConcepts
-    export type Error = unknown
-  }
-}
-
-export async function searchConcepts(
-  queryParams: SearchConcepts.QueryParameters,
-  requestOptions?: RequestOptions<SearchConcepts.Response.Success>,
-): Promise<SearchConcepts.Response.Success> {
-  return request({
-    path: `/api/concept-search`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useSearchConcepts(
-  queryParams: SearchConcepts.QueryParameters,
-  options?: UseQueryOptions<
-    SearchConcepts.Response.Success,
-    SearchConcepts.Response.Error
-  >,
-  requestOptions?: RequestOptions<SearchConcepts.Response.Success>,
-): UseQueryResult<
-  SearchConcepts.Response.Success,
-  SearchConcepts.Response.Error
-> {
-  return useQuery(
-    ['searchConcepts', queryParams],
-    () => searchConcepts(queryParams, requestOptions),
-    options,
-  )
-}
-
-/**
  * Autocomplete for items search.
  */
 
@@ -1841,116 +4242,22 @@ export function useAutocompleteItems(
   )
 }
 
-export namespace RegisterOAuth2User {
-  export namespace Response {
-    export type Success = UserDto
-    export type Error = unknown
+export namespace GetComments {
+  export type PathParameters = {
+    itemId: string
   }
-  export type RequestBody = OAuthRegistrationData
-}
-
-export async function registerOAuth2User([body, requestOptions]: [
-  body: RegisterOAuth2User.RequestBody,
-  requestOptions?: RequestOptions<RegisterOAuth2User.Response.Success>,
-]): Promise<RegisterOAuth2User.Response.Success> {
-  return request({
-    path: `/api/oauth/sign-up`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useRegisterOAuth2User(
-  options?: UseMutationOptions<
-    RegisterOAuth2User.Response.Success,
-    RegisterOAuth2User.Response.Error,
-    [
-      RegisterOAuth2User.RequestBody,
-      RequestOptions<RegisterOAuth2User.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  RegisterOAuth2User.Response.Success,
-  RegisterOAuth2User.Response.Error,
-  [
-    RegisterOAuth2User.RequestBody,
-    RequestOptions<RegisterOAuth2User.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(registerOAuth2User, options)
-}
-
-export namespace ValidateImplicitGrantToken {
   export namespace Response {
-    export type Success = OAuthRegistrationDto
-    export type Error = unknown
-  }
-  export type RequestBody = ImplicitGrantTokenData
-}
-
-export async function validateImplicitGrantToken([body, requestOptions]: [
-  body: ValidateImplicitGrantToken.RequestBody,
-  requestOptions?: RequestOptions<ValidateImplicitGrantToken.Response.Success>,
-]): Promise<ValidateImplicitGrantToken.Response.Success> {
-  return request({
-    path: `/api/oauth/token`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useValidateImplicitGrantToken(
-  options?: UseMutationOptions<
-    ValidateImplicitGrantToken.Response.Success,
-    ValidateImplicitGrantToken.Response.Error,
-    [
-      ValidateImplicitGrantToken.RequestBody,
-      RequestOptions<ValidateImplicitGrantToken.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  ValidateImplicitGrantToken.Response.Success,
-  ValidateImplicitGrantToken.Response.Error,
-  [
-    ValidateImplicitGrantToken.RequestBody,
-    RequestOptions<ValidateImplicitGrantToken.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(validateImplicitGrantToken, options)
-}
-
-export namespace GetLoggedInUser {
-  export namespace Response {
-    export type Success = UserDto
+    export type Success = Array<ItemCommentDto>
     export type Error = unknown
   }
 }
 
-export async function getLoggedInUser(
-  requestOptions?: RequestOptions<GetLoggedInUser.Response.Success>,
-): Promise<GetLoggedInUser.Response.Success> {
+export async function getComments(
+  pathParams: GetComments.PathParameters,
+  requestOptions?: RequestOptions<GetComments.Response.Success>,
+): Promise<GetComments.Response.Success> {
   return request({
-    path: `/api/auth/me`,
+    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/comments`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -1964,761 +4271,39 @@ export async function getLoggedInUser(
   })
 }
 
-export function useGetLoggedInUser(
+export function useGetComments(
+  pathParams: GetComments.PathParameters,
   options?: UseQueryOptions<
-    GetLoggedInUser.Response.Success,
-    GetLoggedInUser.Response.Error
+    GetComments.Response.Success,
+    GetComments.Response.Error
   >,
-  requestOptions?: RequestOptions<GetLoggedInUser.Response.Success>,
-): UseQueryResult<
-  GetLoggedInUser.Response.Success,
-  GetLoggedInUser.Response.Error
-> {
+  requestOptions?: RequestOptions<GetComments.Response.Success>,
+): UseQueryResult<GetComments.Response.Success, GetComments.Response.Error> {
   return useQuery(
-    ['getLoggedInUser'],
-    () => getLoggedInUser(requestOptions),
+    ['getComments', pathParams],
+    () => getComments(pathParams, requestOptions),
     options,
   )
 }
 
-export namespace GetTrainingMaterial {
+export namespace CreateItemComment {
   export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-    approved?: boolean
+    itemId: string
   }
   export namespace Response {
-    export type Success = TrainingMaterialDto
+    export type Success = ItemCommentDto
     export type Error = unknown
   }
+  export type RequestBody = ItemCommentCore
 }
 
-export async function getTrainingMaterial(
-  pathParams: GetTrainingMaterial.PathParameters,
-  queryParams: GetTrainingMaterial.QueryParameters,
-  requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
-): Promise<GetTrainingMaterial.Response.Success> {
+export async function createItemComment([pathParams, body, requestOptions]: [
+  pathParams: CreateItemComment.PathParameters,
+  body: CreateItemComment.RequestBody,
+  requestOptions?: RequestOptions<CreateItemComment.Response.Success>,
+]): Promise<CreateItemComment.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetTrainingMaterial(
-  pathParams: GetTrainingMaterial.PathParameters,
-  queryParams: GetTrainingMaterial.QueryParameters,
-  options?: UseQueryOptions<
-    GetTrainingMaterial.Response.Success,
-    GetTrainingMaterial.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
-): UseQueryResult<
-  GetTrainingMaterial.Response.Success,
-  GetTrainingMaterial.Response.Error
-> {
-  return useQuery(
-    ['getTrainingMaterial', pathParams, queryParams],
-    () => getTrainingMaterial(pathParams, queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateTrainingMaterial {
-  export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = TrainingMaterialDto
-    export type Error = unknown
-  }
-  export type RequestBody = TrainingMaterialCore
-}
-
-export async function updateTrainingMaterial([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: UpdateTrainingMaterial.PathParameters,
-  queryParams: UpdateTrainingMaterial.QueryParameters,
-  body: UpdateTrainingMaterial.RequestBody,
-  requestOptions?: RequestOptions<UpdateTrainingMaterial.Response.Success>,
-]): Promise<UpdateTrainingMaterial.Response.Success> {
-  return request({
-    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateTrainingMaterial(
-  options?: UseMutationOptions<
-    UpdateTrainingMaterial.Response.Success,
-    UpdateTrainingMaterial.Response.Error,
-    [
-      UpdateTrainingMaterial.PathParameters,
-      UpdateTrainingMaterial.QueryParameters,
-      UpdateTrainingMaterial.RequestBody,
-      RequestOptions<UpdateTrainingMaterial.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateTrainingMaterial.Response.Success,
-  UpdateTrainingMaterial.Response.Error,
-  [
-    UpdateTrainingMaterial.PathParameters,
-    UpdateTrainingMaterial.QueryParameters,
-    UpdateTrainingMaterial.RequestBody,
-    RequestOptions<UpdateTrainingMaterial.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateTrainingMaterial, options)
-}
-
-export namespace DeleteTrainingMaterial {
-  export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteTrainingMaterial([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: DeleteTrainingMaterial.PathParameters,
-  queryParams: DeleteTrainingMaterial.QueryParameters,
-  requestOptions?: RequestOptions<DeleteTrainingMaterial.Response.Success>,
-]): Promise<DeleteTrainingMaterial.Response.Success> {
-  return request({
-    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteTrainingMaterial(
-  options?: UseMutationOptions<
-    DeleteTrainingMaterial.Response.Success,
-    DeleteTrainingMaterial.Response.Error,
-    [
-      DeleteTrainingMaterial.PathParameters,
-      DeleteTrainingMaterial.QueryParameters,
-      RequestOptions<DeleteTrainingMaterial.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteTrainingMaterial.Response.Success,
-  DeleteTrainingMaterial.Response.Error,
-  [
-    DeleteTrainingMaterial.PathParameters,
-    DeleteTrainingMaterial.QueryParameters,
-    RequestOptions<DeleteTrainingMaterial.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteTrainingMaterial, options)
-}
-
-export namespace GetTrainingMaterialVersion {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = TrainingMaterialDto
-    export type Error = unknown
-  }
-}
-
-export async function getTrainingMaterialVersion(
-  pathParams: GetTrainingMaterialVersion.PathParameters,
-  requestOptions?: RequestOptions<GetTrainingMaterialVersion.Response.Success>,
-): Promise<GetTrainingMaterialVersion.Response.Success> {
-  return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetTrainingMaterialVersion(
-  pathParams: GetTrainingMaterialVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetTrainingMaterialVersion.Response.Success,
-    GetTrainingMaterialVersion.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetTrainingMaterialVersion.Response.Success>,
-): UseQueryResult<
-  GetTrainingMaterialVersion.Response.Success,
-  GetTrainingMaterialVersion.Response.Error
-> {
-  return useQuery(
-    ['getTrainingMaterialVersion', pathParams],
-    () => getTrainingMaterialVersion(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetTrainingMaterials {
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = PaginatedTrainingMaterials
-    export type Error = unknown
-  }
-}
-
-export async function getTrainingMaterials(
-  queryParams: GetTrainingMaterials.QueryParameters,
-  requestOptions?: RequestOptions<GetTrainingMaterials.Response.Success>,
-): Promise<GetTrainingMaterials.Response.Success> {
-  return request({
-    path: `/api/training-materials`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetTrainingMaterials(
-  queryParams: GetTrainingMaterials.QueryParameters,
-  options?: UseQueryOptions<
-    GetTrainingMaterials.Response.Success,
-    GetTrainingMaterials.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetTrainingMaterials.Response.Success>,
-): UseQueryResult<
-  GetTrainingMaterials.Response.Success,
-  GetTrainingMaterials.Response.Error
-> {
-  return useQuery(
-    ['getTrainingMaterials', queryParams],
-    () => getTrainingMaterials(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateTrainingMaterial {
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = TrainingMaterialDto
-    export type Error = unknown
-  }
-  export type RequestBody = TrainingMaterialCore
-}
-
-export async function createTrainingMaterial([
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  queryParams: CreateTrainingMaterial.QueryParameters,
-  body: CreateTrainingMaterial.RequestBody,
-  requestOptions?: RequestOptions<CreateTrainingMaterial.Response.Success>,
-]): Promise<CreateTrainingMaterial.Response.Success> {
-  return request({
-    path: `/api/training-materials`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateTrainingMaterial(
-  options?: UseMutationOptions<
-    CreateTrainingMaterial.Response.Success,
-    CreateTrainingMaterial.Response.Error,
-    [
-      CreateTrainingMaterial.QueryParameters,
-      CreateTrainingMaterial.RequestBody,
-      RequestOptions<CreateTrainingMaterial.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateTrainingMaterial.Response.Success,
-  CreateTrainingMaterial.Response.Error,
-  [
-    CreateTrainingMaterial.QueryParameters,
-    CreateTrainingMaterial.RequestBody,
-    RequestOptions<CreateTrainingMaterial.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createTrainingMaterial, options)
-}
-
-export namespace RevertTrainingMaterial {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = TrainingMaterialDto
-    export type Error = unknown
-  }
-}
-
-export async function revertTrainingMaterial([pathParams, requestOptions]: [
-  pathParams: RevertTrainingMaterial.PathParameters,
-  requestOptions?: RequestOptions<RevertTrainingMaterial.Response.Success>,
-]): Promise<RevertTrainingMaterial.Response.Success> {
-  return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useRevertTrainingMaterial(
-  options?: UseMutationOptions<
-    RevertTrainingMaterial.Response.Success,
-    RevertTrainingMaterial.Response.Error,
-    [
-      RevertTrainingMaterial.PathParameters,
-      RequestOptions<RevertTrainingMaterial.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  RevertTrainingMaterial.Response.Success,
-  RevertTrainingMaterial.Response.Error,
-  [
-    RevertTrainingMaterial.PathParameters,
-    RequestOptions<RevertTrainingMaterial.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(revertTrainingMaterial, options)
-}
-
-export namespace PublishTrainingMaterial {
-  export type PathParameters = {
-    trainingMaterialId: string
-  }
-  export namespace Response {
-    export type Success = TrainingMaterialDto
-    export type Error = unknown
-  }
-}
-
-export async function publishTrainingMaterial([pathParams, requestOptions]: [
-  pathParams: PublishTrainingMaterial.PathParameters,
-  requestOptions?: RequestOptions<PublishTrainingMaterial.Response.Success>,
-]): Promise<PublishTrainingMaterial.Response.Success> {
-  return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams.trainingMaterialId,
-    )}/commit`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function usePublishTrainingMaterial(
-  options?: UseMutationOptions<
-    PublishTrainingMaterial.Response.Success,
-    PublishTrainingMaterial.Response.Error,
-    [
-      PublishTrainingMaterial.PathParameters,
-      RequestOptions<PublishTrainingMaterial.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  PublishTrainingMaterial.Response.Success,
-  PublishTrainingMaterial.Response.Error,
-  [
-    PublishTrainingMaterial.PathParameters,
-    RequestOptions<PublishTrainingMaterial.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(publishTrainingMaterial, options)
-}
-
-export namespace GetItemCategories {
-  export namespace Response {
-    export type Success = Record<string, string>
-    export type Error = unknown
-  }
-}
-
-export async function getItemCategories(
-  requestOptions?: RequestOptions<GetItemCategories.Response.Success>,
-): Promise<GetItemCategories.Response.Success> {
-  return request({
-    path: `/api/items-categories`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetItemCategories(
-  options?: UseQueryOptions<
-    GetItemCategories.Response.Success,
-    GetItemCategories.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetItemCategories.Response.Success>,
-): UseQueryResult<
-  GetItemCategories.Response.Success,
-  GetItemCategories.Response.Error
-> {
-  return useQuery(
-    ['getItemCategories'],
-    () => getItemCategories(requestOptions),
-    options,
-  )
-}
-
-export namespace GetItems {
-  export type QueryParameters = {
-    sourceId: number /* int64 */
-    sourceItemId: string
-  }
-  export namespace Response {
-    export type Success = Array<ItemBasicDto>
-    export type Error = unknown
-  }
-}
-
-export async function getItems(
-  queryParams: GetItems.QueryParameters,
-  requestOptions?: RequestOptions<GetItems.Response.Success>,
-): Promise<GetItems.Response.Success> {
-  return request({
-    path: `/api/items`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetItems(
-  queryParams: GetItems.QueryParameters,
-  options?: UseQueryOptions<GetItems.Response.Success, GetItems.Response.Error>,
-  requestOptions?: RequestOptions<GetItems.Response.Success>,
-): UseQueryResult<GetItems.Response.Success, GetItems.Response.Error> {
-  return useQuery(
-    ['getItems', queryParams],
-    () => getItems(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetItemSource {
-  export type PathParameters = {
-    sourceCode: string
-  }
-  export namespace Response {
-    export type Success = ItemSourceDto
-    export type Error = unknown
-  }
-}
-
-export async function getItemSource(
-  pathParams: GetItemSource.PathParameters,
-  requestOptions?: RequestOptions<GetItemSource.Response.Success>,
-): Promise<GetItemSource.Response.Success> {
-  return request({
-    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetItemSource(
-  pathParams: GetItemSource.PathParameters,
-  options?: UseQueryOptions<
-    GetItemSource.Response.Success,
-    GetItemSource.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetItemSource.Response.Success>,
-): UseQueryResult<
-  GetItemSource.Response.Success,
-  GetItemSource.Response.Error
-> {
-  return useQuery(
-    ['getItemSource', pathParams],
-    () => getItemSource(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateItemSource {
-  export type PathParameters = {
-    sourceCode: string
-  }
-  export namespace Response {
-    export type Success = ItemSourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = ItemSourceCore
-}
-
-export async function updateItemSource([pathParams, body, requestOptions]: [
-  pathParams: UpdateItemSource.PathParameters,
-  body: UpdateItemSource.RequestBody,
-  requestOptions?: RequestOptions<UpdateItemSource.Response.Success>,
-]): Promise<UpdateItemSource.Response.Success> {
-  return request({
-    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateItemSource(
-  options?: UseMutationOptions<
-    UpdateItemSource.Response.Success,
-    UpdateItemSource.Response.Error,
-    [
-      UpdateItemSource.PathParameters,
-      UpdateItemSource.RequestBody,
-      RequestOptions<UpdateItemSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateItemSource.Response.Success,
-  UpdateItemSource.Response.Error,
-  [
-    UpdateItemSource.PathParameters,
-    UpdateItemSource.RequestBody,
-    RequestOptions<UpdateItemSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateItemSource, options)
-}
-
-export namespace DeleteItemSource {
-  export type PathParameters = {
-    sourceCode: string
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteItemSource([pathParams, requestOptions]: [
-  pathParams: DeleteItemSource.PathParameters,
-  requestOptions?: RequestOptions<DeleteItemSource.Response.Success>,
-]): Promise<DeleteItemSource.Response.Success> {
-  return request({
-    path: `/api/item-sources/${encodeURIComponent(pathParams.sourceCode)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteItemSource(
-  options?: UseMutationOptions<
-    DeleteItemSource.Response.Success,
-    DeleteItemSource.Response.Error,
-    [
-      DeleteItemSource.PathParameters,
-      RequestOptions<DeleteItemSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteItemSource.Response.Success,
-  DeleteItemSource.Response.Error,
-  [
-    DeleteItemSource.PathParameters,
-    RequestOptions<DeleteItemSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteItemSource, options)
-}
-
-export namespace GetAllItemSources {
-  export namespace Response {
-    export type Success = Array<ItemSourceDto>
-    export type Error = unknown
-  }
-}
-
-export async function getAllItemSources(
-  requestOptions?: RequestOptions<GetAllItemSources.Response.Success>,
-): Promise<GetAllItemSources.Response.Success> {
-  return request({
-    path: `/api/item-sources`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetAllItemSources(
-  options?: UseQueryOptions<
-    GetAllItemSources.Response.Success,
-    GetAllItemSources.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetAllItemSources.Response.Success>,
-): UseQueryResult<
-  GetAllItemSources.Response.Success,
-  GetAllItemSources.Response.Error
-> {
-  return useQuery(
-    ['getAllItemSources'],
-    () => getAllItemSources(requestOptions),
-    options,
-  )
-}
-
-export namespace CreateItemSource {
-  export namespace Response {
-    export type Success = ItemSourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = ItemSourceCore
-}
-
-export async function createItemSource([body, requestOptions]: [
-  body: CreateItemSource.RequestBody,
-  requestOptions?: RequestOptions<CreateItemSource.Response.Success>,
-]): Promise<CreateItemSource.Response.Success> {
-  return request({
-    path: `/api/item-sources`,
+    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/comments`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -2732,516 +4317,51 @@ export async function createItemSource([body, requestOptions]: [
   })
 }
 
-export function useCreateItemSource(
+export function useCreateItemComment(
   options?: UseMutationOptions<
-    CreateItemSource.Response.Success,
-    CreateItemSource.Response.Error,
+    CreateItemComment.Response.Success,
+    CreateItemComment.Response.Error,
     [
-      CreateItemSource.RequestBody,
-      RequestOptions<CreateItemSource.Response.Success>,
+      CreateItemComment.PathParameters,
+      CreateItemComment.RequestBody,
+      RequestOptions<CreateItemComment.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  CreateItemSource.Response.Success,
-  CreateItemSource.Response.Error,
+  CreateItemComment.Response.Success,
+  CreateItemComment.Response.Error,
   [
-    CreateItemSource.RequestBody,
-    RequestOptions<CreateItemSource.Response.Success>,
+    CreateItemComment.PathParameters,
+    CreateItemComment.RequestBody,
+    RequestOptions<CreateItemComment.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(createItemSource, options)
+  return useMutation(createItemComment, options)
 }
 
-export namespace GetDatasets {
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = PaginatedDatasets
-    export type Error = unknown
-  }
-}
-
-export async function getDatasets(
-  queryParams: GetDatasets.QueryParameters,
-  requestOptions?: RequestOptions<GetDatasets.Response.Success>,
-): Promise<GetDatasets.Response.Success> {
-  return request({
-    path: `/api/datasets`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetDatasets(
-  queryParams: GetDatasets.QueryParameters,
-  options?: UseQueryOptions<
-    GetDatasets.Response.Success,
-    GetDatasets.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetDatasets.Response.Success>,
-): UseQueryResult<GetDatasets.Response.Success, GetDatasets.Response.Error> {
-  return useQuery(
-    ['getDatasets', queryParams],
-    () => getDatasets(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateDataset {
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-  export type RequestBody = DatasetCore
-}
-
-export async function createDataset([queryParams, body, requestOptions]: [
-  queryParams: CreateDataset.QueryParameters,
-  body: CreateDataset.RequestBody,
-  requestOptions?: RequestOptions<CreateDataset.Response.Success>,
-]): Promise<CreateDataset.Response.Success> {
-  return request({
-    path: `/api/datasets`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateDataset(
-  options?: UseMutationOptions<
-    CreateDataset.Response.Success,
-    CreateDataset.Response.Error,
-    [
-      CreateDataset.QueryParameters,
-      CreateDataset.RequestBody,
-      RequestOptions<CreateDataset.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateDataset.Response.Success,
-  CreateDataset.Response.Error,
-  [
-    CreateDataset.QueryParameters,
-    CreateDataset.RequestBody,
-    RequestOptions<CreateDataset.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createDataset, options)
-}
-
-export namespace GetDatasetVersion {
+export namespace UpdateItemComment {
   export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-}
-
-export async function getDatasetVersion(
-  pathParams: GetDatasetVersion.PathParameters,
-  requestOptions?: RequestOptions<GetDatasetVersion.Response.Success>,
-): Promise<GetDatasetVersion.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetDatasetVersion(
-  pathParams: GetDatasetVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetDatasetVersion.Response.Success,
-    GetDatasetVersion.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetDatasetVersion.Response.Success>,
-): UseQueryResult<
-  GetDatasetVersion.Response.Success,
-  GetDatasetVersion.Response.Error
-> {
-  return useQuery(
-    ['getDatasetVersion', pathParams],
-    () => getDatasetVersion(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetDataset {
-  export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-}
-
-export async function getDataset(
-  pathParams: GetDataset.PathParameters,
-  queryParams: GetDataset.QueryParameters,
-  requestOptions?: RequestOptions<GetDataset.Response.Success>,
-): Promise<GetDataset.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetDataset(
-  pathParams: GetDataset.PathParameters,
-  queryParams: GetDataset.QueryParameters,
-  options?: UseQueryOptions<
-    GetDataset.Response.Success,
-    GetDataset.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetDataset.Response.Success>,
-): UseQueryResult<GetDataset.Response.Success, GetDataset.Response.Error> {
-  return useQuery(
-    ['getDataset', pathParams, queryParams],
-    () => getDataset(pathParams, queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateDataset {
-  export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-  export type RequestBody = DatasetCore
-}
-
-export async function updateDataset([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: UpdateDataset.PathParameters,
-  queryParams: UpdateDataset.QueryParameters,
-  body: UpdateDataset.RequestBody,
-  requestOptions?: RequestOptions<UpdateDataset.Response.Success>,
-]): Promise<UpdateDataset.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateDataset(
-  options?: UseMutationOptions<
-    UpdateDataset.Response.Success,
-    UpdateDataset.Response.Error,
-    [
-      UpdateDataset.PathParameters,
-      UpdateDataset.QueryParameters,
-      UpdateDataset.RequestBody,
-      RequestOptions<UpdateDataset.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateDataset.Response.Success,
-  UpdateDataset.Response.Error,
-  [
-    UpdateDataset.PathParameters,
-    UpdateDataset.QueryParameters,
-    UpdateDataset.RequestBody,
-    RequestOptions<UpdateDataset.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateDataset, options)
-}
-
-export namespace DeleteDataset {
-  export type PathParameters = {
-    id: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteDataset([pathParams, queryParams, requestOptions]: [
-  pathParams: DeleteDataset.PathParameters,
-  queryParams: DeleteDataset.QueryParameters,
-  requestOptions?: RequestOptions<DeleteDataset.Response.Success>,
-]): Promise<DeleteDataset.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteDataset(
-  options?: UseMutationOptions<
-    DeleteDataset.Response.Success,
-    DeleteDataset.Response.Error,
-    [
-      DeleteDataset.PathParameters,
-      DeleteDataset.QueryParameters,
-      RequestOptions<DeleteDataset.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteDataset.Response.Success,
-  DeleteDataset.Response.Error,
-  [
-    DeleteDataset.PathParameters,
-    DeleteDataset.QueryParameters,
-    RequestOptions<DeleteDataset.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteDataset, options)
-}
-
-export namespace RevertDataset {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-}
-
-export async function revertDataset([pathParams, requestOptions]: [
-  pathParams: RevertDataset.PathParameters,
-  requestOptions?: RequestOptions<RevertDataset.Response.Success>,
-]): Promise<RevertDataset.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useRevertDataset(
-  options?: UseMutationOptions<
-    RevertDataset.Response.Success,
-    RevertDataset.Response.Error,
-    [
-      RevertDataset.PathParameters,
-      RequestOptions<RevertDataset.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  RevertDataset.Response.Success,
-  RevertDataset.Response.Error,
-  [
-    RevertDataset.PathParameters,
-    RequestOptions<RevertDataset.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(revertDataset, options)
-}
-
-export namespace PublishDataset {
-  export type PathParameters = {
-    datasetId: string
-  }
-  export namespace Response {
-    export type Success = DatasetDto
-    export type Error = unknown
-  }
-}
-
-export async function publishDataset([pathParams, requestOptions]: [
-  pathParams: PublishDataset.PathParameters,
-  requestOptions?: RequestOptions<PublishDataset.Response.Success>,
-]): Promise<PublishDataset.Response.Success> {
-  return request({
-    path: `/api/datasets/${encodeURIComponent(pathParams.datasetId)}/commit`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function usePublishDataset(
-  options?: UseMutationOptions<
-    PublishDataset.Response.Success,
-    PublishDataset.Response.Error,
-    [
-      PublishDataset.PathParameters,
-      RequestOptions<PublishDataset.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  PublishDataset.Response.Success,
-  PublishDataset.Response.Error,
-  [
-    PublishDataset.PathParameters,
-    RequestOptions<PublishDataset.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(publishDataset, options)
-}
-
-export namespace GetActor {
-  export type PathParameters = {
+    itemId: string
     id: number /* int64 */
   }
   export namespace Response {
-    export type Success = ActorDto
+    export type Success = ItemCommentDto
     export type Error = unknown
   }
+  export type RequestBody = ItemCommentCore
 }
 
-export async function getActor(
-  pathParams: GetActor.PathParameters,
-  requestOptions?: RequestOptions<GetActor.Response.Success>,
-): Promise<GetActor.Response.Success> {
+export async function updateItemComment([pathParams, body, requestOptions]: [
+  pathParams: UpdateItemComment.PathParameters,
+  body: UpdateItemComment.RequestBody,
+  requestOptions?: RequestOptions<UpdateItemComment.Response.Success>,
+]): Promise<UpdateItemComment.Response.Success> {
   return request({
-    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetActor(
-  pathParams: GetActor.PathParameters,
-  options?: UseQueryOptions<GetActor.Response.Success, GetActor.Response.Error>,
-  requestOptions?: RequestOptions<GetActor.Response.Success>,
-): UseQueryResult<GetActor.Response.Success, GetActor.Response.Error> {
-  return useQuery(
-    ['getActor', pathParams],
-    () => getActor(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateActor {
-  export type PathParameters = {
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = ActorDto
-    export type Error = unknown
-  }
-  export type RequestBody = ActorCore
-}
-
-export async function updateActor([pathParams, body, requestOptions]: [
-  pathParams: UpdateActor.PathParameters,
-  body: UpdateActor.RequestBody,
-  requestOptions?: RequestOptions<UpdateActor.Response.Success>,
-]): Promise<UpdateActor.Response.Success> {
-  return request({
-    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
+    path: `/api/items/${encodeURIComponent(
+      pathParams.itemId,
+    )}/comments/${encodeURIComponent(pathParams.id)}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3255,32 +4375,33 @@ export async function updateActor([pathParams, body, requestOptions]: [
   })
 }
 
-export function useUpdateActor(
+export function useUpdateItemComment(
   options?: UseMutationOptions<
-    UpdateActor.Response.Success,
-    UpdateActor.Response.Error,
+    UpdateItemComment.Response.Success,
+    UpdateItemComment.Response.Error,
     [
-      UpdateActor.PathParameters,
-      UpdateActor.RequestBody,
-      RequestOptions<UpdateActor.Response.Success>,
+      UpdateItemComment.PathParameters,
+      UpdateItemComment.RequestBody,
+      RequestOptions<UpdateItemComment.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  UpdateActor.Response.Success,
-  UpdateActor.Response.Error,
+  UpdateItemComment.Response.Success,
+  UpdateItemComment.Response.Error,
   [
-    UpdateActor.PathParameters,
-    UpdateActor.RequestBody,
-    RequestOptions<UpdateActor.Response.Success>,
+    UpdateItemComment.PathParameters,
+    UpdateItemComment.RequestBody,
+    RequestOptions<UpdateItemComment.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(updateActor, options)
+  return useMutation(updateItemComment, options)
 }
 
-export namespace DeleteActor {
+export namespace DeleteItemComment {
   export type PathParameters = {
+    itemId: string
     id: number /* int64 */
   }
   export namespace Response {
@@ -3289,12 +4410,14 @@ export namespace DeleteActor {
   }
 }
 
-export async function deleteActor([pathParams, requestOptions]: [
-  pathParams: DeleteActor.PathParameters,
-  requestOptions?: RequestOptions<DeleteActor.Response.Success>,
-]): Promise<DeleteActor.Response.Success> {
+export async function deleteItemComment([pathParams, requestOptions]: [
+  pathParams: DeleteItemComment.PathParameters,
+  requestOptions?: RequestOptions<DeleteItemComment.Response.Success>,
+]): Promise<DeleteItemComment.Response.Success> {
   return request({
-    path: `/api/actors/${encodeURIComponent(pathParams.id)}`,
+    path: `/api/items/${encodeURIComponent(
+      pathParams.itemId,
+    )}/comments/${encodeURIComponent(pathParams.id)}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3308,127 +4431,44 @@ export async function deleteActor([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteActor(
+export function useDeleteItemComment(
   options?: UseMutationOptions<
-    DeleteActor.Response.Success,
-    DeleteActor.Response.Error,
-    [DeleteActor.PathParameters, RequestOptions<DeleteActor.Response.Success>],
+    DeleteItemComment.Response.Success,
+    DeleteItemComment.Response.Error,
+    [
+      DeleteItemComment.PathParameters,
+      RequestOptions<DeleteItemComment.Response.Success>,
+    ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteActor.Response.Success,
-  DeleteActor.Response.Error,
-  [DeleteActor.PathParameters, RequestOptions<DeleteActor.Response.Success>],
+  DeleteItemComment.Response.Success,
+  DeleteItemComment.Response.Error,
+  [
+    DeleteItemComment.PathParameters,
+    RequestOptions<DeleteItemComment.Response.Success>,
+  ],
   unknown
 > {
-  return useMutation(deleteActor, options)
+  return useMutation(deleteItemComment, options)
 }
 
-export namespace GetActors {
-  export type QueryParameters = {
-    q?: string
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-  }
-  export namespace Response {
-    export type Success = PaginatedActors
-    export type Error = unknown
-  }
-}
-
-export async function getActors(
-  queryParams: GetActors.QueryParameters,
-  requestOptions?: RequestOptions<GetActors.Response.Success>,
-): Promise<GetActors.Response.Success> {
-  return request({
-    path: `/api/actors`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetActors(
-  queryParams: GetActors.QueryParameters,
-  options?: UseQueryOptions<
-    GetActors.Response.Success,
-    GetActors.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetActors.Response.Success>,
-): UseQueryResult<GetActors.Response.Success, GetActors.Response.Error> {
-  return useQuery(
-    ['getActors', queryParams],
-    () => getActors(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateActor {
-  export namespace Response {
-    export type Success = ActorDto
-    export type Error = unknown
-  }
-  export type RequestBody = ActorCore
-}
-
-export async function createActor([body, requestOptions]: [
-  body: CreateActor.RequestBody,
-  requestOptions?: RequestOptions<CreateActor.Response.Success>,
-]): Promise<CreateActor.Response.Success> {
-  return request({
-    path: `/api/actors`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateActor(
-  options?: UseMutationOptions<
-    CreateActor.Response.Success,
-    CreateActor.Response.Error,
-    [CreateActor.RequestBody, RequestOptions<CreateActor.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  CreateActor.Response.Success,
-  CreateActor.Response.Error,
-  [CreateActor.RequestBody, RequestOptions<CreateActor.Response.Success>],
-  unknown
-> {
-  return useMutation(createActor, options)
-}
-
-export namespace GetActorSource {
+export namespace GetLastComments {
   export type PathParameters = {
-    sourceCode: string
+    itemId: string
   }
   export namespace Response {
-    export type Success = ActorSourceDto
+    export type Success = Array<ItemCommentDto>
     export type Error = unknown
   }
 }
 
-export async function getActorSource(
-  pathParams: GetActorSource.PathParameters,
-  requestOptions?: RequestOptions<GetActorSource.Response.Success>,
-): Promise<GetActorSource.Response.Success> {
+export async function getLastComments(
+  pathParams: GetLastComments.PathParameters,
+  requestOptions?: RequestOptions<GetLastComments.Response.Success>,
+): Promise<GetLastComments.Response.Success> {
   return request({
-    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/last-comments`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3442,498 +4482,22 @@ export async function getActorSource(
   })
 }
 
-export function useGetActorSource(
-  pathParams: GetActorSource.PathParameters,
+export function useGetLastComments(
+  pathParams: GetLastComments.PathParameters,
   options?: UseQueryOptions<
-    GetActorSource.Response.Success,
-    GetActorSource.Response.Error
+    GetLastComments.Response.Success,
+    GetLastComments.Response.Error
   >,
-  requestOptions?: RequestOptions<GetActorSource.Response.Success>,
+  requestOptions?: RequestOptions<GetLastComments.Response.Success>,
 ): UseQueryResult<
-  GetActorSource.Response.Success,
-  GetActorSource.Response.Error
+  GetLastComments.Response.Success,
+  GetLastComments.Response.Error
 > {
   return useQuery(
-    ['getActorSource', pathParams],
-    () => getActorSource(pathParams, requestOptions),
+    ['getLastComments', pathParams],
+    () => getLastComments(pathParams, requestOptions),
     options,
   )
-}
-
-export namespace UpdateActorSource {
-  export type PathParameters = {
-    sourceCode: string
-  }
-  export namespace Response {
-    export type Success = ActorSourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = ActorSourceCore
-}
-
-export async function updateActorSource([pathParams, body, requestOptions]: [
-  pathParams: UpdateActorSource.PathParameters,
-  body: UpdateActorSource.RequestBody,
-  requestOptions?: RequestOptions<UpdateActorSource.Response.Success>,
-]): Promise<UpdateActorSource.Response.Success> {
-  return request({
-    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateActorSource(
-  options?: UseMutationOptions<
-    UpdateActorSource.Response.Success,
-    UpdateActorSource.Response.Error,
-    [
-      UpdateActorSource.PathParameters,
-      UpdateActorSource.RequestBody,
-      RequestOptions<UpdateActorSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateActorSource.Response.Success,
-  UpdateActorSource.Response.Error,
-  [
-    UpdateActorSource.PathParameters,
-    UpdateActorSource.RequestBody,
-    RequestOptions<UpdateActorSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateActorSource, options)
-}
-
-export namespace DeleteActorSource {
-  export type PathParameters = {
-    sourceCode: string
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteActorSource([pathParams, requestOptions]: [
-  pathParams: DeleteActorSource.PathParameters,
-  requestOptions?: RequestOptions<DeleteActorSource.Response.Success>,
-]): Promise<DeleteActorSource.Response.Success> {
-  return request({
-    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteActorSource(
-  options?: UseMutationOptions<
-    DeleteActorSource.Response.Success,
-    DeleteActorSource.Response.Error,
-    [
-      DeleteActorSource.PathParameters,
-      RequestOptions<DeleteActorSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteActorSource.Response.Success,
-  DeleteActorSource.Response.Error,
-  [
-    DeleteActorSource.PathParameters,
-    RequestOptions<DeleteActorSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteActorSource, options)
-}
-
-export namespace GetAllActorSources {
-  export namespace Response {
-    export type Success = Array<ActorSourceDto>
-    export type Error = unknown
-  }
-}
-
-export async function getAllActorSources(
-  requestOptions?: RequestOptions<GetAllActorSources.Response.Success>,
-): Promise<GetAllActorSources.Response.Success> {
-  return request({
-    path: `/api/actor-sources`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetAllActorSources(
-  options?: UseQueryOptions<
-    GetAllActorSources.Response.Success,
-    GetAllActorSources.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetAllActorSources.Response.Success>,
-): UseQueryResult<
-  GetAllActorSources.Response.Success,
-  GetAllActorSources.Response.Error
-> {
-  return useQuery(
-    ['getAllActorSources'],
-    () => getAllActorSources(requestOptions),
-    options,
-  )
-}
-
-export namespace CreateActorSource {
-  export namespace Response {
-    export type Success = ActorSourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = ActorSourceCore
-}
-
-export async function createActorSource([body, requestOptions]: [
-  body: CreateActorSource.RequestBody,
-  requestOptions?: RequestOptions<CreateActorSource.Response.Success>,
-]): Promise<CreateActorSource.Response.Success> {
-  return request({
-    path: `/api/actor-sources`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateActorSource(
-  options?: UseMutationOptions<
-    CreateActorSource.Response.Success,
-    CreateActorSource.Response.Error,
-    [
-      CreateActorSource.RequestBody,
-      RequestOptions<CreateActorSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateActorSource.Response.Success,
-  CreateActorSource.Response.Error,
-  [
-    CreateActorSource.RequestBody,
-    RequestOptions<CreateActorSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createActorSource, options)
-}
-
-export namespace GetVocabularies {
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-  }
-  export namespace Response {
-    export type Success = PaginatedVocabularies
-    export type Error = unknown
-  }
-}
-
-export async function getVocabularies(
-  queryParams: GetVocabularies.QueryParameters,
-  requestOptions?: RequestOptions<GetVocabularies.Response.Success>,
-): Promise<GetVocabularies.Response.Success> {
-  return request({
-    path: `/api/vocabularies`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetVocabularies(
-  queryParams: GetVocabularies.QueryParameters,
-  options?: UseQueryOptions<
-    GetVocabularies.Response.Success,
-    GetVocabularies.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetVocabularies.Response.Success>,
-): UseQueryResult<
-  GetVocabularies.Response.Success,
-  GetVocabularies.Response.Error
-> {
-  return useQuery(
-    ['getVocabularies', queryParams],
-    () => getVocabularies(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateVocabulary {
-  export type QueryParameters = {
-    ttl: {
-      ttl?: string /* binary */
-    }
-  }
-  export namespace Response {
-    export type Success = VocabularyBasicDto
-    export type Error = unknown
-  }
-}
-
-export async function createVocabulary([queryParams, requestOptions]: [
-  queryParams: CreateVocabulary.QueryParameters,
-  requestOptions?: RequestOptions<CreateVocabulary.Response.Success>,
-]): Promise<CreateVocabulary.Response.Success> {
-  return request({
-    path: `/api/vocabularies`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateVocabulary(
-  options?: UseMutationOptions<
-    CreateVocabulary.Response.Success,
-    CreateVocabulary.Response.Error,
-    [
-      CreateVocabulary.QueryParameters,
-      RequestOptions<CreateVocabulary.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateVocabulary.Response.Success,
-  CreateVocabulary.Response.Error,
-  [
-    CreateVocabulary.QueryParameters,
-    RequestOptions<CreateVocabulary.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createVocabulary, options)
-}
-
-export namespace GetVocabulary {
-  export type PathParameters = {
-    code: string
-  }
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-  }
-  export namespace Response {
-    export type Success = VocabularyDto
-    export type Error = unknown
-  }
-}
-
-export async function getVocabulary(
-  pathParams: GetVocabulary.PathParameters,
-  queryParams: GetVocabulary.QueryParameters,
-  requestOptions?: RequestOptions<GetVocabulary.Response.Success>,
-): Promise<GetVocabulary.Response.Success> {
-  return request({
-    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetVocabulary(
-  pathParams: GetVocabulary.PathParameters,
-  queryParams: GetVocabulary.QueryParameters,
-  options?: UseQueryOptions<
-    GetVocabulary.Response.Success,
-    GetVocabulary.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetVocabulary.Response.Success>,
-): UseQueryResult<
-  GetVocabulary.Response.Success,
-  GetVocabulary.Response.Error
-> {
-  return useQuery(
-    ['getVocabulary', pathParams, queryParams],
-    () => getVocabulary(pathParams, queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateVocabulary {
-  export type PathParameters = {
-    code: string
-  }
-  export type QueryParameters = {
-    ttl: {
-      ttl?: string /* binary */
-    }
-    force?: boolean
-  }
-  export namespace Response {
-    export type Success = VocabularyBasicDto
-    export type Error = unknown
-  }
-}
-
-export async function updateVocabulary([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: UpdateVocabulary.PathParameters,
-  queryParams: UpdateVocabulary.QueryParameters,
-  requestOptions?: RequestOptions<UpdateVocabulary.Response.Success>,
-]): Promise<UpdateVocabulary.Response.Success> {
-  return request({
-    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateVocabulary(
-  options?: UseMutationOptions<
-    UpdateVocabulary.Response.Success,
-    UpdateVocabulary.Response.Error,
-    [
-      UpdateVocabulary.PathParameters,
-      UpdateVocabulary.QueryParameters,
-      RequestOptions<UpdateVocabulary.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateVocabulary.Response.Success,
-  UpdateVocabulary.Response.Error,
-  [
-    UpdateVocabulary.PathParameters,
-    UpdateVocabulary.QueryParameters,
-    RequestOptions<UpdateVocabulary.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateVocabulary, options)
-}
-
-export namespace DeleteVocabulary {
-  export type PathParameters = {
-    code: string
-  }
-  export type QueryParameters = {
-    force?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteVocabulary([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: DeleteVocabulary.PathParameters,
-  queryParams: DeleteVocabulary.QueryParameters,
-  requestOptions?: RequestOptions<DeleteVocabulary.Response.Success>,
-]): Promise<DeleteVocabulary.Response.Success> {
-  return request({
-    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteVocabulary(
-  options?: UseMutationOptions<
-    DeleteVocabulary.Response.Success,
-    DeleteVocabulary.Response.Error,
-    [
-      DeleteVocabulary.PathParameters,
-      DeleteVocabulary.QueryParameters,
-      RequestOptions<DeleteVocabulary.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteVocabulary.Response.Success,
-  DeleteVocabulary.Response.Error,
-  [
-    DeleteVocabulary.PathParameters,
-    DeleteVocabulary.QueryParameters,
-    RequestOptions<DeleteVocabulary.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteVocabulary, options)
 }
 
 export namespace GetPropertyType {
@@ -4246,18 +4810,128 @@ export function useReorderPropertyTypes(
   return useMutation(reorderPropertyTypes, options)
 }
 
-export namespace GetAllConceptRelations {
+export namespace CompleteMediaUpload {
+  export type PathParameters = {
+    mediaId: string /* uuid */
+  }
+  export type QueryParameters = {
+    filename?: string
+  }
   export namespace Response {
-    export type Success = Array<ConceptRelationDto>
+    export type Success = MediaDetails
     export type Error = unknown
   }
 }
 
-export async function getAllConceptRelations(
-  requestOptions?: RequestOptions<GetAllConceptRelations.Response.Success>,
-): Promise<GetAllConceptRelations.Response.Success> {
+export async function completeMediaUpload([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: CompleteMediaUpload.PathParameters,
+  queryParams: CompleteMediaUpload.QueryParameters,
+  requestOptions?: RequestOptions<CompleteMediaUpload.Response.Success>,
+]): Promise<CompleteMediaUpload.Response.Success> {
   return request({
-    path: `/api/concept-relations`,
+    path: `/api/media/upload/complete/${encodeURIComponent(
+      pathParams.mediaId,
+    )}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCompleteMediaUpload(
+  options?: UseMutationOptions<
+    CompleteMediaUpload.Response.Success,
+    CompleteMediaUpload.Response.Error,
+    [
+      CompleteMediaUpload.PathParameters,
+      CompleteMediaUpload.QueryParameters,
+      RequestOptions<CompleteMediaUpload.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CompleteMediaUpload.Response.Success,
+  CompleteMediaUpload.Response.Error,
+  [
+    CompleteMediaUpload.PathParameters,
+    CompleteMediaUpload.QueryParameters,
+    RequestOptions<CompleteMediaUpload.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(completeMediaUpload, options)
+}
+
+export namespace ImportMedia {
+  export namespace Response {
+    export type Success = MediaDetails
+    export type Error = unknown
+  }
+  export type RequestBody = MediaLocation
+}
+
+export async function importMedia([body, requestOptions]: [
+  body: ImportMedia.RequestBody,
+  requestOptions?: RequestOptions<ImportMedia.Response.Success>,
+]): Promise<ImportMedia.Response.Success> {
+  return request({
+    path: `/api/media/upload/import`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useImportMedia(
+  options?: UseMutationOptions<
+    ImportMedia.Response.Success,
+    ImportMedia.Response.Error,
+    [ImportMedia.RequestBody, RequestOptions<ImportMedia.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  ImportMedia.Response.Success,
+  ImportMedia.Response.Error,
+  [ImportMedia.RequestBody, RequestOptions<ImportMedia.Response.Success>],
+  unknown
+> {
+  return useMutation(importMedia, options)
+}
+
+export namespace GetMediaFile {
+  export type PathParameters = {
+    mediaId: string /* uuid */
+  }
+  export namespace Response {
+    export type Success = Resource
+    export type Error = unknown
+  }
+}
+
+export async function getMediaFile(
+  pathParams: GetMediaFile.PathParameters,
+  requestOptions?: RequestOptions<GetMediaFile.Response.Success>,
+): Promise<GetMediaFile.Response.Success> {
+  return request({
+    path: `/api/media/download/${encodeURIComponent(pathParams.mediaId)}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -4271,41 +4945,409 @@ export async function getAllConceptRelations(
   })
 }
 
-export function useGetAllConceptRelations(
+export function useGetMediaFile(
+  pathParams: GetMediaFile.PathParameters,
   options?: UseQueryOptions<
-    GetAllConceptRelations.Response.Success,
-    GetAllConceptRelations.Response.Error
+    GetMediaFile.Response.Success,
+    GetMediaFile.Response.Error
   >,
-  requestOptions?: RequestOptions<GetAllConceptRelations.Response.Success>,
-): UseQueryResult<
-  GetAllConceptRelations.Response.Success,
-  GetAllConceptRelations.Response.Error
-> {
+  requestOptions?: RequestOptions<GetMediaFile.Response.Success>,
+): UseQueryResult<GetMediaFile.Response.Success, GetMediaFile.Response.Error> {
   return useQuery(
-    ['getAllConceptRelations'],
-    () => getAllConceptRelations(requestOptions),
+    ['getMediaFile', pathParams],
+    () => getMediaFile(pathParams, requestOptions),
     options,
   )
 }
 
-export namespace GetSources {
+export namespace GetMediaThumbnail {
+  export type PathParameters = {
+    mediaId: string /* uuid */
+  }
+  export namespace Response {
+    export type Success = Resource
+    export type Error = unknown
+  }
+}
+
+export async function getMediaThumbnail(
+  pathParams: GetMediaThumbnail.PathParameters,
+  requestOptions?: RequestOptions<GetMediaThumbnail.Response.Success>,
+): Promise<GetMediaThumbnail.Response.Success> {
+  return request({
+    path: `/api/media/thumbnail/${encodeURIComponent(pathParams.mediaId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetMediaThumbnail(
+  pathParams: GetMediaThumbnail.PathParameters,
+  options?: UseQueryOptions<
+    GetMediaThumbnail.Response.Success,
+    GetMediaThumbnail.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetMediaThumbnail.Response.Success>,
+): UseQueryResult<
+  GetMediaThumbnail.Response.Success,
+  GetMediaThumbnail.Response.Error
+> {
+  return useQuery(
+    ['getMediaThumbnail', pathParams],
+    () => getMediaThumbnail(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetMediaInfo {
+  export type PathParameters = {
+    mediaId: string /* uuid */
+  }
+  export namespace Response {
+    export type Success = MediaDetails
+    export type Error = unknown
+  }
+}
+
+export async function getMediaInfo(
+  pathParams: GetMediaInfo.PathParameters,
+  requestOptions?: RequestOptions<GetMediaInfo.Response.Success>,
+): Promise<GetMediaInfo.Response.Success> {
+  return request({
+    path: `/api/media/info/${encodeURIComponent(pathParams.mediaId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetMediaInfo(
+  pathParams: GetMediaInfo.PathParameters,
+  options?: UseQueryOptions<
+    GetMediaInfo.Response.Success,
+    GetMediaInfo.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetMediaInfo.Response.Success>,
+): UseQueryResult<GetMediaInfo.Response.Success, GetMediaInfo.Response.Error> {
+  return useQuery(
+    ['getMediaInfo', pathParams],
+    () => getMediaInfo(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UploadMedia {
+  export type QueryParameters = {
+    file: {
+      file?: string /* binary */
+    }
+  }
+  export namespace Response {
+    export type Success = MediaDetails
+    export type Error = unknown
+  }
+}
+
+export async function uploadMedia([queryParams, requestOptions]: [
+  queryParams: UploadMedia.QueryParameters,
+  requestOptions?: RequestOptions<UploadMedia.Response.Success>,
+]): Promise<UploadMedia.Response.Success> {
+  return request({
+    path: `/api/media/upload/full`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUploadMedia(
+  options?: UseMutationOptions<
+    UploadMedia.Response.Success,
+    UploadMedia.Response.Error,
+    [UploadMedia.QueryParameters, RequestOptions<UploadMedia.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  UploadMedia.Response.Success,
+  UploadMedia.Response.Error,
+  [UploadMedia.QueryParameters, RequestOptions<UploadMedia.Response.Success>],
+  unknown
+> {
+  return useMutation(uploadMedia, options)
+}
+
+export namespace UploadMediaChunk {
+  export type QueryParameters = {
+    mediaId?: string /* uuid */
+    no: number /* int32 */
+    chunk: {
+      chunk?: string /* binary */
+    }
+  }
+  export namespace Response {
+    export type Success = MediaUploadInfo
+    export type Error = unknown
+  }
+}
+
+export async function uploadMediaChunk([queryParams, requestOptions]: [
+  queryParams: UploadMediaChunk.QueryParameters,
+  requestOptions?: RequestOptions<UploadMediaChunk.Response.Success>,
+]): Promise<UploadMediaChunk.Response.Success> {
+  return request({
+    path: `/api/media/upload/chunk`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUploadMediaChunk(
+  options?: UseMutationOptions<
+    UploadMediaChunk.Response.Success,
+    UploadMediaChunk.Response.Error,
+    [
+      UploadMediaChunk.QueryParameters,
+      RequestOptions<UploadMediaChunk.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UploadMediaChunk.Response.Success,
+  UploadMediaChunk.Response.Error,
+  [
+    UploadMediaChunk.QueryParameters,
+    RequestOptions<UploadMediaChunk.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(uploadMediaChunk, options)
+}
+
+export namespace GetItems {
+  export type QueryParameters = {
+    sourceId: number /* int64 */
+    sourceItemId: string
+  }
+  export namespace Response {
+    export type Success = Array<ItemBasicDto>
+    export type Error = unknown
+  }
+}
+
+export async function getItems(
+  queryParams: GetItems.QueryParameters,
+  requestOptions?: RequestOptions<GetItems.Response.Success>,
+): Promise<GetItems.Response.Success> {
+  return request({
+    path: `/api/items`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetItems(
+  queryParams: GetItems.QueryParameters,
+  options?: UseQueryOptions<GetItems.Response.Success, GetItems.Response.Error>,
+  requestOptions?: RequestOptions<GetItems.Response.Success>,
+): UseQueryResult<GetItems.Response.Success, GetItems.Response.Error> {
+  return useQuery(
+    ['getItems', queryParams],
+    () => getItems(queryParams, requestOptions),
+    options,
+  )
+}
+
+/**
+ * Sign into the system
+ */
+
+export namespace SignIn {
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+  export type RequestBody = LoginData
+}
+
+export async function signIn([body, requestOptions]: [
+  body: SignIn.RequestBody,
+  requestOptions?: RequestOptions<SignIn.Response.Success>,
+]): Promise<SignIn.Response.Success> {
+  return request({
+    path: `/api/auth/sign-in`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useSignIn(
+  options?: UseMutationOptions<
+    SignIn.Response.Success,
+    SignIn.Response.Error,
+    [SignIn.RequestBody, RequestOptions<SignIn.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  SignIn.Response.Success,
+  SignIn.Response.Error,
+  [SignIn.RequestBody, RequestOptions<SignIn.Response.Success>],
+  unknown
+> {
+  return useMutation(signIn, options)
+}
+
+/**
+ * Sign into the system using oauth2
+ */
+
+export namespace Oauth2 {
+  export type QueryParameters = {
+    'success-redirect-url': string
+    'failure-redirect-url': string
+    'registration-redirect-url': string
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function oauth2(
+  queryParams: Oauth2.QueryParameters,
+  requestOptions?: RequestOptions<Oauth2.Response.Success>,
+): Promise<Oauth2.Response.Success> {
+  return request({
+    path: `/oauth2/authorize/eosc`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useOauth2(
+  queryParams: Oauth2.QueryParameters,
+  options?: UseQueryOptions<Oauth2.Response.Success, Oauth2.Response.Error>,
+  requestOptions?: RequestOptions<Oauth2.Response.Success>,
+): UseQueryResult<Oauth2.Response.Success, Oauth2.Response.Error> {
+  return useQuery(
+    ['oauth2', queryParams],
+    () => oauth2(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetUser {
+  export type PathParameters = {
+    id: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = UserDto
+    export type Error = unknown
+  }
+}
+
+export async function getUser(
+  pathParams: GetUser.PathParameters,
+  requestOptions?: RequestOptions<GetUser.Response.Success>,
+): Promise<GetUser.Response.Success> {
+  return request({
+    path: `/api/users/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetUser(
+  pathParams: GetUser.PathParameters,
+  options?: UseQueryOptions<GetUser.Response.Success, GetUser.Response.Error>,
+  requestOptions?: RequestOptions<GetUser.Response.Success>,
+): UseQueryResult<GetUser.Response.Success, GetUser.Response.Error> {
+  return useQuery(
+    ['getUser', pathParams],
+    () => getUser(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetUsers {
   export type QueryParameters = {
     q?: string
     page?: number /* int32 */
     perpage?: number /* int32 */
   }
   export namespace Response {
-    export type Success = PaginatedSources
+    export type Success = PaginatedUsers
     export type Error = unknown
   }
 }
 
-export async function getSources(
-  queryParams: GetSources.QueryParameters,
-  requestOptions?: RequestOptions<GetSources.Response.Success>,
-): Promise<GetSources.Response.Success> {
+export async function getUsers(
+  queryParams: GetUsers.QueryParameters,
+  requestOptions?: RequestOptions<GetUsers.Response.Success>,
+): Promise<GetUsers.Response.Success> {
   return request({
-    path: `/api/sources`,
+    path: `/api/users`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -4319,995 +5361,37 @@ export async function getSources(
   })
 }
 
-export function useGetSources(
-  queryParams: GetSources.QueryParameters,
-  options?: UseQueryOptions<
-    GetSources.Response.Success,
-    GetSources.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetSources.Response.Success>,
-): UseQueryResult<GetSources.Response.Success, GetSources.Response.Error> {
+export function useGetUsers(
+  queryParams: GetUsers.QueryParameters,
+  options?: UseQueryOptions<GetUsers.Response.Success, GetUsers.Response.Error>,
+  requestOptions?: RequestOptions<GetUsers.Response.Success>,
+): UseQueryResult<GetUsers.Response.Success, GetUsers.Response.Error> {
   return useQuery(
-    ['getSources', queryParams],
-    () => getSources(queryParams, requestOptions),
+    ['getUsers', queryParams],
+    () => getUsers(queryParams, requestOptions),
     options,
   )
 }
 
-export namespace CreateSource {
-  export namespace Response {
-    export type Success = SourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = SourceCore
-}
-
-export async function createSource([body, requestOptions]: [
-  body: CreateSource.RequestBody,
-  requestOptions?: RequestOptions<CreateSource.Response.Success>,
-]): Promise<CreateSource.Response.Success> {
-  return request({
-    path: `/api/sources`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateSource(
-  options?: UseMutationOptions<
-    CreateSource.Response.Success,
-    CreateSource.Response.Error,
-    [CreateSource.RequestBody, RequestOptions<CreateSource.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  CreateSource.Response.Success,
-  CreateSource.Response.Error,
-  [CreateSource.RequestBody, RequestOptions<CreateSource.Response.Success>],
-  unknown
-> {
-  return useMutation(createSource, options)
-}
-
-export namespace GetSource {
+export namespace UpdateUserStatus {
   export type PathParameters = {
     id: number /* int64 */
+    userStatus: 'during-registration' | 'enabled' | 'locked'
   }
   export namespace Response {
-    export type Success = SourceDto
+    export type Success = UserDto
     export type Error = unknown
   }
 }
 
-export async function getSource(
-  pathParams: GetSource.PathParameters,
-  requestOptions?: RequestOptions<GetSource.Response.Success>,
-): Promise<GetSource.Response.Success> {
+export async function updateUserStatus([pathParams, requestOptions]: [
+  pathParams: UpdateUserStatus.PathParameters,
+  requestOptions?: RequestOptions<UpdateUserStatus.Response.Success>,
+]): Promise<UpdateUserStatus.Response.Success> {
   return request({
-    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetSource(
-  pathParams: GetSource.PathParameters,
-  options?: UseQueryOptions<
-    GetSource.Response.Success,
-    GetSource.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetSource.Response.Success>,
-): UseQueryResult<GetSource.Response.Success, GetSource.Response.Error> {
-  return useQuery(
-    ['getSource', pathParams],
-    () => getSource(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateSource {
-  export type PathParameters = {
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = SourceDto
-    export type Error = unknown
-  }
-  export type RequestBody = SourceCore
-}
-
-export async function updateSource([pathParams, body, requestOptions]: [
-  pathParams: UpdateSource.PathParameters,
-  body: UpdateSource.RequestBody,
-  requestOptions?: RequestOptions<UpdateSource.Response.Success>,
-]): Promise<UpdateSource.Response.Success> {
-  return request({
-    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateSource(
-  options?: UseMutationOptions<
-    UpdateSource.Response.Success,
-    UpdateSource.Response.Error,
-    [
-      UpdateSource.PathParameters,
-      UpdateSource.RequestBody,
-      RequestOptions<UpdateSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateSource.Response.Success,
-  UpdateSource.Response.Error,
-  [
-    UpdateSource.PathParameters,
-    UpdateSource.RequestBody,
-    RequestOptions<UpdateSource.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateSource, options)
-}
-
-export namespace DeleteSource {
-  export type PathParameters = {
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteSource([pathParams, requestOptions]: [
-  pathParams: DeleteSource.PathParameters,
-  requestOptions?: RequestOptions<DeleteSource.Response.Success>,
-]): Promise<DeleteSource.Response.Success> {
-  return request({
-    path: `/api/sources/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteSource(
-  options?: UseMutationOptions<
-    DeleteSource.Response.Success,
-    DeleteSource.Response.Error,
-    [
-      DeleteSource.PathParameters,
-      RequestOptions<DeleteSource.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteSource.Response.Success,
-  DeleteSource.Response.Error,
-  [DeleteSource.PathParameters, RequestOptions<DeleteSource.Response.Success>],
-  unknown
-> {
-  return useMutation(deleteSource, options)
-}
-
-export namespace GetAllLicenseTypes {
-  export namespace Response {
-    export type Success = Array<LicenseTypeDto>
-    export type Error = unknown
-  }
-}
-
-export async function getAllLicenseTypes(
-  requestOptions?: RequestOptions<GetAllLicenseTypes.Response.Success>,
-): Promise<GetAllLicenseTypes.Response.Success> {
-  return request({
-    path: `/api/license-types`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetAllLicenseTypes(
-  options?: UseQueryOptions<
-    GetAllLicenseTypes.Response.Success,
-    GetAllLicenseTypes.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetAllLicenseTypes.Response.Success>,
-): UseQueryResult<
-  GetAllLicenseTypes.Response.Success,
-  GetAllLicenseTypes.Response.Error
-> {
-  return useQuery(
-    ['getAllLicenseTypes'],
-    () => getAllLicenseTypes(requestOptions),
-    options,
-  )
-}
-
-export namespace GetLicenses {
-  export type QueryParameters = {
-    q?: string
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-  }
-  export namespace Response {
-    export type Success = PaginatedLicenses
-    export type Error = unknown
-  }
-}
-
-export async function getLicenses(
-  queryParams: GetLicenses.QueryParameters,
-  requestOptions?: RequestOptions<GetLicenses.Response.Success>,
-): Promise<GetLicenses.Response.Success> {
-  return request({
-    path: `/api/licenses`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetLicenses(
-  queryParams: GetLicenses.QueryParameters,
-  options?: UseQueryOptions<
-    GetLicenses.Response.Success,
-    GetLicenses.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetLicenses.Response.Success>,
-): UseQueryResult<GetLicenses.Response.Success, GetLicenses.Response.Error> {
-  return useQuery(
-    ['getLicenses', queryParams],
-    () => getLicenses(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetStepVersion {
-  export type PathParameters = {
-    workflowId: string
-    stepId: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = StepDto
-    export type Error = unknown
-  }
-}
-
-export async function getStepVersion(
-  pathParams: GetStepVersion.PathParameters,
-  requestOptions?: RequestOptions<GetStepVersion.Response.Success>,
-): Promise<GetStepVersion.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(
-      pathParams.stepId,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetStepVersion(
-  pathParams: GetStepVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetStepVersion.Response.Success,
-    GetStepVersion.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetStepVersion.Response.Success>,
-): UseQueryResult<
-  GetStepVersion.Response.Success,
-  GetStepVersion.Response.Error
-> {
-  return useQuery(
-    ['getStepVersion', pathParams],
-    () => getStepVersion(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateStep {
-  export type PathParameters = {
-    workflowId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = StepDto
-    export type Error = unknown
-  }
-  export type RequestBody = StepCore
-}
-
-export async function createStep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: CreateStep.PathParameters,
-  queryParams: CreateStep.QueryParameters,
-  body: CreateStep.RequestBody,
-  requestOptions?: RequestOptions<CreateStep.Response.Success>,
-]): Promise<CreateStep.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}/steps`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateStep(
-  options?: UseMutationOptions<
-    CreateStep.Response.Success,
-    CreateStep.Response.Error,
-    [
-      CreateStep.PathParameters,
-      CreateStep.QueryParameters,
-      CreateStep.RequestBody,
-      RequestOptions<CreateStep.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateStep.Response.Success,
-  CreateStep.Response.Error,
-  [
-    CreateStep.PathParameters,
-    CreateStep.QueryParameters,
-    CreateStep.RequestBody,
-    RequestOptions<CreateStep.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createStep, options)
-}
-
-export namespace GetStep {
-  export type PathParameters = {
-    workflowId: string
-    stepId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = StepDto
-    export type Error = unknown
-  }
-}
-
-export async function getStep(
-  pathParams: GetStep.PathParameters,
-  queryParams: GetStep.QueryParameters,
-  requestOptions?: RequestOptions<GetStep.Response.Success>,
-): Promise<GetStep.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetStep(
-  pathParams: GetStep.PathParameters,
-  queryParams: GetStep.QueryParameters,
-  options?: UseQueryOptions<GetStep.Response.Success, GetStep.Response.Error>,
-  requestOptions?: RequestOptions<GetStep.Response.Success>,
-): UseQueryResult<GetStep.Response.Success, GetStep.Response.Error> {
-  return useQuery(
-    ['getStep', pathParams, queryParams],
-    () => getStep(pathParams, queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateStep {
-  export type PathParameters = {
-    workflowId: string
-    stepId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = StepDto
-    export type Error = unknown
-  }
-  export type RequestBody = StepCore
-}
-
-export async function updateStep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: UpdateStep.PathParameters,
-  queryParams: UpdateStep.QueryParameters,
-  body: UpdateStep.RequestBody,
-  requestOptions?: RequestOptions<UpdateStep.Response.Success>,
-]): Promise<UpdateStep.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateStep(
-  options?: UseMutationOptions<
-    UpdateStep.Response.Success,
-    UpdateStep.Response.Error,
-    [
-      UpdateStep.PathParameters,
-      UpdateStep.QueryParameters,
-      UpdateStep.RequestBody,
-      RequestOptions<UpdateStep.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateStep.Response.Success,
-  UpdateStep.Response.Error,
-  [
-    UpdateStep.PathParameters,
-    UpdateStep.QueryParameters,
-    UpdateStep.RequestBody,
-    RequestOptions<UpdateStep.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateStep, options)
-}
-
-export namespace DeleteStep {
-  export type PathParameters = {
-    workflowId: string
-    stepId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteStep([pathParams, queryParams, requestOptions]: [
-  pathParams: DeleteStep.PathParameters,
-  queryParams: DeleteStep.QueryParameters,
-  requestOptions?: RequestOptions<DeleteStep.Response.Success>,
-]): Promise<DeleteStep.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(pathParams.stepId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteStep(
-  options?: UseMutationOptions<
-    DeleteStep.Response.Success,
-    DeleteStep.Response.Error,
-    [
-      DeleteStep.PathParameters,
-      DeleteStep.QueryParameters,
-      RequestOptions<DeleteStep.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteStep.Response.Success,
-  DeleteStep.Response.Error,
-  [
-    DeleteStep.PathParameters,
-    DeleteStep.QueryParameters,
-    RequestOptions<DeleteStep.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteStep, options)
-}
-
-export namespace RevertStep {
-  export type PathParameters = {
-    workflowId: string
-    stepId: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = StepDto
-    export type Error = unknown
-  }
-}
-
-export async function revertStep([pathParams, requestOptions]: [
-  pathParams: RevertStep.PathParameters,
-  requestOptions?: RequestOptions<RevertStep.Response.Success>,
-]): Promise<RevertStep.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(
-      pathParams.stepId,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useRevertStep(
-  options?: UseMutationOptions<
-    RevertStep.Response.Success,
-    RevertStep.Response.Error,
-    [RevertStep.PathParameters, RequestOptions<RevertStep.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  RevertStep.Response.Success,
-  RevertStep.Response.Error,
-  [RevertStep.PathParameters, RequestOptions<RevertStep.Response.Success>],
-  unknown
-> {
-  return useMutation(revertStep, options)
-}
-
-export namespace GetWorkflows {
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = PaginatedWorkflows
-    export type Error = unknown
-  }
-}
-
-export async function getWorkflows(
-  queryParams: GetWorkflows.QueryParameters,
-  requestOptions?: RequestOptions<GetWorkflows.Response.Success>,
-): Promise<GetWorkflows.Response.Success> {
-  return request({
-    path: `/api/workflows`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetWorkflows(
-  queryParams: GetWorkflows.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflows.Response.Success,
-    GetWorkflows.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetWorkflows.Response.Success>,
-): UseQueryResult<GetWorkflows.Response.Success, GetWorkflows.Response.Error> {
-  return useQuery(
-    ['getWorkflows', queryParams],
-    () => getWorkflows(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateWorkflow {
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = WorkflowDto
-    export type Error = unknown
-  }
-  export type RequestBody = WorkflowCore
-}
-
-export async function createWorkflow([queryParams, body, requestOptions]: [
-  queryParams: CreateWorkflow.QueryParameters,
-  body: CreateWorkflow.RequestBody,
-  requestOptions?: RequestOptions<CreateWorkflow.Response.Success>,
-]): Promise<CreateWorkflow.Response.Success> {
-  return request({
-    path: `/api/workflows`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateWorkflow(
-  options?: UseMutationOptions<
-    CreateWorkflow.Response.Success,
-    CreateWorkflow.Response.Error,
-    [
-      CreateWorkflow.QueryParameters,
-      CreateWorkflow.RequestBody,
-      RequestOptions<CreateWorkflow.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateWorkflow.Response.Success,
-  CreateWorkflow.Response.Error,
-  [
-    CreateWorkflow.QueryParameters,
-    CreateWorkflow.RequestBody,
-    RequestOptions<CreateWorkflow.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createWorkflow, options)
-}
-
-export namespace GetWorkflowVersion {
-  export type PathParameters = {
-    workflowId: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = WorkflowDto
-    export type Error = unknown
-  }
-}
-
-export async function getWorkflowVersion(
-  pathParams: GetWorkflowVersion.PathParameters,
-  requestOptions?: RequestOptions<GetWorkflowVersion.Response.Success>,
-): Promise<GetWorkflowVersion.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetWorkflowVersion(
-  pathParams: GetWorkflowVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetWorkflowVersion.Response.Success,
-    GetWorkflowVersion.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetWorkflowVersion.Response.Success>,
-): UseQueryResult<
-  GetWorkflowVersion.Response.Success,
-  GetWorkflowVersion.Response.Error
-> {
-  return useQuery(
-    ['getWorkflowVersion', pathParams],
-    () => getWorkflowVersion(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetWorkflow {
-  export type PathParameters = {
-    workflowId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = WorkflowDto
-    export type Error = unknown
-  }
-}
-
-export async function getWorkflow(
-  pathParams: GetWorkflow.PathParameters,
-  queryParams: GetWorkflow.QueryParameters,
-  requestOptions?: RequestOptions<GetWorkflow.Response.Success>,
-): Promise<GetWorkflow.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetWorkflow(
-  pathParams: GetWorkflow.PathParameters,
-  queryParams: GetWorkflow.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflow.Response.Success,
-    GetWorkflow.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetWorkflow.Response.Success>,
-): UseQueryResult<GetWorkflow.Response.Success, GetWorkflow.Response.Error> {
-  return useQuery(
-    ['getWorkflow', pathParams, queryParams],
-    () => getWorkflow(pathParams, queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UpdateWorkflow {
-  export type PathParameters = {
-    workflowId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = WorkflowDto
-    export type Error = unknown
-  }
-  export type RequestBody = WorkflowCore
-}
-
-export async function updateWorkflow([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: UpdateWorkflow.PathParameters,
-  queryParams: UpdateWorkflow.QueryParameters,
-  body: UpdateWorkflow.RequestBody,
-  requestOptions?: RequestOptions<UpdateWorkflow.Response.Success>,
-]): Promise<UpdateWorkflow.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateWorkflow(
-  options?: UseMutationOptions<
-    UpdateWorkflow.Response.Success,
-    UpdateWorkflow.Response.Error,
-    [
-      UpdateWorkflow.PathParameters,
-      UpdateWorkflow.QueryParameters,
-      UpdateWorkflow.RequestBody,
-      RequestOptions<UpdateWorkflow.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateWorkflow.Response.Success,
-  UpdateWorkflow.Response.Error,
-  [
-    UpdateWorkflow.PathParameters,
-    UpdateWorkflow.QueryParameters,
-    UpdateWorkflow.RequestBody,
-    RequestOptions<UpdateWorkflow.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateWorkflow, options)
-}
-
-export namespace DeleteWorkflow {
-  export type PathParameters = {
-    workflowId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteWorkflow([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: DeleteWorkflow.PathParameters,
-  queryParams: DeleteWorkflow.QueryParameters,
-  requestOptions?: RequestOptions<DeleteWorkflow.Response.Success>,
-]): Promise<DeleteWorkflow.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteWorkflow(
-  options?: UseMutationOptions<
-    DeleteWorkflow.Response.Success,
-    DeleteWorkflow.Response.Error,
-    [
-      DeleteWorkflow.PathParameters,
-      DeleteWorkflow.QueryParameters,
-      RequestOptions<DeleteWorkflow.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteWorkflow.Response.Success,
-  DeleteWorkflow.Response.Error,
-  [
-    DeleteWorkflow.PathParameters,
-    DeleteWorkflow.QueryParameters,
-    RequestOptions<DeleteWorkflow.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteWorkflow, options)
-}
-
-export namespace RevertWorkflow {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = WorkflowDto
-    export type Error = unknown
-  }
-}
-
-export async function revertWorkflow([pathParams, requestOptions]: [
-  pathParams: RevertWorkflow.PathParameters,
-  requestOptions?: RequestOptions<RevertWorkflow.Response.Success>,
-]): Promise<RevertWorkflow.Response.Success> {
-  return request({
-    path: `/api/workflows/${encodeURIComponent(
+    path: `/api/users/${encodeURIComponent(
       pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    )}/status/${encodeURIComponent(pathParams.userStatus)}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -5321,64 +5405,57 @@ export async function revertWorkflow([pathParams, requestOptions]: [
   })
 }
 
-export function useRevertWorkflow(
+export function useUpdateUserStatus(
   options?: UseMutationOptions<
-    RevertWorkflow.Response.Success,
-    RevertWorkflow.Response.Error,
+    UpdateUserStatus.Response.Success,
+    UpdateUserStatus.Response.Error,
     [
-      RevertWorkflow.PathParameters,
-      RequestOptions<RevertWorkflow.Response.Success>,
+      UpdateUserStatus.PathParameters,
+      RequestOptions<UpdateUserStatus.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  RevertWorkflow.Response.Success,
-  RevertWorkflow.Response.Error,
+  UpdateUserStatus.Response.Success,
+  UpdateUserStatus.Response.Error,
   [
-    RevertWorkflow.PathParameters,
-    RequestOptions<RevertWorkflow.Response.Success>,
+    UpdateUserStatus.PathParameters,
+    RequestOptions<UpdateUserStatus.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(revertWorkflow, options)
+  return useMutation(updateUserStatus, options)
 }
 
-export namespace CreateSubstep {
+export namespace UpdateUserRole {
   export type PathParameters = {
-    workflowId: string
-    stepId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
+    id: number /* int64 */
+    userRole:
+      | 'contributor'
+      | 'system-contributor'
+      | 'moderator'
+      | 'administrator'
   }
   export namespace Response {
-    export type Success = StepDto
+    export type Success = UserDto
     export type Error = unknown
   }
-  export type RequestBody = StepCore
 }
 
-export async function createSubstep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: CreateSubstep.PathParameters,
-  queryParams: CreateSubstep.QueryParameters,
-  body: CreateSubstep.RequestBody,
-  requestOptions?: RequestOptions<CreateSubstep.Response.Success>,
-]): Promise<CreateSubstep.Response.Success> {
+export async function updateUserRole([pathParams, requestOptions]: [
+  pathParams: UpdateUserRole.PathParameters,
+  requestOptions?: RequestOptions<UpdateUserRole.Response.Success>,
+]): Promise<UpdateUserRole.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams.workflowId,
-    )}/steps/${encodeURIComponent(pathParams.stepId)}/steps`,
+    path: `/api/users/${encodeURIComponent(
+      pathParams.id,
+    )}/role/${encodeURIComponent(pathParams.userRole)}`,
     baseUrl: undefined,
-    query: queryParams,
+    query: undefined,
     options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
+      method: 'put',
+      body: undefined,
+      headers: {},
     },
     returnType: 'json',
     hooks: requestOptions?.hooks,
@@ -5386,218 +5463,44 @@ export async function createSubstep([
   })
 }
 
-export function useCreateSubstep(
+export function useUpdateUserRole(
   options?: UseMutationOptions<
-    CreateSubstep.Response.Success,
-    CreateSubstep.Response.Error,
+    UpdateUserRole.Response.Success,
+    UpdateUserRole.Response.Error,
     [
-      CreateSubstep.PathParameters,
-      CreateSubstep.QueryParameters,
-      CreateSubstep.RequestBody,
-      RequestOptions<CreateSubstep.Response.Success>,
+      UpdateUserRole.PathParameters,
+      RequestOptions<UpdateUserRole.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  CreateSubstep.Response.Success,
-  CreateSubstep.Response.Error,
+  UpdateUserRole.Response.Success,
+  UpdateUserRole.Response.Error,
   [
-    CreateSubstep.PathParameters,
-    CreateSubstep.QueryParameters,
-    CreateSubstep.RequestBody,
-    RequestOptions<CreateSubstep.Response.Success>,
+    UpdateUserRole.PathParameters,
+    RequestOptions<UpdateUserRole.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(createSubstep, options)
+  return useMutation(updateUserRole, options)
 }
 
-export namespace PublishWorkflow {
+export namespace GetActorSource {
   export type PathParameters = {
-    workflowId: string
+    sourceCode: string
   }
   export namespace Response {
-    export type Success = WorkflowDto
+    export type Success = ActorSourceDto
     export type Error = unknown
   }
 }
 
-export async function publishWorkflow([pathParams, requestOptions]: [
-  pathParams: PublishWorkflow.PathParameters,
-  requestOptions?: RequestOptions<PublishWorkflow.Response.Success>,
-]): Promise<PublishWorkflow.Response.Success> {
+export async function getActorSource(
+  pathParams: GetActorSource.PathParameters,
+  requestOptions?: RequestOptions<GetActorSource.Response.Success>,
+): Promise<GetActorSource.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(pathParams.workflowId)}/commit`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function usePublishWorkflow(
-  options?: UseMutationOptions<
-    PublishWorkflow.Response.Success,
-    PublishWorkflow.Response.Error,
-    [
-      PublishWorkflow.PathParameters,
-      RequestOptions<PublishWorkflow.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  PublishWorkflow.Response.Success,
-  PublishWorkflow.Response.Error,
-  [
-    PublishWorkflow.PathParameters,
-    RequestOptions<PublishWorkflow.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(publishWorkflow, options)
-}
-
-export namespace ReindexItems {
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function reindexItems([requestOptions]: [
-  requestOptions?: RequestOptions<ReindexItems.Response.Success>,
-]): Promise<ReindexItems.Response.Success> {
-  return request({
-    path: `/api/item-reindex`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useReindexItems(
-  options?: UseMutationOptions<
-    ReindexItems.Response.Success,
-    ReindexItems.Response.Error,
-    [RequestOptions<ReindexItems.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  ReindexItems.Response.Success,
-  ReindexItems.Response.Error,
-  [RequestOptions<ReindexItems.Response.Success>],
-  unknown
-> {
-  return useMutation(reindexItems, options)
-}
-
-export namespace RebuildAutocompleteIndex {
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function rebuildAutocompleteIndex([requestOptions]: [
-  requestOptions?: RequestOptions<RebuildAutocompleteIndex.Response.Success>,
-]): Promise<RebuildAutocompleteIndex.Response.Success> {
-  return request({
-    path: `/api/item-autocomplete-rebuild`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useRebuildAutocompleteIndex(
-  options?: UseMutationOptions<
-    RebuildAutocompleteIndex.Response.Success,
-    RebuildAutocompleteIndex.Response.Error,
-    [RequestOptions<RebuildAutocompleteIndex.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  RebuildAutocompleteIndex.Response.Success,
-  RebuildAutocompleteIndex.Response.Error,
-  [RequestOptions<RebuildAutocompleteIndex.Response.Success>],
-  unknown
-> {
-  return useMutation(rebuildAutocompleteIndex, options)
-}
-
-export namespace ReindexConcepts {
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function reindexConcepts([requestOptions]: [
-  requestOptions?: RequestOptions<ReindexConcepts.Response.Success>,
-]): Promise<ReindexConcepts.Response.Success> {
-  return request({
-    path: `/api/concept-reindex`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useReindexConcepts(
-  options?: UseMutationOptions<
-    ReindexConcepts.Response.Success,
-    ReindexConcepts.Response.Error,
-    [RequestOptions<ReindexConcepts.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  ReindexConcepts.Response.Success,
-  ReindexConcepts.Response.Error,
-  [RequestOptions<ReindexConcepts.Response.Success>],
-  unknown
-> {
-  return useMutation(reindexConcepts, options)
-}
-
-export namespace GetAllMediaSources {
-  export namespace Response {
-    export type Success = Array<MediaSourceDto>
-    export type Error = unknown
-  }
-}
-
-export async function getAllMediaSources(
-  requestOptions?: RequestOptions<GetAllMediaSources.Response.Success>,
-): Promise<GetAllMediaSources.Response.Success> {
-  return request({
-    path: `/api/media-sources`,
+    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -5611,37 +5514,186 @@ export async function getAllMediaSources(
   })
 }
 
-export function useGetAllMediaSources(
+export function useGetActorSource(
+  pathParams: GetActorSource.PathParameters,
   options?: UseQueryOptions<
-    GetAllMediaSources.Response.Success,
-    GetAllMediaSources.Response.Error
+    GetActorSource.Response.Success,
+    GetActorSource.Response.Error
   >,
-  requestOptions?: RequestOptions<GetAllMediaSources.Response.Success>,
+  requestOptions?: RequestOptions<GetActorSource.Response.Success>,
 ): UseQueryResult<
-  GetAllMediaSources.Response.Success,
-  GetAllMediaSources.Response.Error
+  GetActorSource.Response.Success,
+  GetActorSource.Response.Error
 > {
   return useQuery(
-    ['getAllMediaSources'],
-    () => getAllMediaSources(requestOptions),
+    ['getActorSource', pathParams],
+    () => getActorSource(pathParams, requestOptions),
     options,
   )
 }
 
-export namespace CreateMediaSource {
+export namespace UpdateActorSource {
+  export type PathParameters = {
+    sourceCode: string
+  }
   export namespace Response {
-    export type Success = MediaSourceDto
+    export type Success = ActorSourceDto
     export type Error = unknown
   }
-  export type RequestBody = MediaSourceCore
+  export type RequestBody = ActorSourceCore
 }
 
-export async function createMediaSource([body, requestOptions]: [
-  body: CreateMediaSource.RequestBody,
-  requestOptions?: RequestOptions<CreateMediaSource.Response.Success>,
-]): Promise<CreateMediaSource.Response.Success> {
+export async function updateActorSource([pathParams, body, requestOptions]: [
+  pathParams: UpdateActorSource.PathParameters,
+  body: UpdateActorSource.RequestBody,
+  requestOptions?: RequestOptions<UpdateActorSource.Response.Success>,
+]): Promise<UpdateActorSource.Response.Success> {
   return request({
-    path: `/api/media-sources`,
+    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateActorSource(
+  options?: UseMutationOptions<
+    UpdateActorSource.Response.Success,
+    UpdateActorSource.Response.Error,
+    [
+      UpdateActorSource.PathParameters,
+      UpdateActorSource.RequestBody,
+      RequestOptions<UpdateActorSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateActorSource.Response.Success,
+  UpdateActorSource.Response.Error,
+  [
+    UpdateActorSource.PathParameters,
+    UpdateActorSource.RequestBody,
+    RequestOptions<UpdateActorSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateActorSource, options)
+}
+
+export namespace DeleteActorSource {
+  export type PathParameters = {
+    sourceCode: string
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteActorSource([pathParams, requestOptions]: [
+  pathParams: DeleteActorSource.PathParameters,
+  requestOptions?: RequestOptions<DeleteActorSource.Response.Success>,
+]): Promise<DeleteActorSource.Response.Success> {
+  return request({
+    path: `/api/actor-sources/${encodeURIComponent(pathParams.sourceCode)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteActorSource(
+  options?: UseMutationOptions<
+    DeleteActorSource.Response.Success,
+    DeleteActorSource.Response.Error,
+    [
+      DeleteActorSource.PathParameters,
+      RequestOptions<DeleteActorSource.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteActorSource.Response.Success,
+  DeleteActorSource.Response.Error,
+  [
+    DeleteActorSource.PathParameters,
+    RequestOptions<DeleteActorSource.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteActorSource, options)
+}
+
+export namespace GetAllActorSources {
+  export namespace Response {
+    export type Success = Array<ActorSourceDto>
+    export type Error = unknown
+  }
+}
+
+export async function getAllActorSources(
+  requestOptions?: RequestOptions<GetAllActorSources.Response.Success>,
+): Promise<GetAllActorSources.Response.Success> {
+  return request({
+    path: `/api/actor-sources`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetAllActorSources(
+  options?: UseQueryOptions<
+    GetAllActorSources.Response.Success,
+    GetAllActorSources.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetAllActorSources.Response.Success>,
+): UseQueryResult<
+  GetAllActorSources.Response.Success,
+  GetAllActorSources.Response.Error
+> {
+  return useQuery(
+    ['getAllActorSources'],
+    () => getAllActorSources(requestOptions),
+    options,
+  )
+}
+
+export namespace CreateActorSource {
+  export namespace Response {
+    export type Success = ActorSourceDto
+    export type Error = unknown
+  }
+  export type RequestBody = ActorSourceCore
+}
+
+export async function createActorSource([body, requestOptions]: [
+  body: CreateActorSource.RequestBody,
+  requestOptions?: RequestOptions<CreateActorSource.Response.Success>,
+]): Promise<CreateActorSource.Response.Success> {
+  return request({
+    path: `/api/actor-sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -5655,26 +5707,26 @@ export async function createMediaSource([body, requestOptions]: [
   })
 }
 
-export function useCreateMediaSource(
+export function useCreateActorSource(
   options?: UseMutationOptions<
-    CreateMediaSource.Response.Success,
-    CreateMediaSource.Response.Error,
+    CreateActorSource.Response.Success,
+    CreateActorSource.Response.Error,
     [
-      CreateMediaSource.RequestBody,
-      RequestOptions<CreateMediaSource.Response.Success>,
+      CreateActorSource.RequestBody,
+      RequestOptions<CreateActorSource.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  CreateMediaSource.Response.Success,
-  CreateMediaSource.Response.Error,
+  CreateActorSource.Response.Success,
+  CreateActorSource.Response.Error,
   [
-    CreateMediaSource.RequestBody,
-    RequestOptions<CreateMediaSource.Response.Success>,
+    CreateActorSource.RequestBody,
+    RequestOptions<CreateActorSource.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(createMediaSource, options)
+  return useMutation(createActorSource, options)
 }
 
 export namespace GetMediaSource {
@@ -5830,128 +5882,18 @@ export function useDeleteMediaSource(
   return useMutation(deleteMediaSource, options)
 }
 
-export namespace CompleteMediaUpload {
-  export type PathParameters = {
-    mediaId: string /* uuid */
-  }
-  export type QueryParameters = {
-    filename?: string
-  }
+export namespace GetAllMediaSources {
   export namespace Response {
-    export type Success = MediaDetails
+    export type Success = Array<MediaSourceDto>
     export type Error = unknown
   }
 }
 
-export async function completeMediaUpload([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: CompleteMediaUpload.PathParameters,
-  queryParams: CompleteMediaUpload.QueryParameters,
-  requestOptions?: RequestOptions<CompleteMediaUpload.Response.Success>,
-]): Promise<CompleteMediaUpload.Response.Success> {
+export async function getAllMediaSources(
+  requestOptions?: RequestOptions<GetAllMediaSources.Response.Success>,
+): Promise<GetAllMediaSources.Response.Success> {
   return request({
-    path: `/api/media/upload/complete/${encodeURIComponent(
-      pathParams.mediaId,
-    )}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCompleteMediaUpload(
-  options?: UseMutationOptions<
-    CompleteMediaUpload.Response.Success,
-    CompleteMediaUpload.Response.Error,
-    [
-      CompleteMediaUpload.PathParameters,
-      CompleteMediaUpload.QueryParameters,
-      RequestOptions<CompleteMediaUpload.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CompleteMediaUpload.Response.Success,
-  CompleteMediaUpload.Response.Error,
-  [
-    CompleteMediaUpload.PathParameters,
-    CompleteMediaUpload.QueryParameters,
-    RequestOptions<CompleteMediaUpload.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(completeMediaUpload, options)
-}
-
-export namespace ImportMedia {
-  export namespace Response {
-    export type Success = MediaDetails
-    export type Error = unknown
-  }
-  export type RequestBody = MediaLocation
-}
-
-export async function importMedia([body, requestOptions]: [
-  body: ImportMedia.RequestBody,
-  requestOptions?: RequestOptions<ImportMedia.Response.Success>,
-]): Promise<ImportMedia.Response.Success> {
-  return request({
-    path: `/api/media/upload/import`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useImportMedia(
-  options?: UseMutationOptions<
-    ImportMedia.Response.Success,
-    ImportMedia.Response.Error,
-    [ImportMedia.RequestBody, RequestOptions<ImportMedia.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  ImportMedia.Response.Success,
-  ImportMedia.Response.Error,
-  [ImportMedia.RequestBody, RequestOptions<ImportMedia.Response.Success>],
-  unknown
-> {
-  return useMutation(importMedia, options)
-}
-
-export namespace GetMediaFile {
-  export type PathParameters = {
-    mediaId: string /* uuid */
-  }
-  export namespace Response {
-    export type Success = Resource
-    export type Error = unknown
-  }
-}
-
-export async function getMediaFile(
-  pathParams: GetMediaFile.PathParameters,
-  requestOptions?: RequestOptions<GetMediaFile.Response.Success>,
-): Promise<GetMediaFile.Response.Success> {
-  return request({
-    path: `/api/media/download/${encodeURIComponent(pathParams.mediaId)}`,
+    path: `/api/media-sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -5965,232 +5907,37 @@ export async function getMediaFile(
   })
 }
 
-export function useGetMediaFile(
-  pathParams: GetMediaFile.PathParameters,
+export function useGetAllMediaSources(
   options?: UseQueryOptions<
-    GetMediaFile.Response.Success,
-    GetMediaFile.Response.Error
+    GetAllMediaSources.Response.Success,
+    GetAllMediaSources.Response.Error
   >,
-  requestOptions?: RequestOptions<GetMediaFile.Response.Success>,
-): UseQueryResult<GetMediaFile.Response.Success, GetMediaFile.Response.Error> {
-  return useQuery(
-    ['getMediaFile', pathParams],
-    () => getMediaFile(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace UploadMedia {
-  export type QueryParameters = {
-    file: {
-      file?: string /* binary */
-    }
-  }
-  export namespace Response {
-    export type Success = MediaDetails
-    export type Error = unknown
-  }
-}
-
-export async function uploadMedia([queryParams, requestOptions]: [
-  queryParams: UploadMedia.QueryParameters,
-  requestOptions?: RequestOptions<UploadMedia.Response.Success>,
-]): Promise<UploadMedia.Response.Success> {
-  return request({
-    path: `/api/media/upload/full`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUploadMedia(
-  options?: UseMutationOptions<
-    UploadMedia.Response.Success,
-    UploadMedia.Response.Error,
-    [UploadMedia.QueryParameters, RequestOptions<UploadMedia.Response.Success>],
-    unknown
-  >,
-): UseMutationResult<
-  UploadMedia.Response.Success,
-  UploadMedia.Response.Error,
-  [UploadMedia.QueryParameters, RequestOptions<UploadMedia.Response.Success>],
-  unknown
-> {
-  return useMutation(uploadMedia, options)
-}
-
-export namespace UploadMediaChunk {
-  export type QueryParameters = {
-    mediaId?: string /* uuid */
-    no: number /* int32 */
-    chunk: {
-      chunk?: string /* binary */
-    }
-  }
-  export namespace Response {
-    export type Success = MediaUploadInfo
-    export type Error = unknown
-  }
-}
-
-export async function uploadMediaChunk([queryParams, requestOptions]: [
-  queryParams: UploadMediaChunk.QueryParameters,
-  requestOptions?: RequestOptions<UploadMediaChunk.Response.Success>,
-]): Promise<UploadMediaChunk.Response.Success> {
-  return request({
-    path: `/api/media/upload/chunk`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUploadMediaChunk(
-  options?: UseMutationOptions<
-    UploadMediaChunk.Response.Success,
-    UploadMediaChunk.Response.Error,
-    [
-      UploadMediaChunk.QueryParameters,
-      RequestOptions<UploadMediaChunk.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UploadMediaChunk.Response.Success,
-  UploadMediaChunk.Response.Error,
-  [
-    UploadMediaChunk.QueryParameters,
-    RequestOptions<UploadMediaChunk.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(uploadMediaChunk, options)
-}
-
-export namespace GetMediaThumbnail {
-  export type PathParameters = {
-    mediaId: string /* uuid */
-  }
-  export namespace Response {
-    export type Success = Resource
-    export type Error = unknown
-  }
-}
-
-export async function getMediaThumbnail(
-  pathParams: GetMediaThumbnail.PathParameters,
-  requestOptions?: RequestOptions<GetMediaThumbnail.Response.Success>,
-): Promise<GetMediaThumbnail.Response.Success> {
-  return request({
-    path: `/api/media/thumbnail/${encodeURIComponent(pathParams.mediaId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetMediaThumbnail(
-  pathParams: GetMediaThumbnail.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaThumbnail.Response.Success,
-    GetMediaThumbnail.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetMediaThumbnail.Response.Success>,
+  requestOptions?: RequestOptions<GetAllMediaSources.Response.Success>,
 ): UseQueryResult<
-  GetMediaThumbnail.Response.Success,
-  GetMediaThumbnail.Response.Error
+  GetAllMediaSources.Response.Success,
+  GetAllMediaSources.Response.Error
 > {
   return useQuery(
-    ['getMediaThumbnail', pathParams],
-    () => getMediaThumbnail(pathParams, requestOptions),
+    ['getAllMediaSources'],
+    () => getAllMediaSources(requestOptions),
     options,
   )
 }
 
-export namespace GetMediaInfo {
-  export type PathParameters = {
-    mediaId: string /* uuid */
-  }
+export namespace CreateMediaSource {
   export namespace Response {
-    export type Success = MediaDetails
+    export type Success = MediaSourceDto
     export type Error = unknown
   }
+  export type RequestBody = MediaSourceCore
 }
 
-export async function getMediaInfo(
-  pathParams: GetMediaInfo.PathParameters,
-  requestOptions?: RequestOptions<GetMediaInfo.Response.Success>,
-): Promise<GetMediaInfo.Response.Success> {
+export async function createMediaSource([body, requestOptions]: [
+  body: CreateMediaSource.RequestBody,
+  requestOptions?: RequestOptions<CreateMediaSource.Response.Success>,
+]): Promise<CreateMediaSource.Response.Success> {
   return request({
-    path: `/api/media/info/${encodeURIComponent(pathParams.mediaId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetMediaInfo(
-  pathParams: GetMediaInfo.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaInfo.Response.Success,
-    GetMediaInfo.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetMediaInfo.Response.Success>,
-): UseQueryResult<GetMediaInfo.Response.Success, GetMediaInfo.Response.Error> {
-  return useQuery(
-    ['getMediaInfo', pathParams],
-    () => getMediaInfo(pathParams, requestOptions),
-    options,
-  )
-}
-
-/**
- * Sign into the system
- */
-
-export namespace SignIn {
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-  export type RequestBody = LoginData
-}
-
-export async function signIn([body, requestOptions]: [
-  body: SignIn.RequestBody,
-  requestOptions?: RequestOptions<SignIn.Response.Success>,
-]): Promise<SignIn.Response.Success> {
-  return request({
-    path: `/api/auth/sign-in`,
+    path: `/api/media-sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -6204,46 +5951,214 @@ export async function signIn([body, requestOptions]: [
   })
 }
 
-export function useSignIn(
+export function useCreateMediaSource(
   options?: UseMutationOptions<
-    SignIn.Response.Success,
-    SignIn.Response.Error,
-    [SignIn.RequestBody, RequestOptions<SignIn.Response.Success>],
+    CreateMediaSource.Response.Success,
+    CreateMediaSource.Response.Error,
+    [
+      CreateMediaSource.RequestBody,
+      RequestOptions<CreateMediaSource.Response.Success>,
+    ],
     unknown
   >,
 ): UseMutationResult<
-  SignIn.Response.Success,
-  SignIn.Response.Error,
-  [SignIn.RequestBody, RequestOptions<SignIn.Response.Success>],
+  CreateMediaSource.Response.Success,
+  CreateMediaSource.Response.Error,
+  [
+    CreateMediaSource.RequestBody,
+    RequestOptions<CreateMediaSource.Response.Success>,
+  ],
   unknown
 > {
-  return useMutation(signIn, options)
+  return useMutation(createMediaSource, options)
 }
 
-/**
- * Sign into the system using oauth2
- */
-
-export namespace Oauth2 {
-  export type QueryParameters = {
-    'success-redirect-url': string
-    'failure-redirect-url': string
-    'registration-redirect-url': string
-  }
+export namespace RebuildAutocompleteIndex {
   export namespace Response {
     export type Success = void
     export type Error = unknown
   }
 }
 
-export async function oauth2(
-  queryParams: Oauth2.QueryParameters,
-  requestOptions?: RequestOptions<Oauth2.Response.Success>,
-): Promise<Oauth2.Response.Success> {
+export async function rebuildAutocompleteIndex([requestOptions]: [
+  requestOptions?: RequestOptions<RebuildAutocompleteIndex.Response.Success>,
+]): Promise<RebuildAutocompleteIndex.Response.Success> {
   return request({
-    path: `/oauth2/authorize/eosc`,
+    path: `/api/item-autocomplete-rebuild`,
     baseUrl: undefined,
-    query: queryParams,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRebuildAutocompleteIndex(
+  options?: UseMutationOptions<
+    RebuildAutocompleteIndex.Response.Success,
+    RebuildAutocompleteIndex.Response.Error,
+    [RequestOptions<RebuildAutocompleteIndex.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  RebuildAutocompleteIndex.Response.Success,
+  RebuildAutocompleteIndex.Response.Error,
+  [RequestOptions<RebuildAutocompleteIndex.Response.Success>],
+  unknown
+> {
+  return useMutation(rebuildAutocompleteIndex, options)
+}
+
+export namespace ReindexConcepts {
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function reindexConcepts([requestOptions]: [
+  requestOptions?: RequestOptions<ReindexConcepts.Response.Success>,
+]): Promise<ReindexConcepts.Response.Success> {
+  return request({
+    path: `/api/concept-reindex`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useReindexConcepts(
+  options?: UseMutationOptions<
+    ReindexConcepts.Response.Success,
+    ReindexConcepts.Response.Error,
+    [RequestOptions<ReindexConcepts.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  ReindexConcepts.Response.Success,
+  ReindexConcepts.Response.Error,
+  [RequestOptions<ReindexConcepts.Response.Success>],
+  unknown
+> {
+  return useMutation(reindexConcepts, options)
+}
+
+export namespace ReindexItems {
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function reindexItems([requestOptions]: [
+  requestOptions?: RequestOptions<ReindexItems.Response.Success>,
+]): Promise<ReindexItems.Response.Success> {
+  return request({
+    path: `/api/item-reindex`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useReindexItems(
+  options?: UseMutationOptions<
+    ReindexItems.Response.Success,
+    ReindexItems.Response.Error,
+    [RequestOptions<ReindexItems.Response.Success>],
+    unknown
+  >,
+): UseMutationResult<
+  ReindexItems.Response.Success,
+  ReindexItems.Response.Error,
+  [RequestOptions<ReindexItems.Response.Success>],
+  unknown
+> {
+  return useMutation(reindexItems, options)
+}
+
+export namespace ValidateImplicitGrantToken {
+  export namespace Response {
+    export type Success = OAuthRegistrationDto
+    export type Error = unknown
+  }
+  export type RequestBody = ImplicitGrantTokenData
+}
+
+export async function validateImplicitGrantToken([body, requestOptions]: [
+  body: ValidateImplicitGrantToken.RequestBody,
+  requestOptions?: RequestOptions<ValidateImplicitGrantToken.Response.Success>,
+]): Promise<ValidateImplicitGrantToken.Response.Success> {
+  return request({
+    path: `/api/oauth/token`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useValidateImplicitGrantToken(
+  options?: UseMutationOptions<
+    ValidateImplicitGrantToken.Response.Success,
+    ValidateImplicitGrantToken.Response.Error,
+    [
+      ValidateImplicitGrantToken.RequestBody,
+      RequestOptions<ValidateImplicitGrantToken.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  ValidateImplicitGrantToken.Response.Success,
+  ValidateImplicitGrantToken.Response.Error,
+  [
+    ValidateImplicitGrantToken.RequestBody,
+    RequestOptions<ValidateImplicitGrantToken.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(validateImplicitGrantToken, options)
+}
+
+export namespace GetLoggedInUser {
+  export namespace Response {
+    export type Success = UserDto
+    export type Error = unknown
+  }
+}
+
+export async function getLoggedInUser(
+  requestOptions?: RequestOptions<GetLoggedInUser.Response.Success>,
+): Promise<GetLoggedInUser.Response.Success> {
+  return request({
+    path: `/api/auth/me`,
+    baseUrl: undefined,
+    query: undefined,
     options: {
       method: 'get',
       body: undefined,
@@ -6255,41 +6170,43 @@ export async function oauth2(
   })
 }
 
-export function useOauth2(
-  queryParams: Oauth2.QueryParameters,
-  options?: UseQueryOptions<Oauth2.Response.Success, Oauth2.Response.Error>,
-  requestOptions?: RequestOptions<Oauth2.Response.Success>,
-): UseQueryResult<Oauth2.Response.Success, Oauth2.Response.Error> {
+export function useGetLoggedInUser(
+  options?: UseQueryOptions<
+    GetLoggedInUser.Response.Success,
+    GetLoggedInUser.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetLoggedInUser.Response.Success>,
+): UseQueryResult<
+  GetLoggedInUser.Response.Success,
+  GetLoggedInUser.Response.Error
+> {
   return useQuery(
-    ['oauth2', queryParams],
-    () => oauth2(queryParams, requestOptions),
+    ['getLoggedInUser'],
+    () => getLoggedInUser(requestOptions),
     options,
   )
 }
 
-export namespace UpdateUserStatus {
+export namespace PublishDataset {
   export type PathParameters = {
-    id: number /* int64 */
-    userStatus: 'during-registration' | 'enabled' | 'locked'
+    datasetId: string
   }
   export namespace Response {
-    export type Success = UserDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
 }
 
-export async function updateUserStatus([pathParams, requestOptions]: [
-  pathParams: UpdateUserStatus.PathParameters,
-  requestOptions?: RequestOptions<UpdateUserStatus.Response.Success>,
-]): Promise<UpdateUserStatus.Response.Success> {
+export async function publishDataset([pathParams, requestOptions]: [
+  pathParams: PublishDataset.PathParameters,
+  requestOptions?: RequestOptions<PublishDataset.Response.Success>,
+]): Promise<PublishDataset.Response.Success> {
   return request({
-    path: `/api/users/${encodeURIComponent(
-      pathParams.id,
-    )}/status/${encodeURIComponent(pathParams.userStatus)}`,
+    path: `/api/datasets/${encodeURIComponent(pathParams.datasetId)}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
-      method: 'put',
+      method: 'post',
       body: undefined,
       headers: {},
     },
@@ -6299,104 +6216,46 @@ export async function updateUserStatus([pathParams, requestOptions]: [
   })
 }
 
-export function useUpdateUserStatus(
+export function usePublishDataset(
   options?: UseMutationOptions<
-    UpdateUserStatus.Response.Success,
-    UpdateUserStatus.Response.Error,
+    PublishDataset.Response.Success,
+    PublishDataset.Response.Error,
     [
-      UpdateUserStatus.PathParameters,
-      RequestOptions<UpdateUserStatus.Response.Success>,
+      PublishDataset.PathParameters,
+      RequestOptions<PublishDataset.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  UpdateUserStatus.Response.Success,
-  UpdateUserStatus.Response.Error,
+  PublishDataset.Response.Success,
+  PublishDataset.Response.Error,
   [
-    UpdateUserStatus.PathParameters,
-    RequestOptions<UpdateUserStatus.Response.Success>,
+    PublishDataset.PathParameters,
+    RequestOptions<PublishDataset.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(updateUserStatus, options)
+  return useMutation(publishDataset, options)
 }
 
-export namespace UpdateUserRole {
-  export type PathParameters = {
-    id: number /* int64 */
-    userRole:
-      | 'contributor'
-      | 'system-contributor'
-      | 'moderator'
-      | 'administrator'
-  }
-  export namespace Response {
-    export type Success = UserDto
-    export type Error = unknown
-  }
-}
-
-export async function updateUserRole([pathParams, requestOptions]: [
-  pathParams: UpdateUserRole.PathParameters,
-  requestOptions?: RequestOptions<UpdateUserRole.Response.Success>,
-]): Promise<UpdateUserRole.Response.Success> {
-  return request({
-    path: `/api/users/${encodeURIComponent(
-      pathParams.id,
-    )}/role/${encodeURIComponent(pathParams.userRole)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateUserRole(
-  options?: UseMutationOptions<
-    UpdateUserRole.Response.Success,
-    UpdateUserRole.Response.Error,
-    [
-      UpdateUserRole.PathParameters,
-      RequestOptions<UpdateUserRole.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateUserRole.Response.Success,
-  UpdateUserRole.Response.Error,
-  [
-    UpdateUserRole.PathParameters,
-    RequestOptions<UpdateUserRole.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateUserRole, options)
-}
-
-export namespace GetUsers {
+export namespace GetDatasets {
   export type QueryParameters = {
-    q?: string
     page?: number /* int32 */
     perpage?: number /* int32 */
+    approved?: boolean
   }
   export namespace Response {
-    export type Success = PaginatedUsers
+    export type Success = PaginatedDatasets
     export type Error = unknown
   }
 }
 
-export async function getUsers(
-  queryParams: GetUsers.QueryParameters,
-  requestOptions?: RequestOptions<GetUsers.Response.Success>,
-): Promise<GetUsers.Response.Success> {
+export async function getDatasets(
+  queryParams: GetDatasets.QueryParameters,
+  requestOptions?: RequestOptions<GetDatasets.Response.Success>,
+): Promise<GetDatasets.Response.Success> {
   return request({
-    path: `/api/users`,
+    path: `/api/datasets`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6410,131 +6269,39 @@ export async function getUsers(
   })
 }
 
-export function useGetUsers(
-  queryParams: GetUsers.QueryParameters,
-  options?: UseQueryOptions<GetUsers.Response.Success, GetUsers.Response.Error>,
-  requestOptions?: RequestOptions<GetUsers.Response.Success>,
-): UseQueryResult<GetUsers.Response.Success, GetUsers.Response.Error> {
-  return useQuery(
-    ['getUsers', queryParams],
-    () => getUsers(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetUser {
-  export type PathParameters = {
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = UserDto
-    export type Error = unknown
-  }
-}
-
-export async function getUser(
-  pathParams: GetUser.PathParameters,
-  requestOptions?: RequestOptions<GetUser.Response.Success>,
-): Promise<GetUser.Response.Success> {
-  return request({
-    path: `/api/users/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetUser(
-  pathParams: GetUser.PathParameters,
-  options?: UseQueryOptions<GetUser.Response.Success, GetUser.Response.Error>,
-  requestOptions?: RequestOptions<GetUser.Response.Success>,
-): UseQueryResult<GetUser.Response.Success, GetUser.Response.Error> {
-  return useQuery(
-    ['getUser', pathParams],
-    () => getUser(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetAllItemRelations {
-  export namespace Response {
-    export type Success = Array<ItemRelationDto>
-    export type Error = unknown
-  }
-}
-
-export async function getAllItemRelations(
-  requestOptions?: RequestOptions<GetAllItemRelations.Response.Success>,
-): Promise<GetAllItemRelations.Response.Success> {
-  return request({
-    path: `/api/items-relations`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetAllItemRelations(
+export function useGetDatasets(
+  queryParams: GetDatasets.QueryParameters,
   options?: UseQueryOptions<
-    GetAllItemRelations.Response.Success,
-    GetAllItemRelations.Response.Error
+    GetDatasets.Response.Success,
+    GetDatasets.Response.Error
   >,
-  requestOptions?: RequestOptions<GetAllItemRelations.Response.Success>,
-): UseQueryResult<
-  GetAllItemRelations.Response.Success,
-  GetAllItemRelations.Response.Error
-> {
+  requestOptions?: RequestOptions<GetDatasets.Response.Success>,
+): UseQueryResult<GetDatasets.Response.Success, GetDatasets.Response.Error> {
   return useQuery(
-    ['getAllItemRelations'],
-    () => getAllItemRelations(requestOptions),
+    ['getDatasets', queryParams],
+    () => getDatasets(queryParams, requestOptions),
     options,
   )
 }
 
-export namespace CreateItemRelatedItem {
-  export type PathParameters = {
-    subjectId: string
-    objectId: string
-  }
+export namespace CreateDataset {
   export type QueryParameters = {
     draft?: boolean
   }
   export namespace Response {
-    export type Success = ItemRelatedItemDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
-  export type RequestBody = ItemRelationId
+  export type RequestBody = DatasetCore
 }
 
-export async function createItemRelatedItem([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
-  pathParams: CreateItemRelatedItem.PathParameters,
-  queryParams: CreateItemRelatedItem.QueryParameters,
-  body: CreateItemRelatedItem.RequestBody,
-  requestOptions?: RequestOptions<CreateItemRelatedItem.Response.Success>,
-]): Promise<CreateItemRelatedItem.Response.Success> {
+export async function createDataset([queryParams, body, requestOptions]: [
+  queryParams: CreateDataset.QueryParameters,
+  body: CreateDataset.RequestBody,
+  requestOptions?: RequestOptions<CreateDataset.Response.Success>,
+]): Promise<CreateDataset.Response.Success> {
   return request({
-    path: `/api/items-relations/${encodeURIComponent(
-      pathParams.subjectId,
-    )}/${encodeURIComponent(pathParams.objectId)}`,
+    path: `/api/datasets`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6548,355 +6315,31 @@ export async function createItemRelatedItem([
   })
 }
 
-export function useCreateItemRelatedItem(
+export function useCreateDataset(
   options?: UseMutationOptions<
-    CreateItemRelatedItem.Response.Success,
-    CreateItemRelatedItem.Response.Error,
+    CreateDataset.Response.Success,
+    CreateDataset.Response.Error,
     [
-      CreateItemRelatedItem.PathParameters,
-      CreateItemRelatedItem.QueryParameters,
-      CreateItemRelatedItem.RequestBody,
-      RequestOptions<CreateItemRelatedItem.Response.Success>,
+      CreateDataset.QueryParameters,
+      CreateDataset.RequestBody,
+      RequestOptions<CreateDataset.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  CreateItemRelatedItem.Response.Success,
-  CreateItemRelatedItem.Response.Error,
+  CreateDataset.Response.Success,
+  CreateDataset.Response.Error,
   [
-    CreateItemRelatedItem.PathParameters,
-    CreateItemRelatedItem.QueryParameters,
-    CreateItemRelatedItem.RequestBody,
-    RequestOptions<CreateItemRelatedItem.Response.Success>,
+    CreateDataset.QueryParameters,
+    CreateDataset.RequestBody,
+    RequestOptions<CreateDataset.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(createItemRelatedItem, options)
+  return useMutation(createDataset, options)
 }
 
-export namespace DeleteItemRelatedItem {
-  export type PathParameters = {
-    subjectId: string
-    objectId: string
-  }
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteItemRelatedItem([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: DeleteItemRelatedItem.PathParameters,
-  queryParams: DeleteItemRelatedItem.QueryParameters,
-  requestOptions?: RequestOptions<DeleteItemRelatedItem.Response.Success>,
-]): Promise<DeleteItemRelatedItem.Response.Success> {
-  return request({
-    path: `/api/items-relations/${encodeURIComponent(
-      pathParams.subjectId,
-    )}/${encodeURIComponent(pathParams.objectId)}`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteItemRelatedItem(
-  options?: UseMutationOptions<
-    DeleteItemRelatedItem.Response.Success,
-    DeleteItemRelatedItem.Response.Error,
-    [
-      DeleteItemRelatedItem.PathParameters,
-      DeleteItemRelatedItem.QueryParameters,
-      RequestOptions<DeleteItemRelatedItem.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteItemRelatedItem.Response.Success,
-  DeleteItemRelatedItem.Response.Error,
-  [
-    DeleteItemRelatedItem.PathParameters,
-    DeleteItemRelatedItem.QueryParameters,
-    RequestOptions<DeleteItemRelatedItem.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteItemRelatedItem, options)
-}
-
-export namespace GetComments {
-  export type PathParameters = {
-    itemId: string
-  }
-  export namespace Response {
-    export type Success = Array<ItemCommentDto>
-    export type Error = unknown
-  }
-}
-
-export async function getComments(
-  pathParams: GetComments.PathParameters,
-  requestOptions?: RequestOptions<GetComments.Response.Success>,
-): Promise<GetComments.Response.Success> {
-  return request({
-    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/comments`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetComments(
-  pathParams: GetComments.PathParameters,
-  options?: UseQueryOptions<
-    GetComments.Response.Success,
-    GetComments.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetComments.Response.Success>,
-): UseQueryResult<GetComments.Response.Success, GetComments.Response.Error> {
-  return useQuery(
-    ['getComments', pathParams],
-    () => getComments(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreateItemComment {
-  export type PathParameters = {
-    itemId: string
-  }
-  export namespace Response {
-    export type Success = ItemCommentDto
-    export type Error = unknown
-  }
-  export type RequestBody = ItemCommentCore
-}
-
-export async function createItemComment([pathParams, body, requestOptions]: [
-  pathParams: CreateItemComment.PathParameters,
-  body: CreateItemComment.RequestBody,
-  requestOptions?: RequestOptions<CreateItemComment.Response.Success>,
-]): Promise<CreateItemComment.Response.Success> {
-  return request({
-    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/comments`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreateItemComment(
-  options?: UseMutationOptions<
-    CreateItemComment.Response.Success,
-    CreateItemComment.Response.Error,
-    [
-      CreateItemComment.PathParameters,
-      CreateItemComment.RequestBody,
-      RequestOptions<CreateItemComment.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreateItemComment.Response.Success,
-  CreateItemComment.Response.Error,
-  [
-    CreateItemComment.PathParameters,
-    CreateItemComment.RequestBody,
-    RequestOptions<CreateItemComment.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createItemComment, options)
-}
-
-export namespace UpdateItemComment {
-  export type PathParameters = {
-    itemId: string
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = ItemCommentDto
-    export type Error = unknown
-  }
-  export type RequestBody = ItemCommentCore
-}
-
-export async function updateItemComment([pathParams, body, requestOptions]: [
-  pathParams: UpdateItemComment.PathParameters,
-  body: UpdateItemComment.RequestBody,
-  requestOptions?: RequestOptions<UpdateItemComment.Response.Success>,
-]): Promise<UpdateItemComment.Response.Success> {
-  return request({
-    path: `/api/items/${encodeURIComponent(
-      pathParams.itemId,
-    )}/comments/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'put',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useUpdateItemComment(
-  options?: UseMutationOptions<
-    UpdateItemComment.Response.Success,
-    UpdateItemComment.Response.Error,
-    [
-      UpdateItemComment.PathParameters,
-      UpdateItemComment.RequestBody,
-      RequestOptions<UpdateItemComment.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  UpdateItemComment.Response.Success,
-  UpdateItemComment.Response.Error,
-  [
-    UpdateItemComment.PathParameters,
-    UpdateItemComment.RequestBody,
-    RequestOptions<UpdateItemComment.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(updateItemComment, options)
-}
-
-export namespace DeleteItemComment {
-  export type PathParameters = {
-    itemId: string
-    id: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = void
-    export type Error = unknown
-  }
-}
-
-export async function deleteItemComment([pathParams, requestOptions]: [
-  pathParams: DeleteItemComment.PathParameters,
-  requestOptions?: RequestOptions<DeleteItemComment.Response.Success>,
-]): Promise<DeleteItemComment.Response.Success> {
-  return request({
-    path: `/api/items/${encodeURIComponent(
-      pathParams.itemId,
-    )}/comments/${encodeURIComponent(pathParams.id)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'delete',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useDeleteItemComment(
-  options?: UseMutationOptions<
-    DeleteItemComment.Response.Success,
-    DeleteItemComment.Response.Error,
-    [
-      DeleteItemComment.PathParameters,
-      RequestOptions<DeleteItemComment.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  DeleteItemComment.Response.Success,
-  DeleteItemComment.Response.Error,
-  [
-    DeleteItemComment.PathParameters,
-    RequestOptions<DeleteItemComment.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(deleteItemComment, options)
-}
-
-export namespace GetLastComments {
-  export type PathParameters = {
-    itemId: string
-  }
-  export namespace Response {
-    export type Success = Array<ItemCommentDto>
-    export type Error = unknown
-  }
-}
-
-export async function getLastComments(
-  pathParams: GetLastComments.PathParameters,
-  requestOptions?: RequestOptions<GetLastComments.Response.Success>,
-): Promise<GetLastComments.Response.Success> {
-  return request({
-    path: `/api/items/${encodeURIComponent(pathParams.itemId)}/last-comments`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetLastComments(
-  pathParams: GetLastComments.PathParameters,
-  options?: UseQueryOptions<
-    GetLastComments.Response.Success,
-    GetLastComments.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetLastComments.Response.Success>,
-): UseQueryResult<
-  GetLastComments.Response.Success,
-  GetLastComments.Response.Error
-> {
-  return useQuery(
-    ['getLastComments', pathParams],
-    () => getLastComments(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace GetPublication {
+export namespace GetDataset {
   export type PathParameters = {
     id: string
   }
@@ -6905,18 +6348,18 @@ export namespace GetPublication {
     approved?: boolean
   }
   export namespace Response {
-    export type Success = PublicationDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
 }
 
-export async function getPublication(
-  pathParams: GetPublication.PathParameters,
-  queryParams: GetPublication.QueryParameters,
-  requestOptions?: RequestOptions<GetPublication.Response.Success>,
-): Promise<GetPublication.Response.Success> {
+export async function getDataset(
+  pathParams: GetDataset.PathParameters,
+  queryParams: GetDataset.QueryParameters,
+  requestOptions?: RequestOptions<GetDataset.Response.Success>,
+): Promise<GetDataset.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6930,26 +6373,23 @@ export async function getPublication(
   })
 }
 
-export function useGetPublication(
-  pathParams: GetPublication.PathParameters,
-  queryParams: GetPublication.QueryParameters,
+export function useGetDataset(
+  pathParams: GetDataset.PathParameters,
+  queryParams: GetDataset.QueryParameters,
   options?: UseQueryOptions<
-    GetPublication.Response.Success,
-    GetPublication.Response.Error
+    GetDataset.Response.Success,
+    GetDataset.Response.Error
   >,
-  requestOptions?: RequestOptions<GetPublication.Response.Success>,
-): UseQueryResult<
-  GetPublication.Response.Success,
-  GetPublication.Response.Error
-> {
+  requestOptions?: RequestOptions<GetDataset.Response.Success>,
+): UseQueryResult<GetDataset.Response.Success, GetDataset.Response.Error> {
   return useQuery(
-    ['getPublication', pathParams, queryParams],
-    () => getPublication(pathParams, queryParams, requestOptions),
+    ['getDataset', pathParams, queryParams],
+    () => getDataset(pathParams, queryParams, requestOptions),
     options,
   )
 }
 
-export namespace UpdatePublication {
+export namespace UpdateDataset {
   export type PathParameters = {
     id: string
   }
@@ -6957,25 +6397,25 @@ export namespace UpdatePublication {
     draft?: boolean
   }
   export namespace Response {
-    export type Success = PublicationDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
-  export type RequestBody = PublicationCore
+  export type RequestBody = DatasetCore
 }
 
-export async function updatePublication([
+export async function updateDataset([
   pathParams,
   queryParams,
   body,
   requestOptions,
 ]: [
-  pathParams: UpdatePublication.PathParameters,
-  queryParams: UpdatePublication.QueryParameters,
-  body: UpdatePublication.RequestBody,
-  requestOptions?: RequestOptions<UpdatePublication.Response.Success>,
-]): Promise<UpdatePublication.Response.Success> {
+  pathParams: UpdateDataset.PathParameters,
+  queryParams: UpdateDataset.QueryParameters,
+  body: UpdateDataset.RequestBody,
+  requestOptions?: RequestOptions<UpdateDataset.Response.Success>,
+]): Promise<UpdateDataset.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6989,33 +6429,33 @@ export async function updatePublication([
   })
 }
 
-export function useUpdatePublication(
+export function useUpdateDataset(
   options?: UseMutationOptions<
-    UpdatePublication.Response.Success,
-    UpdatePublication.Response.Error,
+    UpdateDataset.Response.Success,
+    UpdateDataset.Response.Error,
     [
-      UpdatePublication.PathParameters,
-      UpdatePublication.QueryParameters,
-      UpdatePublication.RequestBody,
-      RequestOptions<UpdatePublication.Response.Success>,
+      UpdateDataset.PathParameters,
+      UpdateDataset.QueryParameters,
+      UpdateDataset.RequestBody,
+      RequestOptions<UpdateDataset.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  UpdatePublication.Response.Success,
-  UpdatePublication.Response.Error,
+  UpdateDataset.Response.Success,
+  UpdateDataset.Response.Error,
   [
-    UpdatePublication.PathParameters,
-    UpdatePublication.QueryParameters,
-    UpdatePublication.RequestBody,
-    RequestOptions<UpdatePublication.Response.Success>,
+    UpdateDataset.PathParameters,
+    UpdateDataset.QueryParameters,
+    UpdateDataset.RequestBody,
+    RequestOptions<UpdateDataset.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(updatePublication, options)
+  return useMutation(updateDataset, options)
 }
 
-export namespace DeletePublication {
+export namespace DeleteDataset {
   export type PathParameters = {
     id: string
   }
@@ -7028,17 +6468,13 @@ export namespace DeletePublication {
   }
 }
 
-export async function deletePublication([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
-  pathParams: DeletePublication.PathParameters,
-  queryParams: DeletePublication.QueryParameters,
-  requestOptions?: RequestOptions<DeletePublication.Response.Success>,
-]): Promise<DeletePublication.Response.Success> {
+export async function deleteDataset([pathParams, queryParams, requestOptions]: [
+  pathParams: DeleteDataset.PathParameters,
+  queryParams: DeleteDataset.QueryParameters,
+  requestOptions?: RequestOptions<DeleteDataset.Response.Success>,
+]): Promise<DeleteDataset.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(pathParams.id)}`,
+    path: `/api/datasets/${encodeURIComponent(pathParams.id)}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -7052,201 +6488,47 @@ export async function deletePublication([
   })
 }
 
-export function useDeletePublication(
+export function useDeleteDataset(
   options?: UseMutationOptions<
-    DeletePublication.Response.Success,
-    DeletePublication.Response.Error,
+    DeleteDataset.Response.Success,
+    DeleteDataset.Response.Error,
     [
-      DeletePublication.PathParameters,
-      DeletePublication.QueryParameters,
-      RequestOptions<DeletePublication.Response.Success>,
+      DeleteDataset.PathParameters,
+      DeleteDataset.QueryParameters,
+      RequestOptions<DeleteDataset.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeletePublication.Response.Success,
-  DeletePublication.Response.Error,
+  DeleteDataset.Response.Success,
+  DeleteDataset.Response.Error,
   [
-    DeletePublication.PathParameters,
-    DeletePublication.QueryParameters,
-    RequestOptions<DeletePublication.Response.Success>,
+    DeleteDataset.PathParameters,
+    DeleteDataset.QueryParameters,
+    RequestOptions<DeleteDataset.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deletePublication, options)
+  return useMutation(deleteDataset, options)
 }
 
-export namespace GetPublications {
-  export type QueryParameters = {
-    page?: number /* int32 */
-    perpage?: number /* int32 */
-    approved?: boolean
-  }
-  export namespace Response {
-    export type Success = PaginatedPublications
-    export type Error = unknown
-  }
-}
-
-export async function getPublications(
-  queryParams: GetPublications.QueryParameters,
-  requestOptions?: RequestOptions<GetPublications.Response.Success>,
-): Promise<GetPublications.Response.Success> {
-  return request({
-    path: `/api/publications`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetPublications(
-  queryParams: GetPublications.QueryParameters,
-  options?: UseQueryOptions<
-    GetPublications.Response.Success,
-    GetPublications.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetPublications.Response.Success>,
-): UseQueryResult<
-  GetPublications.Response.Success,
-  GetPublications.Response.Error
-> {
-  return useQuery(
-    ['getPublications', queryParams],
-    () => getPublications(queryParams, requestOptions),
-    options,
-  )
-}
-
-export namespace CreatePublication {
-  export type QueryParameters = {
-    draft?: boolean
-  }
-  export namespace Response {
-    export type Success = PublicationDto
-    export type Error = unknown
-  }
-  export type RequestBody = PublicationCore
-}
-
-export async function createPublication([queryParams, body, requestOptions]: [
-  queryParams: CreatePublication.QueryParameters,
-  body: CreatePublication.RequestBody,
-  requestOptions?: RequestOptions<CreatePublication.Response.Success>,
-]): Promise<CreatePublication.Response.Success> {
-  return request({
-    path: `/api/publications`,
-    baseUrl: undefined,
-    query: queryParams,
-    options: {
-      method: 'post',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useCreatePublication(
-  options?: UseMutationOptions<
-    CreatePublication.Response.Success,
-    CreatePublication.Response.Error,
-    [
-      CreatePublication.QueryParameters,
-      CreatePublication.RequestBody,
-      RequestOptions<CreatePublication.Response.Success>,
-    ],
-    unknown
-  >,
-): UseMutationResult<
-  CreatePublication.Response.Success,
-  CreatePublication.Response.Error,
-  [
-    CreatePublication.QueryParameters,
-    CreatePublication.RequestBody,
-    RequestOptions<CreatePublication.Response.Success>,
-  ],
-  unknown
-> {
-  return useMutation(createPublication, options)
-}
-
-export namespace GetPublicationVersion {
+export namespace RevertDataset {
   export type PathParameters = {
     id: string
     versionId: number /* int64 */
   }
   export namespace Response {
-    export type Success = PublicationDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
 }
 
-export async function getPublicationVersion(
-  pathParams: GetPublicationVersion.PathParameters,
-  requestOptions?: RequestOptions<GetPublicationVersion.Response.Success>,
-): Promise<GetPublicationVersion.Response.Success> {
+export async function revertDataset([pathParams, requestOptions]: [
+  pathParams: RevertDataset.PathParameters,
+  requestOptions?: RequestOptions<RevertDataset.Response.Success>,
+]): Promise<RevertDataset.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams.id,
-    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
-    baseUrl: undefined,
-    query: undefined,
-    options: {
-      method: 'get',
-      body: undefined,
-      headers: {},
-    },
-    returnType: 'json',
-    hooks: requestOptions?.hooks,
-    token: requestOptions?.token,
-  })
-}
-
-export function useGetPublicationVersion(
-  pathParams: GetPublicationVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetPublicationVersion.Response.Success,
-    GetPublicationVersion.Response.Error
-  >,
-  requestOptions?: RequestOptions<GetPublicationVersion.Response.Success>,
-): UseQueryResult<
-  GetPublicationVersion.Response.Success,
-  GetPublicationVersion.Response.Error
-> {
-  return useQuery(
-    ['getPublicationVersion', pathParams],
-    () => getPublicationVersion(pathParams, requestOptions),
-    options,
-  )
-}
-
-export namespace RevertPublication {
-  export type PathParameters = {
-    id: string
-    versionId: number /* int64 */
-  }
-  export namespace Response {
-    export type Success = PublicationDto
-    export type Error = unknown
-  }
-}
-
-export async function revertPublication([pathParams, requestOptions]: [
-  pathParams: RevertPublication.PathParameters,
-  requestOptions?: RequestOptions<RevertPublication.Response.Success>,
-]): Promise<RevertPublication.Response.Success> {
-  return request({
-    path: `/api/publications/${encodeURIComponent(
+    path: `/api/datasets/${encodeURIComponent(
       pathParams.id,
     )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
     baseUrl: undefined,
@@ -7262,45 +6544,487 @@ export async function revertPublication([pathParams, requestOptions]: [
   })
 }
 
-export function useRevertPublication(
+export function useRevertDataset(
   options?: UseMutationOptions<
-    RevertPublication.Response.Success,
-    RevertPublication.Response.Error,
+    RevertDataset.Response.Success,
+    RevertDataset.Response.Error,
     [
-      RevertPublication.PathParameters,
-      RequestOptions<RevertPublication.Response.Success>,
+      RevertDataset.PathParameters,
+      RequestOptions<RevertDataset.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  RevertPublication.Response.Success,
-  RevertPublication.Response.Error,
+  RevertDataset.Response.Success,
+  RevertDataset.Response.Error,
   [
-    RevertPublication.PathParameters,
-    RequestOptions<RevertPublication.Response.Success>,
+    RevertDataset.PathParameters,
+    RequestOptions<RevertDataset.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(revertPublication, options)
+  return useMutation(revertDataset, options)
 }
 
-export namespace PublishPublication {
+export namespace GetDatasetVersion {
   export type PathParameters = {
-    publicationId: string
+    id: string
+    versionId: number /* int64 */
   }
   export namespace Response {
-    export type Success = PublicationDto
+    export type Success = DatasetDto
     export type Error = unknown
   }
 }
 
-export async function publishPublication([pathParams, requestOptions]: [
-  pathParams: PublishPublication.PathParameters,
-  requestOptions?: RequestOptions<PublishPublication.Response.Success>,
-]): Promise<PublishPublication.Response.Success> {
+export async function getDatasetVersion(
+  pathParams: GetDatasetVersion.PathParameters,
+  requestOptions?: RequestOptions<GetDatasetVersion.Response.Success>,
+): Promise<GetDatasetVersion.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams.publicationId,
+    path: `/api/datasets/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetDatasetVersion(
+  pathParams: GetDatasetVersion.PathParameters,
+  options?: UseQueryOptions<
+    GetDatasetVersion.Response.Success,
+    GetDatasetVersion.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetDatasetVersion.Response.Success>,
+): UseQueryResult<
+  GetDatasetVersion.Response.Success,
+  GetDatasetVersion.Response.Error
+> {
+  return useQuery(
+    ['getDatasetVersion', pathParams],
+    () => getDatasetVersion(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetTrainingMaterialVersion {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+}
+
+export async function getTrainingMaterialVersion(
+  pathParams: GetTrainingMaterialVersion.PathParameters,
+  requestOptions?: RequestOptions<GetTrainingMaterialVersion.Response.Success>,
+): Promise<GetTrainingMaterialVersion.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetTrainingMaterialVersion(
+  pathParams: GetTrainingMaterialVersion.PathParameters,
+  options?: UseQueryOptions<
+    GetTrainingMaterialVersion.Response.Success,
+    GetTrainingMaterialVersion.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetTrainingMaterialVersion.Response.Success>,
+): UseQueryResult<
+  GetTrainingMaterialVersion.Response.Success,
+  GetTrainingMaterialVersion.Response.Error
+> {
+  return useQuery(
+    ['getTrainingMaterialVersion', pathParams],
+    () => getTrainingMaterialVersion(pathParams, requestOptions),
+    options,
+  )
+}
+
+export namespace GetTrainingMaterials {
+  export type QueryParameters = {
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = PaginatedTrainingMaterials
+    export type Error = unknown
+  }
+}
+
+export async function getTrainingMaterials(
+  queryParams: GetTrainingMaterials.QueryParameters,
+  requestOptions?: RequestOptions<GetTrainingMaterials.Response.Success>,
+): Promise<GetTrainingMaterials.Response.Success> {
+  return request({
+    path: `/api/training-materials`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetTrainingMaterials(
+  queryParams: GetTrainingMaterials.QueryParameters,
+  options?: UseQueryOptions<
+    GetTrainingMaterials.Response.Success,
+    GetTrainingMaterials.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetTrainingMaterials.Response.Success>,
+): UseQueryResult<
+  GetTrainingMaterials.Response.Success,
+  GetTrainingMaterials.Response.Error
+> {
+  return useQuery(
+    ['getTrainingMaterials', queryParams],
+    () => getTrainingMaterials(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateTrainingMaterial {
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+  export type RequestBody = TrainingMaterialCore
+}
+
+export async function createTrainingMaterial([
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  queryParams: CreateTrainingMaterial.QueryParameters,
+  body: CreateTrainingMaterial.RequestBody,
+  requestOptions?: RequestOptions<CreateTrainingMaterial.Response.Success>,
+]): Promise<CreateTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateTrainingMaterial(
+  options?: UseMutationOptions<
+    CreateTrainingMaterial.Response.Success,
+    CreateTrainingMaterial.Response.Error,
+    [
+      CreateTrainingMaterial.QueryParameters,
+      CreateTrainingMaterial.RequestBody,
+      RequestOptions<CreateTrainingMaterial.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateTrainingMaterial.Response.Success,
+  CreateTrainingMaterial.Response.Error,
+  [
+    CreateTrainingMaterial.QueryParameters,
+    CreateTrainingMaterial.RequestBody,
+    RequestOptions<CreateTrainingMaterial.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createTrainingMaterial, options)
+}
+
+export namespace GetTrainingMaterial {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+    approved?: boolean
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+}
+
+export async function getTrainingMaterial(
+  pathParams: GetTrainingMaterial.PathParameters,
+  queryParams: GetTrainingMaterial.QueryParameters,
+  requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
+): Promise<GetTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetTrainingMaterial(
+  pathParams: GetTrainingMaterial.PathParameters,
+  queryParams: GetTrainingMaterial.QueryParameters,
+  options?: UseQueryOptions<
+    GetTrainingMaterial.Response.Success,
+    GetTrainingMaterial.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
+): UseQueryResult<
+  GetTrainingMaterial.Response.Success,
+  GetTrainingMaterial.Response.Error
+> {
+  return useQuery(
+    ['getTrainingMaterial', pathParams, queryParams],
+    () => getTrainingMaterial(pathParams, queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateTrainingMaterial {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+  export type RequestBody = TrainingMaterialCore
+}
+
+export async function updateTrainingMaterial([
+  pathParams,
+  queryParams,
+  body,
+  requestOptions,
+]: [
+  pathParams: UpdateTrainingMaterial.PathParameters,
+  queryParams: UpdateTrainingMaterial.QueryParameters,
+  body: UpdateTrainingMaterial.RequestBody,
+  requestOptions?: RequestOptions<UpdateTrainingMaterial.Response.Success>,
+]): Promise<UpdateTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateTrainingMaterial(
+  options?: UseMutationOptions<
+    UpdateTrainingMaterial.Response.Success,
+    UpdateTrainingMaterial.Response.Error,
+    [
+      UpdateTrainingMaterial.PathParameters,
+      UpdateTrainingMaterial.QueryParameters,
+      UpdateTrainingMaterial.RequestBody,
+      RequestOptions<UpdateTrainingMaterial.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateTrainingMaterial.Response.Success,
+  UpdateTrainingMaterial.Response.Error,
+  [
+    UpdateTrainingMaterial.PathParameters,
+    UpdateTrainingMaterial.QueryParameters,
+    UpdateTrainingMaterial.RequestBody,
+    RequestOptions<UpdateTrainingMaterial.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateTrainingMaterial, options)
+}
+
+export namespace DeleteTrainingMaterial {
+  export type PathParameters = {
+    id: string
+  }
+  export type QueryParameters = {
+    draft?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteTrainingMaterial([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: DeleteTrainingMaterial.PathParameters,
+  queryParams: DeleteTrainingMaterial.QueryParameters,
+  requestOptions?: RequestOptions<DeleteTrainingMaterial.Response.Success>,
+]): Promise<DeleteTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(pathParams.id)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteTrainingMaterial(
+  options?: UseMutationOptions<
+    DeleteTrainingMaterial.Response.Success,
+    DeleteTrainingMaterial.Response.Error,
+    [
+      DeleteTrainingMaterial.PathParameters,
+      DeleteTrainingMaterial.QueryParameters,
+      RequestOptions<DeleteTrainingMaterial.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteTrainingMaterial.Response.Success,
+  DeleteTrainingMaterial.Response.Error,
+  [
+    DeleteTrainingMaterial.PathParameters,
+    DeleteTrainingMaterial.QueryParameters,
+    RequestOptions<DeleteTrainingMaterial.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteTrainingMaterial, options)
+}
+
+export namespace RevertTrainingMaterial {
+  export type PathParameters = {
+    id: string
+    versionId: number /* int64 */
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+}
+
+export async function revertTrainingMaterial([pathParams, requestOptions]: [
+  pathParams: RevertTrainingMaterial.PathParameters,
+  requestOptions?: RequestOptions<RevertTrainingMaterial.Response.Success>,
+]): Promise<RevertTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(
+      pathParams.id,
+    )}/versions/${encodeURIComponent(pathParams.versionId)}/revert`,
+    baseUrl: undefined,
+    query: undefined,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useRevertTrainingMaterial(
+  options?: UseMutationOptions<
+    RevertTrainingMaterial.Response.Success,
+    RevertTrainingMaterial.Response.Error,
+    [
+      RevertTrainingMaterial.PathParameters,
+      RequestOptions<RevertTrainingMaterial.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  RevertTrainingMaterial.Response.Success,
+  RevertTrainingMaterial.Response.Error,
+  [
+    RevertTrainingMaterial.PathParameters,
+    RequestOptions<RevertTrainingMaterial.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(revertTrainingMaterial, options)
+}
+
+export namespace PublishTrainingMaterial {
+  export type PathParameters = {
+    trainingMaterialId: string
+  }
+  export namespace Response {
+    export type Success = TrainingMaterialDto
+    export type Error = unknown
+  }
+}
+
+export async function publishTrainingMaterial([pathParams, requestOptions]: [
+  pathParams: PublishTrainingMaterial.PathParameters,
+  requestOptions?: RequestOptions<PublishTrainingMaterial.Response.Success>,
+]): Promise<PublishTrainingMaterial.Response.Success> {
+  return request({
+    path: `/api/training-materials/${encodeURIComponent(
+      pathParams.trainingMaterialId,
     )}/commit`,
     baseUrl: undefined,
     query: undefined,
@@ -7315,24 +7039,303 @@ export async function publishPublication([pathParams, requestOptions]: [
   })
 }
 
-export function usePublishPublication(
+export function usePublishTrainingMaterial(
   options?: UseMutationOptions<
-    PublishPublication.Response.Success,
-    PublishPublication.Response.Error,
+    PublishTrainingMaterial.Response.Success,
+    PublishTrainingMaterial.Response.Error,
     [
-      PublishPublication.PathParameters,
-      RequestOptions<PublishPublication.Response.Success>,
+      PublishTrainingMaterial.PathParameters,
+      RequestOptions<PublishTrainingMaterial.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  PublishPublication.Response.Success,
-  PublishPublication.Response.Error,
+  PublishTrainingMaterial.Response.Success,
+  PublishTrainingMaterial.Response.Error,
   [
-    PublishPublication.PathParameters,
-    RequestOptions<PublishPublication.Response.Success>,
+    PublishTrainingMaterial.PathParameters,
+    RequestOptions<PublishTrainingMaterial.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(publishPublication, options)
+  return useMutation(publishTrainingMaterial, options)
+}
+
+export namespace GetVocabularies {
+  export type QueryParameters = {
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+  }
+  export namespace Response {
+    export type Success = PaginatedVocabularies
+    export type Error = unknown
+  }
+}
+
+export async function getVocabularies(
+  queryParams: GetVocabularies.QueryParameters,
+  requestOptions?: RequestOptions<GetVocabularies.Response.Success>,
+): Promise<GetVocabularies.Response.Success> {
+  return request({
+    path: `/api/vocabularies`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetVocabularies(
+  queryParams: GetVocabularies.QueryParameters,
+  options?: UseQueryOptions<
+    GetVocabularies.Response.Success,
+    GetVocabularies.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetVocabularies.Response.Success>,
+): UseQueryResult<
+  GetVocabularies.Response.Success,
+  GetVocabularies.Response.Error
+> {
+  return useQuery(
+    ['getVocabularies', queryParams],
+    () => getVocabularies(queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace CreateVocabulary {
+  export type QueryParameters = {
+    ttl: {
+      ttl?: string /* binary */
+    }
+  }
+  export namespace Response {
+    export type Success = VocabularyBasicDto
+    export type Error = unknown
+  }
+}
+
+export async function createVocabulary([queryParams, requestOptions]: [
+  queryParams: CreateVocabulary.QueryParameters,
+  requestOptions?: RequestOptions<CreateVocabulary.Response.Success>,
+]): Promise<CreateVocabulary.Response.Success> {
+  return request({
+    path: `/api/vocabularies`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'post',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useCreateVocabulary(
+  options?: UseMutationOptions<
+    CreateVocabulary.Response.Success,
+    CreateVocabulary.Response.Error,
+    [
+      CreateVocabulary.QueryParameters,
+      RequestOptions<CreateVocabulary.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  CreateVocabulary.Response.Success,
+  CreateVocabulary.Response.Error,
+  [
+    CreateVocabulary.QueryParameters,
+    RequestOptions<CreateVocabulary.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(createVocabulary, options)
+}
+
+export namespace GetVocabulary {
+  export type PathParameters = {
+    code: string
+  }
+  export type QueryParameters = {
+    page?: number /* int32 */
+    perpage?: number /* int32 */
+  }
+  export namespace Response {
+    export type Success = VocabularyDto
+    export type Error = unknown
+  }
+}
+
+export async function getVocabulary(
+  pathParams: GetVocabulary.PathParameters,
+  queryParams: GetVocabulary.QueryParameters,
+  requestOptions?: RequestOptions<GetVocabulary.Response.Success>,
+): Promise<GetVocabulary.Response.Success> {
+  return request({
+    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'get',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useGetVocabulary(
+  pathParams: GetVocabulary.PathParameters,
+  queryParams: GetVocabulary.QueryParameters,
+  options?: UseQueryOptions<
+    GetVocabulary.Response.Success,
+    GetVocabulary.Response.Error
+  >,
+  requestOptions?: RequestOptions<GetVocabulary.Response.Success>,
+): UseQueryResult<
+  GetVocabulary.Response.Success,
+  GetVocabulary.Response.Error
+> {
+  return useQuery(
+    ['getVocabulary', pathParams, queryParams],
+    () => getVocabulary(pathParams, queryParams, requestOptions),
+    options,
+  )
+}
+
+export namespace UpdateVocabulary {
+  export type PathParameters = {
+    code: string
+  }
+  export type QueryParameters = {
+    ttl: {
+      ttl?: string /* binary */
+    }
+    force?: boolean
+  }
+  export namespace Response {
+    export type Success = VocabularyBasicDto
+    export type Error = unknown
+  }
+}
+
+export async function updateVocabulary([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: UpdateVocabulary.PathParameters,
+  queryParams: UpdateVocabulary.QueryParameters,
+  requestOptions?: RequestOptions<UpdateVocabulary.Response.Success>,
+]): Promise<UpdateVocabulary.Response.Success> {
+  return request({
+    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'put',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useUpdateVocabulary(
+  options?: UseMutationOptions<
+    UpdateVocabulary.Response.Success,
+    UpdateVocabulary.Response.Error,
+    [
+      UpdateVocabulary.PathParameters,
+      UpdateVocabulary.QueryParameters,
+      RequestOptions<UpdateVocabulary.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  UpdateVocabulary.Response.Success,
+  UpdateVocabulary.Response.Error,
+  [
+    UpdateVocabulary.PathParameters,
+    UpdateVocabulary.QueryParameters,
+    RequestOptions<UpdateVocabulary.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(updateVocabulary, options)
+}
+
+export namespace DeleteVocabulary {
+  export type PathParameters = {
+    code: string
+  }
+  export type QueryParameters = {
+    force?: boolean
+  }
+  export namespace Response {
+    export type Success = void
+    export type Error = unknown
+  }
+}
+
+export async function deleteVocabulary([
+  pathParams,
+  queryParams,
+  requestOptions,
+]: [
+  pathParams: DeleteVocabulary.PathParameters,
+  queryParams: DeleteVocabulary.QueryParameters,
+  requestOptions?: RequestOptions<DeleteVocabulary.Response.Success>,
+]): Promise<DeleteVocabulary.Response.Success> {
+  return request({
+    path: `/api/vocabularies/${encodeURIComponent(pathParams.code)}`,
+    baseUrl: undefined,
+    query: queryParams,
+    options: {
+      method: 'delete',
+      body: undefined,
+      headers: {},
+    },
+    returnType: 'json',
+    hooks: requestOptions?.hooks,
+    token: requestOptions?.token,
+  })
+}
+
+export function useDeleteVocabulary(
+  options?: UseMutationOptions<
+    DeleteVocabulary.Response.Success,
+    DeleteVocabulary.Response.Error,
+    [
+      DeleteVocabulary.PathParameters,
+      DeleteVocabulary.QueryParameters,
+      RequestOptions<DeleteVocabulary.Response.Success>,
+    ],
+    unknown
+  >,
+): UseMutationResult<
+  DeleteVocabulary.Response.Success,
+  DeleteVocabulary.Response.Error,
+  [
+    DeleteVocabulary.PathParameters,
+    DeleteVocabulary.QueryParameters,
+    RequestOptions<DeleteVocabulary.Response.Success>,
+  ],
+  unknown
+> {
+  return useMutation(deleteVocabulary, options)
 }

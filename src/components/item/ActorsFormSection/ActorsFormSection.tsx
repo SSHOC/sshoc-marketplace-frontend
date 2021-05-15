@@ -263,7 +263,7 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.serviceIdentifier?.code != null &&
+          id.identifierService?.code != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifier == null
         ) {
@@ -285,13 +285,13 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifier != null &&
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.serviceIdentifier?.code == null
+          id.identifierService?.code == null
         ) {
           if (errors.externalIds === undefined) {
             errors.externalIds = []
           }
           errors.externalIds[index] = {
-            serviceIdentifier: { code: 'Please select an ID service.' },
+            identifierService: { code: 'Please select an ID service.' },
           }
         }
       })
@@ -332,7 +332,7 @@ function CreateActorForm(props: CreateActorFormProps) {
                           }
                         >
                           <ExternalIdServiceSelect
-                            name={`${name}.serviceIdentifier.code`}
+                            name={`${name}.identifierService.code`}
                             label="ID Service"
                           />
                           <FormTextField

@@ -1,5 +1,6 @@
 import { useButton } from '@react-aria/button'
 import type { AriaButtonProps } from '@react-types/button'
+import cx from 'clsx'
 import type { ReactNode } from 'react'
 import { useRef } from 'react'
 
@@ -21,8 +22,12 @@ export function FormFieldAddButton(
   const { buttonProps } = useButton(props, ref)
 
   const styles = {
-    button:
-      'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal font-ui-base text-primary-750 hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
+    button: cx(
+      'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal font-ui-base hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
+      props.isDisabled === true
+        ? 'pointer-events-none text-gray-550'
+        : 'text-primary-750',
+    ),
     icon: 'w-2.5 h-2.5',
   }
 

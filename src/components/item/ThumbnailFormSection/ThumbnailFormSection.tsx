@@ -35,10 +35,12 @@ export function ThumbnailFormSection(
           return (
             <div>
               {input.value != null && input.value !== '' ? (
-                <Thumbnail
-                  onRemove={() => input.onChange(null)}
-                  media={{ ...input.value, hasThumbnail: true }}
-                />
+                <div className="grid grid-cols-3">
+                  <Thumbnail
+                    onRemove={() => input.onChange(null)}
+                    media={{ ...input.value, hasThumbnail: true }}
+                  />
+                </div>
               ) : null}
               <div className="flex items-center space-x-8">
                 <FormFieldAddButton onPress={addThumbnailDialog.open}>
@@ -47,14 +49,14 @@ export function ThumbnailFormSection(
                 <AddThumbnailDialog
                   isOpen={addThumbnailDialog.isOpen}
                   onDismiss={addThumbnailDialog.close}
-                  onSuccess={(mediaInfo, caption) => {
+                  onSuccess={(info) => {
                     if (
-                      mediaInfo.category !== 'image' ||
-                      mediaInfo.hasThumbnail !== true
+                      info.category !== 'image' ||
+                      info.hasThumbnail !== true
                     ) {
                       throw new MediaError('A thumbnail must be an image.')
                     }
-                    input.onChange({ ...mediaInfo, caption })
+                    input.onChange(info)
                   }}
                 />
                 <div>or</div>
@@ -62,8 +64,9 @@ export function ThumbnailFormSection(
                   {({ input: media }) => {
                     const images =
                       media.value?.filter(
-                        (m: MediaDetails) =>
-                          m.category === 'image' && m.hasThumbnail === true,
+                        (m: { info?: MediaDetails }) =>
+                          m.info?.category === 'image' &&
+                          m.info.hasThumbnail === true,
                       ) ?? []
                     return (
                       <Fragment>
@@ -76,8 +79,8 @@ export function ThumbnailFormSection(
                         <ChooseThumbnailDialog
                           isOpen={chooseThumbnailDialog.isOpen}
                           onDismiss={chooseThumbnailDialog.close}
-                          onSuccess={(mediaInfo, caption) => {
-                            input.onChange({ ...mediaInfo, caption })
+                          onSuccess={(info) => {
+                            input.onChange(info)
                           }}
                           images={images}
                         />
@@ -108,7 +111,7 @@ function useDialogState(initialState = false) {
 interface DialogProps {
   isOpen: boolean
   onDismiss: () => void
-  onSuccess?: (mediaInfo: MediaDetails, caption?: string) => void
+  onSuccess?: (info: MediaDetails, caption?: string) => void
 }
 
 type AddThumbnailDialogProps = DialogProps
@@ -143,7 +146,7 @@ function AddThumbnailDialog(props: AddThumbnailDialogProps) {
 }
 
 interface ChooseThumbnailDialogProps extends DialogProps {
-  images: Array<MediaDetails & { caption?: string }>
+  images: Array<{ info: MediaDetails; caption?: string }>
 }
 
 function ChooseThumbnailDialog(props: ChooseThumbnailDialogProps) {
@@ -183,8 +186,8 @@ interface ChooseThumbnailFormProps {
 }
 
 function ChooseThumbnailForm(props: ChooseThumbnailFormProps) {
-  function onSubmit(image: MediaDetails & { caption?: string }) {
-    props.onSuccess?.(image, image.caption)
+  function onSubmit(image: { info: MediaDetails; caption?: string }) {
+    props.onSuccess?.(image.info, image.caption)
     props.onDismiss()
   }
 
@@ -193,9 +196,9 @@ function ChooseThumbnailForm(props: ChooseThumbnailFormProps) {
       <ul className="grid grid-cols-2">
         {props.images.map((image) => {
           return (
-            <li key={image.mediaId}>
+            <li key={image.info.mediaId}>
               <button type="button" onClick={() => onSubmit(image)}>
-                <Thumbnail media={image} caption={image.caption} />
+                <Thumbnail media={image.info} caption={image.caption} />
               </button>
             </li>
           )

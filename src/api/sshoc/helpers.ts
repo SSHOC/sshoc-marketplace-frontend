@@ -88,10 +88,11 @@ export function convertToInitialFormValues(
      */
     externalIds: item.externalIds?.map((id) => {
       const identifierService = { code: id.identifierService?.code }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const identifier = id.identifier!
       const externalId = {
         identifier,
-        serviceIdentifier: identifierService,
+        identifierService,
       }
       return externalId
     }),
@@ -109,14 +110,7 @@ export function convertToInitialFormValues(
     /**
      * Only id needed, but keep additional info around - will be stripped in `sanitizeFormValues` before submit.
      */
-    media: item.media?.map((m) => ({
-      caption: m.caption,
-      mediaId: m.metadata?.mediaId,
-      filename: m.metadata?.filename,
-      hasThumbnail: m.metadata?.hasThumbnail,
-      category: m.metadata?.category,
-      location: m.metadata?.location,
-    })),
+    media: item.media,
   }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

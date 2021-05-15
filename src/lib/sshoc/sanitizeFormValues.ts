@@ -37,9 +37,13 @@ export function sanitizeFormValues<
 
   if (Array.isArray(values.media) && values.media.length > 0) {
     values.media = values.media.map((m) => ({
-      mediaId: m.mediaId,
       caption: m.caption,
+      info: { mediaId: m.info?.mediaId },
     }))
+  }
+
+  if (values.thumbnail != null && values.thumbnail.mediaId != null) {
+    values.thumbnail = { mediaId: values.thumbnail.mediaId }
   }
 
   return values

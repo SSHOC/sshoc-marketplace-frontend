@@ -17,7 +17,7 @@ interface AddMediaFormValues {
 
 interface AddMediaFormProps {
   onDismiss: () => void
-  onSuccess?: (mediaInfo: MediaDetails, caption?: string) => void
+  onSuccess?: (info: MediaDetails, caption?: string) => void
   accept?: string
 }
 
@@ -41,8 +41,8 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
     const caption = values.caption
 
     const callbacks = {
-      onSuccess(mediaInfo: MediaDetails) {
-        props.onSuccess?.(mediaInfo, caption)
+      onSuccess(info: MediaDetails) {
+        props.onSuccess?.(info, caption)
         toast.success('Sucessfully added media.')
       },
       onError(error: unknown) {
