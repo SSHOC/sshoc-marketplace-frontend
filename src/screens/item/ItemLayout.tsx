@@ -468,7 +468,9 @@ function useItemMetadata({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const type = property.type!
       if (
-        type.hidden === true ||
+        // The api returns hidden properties only for authenticated users with role moderator/administrator,
+        // and we want to show hidden properties in the ui for these users.
+        // type.hidden === true ||
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ADDITIONAL_HIDDEN_PROPERTIES.includes(type.code!)
       ) {
