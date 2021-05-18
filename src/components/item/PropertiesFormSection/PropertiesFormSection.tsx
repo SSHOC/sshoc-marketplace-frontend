@@ -33,10 +33,19 @@ export function PropertiesFormSection(
 ): JSX.Element {
   const prefix = props.prefix ?? ''
 
-  const propertyTypes = useGetPropertyTypes({
-    /** try to get everything in one go, so we don't need a combobox here */
-    perpage: 100,
-  })
+  const propertyTypes = useGetPropertyTypes(
+    {
+      /** try to get everything in one go, so we don't need a combobox here */
+      perpage: 100,
+    },
+    {
+      select(data) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        data.propertyTypes?.sort((a, b) => a.label!.localeCompare(b.label!))
+        return data
+      },
+    },
+  )
   const propertyTypesById = useMemo(() => {
     const map = {} as Record<string, PropertyTypeDto>
 
