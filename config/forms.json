@@ -1,0 +1,145 @@
+{
+  "tool": {
+    "required": ["label", "description"],
+    "recommended": [
+      "actors",
+      "accessibleAt",
+      "externalIds",
+      "media",
+      "thumbnail",
+      "relatedItems",
+      "version"
+    ],
+    "recommendedProperties": [
+      "activity",
+      "keyword",
+      "discipline",
+      "language",
+      "tool-family",
+      "service-type",
+      "mode-of-use",
+      "intended-audience",
+      "see-also",
+      "usermanual-url",
+      "helpdesk-url",
+      "license",
+      "terms-of-use-url",
+      "technical-readiness-level"
+    ]
+  },
+  "trainingMaterial": {
+    "required": ["label", "description"],
+    "recommended": [
+      "actors",
+      "accessibleAt",
+      "externalIds",
+      "media",
+      "thumbnail",
+      "relatedItems"
+    ],
+    "recommendedProperties": [
+      "activity",
+      "keyword",
+      "discipline",
+      "language",
+      "object-format",
+      "extent",
+      "intended-audience",
+      "see-also",
+      "license",
+      "terms-of-use-url",
+      "year"
+    ]
+  },
+  "publication": {
+    "required": ["label", "description"],
+    "recommended": [
+      "actors",
+      "accessibleAt",
+      "externalIds",
+      "media",
+      "thumbnail",
+      "relatedItems"
+    ],
+    "recommendedProperties": [
+      "activity",
+      "keyword",
+      "discipline",
+      "language",
+      "extent",
+      "intended-audience",
+      "see-also",
+      "license",
+      "publication-type",
+      "publisher",
+      "publication-place",
+      "year",
+      "journal",
+      "conference",
+      "volume",
+      "issue",
+      "pages"
+    ]
+  },
+  "dataset": {
+    "required": ["label", "description"],
+    "recommended": [
+      "actors",
+      "accessibleAt",
+      "externalIds",
+      "media",
+      "thumbnail",
+      "relatedItems"
+    ],
+    "recommendedProperties": [
+      "activity",
+      "keyword",
+      "discipline",
+      "language",
+      "object-format",
+      "extent",
+      "intended-audience",
+      "see-also",
+      "license",
+      "year"
+    ]
+  },
+  "workflow": {
+    "required": ["label", "description"],
+    "recommended": [
+      "actors",
+      "externalIds",
+      "media",
+      "thumbnail",
+      "relatedItems"
+    ],
+    "recommendedProperties": [
+      "activity",
+      "keyword",
+      "discipline",
+      "language",
+      "intended-audience",
+      "see-also",
+      "license",
+      "terms-of-use-url"
+    ]
+  },
+  "step": {
+    "required": ["label", "description"],
+    "recommended": ["relatedItems"],
+    "recommendedProperties": []
+  },
+  "// NOTE": "these referenced properties are currently not in the marketplace",
+  "missing": [
+    "service-type",
+    "mode-of-use",
+    "intended-audience",
+    "see-also",
+    "usermanual-url",
+    "helpdesk-url",
+    "technical-readiness-level",
+    "extent",
+    "discipline",
+    "object-format"
+  ]
+}
