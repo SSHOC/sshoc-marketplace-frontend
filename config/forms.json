@@ -20,7 +20,7 @@
       "mode-of-use",
       "intended-audience",
       "see-also",
-      "usermanual-url",
+      "user-manual-url",
       "helpdesk-url",
       "license",
       "terms-of-use-url",
@@ -130,16 +130,5 @@
     "recommendedProperties": []
   },
   "// NOTE": "these referenced properties are currently not in the marketplace",
-  "missing": [
-    "service-type",
-    "mode-of-use",
-    "intended-audience",
-    "see-also",
-    "usermanual-url",
-    "helpdesk-url",
-    "technical-readiness-level",
-    "extent",
-    "discipline",
-    "object-format"
-  ]
+  "missing": ["service-type", "intended-audience", "extent", "discipline"]
 }
