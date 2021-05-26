@@ -62,12 +62,13 @@ export function ThumbnailFormSection(
                 <div>or</div>
                 <FormField name={`${prefix}media`}>
                   {({ input: media }) => {
-                    const images =
-                      media.value?.filter(
-                        (m: { info?: MediaDetails }) =>
-                          m.info?.category === 'image' &&
-                          m.info.hasThumbnail === true,
-                      ) ?? []
+                    const images = Array.isArray(media.value)
+                      ? media.value.filter(
+                          (m: { info?: MediaDetails }) =>
+                            m.info?.category === 'image' &&
+                            m.info.hasThumbnail === true,
+                        )
+                      : []
                     return (
                       <Fragment>
                         <FormFieldAddButton
