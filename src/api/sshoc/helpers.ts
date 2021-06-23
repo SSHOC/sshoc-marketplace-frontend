@@ -49,7 +49,6 @@ export function convertToInitialFormValues(
     version: item.version,
     description: item.description,
     accessibleAt: item.accessibleAt,
-    licenses: item.licenses, // deprecated?
     /**
      * Only ids needed.
      */
