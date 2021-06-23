@@ -26,6 +26,10 @@ export default function TrainingMaterialScreen({
   const trainingMaterial = (data ??
     initialData) as DeepRequired<TrainingMaterialDto>
 
+  const license = trainingMaterial.properties.find((property) => {
+    return property.type.code === 'license'
+  })?.concept.label
+
   return (
     <Fragment>
       {trainingMaterial !== undefined ? (
@@ -40,7 +44,7 @@ export default function TrainingMaterialScreen({
             about: trainingMaterial.properties
               .filter((property) => property.type.code === 'keyword')
               .map((property) => property.value),
-            license: trainingMaterial.licenses.map((license) => license.label),
+            license,
             version: trainingMaterial.version,
             contributor: trainingMaterial.contributors.map(
               (contributor) => contributor.actor.name,

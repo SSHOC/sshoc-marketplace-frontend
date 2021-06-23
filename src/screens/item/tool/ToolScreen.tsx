@@ -25,6 +25,10 @@ export default function ToolScreen({
   /** backend does not specify required fields. should be safe here */
   const tool = (data ?? initialData) as DeepRequired<ToolDto>
 
+  const license = tool.properties.find((property) => {
+    return property.type.code === 'license'
+  })?.concept.label
+
   return (
     <Fragment>
       {tool !== undefined ? (
@@ -39,7 +43,7 @@ export default function ToolScreen({
             about: tool.properties
               .filter((property) => property.type.code === 'keyword')
               .map((property) => property.value),
-            license: tool.licenses.map((license) => license.label),
+            license,
             version: tool.version,
             contributor: tool.contributors.map(
               (contributor) => contributor.actor.name,

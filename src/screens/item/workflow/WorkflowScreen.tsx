@@ -26,6 +26,10 @@ export default function WorkflowScreen({
   /** backend does not specify required fields. should be safe here */
   const workflow = (data ?? initialData) as DeepRequired<WorkflowDto>
 
+  const license = workflow.properties.find((property) => {
+    return property.type.code === 'license'
+  })?.concept.label
+
   return (
     <Fragment>
       {workflow !== undefined ? (
@@ -40,7 +44,7 @@ export default function WorkflowScreen({
             about: workflow.properties
               .filter((property) => property.type.code === 'keyword')
               .map((property) => property.value),
-            license: workflow.licenses.map((license) => license.label),
+            license,
             version: workflow.version,
             contributor: workflow.contributors.map(
               (contributor) => contributor.actor.name,

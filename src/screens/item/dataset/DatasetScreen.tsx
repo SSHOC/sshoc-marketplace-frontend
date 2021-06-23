@@ -25,6 +25,10 @@ export default function DatasetScreen({
   /** backend does not specify required fields. should be safe here */
   const dataset = (data ?? initialData) as DeepRequired<DatasetDto>
 
+  const license = dataset.properties.find((property) => {
+    return property.type.code === 'license'
+  })?.concept.label
+
   return (
     <Fragment>
       {dataset !== undefined ? (
@@ -39,7 +43,7 @@ export default function DatasetScreen({
             about: dataset.properties
               .filter((property) => property.type.code === 'keyword')
               .map((property) => property.value),
-            license: dataset.licenses.map((license) => license.label),
+            license,
             version: dataset.version,
             contributor: dataset.contributors.map(
               (contributor) => contributor.actor.name,

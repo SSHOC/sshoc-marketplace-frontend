@@ -25,6 +25,10 @@ export default function PublicationScreen({
   /** backend does not specify required fields. should be safe here */
   const publication = (data ?? initialData) as DeepRequired<PublicationDto>
 
+  const license = publication.properties.find((property) => {
+    return property.type.code === 'license'
+  })?.concept.label
+
   return (
     <Fragment>
       {publication !== undefined ? (
@@ -39,7 +43,7 @@ export default function PublicationScreen({
             about: publication.properties
               .filter((property) => property.type.code === 'keyword')
               .map((property) => property.value),
-            license: publication.licenses.map((license) => license.label),
+            license,
             version: publication.version,
             contributor: publication.contributors.map(
               (contributor) => contributor.actor.name,
