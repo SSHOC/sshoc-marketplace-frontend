@@ -30,7 +30,7 @@ export function ThumbnailFormSection(
 
   return (
     <FormSection title={'Thumbnail'}>
-      <FormField name={`${prefix}thumbnail`}>
+      <FormField name={`${prefix}thumbnail.info`}>
         {({ input }) => {
           return (
             <div>

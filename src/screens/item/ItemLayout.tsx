@@ -169,10 +169,10 @@ function ItemThumbnail({
   category: ItemCategory
   thumbnail: Item['thumbnail']
 }) {
-  if (thumbnail != null && thumbnail.mediaId !== undefined) {
+  if (thumbnail != null && thumbnail.info?.mediaId !== undefined) {
     return (
       <img
-        src={getMediaThumbnailUrl({ mediaId: thumbnail.mediaId })}
+        src={getMediaThumbnailUrl({ mediaId: thumbnail.info.mediaId })}
         alt=""
         className="object-contain w-24 h-24"
       />

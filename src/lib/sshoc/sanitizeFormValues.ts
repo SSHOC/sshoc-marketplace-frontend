@@ -42,8 +42,8 @@ export function sanitizeFormValues<
     }))
   }
 
-  if (values.thumbnail != null && values.thumbnail.mediaId != null) {
-    values.thumbnail = { mediaId: values.thumbnail.mediaId }
+  if (values.thumbnail != null && values.thumbnail.info?.mediaId != null) {
+    values.thumbnail = { info: { mediaId: values.thumbnail.info.mediaId } }
   }
 
   return values
