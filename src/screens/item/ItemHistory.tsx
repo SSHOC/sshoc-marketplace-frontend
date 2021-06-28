@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { ItemExtBasicDto } from '@/api/sshoc'

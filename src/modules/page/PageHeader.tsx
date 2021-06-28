@@ -290,6 +290,18 @@ function AuthButton() {
                   >
                     <Menu.Item>
                       {({ active }) => (
+                        <MenuAction
+                          highlighted={active}
+                          onClick={() => {
+                            router.push({ pathname: '/account' })
+                          }}
+                        >
+                          My account
+                        </MenuAction>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
                         <MenuAction highlighted={active} onClick={onSignOut}>
                           Sign out
                         </MenuAction>

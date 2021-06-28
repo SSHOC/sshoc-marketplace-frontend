@@ -113,10 +113,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function onSuccess(data: WorkflowDto) {
     toast.success(
       `Successfully ${
-        isAllowedToPublish
-          ? 'published'
-          : data.status === 'draft'
+        data.status === 'draft'
           ? 'saved as draft'
+          : isAllowedToPublish
+          ? 'published'
           : 'submitted'
       } ${categoryLabel}.`,
     )
@@ -130,6 +130,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     queryClient.invalidateQueries({
       queryKey: ['getWorkflow', { workflowId: data.persistentId }],
     })
+    if (data.status === 'draft') {
+      queryClient.invalidateQueries({
+        queryKey: ['getMyDraftItems'],
+      })
+    }
 
     /**
      * if the item is published (i.e. submitted as admin), redirect to details page.
