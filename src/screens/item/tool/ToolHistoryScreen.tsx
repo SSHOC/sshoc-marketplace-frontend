@@ -9,8 +9,7 @@ import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import { Title } from '@/modules/ui/typography/Title'
-
-import { ItemHistory } from '../ItemHistory'
+import { ItemHistory } from '@/screens/item/ItemHistory'
 
 /**
  * Tool history screen.
