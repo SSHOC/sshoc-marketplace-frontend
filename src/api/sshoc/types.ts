@@ -36,10 +36,12 @@ export type ItemCategory = Exclude<ItemBasicDto['category'], undefined>
 /**
  * item search query parameters.
  */
-export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f'> & {
+export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
   'f.activity'?: Array<string>
   'f.keyword'?: Array<string>
   'f.source'?: Array<string>
+  'd.status'?: string
+  'd.owner'?: string
 }
 
 /**

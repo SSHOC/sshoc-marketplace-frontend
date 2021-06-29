@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { useGetTool } from '@/api/sshoc'
+import { useGetToolVersion } from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/ToolEditForm/ToolEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -15,22 +15,23 @@ import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
 
 /**
- * Edit draft tool screen.
+ * Edit tool version screen.
  */
-export default function ToolDraftEditScreen(): JSX.Element {
+export default function ToolVersionEditScreen(): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
   const handleError = useErrorHandlers()
 
   const id = useQueryParam('id', false)
-  const tool = useGetTool(
+  const versionId = useQueryParam('versionId', false, Number)
+  const tool = useGetToolVersion(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { id: id! },
-    { draft: true },
+    { id: id!, versionId: versionId! },
     {
-      enabled: id != null && auth.session?.accessToken != null,
+      enabled:
+        id != null && versionId != null && auth.session?.accessToken != null,
       onError(error) {
-        toast.error('Failed to fetch draft workflow')
+        toast.error('Failed to fetch workflow version')
 
         router.push('/')
 

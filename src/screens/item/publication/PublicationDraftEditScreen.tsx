@@ -6,6 +6,7 @@ import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/PublicationEditForm/PublicationEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { toast } from '@/elements/Toast/useToast'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import ContentColumn from '@/modules/layout/ContentColumn'
@@ -21,21 +22,7 @@ export default function PublicationDraftEditScreen(): JSX.Element {
   const auth = useAuth()
   const handleError = useErrorHandlers()
 
-  const id = router.query.id as string | undefined
-  // const draftId = Number(router.query.draftId) as number | undefined
-  // const publication = useGetPublicationVersion(
-  //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  //   { id: id!, versionId: draftId! },
-  //   {
-  //     enabled:
-  //       id != null && draftId != null && auth.session?.accessToken != null,
-  //   },
-  //   { token: auth.session?.accessToken },
-  // )
-  // FIXME: Event though the version history screen lists multiple drafts for an item
-  // we can actually only get one draft (the latest) by setting `?draft=true`.
-  // The version endpoint above does not work because it explicitly does
-  // not handles drafts (only returns them for admins).
+  const id = useQueryParam('id', false)
   const publication = useGetPublication(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { id: id! },
@@ -43,7 +30,7 @@ export default function PublicationDraftEditScreen(): JSX.Element {
     {
       enabled: id != null && auth.session?.accessToken != null,
       onError(error) {
-        toast.error('Failed to fetch draft publication')
+        toast.error('Failed to fetch draft workflow')
 
         router.push('/')
 

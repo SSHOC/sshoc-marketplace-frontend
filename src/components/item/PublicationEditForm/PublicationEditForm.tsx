@@ -66,7 +66,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       )
 
       queryClient.invalidateQueries({
-        queryKey: ['itemSearch'],
+        queryKey: ['searchItems'],
       })
       queryClient.invalidateQueries({
         queryKey: ['getPublications'],

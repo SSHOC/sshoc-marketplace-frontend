@@ -1,13 +1,13 @@
 import ProtectedScreen from '@/modules/auth/ProtectedScreen'
-import DatasetEditDraftScreen from '@/screens/item/dataset/DatasetDraftEditScreen'
+import DatasetDraftEditScreen from '@/screens/item/dataset/DatasetDraftEditScreen'
 
 /**
- * Edit draft dataset page.
+ * Draft dataset edit page.
  */
 export default function DatasetDraftEditPage(): JSX.Element {
   return (
     <ProtectedScreen>
-      <DatasetEditDraftScreen />
+      <DatasetDraftEditScreen />
     </ProtectedScreen>
   )
 }

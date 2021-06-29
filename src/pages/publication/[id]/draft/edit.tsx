@@ -2,7 +2,7 @@ import ProtectedScreen from '@/modules/auth/ProtectedScreen'
 import PublicationDraftEditScreen from '@/screens/item/publication/PublicationDraftEditScreen'
 
 /**
- * Edit draft publication page.
+ * Draft publication edit page.
  */
 export default function PublicationDraftEditPage(): JSX.Element {
   return (

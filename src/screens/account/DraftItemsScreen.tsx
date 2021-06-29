@@ -115,13 +115,7 @@ function DraftItem(props: DraftItemProps) {
         <h2>
           <Link
             href={{
-              pathname: [
-                '',
-                category,
-                item.persistentId,
-                'version',
-                item.id,
-              ].join('/'),
+              pathname: ['', category, item.persistentId, 'draft'].join('/'),
             }}
           >
             <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">
@@ -152,7 +146,7 @@ function DraftItem(props: DraftItemProps) {
                   category,
                   item.persistentId,
                   'edit',
-                  item.id,
+                  'draft',
                 ].join('/'),
               }}
             >
