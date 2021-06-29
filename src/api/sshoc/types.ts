@@ -40,7 +40,7 @@ export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
   'f.activity'?: Array<string>
   'f.keyword'?: Array<string>
   'f.source'?: Array<string>
-  'd.status'?: string
+  'd.status'?: Exclude<Item['status'], 'draft'> | string // draft items are not indexed with solr
   'd.owner'?: string
 }
 

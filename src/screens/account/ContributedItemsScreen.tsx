@@ -6,7 +6,7 @@ import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import type { SearchItem, SearchItems } from '@/api/sshoc'
-import { useSearchItems } from '@/api/sshoc'
+import { useGetLoggedInUser, useSearchItems } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
@@ -38,18 +38,22 @@ export default function ContributedItemsScreen(): JSX.Element {
   const router = useRouter()
   const query = sanitizeQuery(router.query)
 
+  const user = useGetLoggedInUser()
+
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
   const items = useSearchItems(
     {
       ...query,
-      'd.status': '(ingested OR suggested)',
-      // TODO: when a user is logged in as admin, this will not return the user's
-      // items, but *all* items.
-      // 'd.owner': user.username
+      'd.status': '(approved OR suggested)',
+      // When a user is logged in as admin, this will not return the user's
+      // items, but *all* items, so we specifically query by username, even though
+      // this is not necessary for non-admin users.
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      'd.owner': user.data!.username!,
     } as SearchItems.QueryParameters,
     {
-      enabled: auth.session?.accessToken != null,
+      enabled: auth.session?.accessToken != null && user.data?.username != null,
       keepPreviousData: true,
       onError(error) {
         if (error instanceof Error) {

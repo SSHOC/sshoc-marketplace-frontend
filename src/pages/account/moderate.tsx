@@ -6,7 +6,7 @@ import ModerateItemsScreen from '@/screens/account/ModerateItemsScreen'
  */
 export default function ModerateItemsPage(): JSX.Element {
   return (
-    <ProtectedScreen>
+    <ProtectedScreen roles={['administrator', 'moderator']}>
       <ModerateItemsScreen />
     </ProtectedScreen>
   )
