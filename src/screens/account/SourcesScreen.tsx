@@ -131,7 +131,7 @@ export default function SourcesScreen(): JSX.Element {
                 <ItemPagination filter={query} results={sources.data} />
               </div>
               {sources.data.sources?.length === 0 ? (
-                <div>Nothing found</div>
+                <div>No source found.</div>
               ) : (
                 <ul className="space-y-2.5">
                   {sources.data.sources?.map((source) => {

@@ -90,7 +90,7 @@ export default function ModerateItemsScreen(): JSX.Element {
           {items.data === undefined ? (
             <ProgressSpinner />
           ) : items.data.items?.length === 0 ? (
-            <div>Nothing found</div>
+            <div>Nothing to moderate.</div>
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">

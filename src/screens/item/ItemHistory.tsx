@@ -42,7 +42,7 @@ export function ItemHistory(props: ItemHistoryProps): JSX.Element {
   }
 
   if (itemHistory.data === undefined) {
-    return <p>Nothing found</p>
+    return <p>No versions found.</p>
   }
 
   return (

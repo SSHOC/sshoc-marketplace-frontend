@@ -119,7 +119,7 @@ export default function ActorsScreen(): JSX.Element {
                 <ItemPagination filter={query} results={actors.data} />
               </div>
               {actors.data.actors?.length === 0 ? (
-                <div>Nothing found</div>
+                <div>No actors found.</div>
               ) : (
                 <ul className="space-y-2.5">
                   {actors.data.actors?.map((actor) => {

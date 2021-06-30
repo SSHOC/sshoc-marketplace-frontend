@@ -95,7 +95,7 @@ export default function ContributedItemsScreen(): JSX.Element {
           {items.data === undefined ? (
             <ProgressSpinner />
           ) : items.data.items?.length === 0 ? (
-            <div>Nothing found</div>
+            <div>Nothing contributed yet.</div>
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">

@@ -120,7 +120,7 @@ export default function UsersScreen(): JSX.Element {
                 <ItemPagination filter={query} results={users.data} />
               </div>
               {users.data.users?.length === 0 ? (
-                <div>Nothing found</div>
+                <div>No users found.</div>
               ) : (
                 <ul className="space-y-2.5">
                   {users.data.users?.map((user) => {
