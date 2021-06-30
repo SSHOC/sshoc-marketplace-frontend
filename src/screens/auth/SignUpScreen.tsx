@@ -227,9 +227,6 @@ function useValidateAuthCode() {
           shallow: true,
         },
       )
-    } else {
-      toast.error('Received invalid token.')
-      router.replace({ pathname: '/auth/sign-in' })
     }
   }, [router, auth, validateToken, status])
 
