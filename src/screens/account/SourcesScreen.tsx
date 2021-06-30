@@ -123,7 +123,7 @@ export default function SourcesScreen(): JSX.Element {
             <ProgressSpinner />
           ) : (
             <Fragment>
-              <div className="items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="space-x-8">
                   {/* <ItemSortOrder filter={query} /> */}
                   <ItemSearch filter={query} />

@@ -114,7 +114,7 @@ export default function ActorsScreen(): JSX.Element {
             <ProgressSpinner />
           ) : (
             <Fragment>
-              <div className="items-center justify-between">
+              <div className="flex items-center justify-between">
                 <ItemSearch filter={query} />
                 <ItemPagination filter={query} results={actors.data} />
               </div>

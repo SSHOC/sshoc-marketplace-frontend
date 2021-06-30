@@ -84,7 +84,7 @@ export default function DraftItemsScreen(): JSX.Element {
             <p>No draft items found.</p>
           ) : (
             <Fragment>
-              <div className="items-center justify-between">
+              <div className="flex items-center justify-between">
                 <ItemSortOrder filter={query} />
                 <ItemPagination filter={query} results={items.data} />
               </div>
