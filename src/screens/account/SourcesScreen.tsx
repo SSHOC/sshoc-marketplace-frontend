@@ -798,11 +798,11 @@ function EditSourceButton(props: EditSourceButtonProps) {
   )
 }
 
-interface DeleteSourceButton {
+interface DeleteSourceButtonProps {
   id: number
 }
 
-function DeleteSourceButton(props: DeleteSourceButton) {
+function DeleteSourceButton(props: DeleteSourceButtonProps) {
   const { id } = props
 
   const dialog = useDialogState()
