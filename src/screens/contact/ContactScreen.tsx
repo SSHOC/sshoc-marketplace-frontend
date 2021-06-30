@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
-import { toast } from 'react-toastify'
 
 import { Button } from '@/elements/Button/Button'
+import { toast } from '@/elements/Toast/useToast'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { FormTextArea } from '@/modules/form/components/FormTextArea/FormTextArea'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'

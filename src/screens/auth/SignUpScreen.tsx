@@ -2,12 +2,12 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
-import { toast } from 'react-toastify'
 
 import { useRegisterOAuth2User } from '@/api/sshoc'
 import { useValidateImplicitGrantTokenWithRegistration } from '@/api/sshoc/client'
 import { Button } from '@/elements/Button/Button'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
+import { toast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { FormCheckBox } from '@/modules/form/components/FormCheckBox/FormCheckBox'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
@@ -203,7 +203,11 @@ function useValidateAuthCode() {
 
     const url = createUrlFromPath(router.asPath)
     const { hash } = url
-    if (hash && hash.length === 69) {
+    /**
+     * The develop egi instance uses 68+1 chars, the demo instance (which is used on staging)
+     * uses 64+1 chars.
+     */
+    if (hash && (hash.length === 69 || hash.length === 65)) {
       /** remove leading "#" character */
       const authCode = hash.slice(1)
       /**
@@ -223,6 +227,9 @@ function useValidateAuthCode() {
           shallow: true,
         },
       )
+    } else {
+      toast.error('Received invalid token.')
+      router.replace({ pathname: '/auth/sign-in' })
     }
   }, [router, auth, validateToken, status])
 

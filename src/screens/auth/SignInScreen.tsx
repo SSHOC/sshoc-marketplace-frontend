@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useMemo } from 'react'
-import { toast } from 'react-toastify'
 
 import {
   useSignInUser,
   useValidateImplicitGrantTokenWithoutRegistration,
 } from '@/api/sshoc/client'
 import { Button } from '@/elements/Button/Button'
+import { toast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
 import { Form } from '@/modules/form/Form'
