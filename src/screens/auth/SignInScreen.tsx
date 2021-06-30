@@ -175,7 +175,11 @@ function useValidateToken() {
 
     const url = createUrlFromPath(router.asPath)
     const { hash, searchParams } = url
-    if (hash && hash.length === 69) {
+    /**
+     * The develop egi instance uses 68+1 chars, the demo instance (which is used on staging)
+     * uses 64+1 chars.
+     */
+    if (hash && (hash.length === 69 || hash.length === 65)) {
       /** remove leading "#" character */
       const authCode = hash.slice(1)
       validateToken([{ token: authCode, registration: false }], {
@@ -209,6 +213,9 @@ function useValidateToken() {
           shallow: true,
         },
       )
+    } else {
+      toast.error('Received invalid token.')
+      router.replace({ pathname: '/auth/sign-in' })
     }
   }, [router, auth, validateToken, status])
 
