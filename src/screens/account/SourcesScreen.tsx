@@ -784,7 +784,7 @@ function EditSourceButton(props: EditSourceButtonProps) {
           <Icon icon={CloseIcon} className="w-8 h-8" />
         </button>
         <section className="flex flex-col space-y-6">
-          <h2 className="text-2xl font-medium">Add source</h2>
+          <h2 className="text-2xl font-medium">Edit source</h2>
           <AddSourceForm
             onDismiss={dialog.close}
             onSubmit={onSubmit}

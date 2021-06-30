@@ -178,40 +178,6 @@ interface CreateActorDialogProps {
  * Create new actor dialog.
  */
 function CreateActorDialog(props: CreateActorDialogProps) {
-  return (
-    <Dialog
-      isOpen={props.isOpen}
-      onDismiss={props.onDismiss}
-      className="flex flex-col w-full max-w-screen-lg px-32 py-16 mx-auto bg-white rounded shadow-lg"
-      style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
-      aria-label="Create new actor"
-    >
-      <button
-        onClick={props.onDismiss}
-        className="self-end"
-        aria-label="Close dialog"
-      >
-        <Icon icon={CloseIcon} className="" />
-      </button>
-      <section className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-medium">Create new actor</h2>
-        {/* this form is rendered in a portal, so it's valid html, even though it's a <form> "nested" in another <form>. */}
-        <CreateActorForm onDismiss={props.onDismiss} />
-      </section>
-    </Dialog>
-  )
-}
-
-type ActorFormValues = ActorCore
-
-interface CreateActorFormProps {
-  onDismiss: () => void
-}
-
-/**
- * Create actor.
- */
-function CreateActorForm(props: CreateActorFormProps) {
   const createActor = useCreateActor()
   const auth = useAuth()
   const queryClient = useQueryClient()
@@ -242,22 +208,67 @@ function CreateActorForm(props: CreateActorFormProps) {
     )
   }
 
+  return (
+    <Dialog
+      isOpen={props.isOpen}
+      onDismiss={props.onDismiss}
+      className="flex flex-col w-full max-w-screen-lg px-32 py-16 mx-auto bg-white rounded shadow-lg"
+      style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
+      aria-label="Create new actor"
+    >
+      <button
+        onClick={props.onDismiss}
+        className="self-end"
+        aria-label="Close dialog"
+      >
+        <Icon icon={CloseIcon} className="" />
+      </button>
+      <section className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-medium">Create new actor</h2>
+        {/* this form is rendered in a portal, so it's valid html, even though it's a <form> "nested" in another <form>. */}
+        <CreateActorForm
+          onDismiss={props.onDismiss}
+          onSubmit={onSubmit}
+          isLoading={createActor.isLoading}
+          buttonLabel="Create"
+        />
+      </section>
+    </Dialog>
+  )
+}
+
+type ActorFormValues = ActorCore
+
+interface CreateActorFormProps {
+  onDismiss: () => void
+  initialValues?: ActorFormValues
+  onSubmit: (actor: ActorFormValues) => void
+  isLoading: boolean
+  buttonLabel: string
+}
+
+/**
+ * Create actor.
+ */
+export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
+  const { initialValues, onSubmit, isLoading, buttonLabel } = props
+
   function onValidate(values: Partial<ActorFormValues>) {
     const errors: Partial<Record<keyof typeof values, any>> = {}
 
-    if (values.name === undefined) {
+    if (values.name == null) {
       errors.name = 'Name is required.'
     }
 
-    if (values.email !== undefined && !isEmail(values.email)) {
+    if (values.email != null && !isEmail(values.email)) {
       errors.email = 'Please provide a valid email address.'
     }
 
-    if (values.website !== undefined && !isUrl(values.website)) {
+    if (values.website != null && !isUrl(values.website)) {
       errors.website = 'Please provide a valid URL.'
     }
 
-    if (values.externalIds !== undefined) {
+    if (values.externalIds != null) {
       values.externalIds.forEach((id, index) => {
         if (
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -267,7 +278,7 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifier == null
         ) {
-          if (errors.externalIds === undefined) {
+          if (errors.externalIds == null) {
             errors.externalIds = []
           }
           errors.externalIds[index] = {
@@ -277,7 +288,7 @@ function CreateActorForm(props: CreateActorFormProps) {
       })
     }
 
-    if (values.externalIds !== undefined) {
+    if (values.externalIds != null) {
       values.externalIds.forEach((id, index) => {
         if (
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -287,7 +298,7 @@ function CreateActorForm(props: CreateActorFormProps) {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           id.identifierService?.code == null
         ) {
-          if (errors.externalIds === undefined) {
+          if (errors.externalIds == null) {
             errors.externalIds = []
           }
           errors.externalIds[index] = {
@@ -301,7 +312,11 @@ function CreateActorForm(props: CreateActorFormProps) {
   }
 
   return (
-    <Form onSubmit={onSubmit} validate={onValidate}>
+    <Form
+      onSubmit={onSubmit}
+      validate={onValidate}
+      initialValues={initialValues}
+    >
       {({ handleSubmit, pristine, invalid, submitting }) => {
         return (
           <form
@@ -379,7 +394,7 @@ function CreateActorForm(props: CreateActorFormProps) {
                           }
                         >
                           <ActorComboBox
-                            name={`${name}.code`}
+                            name={`${name}.id`}
                             label="Affiliation"
                             index={index}
                           />
@@ -400,11 +415,9 @@ function CreateActorForm(props: CreateActorFormProps) {
               <Button
                 type="submit"
                 variant="gradient"
-                isDisabled={
-                  pristine || invalid || submitting || createActor.isLoading
-                }
+                isDisabled={pristine || invalid || submitting || isLoading}
               >
-                Create
+                {buttonLabel}
               </Button>
             </div>
           </form>
@@ -414,7 +427,9 @@ function CreateActorForm(props: CreateActorFormProps) {
   )
 }
 
-function sanitizeActorFormValues(values: ActorFormValues) {
+export function sanitizeActorFormValues(
+  values: ActorFormValues,
+): ActorFormValues {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   values.affiliations = values.affiliations?.filter((v) => v != null)
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
