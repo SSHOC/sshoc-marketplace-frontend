@@ -10,6 +10,7 @@ import { useGetMyDraftItems } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
+import { useToast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -39,12 +40,15 @@ export default function DraftItemsScreen(): JSX.Element {
 
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
+  const toast = useToast()
   const items = useGetMyDraftItems(
     query,
     {
       enabled: auth.session?.accessToken != null,
       keepPreviousData: true,
       onError(error) {
+        toast.error('Failed to fetch draft items')
+
         if (error instanceof Error) {
           handleErrors(error)
         }

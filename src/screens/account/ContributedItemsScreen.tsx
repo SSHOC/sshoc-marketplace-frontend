@@ -10,6 +10,7 @@ import { useGetLoggedInUser, useSearchItems } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
+import { useToast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -42,6 +43,7 @@ export default function ContributedItemsScreen(): JSX.Element {
 
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
+  const toast = useToast()
   const items = useSearchItems(
     {
       ...query,
@@ -56,6 +58,8 @@ export default function ContributedItemsScreen(): JSX.Element {
       enabled: auth.session?.accessToken != null && user.data?.username != null,
       keepPreviousData: true,
       onError(error) {
+        toast.error('Failed to fetch contributed items')
+
         if (error instanceof Error) {
           handleErrors(error)
         }

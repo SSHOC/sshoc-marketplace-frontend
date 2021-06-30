@@ -31,6 +31,7 @@ const fields = [
     label: 'Items to moderate',
     pathname: '/account/moderate',
     icon: ModerateItemsIcon,
+    roles: ['administrator', 'moderator'],
   },
   {
     label: 'Sources',
