@@ -64,7 +64,10 @@ export default function AccountScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="My account" />
       <GridLayout>
-        <Header image={'/assets/images/search/clouds@2x.png'}>
+        <Header
+          image={'/assets/images/search/clouds@2x.png'}
+          showSearchBar={false}
+        >
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },

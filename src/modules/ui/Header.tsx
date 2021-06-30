@@ -15,7 +15,11 @@ import ItemSearchForm, {
 export default function Header({
   image,
   children,
-}: PropsWithChildren<{ image?: string }>): JSX.Element {
+  showSearchBar = true,
+}: PropsWithChildren<{
+  image?: string
+  showSearchBar?: boolean
+}>): JSX.Element {
   return (
     <Fragment>
       <ContentColumn>
@@ -30,10 +34,12 @@ export default function Header({
           />
         ) : null}
         <VStack className="relative p-6 space-y-6">
-          <ItemSearchForm className="flex items-center self-end w-full max-w-screen-md px-2 py-1 my-4 space-x-2 bg-white border border-gray-200 rounded">
-            <ItemSearchComboBox shouldSubmitOnSelect variant="invisible" />
-            <SubmitButton className="h-10" />
-          </ItemSearchForm>
+          {showSearchBar ? (
+            <ItemSearchForm className="flex items-center self-end w-full max-w-screen-md px-2 py-1 my-4 space-x-2 bg-white border border-gray-200 rounded">
+              <ItemSearchComboBox shouldSubmitOnSelect variant="invisible" />
+              <SubmitButton className="h-10" />
+            </ItemSearchForm>
+          ) : null}
           {children}
         </VStack>
       </ContentColumn>

@@ -67,7 +67,10 @@ export default function ModerateItemsScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="My draft items" />
       <GridLayout>
-        <Header image={'/assets/images/search/clouds@2x.png'}>
+        <Header
+          image={'/assets/images/search/clouds@2x.png'}
+          showSearchBar={false}
+        >
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
