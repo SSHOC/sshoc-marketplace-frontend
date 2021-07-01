@@ -124,7 +124,7 @@ function ItemVersion(props: ItemVersionProps) {
     onSuccess() {
       toast.success('Successfully reverted to version.')
 
-      queryClient.invalidateQueries({ queryKey: ['itemSearch'] })
+      queryClient.invalidateQueries({ queryKey: ['searchItems'] })
       queryClient.invalidateQueries({ queryKey: [getAllKey] })
       queryClient.invalidateQueries({
         queryKey: [

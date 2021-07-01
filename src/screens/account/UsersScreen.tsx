@@ -8,7 +8,11 @@ import { Fragment, useEffect, useState } from 'react'
 import { QueryClientProvider, useQueryClient } from 'react-query'
 
 import type { GetUsers, UserDto } from '@/api/sshoc'
-import { useGetUsers, useUpdateUserStatus } from '@/api/sshoc'
+import {
+  useGetUsers,
+  useUpdateUserRole,
+  useUpdateUserStatus,
+} from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
@@ -179,6 +183,7 @@ function User(props: UserProps) {
         </div>
         <div className="flex space-x-4 text-sm text-primary-750">
           <ProtectedView roles={['administrator']}>
+            <UserRoleSelect user={user} />
             <UserStatusSelect user={user} />
             {/* FIXME: Needs endpoint */}
             {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
@@ -611,10 +616,11 @@ function UserStatusSelect(props: UserStatusSelectProps) {
     <label className="space-x-1.5 flex items-center">
       <span className="text-xs text-gray-550">Status:</span>
       <Select
-        aria-label="Sort order"
+        aria-label="User status"
         items={labeledAllowedStatus}
         onSelectionChange={onSubmit}
         selectedKey={user.status}
+        size="small"
       >
         {(item) => <Select.Item>{item.label}</Select.Item>}
       </Select>
@@ -624,4 +630,74 @@ function UserStatusSelect(props: UserStatusSelectProps) {
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+type AllowedUserRole = Exclude<UserDto['role'], undefined>
+
+interface UserRoleSelectProps {
+  user: UserDto
+}
+
+/**
+ * Set user status.
+ */
+function UserRoleSelect(props: UserRoleSelectProps) {
+  const { user } = props
+
+  const toast = useToast()
+  const auth = useAuth()
+  const handleErrors = useErrorHandlers()
+  const queryClient = useQueryClient()
+  const updateUserRole = useUpdateUserRole({
+    onSuccess() {
+      toast.success('Successfully changed user role')
+      queryClient.invalidateQueries(['getUsers'])
+      queryClient.invalidateQueries(['getUser', { id: user.id }])
+    },
+    onError(error) {
+      toast.error('Failed to update user role')
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
+    },
+  })
+
+  const allowedRoles: Array<AllowedUserRole> = [
+    'contributor',
+    'system-contributor',
+    'moderator',
+    'system-moderator',
+    'administrator',
+  ]
+  const labeledAllowedRoles = allowedRoles.map((id) => ({
+    id,
+    label: id.split('-').map(capitalize).join(' '),
+  }))
+
+  function onSubmit(role: Key) {
+    updateUserRole.mutate([
+      {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        id: user.id!,
+        userRole: role as AllowedUserRole,
+      },
+      { token: auth.session?.accessToken },
+    ])
+  }
+
+  return (
+    <label className="space-x-1.5 flex items-center">
+      <span className="text-xs text-gray-550">Role:</span>
+      <Select
+        aria-label="User role"
+        items={labeledAllowedRoles}
+        onSelectionChange={onSubmit}
+        selectedKey={user.role}
+        size="small"
+      >
+        {(item) => <Select.Item>{item.label}</Select.Item>}
+      </Select>
+    </label>
+  )
 }

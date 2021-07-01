@@ -26,6 +26,7 @@ import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/Thu
 import { WorkflowStepsFormSection } from '@/components/item/WorkflowStepsFormSection/WorkflowStepsFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -58,6 +59,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const stepLabel = getSingularItemCategoryLabel('step')
 
   const useItemMutation = useUpdateWorkflow
+
+  const isReviewToApprove = useQueryParam('review', false, Boolean)
 
   const toast = useToast()
   const router = useRouter()
@@ -350,7 +353,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function isFormPristine(isCurrentPagePristine: boolean) {
     return (
       isCurrentPagePristine &&
-      Object.values(pageStatus).every((pristine) => pristine === true)
+      Object.values(pageStatus).every((pristine) => pristine === true) &&
+      isReviewToApprove !== true
     )
   }
 

@@ -6,7 +6,7 @@ import ActorsScreen from '@/screens/account/ActorsScreen'
  */
 export default function ActorsPage(): JSX.Element {
   return (
-    <ProtectedScreen>
+    <ProtectedScreen roles={['administrator', 'moderator']}>
       <ActorsScreen />
     </ProtectedScreen>
   )

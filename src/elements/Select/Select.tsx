@@ -31,6 +31,8 @@ export interface SelectProps<T> extends AriaSelectProps<T> {
   hideSelectionIcon?: boolean
   /** @default "default" */
   variant?: 'default' | 'search' | 'form'
+  /** @default "medium" */
+  size?: 'small' | 'medium'
   style?: CSSProperties
 }
 
@@ -115,28 +117,48 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
     },
   }
 
+  const sizes = {
+    small: {
+      button: 'w-56 text-ui-sm',
+      value: 'px-3 py-2',
+      iconContainer: 'px-2',
+      icon: 'h-2 w-2',
+    },
+    medium: {
+      button: 'w-64 text-ui-base',
+      value: 'px-4 py-3',
+      iconContainer: 'px-3.5',
+      icon: 'h-2.5 w-2.5',
+    },
+  }
+
   const variant = variants[props.variant ?? 'default']
+  const size = sizes[props.size ?? 'medium']
   const styles = {
     container: 'relative inline-flex',
     button: cx(
-      'w-64 cursor-default',
-      'font-body font-normal text-ui-base text-gray-800 inline-flex items-center justify-between focus:outline-none',
+      'cursor-default',
+      'font-body font-normal text-gray-800 inline-flex items-center justify-between focus:outline-none',
       'transition rounded border border-gray-300 hover:text-primary-750',
       variant.button,
+      size.button,
     ),
     value: cx(
-      'px-4 py-3 flex-1 text-left',
+      'flex-1 text-left',
       isLoadingInitial && 'pr-0',
       variant.value,
+      size.value,
     ),
     iconContainer: cx(
-      'transition self-stretch inline-flex items-center justify-center px-3.5 border-l',
+      'transition self-stretch inline-flex items-center justify-center border-l',
       variant.iconContainer,
+      size.iconContainer,
     ),
     icon: cx(
-      'transition transform h-2.5 w-2.5',
+      'transition transform',
       state.isOpen && 'rotate-180',
       variant.icon,
+      size.icon,
     ),
     spinnerContainer: 'inline-flex items-center justify-center',
     spinner: 'w-4 h-4 text-primary-750',

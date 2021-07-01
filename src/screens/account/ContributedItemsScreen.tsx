@@ -46,6 +46,7 @@ export default function ContributedItemsScreen(): JSX.Element {
   const toast = useToast()
   const items = useSearchItems(
     {
+      order: ['modified-on'],
       ...query,
       'd.status': '(approved OR suggested)',
       // When a user is logged in as admin, this will not return the user's

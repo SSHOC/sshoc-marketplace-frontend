@@ -37,11 +37,13 @@ const fields = [
     label: 'Sources',
     pathname: '/account/sources',
     icon: SourcesIcon,
+    roles: ['administrator'],
   },
   {
     label: 'Actors',
     pathname: '/account/actors',
     icon: ActorsIcon,
+    roles: ['administrator', 'moderator'],
   },
   {
     label: 'Users',

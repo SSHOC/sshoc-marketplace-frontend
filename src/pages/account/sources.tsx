@@ -6,7 +6,7 @@ import SourcesScreen from '@/screens/account/SourcesScreen'
  */
 export default function SourcesPage(): JSX.Element {
   return (
-    <ProtectedScreen>
+    <ProtectedScreen roles={['administrator']}>
       <SourcesScreen />
     </ProtectedScreen>
   )

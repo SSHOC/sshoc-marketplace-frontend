@@ -13,6 +13,7 @@ import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSecti
 import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/ThumbnailFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { validateDateFormFields } from '@/lib/sshoc/validateDateFormFields'
@@ -41,6 +42,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const categoryLabel = getSingularItemCategoryLabel(category)
 
   const useItemMutation = useUpdateDataset
+
+  const isReviewToApprove = useQueryParam('review', false, Boolean)
 
   const toast = useToast()
   const router = useRouter()
@@ -184,7 +187,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                   form.change('draft', undefined)
                 }}
                 isDisabled={
-                  pristine || invalid || submitting || create.isLoading
+                  (pristine && isReviewToApprove !== true) ||
+                  invalid ||
+                  submitting ||
+                  create.isLoading
                 }
               >
                 {isAllowedToPublish ? 'Publish' : 'Submit'}

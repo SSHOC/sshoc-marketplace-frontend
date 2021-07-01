@@ -44,6 +44,7 @@ export default function ModerateItemsScreen(): JSX.Element {
   const toast = useToast()
   const items = useSearchItems(
     {
+      order: ['modified-on'],
       ...query,
       // When a user is signed in as admin/moderator, this returns
       // ingested/suggested items by *all* users
@@ -76,8 +77,8 @@ export default function ModerateItemsScreen(): JSX.Element {
               { pathname: '/', label: 'Home' },
               { pathname: '/account', label: 'My account' },
               {
-                pathname: '/account/contributed',
-                label: 'My contributed items',
+                pathname: '/account/moderate',
+                label: 'Items to moderate',
               },
             ]}
           />
@@ -86,7 +87,7 @@ export default function ModerateItemsScreen(): JSX.Element {
           className="px-6 py-12 space-y-12"
           style={{ gridColumn: '4 / span 8' }}
         >
-          <Title>My contributed items</Title>
+          <Title>Items to moderate</Title>
           {items.data === undefined ? (
             <ProgressSpinner />
           ) : items.data.items?.length === 0 ? (
@@ -163,19 +164,21 @@ function ContributedItem(props: ContributedItemProps) {
             <span className="text-gray-550">Status:</span>
             <span>{item.status}</span>
           </div>
-          <div className="space-x-1.5">
-            <span className="text-gray-550">Contributior:</span>
-            <span>
-              {item.contributors
-                ?.map((contributor) => {
-                  return contributor.actor?.name
-                })
-                .join(', ')}
-            </span>
-          </div>
+          {Array.isArray(item.contributors) && item.contributors.length > 0 ? (
+            <div className="space-x-1.5">
+              <span className="text-gray-550">Contributors:</span>
+              <span>
+                {item.contributors
+                  .map((contributor) => {
+                    return contributor.actor?.name
+                  })
+                  .join(', ')}
+              </span>
+            </div>
+          ) : null}
         </div>
         <div className="text-sm">
-          <ProtectedView>
+          <ProtectedView roles={['moderator', 'administrator']}>
             <Link
               passHref
               href={{
@@ -187,6 +190,9 @@ function ContributedItem(props: ContributedItemProps) {
                   item.id,
                   'edit',
                 ].join('/'),
+                query: {
+                  review: true,
+                },
               }}
             >
               <Anchor className="cursor-default text-ui-base">Edit</Anchor>

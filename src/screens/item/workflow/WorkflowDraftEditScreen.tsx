@@ -50,7 +50,6 @@ export default function WorkflowDraftEditScreen(): JSX.Element {
           className="px-6 py-12 space-y-12"
           style={{ gridColumn: '4 / span 8' }}
         >
-          <Title>Edit workflow</Title>
           {workflow.data === undefined || id == null ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />

@@ -42,7 +42,10 @@ export default function DraftItemsScreen(): JSX.Element {
   const handleErrors = useErrorHandlers()
   const toast = useToast()
   const items = useGetMyDraftItems(
-    query,
+    {
+      order: 'modified-on',
+      ...query,
+    },
     {
       enabled: auth.session?.accessToken != null,
       keepPreviousData: true,

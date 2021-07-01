@@ -743,6 +743,7 @@ function EditSourceButton(props: EditSourceButtonProps) {
   const editSource = useUpdateSource({
     onSuccess() {
       toast.success('Successfully updated source.')
+      queryClient.invalidateQueries(['searchItems'])
       queryClient.invalidateQueries(['getSources'])
       queryClient.invalidateQueries(['getSource', { id: props.source.id }])
     },
@@ -813,6 +814,7 @@ function DeleteSourceButton(props: DeleteSourceButtonProps) {
   const deleteSource = useDeleteSource({
     onSuccess() {
       toast.success('Successfully deleted source.')
+      queryClient.invalidateQueries(['searchItems'])
       queryClient.invalidateQueries(['getSources'])
     },
     onError(error) {

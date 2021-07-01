@@ -565,6 +565,7 @@ function EditActorButton(props: EditActorButtonProps) {
   const editActor = useUpdateActor({
     onSuccess() {
       toast.success('Successfully updated actor.')
+      queryClient.invalidateQueries(['searchItems'])
       queryClient.invalidateQueries(['getActors'])
       queryClient.invalidateQueries(['getActor', { id: props.actor.id }])
     },
@@ -635,6 +636,7 @@ function DeleteActorButton(props: DeleteActorButton) {
   const deleteActor = useDeleteActor({
     onSuccess() {
       toast.success('Successfully deleted actor.')
+      queryClient.invalidateQueries(['searchItems'])
       queryClient.invalidateQueries(['getActors'])
     },
     onError(error) {
