@@ -871,7 +871,7 @@ function ItemSearchResult({
   )
   const keywords = allKeywords
     ?.slice(0, MAX_METADATA_VALUES)
-    ?.map((keyword) => keyword.value)
+    ?.map((keyword) => keyword.concept?.label)
     ?.join(', ')
 
   const pathname = `/${item.category}/${item.persistentId}`
