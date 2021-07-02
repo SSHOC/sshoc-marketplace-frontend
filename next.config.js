@@ -1,5 +1,6 @@
 const createBundleAnalyzerPlugin = require('@next/bundle-analyzer')
 const createSvgPlugin = require('@stefanprobst/next-svg')
+const createPrevalPlugin = require('next-plugin-preval/config')
 
 const withBundleAnalyzer = createBundleAnalyzerPlugin({
   enabled: process.env.ANALYZE === 'true',
@@ -24,6 +25,7 @@ const withMdx = (nextConfig = {}) => {
     },
   }
 }
+
 const withSvg = createSvgPlugin({
   svgo: {
     plugins: [
@@ -36,6 +38,8 @@ const withSvg = createSvgPlugin({
     titleProp: true,
   },
 })
+
+const withPreval = createPrevalPlugin()
 
 const nextConfig = {
   async headers() {
@@ -56,6 +60,6 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-const plugins = [withBundleAnalyzer, withMdx, withSvg]
+const plugins = [withBundleAnalyzer, withMdx, withSvg, withPreval]
 
 module.exports = plugins.reduce((acc, plugin) => plugin(acc), nextConfig)

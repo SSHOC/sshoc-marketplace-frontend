@@ -100,6 +100,22 @@ collections:
           - name: body
             label: Text
             widget: markdown
+  - name: contribute-pages
+    label: Contribute pages
+    label_singular: Contribute page
+    editor:
+      preview: false
+    format: frontmatter
+    extension: mdx
+    folder: content/contribute-pages
+    create: true
+    delete: false
+    fields:
+      - name: title
+        label: Title
+      - name: body
+        label: Text
+        widget: markdown
   - name: settings
     label: Settings
     editor:

@@ -11,10 +11,12 @@ import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
+import FullWidth from '@/modules/layout/FullWidth'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import styles from '@/modules/page/PageHeader.module.css'
+import contributeLinks from '@/utils/contributePages.preval'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
@@ -22,8 +24,6 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
-
-import FullWidth from '../layout/FullWidth'
 
 /**
  * Page header.
@@ -117,6 +117,38 @@ function MainNavigation(): JSX.Element {
                 )}
               </Menu>
             </li>
+            {contributeLinks.length > 0 ? (
+              <Fragment>
+                <Separator />
+                <li className="relative z-10 inline-flex">
+                  <Menu>
+                    {({ open }) => (
+                      <Fragment>
+                        <MenuButton isOpen={open}>Contribute</MenuButton>
+                        <FadeIn show={open}>
+                          <MenuPopover static>
+                            {contributeLinks.map(({ label, pathname }) => {
+                              return (
+                                <Menu.Item key={pathname}>
+                                  {({ active }) => (
+                                    <MenuLink
+                                      href={{ pathname }}
+                                      highlighted={active}
+                                    >
+                                      {label}
+                                    </MenuLink>
+                                  )}
+                                </Menu.Item>
+                              )
+                            })}
+                          </MenuPopover>
+                        </FadeIn>
+                      </Fragment>
+                    )}
+                  </Menu>
+                </li>
+              </Fragment>
+            ) : null}
             <Separator />
             <li className="relative z-10 inline-flex">
               <Menu>

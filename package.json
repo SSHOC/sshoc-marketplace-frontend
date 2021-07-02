@@ -152,13 +152,15 @@
     "lint-staged": "^10.5.1",
     "msw": "^0.21.3",
     "netlify-cms-proxy-server": "^1.3.6",
+    "next-plugin-preval": "^1.2.1",
     "node-fetch": "^2.6.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.5",
-    "utility-types": "^3.10.0"
+    "utility-types": "^3.10.0",
+    "vfile-matter": "^3.0.0"
   },
   "engines": {
     "node": ">=12.9",
