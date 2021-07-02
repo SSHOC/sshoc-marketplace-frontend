@@ -22,10 +22,14 @@ async function getContributePageRoutes() {
 }
 
 async function getContributePageIds() {
-  const ids = (await fs.readdir(folder, 'utf-8')).map((fileName) => {
-    return fileName.slice(0, -extension.length)
-  })
-  return ids
+  try {
+    const ids = (await fs.readdir(folder, 'utf-8')).map((fileName) => {
+      return fileName.slice(0, -extension.length)
+    })
+    return ids
+  } catch {
+    return []
+  }
 }
 
 async function getContributePageMetadataById(id: string) {
