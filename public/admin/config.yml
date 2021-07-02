@@ -4,7 +4,7 @@ local_backend: true
 backend:
   name: gitlab
   repo: sshoc/sshoc-marketplace-frontend
-  branch: main
+  branch: develop
   auth_type: implicit
   app_id: 715dbe5a99099c436330e3fe439ac38e2c746fbdefc4446558fe6f99c517b8d7
   api_root: https://gitlab.gwdg.de/api/v4
