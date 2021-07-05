@@ -5,7 +5,6 @@ import type { NextRouter } from 'next/router'
 import { useRouter } from 'next/router'
 import type { PropsWithChildren, Ref } from 'react'
 import { Fragment, useEffect, useState } from 'react'
-import { useQueryClient } from 'react-query'
 
 import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
@@ -243,7 +242,6 @@ function ReportAnIssueButton({
 function AuthButton() {
   const router = useRouter()
   const auth = useAuth()
-  const queryClient = useQueryClient()
 
   const { data: user } = useGetLoggedInUser(
     {
@@ -278,8 +276,6 @@ function AuthButton() {
 
   function onSignOut() {
     auth.signOut()
-    /** clear the whole query cache to be on the safe side */
-    queryClient.clear()
     router.replace(
       getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
     )

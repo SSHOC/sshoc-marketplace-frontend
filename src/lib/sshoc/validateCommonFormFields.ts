@@ -15,7 +15,7 @@ export function validateCommonFormFields<
     | PublicationCore
     | ToolCore
     | TrainingMaterialCore
-    | WorkflowCore
+    | WorkflowCore,
 >(
   values: Partial<T>,
   errors: Partial<Record<keyof typeof values, any>>,
@@ -40,7 +40,6 @@ export function validateCommonFormFields<
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (url != null && !isUrl(url)) {
         if (errors.accessibleAt === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.accessibleAt = []
         }
         errors.accessibleAt[index] = 'Must be a valid URL.'
@@ -58,7 +57,6 @@ export function validateCommonFormFields<
         contributor.actor === undefined
       ) {
         if (errors.contributors === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.contributors = []
         }
         errors.contributors[index] = {
@@ -78,7 +76,6 @@ export function validateCommonFormFields<
         contributor.role === undefined
       ) {
         if (errors.contributors === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.contributors = []
         }
         errors.contributors[index] = {
@@ -98,7 +95,6 @@ export function validateCommonFormFields<
         (property.value !== undefined || property.concept !== undefined)
       ) {
         if (errors.properties === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.properties = []
         }
         errors.properties[index] = {
@@ -129,7 +125,6 @@ export function validateCommonFormFields<
             (type === 'float' && !Number.isFinite(Number(property.value)))
           ) {
             if (errors.properties === undefined) {
-              /* @ts-expect-error Untyped empty array. */
               errors.properties = []
             }
             errors.properties[index] = {
@@ -152,7 +147,6 @@ export function validateCommonFormFields<
         property.concept === undefined
       ) {
         if (errors.properties === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.properties = []
         }
         errors.properties[index] = {
@@ -173,7 +167,6 @@ export function validateCommonFormFields<
         item.persistentId === undefined
       ) {
         if (errors.relatedItems === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.relatedItems = []
         }
         errors.relatedItems[index] = { persistentId: 'Please select an item.' }
@@ -191,7 +184,6 @@ export function validateCommonFormFields<
         item.relation === undefined
       ) {
         if (errors.relatedItems === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.relatedItems = []
         }
         errors.relatedItems[index] = {
@@ -212,7 +204,6 @@ export function validateCommonFormFields<
         id.identifier == null
       ) {
         if (errors.externalIds === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.externalIds = []
         }
         errors.externalIds[index] = {
@@ -233,7 +224,6 @@ export function validateCommonFormFields<
         id.identifierService?.code == null
       ) {
         if (errors.externalIds === undefined) {
-          /* @ts-expect-error Untyped empty array. */
           errors.externalIds = []
         }
         errors.externalIds[index] = {

@@ -43,7 +43,12 @@ export function useAuth(): Auth {
  */
 export default function AuthProvider({
   children,
-}: PropsWithChildren<unknown>): JSX.Element {
+  onSignIn,
+  onSignOut,
+}: PropsWithChildren<{
+  onSignIn?: () => void
+  onSignOut?: () => void
+}>): JSX.Element {
   const [session, setSession] = useLocalStorage<Session | null>('session', null)
 
   const auth = useMemo(() => {
@@ -57,11 +62,13 @@ export default function AuthProvider({
           accessToken: token,
           expiresAt: decoded.exp,
         })
+        onSignIn?.()
       }
     }
 
     function signOut() {
       setSession(null)
+      onSignOut?.()
     }
 
     function validateToken(token: string) {

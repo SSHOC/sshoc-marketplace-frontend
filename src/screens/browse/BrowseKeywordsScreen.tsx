@@ -1,4 +1,4 @@
-import BrowseLayout from '@/screens/browse/BrowseLayout.tsx'
+import BrowseLayout from '@/screens/browse/BrowseLayout'
 
 export default function BrowseKeywordsScreen(): JSX.Element {
   return (

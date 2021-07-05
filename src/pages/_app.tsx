@@ -94,7 +94,12 @@ function Providers({ children }: PropsWithChildren<unknown>) {
     <SSRProvider>
       <I18nProvider locale="en">
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider
+            onSignIn={queryClient.clear}
+            onSignOut={queryClient.clear}
+          >
+            {children}
+          </AuthProvider>
         </QueryClientProvider>
       </I18nProvider>
     </SSRProvider>
