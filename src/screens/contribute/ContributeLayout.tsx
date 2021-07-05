@@ -34,7 +34,7 @@ export default function ContributeLayout({
     <Fragment>
       <Metadata title={title} />
       <GridLayout className={styles.grid}>
-        <Header image={'/assets/images/contribute/clouds@2x.png'}>
+        <Header image={'/assets/images/about/clouds@2x.png'}>
           <Breadcrumbs links={[{ pathname: '/', label: 'Home' }, breadcrumb]} />
         </Header>
         <b
