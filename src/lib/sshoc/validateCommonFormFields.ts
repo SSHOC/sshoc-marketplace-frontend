@@ -15,7 +15,7 @@ export function validateCommonFormFields<
     | PublicationCore
     | ToolCore
     | TrainingMaterialCore
-    | WorkflowCore,
+    | WorkflowCore
 >(
   values: Partial<T>,
   errors: Partial<Record<keyof typeof values, any>>,

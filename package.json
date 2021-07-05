@@ -158,7 +158,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.0.5",
+    "typescript": "^4.3.5",
     "utility-types": "^3.10.0",
     "vfile-matter": "^3.0.0"
   },

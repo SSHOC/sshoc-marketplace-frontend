@@ -6,11 +6,22 @@
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "[typescript,typescriptreact,javascript]": {
+  "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnSave": false
   },
-  "[markdown,mdx]": {
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": false
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "[mdx]": {
     "files.trimTrailingWhitespace": false
   }
 }
