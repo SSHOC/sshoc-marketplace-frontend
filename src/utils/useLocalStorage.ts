@@ -1,49 +1,78 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-/** JSON serializable */
-type Json =
-  | null
-  | boolean
-  | string
-  | number
-  | Array<Json>
-  | { [key: string]: Json }
+import type { JSON } from '@/utils/ts/json'
 
 type ValueOrSetter<T> = T | ((previousValue: T) => T)
 
-export function useLocalStorage<T extends Json>(
+/**
+ * Synchronizes state to local storage.
+ */
+export function useLocalStorage<T extends JSON>(
   key: string,
   initialValue: T,
+  onChange?: () => void,
 ): [T, (value: ValueOrSetter<T>) => void] {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === 'undefined') {
-      return initialValue
-    }
+  const [storedValue, _setStoredValue] = useState<T>(initialValue)
 
-    try {
-      const item = window.localStorage.getItem(key)
-      if (item === null) return initialValue
-      return JSON.parse(item)
-    } catch (error) {
-      console.error(error)
-      return initialValue
+  const setStoredValue = useCallback(
+    function setStoredValue(value: ValueOrSetter<T>) {
+      _setStoredValue(value)
+      onChange?.()
+    },
+    [onChange],
+  )
+
+  useEffect(() => {
+    const item = getItem(key)
+
+    if (item !== undefined) {
+      setStoredValue(item)
     }
-  })
+  }, [key, setStoredValue])
 
   const setValue = useCallback(
     function setValue(value: ValueOrSetter<T>) {
-      try {
-        /** mirror useState api */
+      setStoredValue((previousValue) => {
         const newValue =
-          typeof value === 'function' ? value(storedValue) : value
-        window.localStorage.setItem(key, JSON.stringify(newValue))
+          typeof value === 'function' ? value(previousValue) : value
+
+        setItem(key, newValue)
         setStoredValue(newValue)
-      } catch (error) {
-        console.error(error)
-      }
+
+        return newValue
+      })
     },
-    [key, storedValue],
+    [key, setStoredValue],
   )
 
   return [storedValue, setValue]
+}
+
+/**
+ * Retrieves and parses value from local storage.
+ */
+function getItem(key: string) {
+  try {
+    const item = window.localStorage.getItem(key)
+    if (item === null) return undefined
+    return JSON.parse(item)
+  } catch {
+    return undefined
+  }
+}
+
+/**
+ * Saves value to local storage.
+ */
+function setItem(key: string, value: unknown) {
+  try {
+    if (value == null) {
+      window.localStorage.removeItem(key)
+    } else {
+      const item = JSON.stringify(value)
+      window.localStorage.setItem(key, item)
+    }
+  } catch {
+    /** Dont't set anything when local storage not supported. */
+  }
 }

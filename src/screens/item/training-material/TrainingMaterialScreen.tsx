@@ -4,6 +4,7 @@ import type { DeepRequired } from 'utility-types'
 
 import type { TrainingMaterialDto } from '@/api/sshoc'
 import { useGetTrainingMaterial } from '@/api/sshoc'
+import { useAuth } from '@/modules/auth/AuthContext'
 import type { PageProps } from '@/pages/training-material/[id]/index'
 import ItemLayout from '@/screens/item/ItemLayout'
 
@@ -13,6 +14,9 @@ import ItemLayout from '@/screens/item/ItemLayout'
 export default function TrainingMaterialScreen({
   trainingMaterial: initialData,
 }: PageProps): JSX.Element {
+  /** token is used to get hidden properties */
+  const auth = useAuth()
+
   /**
    * populate client cache with data from getServerSideProps,
    * to allow background refreshing
@@ -21,6 +25,7 @@ export default function TrainingMaterialScreen({
     { id: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
+    { token: auth.session?.accessToken },
   )
   /** backend does not specify required fields. should be safe here */
   const trainingMaterial = (data ??

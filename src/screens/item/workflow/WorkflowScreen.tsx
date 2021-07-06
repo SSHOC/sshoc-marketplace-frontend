@@ -4,6 +4,7 @@ import type { DeepRequired } from 'utility-types'
 
 import type { WorkflowDto } from '@/api/sshoc'
 import { useGetWorkflow } from '@/api/sshoc'
+import { useAuth } from '@/modules/auth/AuthContext'
 import type { PageProps } from '@/pages/workflow/[id]/index'
 import ItemLayout from '@/screens/item/ItemLayout'
 import Steps from '@/screens/item/workflow/Steps'
@@ -14,6 +15,9 @@ import Steps from '@/screens/item/workflow/Steps'
 export default function WorkflowScreen({
   workflow: initialData,
 }: PageProps): JSX.Element {
+  /** token is used to get hidden properties */
+  const auth = useAuth()
+
   /**
    * populate client cache with data from getServerSideProps,
    * to allow background refreshing
@@ -22,6 +26,7 @@ export default function WorkflowScreen({
     { workflowId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
+    { token: auth.session?.accessToken },
   )
   /** backend does not specify required fields. should be safe here */
   const workflow = (data ?? initialData) as DeepRequired<WorkflowDto>

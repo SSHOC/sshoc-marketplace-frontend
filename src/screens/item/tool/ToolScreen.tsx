@@ -4,6 +4,7 @@ import type { DeepRequired } from 'utility-types'
 
 import type { ToolDto } from '@/api/sshoc'
 import { useGetTool } from '@/api/sshoc'
+import { useAuth } from '@/modules/auth/AuthContext'
 import type { PageProps } from '@/pages/tool-or-service/[id]/index'
 import ItemLayout from '@/screens/item/ItemLayout'
 
@@ -13,6 +14,9 @@ import ItemLayout from '@/screens/item/ItemLayout'
 export default function ToolScreen({
   tool: initialData,
 }: PageProps): JSX.Element {
+  /** token is used to get hidden properties */
+  const auth = useAuth()
+
   /**
    * populate client cache with data from getServerSideProps,
    * to allow background refreshing
@@ -21,6 +25,7 @@ export default function ToolScreen({
     { id: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
+    { token: auth.session?.accessToken },
   )
   /** backend does not specify required fields. should be safe here */
   const tool = (data ?? initialData) as DeepRequired<ToolDto>

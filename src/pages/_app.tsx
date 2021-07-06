@@ -26,14 +26,6 @@ import ClientError from '@/modules/error/ClientError'
 import PageLayout from '@/modules/page/PageLayout'
 
 /**
- * Report web vitals.
- */
-export function reportWebVitals(metric: NextWebVitalsMetric): void {
-  /** should be dispatched to an analytics service */
-  // console.info(metric)
-}
-
-/**
  * Report page transitions to Matomo analytics.
  */
 Router.events.on('routeChangeComplete', (url) => {
@@ -72,8 +64,15 @@ function createQueryClient() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        cacheTime: Infinity,
-        staleTime: Infinity,
+        // cacheTime: Infinity,
+        /**
+         * stale time must not be set to infinite, because this will interfere
+         * with refetching after clearing the query cache when a user signs in/out.
+         *
+         * TODO: is this because the cache gets reset to its initialData (which is
+         * unauthenticated data fetched server-side)?
+         */
+        // staleTime: Infinity,
         structuralSharing: false,
       },
     },
@@ -85,21 +84,30 @@ function createQueryClient() {
 /**
  * Providers.
  */
-function Providers({ children }: PropsWithChildren<unknown>) {
+function Providers({
+  children,
+  render,
+}: PropsWithChildren<{ render: () => void }>) {
   const [queryClient] = useState(() => createQueryClient())
 
   useInteractionModality()
+
+  const [clearQueryCache] = useState(() => {
+    return () => {
+      queryClient.clear()
+      /**
+       * Clearing the query cache means removing all query subscribers.
+       * Rerendering the tree registers them again.
+       */
+      render()
+    }
+  })
 
   return (
     <SSRProvider>
       <I18nProvider locale="en">
         <QueryClientProvider client={queryClient}>
-          <AuthProvider
-            onSignIn={queryClient.clear}
-            onSignOut={queryClient.clear}
-          >
-            {children}
-          </AuthProvider>
+          <AuthProvider onChange={clearQueryCache}>{children}</AuthProvider>
         </QueryClientProvider>
       </I18nProvider>
     </SSRProvider>
@@ -114,13 +122,16 @@ export default function App({
   pageProps,
   router,
 }: AppProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const [, forceRender] = useState<object>({})
+
   return (
     <Fragment>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <ErrorBoundary fallback={ClientError} resetOnChange={[router.asPath]}>
-        <Providers {...pageProps}>
+        <Providers {...pageProps} render={() => forceRender({})}>
           <Layout {...pageProps} default={PageLayout}>
             <Component {...pageProps} />
           </Layout>
