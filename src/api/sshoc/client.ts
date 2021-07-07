@@ -8,7 +8,8 @@ import type { UseMutationOptions, UseMutationResult } from 'react-query'
 import { useMutation } from 'react-query'
 
 import type { ImplicitGrantTokenData, OAuthRegistrationDto } from '@/api/sshoc'
-import { baseUrl, request } from '@/api/sshoc'
+import { baseUrl, request, useGetLoggedInUser } from '@/api/sshoc'
+import { useAuth } from '@/modules/auth/AuthContext'
 
 /**
  * Sign in user with username and password.
@@ -190,4 +191,24 @@ export function getMediaFileUrl({ mediaId }: { mediaId: string }): string {
     baseUrl,
   )
   return String(url)
+}
+
+export function useCurrentUser(): ReturnType<typeof useGetLoggedInUser> {
+  const auth = useAuth()
+
+  return useGetLoggedInUser(
+    {
+      enabled: auth.session?.accessToken !== undefined,
+      /** immediately sign out in case of error */
+      retry: false,
+      /** cache until cache is cleared manually */
+      staleTime: Infinity,
+      onError() {
+        auth.signOut()
+      },
+    },
+    {
+      token: auth.session?.accessToken,
+    },
+  )
 }

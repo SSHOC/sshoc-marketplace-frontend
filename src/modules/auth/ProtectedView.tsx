@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 
-import { useGetLoggedInUser } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import { useAuth } from '@/modules/auth/AuthContext'
 
 export default function ProtectedView({
@@ -11,10 +11,7 @@ export default function ProtectedView({
   roles?: Array<'contributor' | 'moderator' | 'administrator'>
 }>): JSX.Element | null {
   const { session } = useAuth()
-  const user = useGetLoggedInUser(
-    { enabled: session?.accessToken != null },
-    { token: session?.accessToken },
-  )
+  const user = useCurrentUser()
 
   if (session === null) return null
 

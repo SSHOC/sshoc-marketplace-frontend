@@ -2,7 +2,8 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
-import { useGetLoggedInUser, useUpdateDataset } from '@/api/sshoc'
+import { useUpdateDataset } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
@@ -48,7 +49,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const toast = useToast()
   const router = useRouter()
   const auth = useAuth()
-  const user = useGetLoggedInUser()
+  const user = useCurrentUser()
   const handleErrors = useErrorHandlers()
   const validateCommonFormFields = useValidateCommonFormFields()
   const isAllowedToPublish =

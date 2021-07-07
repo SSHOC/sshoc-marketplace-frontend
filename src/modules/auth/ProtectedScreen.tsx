@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react'
 import { Fragment, useEffect } from 'react'
 
 import type { UserDto } from '@/api/sshoc'
-import { useGetLoggedInUser } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import { useAuth } from '@/modules/auth/AuthContext'
 
 export default function ProtectedScreen({
@@ -14,10 +14,7 @@ export default function ProtectedScreen({
 }>): JSX.Element | null {
   const router = useRouter()
   const { session } = useAuth()
-  const user = useGetLoggedInUser(
-    { enabled: session?.accessToken != null },
-    { token: session?.accessToken },
-  )
+  const user = useCurrentUser()
 
   useEffect(() => {
     if (session === null || !hasAppropriateRole(roles, user.data)) {

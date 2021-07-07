@@ -6,7 +6,8 @@ import { useRouter } from 'next/router'
 import type { PropsWithChildren, Ref } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
-import { useGetItemCategories, useGetLoggedInUser } from '@/api/sshoc'
+import { useGetItemCategories } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
@@ -23,7 +24,6 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
-
 /**
  * Page header.
  */
@@ -243,19 +243,7 @@ function AuthButton() {
   const router = useRouter()
   const auth = useAuth()
 
-  const { data: user } = useGetLoggedInUser(
-    {
-      enabled: auth.session?.accessToken !== undefined,
-      /** immediately sign out in case of error */
-      retry: false,
-      onError() {
-        auth.signOut()
-      },
-    },
-    {
-      token: auth.session?.accessToken,
-    },
-  )
+  const { data: user } = useCurrentUser()
   const [redirectPath, setRedirectPath] = useState(() => {
     const path = getRedirectPath(router.asPath)
     if (path === undefined) return undefined

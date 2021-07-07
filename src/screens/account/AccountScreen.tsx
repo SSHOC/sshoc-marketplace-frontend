@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
 
-import { useGetLoggedInUser } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as ActorsIcon } from '@/elements/icons/big/actors.svg'
 import { Svg as ContributedItemsIcon } from '@/elements/icons/big/contributed-items.svg'
@@ -57,7 +57,7 @@ const fields = [
  * My account screen.
  */
 export default function AccountScreen(): JSX.Element {
-  const user = useGetLoggedInUser()
+  const user = useCurrentUser()
 
   // just for typescript - user should always exist here
   if (user.data == null) return <div>User not found</div>

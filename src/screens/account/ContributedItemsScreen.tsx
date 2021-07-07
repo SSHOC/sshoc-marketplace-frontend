@@ -6,7 +6,8 @@ import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import type { SearchItem, SearchItems } from '@/api/sshoc'
-import { useGetLoggedInUser, useSearchItems } from '@/api/sshoc'
+import { useSearchItems } from '@/api/sshoc'
+import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
@@ -39,7 +40,7 @@ export default function ContributedItemsScreen(): JSX.Element {
   const router = useRouter()
   const query = sanitizeQuery(router.query)
 
-  const user = useGetLoggedInUser()
+  const user = useCurrentUser()
 
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
