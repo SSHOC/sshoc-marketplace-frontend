@@ -62,16 +62,16 @@ function useGetItemHistory(category: ItemCategory, id: string) {
   switch (category) {
     case 'dataset':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetDatasetHistory({ datasetId: id }, {})
+      return useGetDatasetHistory({ id }, {})
     case 'publication':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetPublicationHistory({ publicationId: id }, {})
+      return useGetPublicationHistory({ id }, {})
     case 'tool-or-service':
       // eslint-disable-next-line react-hooks/rules-of-hooks
       return useGetToolHistory({ id }, {})
     case 'training-material':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetTrainingMaterialHistory({ trainingMaterialId: id }, {})
+      return useGetTrainingMaterialHistory({ id }, {})
     case 'workflow':
       // eslint-disable-next-line react-hooks/rules-of-hooks
       return useGetWorkflowHistory({ workflowId: id }, {})
@@ -149,11 +149,19 @@ function ItemVersion(props: ItemVersionProps) {
   })
 
   function onRevert() {
-    revert.mutate([
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      { id: item.persistentId!, versionId: item.id! },
-      { token: auth.session?.accessToken },
-    ])
+    if (category === 'workflow') {
+      revert.mutate([
+        // @ts-expect-error Ignore for now, refactor later
+        { workflowId: item.persistentId, versionId: item.id },
+        { token: auth.session?.accessToken },
+      ])
+    } else {
+      revert.mutate([
+        // @ts-expect-error Ignore for now, refactor later
+        { id: item.persistentId, versionId: item.id },
+        { token: auth.session?.accessToken },
+      ])
+    }
   }
 
   return (
