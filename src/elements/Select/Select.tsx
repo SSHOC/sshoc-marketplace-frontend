@@ -25,6 +25,7 @@ import { useErrorMessage } from '@/modules/a11y/useErrorMessage'
 export interface SelectProps<T> extends AriaSelectProps<T> {
   name?: string
   validationMessage?: ReactNode
+  helpText?: ReactNode
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
   shouldFocusWrap?: boolean
@@ -173,6 +174,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
       necessityIndicator={props.necessityIndicator}
       validationState={props.validationState}
       validationMessage={props.validationMessage}
+      helpText={props.helpText}
       errorMessageProps={errorMessageProps}
       style={props.style}
     >

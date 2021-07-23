@@ -10,6 +10,7 @@ import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormField } from '@/modules/form/FormField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
+import helpText from '@@/config/form-helptext.json'
 
 export interface MediaFormSectionProps {
   initialValues?: any

@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 
 import type { MediaDetails } from '@/api/sshoc'
 import { AddMediaForm as AddThumbnailForm } from '@/components/item/AddMediaForm/AddMediaForm'
+import { Thumbnail } from '@/components/item/Thumbnail/Thumbnail'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { MediaError } from '@/lib/error/MediaError'
@@ -10,8 +11,7 @@ import { useDialogState } from '@/lib/hooks/useDialogState'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormField } from '@/modules/form/FormField'
-
-import { Thumbnail } from '../Thumbnail/Thumbnail'
+import helpText from '@@/config/form-helptext.json'
 
 export interface ThumbnailFormSectionProps {
   initialValues?: any

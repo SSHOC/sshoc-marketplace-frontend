@@ -99,6 +99,7 @@ export function TextFieldBase(
       necessityIndicator={props.necessityIndicator}
       validationState={props.validationState}
       validationMessage={props.validationMessage}
+      helpText={props.helpText}
       errorMessageProps={errorMessageProps}
       style={props.style}
     >

@@ -10,6 +10,7 @@ import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
+import helpText from '@@/config/form-helptext.json'
 
 export interface RelatedItemsFormSectionProps {
   initialValues?: any
@@ -136,6 +137,7 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
       onInputChange={setSearchTerm}
       variant="form"
       style={{ flex: 1 }}
+      helpText={helpText.relatedItem}
     >
       {(item) => (
         <FormComboBox.Item key={item.persistentId}>

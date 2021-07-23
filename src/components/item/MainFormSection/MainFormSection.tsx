@@ -8,6 +8,7 @@ import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextArea } from '@/modules/form/components/FormTextArea/FormTextArea'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
+import helpText from '@@/config/form-helptext.json'
 
 export interface MainFormSectionProps {
   prefix?: string
@@ -27,11 +28,13 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           label={'Label'}
           isRequired
           variant="form"
+          helpText={helpText.label}
         />
         <FormTextField
           name={`${prefix}version`}
           label={'Version'}
           variant="form"
+          // helpText={helpText.version}
         />
       </div>
       <FormTextArea
@@ -40,6 +43,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
         isRequired
         rows={8}
         variant="form"
+        helpText={helpText.description}
       />
       <FormFieldArray name={`${prefix}accessibleAt`}>
         {({ fields }) => {
@@ -61,6 +65,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       label={'Accessible at'}
                       variant="form"
                       style={{ flex: 1 }}
+                      helpText={helpText.accessibleAt}
                     />
                   </FormRecord>
                 )
@@ -96,6 +101,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       label="Identifier"
                       variant="form"
                       style={{ flex: 1 }}
+                      helpText={helpText.externalId}
                     />
                   </FormRecord>
                 )

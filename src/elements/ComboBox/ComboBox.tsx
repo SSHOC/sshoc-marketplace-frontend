@@ -33,6 +33,7 @@ export interface ComboBoxProps<T>
     AsyncLoadable {
   name?: string
   validationMessage?: ReactNode
+  helpText?: ReactNode
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
   // loadingState?: 'loading'
@@ -187,6 +188,7 @@ export function ComboBox<T extends object>(
       necessityIndicator={props.necessityIndicator}
       validationState={props.validationState}
       validationMessage={props.validationMessage}
+      helpText={props.helpText}
       errorMessageProps={errorMessageProps}
       style={props.style}
     >

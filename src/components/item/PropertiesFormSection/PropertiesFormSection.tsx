@@ -19,6 +19,7 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
 import { FormField } from '@/modules/form/FormField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { FormFieldCondition } from '@/modules/form/FormFieldCondition'
+import helpText from '@@/config/form-helptext.json'
 
 export interface PropertiesFormSectionProps {
   initialValues?: any
@@ -113,12 +114,18 @@ export function PropertiesFormSection(
                         propertyTypesById[id].type !== 'concept'
                       }
                     >
-                      <FormTextField
-                        name={`${name}.value`}
-                        label={'Value'}
-                        variant="form"
-                        style={{ flex: 1 }}
-                      />
+                      {(id: string) => {
+                        return (
+                          <FormTextField
+                            name={`${name}.value`}
+                            label={'Value'}
+                            variant="form"
+                            style={{ flex: 1 }}
+                            // @ts-expect-error It's ok
+                            helpText={helpText.properties[id]}
+                          />
+                        )
+                      }}
                     </FormFieldCondition>
                   </FormRecord>
                 )
@@ -225,6 +232,12 @@ function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
         onInputChange={setSearchTerm}
         variant="form"
         style={{ flex: 1 }}
+        helpText={
+          props.propertyTypeId != null
+            ? // @ts-expect-error It's ok
+              helpText.properties[props.propertyTypeId]
+            : undefined
+        }
       >
         {(item) => (
           <FormComboBox.Item key={item.uri}>{item.label}</FormComboBox.Item>

@@ -13,6 +13,7 @@ export interface TextFieldProps extends AriaTextFieldProps {
   size?: 'md' | 'lg'
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
+  helpText?: ReactNode
   style?: CSSProperties
 }
 

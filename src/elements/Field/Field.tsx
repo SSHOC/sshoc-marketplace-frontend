@@ -10,10 +10,11 @@ import type {
   LabelHTMLAttributes,
   ReactNode,
 } from 'react'
-import { Fragment } from 'react'
 
 import { ErrorMessage } from '@/elements/ErrorMessage/ErrorMessage'
+import { HelpText } from '@/elements/HelpText/HelpText'
 import { Label } from '@/elements/Label/Label'
+import { SuccessMessage } from '@/elements/SuccessMessage/SuccessMessage'
 
 export interface FieldProps extends LabelableProps, Validation {
   children?: JSX.Element
@@ -24,6 +25,7 @@ export interface FieldProps extends LabelableProps, Validation {
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
+  helpText?: ReactNode
   errorMessageProps?: HTMLAttributes<HTMLElement>
   style?: CSSProperties
 }
@@ -63,6 +65,11 @@ export function Field(props: FieldProps): JSX.Element {
         <ErrorMessage {...props.errorMessageProps}>
           {props.validationMessage}
         </ErrorMessage>
+      ) : props.validationState === 'valid' &&
+        props.validationMessage !== undefined ? (
+        <SuccessMessage>{props.validationMessage}</SuccessMessage>
+      ) : props.helpText !== undefined ? (
+        <HelpText>{props.helpText}</HelpText>
       ) : null}
     </div>
   )

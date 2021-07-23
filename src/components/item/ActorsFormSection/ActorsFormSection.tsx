@@ -26,6 +26,7 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
 import { Form } from '@/modules/form/Form'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { isEmail, isUrl } from '@/modules/form/validate'
+import helpText from '@@/config/form-helptext.json'
 
 export interface ActorsFormSectionProps {
   initialValues?: any
@@ -163,6 +164,7 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       onInputChange={setSearchTerm}
       variant="form"
       style={{ flex: 1 }}
+      helpText={helpText.actor}
     >
       {(item) => <FormComboBox.Item>{item.name}</FormComboBox.Item>}
     </FormComboBox>
