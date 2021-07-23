@@ -6,7 +6,15 @@ import type { PropsWithChildren } from 'react'
 import { Fragment, useState } from 'react'
 
 import type { ActorDto, PropertyDto } from '@/api/sshoc'
-import { useGetItemCategories } from '@/api/sshoc'
+import {
+  useGetInformationContributors,
+  useGetInformationContributors1,
+  useGetInformationContributors2,
+  useGetInformationContributors3,
+  useGetInformationContributors4,
+  useGetInformationContributors5,
+  useGetItemCategories,
+} from '@/api/sshoc'
 import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
 import type {
   Item as GenericItem,
@@ -57,7 +65,7 @@ export default function ItemLayout({
   /** we can assume these fields to be present */
   const item = _item as RequiredFields<
     typeof _item,
-    'id' | 'label' | 'category' | 'accessibleAt'
+    'persistentId' | 'id' | 'label' | 'category' | 'accessibleAt'
   >
   const query: ItemSearchQuery = {
     categories: [item.category],
@@ -134,7 +142,7 @@ export default function ItemLayout({
           <RelatedItems items={relatedItems} />
         </div>
         <SideColumn>
-          <VStack className="px-6 pt-6 pb-12 space-y-16">
+          <VStack className="px-6 pt-6 pb-12">
             <AccessibleAtLinks
               accessibleAt={item.accessibleAt}
               category={item.category as ItemCategory}
@@ -147,6 +155,10 @@ export default function ItemLayout({
               dateCreated={item.dateCreated}
               dateLastUpdated={item.dateLastUpdated}
               externalIds={item.externalIds}
+            />
+            <ItemContributors
+              id={item.persistentId}
+              category={item.category as Exclude<ItemCategory, 'step'>}
             />
           </VStack>
         </SideColumn>
@@ -224,7 +236,7 @@ function AccessibleAtLinks({
     return (
       <Menu>
         {({ open }) => (
-          <div className="relative inline-block w-full">
+          <div className="relative inline-block w-full mb-16">
             <Menu.Button
               className={cx(buttonClassNames, 'inline-flex justify-between')}
             >
@@ -255,7 +267,7 @@ function AccessibleAtLinks({
 
   return (
     <a
-      className={buttonClassNames}
+      className={cx(buttonClassNames, 'mb-16')}
       href={accessibleAt[0]}
       rel="noopener noreferrer"
       target="_blank"
@@ -699,4 +711,54 @@ function useItemMetadata({
   }
 
   return metadata
+}
+
+/**
+ * Item contributors.
+ */
+function ItemContributors({
+  id,
+  category,
+}: {
+  id: string
+  category: Exclude<ItemCategory, 'step'>
+}) {
+  /**
+   * Unfortunately, the OpenApi doc does not have unique operation ids for
+   * `getInformationContributors`, so we end up with numbered suffixes.
+   */
+  const op = {
+    dataset: useGetInformationContributors4,
+    publication: useGetInformationContributors,
+    'tool-or-service': useGetInformationContributors2,
+    'training-material': useGetInformationContributors3,
+    workflow: useGetInformationContributors1,
+  }
+
+  const contributors = op[category](
+    // @ts-expect-error Yuck
+    category === 'workflow' ? { workflowId: id } : { id },
+  )
+
+  if (!Array.isArray(contributors.data) || contributors.data.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="flex flex-col py-8 space-y-3 border-t">
+      <h3 className="font-bold tracking-wide text-gray-600 uppercase text-ui-sm whitespace-nowrap">
+        Information contributors
+      </h3>
+      <ul className="flex flex-col space-y-2 text-sm">
+        {contributors.data.map((contributor) => {
+          return (
+            <li key={contributor.id} className="flex flex-col">
+              <span>{contributor.displayName}</span>
+              <span className="text-gray-550">{contributor.email}</span>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
 }
