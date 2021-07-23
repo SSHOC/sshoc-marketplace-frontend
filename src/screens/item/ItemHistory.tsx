@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import type { UseQueryOptions } from 'react-query'
 import { useQueryClient } from 'react-query'
 
 import type { ItemExtBasicDto } from '@/api/sshoc'
@@ -17,6 +18,7 @@ import {
 } from '@/api/sshoc'
 import type { Item, ItemCategory } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'
+import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { toast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
@@ -31,14 +33,14 @@ export function ItemHistory(props: ItemHistoryProps): JSX.Element {
   const { item } = props
   const category = item.category as Exclude<ItemCategory, 'step'>
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const itemHistory = useGetItemHistory(category, item.persistentId!)
+  const itemHistory = useGetItemHistory(category, item.persistentId!, {
+    onError() {
+      toast.error('Failed to fetch item history')
+    },
+  })
 
   if (itemHistory.isLoading) {
-    return <p>Loading</p>
-  }
-
-  if (itemHistory.isError) {
-    return <p>Failed to fetch item history</p>
+    return <ProgressSpinner className="text-secondary-600" />
   }
 
   if (itemHistory.data === undefined) {
@@ -58,23 +60,27 @@ export function ItemHistory(props: ItemHistoryProps): JSX.Element {
   )
 }
 
-function useGetItemHistory(category: ItemCategory, id: string) {
+function useGetItemHistory(
+  category: ItemCategory,
+  id: string,
+  options?: UseQueryOptions<any>,
+) {
   switch (category) {
     case 'dataset':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetDatasetHistory({ id }, {})
+      return useGetDatasetHistory({ id }, {}, options)
     case 'publication':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetPublicationHistory({ id }, {})
+      return useGetPublicationHistory({ id }, {}, options)
     case 'tool-or-service':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetToolHistory({ id }, {})
+      return useGetToolHistory({ id }, {}, options)
     case 'training-material':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetTrainingMaterialHistory({ id }, {})
+      return useGetTrainingMaterialHistory({ id }, {}, options)
     case 'workflow':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetWorkflowHistory({ workflowId: id }, {})
+      return useGetWorkflowHistory({ workflowId: id }, {}, options)
     case 'step':
       throw new Error("Workflow steps don't have history.")
   }
