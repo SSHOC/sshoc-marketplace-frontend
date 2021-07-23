@@ -7,12 +7,11 @@ import { Fragment, useState } from 'react'
 
 import type { ActorDto, PropertyDto } from '@/api/sshoc'
 import {
-  useGetInformationContributors,
-  useGetInformationContributors1,
-  useGetInformationContributors2,
-  useGetInformationContributors3,
-  useGetInformationContributors4,
   useGetInformationContributors5,
+  useGetInformationContributorsForVersion,
+  useGetInformationContributorsForVersion1,
+  useGetInformationContributorsForVersion2,
+  useGetInformationContributorsForVersion3,
   useGetItemCategories,
 } from '@/api/sshoc'
 import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
@@ -159,6 +158,7 @@ export default function ItemLayout({
             <ItemContributors
               id={item.persistentId}
               category={item.category as Exclude<ItemCategory, 'step'>}
+              versionId={item.id}
             />
           </VStack>
         </SideColumn>
@@ -719,25 +719,27 @@ function useItemMetadata({
 function ItemContributors({
   id,
   category,
+  versionId,
 }: {
   id: string
   category: Exclude<ItemCategory, 'step'>
+  versionId: number
 }) {
   /**
    * Unfortunately, the OpenApi doc does not have unique operation ids for
    * `getInformationContributors`, so we end up with numbered suffixes.
    */
   const op = {
-    dataset: useGetInformationContributors4,
-    publication: useGetInformationContributors,
-    'tool-or-service': useGetInformationContributors2,
-    'training-material': useGetInformationContributors3,
-    workflow: useGetInformationContributors1,
+    dataset: useGetInformationContributors5,
+    publication: useGetInformationContributorsForVersion,
+    'tool-or-service': useGetInformationContributorsForVersion2,
+    'training-material': useGetInformationContributorsForVersion3,
+    workflow: useGetInformationContributorsForVersion1,
   }
 
   const contributors = op[category](
     // @ts-expect-error Yuck
-    category === 'workflow' ? { workflowId: id } : { id },
+    category === 'workflow' ? { workflowId: id, versionId } : { id, versionId },
   )
 
   if (!Array.isArray(contributors.data) || contributors.data.length === 0) {
