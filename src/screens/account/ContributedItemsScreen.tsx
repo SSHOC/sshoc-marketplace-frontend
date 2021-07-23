@@ -152,13 +152,12 @@ function ContributedItem(props: ContributedItemProps) {
             </a>
           </Link>
         </h2>
-        {/* FIXME: Needs https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/93 */}
-        {/* {item.lastInfoUpdate != null ? (
+        {item.lastInfoUpdate != null ? (
           <div className="space-x-1.5">
             <span className="text-gray-550">Date:</span>
             <LastUpdate isoDate={item.lastInfoUpdate} />
           </div>
-        ) : null} */}
+        ) : null}
       </div>
       <div className="flex items-center justify-between">
         <div className="flex space-x-4">
