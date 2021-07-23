@@ -42,9 +42,9 @@ import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
 
-const itemSortOrders = ['label', 'modified-on'] as const
+const itemSortOrders = ['name', 'date'] as const
 type ItemSortOrder = typeof itemSortOrders[number]
-const defaultItemSortOrder: ItemSortOrder = 'modified-on'
+const defaultItemSortOrder: ItemSortOrder = 'name'
 
 /**
  * Sources screen.
@@ -59,7 +59,6 @@ export default function SourcesScreen(): JSX.Element {
   // const page = useQueryParam('page', false, Number)
   // const perPage = clamp(0, useQueryParam('perPage', false, Number), 50)
   // const query = { q, page }
-  // FIXME: mockups allow sorting, but api does not
   const query = sanitizeQuery(router.query)
 
   const auth = useAuth()
@@ -124,8 +123,8 @@ export default function SourcesScreen(): JSX.Element {
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">
-                <div className="space-x-8">
-                  {/* <ItemSortOrder filter={query} /> */}
+                <div className="flex items-center space-x-8">
+                  <ItemSortOrder filter={query} />
                   <ItemSearch filter={query} />
                 </div>
                 <ItemPagination filter={query} results={sources.data} />
@@ -231,49 +230,49 @@ interface ItemSortOrderProps {
 /**
  * Sort order.
  */
-// function ItemSortOrder(props: ItemSortOrderProps) {
-//   const { filter } = props
+function ItemSortOrder(props: ItemSortOrderProps) {
+  const { filter } = props
 
-//   const router = useRouter()
+  const router = useRouter()
 
-//   const currentSortOrder =
-//     filter.order === undefined
-//       ? defaultItemSortOrder
-//       : (filter.order[0] as ItemSortOrder)
+  const currentSortOrder =
+    filter.order === undefined
+      ? defaultItemSortOrder
+      : (filter.order as ItemSortOrder)
 
-//   function onSubmit(order: Key) {
-//     const query = { ...filter }
-//     if (order === defaultItemSortOrder) {
-//       delete query.order
-//     } else {
-//       query.order = [order as ItemSortOrder]
-//     }
-//     router.push({ query })
-//   }
+  function onSubmit(order: Key) {
+    const query = { ...filter }
+    if (order === defaultItemSortOrder) {
+      delete query.order
+    } else {
+      query.order = order as ItemSortOrder
+    }
+    router.push({ query })
+  }
 
-//   /** we don't get labels for sort order from the backend */
-//   const labels: Record<ItemSortOrder, string> = {
-//     label: 'name',
-//     'modified-on': 'last modification',
-//   }
+  /** we don't get labels for sort order from the backend */
+  const labels: Record<ItemSortOrder, string> = {
+    name: 'name',
+    date: 'last harvest date',
+  }
 
-//   const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
 
-//   return (
-//     <Select
-//       aria-label="Sort order"
-//       items={items}
-//       onSelectionChange={onSubmit}
-//       selectedKey={currentSortOrder}
-//     >
-//       {(item) => (
-//         <Select.Item key={item.id} textValue={item.label}>
-//           Sort by {item.label}
-//         </Select.Item>
-//       )}
-//     </Select>
-//   )
-// }
+  return (
+    <Select
+      aria-label="Sort order"
+      items={items}
+      onSelectionChange={onSubmit}
+      selectedKey={currentSortOrder}
+    >
+      {(item) => (
+        <Select.Item key={item.id} textValue={item.label}>
+          Sort by {item.label}
+        </Select.Item>
+      )}
+    </Select>
+  )
+}
 
 interface ItemSearchProps {
   filter: GetSources.QueryParameters
