@@ -37,13 +37,12 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
-import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
 
-const itemSortOrders = ['label', 'modified-on'] as const
+const itemSortOrders = ['username', 'date'] as const
 type ItemSortOrder = typeof itemSortOrders[number]
-const defaultItemSortOrder: ItemSortOrder = 'modified-on'
+const defaultItemSortOrder: ItemSortOrder = 'username'
 
 /**
  * Users screen.
@@ -117,8 +116,8 @@ export default function UsersScreen(): JSX.Element {
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">
-                <div className="space-x-8">
-                  {/* <ItemSortOrder filter={query} /> */}
+                <div className="flex items-center space-x-8">
+                  <ItemSortOrder filter={query} />
                   <ItemSearch filter={query} />
                 </div>
                 <ItemPagination filter={query} results={users.data} />
@@ -225,49 +224,49 @@ interface ItemSortOrderProps {
 /**
  * Sort order.
  */
-// function ItemSortOrder(props: ItemSortOrderProps) {
-//   const { filter } = props
+function ItemSortOrder(props: ItemSortOrderProps) {
+  const { filter } = props
 
-//   const router = useRouter()
+  const router = useRouter()
 
-//   const currentSortOrder =
-//     filter.order === undefined
-//       ? defaultItemSortOrder
-//       : (filter.order[0] as ItemSortOrder)
+  const currentSortOrder =
+    filter.order === undefined
+      ? defaultItemSortOrder
+      : (filter.order as ItemSortOrder)
 
-//   function onSubmit(order: Key) {
-//     const query = { ...filter }
-//     if (order === defaultItemSortOrder) {
-//       delete query.order
-//     } else {
-//       query.order = [order as ItemSortOrder]
-//     }
-//     router.push({ query })
-//   }
+  function onSubmit(order: Key) {
+    const query = { ...filter }
+    if (order === defaultItemSortOrder) {
+      delete query.order
+    } else {
+      query.order = order as ItemSortOrder
+    }
+    router.push({ query })
+  }
 
-//   /** we don't get labels for sort order from the backend */
-//   const labels: Record<ItemSortOrder, string> = {
-//     label: 'name',
-//     'modified-on': 'last modification',
-//   }
+  /** we don't get labels for sort order from the backend */
+  const labels: Record<ItemSortOrder, string> = {
+    username: 'username',
+    date: 'registration date',
+  }
 
-//   const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
 
-//   return (
-//     <Select
-//       aria-label="Sort order"
-//       items={items}
-//       onSelectionChange={onSubmit}
-//       selectedKey={currentSortOrder}
-//     >
-//       {(item) => (
-//         <Select.Item key={item.id} textValue={item.label}>
-//           Sort by {item.label}
-//         </Select.Item>
-//       )}
-//     </Select>
-//   )
-// }
+  return (
+    <Select
+      aria-label="Sort order"
+      items={items}
+      onSelectionChange={onSubmit}
+      selectedKey={currentSortOrder}
+    >
+      {(item) => (
+        <Select.Item key={item.id} textValue={item.label}>
+          Sort by {item.label}
+        </Select.Item>
+      )}
+    </Select>
+  )
+}
 
 interface ItemSearchProps {
   filter: GetUsers.QueryParameters
@@ -534,12 +533,10 @@ function sanitizeQuery(params?: ParsedUrlQuery): GetUsers.QueryParameters {
   }
 
   if (params.order !== undefined) {
-    const order = ensureArray(
-      params.order,
-    ).filter((sortOrder): sortOrder is ItemSortOrder =>
-      itemSortOrders.includes(sortOrder as ItemSortOrder),
-    )
-    sanitized.push(['order', order])
+    const order = ensureScalar(params.order)
+    if (itemSortOrders.includes(order as ItemSortOrder)) {
+      sanitized.push(['order', order])
+    }
   }
 
   if (params.page !== undefined) {

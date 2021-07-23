@@ -38,7 +38,6 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
-import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
 
@@ -539,12 +538,10 @@ function sanitizeQuery(params?: ParsedUrlQuery): GetSources.QueryParameters {
   }
 
   if (params.order !== undefined) {
-    const order = ensureArray(
-      params.order,
-    ).filter((sortOrder): sortOrder is ItemSortOrder =>
-      itemSortOrders.includes(sortOrder as ItemSortOrder),
-    )
-    sanitized.push(['order', order])
+    const order = ensureScalar(params.order)
+    if (itemSortOrders.includes(order as ItemSortOrder)) {
+      sanitized.push(['order', order])
+    }
   }
 
   if (params.page !== undefined) {
