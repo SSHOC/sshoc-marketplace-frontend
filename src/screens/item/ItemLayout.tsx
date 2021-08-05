@@ -351,6 +351,7 @@ function ItemMedia({ media }: { media: Item['media'] }) {
   const currentMediaUrl =
     current.info?.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
   const currentMediaCategory = current.info?.category
+  const currentMediaCaption = current.caption
 
   return (
     <section>
@@ -380,6 +381,7 @@ function ItemMedia({ media }: { media: Item['media'] }) {
               </a>
             </div>
           )}
+          <p className="m-1.5">{currentMediaCaption ?? <span>&nbsp;</span>}</p>
         </div>
       </div>
       <div className="flex justify-center border border-gray-200">
