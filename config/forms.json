@@ -2,7 +2,7 @@
   "tool": {
     "required": ["label", "description"],
     "recommended": [
-      "actors",
+      "contributors",
       "accessibleAt",
       "externalIds",
       "media",
@@ -32,7 +32,7 @@
   "trainingMaterial": {
     "required": ["label", "description"],
     "recommended": [
-      "actors",
+      "contributors",
       "accessibleAt",
       "externalIds",
       "media",
@@ -58,7 +58,7 @@
   "publication": {
     "required": ["label", "description"],
     "recommended": [
-      "actors",
+      "contributors",
       "accessibleAt",
       "externalIds",
       "media",
@@ -90,7 +90,7 @@
   "dataset": {
     "required": ["label", "description"],
     "recommended": [
-      "actors",
+      "contributors",
       "accessibleAt",
       "externalIds",
       "media",
@@ -116,7 +116,7 @@
   "workflow": {
     "required": ["label", "description"],
     "recommended": [
-      "actors",
+      "contributors",
       "externalIds",
       "media",
       "thumbnail",

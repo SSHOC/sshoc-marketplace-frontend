@@ -1,10 +1,12 @@
 import { Fragment } from 'react'
 
+import { createInitialRecommendedFields } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/TrainingMaterialCreateForm/TrainingMaterialCreateForm'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
+import forms from '@@/config/forms.json'
 
 /**
  * Create training material screen.
@@ -19,7 +21,12 @@ export default function TrainingMaterialCreateScreen(): JSX.Element {
           style={{ gridColumn: '4 / span 8' }}
         >
           <Title>Create training material</Title>
-          <ItemForm category="training-material" initialValues={{}} />
+          <ItemForm
+            category="training-material"
+            initialValues={createInitialRecommendedFields(
+              forms.trainingMaterial,
+            )}
+          />
         </ContentColumn>
       </GridLayout>
     </Fragment>

@@ -12,6 +12,8 @@ import type {
   WorkflowCore,
   WorkflowDto,
 } from '@/api/sshoc'
+import type { Item } from '@/api/sshoc/types'
+import allowedPropertyTypes from '@/utils/propertyTypes.preval'
 
 export function convertToInitialFormValues(item: DatasetDto): DatasetCore
 export function convertToInitialFormValues(
@@ -132,6 +134,50 @@ export function convertToInitialFormValues(
     // @ts-expect-error items are not discriminated unions
     initialValues.persistentId = item.persistentId
   }
+
+  return initialValues
+}
+
+/**
+ * Populates recommended form fields with empty values.
+ */
+export function createInitialRecommendedFields({
+  required,
+  recommended,
+  recommendedProperties,
+}: {
+  required: Array<string>
+  recommended: Array<string>
+  recommendedProperties: Array<string>
+}): Record<string, unknown> {
+  const fieldTypes: Partial<Item> = {
+    label: '',
+    version: '',
+    description: '',
+    contributors: [{ role: { code: 'contributor' } }],
+    accessibleAt: [''],
+
+    externalIds: [{}],
+    media: [{}],
+    thumbnail: {},
+    relatedItems: [{}],
+  }
+
+  const initialValues: any = {}
+
+  ;(required as Array<keyof Item>).forEach((fieldName) => {
+    initialValues[fieldName] = fieldTypes[fieldName]
+  })
+  ;(recommended as Array<keyof Item>).forEach((fieldName) => {
+    initialValues[fieldName] = fieldTypes[fieldName]
+  })
+
+  initialValues.properties = []
+  recommendedProperties
+    .filter((id) => allowedPropertyTypes.includes(id))
+    .forEach((id) => {
+      initialValues.properties.push({ type: { code: id } })
+    })
 
   return initialValues
 }
