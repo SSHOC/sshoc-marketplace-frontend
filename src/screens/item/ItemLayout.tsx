@@ -7,6 +7,11 @@ import { Fragment, useState } from 'react'
 
 import type { ActorDto, PropertyDto } from '@/api/sshoc'
 import {
+  useDeleteDataset,
+  useDeletePublication,
+  useDeleteTool,
+  useDeleteTrainingMaterial,
+  useDeleteWorkflow,
   useGetInformationContributors5,
   useGetInformationContributorsForVersion,
   useGetInformationContributorsForVersion1,
@@ -21,6 +26,7 @@ import type {
   ItemSearchQuery,
 } from '@/api/sshoc/types'
 import DocumentIcon from '@/elements/icons/small/document.svg'
+import { useToast } from '@/elements/Toast/useToast'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import RelatedItems from '@/modules/item/RelatedItems'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -130,6 +136,12 @@ export default function ItemLayout({
                 </Link>
               </div>
             </ProtectedView>
+            <ProtectedView roles={['administrator']}>
+              <DeleteItemButton
+                id={item.persistentId}
+                category={item.category as ItemCategory}
+              />
+            </ProtectedView>
           </HStack>
           <ItemDescription description={item.description} />
         </VStack>
@@ -164,6 +176,52 @@ export default function ItemLayout({
         </SideColumn>
       </GridLayout>
     </Fragment>
+  )
+}
+
+/**
+ * Delete item.
+ */
+function DeleteItemButton({
+  id,
+  category,
+}: {
+  id: string
+  category: ItemCategory
+}) {
+  const toast = useToast()
+
+  const ops: Record<ItemCategory, any> = {
+    dataset: useDeleteDataset,
+    publication: useDeletePublication,
+    'tool-or-service': useDeleteTool,
+    'training-material': useDeleteTrainingMaterial,
+    workflow: useDeleteWorkflow,
+  }
+
+  const { mutate, status } = ops[category]({
+    onSuccess() {
+      toast.success('Successfully deleted item.')
+    },
+    onError() {
+      toast.error('Failed to delete item.')
+    },
+  })
+
+  function deleteItem() {
+    mutate([category === 'workflow' ? { workflowId: id } : { id }])
+  }
+
+  return (
+    <button
+      onClick={deleteItem}
+      className={cx(
+        'w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-error-600 hover:bg-error-700',
+        status !== 'idle' && 'pointer-events-none',
+      )}
+    >
+      Delete
+    </button>
   )
 }
 
