@@ -2,6 +2,7 @@ import { Menu } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import type { PropsWithChildren } from 'react'
 import { Fragment, useState } from 'react'
 
@@ -27,6 +28,7 @@ import type {
 } from '@/api/sshoc/types'
 import DocumentIcon from '@/elements/icons/small/document.svg'
 import { useToast } from '@/elements/Toast/useToast'
+import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import RelatedItems from '@/modules/item/RelatedItems'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -189,7 +191,9 @@ function DeleteItemButton({
   id: string
   category: ItemCategory
 }) {
+  const auth = useAuth()
   const toast = useToast()
+  const router = useRouter()
 
   const ops: Record<ItemCategory, any> = {
     dataset: useDeleteDataset,
@@ -200,8 +204,10 @@ function DeleteItemButton({
   }
 
   const { mutate, status } = ops[category]({
+    enabled: Boolean(auth.session?.accessToken),
     onSuccess() {
       toast.success('Successfully deleted item.')
+      router.push('/')
     },
     onError() {
       toast.error('Failed to delete item.')
@@ -209,7 +215,25 @@ function DeleteItemButton({
   })
 
   function deleteItem() {
-    mutate([category === 'workflow' ? { workflowId: id } : { id }])
+    if (auth.session?.accessToken == null) return
+
+    mutate([
+      category === 'workflow' ? { workflowId: id } : { id },
+      undefined,
+      {
+        token: auth.session.accessToken,
+        hooks: {
+          /**
+           * We wrongly assume in the OpenApi document that
+           * DELETE returns a json response, so we override this here
+           * to avoid trying to parse an empty response.
+           */
+          response() {
+            return Promise.resolve()
+          },
+        },
+      },
+    ])
   }
 
   return (
