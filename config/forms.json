@@ -23,8 +23,10 @@
       "user-manual-url",
       "helpdesk-url",
       "license",
+      "standard",
       "terms-of-use-url",
-      "technical-readiness-level"
+      "technical-readiness-level",
+      "resource-category"
     ]
   },
   "trainingMaterial": {
@@ -47,8 +49,10 @@
       "intended-audience",
       "see-also",
       "license",
+      "standard",
       "terms-of-use-url",
-      "year"
+      "year",
+      "resource-category"
     ]
   },
   "publication": {
@@ -78,7 +82,9 @@
       "conference",
       "volume",
       "issue",
-      "pages"
+      "pages",
+      "standard",
+      "resource-category"
     ]
   },
   "dataset": {
@@ -101,7 +107,10 @@
       "intended-audience",
       "see-also",
       "license",
-      "year"
+      "year",
+      "standard",
+      "publisher",
+      "resource-category"
     ]
   },
   "workflow": {
@@ -121,7 +130,9 @@
       "intended-audience",
       "see-also",
       "license",
-      "terms-of-use-url"
+      "terms-of-use-url",
+      "standard",
+      "resource-category"
     ]
   },
   "step": {
