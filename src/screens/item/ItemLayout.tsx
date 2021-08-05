@@ -120,7 +120,7 @@ export default function ItemLayout({
                       pathname: `/${item.category}/${item.persistentId}/edit`,
                     }}
                   >
-                    <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-primary-750 hover:bg-secondary-600">
+                    <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
                       Edit
                     </a>
                   </Link>
@@ -130,17 +130,17 @@ export default function ItemLayout({
                     pathname: `/${item.category}/${item.persistentId}/history`,
                   }}
                 >
-                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-primary-750 hover:bg-secondary-600">
+                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
                     History
                   </a>
                 </Link>
+                <ProtectedView roles={['administrator']}>
+                  <DeleteItemButton
+                    id={item.persistentId}
+                    category={item.category as ItemCategory}
+                  />
+                </ProtectedView>
               </div>
-            </ProtectedView>
-            <ProtectedView roles={['administrator']}>
-              <DeleteItemButton
-                id={item.persistentId}
-                category={item.category as ItemCategory}
-              />
             </ProtectedView>
           </HStack>
           <ItemDescription description={item.description} />
@@ -216,7 +216,7 @@ function DeleteItemButton({
     <button
       onClick={deleteItem}
       className={cx(
-        'w-32 px-6 py-3 text-lg text-center text-white transition rounded lg:text-xl lg:w-48 lg:px-10 lg:py-4 bg-error-600 hover:bg-error-700',
+        'w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-error-600 hover:bg-error-700',
         status !== 'idle' && 'pointer-events-none',
       )}
     >
