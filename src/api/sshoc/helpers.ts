@@ -158,7 +158,7 @@ export function createInitialRecommendedFields({
     accessibleAt: [''],
 
     externalIds: [{}],
-    media: [{}],
+    media: [],
     thumbnail: {},
     relatedItems: [{}],
   }
