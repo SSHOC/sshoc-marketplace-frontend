@@ -30,6 +30,7 @@ import type {
   ItemCategory as ItemCategoryWithStep,
   ItemSearchQuery,
 } from '@/api/sshoc/types'
+import { Icon } from '@/elements/Icon/Icon'
 import DocumentIcon from '@/elements/icons/small/document.svg'
 import { useToast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -51,7 +52,7 @@ import { formatDate } from '@/utils/formatDate'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import type { RequiredFields } from '@/utils/ts/object'
 import { Svg as UrlIcon } from '@@/assets/icons/url.svg'
-import OrcidIcon from '@@/public/assets/images/orcid.svg'
+import { Svg as OrcidIcon } from '@@/public/assets/images/orcid.svg'
 
 /** lazy load markdown processor */
 const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
@@ -399,6 +400,14 @@ function ItemMedia({ media }: { media: Item['media'] }) {
               src={currentMediaUrl}
               className="object-contain w-full h-full"
             />
+          ) : currentMediaCategory === 'embed' ? (
+            <iframe
+              src={currentMediaUrl}
+              className="object-contain w-full h-full"
+              title="Embedded content"
+              allow="autoplay; fullscreen; picture-in-picture"
+              loading="lazy"
+            />
           ) : (
             <div className="grid place-items-center">
               <a href={currentMediaUrl} download rel="noopener noreferrer">
@@ -573,7 +582,7 @@ function useItemMetadata({
        * Only show hidden properties for admins.
        */
       if (property.type?.hidden === true) {
-        if (!user || !['Administrator', 'Moderator'].includes(user.role!)) {
+        if (!user || !['administrator', 'moderator'].includes(user.role!)) {
           return
         }
       }
@@ -682,9 +691,6 @@ function useItemMetadata({
                 </span>
                 <ul className="flex flex-col space-y-2">
                   {actors.map((actor) => {
-                    const orcid = actor.externalIds?.find(
-                      (a) => a.identifierService?.code === 'ORCID',
-                    )
                     return (
                       <li key={actor.id} className="flex flex-col">
                         <span className="flex flex-wrap items-center">
@@ -710,6 +716,12 @@ function useItemMetadata({
                         ) : null}
                         {Array.isArray(actor.externalIds)
                           ? actor.externalIds.map((id) => {
+                              // TODO: should icons be returned on externalIds?
+                              const icon =
+                                id.identifierService?.code === 'ORCID'
+                                  ? OrcidIcon
+                                  : null
+
                               return id.identifierService?.urlTemplate !=
                                 null ? (
                                 <Anchor
@@ -717,12 +729,12 @@ function useItemMetadata({
                                     '{source-actor-id}',
                                     id.identifier!,
                                   )}
+                                  className="flex items-center space-x-1.5"
                                 >
-                                  {id.identifier}
+                                  {icon != null ? <Icon icon={icon} /> : null}
+                                  <span>{id.identifierService.label}</span>
                                 </Anchor>
-                              ) : (
-                                <span>{id.identifier}</span>
-                              )
+                              ) : null
                             })
                           : null}
                       </li>

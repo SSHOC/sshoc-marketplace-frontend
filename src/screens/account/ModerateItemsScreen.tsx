@@ -127,7 +127,7 @@ export default function ModerateItemsScreen(): JSX.Element {
               <ul className="space-y-2.5">
                 {items.data.items?.map((item) => {
                   return (
-                    <li key={item.persistentId}>
+                    <li key={item.persistentId + '-' + item.id}>
                       <ContributedItem item={item} />
                     </li>
                   )
@@ -349,7 +349,7 @@ function SourceFacet(props: SourceFacetProps) {
         variant="form"
         aria-labelledby="facet-source"
         onChange={onChange}
-        // defaultValue={filter['d.status']}
+        // defaultValue={filter['d.source']}
       >
         {allowedSources.map((source) => {
           return (
@@ -943,6 +943,8 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
       'dataset',
       'publication',
       'tool-or-service',
+      'training-material',
+      'workflow',
     ]
     const categories = ensureArray(params.categories).filter((category) =>
       (allowedCategories as Array<string>).includes(category),

@@ -465,7 +465,7 @@ function sanitizeQuery(params?: ParsedUrlQuery): SearchActors.QueryParameters {
   const sanitized = []
 
   if (params.q != null && params.q.length > 0) {
-    sanitized.push(['q', params.q])
+    sanitized.push(['d.name', params.q])
   }
 
   if (params.page !== undefined) {
