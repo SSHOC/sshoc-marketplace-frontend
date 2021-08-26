@@ -111,7 +111,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       queryKey: ['getWorkflows'],
     })
     // queryClient.invalidateQueries({
-    //   queryKey: ['getWorkflow', { workflowId: data.persistentId }],
+    //   queryKey: ['getWorkflow', { persistentId: data.persistentId }],
     // })
     if (data.status === 'draft') {
       queryClient.invalidateQueries({
@@ -165,7 +165,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     await (composedOf ?? []).reduce((operations, step) => {
       return operations.then(() => {
         return createStep.mutateAsync([
-          { workflowId },
+          { persistentId: workflowId },
           { draft },
           sanitizeFormValues(step),
           { token: auth.session?.accessToken },
@@ -215,7 +215,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     PageKey,
     {
       Page: FC<FormPageProps>
-      onValidate?: FormConfig<ItemFormValues>['validate']
+      onValidate?: FormConfig<Partial<ItemFormValues>>['validate']
     }
   > = {
     workflow: {
@@ -274,7 +274,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   function handleSubmit(values: Partial<ItemFormValues>) {
     if (currentPageKey === 'steps') {
-      return onSubmit(values)
+      return onSubmit(values as ItemFormValues)
     } else {
       onNextPage(values)
     }

@@ -47,7 +47,7 @@ export function convertToInitialFormValues(
   | WorkflowCore
 ) & { persistentId?: string } {
   const initialValues = {
-    label: item.label,
+    label: item.label!,
     version: item.version,
     description: item.description,
     accessibleAt: item.accessibleAt,
@@ -65,7 +65,7 @@ export function convertToInitialFormValues(
     properties: item.properties?.map((property) => {
       return {
         // id: property.id, // this is in ItemDto but not in ItemCore
-        type: { code: property.type?.code },
+        type: { code: property.type?.code, hidden: property.type?.hidden },
         value: property.value,
         concept: {
           code: property.concept?.code,
@@ -80,7 +80,7 @@ export function convertToInitialFormValues(
     relatedItems: item.relatedItems?.map((relation) => {
       return {
         id: relation.id,
-        persistentId: relation.persistentId,
+        persistentId: relation.persistentId!,
         relation: relation.relation && { code: relation.relation.code },
       }
     }),

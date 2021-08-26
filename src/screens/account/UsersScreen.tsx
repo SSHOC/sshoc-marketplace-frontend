@@ -155,14 +155,14 @@ function User(props: UserProps) {
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-2">
         <h2 className="space-x-1.5">
           <span className="text-gray-550">Username:</span>
           <span className="text-base font-bold transition text-primary-750">
             {user.username}
           </span>
         </h2>
-        <div className="space-x-1.5">
+        <div className="space-x-1.5 flex-shrink-0">
           <span className="text-gray-550">Registration date:</span>
           <FormattedDate isoDate={user.registrationDate} />
         </div>

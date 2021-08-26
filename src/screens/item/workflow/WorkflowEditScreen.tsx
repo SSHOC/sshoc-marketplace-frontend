@@ -18,7 +18,7 @@ export default function WorkflowEditScreen(): JSX.Element {
   const id = router.query.id as string | undefined
   const workflow = useGetWorkflow(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { workflowId: id! },
+    { persistentId: id! },
     {},
     { enabled: id != null },
   )
@@ -32,7 +32,7 @@ export default function WorkflowEditScreen(): JSX.Element {
           style={{ gridColumn: '4 / span 8' }}
         >
           {workflow.data === undefined || id == undefined ? (
-            <div className="h-full flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>
           ) : (

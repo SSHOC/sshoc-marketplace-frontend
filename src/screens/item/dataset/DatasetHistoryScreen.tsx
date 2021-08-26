@@ -19,7 +19,11 @@ export default function DatasetHistoryScreen(): JSX.Element {
 
   const id = router.query.id as string | undefined
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const dataset = useGetDataset({ id: id! }, {}, { enabled: id != null })
+  const dataset = useGetDataset(
+    { persistentId: id! },
+    {},
+    { enabled: id != null },
+  )
 
   return (
     <Fragment>

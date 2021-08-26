@@ -163,8 +163,8 @@
     "vfile-matter": "^3.0.0"
   },
   "engines": {
-    "node": ">=12.9",
-    "yarn": "^1"
+    "node": "14.x",
+    "yarn": "1.x"
   },
   "babel": {
     "presets": [

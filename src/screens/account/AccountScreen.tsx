@@ -30,6 +30,9 @@ const fields = [
   {
     label: 'Items to moderate',
     pathname: '/account/moderate',
+    query: {
+      'd.status': '(suggested OR ingested)',
+    },
     icon: ModerateItemsIcon,
     roles: ['administrator', 'moderator'],
   },
@@ -94,7 +97,7 @@ export default function AccountScreen(): JSX.Element {
 
               return (
                 <li key={index}>
-                  <Link href={{ pathname: route.pathname }}>
+                  <Link href={{ pathname: route.pathname, query: route.query }}>
                     <a className="flex flex-col items-center p-6 space-y-2 border rounded bg-highlight-50 border-highlight-75">
                       <Icon
                         icon={route.icon}

@@ -23,7 +23,7 @@ export default function WorkflowScreen({
    * to allow background refreshing
    */
   const { data } = useGetWorkflow(
-    { workflowId: initialData.persistentId! },
+    { persistentId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
     { token: auth.session?.accessToken },

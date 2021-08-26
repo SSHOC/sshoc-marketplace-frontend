@@ -25,7 +25,7 @@ export default function WorkflowDraftEditScreen(): JSX.Element {
   const id = useQueryParam('id', false)
   const workflow = useGetWorkflow(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { workflowId: id! },
+    { persistentId: id! },
     { draft: true },
     {
       enabled: id != null && auth.session?.accessToken != null,

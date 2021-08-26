@@ -121,7 +121,7 @@ function DraftItem(props: DraftItemProps) {
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-2">
         <h2>
           <Link
             href={{
@@ -135,7 +135,7 @@ function DraftItem(props: DraftItemProps) {
           </Link>
         </h2>
         {item.lastInfoUpdate != null ? (
-          <div className="space-x-1.5">
+          <div className="space-x-1.5 flex-shrink-0">
             <span className="text-gray-550">Date:</span>
             <LastUpdate isoDate={item.lastInfoUpdate} />
           </div>

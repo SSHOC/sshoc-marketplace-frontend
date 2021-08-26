@@ -5,9 +5,9 @@ import { useQueryClient } from 'react-query'
 import type { ActorCore } from '@/api/sshoc'
 import {
   useCreateActor,
-  useGetActors,
   useGetAllActorRoles,
   useGetAllActorSources,
+  useSearchActors,
 } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
@@ -147,7 +147,7 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
 
   const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedsearchTerm = useDebouncedState(searchTerm, 150).trim()
-  const actors = useGetActors(
+  const actors = useSearchActors(
     { q: debouncedsearchTerm },
     {
       // enabled: debouncedsearchTerm.length > 2,

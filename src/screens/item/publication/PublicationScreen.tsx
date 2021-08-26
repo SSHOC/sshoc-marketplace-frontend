@@ -22,7 +22,7 @@ export default function PublicationScreen({
    * to allow background refreshing
    */
   const { data } = useGetPublication(
-    { id: initialData.persistentId! },
+    { persistentId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
     { token: auth.session?.accessToken },

@@ -19,7 +19,7 @@ export default function ToolHistoryScreen(): JSX.Element {
 
   const id = router.query.id as string | undefined
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const tool = useGetTool({ id: id! }, {}, { enabled: id != null })
+  const tool = useGetTool({ persistentId: id! }, {}, { enabled: id != null })
 
   return (
     <Fragment>

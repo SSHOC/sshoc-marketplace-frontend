@@ -71,7 +71,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getDatasets'],
       })
       // queryClient.invalidateQueries({
-      //   queryKey: ['getDataset', { id: data.persistentId }],
+      //   queryKey: ['getDataset', { persistentId: data.persistentId }],
       // })
       if (data.status === 'draft') {
         queryClient.invalidateQueries({

@@ -29,7 +29,7 @@ export async function getServerSideProps(
   }
 
   try {
-    const workflow = await getWorkflow({ workflowId: id }, {})
+    const workflow = await getWorkflow({ persistentId: id }, {})
     return { props: { workflow } }
   } catch (error) {
     console.log(`Failed to fetch workflow ${id}: ${JSON.stringify(error)}`)

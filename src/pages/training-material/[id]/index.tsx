@@ -33,7 +33,7 @@ export async function getServerSideProps(
   }
 
   try {
-    const trainingMaterial = await getTrainingMaterial({ id }, {})
+    const trainingMaterial = await getTrainingMaterial({ persistentId: id }, {})
     return { props: { trainingMaterial } }
   } catch (error) {
     console.log(

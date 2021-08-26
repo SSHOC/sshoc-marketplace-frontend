@@ -22,7 +22,7 @@ export default function DatasetScreen({
    * to allow background refreshing
    */
   const { data } = useGetDataset(
-    { id: initialData.persistentId! },
+    { persistentId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
     { token: auth.session?.accessToken },

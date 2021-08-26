@@ -25,7 +25,7 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
   const versionId = useQueryParam('versionId', false, Number)
   const workflow = useGetWorkflowVersion(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { workflowId: id!, versionId: versionId! },
+    { persistentId: id!, versionId: versionId! },
     {
       enabled:
         id != null && versionId != null && auth.session?.accessToken != null,

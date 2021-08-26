@@ -69,7 +69,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getTrainingMaterials'],
       })
       // queryClient.invalidateQueries({
-      //   queryKey: ['getTrainingMaterial', { id: data.persistentId }],
+      //   queryKey: ['getTrainingMaterial', { persistentId: data.persistentId }],
       // })
       if (data.status === 'draft') {
         queryClient.invalidateQueries({

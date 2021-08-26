@@ -20,7 +20,7 @@ export default function TrainingMaterialHistoryScreen(): JSX.Element {
   const id = router.query.id as string | undefined
   const trainingMaterial = useGetTrainingMaterial(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { id: id! },
+    { persistentId: id! },
     {},
     { enabled: id != null },
   )

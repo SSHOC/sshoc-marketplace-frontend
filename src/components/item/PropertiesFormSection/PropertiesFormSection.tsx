@@ -8,6 +8,7 @@ import type {
 } from '@/api/sshoc'
 import { useGetPropertyTypes, useSearchConcepts } from '@/api/sshoc'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { useAuth } from '@/modules/auth/AuthContext'
 import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
@@ -32,6 +33,8 @@ export interface PropertiesFormSectionProps {
 export function PropertiesFormSection(
   props: PropertiesFormSectionProps,
 ): JSX.Element {
+  const auth = useAuth()
+
   const prefix = props.prefix ?? ''
 
   const propertyTypes = useGetPropertyTypes(
@@ -45,6 +48,9 @@ export function PropertiesFormSection(
         data.propertyTypes?.sort((a, b) => a.label!.localeCompare(b.label!))
         return data
       },
+    },
+    {
+      token: auth.session?.accessToken,
     },
   )
   const propertyTypesById = useMemo(() => {
@@ -69,65 +75,80 @@ export function PropertiesFormSection(
             <FormRecords>
               {fields.map((name, index) => {
                 return (
-                  <FormRecord
+                  /** Don't display hidden properties */
+                  <FormFieldCondition
                     key={name}
-                    actions={
-                      <FormFieldRemoveButton
-                        onPress={() => fields.remove(index)}
-                        aria-label={'Remove property'}
-                      />
-                    }
+                    name={`${name}.type.hidden`}
+                    condition={(hidden) => {
+                      /** Always show hidden properties for admins. */
+                      /** Requires that `property-types` are fetch with token. */
+                      if (auth.session?.user.username === 'Administrator') {
+                        return true
+                      }
+
+                      return hidden !== true
+                    }}
                   >
-                    <PropertyTypeSelect
-                      name={`${name}.type.code`}
-                      label={'Property type'}
-                      propertyTypes={propertyTypes}
-                    />
-                    <FormFieldCondition
-                      name={`${name}.type.code`}
-                      condition={(id) =>
-                        id !== '' &&
-                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        propertyTypesById[id] !== undefined &&
-                        propertyTypesById[id].type === 'concept'
+                    <FormRecord
+                      key={name}
+                      actions={
+                        <FormFieldRemoveButton
+                          onPress={() => fields.remove(index)}
+                          aria-label={'Remove property'}
+                        />
                       }
                     >
-                      {(id: string) => {
-                        return (
-                          <PropertyConceptSelect
-                            name={`${name}.concept.uri`}
-                            parentName={name}
-                            label={'Concept'}
-                            propertyTypeId={id}
-                            initialValues={props.initialValues}
-                            index={index}
-                          />
-                        )
-                      }}
-                    </FormFieldCondition>
-                    <FormFieldCondition
-                      name={`${name}.type.code`}
-                      condition={(id) =>
-                        id !== '' &&
-                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        propertyTypesById[id] !== undefined &&
-                        propertyTypesById[id].type !== 'concept'
-                      }
-                    >
-                      {(id: string) => {
-                        return (
-                          <FormTextField
-                            name={`${name}.value`}
-                            label={'Value'}
-                            variant="form"
-                            style={{ flex: 1 }}
-                            // @ts-expect-error It's ok
-                            helpText={helpText.properties[id]}
-                          />
-                        )
-                      }}
-                    </FormFieldCondition>
-                  </FormRecord>
+                      <PropertyTypeSelect
+                        name={`${name}.type.code`}
+                        label={'Property type'}
+                        propertyTypes={propertyTypes}
+                      />
+                      <FormFieldCondition
+                        name={`${name}.type.code`}
+                        condition={(id) =>
+                          id !== '' &&
+                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                          propertyTypesById[id] !== undefined &&
+                          propertyTypesById[id].type === 'concept'
+                        }
+                      >
+                        {(id: string) => {
+                          return (
+                            <PropertyConceptSelect
+                              name={`${name}.concept.uri`}
+                              parentName={name}
+                              label={'Concept'}
+                              propertyTypeId={id}
+                              initialValues={props.initialValues}
+                              index={index}
+                            />
+                          )
+                        }}
+                      </FormFieldCondition>
+                      <FormFieldCondition
+                        name={`${name}.type.code`}
+                        condition={(id) =>
+                          id !== '' &&
+                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                          propertyTypesById[id] !== undefined &&
+                          propertyTypesById[id].type !== 'concept'
+                        }
+                      >
+                        {(id: string) => {
+                          return (
+                            <FormTextField
+                              name={`${name}.value`}
+                              label={'Value'}
+                              variant="form"
+                              style={{ flex: 1 }}
+                              // @ts-expect-error It's ok
+                              helpText={helpText.properties[id]}
+                            />
+                          )
+                        }}
+                      </FormFieldCondition>
+                    </FormRecord>
+                  </FormFieldCondition>
                 )
               })}
               <FormFieldAddButton onPress={() => fields.push(undefined)}>

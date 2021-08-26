@@ -71,7 +71,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getPublications'],
       })
       // queryClient.invalidateQueries({
-      //   queryKey: ['getPublication', { id: data.persistentId }],
+      //   queryKey: ['getPublication', { persistentId: data.persistentId }],
       // })
       if (data.status === 'draft') {
         queryClient.invalidateQueries({

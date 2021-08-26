@@ -69,7 +69,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getTools'],
       })
       // queryClient.invalidateQueries({
-      //   queryKey: ['getTool', { id: data.persistentId }],
+      //   queryKey: ['getTool', { persistentId: data.persistentId }],
       // })
       if (data.status === 'draft') {
         queryClient.invalidateQueries({

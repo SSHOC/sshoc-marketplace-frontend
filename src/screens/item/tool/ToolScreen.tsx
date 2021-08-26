@@ -22,7 +22,7 @@ export default function ToolScreen({
    * to allow background refreshing
    */
   const { data } = useGetTool(
-    { id: initialData.persistentId! },
+    { persistentId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
     { token: auth.session?.accessToken },

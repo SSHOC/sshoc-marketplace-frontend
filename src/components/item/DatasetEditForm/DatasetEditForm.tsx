@@ -76,7 +76,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryKey: ['getDatasets'],
       })
       queryClient.invalidateQueries({
-        queryKey: ['getDataset', { id: data.persistentId }],
+        queryKey: ['getDataset', { persistentId: data.persistentId }],
       })
       if (data.status === 'draft') {
         queryClient.invalidateQueries({
@@ -119,7 +119,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     const values = sanitizeFormValues(unsanitized)
 
     await create.mutateAsync([
-      { id },
+      { persistentId: id },
       { draft },
       values,
       { token: auth.session.accessToken },

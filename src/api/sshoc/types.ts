@@ -42,6 +42,11 @@ export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
   'f.source'?: Array<string>
   'd.status'?: Exclude<Item['status'], 'draft'> | string // draft items are not indexed with solr
   'd.owner'?: string
+  'd.lastInfoUpdate'?: string
+  'd.curation-flag-description'?: string
+  'd.curation-flag-url'?: string
+  'd.curation-flag-coverage'?: string
+  'd.curation-flag-relations'?: string
 }
 
 /**

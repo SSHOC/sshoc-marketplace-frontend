@@ -266,7 +266,14 @@ export function useValidateCommonFormFields() {
 function mapPropertyTypes(response: PaginatedPropertyTypes) {
   const map: Record<
     string,
-    'string' | 'concept' | 'url' | 'int' | 'float' | 'date' | undefined
+    | 'string'
+    | 'boolean'
+    | 'concept'
+    | 'url'
+    | 'int'
+    | 'float'
+    | 'date'
+    | undefined
   > = {}
   response.propertyTypes?.forEach((propertyType) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -25,7 +25,7 @@ export default function PublicationDraftEditScreen(): JSX.Element {
   const id = useQueryParam('id', false)
   const publication = useGetPublication(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { id: id! },
+    { persistentId: id! },
     { draft: true },
     {
       enabled: id != null && auth.session?.accessToken != null,

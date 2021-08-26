@@ -5,6 +5,7 @@ import { useGetTool } from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/ToolEditForm/ToolEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
+import { useAuth } from '@/modules/auth/AuthContext'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
@@ -15,10 +16,17 @@ import { Title } from '@/modules/ui/typography/Title'
  */
 export default function ToolEditScreen(): JSX.Element {
   const router = useRouter()
+  const auth = useAuth()
 
   const id = router.query.id as string | undefined
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const tool = useGetTool({ id: id! }, {}, { enabled: id != null })
+  const tool = useGetTool(
+    { persistentId: id! },
+    {},
+    { enabled: id != null && auth.session?.accessToken != null },
+    // FIXME: this is just for testing, because currently hidden fields are only delivered to admins
+    { token: auth.session?.accessToken },
+  )
 
   return (
     <Fragment>

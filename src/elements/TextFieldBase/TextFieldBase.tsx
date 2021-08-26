@@ -53,7 +53,11 @@ export function TextFieldBase(
       textField: {
         default: cx(
           'text-base rounded placeholder-gray-350 border border-gray-300 focus:border-secondary-600 hover:bg-gray-75 hover:border-gray-350',
-          size === 'lg' ? 'px-4 py-4' : 'px-4 py-2',
+          size === 'lg'
+            ? 'px-4 py-4'
+            : size === 'md'
+            ? 'px-4 py-2'
+            : 'px-3 py-1.5 text-ui-base',
         ),
         states: {
           enabled: 'text-gray-800',
@@ -67,7 +71,11 @@ export function TextFieldBase(
       textField: {
         default: cx(
           'text-ui-base rounded bg-gray-75 border border-gray-300 placeholder-gray-350 focus:bg-highlight-75 focus:border-secondary-600 focus:placeholder-highlight-300 hover:border-secondary-600 hover:bg-white',
-          size === 'lg' ? 'px-4 py-4' : 'px-4 py-3',
+          size === 'lg'
+            ? 'px-4 py-4'
+            : size === 'md'
+            ? 'px-4 py-3'
+            : 'px-3 py-1.5 text-ui-base',
         ),
         states: {
           enabled: 'text-gray-800',

@@ -68,19 +68,19 @@ function useGetItemHistory(
   switch (category) {
     case 'dataset':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetDatasetHistory({ id }, {}, options)
+      return useGetDatasetHistory({ persistentId: id }, {}, options)
     case 'publication':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetPublicationHistory({ id }, {}, options)
+      return useGetPublicationHistory({ persistentId: id }, {}, options)
     case 'tool-or-service':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetToolHistory({ id }, {}, options)
+      return useGetToolHistory({ persistentId: id }, {}, options)
     case 'training-material':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetTrainingMaterialHistory({ id }, {}, options)
+      return useGetTrainingMaterialHistory({ persistentId: id }, {}, options)
     case 'workflow':
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useGetWorkflowHistory({ workflowId: id }, {}, options)
+      return useGetWorkflowHistory({ persistentId: id }, {}, options)
     case 'step':
       throw new Error("Workflow steps don't have history.")
   }
@@ -136,7 +136,9 @@ function ItemVersion(props: ItemVersionProps) {
         queryKey: [
           getByIdKey,
           {
-            [category === 'workflow' ? 'workflowId' : 'id']: item.persistentId,
+            [category === 'workflow'
+              ? 'persistentId'
+              : 'persistentId']: item.persistentId,
           },
         ],
       })
@@ -158,13 +160,13 @@ function ItemVersion(props: ItemVersionProps) {
     if (category === 'workflow') {
       revert.mutate([
         // @ts-expect-error Ignore for now, refactor later
-        { workflowId: item.persistentId, versionId: item.id },
+        { persistentId: item.persistentId, versionId: item.id },
         { token: auth.session?.accessToken },
       ])
     } else {
       revert.mutate([
         // @ts-expect-error Ignore for now, refactor later
-        { id: item.persistentId, versionId: item.id },
+        { persistentId: item.persistentId, versionId: item.id },
         { token: auth.session?.accessToken },
       ])
     }

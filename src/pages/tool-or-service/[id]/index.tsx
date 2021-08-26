@@ -29,7 +29,7 @@ export async function getServerSideProps(
   }
 
   try {
-    const tool = await getTool({ id }, {})
+    const tool = await getTool({ persistentId: id }, {})
     return { props: { tool } }
   } catch (error) {
     console.log(`Failed to fetch tool ${id}: ${JSON.stringify(error)}`)

@@ -23,7 +23,7 @@ export default function WorkflowVersionScreen(): JSX.Element {
 
   const workflow = useGetWorkflowVersion(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { workflowId: id!, versionId: versionId! },
+    { persistentId: id!, versionId: versionId! },
     {
       enabled: id != null && versionId != null && !Number.isNaN(versionId),
       onError(error) {

@@ -13,14 +13,18 @@ import {
   useDeleteTool,
   useDeleteTrainingMaterial,
   useDeleteWorkflow,
-  useGetInformationContributors5,
-  useGetInformationContributorsForVersion,
-  useGetInformationContributorsForVersion1,
-  useGetInformationContributorsForVersion2,
-  useGetInformationContributorsForVersion3,
+  useGetDatasetVersionInformationContributors,
   useGetItemCategories,
+  useGetPublicationVersionInformationContributors,
+  useGetToolVersionInformationContributors,
+  useGetTrainingMaterialVersionInformationContributors,
+  useGetWorkflowVersionInformationContributors,
 } from '@/api/sshoc'
-import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
+import {
+  getMediaFileUrl,
+  getMediaThumbnailUrl,
+  useCurrentUser,
+} from '@/api/sshoc/client'
 import type {
   Item as GenericItem,
   ItemCategory as ItemCategoryWithStep,
@@ -542,6 +546,8 @@ function ItemPropertyValue({ property }: { property: ItemProperty }) {
       return property.value === undefined ? null : (
         <time dateTime={property.value}>{formatDate(property.value)}</time>
       )
+    case 'boolean':
+      return <span>{String(property.value)}</span>
     default:
       return null
   }
@@ -556,11 +562,22 @@ function useItemMetadata({
   dateLastUpdated,
   externalIds,
 }: ItemMetadata) {
+  const { data: user } = useCurrentUser()
+
   const metadata: any = {}
 
   if (Array.isArray(properties) && properties.length > 0) {
     const grouped: Record<string, Record<string, Array<PropertyDto>>> = {}
     properties.forEach((property) => {
+      /**
+       * Only show hidden properties for admins.
+       */
+      if (property.type?.hidden === true) {
+        if (!user || !['Administrator', 'Moderator'].includes(user.role!)) {
+          return
+        }
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const type = property.type!
       if (
@@ -672,22 +689,6 @@ function useItemMetadata({
                       <li key={actor.id} className="flex flex-col">
                         <span className="flex flex-wrap items-center">
                           <span className="mr-1.5">{actor.name}</span>
-                          {orcid != null ? (
-                            <a
-                              href={`https://orcid.org/${orcid.identifier}`}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              aria-label="ORCID"
-                              className="flex-shrink-0 mr-1.5"
-                            >
-                              <img
-                                src={OrcidIcon}
-                                alt=""
-                                aria-hidden
-                                className="w-5 h-5"
-                              />
-                            </a>
-                          ) : null}
                           {Array.isArray(actor.affiliations) &&
                           actor.affiliations.length > 0 ? (
                             <span className="mr-1.5 text-gray-550">
@@ -707,6 +708,23 @@ function useItemMetadata({
                         {actor.website != null ? (
                           <Anchor href={actor.website}>Website</Anchor>
                         ) : null}
+                        {Array.isArray(actor.externalIds)
+                          ? actor.externalIds.map((id) => {
+                              return id.identifierService?.urlTemplate !=
+                                null ? (
+                                <Anchor
+                                  href={id.identifierService.urlTemplate.replace(
+                                    '{source-actor-id}',
+                                    id.identifier!,
+                                  )}
+                                >
+                                  {id.identifier}
+                                </Anchor>
+                              ) : (
+                                <span>{id.identifier}</span>
+                              )
+                            })
+                          : null}
                       </li>
                     )
                   })}
@@ -786,7 +804,18 @@ function useItemMetadata({
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 {id.identifierService?.label}:
               </span>
-              <span>{id.identifier}</span>
+              {id.identifierService?.urlTemplate != null ? (
+                <Anchor
+                  href={id.identifierService.urlTemplate.replace(
+                    '{source-item-id}',
+                    id.identifier!,
+                  )}
+                >
+                  {id.identifier}
+                </Anchor>
+              ) : (
+                <span>{id.identifier}</span>
+              )}
             </li>
           )
         })}
@@ -814,17 +843,14 @@ function ItemContributors({
    * `getInformationContributors`, so we end up with numbered suffixes.
    */
   const op = {
-    dataset: useGetInformationContributors5,
-    publication: useGetInformationContributorsForVersion,
-    'tool-or-service': useGetInformationContributorsForVersion2,
-    'training-material': useGetInformationContributorsForVersion3,
-    workflow: useGetInformationContributorsForVersion1,
+    dataset: useGetDatasetVersionInformationContributors,
+    publication: useGetPublicationVersionInformationContributors,
+    'tool-or-service': useGetToolVersionInformationContributors,
+    'training-material': useGetTrainingMaterialVersionInformationContributors,
+    workflow: useGetWorkflowVersionInformationContributors,
   }
 
-  const contributors = op[category](
-    // @ts-expect-error Yuck
-    category === 'workflow' ? { workflowId: id, versionId } : { id, versionId },
-  )
+  const contributors = op[category]({ persistentId: id, versionId })
 
   if (!Array.isArray(contributors.data) || contributors.data.length === 0) {
     return null

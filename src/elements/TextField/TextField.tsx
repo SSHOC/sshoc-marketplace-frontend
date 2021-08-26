@@ -10,7 +10,7 @@ export interface TextFieldProps extends AriaTextFieldProps {
   /** @default "default" */
   variant?: 'default' | 'form'
   /** @default "md" */
-  size?: 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg'
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
   helpText?: ReactNode

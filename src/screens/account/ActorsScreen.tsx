@@ -7,11 +7,11 @@ import type { ChangeEvent, FormEvent } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { ActorCore, ActorDto, GetActors } from '@/api/sshoc'
+import type { ActorCore, ActorDto, SearchActors } from '@/api/sshoc'
 import {
   useCreateActor,
   useDeleteActor,
-  useGetActors,
+  useSearchActors,
   useUpdateActor,
 } from '@/api/sshoc'
 import {
@@ -57,7 +57,7 @@ export default function ActorsScreen(): JSX.Element {
   const handleErrors = useErrorHandlers()
   const toast = useToast()
 
-  const actors = useGetActors(
+  const actors = useSearchActors(
     query,
     {
       enabled: auth.session?.accessToken != null,
@@ -205,7 +205,7 @@ function Actor(props: ActorProps) {
 }
 
 interface ItemSearchProps {
-  filter: GetActors.QueryParameters
+  filter: SearchActors.QueryParameters
 }
 
 /**
@@ -250,8 +250,8 @@ function ItemPagination({
   filter,
   results,
 }: {
-  filter: GetActors.QueryParameters
-  results?: GetActors.Response.Success
+  filter: SearchActors.QueryParameters
+  results?: SearchActors.Response.Success
 }) {
   const router = useRouter()
   const currentPage = filter.page ?? 1
@@ -329,8 +329,8 @@ function ItemLongPagination({
   filter,
   results,
 }: {
-  filter: GetActors.QueryParameters
-  results?: GetActors.Response.Success
+  filter: SearchActors.QueryParameters
+  results?: SearchActors.Response.Success
 }) {
   const currentPage = filter.page ?? 1
   const pages = results?.pages ?? 1
@@ -395,7 +395,7 @@ function PreviousPageLink({
   filter,
 }: {
   currentPage?: number
-  filter: GetActors.QueryParameters
+  filter: SearchActors.QueryParameters
 }) {
   const isDisabled = currentPage <= 1
   const label = (
@@ -432,7 +432,7 @@ function NextPageLink({
 }: {
   currentPage?: number
   pages?: number
-  filter: GetActors.QueryParameters
+  filter: SearchActors.QueryParameters
 }) {
   const isDisabled = currentPage >= pages
   const label = (
@@ -459,7 +459,7 @@ function NextPageLink({
   )
 }
 
-function sanitizeQuery(params?: ParsedUrlQuery): GetActors.QueryParameters {
+function sanitizeQuery(params?: ParsedUrlQuery): SearchActors.QueryParameters {
   if (params === undefined) return {}
 
   const sanitized = []
@@ -693,7 +693,7 @@ function DeleteActorButton(props: DeleteActorButton) {
 
 function convertToFormValues(actor: ActorDto): ActorCore {
   return {
-    name: actor.name,
+    name: actor.name!,
     email: actor.email,
     website: actor.website,
     affiliations: actor.affiliations?.map(({ id }) => ({ id })),

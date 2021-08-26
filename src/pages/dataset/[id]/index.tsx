@@ -29,7 +29,7 @@ export async function getServerSideProps(
   }
 
   try {
-    const dataset = await getDataset({ id }, {})
+    const dataset = await getDataset({ persistentId: id }, {})
     return { props: { dataset } }
   } catch (error) {
     console.log(`Failed to fetch dataset ${id}: ${JSON.stringify(error)}`)

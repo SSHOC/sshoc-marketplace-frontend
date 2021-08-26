@@ -31,7 +31,7 @@ export async function getServerSideProps(
   }
 
   try {
-    const publication = await getPublication({ id }, {})
+    const publication = await getPublication({ persistentId: id }, {})
     return { props: { publication } }
   } catch (error) {
     console.log(`Failed to fetch publication ${id}: ${JSON.stringify(error)}`)

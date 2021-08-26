@@ -127,7 +127,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       queryKey: ['getWorkflows'],
     })
     queryClient.invalidateQueries({
-      queryKey: ['getWorkflow', { workflowId: data.persistentId }],
+      queryKey: ['getWorkflow', { persistentId: data.persistentId }],
     })
     if (data.status === 'draft') {
       queryClient.invalidateQueries({
@@ -163,7 +163,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     const { composedOf, ...workflow } = values
 
     const updatedWorkflow = await updateWorkflow.mutateAsync([
-      { workflowId: id },
+      { persistentId: id },
       { draft },
       workflow,
       { token: auth.session.accessToken },
@@ -194,7 +194,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             step.persistentId !== originalStep?.persistentId
           ) {
             return updateStep.mutateAsync([
-              { workflowId, stepId: step.persistentId },
+              {
+                persistentId: workflowId,
+                stepPersistentId: step.persistentId,
+              },
               { draft },
               sanitizeFormValues(step),
               { token: auth.session?.accessToken },
@@ -205,7 +208,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         }
 
         return createStep.mutateAsync([
-          { workflowId },
+          { persistentId: workflowId },
           { draft },
           sanitizeFormValues(step),
           { token: auth.session?.accessToken },
@@ -256,7 +259,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     PageKey,
     {
       Page: FC<FormPageProps>
-      onValidate?: FormConfig<ItemFormValues>['validate']
+      onValidate?: FormConfig<Partial<ItemFormValues>>['validate']
     }
   > = {
     workflow: {
@@ -315,7 +318,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   function handleSubmit(values: Partial<ItemFormValues>) {
     if (currentPageKey === 'steps') {
-      return onSubmit(values)
+      return onSubmit(values as ItemFormValues)
     } else {
       onNextPage(values)
     }

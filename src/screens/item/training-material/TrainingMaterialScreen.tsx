@@ -22,7 +22,7 @@ export default function TrainingMaterialScreen({
    * to allow background refreshing
    */
   const { data } = useGetTrainingMaterial(
-    { id: initialData.persistentId! },
+    { persistentId: initialData.persistentId! },
     {},
     { enabled: initialData.persistentId !== undefined, initialData },
     { token: auth.session?.accessToken },

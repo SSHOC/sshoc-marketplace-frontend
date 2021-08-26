@@ -20,7 +20,7 @@ export default function WorkflowHistoryScreen(): JSX.Element {
   const id = router.query.id as string | undefined
   const workflow = useGetWorkflow(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { workflowId: id! },
+    { persistentId: id! },
     {},
     { enabled: id != null },
   )

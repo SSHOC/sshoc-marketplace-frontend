@@ -6,11 +6,14 @@ import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import type { SearchItem, SearchItems } from '@/api/sshoc'
-import { useSearchItems } from '@/api/sshoc'
+import { useGetSources, useGetUsers, useSearchItems } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import { CheckBoxGroup } from '@/elements/CheckBoxGroup/CheckBoxGroup'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
+import { TextField } from '@/elements/TextField/TextField'
 import { useToast } from '@/elements/Toast/useToast'
+import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -21,6 +24,7 @@ import Metadata from '@/modules/metadata/Metadata'
 import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
+import Spinner from '@/modules/ui/Spinner'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
 import { ensureArray } from '@/utils/ensureArray'
@@ -42,13 +46,11 @@ export default function ModerateItemsScreen(): JSX.Element {
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
   const toast = useToast()
+
   const items = useSearchItems(
     {
       order: ['modified-on'],
       ...query,
-      // When a user is signed in as admin/moderator, this returns
-      // ingested/suggested items by *all* users
-      'd.status': '(ingested OR suggested)',
     } as SearchItems.QueryParameters,
     {
       enabled: auth.session?.accessToken != null,
@@ -66,7 +68,7 @@ export default function ModerateItemsScreen(): JSX.Element {
 
   return (
     <Fragment>
-      <Metadata noindex title="My draft items" />
+      <Metadata noindex title="Items to moderate" />
       <GridLayout>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
@@ -83,13 +85,37 @@ export default function ModerateItemsScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
+        <ContentColumn>
+          <div className="px-6 pb-12">
+            <Title className="space-x-3">
+              <span>Items to moderate</span>
+              {Number(items.data?.hits) > 0 ? (
+                <span className="text-2xl font-normal">
+                  ({items.data?.hits})
+                </span>
+              ) : null}
+              {items.isFetching ? (
+                <span>
+                  <Spinner className="w-6 h-6 text-secondary-600" />
+                </span>
+              ) : null}
+            </Title>
+          </div>
+        </ContentColumn>
+        <section
+          className="px-6 pb-12 mr-6 space-y-8"
+          style={{ gridColumn: '3 / span 3' }}
         >
-          <Title>Items to moderate</Title>
+          <SearchFacets filter={query} />
+        </section>
+        <section
+          className="px-6 pb-12 space-y-12"
+          style={{ gridColumn: '-10 / span 7' }}
+        >
           {items.data === undefined ? (
-            <ProgressSpinner />
+            items.isError ? null : (
+              <ProgressSpinner />
+            )
           ) : items.data.items?.length === 0 ? (
             <div>Nothing to moderate.</div>
           ) : (
@@ -112,9 +138,404 @@ export default function ModerateItemsScreen(): JSX.Element {
               </div>
             </Fragment>
           )}
-        </ContentColumn>
+        </section>
       </GridLayout>
     </Fragment>
+  )
+}
+
+interface SearchFacetsProps {
+  filter: ItemSearchQuery
+}
+
+function SearchFacets(props: SearchFacetsProps) {
+  const { filter } = props
+
+  return (
+    <Fragment>
+      <CategoryFacet filter={filter} />
+      <CurationFlags filter={filter} />
+      <StatusFacet filter={filter} />
+      <SourceFacet filter={filter} />
+      <ContributorFacet filter={filter} />
+      <LastUpdatedFacet filter={filter} />
+    </Fragment>
+  )
+}
+
+interface CurationFlagsProps {
+  filter: ItemSearchQuery
+}
+
+function CurationFlags(props: CurationFlagsProps) {
+  const router = useRouter()
+
+  const { filter } = props
+
+  function onChange(status: Array<string>) {
+    const query = { ...filter }
+    allowedFlags.forEach((flag) => {
+      const key = `d.curation-flag-${flag}` as const
+      if (!status.includes(flag)) {
+        delete query[key]
+      } else {
+        query[key] = 'TRUE'
+      }
+    })
+    delete query.page
+    router.push({ query })
+  }
+
+  const allowedFlags = ['description', 'url', 'coverage', 'relations'] as const
+
+  const defaultValue = [] as Array<string>
+  allowedFlags.forEach((flag) => {
+    if (filter[`d.curation-flag-${flag}` as const] === 'TRUE') {
+      defaultValue.push(flag)
+    }
+  })
+
+  return (
+    <fieldset>
+      <legend
+        id="facet-curation"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Curation flags
+      </legend>
+      <CheckBoxGroup
+        variant="form"
+        aria-labelledby="facet-curation"
+        onChange={onChange}
+        defaultValue={defaultValue}
+      >
+        {allowedFlags.map((flag) => {
+          return (
+            <CheckBoxGroup.Item key={flag} value={flag}>
+              {flag}
+            </CheckBoxGroup.Item>
+          )
+        })}
+      </CheckBoxGroup>
+    </fieldset>
+  )
+}
+
+interface StatusFacetProps {
+  filter: ItemSearchQuery
+}
+
+function StatusFacet(props: StatusFacetProps) {
+  const router = useRouter()
+
+  const { filter } = props
+
+  function onChange(status: Array<string>) {
+    const query = { ...filter }
+    if (status.length === 0) {
+      delete query['d.status']
+    } else {
+      query['d.status'] = `(${status.join(' OR ')})`
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  const allowedStatus = [
+    'ingested',
+    'suggested',
+    'approved',
+    'deprecated',
+  ] as const
+
+  const defaultValue = [] as Array<string>
+  const current = filter['d.status']
+  if (current != null) {
+    allowedStatus.forEach((status) => {
+      if (current.includes(status)) {
+        defaultValue.push(status)
+      }
+    })
+  }
+  return (
+    <fieldset>
+      <legend
+        id="facet-status"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Status
+      </legend>
+      <CheckBoxGroup
+        variant="form"
+        aria-labelledby="facet-status"
+        onChange={onChange}
+        defaultValue={defaultValue}
+      >
+        {allowedStatus.map((status) => {
+          return (
+            <CheckBoxGroup.Item key={status} value={status}>
+              {status}
+            </CheckBoxGroup.Item>
+          )
+        })}
+      </CheckBoxGroup>
+    </fieldset>
+  )
+}
+
+interface SourceFacetProps {
+  filter: ItemSearchQuery
+}
+
+function SourceFacet(props: SourceFacetProps) {
+  const router = useRouter()
+  const auth = useAuth()
+  const toast = useToast()
+
+  const { filter } = props
+
+  function onChange(source: Array<string>) {
+    const query = { ...filter }
+    if (source.length === 0) {
+      delete query['f.source']
+    } else {
+      query['f.source'] = source
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const sourceQuery =
+    debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
+
+  const sources = useGetSources(
+    {
+      q: sourceQuery,
+    },
+    {
+      enabled: Boolean(auth.session?.accessToken),
+      keepPreviousData: true,
+      onError() {
+        toast.error('Failed to fetch sources')
+      },
+    },
+    {
+      token: auth.session?.accessToken,
+    },
+  )
+  const allowedSources = sources.data?.sources ?? []
+
+  return (
+    <fieldset>
+      <legend
+        id="facet-source"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Sources
+      </legend>
+      <div className="mb-6">
+        <TextField
+          placeholder="Search source"
+          onChange={setSearchTerm}
+          value={searchTerm}
+          aria-labelledby="facet-source"
+          variant="form"
+          size="sm"
+        />
+      </div>
+      <CheckBoxGroup
+        variant="form"
+        aria-labelledby="facet-source"
+        onChange={onChange}
+        // defaultValue={filter['d.status']}
+      >
+        {allowedSources.map((source) => {
+          return (
+            <CheckBoxGroup.Item key={source.id} value={source.label!}>
+              {source.label}
+            </CheckBoxGroup.Item>
+          )
+        })}
+      </CheckBoxGroup>
+    </fieldset>
+  )
+}
+
+interface ContributorFacetProps {
+  filter: ItemSearchQuery
+}
+
+function ContributorFacet(props: ContributorFacetProps) {
+  const router = useRouter()
+  const auth = useAuth()
+  const toast = useToast()
+
+  const { filter } = props
+
+  function onChange(contributors: Array<string>) {
+    const query = { ...filter }
+    if (contributors.length === 0) {
+      delete query['d.owner']
+    } else {
+      query['d.owner'] = `(${contributors.join(' OR ')})`
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  const [searchTerm, setSearchTerm] = useState('')
+  const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
+  const contributorQuery =
+    debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
+
+  const users = useGetUsers(
+    {
+      q: contributorQuery,
+    },
+    {
+      enabled: Boolean(auth.session?.accessToken),
+      keepPreviousData: true,
+      onError() {
+        toast.error('Failed to fetch users')
+      },
+    },
+    {
+      token: auth.session?.accessToken,
+    },
+  )
+  const allowedUsers = users.data?.users ?? []
+
+  return (
+    <fieldset>
+      <legend
+        id="facet-contributor"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Contributors
+      </legend>
+      <div className="mb-6">
+        <TextField
+          placeholder="Search contributor"
+          onChange={setSearchTerm}
+          value={searchTerm}
+          aria-labelledby="facet-contributor"
+          variant="form"
+          size="sm"
+        />
+      </div>
+      <CheckBoxGroup
+        variant="form"
+        aria-labelledby="facet-contributor"
+        onChange={onChange}
+        // defaultValue={filter['d.contributor']}
+      >
+        {allowedUsers.map((user) => {
+          return (
+            <CheckBoxGroup.Item key={user.id} value={user.username!}>
+              {user.displayName}
+            </CheckBoxGroup.Item>
+          )
+        })}
+      </CheckBoxGroup>
+    </fieldset>
+  )
+}
+
+interface LastUpdatedFacetProps {
+  filter: ItemSearchQuery
+}
+
+function LastUpdatedFacet(props: LastUpdatedFacetProps) {
+  const router = useRouter()
+
+  const { filter } = props
+
+  function onChange(lastInfoUpdate: string) {
+    const query = { ...filter }
+    if (lastInfoUpdate.length === 0) {
+      delete query['d.lastInfoUpdate']
+    } else {
+      const date = new Date(lastInfoUpdate).toISOString()
+      query['d.lastInfoUpdate'] = `[${date} TO NOW]`
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  return (
+    <fieldset>
+      <legend
+        id="facet-lastInfoUpdate"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Last updated after
+      </legend>
+      <TextField
+        type="date"
+        variant="form"
+        size="sm"
+        onChange={onChange}
+        aria-labelledby="facet-lastInfoUpdate"
+        // defaultValue={filter['d.lastInfoUpdate']}
+      />
+    </fieldset>
+  )
+}
+
+interface CategoryFacetProps {
+  filter: ItemSearchQuery
+}
+
+function CategoryFacet(props: CategoryFacetProps) {
+  const router = useRouter()
+
+  const { filter } = props
+
+  function onChange(categories: Array<string>) {
+    const query = { ...filter }
+    if (categories.length === 0) {
+      delete query['categories']
+    } else {
+      query['categories'] = categories as Array<ItemCategory>
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  const allowedCategories: Record<Exclude<ItemCategory, 'step'>, string> = {
+    'tool-or-service': 'Tools & Services',
+    'training-material': 'Training Materials',
+    dataset: 'Datasets',
+    publication: 'Publications',
+    workflow: 'Workflows',
+  }
+  const defaultValue = filter.categories
+
+  return (
+    <fieldset>
+      <legend
+        id="facet-categories"
+        className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
+      >
+        Categories
+      </legend>
+      <CheckBoxGroup
+        variant="form"
+        aria-labelledby="facet-categories"
+        onChange={onChange}
+        defaultValue={defaultValue}
+      >
+        {Object.entries(allowedCategories).map(([category, label]) => {
+          return (
+            <CheckBoxGroup.Item key={category} value={category}>
+              {label}
+            </CheckBoxGroup.Item>
+          )
+        })}
+      </CheckBoxGroup>
+    </fieldset>
   )
 }
 
@@ -128,7 +549,7 @@ function ContributedItem(props: ContributedItemProps) {
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-2">
         <h2>
           <Link
             href={{
@@ -147,7 +568,7 @@ function ContributedItem(props: ContributedItemProps) {
           </Link>
         </h2>
         {item.lastInfoUpdate != null ? (
-          <div className="space-x-1.5">
+          <div className="space-x-1.5 flex-shrink-0">
             <span className="text-gray-550">Date:</span>
             <LastUpdate isoDate={item.lastInfoUpdate} />
           </div>
@@ -246,6 +667,7 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     } else {
       query.order = [order as ItemSortOrder]
     }
+    delete query.page
     router.push({ query })
   }
 
@@ -513,6 +935,74 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
     const perpage = parseInt(ensureScalar(params.perpage), 10)
     if (!Number.isNaN(perpage) && perpage > 0 && perpage <= 50) {
       sanitized.push(['perpage', perpage])
+    }
+  }
+
+  if (params.categories != null) {
+    const allowedCategories: Array<ItemCategory> = [
+      'dataset',
+      'publication',
+      'tool-or-service',
+    ]
+    const categories = ensureArray(params.categories).filter((category) =>
+      (allowedCategories as Array<string>).includes(category),
+    )
+    if (categories.length > 0) {
+      sanitized.push(['categories', categories])
+    }
+  }
+  if (params['d.lastInfoUpdate'] != null) {
+    const lastInfoUpdate = ensureScalar(params['d.lastInfoUpdate'])
+    if (lastInfoUpdate.length > 0) {
+      sanitized.push(['d.lastInfoUpdate', lastInfoUpdate])
+    }
+  }
+  if (params['d.owner'] != null) {
+    const contributor = ensureScalar(params['d.owner'])
+    if (contributor.length > 0) {
+      sanitized.push(['d.owner', contributor])
+    }
+  }
+  if (params['d.status'] != null) {
+    const status = ensureScalar(params['d.status'])
+    if (status.length > 0) {
+      sanitized.push(['d.status', status])
+    }
+  }
+  if (params['f.source'] != null) {
+    const source = ensureArray(params['f.source'])
+    if (source.length > 0) {
+      sanitized.push(['f.source', source])
+    }
+  }
+  if (params['d.curation-flag-description'] != null) {
+    const curationFlagDescription = ensureScalar(
+      params['d.curation-flag-description'],
+    )
+    if (curationFlagDescription.length > 0) {
+      sanitized.push(['d.curation-flag-description', curationFlagDescription])
+    }
+  }
+  if (params['d.curation-flag-url'] != null) {
+    const curationFlagUrl = ensureScalar(params['d.curation-flag-url'])
+    if (curationFlagUrl.length > 0) {
+      sanitized.push(['d.curation-flag-url', curationFlagUrl])
+    }
+  }
+  if (params['d.curation-flag-relations'] != null) {
+    const curationFlagRelations = ensureScalar(
+      params['d.curation-flag-relations'],
+    )
+    if (curationFlagRelations.length > 0) {
+      sanitized.push(['d.curation-flag-relations', curationFlagRelations])
+    }
+  }
+  if (params['d.curation-flag-coverage'] != null) {
+    const curationFlagCoverage = ensureScalar(
+      params['d.curation-flag-coverage'],
+    )
+    if (curationFlagCoverage.length > 0) {
+      sanitized.push(['d.curation-flag-coverage', curationFlagCoverage])
     }
   }
 

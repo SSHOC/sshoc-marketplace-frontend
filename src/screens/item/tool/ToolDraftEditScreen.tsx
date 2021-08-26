@@ -25,7 +25,7 @@ export default function ToolDraftEditScreen(): JSX.Element {
   const id = useQueryParam('id', false)
   const tool = useGetTool(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { id: id! },
+    { persistentId: id! },
     { draft: true },
     {
       enabled: id != null && auth.session?.accessToken != null,
