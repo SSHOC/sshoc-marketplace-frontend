@@ -149,7 +149,7 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
   const debouncedsearchTerm = useDebouncedState(searchTerm, 150).trim()
   const actors = useSearchActors(
     // @ts-expect-error Search on dynamic property
-    { 'd.name': debouncedsearchTerm },
+    { 'd.name': '*' + debouncedsearchTerm.replace(/\s+/, '*') + '*' }, // We need wildcards for SOLR to match.
     {
       // enabled: debouncedsearchTerm.length > 2,
       keepPreviousData: true,

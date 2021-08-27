@@ -465,7 +465,9 @@ function sanitizeQuery(params?: ParsedUrlQuery): SearchActors.QueryParameters {
   const sanitized = []
 
   if (params.q != null && params.q.length > 0) {
-    sanitized.push(['d.name', params.q])
+    const q = ensureScalar(params.q)
+    // We need wildcards for SOLR to match.
+    sanitized.push(['d.name', '*' + q.replace(/\s+/, '*') + '*'])
   }
 
   if (params.page !== undefined) {
