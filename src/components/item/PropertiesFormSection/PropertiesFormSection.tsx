@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import type { QueryObserverResult } from 'react-query'
 
 import type {
@@ -122,7 +122,7 @@ export function PropertiesFormSection(
                       >
                         {(id: string) => {
                           return (
-                            <PropertyConceptSelect
+                            <PropertyConceptComboBox
                               name={`${name}.concept.uri`}
                               parentName={name}
                               label={'Concept'}
@@ -195,7 +195,7 @@ function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
   )
 }
 
-interface PropertyConceptSelectProps {
+interface PropertyConceptComboBoxProps {
   name: string
   parentName: string
   label: string
@@ -210,7 +210,9 @@ interface PropertyConceptSelectProps {
  * The form control displays the concept `uri`, but we also need to submit
  * the concept `id` and vocabulary `id`.
  */
-function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
+function PropertyConceptComboBox(
+  props: PropertyConceptComboBoxProps,
+): JSX.Element {
   /**
    * Populate the input field with the label of the initially selected item (if any),
    * which triggers a search request. The result set should include the initial item.
@@ -236,6 +238,10 @@ function PropertyConceptSelect(props: PropertyConceptSelectProps): JSX.Element {
       keepPreviousData: true,
     },
   )
+
+  useEffect(() => {
+    setSearchTerm(initialLabel)
+  }, [initialLabel])
 
   const conceptsByUri = useMemo(() => {
     const map: Record<string, SearchConcept> = {}

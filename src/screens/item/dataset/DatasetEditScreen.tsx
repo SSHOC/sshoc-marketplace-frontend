@@ -21,7 +21,12 @@ export default function DatasetEditScreen(): JSX.Element {
   const dataset = useGetDataset(
     { persistentId: id! },
     {},
-    { enabled: id != null },
+    {
+      enabled: id != null,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
   )
 
   return (

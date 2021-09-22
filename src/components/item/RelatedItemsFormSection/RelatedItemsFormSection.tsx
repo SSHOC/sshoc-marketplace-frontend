@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useGetAllItemRelations, useSearchItems } from '@/api/sshoc'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
@@ -135,6 +135,10 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
       keepPreviousData: true,
     },
   )
+
+  useEffect(() => {
+    setSearchTerm(initialLabel)
+  }, [initialLabel])
 
   return (
     <FormComboBox

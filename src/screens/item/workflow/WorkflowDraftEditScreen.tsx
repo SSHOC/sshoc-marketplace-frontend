@@ -38,6 +38,9 @@ export default function WorkflowDraftEditScreen(): JSX.Element {
           handleError(error)
         }
       },
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
     },
     { token: auth.session?.accessToken },
   )

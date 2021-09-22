@@ -21,7 +21,12 @@ export default function PublicationEditScreen(): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     {},
-    { enabled: id != null },
+    {
+      enabled: id != null,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
   )
 
   return (

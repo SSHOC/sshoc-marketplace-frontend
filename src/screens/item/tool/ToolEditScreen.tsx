@@ -23,9 +23,12 @@ export default function ToolEditScreen(): JSX.Element {
   const tool = useGetTool(
     { persistentId: id! },
     {},
-    { enabled: id != null && auth.session?.accessToken != null },
-    // FIXME: this is just for testing, because currently hidden fields are only delivered to admins
-    { token: auth.session?.accessToken },
+    {
+      enabled: id != null && auth.session?.accessToken != null,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
   )
 
   return (

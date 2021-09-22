@@ -1,5 +1,5 @@
 import { Dialog } from '@reach/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { ActorCore } from '@/api/sshoc'
@@ -162,6 +162,10 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       keepPreviousData: true,
     },
   )
+
+  useEffect(() => {
+    setSearchTerm(initialLabel)
+  }, [initialLabel])
 
   return (
     <FormComboBox

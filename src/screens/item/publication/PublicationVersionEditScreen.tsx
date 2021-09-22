@@ -39,6 +39,9 @@ export default function PublicationVersionEditScreen(): JSX.Element {
           handleError(error)
         }
       },
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
     },
     { token: auth.session?.accessToken },
   )
