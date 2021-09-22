@@ -55,7 +55,9 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                     key={name}
                     actions={
                       <FormFieldRemoveButton
-                        onPress={() => fields.remove(index)}
+                        onPress={() => {
+                          fields.remove(index)
+                        }}
                         aria-label={'Remove URL'}
                       />
                     }
@@ -87,7 +89,9 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                     key={name}
                     actions={
                       <FormFieldRemoveButton
-                        onPress={() => fields.remove(index)}
+                        onPress={() => {
+                          fields.remove(index)
+                        }}
                         aria-label={'Remove external ID'}
                       />
                     }

@@ -93,7 +93,15 @@ export function PropertiesFormSection(
                       key={name}
                       actions={
                         <FormFieldRemoveButton
-                          onPress={() => fields.remove(index)}
+                          onPress={() => {
+                            fields.remove(index)
+                            /** YUCK! */
+                            if (
+                              Array.isArray(props.initialValues?.properties)
+                            ) {
+                              props.initialValues.properties.splice(index, 1)
+                            }
+                          }}
                           aria-label={'Remove property'}
                         />
                       }

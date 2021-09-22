@@ -543,11 +543,11 @@ function WorkflowPage(props: FormPageProps) {
   return (
     <Fragment>
       <MainFormSection />
-      <ActorsFormSection initialValues={props.item} />
-      <PropertiesFormSection initialValues={props.item} />
-      <MediaFormSection initialValues={props.item} />
-      <ThumbnailFormSection initialValues={props.item} />
-      <RelatedItemsFormSection initialValues={props.item} />
+      <ActorsFormSection initialValues={{ ...props.item }} />
+      <PropertiesFormSection initialValues={{ ...props.item }} />
+      <MediaFormSection initialValues={{ ...props.item }} />
+      <ThumbnailFormSection initialValues={{ ...props.item }} />
+      <RelatedItemsFormSection initialValues={{ ...props.item }} />
     </Fragment>
   )
 }
@@ -569,9 +569,15 @@ function WorkflowStepPage(props: FormPageProps) {
   return (
     <Fragment>
       <MainFormSection prefix={prefix} />
-      <ActorsFormSection prefix={prefix} initialValues={initialValues} />
-      <PropertiesFormSection prefix={prefix} initialValues={initialValues} />
-      <RelatedItemsFormSection prefix={prefix} initialValues={initialValues} />
+      <ActorsFormSection prefix={prefix} initialValues={{ ...initialValues }} />
+      <PropertiesFormSection
+        prefix={prefix}
+        initialValues={{ ...initialValues }}
+      />
+      <RelatedItemsFormSection
+        prefix={prefix}
+        initialValues={{ ...initialValues }}
+      />
     </Fragment>
   )
 }

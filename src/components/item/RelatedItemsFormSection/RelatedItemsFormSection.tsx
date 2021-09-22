@@ -37,7 +37,15 @@ export function RelatedItemsFormSection(
                     key={name}
                     actions={
                       <FormFieldRemoveButton
-                        onPress={() => fields.remove(index)}
+                        onPress={() => {
+                          fields.remove(index)
+                          /** YUCK! */
+                          if (
+                            Array.isArray(props.initialValues?.relatedItems)
+                          ) {
+                            props.initialValues.relatedItems.splice(index, 1)
+                          }
+                        }}
                         aria-label={'Remove related item'}
                       />
                     }

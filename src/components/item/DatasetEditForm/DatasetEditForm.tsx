@@ -161,11 +161,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
           >
             <MainFormSection />
             <DateFormSection />
-            <ActorsFormSection initialValues={props.item} />
-            <PropertiesFormSection initialValues={props.item} />
-            <MediaFormSection initialValues={props.item} />
-            <ThumbnailFormSection initialValues={props.item} />
-            <RelatedItemsFormSection initialValues={props.item} />
+            <ActorsFormSection initialValues={{ ...props.item }} />
+            <PropertiesFormSection initialValues={{ ...props.item }} />
+            <MediaFormSection initialValues={{ ...props.item }} />
+            <ThumbnailFormSection initialValues={{ ...props.item }} />
+            <RelatedItemsFormSection initialValues={{ ...props.item }} />
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel

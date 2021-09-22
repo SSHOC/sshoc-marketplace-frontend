@@ -66,7 +66,15 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                     key={name}
                     actions={
                       <FormFieldRemoveButton
-                        onPress={() => fields.remove(index)}
+                        onPress={() => {
+                          fields.remove(index)
+                          /** YUCK! */
+                          if (
+                            Array.isArray(props.initialValues?.contributors)
+                          ) {
+                            props.initialValues.contributors.splice(index, 1)
+                          }
+                        }}
                         aria-label={'Remove actor'}
                       />
                     }
@@ -343,7 +351,9 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
                           key={name}
                           actions={
                             <FormFieldRemoveButton
-                              onPress={() => fields.remove(index)}
+                              onPress={() => {
+                                fields.remove(index)
+                              }}
                               aria-label={'Remove external ID'}
                             />
                           }
@@ -390,7 +400,9 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
                           key={name}
                           actions={
                             <FormFieldRemoveButton
-                              onPress={() => fields.remove(index)}
+                              onPress={() => {
+                                fields.remove(index)
+                              }}
                               aria-label={'Remove affiliation'}
                             />
                           }
