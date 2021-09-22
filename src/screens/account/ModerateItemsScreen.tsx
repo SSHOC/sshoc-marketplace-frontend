@@ -8,6 +8,7 @@ import { Fragment, useEffect, useState } from 'react'
 import type { SearchItem, SearchItems } from '@/api/sshoc'
 import { useGetSources, useGetUsers, useSearchItems } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import { CheckBox } from '@/elements/CheckBox/CheckBox'
 import { CheckBoxGroup } from '@/elements/CheckBoxGroup/CheckBoxGroup'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
@@ -157,6 +158,7 @@ function SearchFacets(props: SearchFacetsProps) {
       <CurationFlags filter={filter} />
       <StatusFacet filter={filter} />
       <SourceFacet filter={filter} />
+      <DeprecatedAtSourceCheckBox filter={filter} />
       <ContributorFacet filter={filter} />
       <LastUpdatedFacet filter={filter} />
     </Fragment>
@@ -360,6 +362,37 @@ function SourceFacet(props: SourceFacetProps) {
         })}
       </CheckBoxGroup>
     </fieldset>
+  )
+}
+
+interface DeprecatedAtSourceCheckBoxProps {
+  filter: ItemSearchQuery
+}
+
+function DeprecatedAtSourceCheckBox(props: DeprecatedAtSourceCheckBoxProps) {
+  const router = useRouter()
+
+  const { filter } = props
+
+  function onChange(isDeprecatedAtSource: boolean) {
+    const query = { ...filter }
+    if (isDeprecatedAtSource) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore Property exists
+      query['d.deprecated-at-source'] = 'TRUE'
+    } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore Property exists
+      delete query['d.deprecated-at-source']
+    }
+    delete query.page
+    router.push({ query })
+  }
+
+  return (
+    <CheckBox variant="form" onChange={onChange}>
+      Deprecated at source
+    </CheckBox>
   )
 }
 
@@ -1006,6 +1039,9 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
     if (curationFlagCoverage.length > 0) {
       sanitized.push(['d.curation-flag-coverage', curationFlagCoverage])
     }
+  }
+  if (params['d.deprecated-at-source'] != null) {
+    sanitized.push(['d.deprecated-at-source', true])
   }
 
   const sanitizedParams = Object.fromEntries(sanitized)
