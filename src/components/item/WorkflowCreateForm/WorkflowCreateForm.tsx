@@ -10,7 +10,11 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
-import { useCreateStep, useCreateWorkflow } from '@/api/sshoc'
+import {
+  useCreateStep,
+  useCreateWorkflow,
+  useUpdateWorkflow,
+} from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -51,7 +55,16 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const categoryLabel = getSingularItemCategoryLabel(category)
   const stepLabel = getSingularItemCategoryLabel('step')
 
-  const useItemMutation = useCreateWorkflow
+  /**
+   * When a user saves a first draft, we dispatch a POST request,
+   * which will return a persistent id, which we need to use in
+   * subsequent PUT requests, to avoid creating multiple items.
+   */
+  const [persistentIdFromSavedDraft, setPersistentIdFromSavedDraft] = useState<
+    string | undefined
+  >(undefined)
+  const useItemMutation =
+    persistentIdFromSavedDraft != null ? useUpdateWorkflow : useCreateWorkflow
 
   const toast = useToast()
   const router = useRouter()
@@ -117,6 +130,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       queryClient.invalidateQueries({
         queryKey: ['getMyDraftItems'],
       })
+
+      setPersistentIdFromSavedDraft(data.persistentId)
     }
 
     /**
@@ -146,11 +161,29 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
      */
     const { composedOf, ...workflow } = values
 
-    const createdWorkflow = await createWorkflow.mutateAsync([
-      { draft },
-      workflow,
-      { token: auth.session.accessToken },
-    ])
+    let createdWorkflow
+    if (persistentIdFromSavedDraft == null) {
+      const mutateAsync = createWorkflow.mutateAsync as ReturnType<
+        typeof useCreateWorkflow
+      >['mutateAsync']
+
+      createdWorkflow = await mutateAsync([
+        { draft },
+        workflow,
+        { token: auth.session.accessToken },
+      ])
+    } else {
+      const mutateAsync = createWorkflow.mutateAsync as ReturnType<
+        typeof useUpdateWorkflow
+      >['mutateAsync']
+
+      createdWorkflow = await mutateAsync([
+        { persistentId: persistentIdFromSavedDraft },
+        { draft },
+        workflow,
+        { token: auth.session.accessToken },
+      ])
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const workflowId = createdWorkflow.persistentId!

@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { ToolCore, ToolDto } from '@/api/sshoc'
-import { useCreateTool } from '@/api/sshoc'
+import { useCreateTool, useUpdateTool } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -37,7 +38,16 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   const categoryLabel = getSingularItemCategoryLabel(category)
 
-  const useItemMutation = useCreateTool
+  /**
+   * When a user saves a first draft, we dispatch a POST request,
+   * which will return a persistent id, which we need to use in
+   * subsequent PUT requests, to avoid creating multiple items.
+   */
+  const [persistentIdFromSavedDraft, setPersistentIdFromSavedDraft] = useState<
+    string | undefined
+  >(undefined)
+  const useItemMutation =
+    persistentIdFromSavedDraft != null ? useUpdateTool : useCreateTool
 
   const toast = useToast()
   const router = useRouter()
@@ -75,6 +85,8 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryClient.invalidateQueries({
           queryKey: ['getMyDraftItems'],
         })
+
+        setPersistentIdFromSavedDraft(data.persistentId)
       }
 
       /**
@@ -111,11 +123,28 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
     const values = sanitizeFormValues(unsanitized)
 
-    await create.mutateAsync([
-      { draft },
-      values,
-      { token: auth.session.accessToken },
-    ])
+    if (persistentIdFromSavedDraft == null) {
+      const mutateAsync = create.mutateAsync as ReturnType<
+        typeof useCreateTool
+      >['mutateAsync']
+
+      await mutateAsync([
+        { draft },
+        values,
+        { token: auth.session.accessToken },
+      ])
+    } else {
+      const mutateAsync = create.mutateAsync as ReturnType<
+        typeof useUpdateTool
+      >['mutateAsync']
+
+      await mutateAsync([
+        { persistentId: persistentIdFromSavedDraft },
+        { draft },
+        values,
+        { token: auth.session.accessToken },
+      ])
+    }
 
     /**
      * If `onSubmit` resolves to `undefined` it's a successful submit.
