@@ -21,6 +21,7 @@ type Session = {
 }
 
 export type Auth = {
+  hasCheckedLocalStorage: boolean
   session: Session | null
   signIn: (token: string) => void
   signOut: () => void
@@ -47,11 +48,11 @@ export default function AuthProvider({
 }: PropsWithChildren<{
   onChange?: () => void
 }>): JSX.Element {
-  const [session, setSession] = useLocalStorage<Session | null>(
-    'session',
-    null,
-    onChange,
-  )
+  const [
+    session,
+    setSession,
+    hasCheckedLocalStorage,
+  ] = useLocalStorage<Session | null>('session', null, onChange)
 
   const auth = useMemo(() => {
     function signIn(token: string) {
@@ -82,12 +83,13 @@ export default function AuthProvider({
     }
 
     return {
+      hasCheckedLocalStorage,
       session,
       signIn,
       signOut,
       validateToken,
     }
-  }, [session, setSession])
+  }, [session, setSession, hasCheckedLocalStorage])
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }

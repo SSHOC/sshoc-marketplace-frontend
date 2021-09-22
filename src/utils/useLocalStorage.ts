@@ -11,8 +11,9 @@ export function useLocalStorage<T extends JSON>(
   key: string,
   initialValue: T,
   onChange?: () => void,
-): [T, (value: ValueOrSetter<T>) => void] {
+): [T, (value: ValueOrSetter<T>) => void, boolean] {
   const [storedValue, _setStoredValue] = useState<T>(initialValue)
+  const [hasCheckedLocalStorage, setHasCheckedLocalStorage] = useState(false)
 
   const setStoredValue = useCallback(
     function setStoredValue(value: ValueOrSetter<T>) {
@@ -28,6 +29,8 @@ export function useLocalStorage<T extends JSON>(
     if (item !== undefined) {
       setStoredValue(item)
     }
+
+    setHasCheckedLocalStorage(true)
   }, [key, setStoredValue])
 
   const setValue = useCallback(
@@ -45,7 +48,7 @@ export function useLocalStorage<T extends JSON>(
     [key, setStoredValue],
   )
 
-  return [storedValue, setValue]
+  return [storedValue, setValue, hasCheckedLocalStorage]
 }
 
 /**

@@ -13,17 +13,19 @@ export default function ProtectedScreen({
   roles?: Array<'contributor' | 'moderator' | 'administrator'>
 }>): JSX.Element | null {
   const router = useRouter()
-  const { session } = useAuth()
+  const { session, hasCheckedLocalStorage } = useAuth()
   const user = useCurrentUser()
 
   useEffect(() => {
+    if (!hasCheckedLocalStorage) return
+
     if (session === null || !hasAppropriateRole(roles, user.data)) {
       router.replace({
         pathname: '/auth/sign-in',
         query: { from: router.asPath },
       })
     }
-  }, [roles, user.data, session, router])
+  }, [roles, user.data, session, hasCheckedLocalStorage, router])
 
   /**
    * avoid flash of content, because the router (for redirecting) is only available on the client
