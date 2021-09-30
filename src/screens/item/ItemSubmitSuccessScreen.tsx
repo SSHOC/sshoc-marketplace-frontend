@@ -42,7 +42,8 @@ export default function ItemSubmitSuccessScreen(): JSX.Element {
       </GridLayout>
       <style jsx global>{`
         body {
-          background: linear-gradient(41deg, #e7f5ff, transparent 85%);
+          /* Note that we cannot use "transparent" here for the second value, because Safari interprets that as rgba(0, 0, 0, 0), which will produce an awful transition to gray. */
+          background: linear-gradient(41deg, #e7f5ff, #e7f5ff00 85%);
         }
       `}</style>
     </Fragment>
