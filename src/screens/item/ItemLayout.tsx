@@ -381,12 +381,15 @@ function ItemMedia({ media }: { media: Item['media'] }) {
     current.info?.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
   const currentMediaCategory = current.info?.category
   const currentMediaCaption = current.caption
+  const currentMediaConcept = current.concept
+    ? `(${current.concept.label})`
+    : undefined
 
   return (
     <section>
       <SectionTitle className="sr-only">Media</SectionTitle>
       <div className="relative w-full h-64 border border-b-0 border-gray-200">
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-2.5">
           {currentMediaCategory === 'image' ? (
             <img
               src={currentMediaUrl}
@@ -418,7 +421,14 @@ function ItemMedia({ media }: { media: Item['media'] }) {
               </a>
             </div>
           )}
-          <p className="m-1.5">{currentMediaCaption ?? <span>&nbsp;</span>}</p>
+          <small className="mt-2.5">
+            <span>
+              {[currentMediaCaption, currentMediaConcept]
+                .filter(Boolean)
+                .join(' ')}
+            </span>
+            <span>&nbsp;</span>
+          </small>
         </div>
       </div>
       <div className="flex justify-center border border-gray-200">
