@@ -18,7 +18,10 @@ export default function ContributeScreen({
       lastUpdatedAt={lastUpdatedAt}
       links={pages}
     >
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </ContributeLayout>
   )
 }
