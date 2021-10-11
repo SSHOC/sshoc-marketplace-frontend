@@ -54,7 +54,7 @@ export default function ContributedItemsScreen(): JSX.Element {
       // items, but *all* items, so we specifically query by username, even though
       // this is not necessary for non-admin users.
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      'd.owner': user.data!.username!,
+      'd.owner': user.data?.username,
     } as SearchItems.QueryParameters,
     {
       enabled: auth.session?.accessToken != null && user.data?.username != null,
