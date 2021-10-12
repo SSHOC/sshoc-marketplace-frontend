@@ -20,6 +20,7 @@ import { useEffect, useRef } from 'react'
 import { Separator } from '@/elements/Collection/Separator'
 import { Field } from '@/elements/Field/Field'
 import { Icon } from '@/elements/Icon/Icon'
+import { Svg as CheckMarkIcon } from '@/elements/icons/small/checkmark.svg'
 import { Svg as TriangleIcon } from '@/elements/icons/small/triangle.svg'
 import { ListBoxBase } from '@/elements/ListBoxBase/ListBoxBase'
 import { Popover } from '@/elements/Popover/Popover'
@@ -41,6 +42,7 @@ export interface ComboBoxProps<T>
   allowsEmptyCollection?: boolean
   emptyCollectionPlaceholder?: string
   hideSelectionIcon?: boolean
+  showSelectedItemIndicator?: boolean
   hideButton?: boolean
   /** @default "text" */
   type?: 'text' | 'search'
@@ -177,6 +179,7 @@ export function ComboBox<T extends object>(
     ),
     spinnerContainer: 'inline-flex items-center justify-center mx-4',
     spinner: 'w-4 h-4 text-primary-750',
+    check: 'w-3 h-3 text-success-600',
   }
 
   return (
@@ -202,6 +205,16 @@ export function ComboBox<T extends object>(
           {isLoading ? (
             <span className={styles.spinnerContainer}>
               <ProgressSpinner className={styles.spinner} />
+            </span>
+          ) : null}
+          {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+          {typeof state.selectedKey === 'string' &&
+          state.selectedKey.length > 0 &&
+          /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
+          state.selectedItem?.textValue === state.inputValue && // only show indicator for selected item when it matches the current input. TODO: figure out how this should behave
+          props.showSelectedItemIndicator === true ? (
+            <span className={styles.spinnerContainer}>
+              <Icon icon={CheckMarkIcon} className={styles.check} />
             </span>
           ) : null}
           {props.hideButton !== true ? (

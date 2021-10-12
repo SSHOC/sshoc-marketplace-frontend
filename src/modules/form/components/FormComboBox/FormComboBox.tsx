@@ -31,6 +31,7 @@ export function FormComboBox<T>(props: FormComboBoxProps<T>): JSX.Element {
               selectedKey: input.value,
             })}
             {...getFormFieldValidationState(meta)}
+            showSelectedItemIndicator
           />
         )
       }}
