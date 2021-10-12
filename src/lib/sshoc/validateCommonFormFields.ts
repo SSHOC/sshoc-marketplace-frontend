@@ -7,6 +7,7 @@ import type {
   WorkflowCore,
 } from '@/api/sshoc'
 import { useGetPropertyTypes } from '@/api/sshoc'
+import { isEmptyString } from '@/lib/util/isEmptyString'
 import { isDate, isUrl } from '@/modules/form/validate'
 
 export function validateCommonFormFields<
@@ -25,12 +26,12 @@ export function validateCommonFormFields<
   >,
 ): void {
   /** Required field `label`. */
-  if (values.label === undefined) {
+  if (values.label === undefined || isEmptyString(values.label)) {
     errors.label = 'Label is required.'
   }
 
   /** Required field `description`. */
-  if (values.description === undefined) {
+  if (values.description === undefined || isEmptyString(values.description)) {
     errors.description = 'Description is required.'
   }
 
@@ -53,7 +54,6 @@ export function validateCommonFormFields<
       if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         contributor != null &&
-        contributor.role !== undefined &&
         contributor.actor === undefined
       ) {
         if (errors.contributors === undefined) {
@@ -91,8 +91,8 @@ export function validateCommonFormFields<
       if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         property != null &&
-        property.type === undefined &&
-        (property.value !== undefined || property.concept !== undefined)
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        property.type == null
       ) {
         if (errors.properties === undefined) {
           errors.properties = []
@@ -163,7 +163,6 @@ export function validateCommonFormFields<
       if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         item != null &&
-        item.relation !== undefined &&
         item.persistentId === undefined
       ) {
         if (errors.relatedItems === undefined) {
@@ -199,8 +198,6 @@ export function validateCommonFormFields<
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         id != null &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.identifierService?.code != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         id.identifier == null
       ) {
         if (errors.externalIds === undefined) {
@@ -234,7 +231,7 @@ export function validateCommonFormFields<
   }
 
   /** `sourceItemId` is required when `source` is set. */
-  if (values.source?.id != null && values.sourceItemId == null) {
+  if (values.sourceItemId == null) {
     errors.sourceItemId = 'Missing value in Source ID.'
   }
 
