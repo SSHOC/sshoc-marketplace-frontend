@@ -142,15 +142,16 @@ export function validateCommonFormFields<
       if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         property != null &&
-        property.type !== undefined &&
-        property.value === undefined &&
-        property.concept === undefined
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        property.type != null &&
+        property.value == null &&
+        property.concept == null
       ) {
         if (errors.properties === undefined) {
           errors.properties = []
         }
         errors.properties[index] = {
-          concept: 'Please choose a concept.',
+          concept: { uri: 'Please choose a concept.' },
           value: 'Please choose a value.',
         }
       }
