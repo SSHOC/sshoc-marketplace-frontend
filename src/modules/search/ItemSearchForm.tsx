@@ -114,8 +114,7 @@ export function ItemSearchComboBox(
       keepPreviousData: true,
     },
   )
-  const suggestions =
-    items.data?.suggestions?.map((suggestion) => ({ suggestion })) ?? []
+  const suggestions = items.data?.suggestions ?? []
 
   function onSelectionChange(key: Key | null) {
     if (
@@ -149,9 +148,9 @@ export function ItemSearchComboBox(
       }
     >
       {(item) => (
-        <ComboBox.Item key={item.suggestion} textValue={item.suggestion}>
+        <ComboBox.Item key={item.phrase} textValue={item.phrase}>
           <HighlightedText
-            text={item.suggestion}
+            text={item.phrase}
             searchPhrase={debouncedSearchTerm}
           />
         </ComboBox.Item>
