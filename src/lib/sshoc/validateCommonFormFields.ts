@@ -232,7 +232,7 @@ export function validateCommonFormFields<
   }
 
   /** `sourceItemId` is required when `source` is set. */
-  if (values.sourceItemId == null) {
+  if (values.sourceItemId == null && values.source?.id != null) {
     errors.sourceItemId = 'Missing value in Source ID.'
   }
 
