@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import type { FormEvent, Key, ReactNode } from 'react'
-import { useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
@@ -16,6 +16,11 @@ interface SearchFormValues {
   category?: ItemCategory
 }
 
+const ItemSearchFormContext = createContext<{
+  category?: ItemCategory
+  onCategoryChange?: (category: Key | null) => void
+}>({})
+
 export interface ItemSearchFormProps {
   children?: ReactNode
   className?: string
@@ -25,6 +30,15 @@ export default function ItemSearchForm(
   props: ItemSearchFormProps,
 ): JSX.Element {
   const router = useRouter()
+  const [category, setCategory] = useState<ItemCategory | undefined>(undefined)
+
+  function onCategoryChange(category: Key | null) {
+    if (typeof category === 'string' && category.length > 0) {
+      setCategory(category as ItemCategory)
+    } else {
+      setCategory(undefined)
+    }
+  }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -47,12 +61,15 @@ export default function ItemSearchForm(
 
   return (
     <form onSubmit={onSubmit} role="search" className={props.className}>
-      {props.children}
+      <ItemSearchFormContext.Provider value={{ category, onCategoryChange }}>
+        {props.children}
+      </ItemSearchFormContext.Provider>
     </form>
   )
 }
 
 export function ItemCategorySelect(): JSX.Element {
+  const { onCategoryChange } = useContext(ItemSearchFormContext)
   const categories = useGetItemCategories()
   const itemCategories = useMemo(() => {
     const items = [{ id: '', label: 'All categories' }]
@@ -69,6 +86,7 @@ export function ItemCategorySelect(): JSX.Element {
   return (
     <Select
       name="category"
+      onSelectionChange={onCategoryChange}
       aria-label="Category"
       isLoading={categories.isLoading}
       items={itemCategories}
@@ -89,6 +107,7 @@ export interface ItemSearchComboBoxProps {
 export function ItemSearchComboBox(
   props: ItemSearchComboBoxProps,
 ): JSX.Element {
+  const { category } = useContext(ItemSearchFormContext)
   const router = useRouter()
   const defaultSearchTerm = useQueryParam('q', false)
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm ?? '')
@@ -107,7 +126,7 @@ export function ItemSearchComboBox(
 
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
   const items = useAutocompleteItems(
-    { q: debouncedSearchTerm },
+    { q: debouncedSearchTerm, category },
     {
       /** Backend requires non-empty search phrase. */
       enabled: debouncedSearchTerm.length > 0,
