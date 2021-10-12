@@ -3,6 +3,8 @@ import { Fragment } from 'react'
 import type { ItemSearchResults } from '@/api/sshoc/types'
 import VStack from '@/modules/layout/VStack'
 
+const MAX_METADATA_VALUES = 5
+
 type Items = ItemSearchResults['items']
 type Item = Items[number]
 
@@ -16,11 +18,13 @@ export default function ItemMetadata({
 }): JSX.Element | null {
   const activities = item.properties
     ?.filter((property) => property.type?.code === 'activity')
+    ?.slice(0, MAX_METADATA_VALUES)
     ?.map((activity) => activity.concept?.label)
     ?.join(', ')
   const keywords = item.properties
     ?.filter((property) => property.type?.code === 'keyword')
-    ?.map((keyword) => keyword.value)
+    ?.slice(0, MAX_METADATA_VALUES)
+    ?.map((keyword) => keyword.concept?.label)
     ?.join(', ')
 
   if (
@@ -33,7 +37,7 @@ export default function ItemMetadata({
   return (
     <VStack
       as="dl"
-      className="text-xs text-gray-500 grid"
+      className="grid text-xs text-gray-500"
       style={{ gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem' }}
     >
       {activities !== undefined && activities.length > 0 ? (
