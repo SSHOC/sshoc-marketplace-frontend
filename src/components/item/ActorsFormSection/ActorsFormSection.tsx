@@ -433,7 +433,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
               <Button
                 type="submit"
                 variant="gradient"
-                isDisabled={pristine || invalid || submitting || isLoading}
+                isDisabled={submitting || isLoading}
               >
                 {buttonLabel}
               </Button>

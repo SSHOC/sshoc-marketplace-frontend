@@ -415,12 +415,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     onPress={() => {
                       updatePageStatus(pristine)
                     }}
-                    isDisabled={currentPageKey === 'steps' || invalid}
+                    isDisabled={currentPageKey === 'steps'}
                     className={cx(
                       'group inline-flex items-center space-x-4 font-body focus:outline-none',
-                      currentPageKey === 'steps' || invalid
-                        ? 'pointer-events-none'
-                        : '',
+                      currentPageKey === 'steps' ? 'pointer-events-none' : '',
                     )}
                   >
                     <span
@@ -466,8 +464,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', true)
                     }}
                     isDisabled={
-                      isFormPristine(pristine) ||
-                      invalid ||
                       submitting ||
                       updateWorkflow.isLoading ||
                       updateStep.isLoading ||
@@ -483,8 +479,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       form.change('draft', undefined)
                     }}
                     isDisabled={
-                      isFormPristine(pristine) ||
-                      invalid ||
                       submitting ||
                       updateWorkflow.isLoading ||
                       updateStep.isLoading ||
@@ -510,7 +504,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
                     updatePageStatus(pristine)
                   }}
-                  isDisabled={invalid}
                 >
                   Save
                 </Button>
@@ -520,7 +513,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                   onPress={() => {
                     updatePageStatus(pristine)
                   }}
-                  isDisabled={invalid}
                 >
                   Next
                 </Button>

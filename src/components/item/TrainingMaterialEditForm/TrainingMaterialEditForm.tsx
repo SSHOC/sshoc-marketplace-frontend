@@ -171,9 +171,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 onPress={() => {
                   form.change('draft', true)
                 }}
-                isDisabled={
-                  pristine || invalid || submitting || create.isLoading
-                }
+                isDisabled={submitting || create.isLoading}
                 variant="link"
               >
                 Save as draft
@@ -183,12 +181,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 onPress={() => {
                   form.change('draft', undefined)
                 }}
-                isDisabled={
-                  (pristine && isReviewToApprove !== true) ||
-                  invalid ||
-                  submitting ||
-                  create.isLoading
-                }
+                isDisabled={submitting || create.isLoading}
               >
                 {isAllowedToPublish ? 'Publish' : 'Submit'}
               </Button>
