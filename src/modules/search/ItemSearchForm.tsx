@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import type { FormEvent, Key, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
+import type { SuggestedObject } from '@/api/sshoc'
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'
@@ -134,14 +135,48 @@ export function ItemSearchComboBox(
     },
   )
   const suggestions = items.data?.suggestions ?? []
+  /**
+   * Suggested phrases are *not* unique. For example, the response from
+   *
+   * ```
+   * https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at/api/item-search/autocomplete?q=Generating
+   * ```
+   *
+   * returns:
+   *
+   * ```json
+   * {
+   *   "phrase": "Generating",
+   *   "suggestions": [
+   *     {
+   *       "phrase": "Generating an Ordered Data Set from an OCR Text File",
+   *       "persistentId": "WpRbMx"
+   *     },
+   *     {
+   *       "phrase": "Generating an Ordered Data Set from an OCR Text File",
+   *       "persistentId": "r8cjen"
+   *     }
+   *   ]
+   * }
+   * ```
+   *
+   * Therefore, we use a compound key of persistentId+phrase.
+   */
+
+  function createKey(suggestion: SuggestedObject) {
+    return [suggestion.persistentId, suggestion.phrase].join('+')
+  }
+
+  const suggestionsById = Object.fromEntries(
+    suggestions.map((suggestion) => [createKey(suggestion), suggestion.phrase]),
+  )
 
   function onSelectionChange(key: Key | null) {
-    if (
-      props.shouldSubmitOnSelect === true &&
-      key != null &&
-      String(key).length > 0
-    ) {
-      router.push({ pathname: '/search', query: { q: key } })
+    if (props.shouldSubmitOnSelect === true && key != null) {
+      const phrase = suggestionsById[key]
+      if (phrase != null && phrase.length > 0) {
+        router.push({ pathname: '/search', query: { q: phrase } })
+      }
     }
   }
 
@@ -167,7 +202,7 @@ export function ItemSearchComboBox(
       }
     >
       {(item) => (
-        <ComboBox.Item key={item.phrase} textValue={item.phrase}>
+        <ComboBox.Item key={createKey(item)} textValue={item.phrase}>
           <HighlightedText
             text={item.phrase}
             searchPhrase={debouncedSearchTerm}
