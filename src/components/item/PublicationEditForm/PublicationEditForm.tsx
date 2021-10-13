@@ -69,15 +69,24 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         } ${categoryLabel}.`,
       )
 
-      queryClient.invalidateQueries({
-        queryKey: ['searchItems'],
-      })
-      queryClient.invalidateQueries({
-        queryKey: ['getPublications'],
-      })
-      queryClient.invalidateQueries({
-        queryKey: ['getPublication', { persistentId: data.persistentId }],
-      })
+      /**
+       * Don't invalidate cache when saving a draft,
+       * because otherwise we would refetch the item,
+       * which will update the form's initial values.
+       * However, this refetch will return the non-draft
+       * item, so any edits would be lost.
+       */
+      if (data.status !== 'draft') {
+        queryClient.invalidateQueries({
+          queryKey: ['searchItems'],
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['getPublications'],
+        })
+        queryClient.invalidateQueries({
+          queryKey: ['getPublication', { persistentId: data.persistentId }],
+        })
+      }
       if (data.status === 'draft') {
         queryClient.invalidateQueries({
           queryKey: ['getMyDraftItems'],
