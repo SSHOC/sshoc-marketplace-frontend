@@ -386,7 +386,12 @@ function SuggestConceptDialog(props: SuggestConceptDialogProps) {
       ],
       {
         onSuccess() {
-          queryClient.invalidateQueries(['getConcepts'])
+          queryClient.invalidateQueries(['searchConcepts'])
+          queryClient.invalidateQueries(['getAllConceptRelations'])
+          queryClient.invalidateQueries([
+            'getVocabulary',
+            { code: vocabularyId },
+          ])
           toast.success('Sucessfully suggested concept.')
         },
         onError() {
