@@ -152,7 +152,7 @@ export function validateCommonFormFields<
         }
         errors.properties[index] = {
           concept: { uri: 'Please choose a concept.' },
-          value: 'Please choose a value.',
+          value: 'Please enter a value.',
         }
       }
     })
