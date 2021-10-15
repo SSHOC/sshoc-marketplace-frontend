@@ -157,8 +157,8 @@ function DraftItem(props: DraftItemProps) {
                   '',
                   category,
                   item.persistentId,
-                  'edit',
                   'draft',
+                  'edit',
                 ].join('/'),
               }}
             >
