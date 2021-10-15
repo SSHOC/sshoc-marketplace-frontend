@@ -189,7 +189,9 @@ function ItemVersion(props: ItemVersionProps) {
           >
             <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">
               {item.label}
-              {item.version != null ? <span> ({item.version})</span> : null}
+              {typeof item.version === 'string' && item.version.length > 0 ? (
+                <span> ({item.version})</span>
+              ) : null}
             </a>
           </Link>
         </h2>
