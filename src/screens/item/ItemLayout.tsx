@@ -132,15 +132,17 @@ export default function ItemLayout({
                     </a>
                   </Link>
                 ) : null}
-                <Link
-                  href={{
-                    pathname: `/${item.category}/${item.persistentId}/history`,
-                  }}
-                >
-                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
-                    History
-                  </a>
-                </Link>
+                {item.status === 'approved' ? (
+                  <Link
+                    href={{
+                      pathname: `/${item.category}/${item.persistentId}/history`,
+                    }}
+                  >
+                    <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+                      History
+                    </a>
+                  </Link>
+                ) : null}
                 <ProtectedView roles={['administrator']}>
                   <DeleteItemButton
                     id={item.persistentId}
