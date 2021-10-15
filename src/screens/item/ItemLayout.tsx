@@ -147,6 +147,7 @@ export default function ItemLayout({
                   <DeleteItemButton
                     id={item.persistentId}
                     category={item.category as ItemCategory}
+                    draft={item.status === 'draft'}
                   />
                 </ProtectedView>
               </div>
@@ -194,15 +195,17 @@ export default function ItemLayout({
 function DeleteItemButton({
   id,
   category,
+  draft,
 }: {
   id: string
   category: ItemCategory
+  draft: boolean
 }) {
   const auth = useAuth()
   const toast = useToast()
   const router = useRouter()
 
-  const ops: Record<ItemCategory, any> = {
+  const ops = {
     dataset: useDeleteDataset,
     publication: useDeletePublication,
     'tool-or-service': useDeleteTool,
@@ -211,7 +214,6 @@ function DeleteItemButton({
   }
 
   const { mutate, status } = ops[category]({
-    enabled: Boolean(auth.session?.accessToken),
     onSuccess() {
       toast.success('Successfully deleted item.')
       router.push('/')
@@ -225,8 +227,8 @@ function DeleteItemButton({
     if (auth.session?.accessToken == null) return
 
     mutate([
-      category === 'workflow' ? { workflowId: id } : { id },
-      undefined,
+      { persistentId: id },
+      draft ? { draft: true } : {},
       {
         token: auth.session.accessToken,
         hooks: {
