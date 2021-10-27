@@ -737,7 +737,8 @@ function useItemMetadata({
                                   : null
 
                               return id.identifierService?.urlTemplate !=
-                                null ? (
+                                null &&
+                                id.identifierService.urlTemplate.length > 0 ? (
                                 <Anchor
                                   href={id.identifierService.urlTemplate.replace(
                                     '{source-actor-id}',
@@ -804,7 +805,7 @@ function useItemMetadata({
           <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
             Source:
           </span>
-          {source.urlTemplate != null ? (
+          {source.urlTemplate != null && source.urlTemplate.length > 0 ? (
             <Anchor
               href={source.urlTemplate.replace(
                 '{source-item-id}',
@@ -828,20 +829,22 @@ function useItemMetadata({
           return (
             <li key={id.identifier} className="flex">
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-                {id.identifierService?.label}:
+                {id.identifierService?.label}
               </span>
-              {id.identifierService?.urlTemplate != null ? (
-                <Anchor
-                  href={id.identifierService.urlTemplate.replace(
-                    '{source-item-id}',
-                    id.identifier!,
-                  )}
-                >
-                  {id.identifier}
-                </Anchor>
-              ) : (
-                <span>{id.identifier}</span>
-              )}
+              {id.identifierService?.urlTemplate != null &&
+              id.identifierService.urlTemplate.length > 0 ? (
+                <>
+                  <span>: </span>
+                  <Anchor
+                    href={id.identifierService.urlTemplate.replace(
+                      '{source-item-id}',
+                      id.identifier!,
+                    )}
+                  >
+                    {id.identifier}
+                  </Anchor>
+                </>
+              ) : null}
             </li>
           )
         })}
