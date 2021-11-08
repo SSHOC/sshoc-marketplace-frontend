@@ -42,6 +42,11 @@ export interface ActorsFormSectionProps {
 export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
 
+  /**
+   * This is an ugly hack.
+   */
+  const [refresh, doRefresh] = useState(0)
+
   const [showCreateNewDialog, setShowCreateNewDialog] = useState(false)
   function openCreateNewDialog() {
     setShowCreateNewDialog(true)
@@ -51,7 +56,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
   }
 
   const [showEditDialog, setShowEditDialog] = useState(false)
-  const [actorId, setActorId] = useState<{ id: number }>({ id: 0 })
+  const [actorToEdit, setActorToEdit] = useState<{ id: number }>({ id: 0 })
   function openEditDialog() {
     setShowEditDialog(true)
   }
@@ -80,7 +85,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       <div className="flex items-center space-x-6">
                         <FormFieldEditButton
                           onPress={() => {
-                            setActorId(fields.value[index].actor)
+                            setActorToEdit(fields.value[index].actor)
                             openEditDialog()
                           }}
                         >
@@ -106,6 +111,8 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       label={'Actor role'}
                     />
                     <ActorComboBox
+                      // TODO: try make this a compound key of id+name
+                      key={refresh}
                       name={`${name}.actor.id`}
                       label={'Name'}
                       index={index}
@@ -126,9 +133,36 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
         onDismiss={closeCreateNewDialog}
       />
       <EditActorDialog
-        isOpen={showEditDialog && actorId.id !== 0}
+        isOpen={showEditDialog && actorToEdit.id !== 0}
         onDismiss={closeEditDialog}
-        actorId={actorId}
+        actorId={actorToEdit}
+        onSuccess={(actor) => {
+          /**
+           * We need to öotentially mutate initial values to update the displayed actor name,
+           * because initially, `ActorComboBox` is populated by reading from the form's `initialValues`.
+           * Only subsequent actor searches hit the `searchActors` endpoint.
+           *
+           * This is all really not great. We just just always fetch fresh data to populate the combobox,
+           * i.e. use initialValues only as placeholder data for in a useGetActor query hook.
+           */
+          if (actor.id === actorToEdit.id) {
+            const contributors = props.initialValues?.contributors
+            if (Array.isArray(contributors)) {
+              const _actor = contributors.find(
+                (contributor) => contributor.actor.id === actor.id,
+              )?.actor
+              if (_actor != null) {
+                _actor.name = actor.name
+              }
+              /**
+               * Force actor combobox to remount, so the value in the `<input>` is reset.
+               * Invalidating `searchActor` query alone will force new request, but would
+               * not update the input text value.
+               */
+              doRefresh((i) => i + 1)
+            }
+          }
+        }}
       />
     </FormSection>
   )
@@ -237,6 +271,7 @@ function CreateActorDialog(props: CreateActorDialogProps) {
       {
         onSuccess() {
           queryClient.invalidateQueries(['getActors'])
+          queryClient.invalidateQueries(['searchActors'])
           toast.success('Sucessfully created actor.')
         },
         onError() {
@@ -476,6 +511,7 @@ interface EditActorDialogProps {
   isOpen: boolean
   onDismiss: () => void
   actorId: { id: number }
+  onSuccess?: (actor: ActorDto) => void
 }
 
 function EditActorDialog(props: EditActorDialogProps) {
@@ -498,10 +534,12 @@ function EditActorDialog(props: EditActorDialogProps) {
     return updateActor.mutateAsync(
       [{ id }, values, { token: auth.session.accessToken }],
       {
-        onSuccess() {
+        onSuccess(actor) {
           queryClient.invalidateQueries(['getActors'])
+          queryClient.invalidateQueries(['searchActors'])
           queryClient.invalidateQueries(['getActor', { id }])
           toast.success('Sucessfully updated actor.')
+          props.onSuccess?.(actor)
         },
         onError() {
           toast.error('Failed to update actor.')

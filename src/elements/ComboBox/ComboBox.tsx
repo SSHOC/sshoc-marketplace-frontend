@@ -208,8 +208,9 @@ export function ComboBox<T extends object>(
             </span>
           ) : null}
           {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-          {typeof state.selectedKey === 'string' &&
-          state.selectedKey.length > 0 &&
+          {((typeof state.selectedKey === 'string' &&
+            state.selectedKey.length > 0) ||
+            typeof state.selectedKey === 'number') &&
           /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
           state.selectedItem?.textValue === state.inputValue && // only show indicator for selected item when it matches the current input. TODO: figure out how this should behave
           props.showSelectedItemIndicator === true ? (
