@@ -2,12 +2,14 @@ import { Dialog } from '@reach/dialog'
 import { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { ActorCore } from '@/api/sshoc'
+import type { ActorCore, ActorDto } from '@/api/sshoc'
 import {
   useCreateActor,
+  useGetActor,
   useGetAllActorRoles,
   useGetAllActorSources,
   useSearchActors,
+  useUpdateActor,
 } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
@@ -17,6 +19,7 @@ import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
+import { FormFieldEditButton } from '@/modules/form/components/FormFieldEditButton/FormFieldEditButton'
 import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
 import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
 import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
@@ -47,6 +50,15 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
     setShowCreateNewDialog(false)
   }
 
+  const [showEditDialog, setShowEditDialog] = useState(false)
+  const [actorId, setActorId] = useState<{ id: number }>({ id: 0 })
+  function openEditDialog() {
+    setShowEditDialog(true)
+  }
+  function closeEditDialog() {
+    setShowEditDialog(false)
+  }
+
   return (
     <FormSection
       title={'Actors'}
@@ -65,18 +77,28 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                   <FormRecord
                     key={name}
                     actions={
-                      <FormFieldRemoveButton
-                        onPress={() => {
-                          fields.remove(index)
-                          /** YUCK! */
-                          if (
-                            Array.isArray(props.initialValues?.contributors)
-                          ) {
-                            props.initialValues.contributors.splice(index, 1)
-                          }
-                        }}
-                        aria-label={'Remove actor'}
-                      />
+                      <div className="flex items-center space-x-6">
+                        <FormFieldEditButton
+                          onPress={() => {
+                            setActorId(fields.value[index].actor)
+                            openEditDialog()
+                          }}
+                        >
+                          Edit actor
+                        </FormFieldEditButton>
+                        <FormFieldRemoveButton
+                          onPress={() => {
+                            fields.remove(index)
+                            /** YUCK! */
+                            if (
+                              Array.isArray(props.initialValues?.contributors)
+                            ) {
+                              props.initialValues.contributors.splice(index, 1)
+                            }
+                          }}
+                          aria-label={'Remove actor'}
+                        />
+                      </div>
                     }
                   >
                     <ActorRoleSelect
@@ -102,6 +124,11 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
       <CreateActorDialog
         isOpen={showCreateNewDialog}
         onDismiss={closeCreateNewDialog}
+      />
+      <EditActorDialog
+        isOpen={showEditDialog && actorId.id !== 0}
+        onDismiss={closeEditDialog}
+        actorId={actorId}
       />
     </FormSection>
   )
@@ -255,7 +282,7 @@ type ActorFormValues = ActorCore
 
 interface CreateActorFormProps {
   onDismiss: () => void
-  initialValues?: ActorFormValues
+  initialValues?: Partial<ActorFormValues>
   onSubmit: (actor: ActorFormValues) => void
   isLoading: boolean
   buttonLabel: string
@@ -442,6 +469,77 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
         )
       }}
     </Form>
+  )
+}
+
+interface EditActorDialogProps {
+  isOpen: boolean
+  onDismiss: () => void
+  actorId: { id: number }
+}
+
+function EditActorDialog(props: EditActorDialogProps) {
+  const updateActor = useUpdateActor()
+  const auth = useAuth()
+  const queryClient = useQueryClient()
+  const toast = useToast()
+
+  const id = props.actorId.id
+  const actor = useGetActor({ id }, { enabled: Boolean(id) })
+
+  function onSubmit(unsanitized: ActorFormValues) {
+    if (auth.session?.accessToken === undefined) {
+      toast.error('Authentication required.')
+      return Promise.reject()
+    }
+
+    const values = sanitizeActorFormValues(unsanitized)
+
+    return updateActor.mutateAsync(
+      [{ id }, values, { token: auth.session.accessToken }],
+      {
+        onSuccess() {
+          queryClient.invalidateQueries(['getActors'])
+          queryClient.invalidateQueries(['getActor', { id }])
+          toast.success('Sucessfully updated actor.')
+        },
+        onError() {
+          toast.error('Failed to update actor.')
+        },
+        onSettled() {
+          props.onDismiss()
+        },
+      },
+    )
+  }
+
+  return (
+    <Dialog
+      isOpen={props.isOpen && actor.data != null}
+      onDismiss={props.onDismiss}
+      className="flex flex-col w-full max-w-screen-lg px-32 py-16 mx-auto bg-white rounded shadow-lg"
+      style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
+      aria-label="Edit actor"
+    >
+      <button
+        onClick={props.onDismiss}
+        className="self-end"
+        aria-label="Close dialog"
+      >
+        <Icon icon={CloseIcon} className="" />
+      </button>
+      <section className="flex flex-col space-y-6">
+        <h2 className="text-2xl font-medium">Edit actor</h2>
+        {/* this form is rendered in a portal, so it's valid html, even though it's a <form> "nested" in another <form>. */}
+        <CreateActorForm
+          initialValues={actor.data as Partial<ActorFormValues>}
+          onDismiss={props.onDismiss}
+          onSubmit={onSubmit}
+          isLoading={actor.isLoading || updateActor.isLoading}
+          buttonLabel="Update"
+        />
+      </section>
+    </Dialog>
   )
 }
 
