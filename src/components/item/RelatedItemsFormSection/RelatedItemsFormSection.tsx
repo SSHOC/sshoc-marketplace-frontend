@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useGetAllItemRelations, useSearchItems } from '@/api/sshoc'
+import { useGetItemRelations, useSearchItems } from '@/api/sshoc'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBox'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
@@ -83,13 +83,16 @@ interface RelationTypeSelectProps {
  * Relation type.
  */
 function RelationTypeSelect(props: RelationTypeSelectProps): JSX.Element {
-  const relationTypes = useGetAllItemRelations()
+  // TODO: will we ever have more than 100 relation types? if yes, make this a combobox.
+  const relationTypes = useGetItemRelations({ perpage: 100 })
+
+  const types = relationTypes.data?.itemRelations ?? []
 
   return (
     <FormSelect
       name={props.name}
       label={props.label}
-      items={relationTypes.data ?? []}
+      items={types}
       isLoading={relationTypes.isLoading}
       variant="form"
     >
