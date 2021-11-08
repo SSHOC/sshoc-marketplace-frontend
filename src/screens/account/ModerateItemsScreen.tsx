@@ -446,7 +446,7 @@ function ContributorFacet(props: ContributorFacetProps) {
         id="facet-contributor"
         className="w-full pt-8 mb-4 font-medium uppercase border-t border-gray-200"
       >
-        Contributors
+        Users
       </legend>
       <div className="mb-6">
         <TextField
