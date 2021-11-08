@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useMemo } from 'react'
 
@@ -53,8 +54,24 @@ export default function SignInScreen(): JSX.Element {
               <span className="text-xl font-bold">or</span>
               <span className="flex-1 border-b border-gray-200" />
             </div>
-            <p>Sign in with a local account.</p>
+            <p>
+              Sign in with a local account is used by maintainers to manage the
+              website.
+            </p>
             <SignInForm />
+            <div className="flex items-baseline space-x-4">
+              {/* <span className="text-xl font-bold">or</span> */}
+              <span className="flex-1 border-b border-gray-200" />
+            </div>
+            <p className="text-gray-550">
+              If you are having trouble with the sign in process, please{' '}
+              <Link href="/contact">
+                <a className="transition-colors text-primary-500 hover:text-primary-750">
+                  contact the SSH Open Marketplace team
+                </a>
+              </Link>
+              .
+            </p>
           </div>
         </ContentColumn>
       </GridLayout>
