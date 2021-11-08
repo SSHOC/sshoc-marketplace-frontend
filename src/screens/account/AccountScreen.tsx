@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { Fragment } from 'react'
 
+import type { UserDto } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as ActorsIcon } from '@/elements/icons/big/actors.svg'
@@ -55,6 +57,60 @@ const fields = [
     roles: ['administrator'],
   },
 ]
+type UserRole = Exclude<UserDto['role'], undefined>
+type NonSystemUserRole = Exclude<
+  UserRole,
+  'system-contributor' | 'system-moderator'
+>
+
+const welcomeMessage: Record<NonSystemUserRole, ReactNode> = {
+  contributor: (
+    <Fragment>
+      Dear contributor to the SSH Open Marketplace, welcome to the curation
+      dashboard of the SSH Open Marketplace! You can find here the list of items
+      you have contributed to as well as the list of your draft items. Now that
+      you are logged in, you can create and edit items. Please consult the{' '}
+      <Link href="/contribute">
+        <a className="transition-colors text-primary-500 hover:text-primary-750">
+          contributor guidelines
+        </a>
+      </Link>{' '}
+      if you need to be guided in the process.
+    </Fragment>
+  ),
+  moderator: (
+    <Fragment>
+      Dear moderator of the SSH Open Marketplace, welcome to the curation
+      dashboard! As any contributor, you can find here the list of items you
+      have contributed to as well as the list of your draft items. Because of
+      your moderator status, you can also access the list of items to moderate
+      and manage the actors referenced in the Marketplace. Please consult the{' '}
+      <Link href="/contribute">
+        <a className="transition-colors text-primary-500 hover:text-primary-750">
+          contribute pages
+        </a>
+      </Link>{' '}
+      if you need some guidance.
+    </Fragment>
+  ),
+  administrator: (
+    <Fragment>
+      Dear administrator of the SSH Open Marketplace, welcome to the curation
+      dashboard! As any contributor, you can find here the list of items you
+      have contributed to as well as the list of your draft items. As any
+      moderator, you can also access the list of items to moderate and manage
+      the actors referenced in the Marketplace. And because of your
+      administrator status, you can also manage sources and users. Please
+      consult the{' '}
+      <Link href="/contribute">
+        <a className="transition-colors text-primary-500 hover:text-primary-750">
+          contribute pages
+        </a>
+      </Link>{' '}
+      if you need some guidance.
+    </Fragment>
+  ),
+}
 
 /**
  * My account screen.
@@ -85,6 +141,9 @@ export default function AccountScreen(): JSX.Element {
           style={{ gridColumn: '4 / span 8' }}
         >
           <Title>My account</Title>
+          <p className="py-6 leading-relaxed text-gray-550">
+            {welcomeMessage[user.data.role as NonSystemUserRole]}
+          </p>
           <ul className="grid grid-cols-3 gap-10">
             {fields.map((route, index) => {
               if (
