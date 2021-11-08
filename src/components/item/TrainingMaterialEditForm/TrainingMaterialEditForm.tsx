@@ -42,7 +42,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   const useItemMutation = useUpdateTrainingMaterial
 
-  const isReviewToApprove = useQueryParam('review', false, Boolean)
+  const isReviewToApprove = useQueryParam('review', false, Boolean) ?? false
 
   const toast = useToast()
   const router = useRouter()
@@ -195,7 +195,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 }}
                 isDisabled={submitting || create.isLoading}
               >
-                {isAllowedToPublish ? 'Publish' : 'Submit'}
+                {isAllowedToPublish
+                  ? isReviewToApprove
+                    ? 'Approve'
+                    : 'Publish'
+                  : 'Submit'}
               </Button>
             </div>
           </form>

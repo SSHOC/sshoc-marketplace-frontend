@@ -56,7 +56,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   const useItemMutation = useUpdateWorkflow
 
-  const isReviewToApprove = useQueryParam('review', false, Boolean)
+  const isReviewToApprove = useQueryParam('review', false, Boolean) ?? false
 
   const toast = useToast()
   const router = useRouter()
@@ -494,7 +494,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                       createStep.isLoading
                     }
                   >
-                    {isAllowedToPublish ? 'Publish' : 'Submit'}
+                    {isAllowedToPublish
+                      ? isReviewToApprove
+                        ? 'Approve'
+                        : 'Publish'
+                      : 'Submit'}
                   </Button>
                 </Fragment>
               ) : currentPageKey === 'step' ? (
