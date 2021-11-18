@@ -547,7 +547,9 @@ function ItemPropertiesList(props: ItemMetadata) {
   return (
     <aside className="">
       <h2 className="text-xl font-medium">Details</h2>
-      <div className="text-sm divide-y">{Object.values(metadata)}</div>
+      <div className="text-sm break-words divide-y">
+        {Object.values(metadata)}
+      </div>
     </aside>
   )
 }
