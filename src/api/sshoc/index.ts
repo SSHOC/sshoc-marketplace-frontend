@@ -6597,6 +6597,7 @@ export namespace SearchItems {
       | 'workflow'
       | 'step'
     >
+    includeSteps?: boolean
     order?: Array<'score' | 'label' | 'modified-on'>
     page?: number /* int32 */
     perpage?: number /* int32 */

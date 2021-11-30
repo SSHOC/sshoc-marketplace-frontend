@@ -131,6 +131,7 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
   const searchResults = useSearchItems(
     {
       q: debouncedSearchTerm,
+      includeSteps: true,
       // categories: category !== null ? [category] : undefined,
     },
     {
