@@ -87,7 +87,7 @@
     "next-plugin-preval": "^1.2.1",
     "nodemailer": "^6.4.16",
     "nprogress": "^0.2.0",
-    "postcss": "^8.2.1",
+    "postcss": "^8.4.4",
     "postcss-focus-visible": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -163,7 +163,7 @@
     "vfile-matter": "^3.0.0"
   },
   "engines": {
-    "node": ">=12.9",
+    "node": "14.x||16.x",
     "yarn": "^1"
   },
   "babel": {
