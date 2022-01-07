@@ -10,7 +10,12 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
-import { useCreateStep, useUpdateStep, useUpdateWorkflow } from '@/api/sshoc'
+import {
+  useCreateStep,
+  useDeleteWorkflowVersion,
+  useUpdateStep,
+  useUpdateWorkflow,
+} from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -40,6 +45,7 @@ export interface ItemFormValues extends WorkflowCore {
 
 export interface ItemFormProps<T> {
   id: string
+  versionId?: number
   category: ItemCategory
   initialValues?: Partial<T>
   item?: WorkflowDto
@@ -49,7 +55,7 @@ export interface ItemFormProps<T> {
  * Item edit form.
  */
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
-  const { id, category, initialValues } = props
+  const { id, versionId, category, initialValues } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
   const stepLabel = getSingularItemCategoryLabel('step')
@@ -234,6 +240,42 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
      * If the promise rejects it's a network error (or similar).
      */
     return Promise.resolve()
+  }
+
+  const rejectVersion = useDeleteWorkflowVersion({
+    onSuccess() {
+      toast.success('Successfully rejected item version.')
+      router.push('/')
+    },
+    onError() {
+      toast.error('Failed to reject item version.')
+    },
+  })
+
+  function onReject() {
+    if (auth.session?.accessToken == null) {
+      toast.error('Authentication required.')
+      return Promise.reject()
+    }
+
+    if (versionId == null) return
+
+    rejectVersion.mutate([
+      { persistentId: id, versionId },
+      {
+        token: auth.session.accessToken,
+        hooks: {
+          /**
+           * We wrongly assume in the OpenApi document that
+           * DELETE returns a json response, so we override this here
+           * to avoid trying to parse an empty response.
+           */
+          response() {
+            return Promise.resolve()
+          },
+        },
+      },
+    ])
   }
 
   const [state, setState] = useState<{
@@ -467,21 +509,38 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
               </Button>
               {currentPageKey === 'steps' ? (
                 <Fragment>
-                  <Button
-                    type="submit"
-                    onPress={() => {
-                      form.change('draft', true)
-                    }}
-                    isDisabled={
-                      submitting ||
-                      updateWorkflow.isLoading ||
-                      updateStep.isLoading ||
-                      createStep.isLoading
-                    }
-                    variant="link"
-                  >
-                    Save as draft
-                  </Button>
+                  {!isReviewToApprove ? (
+                    <Button
+                      type="submit"
+                      onPress={() => {
+                        form.change('draft', true)
+                      }}
+                      isDisabled={
+                        submitting ||
+                        updateWorkflow.isLoading ||
+                        updateStep.isLoading ||
+                        createStep.isLoading
+                      }
+                      variant="link"
+                    >
+                      Save as draft
+                    </Button>
+                  ) : null}
+                  {isReviewToApprove && isAllowedToPublish ? (
+                    <Button
+                      type="button"
+                      onPress={onReject}
+                      isDisabled={
+                        submitting ||
+                        updateWorkflow.isLoading ||
+                        updateStep.isLoading ||
+                        createStep.isLoading
+                      }
+                      variant="link"
+                    >
+                      Reject
+                    </Button>
+                  ) : null}
                   <Button
                     type="submit"
                     onPress={() => {

@@ -45,6 +45,7 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
           ) : (
             <ItemForm
               id={id}
+              versionId={trainingMaterial.data.id!}
               category="training-material"
               initialValues={convertToInitialFormValues(trainingMaterial.data)}
               item={trainingMaterial.data}

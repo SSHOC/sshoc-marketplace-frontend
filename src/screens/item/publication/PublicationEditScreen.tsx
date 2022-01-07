@@ -45,6 +45,7 @@ export default function PublicationEditScreen(): JSX.Element {
           ) : (
             <ItemForm
               id={id}
+              versionId={publication.data.id!}
               category="publication"
               initialValues={convertToInitialFormValues(publication.data)}
               item={publication.data}

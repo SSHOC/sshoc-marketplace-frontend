@@ -43,6 +43,7 @@ export default function WorkflowEditScreen(): JSX.Element {
           ) : (
             <ItemForm
               id={id}
+              versionId={workflow.data.id!}
               category="workflow"
               initialValues={convertToInitialFormValues(workflow.data)}
               item={workflow.data}

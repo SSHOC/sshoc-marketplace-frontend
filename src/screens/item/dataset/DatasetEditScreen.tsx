@@ -45,6 +45,7 @@ export default function DatasetEditScreen(): JSX.Element {
           ) : (
             <ItemForm
               id={id}
+              versionId={dataset.data.id!}
               category="dataset"
               initialValues={convertToInitialFormValues(dataset.data)}
               item={dataset.data}

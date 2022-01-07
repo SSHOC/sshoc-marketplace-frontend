@@ -47,6 +47,7 @@ export default function ToolEditScreen(): JSX.Element {
           ) : (
             <ItemForm
               id={id}
+              versionId={tool.data.id!}
               category="tool-or-service"
               initialValues={convertToInitialFormValues(tool.data)}
               item={tool.data}

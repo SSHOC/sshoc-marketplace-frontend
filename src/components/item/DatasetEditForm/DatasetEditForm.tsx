@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
-import { useUpdateDataset } from '@/api/sshoc'
+import { useDeleteDatasetVersion, useUpdateDataset } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -29,6 +29,7 @@ export interface ItemFormValues extends DatasetCore {
 
 export interface ItemFormProps<T> {
   id: string
+  versionId?: number
   category: ItemCategory
   initialValues?: Partial<T>
   item?: any
@@ -38,7 +39,7 @@ export interface ItemFormProps<T> {
  * Item edit form.
  */
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
-  const { id, category, initialValues } = props
+  const { id, versionId, category, initialValues } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
 
@@ -155,6 +156,42 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     router.push('/')
   }
 
+  const rejectVersion = useDeleteDatasetVersion({
+    onSuccess() {
+      toast.success('Successfully rejected item version.')
+      router.push('/')
+    },
+    onError() {
+      toast.error('Failed to reject item version.')
+    },
+  })
+
+  function onReject() {
+    if (auth.session?.accessToken == null) {
+      toast.error('Authentication required.')
+      return Promise.reject()
+    }
+
+    if (versionId == null) return
+
+    rejectVersion.mutate([
+      { persistentId: id, versionId },
+      {
+        token: auth.session.accessToken,
+        hooks: {
+          /**
+           * We wrongly assume in the OpenApi document that
+           * DELETE returns a json response, so we override this here
+           * to avoid trying to parse an empty response.
+           */
+          response() {
+            return Promise.resolve()
+          },
+        },
+      },
+    ])
+  }
+
   return (
     <Form
       onSubmit={onSubmit}
@@ -179,16 +216,28 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
               <Button onPress={onCancel} variant="link">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                onPress={() => {
-                  form.change('draft', true)
-                }}
-                isDisabled={submitting || create.isLoading}
-                variant="link"
-              >
-                Save as draft
-              </Button>
+              {!isReviewToApprove ? (
+                <Button
+                  type="submit"
+                  onPress={() => {
+                    form.change('draft', true)
+                  }}
+                  isDisabled={submitting || create.isLoading}
+                  variant="link"
+                >
+                  Save as draft
+                </Button>
+              ) : null}
+              {isReviewToApprove && isAllowedToPublish ? (
+                <Button
+                  type="button"
+                  onPress={onReject}
+                  isDisabled={submitting || create.isLoading}
+                  variant="link"
+                >
+                  Reject
+                </Button>
+              ) : null}
               <Button
                 type="submit"
                 onPress={() => {
