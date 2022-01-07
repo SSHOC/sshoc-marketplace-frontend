@@ -20,11 +20,7 @@ import {
   useGetTrainingMaterialVersionInformationContributors,
   useGetWorkflowVersionInformationContributors,
 } from '@/api/sshoc'
-import {
-  getMediaFileUrl,
-  getMediaThumbnailUrl,
-  useCurrentUser,
-} from '@/api/sshoc/client'
+import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
 import type {
   Item as GenericItem,
   ItemCategory as ItemCategoryWithStep,
@@ -519,13 +515,6 @@ function ItemMedia({ media }: { media: Item['media'] }) {
   )
 }
 
-/**
- * Some properties are marked as `hidden` by the backend.
- * `thumbnail` and `media` are already shown, so we treat these as additional hidden properties
- * in the metadata sidepanel.
- */
-const ADDITIONAL_HIDDEN_PROPERTIES = ['thumbnail', 'media']
-
 interface ItemMetadata {
   properties: ItemProperties
   contributors: ItemContributors
@@ -587,33 +576,13 @@ function useItemMetadata({
   dateLastUpdated,
   externalIds,
 }: ItemMetadata) {
-  const { data: user } = useCurrentUser()
-
   const metadata: any = {}
 
   if (Array.isArray(properties) && properties.length > 0) {
     const grouped: Record<string, Record<string, Array<PropertyDto>>> = {}
     properties.forEach((property) => {
-      /**
-       * Only show hidden properties for admins.
-       */
-      if (property.type?.hidden === true) {
-        if (!user || !['administrator', 'moderator'].includes(user.role!)) {
-          return
-        }
-      }
-
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const type = property.type!
-      if (
-        // The api returns hidden properties only for authenticated users with role moderator/administrator,
-        // and we want to show hidden properties in the ui for these users.
-        // type.hidden === true ||
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        ADDITIONAL_HIDDEN_PROPERTIES.includes(type.code!)
-      ) {
-        return
-      }
 
       const groupName = property.type?.groupName ?? 'Other'
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
