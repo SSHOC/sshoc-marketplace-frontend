@@ -78,6 +78,8 @@ export function ItemCategorySelect(): JSX.Element {
     if (categories.data === undefined) return items
 
     Object.entries(categories.data).forEach(([id, label]) => {
+      if (id === 'step') return
+
       items.push({ id, label })
     })
 

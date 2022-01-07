@@ -62,6 +62,8 @@ function MainNavigation(): JSX.Element {
           </HStack>
           <HStack as="ul" className="items-center">
             {Object.entries(itemCategories).map(([category, label]) => {
+              if (category === 'step') return null
+
               const query: ItemSearchQuery = {
                 categories: [category as ItemCategory],
                 order: ['label'],
