@@ -117,17 +117,15 @@ export default function ItemLayout({
             </div>
             <ProtectedView>
               <div className="flex flex-col space-y-2 xl:flex-row xl:space-y-0 xl:space-x-4">
-                {item.status === 'approved' ? (
-                  <Link
-                    href={{
-                      pathname: `/${item.category}/${item.persistentId}/edit`,
-                    }}
-                  >
-                    <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
-                      Edit
-                    </a>
-                  </Link>
-                ) : null}
+                <Link
+                  href={{
+                    pathname: `/${item.category}/${item.persistentId}/edit`,
+                  }}
+                >
+                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+                    Edit
+                  </a>
+                </Link>
                 {item.status === 'approved' ? (
                   <Link
                     href={{

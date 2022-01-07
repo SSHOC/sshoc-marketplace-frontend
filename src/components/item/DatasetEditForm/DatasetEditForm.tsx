@@ -45,7 +45,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
   const useItemMutation = useUpdateDataset
 
-  const isReviewToApprove = useQueryParam('review', false, Boolean) ?? false
+  const _isReviewToApprove = useQueryParam('review', false, Boolean) ?? false
+  const isReviewToApprove =
+    _isReviewToApprove &&
+    props.item?.status != null &&
+    ['suggested', 'ingested'].includes(props.item.status)
 
   const toast = useToast()
   const router = useRouter()

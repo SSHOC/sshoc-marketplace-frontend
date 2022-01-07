@@ -5,6 +5,7 @@ import { useGetTrainingMaterial } from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/TrainingMaterialEditForm/TrainingMaterialEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
+import { useAuth } from '@/modules/auth/AuthContext'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
@@ -15,18 +16,24 @@ import { Title } from '@/modules/ui/typography/Title'
  */
 export default function TrainingMaterialEditScreen(): JSX.Element {
   const router = useRouter()
+  const auth = useAuth()
 
   const id = router.query.id as string | undefined
   const trainingMaterial = useGetTrainingMaterial(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
-    {},
+    /**
+     * If there is a not-yet-approved item version accessible by the authenticated user
+     * (either a draft, or suggested version), use that, otherwise fall back to last approved version.
+     */
+    { approved: false, draft: true },
     {
       enabled: id != null,
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     },
+    { token: auth.session?.accessToken },
   )
 
   return (
