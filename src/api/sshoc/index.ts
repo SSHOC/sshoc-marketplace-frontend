@@ -2217,7 +2217,7 @@ export function useGetTrainingMaterialVersion(
  * Delete training material by its persistentId and versionId
  */
 
-export namespace DeleteTrainingMaterial1 {
+export namespace DeleteTrainingMaterialVersion {
   export type PathParameters = {
     persistentId: string
     versionId: number /* int64 */
@@ -2228,10 +2228,13 @@ export namespace DeleteTrainingMaterial1 {
   }
 }
 
-export async function deleteTrainingMaterial1([pathParams, requestOptions]: [
-  pathParams: DeleteTrainingMaterial1.PathParameters,
-  requestOptions?: RequestOptions<DeleteTrainingMaterial1.Response.Success>,
-]): Promise<DeleteTrainingMaterial1.Response.Success> {
+export async function deleteTrainingMaterialVersion([
+  pathParams,
+  requestOptions,
+]: [
+  pathParams: DeleteTrainingMaterialVersion.PathParameters,
+  requestOptions?: RequestOptions<DeleteTrainingMaterialVersion.Response.Success>,
+]): Promise<DeleteTrainingMaterialVersion.Response.Success> {
   return request({
     path: `/api/training-materials/${encodeURIComponent(
       pathParams['persistentId'],
@@ -2249,26 +2252,26 @@ export async function deleteTrainingMaterial1([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteTrainingMaterial1(
+export function useDeleteTrainingMaterialVersion(
   options?: UseMutationOptions<
-    DeleteTrainingMaterial1.Response.Success,
-    DeleteTrainingMaterial1.Response.Error,
+    DeleteTrainingMaterialVersion.Response.Success,
+    DeleteTrainingMaterialVersion.Response.Error,
     [
-      DeleteTrainingMaterial1.PathParameters,
-      RequestOptions<DeleteTrainingMaterial1.Response.Success>,
+      DeleteTrainingMaterialVersion.PathParameters,
+      RequestOptions<DeleteTrainingMaterialVersion.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteTrainingMaterial1.Response.Success,
-  DeleteTrainingMaterial1.Response.Error,
+  DeleteTrainingMaterialVersion.Response.Success,
+  DeleteTrainingMaterialVersion.Response.Error,
   [
-    DeleteTrainingMaterial1.PathParameters,
-    RequestOptions<DeleteTrainingMaterial1.Response.Success>,
+    DeleteTrainingMaterialVersion.PathParameters,
+    RequestOptions<DeleteTrainingMaterialVersion.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteTrainingMaterial1, options)
+  return useMutation(deleteTrainingMaterialVersion, options)
 }
 
 /**
@@ -3600,7 +3603,7 @@ export function useGetPublicationVersion(
  * Delete publication by its persistentId and versionId
  */
 
-export namespace DeletePublication {
+export namespace DeletePublicationVersion {
   export type PathParameters = {
     persistentId: string
     versionId: number /* int64 */
@@ -3611,10 +3614,10 @@ export namespace DeletePublication {
   }
 }
 
-export async function deletePublication([pathParams, requestOptions]: [
-  pathParams: DeletePublication.PathParameters,
-  requestOptions?: RequestOptions<DeletePublication.Response.Success>,
-]): Promise<DeletePublication.Response.Success> {
+export async function deletePublicationVersion([pathParams, requestOptions]: [
+  pathParams: DeletePublicationVersion.PathParameters,
+  requestOptions?: RequestOptions<DeletePublicationVersion.Response.Success>,
+]): Promise<DeletePublicationVersion.Response.Success> {
   return request({
     path: `/api/publications/${encodeURIComponent(
       pathParams['persistentId'],
@@ -3632,26 +3635,26 @@ export async function deletePublication([pathParams, requestOptions]: [
   })
 }
 
-export function useDeletePublication(
+export function useDeletePublicationVersion(
   options?: UseMutationOptions<
-    DeletePublication.Response.Success,
-    DeletePublication.Response.Error,
+    DeletePublicationVersion.Response.Success,
+    DeletePublicationVersion.Response.Error,
     [
-      DeletePublication.PathParameters,
-      RequestOptions<DeletePublication.Response.Success>,
+      DeletePublicationVersion.PathParameters,
+      RequestOptions<DeletePublicationVersion.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeletePublication.Response.Success,
-  DeletePublication.Response.Error,
+  DeletePublicationVersion.Response.Success,
+  DeletePublicationVersion.Response.Error,
   [
-    DeletePublication.PathParameters,
-    RequestOptions<DeletePublication.Response.Success>,
+    DeletePublicationVersion.PathParameters,
+    RequestOptions<DeletePublicationVersion.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deletePublication, options)
+  return useMutation(deletePublicationVersion, options)
 }
 
 /**
@@ -3786,7 +3789,7 @@ export function useUpdatePublication(
  * Delete publication by its persistentId
  */
 
-export namespace DeletePublication1 {
+export namespace DeletePublication {
   export type PathParameters = {
     persistentId: string
   }
@@ -3799,15 +3802,15 @@ export namespace DeletePublication1 {
   }
 }
 
-export async function deletePublication1([
+export async function deletePublication([
   pathParams,
   queryParams,
   requestOptions,
 ]: [
-  pathParams: DeletePublication1.PathParameters,
-  queryParams: DeletePublication1.QueryParameters,
-  requestOptions?: RequestOptions<DeletePublication1.Response.Success>,
-]): Promise<DeletePublication1.Response.Success> {
+  pathParams: DeletePublication.PathParameters,
+  queryParams: DeletePublication.QueryParameters,
+  requestOptions?: RequestOptions<DeletePublication.Response.Success>,
+]): Promise<DeletePublication.Response.Success> {
   return request({
     path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
@@ -3823,28 +3826,28 @@ export async function deletePublication1([
   })
 }
 
-export function useDeletePublication1(
+export function useDeletePublication(
   options?: UseMutationOptions<
-    DeletePublication1.Response.Success,
-    DeletePublication1.Response.Error,
+    DeletePublication.Response.Success,
+    DeletePublication.Response.Error,
     [
-      DeletePublication1.PathParameters,
-      DeletePublication1.QueryParameters,
-      RequestOptions<DeletePublication1.Response.Success>,
+      DeletePublication.PathParameters,
+      DeletePublication.QueryParameters,
+      RequestOptions<DeletePublication.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeletePublication1.Response.Success,
-  DeletePublication1.Response.Error,
+  DeletePublication.Response.Success,
+  DeletePublication.Response.Error,
   [
-    DeletePublication1.PathParameters,
-    DeletePublication1.QueryParameters,
-    RequestOptions<DeletePublication1.Response.Success>,
+    DeletePublication.PathParameters,
+    DeletePublication.QueryParameters,
+    RequestOptions<DeletePublication.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deletePublication1, options)
+  return useMutation(deletePublication, options)
 }
 
 /**
@@ -5736,7 +5739,7 @@ export function useGetToolVersion(
  * Delete tool by its persistentId and versionId
  */
 
-export namespace DeleteTool {
+export namespace DeleteToolVersion {
   export type PathParameters = {
     persistentId: string
     versionId: number /* int64 */
@@ -5747,10 +5750,10 @@ export namespace DeleteTool {
   }
 }
 
-export async function deleteTool([pathParams, requestOptions]: [
-  pathParams: DeleteTool.PathParameters,
-  requestOptions?: RequestOptions<DeleteTool.Response.Success>,
-]): Promise<DeleteTool.Response.Success> {
+export async function deleteToolVersion([pathParams, requestOptions]: [
+  pathParams: DeleteToolVersion.PathParameters,
+  requestOptions?: RequestOptions<DeleteToolVersion.Response.Success>,
+]): Promise<DeleteToolVersion.Response.Success> {
   return request({
     path: `/api/tools-services/${encodeURIComponent(
       pathParams['persistentId'],
@@ -5768,20 +5771,26 @@ export async function deleteTool([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteTool(
+export function useDeleteToolVersion(
   options?: UseMutationOptions<
-    DeleteTool.Response.Success,
-    DeleteTool.Response.Error,
-    [DeleteTool.PathParameters, RequestOptions<DeleteTool.Response.Success>],
+    DeleteToolVersion.Response.Success,
+    DeleteToolVersion.Response.Error,
+    [
+      DeleteToolVersion.PathParameters,
+      RequestOptions<DeleteToolVersion.Response.Success>,
+    ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteTool.Response.Success,
-  DeleteTool.Response.Error,
-  [DeleteTool.PathParameters, RequestOptions<DeleteTool.Response.Success>],
+  DeleteToolVersion.Response.Success,
+  DeleteToolVersion.Response.Error,
+  [
+    DeleteToolVersion.PathParameters,
+    RequestOptions<DeleteToolVersion.Response.Success>,
+  ],
   unknown
 > {
-  return useMutation(deleteTool, options)
+  return useMutation(deleteToolVersion, options)
 }
 
 /**
@@ -6184,7 +6193,7 @@ export function useUpdateTool(
  * Delete tool by its persistentId
  */
 
-export namespace DeleteTool1 {
+export namespace DeleteTool {
   export type PathParameters = {
     persistentId: string
   }
@@ -6197,11 +6206,11 @@ export namespace DeleteTool1 {
   }
 }
 
-export async function deleteTool1([pathParams, queryParams, requestOptions]: [
-  pathParams: DeleteTool1.PathParameters,
-  queryParams: DeleteTool1.QueryParameters,
-  requestOptions?: RequestOptions<DeleteTool1.Response.Success>,
-]): Promise<DeleteTool1.Response.Success> {
+export async function deleteTool([pathParams, queryParams, requestOptions]: [
+  pathParams: DeleteTool.PathParameters,
+  queryParams: DeleteTool.QueryParameters,
+  requestOptions?: RequestOptions<DeleteTool.Response.Success>,
+]): Promise<DeleteTool.Response.Success> {
   return request({
     path: `/api/tools-services/${encodeURIComponent(
       pathParams['persistentId'],
@@ -6219,28 +6228,28 @@ export async function deleteTool1([pathParams, queryParams, requestOptions]: [
   })
 }
 
-export function useDeleteTool1(
+export function useDeleteTool(
   options?: UseMutationOptions<
-    DeleteTool1.Response.Success,
-    DeleteTool1.Response.Error,
+    DeleteTool.Response.Success,
+    DeleteTool.Response.Error,
     [
-      DeleteTool1.PathParameters,
-      DeleteTool1.QueryParameters,
-      RequestOptions<DeleteTool1.Response.Success>,
+      DeleteTool.PathParameters,
+      DeleteTool.QueryParameters,
+      RequestOptions<DeleteTool.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteTool1.Response.Success,
-  DeleteTool1.Response.Error,
+  DeleteTool.Response.Success,
+  DeleteTool.Response.Error,
   [
-    DeleteTool1.PathParameters,
-    DeleteTool1.QueryParameters,
-    RequestOptions<DeleteTool1.Response.Success>,
+    DeleteTool.PathParameters,
+    DeleteTool.QueryParameters,
+    RequestOptions<DeleteTool.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteTool1, options)
+  return useMutation(deleteTool, options)
 }
 
 /**
@@ -8548,7 +8557,7 @@ export function useGetDatasetVersion(
  * Delete dataset by its persistentId and versionId
  */
 
-export namespace DeleteDataset1 {
+export namespace DeleteDatasetVersion {
   export type PathParameters = {
     persistentId: string
     versionId: number /* int64 */
@@ -8559,10 +8568,10 @@ export namespace DeleteDataset1 {
   }
 }
 
-export async function deleteDataset1([pathParams, requestOptions]: [
-  pathParams: DeleteDataset1.PathParameters,
-  requestOptions?: RequestOptions<DeleteDataset1.Response.Success>,
-]): Promise<DeleteDataset1.Response.Success> {
+export async function deleteDatasetVersion([pathParams, requestOptions]: [
+  pathParams: DeleteDatasetVersion.PathParameters,
+  requestOptions?: RequestOptions<DeleteDatasetVersion.Response.Success>,
+]): Promise<DeleteDatasetVersion.Response.Success> {
   return request({
     path: `/api/datasets/${encodeURIComponent(
       pathParams['persistentId'],
@@ -8580,26 +8589,26 @@ export async function deleteDataset1([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteDataset1(
+export function useDeleteDatasetVersion(
   options?: UseMutationOptions<
-    DeleteDataset1.Response.Success,
-    DeleteDataset1.Response.Error,
+    DeleteDatasetVersion.Response.Success,
+    DeleteDatasetVersion.Response.Error,
     [
-      DeleteDataset1.PathParameters,
-      RequestOptions<DeleteDataset1.Response.Success>,
+      DeleteDatasetVersion.PathParameters,
+      RequestOptions<DeleteDatasetVersion.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteDataset1.Response.Success,
-  DeleteDataset1.Response.Error,
+  DeleteDatasetVersion.Response.Success,
+  DeleteDatasetVersion.Response.Error,
   [
-    DeleteDataset1.PathParameters,
-    RequestOptions<DeleteDataset1.Response.Success>,
+    DeleteDatasetVersion.PathParameters,
+    RequestOptions<DeleteDatasetVersion.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteDataset1, options)
+  return useMutation(deleteDatasetVersion, options)
 }
 
 /**
@@ -10574,7 +10583,7 @@ export function useUpdateWorkflow(
  * Delete workflow by its persistentId
  */
 
-export namespace DeleteWorkflow1 {
+export namespace DeleteWorkflow {
   export type PathParameters = {
     persistentId: string
   }
@@ -10587,15 +10596,15 @@ export namespace DeleteWorkflow1 {
   }
 }
 
-export async function deleteWorkflow1([
+export async function deleteWorkflow([
   pathParams,
   queryParams,
   requestOptions,
 ]: [
-  pathParams: DeleteWorkflow1.PathParameters,
-  queryParams: DeleteWorkflow1.QueryParameters,
-  requestOptions?: RequestOptions<DeleteWorkflow1.Response.Success>,
-]): Promise<DeleteWorkflow1.Response.Success> {
+  pathParams: DeleteWorkflow.PathParameters,
+  queryParams: DeleteWorkflow.QueryParameters,
+  requestOptions?: RequestOptions<DeleteWorkflow.Response.Success>,
+]): Promise<DeleteWorkflow.Response.Success> {
   return request({
     path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
@@ -10611,28 +10620,28 @@ export async function deleteWorkflow1([
   })
 }
 
-export function useDeleteWorkflow1(
+export function useDeleteWorkflow(
   options?: UseMutationOptions<
-    DeleteWorkflow1.Response.Success,
-    DeleteWorkflow1.Response.Error,
+    DeleteWorkflow.Response.Success,
+    DeleteWorkflow.Response.Error,
     [
-      DeleteWorkflow1.PathParameters,
-      DeleteWorkflow1.QueryParameters,
-      RequestOptions<DeleteWorkflow1.Response.Success>,
+      DeleteWorkflow.PathParameters,
+      DeleteWorkflow.QueryParameters,
+      RequestOptions<DeleteWorkflow.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteWorkflow1.Response.Success,
-  DeleteWorkflow1.Response.Error,
+  DeleteWorkflow.Response.Success,
+  DeleteWorkflow.Response.Error,
   [
-    DeleteWorkflow1.PathParameters,
-    DeleteWorkflow1.QueryParameters,
-    RequestOptions<DeleteWorkflow1.Response.Success>,
+    DeleteWorkflow.PathParameters,
+    DeleteWorkflow.QueryParameters,
+    RequestOptions<DeleteWorkflow.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteWorkflow1, options)
+  return useMutation(deleteWorkflow, options)
 }
 
 /**
@@ -11314,7 +11323,7 @@ export function useGetStepVersion(
  * Delete step by its persistentId, versionId and workflow persistentId
  */
 
-export namespace DeleteStep {
+export namespace DeleteStepVersion {
   export type PathParameters = {
     persistentId: string
     stepPersistentId: string
@@ -11326,10 +11335,10 @@ export namespace DeleteStep {
   }
 }
 
-export async function deleteStep([pathParams, requestOptions]: [
-  pathParams: DeleteStep.PathParameters,
-  requestOptions?: RequestOptions<DeleteStep.Response.Success>,
-]): Promise<DeleteStep.Response.Success> {
+export async function deleteStepVersion([pathParams, requestOptions]: [
+  pathParams: DeleteStepVersion.PathParameters,
+  requestOptions?: RequestOptions<DeleteStepVersion.Response.Success>,
+]): Promise<DeleteStepVersion.Response.Success> {
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
@@ -11349,20 +11358,26 @@ export async function deleteStep([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteStep(
+export function useDeleteStepVersion(
   options?: UseMutationOptions<
-    DeleteStep.Response.Success,
-    DeleteStep.Response.Error,
-    [DeleteStep.PathParameters, RequestOptions<DeleteStep.Response.Success>],
+    DeleteStepVersion.Response.Success,
+    DeleteStepVersion.Response.Error,
+    [
+      DeleteStepVersion.PathParameters,
+      RequestOptions<DeleteStepVersion.Response.Success>,
+    ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteStep.Response.Success,
-  DeleteStep.Response.Error,
-  [DeleteStep.PathParameters, RequestOptions<DeleteStep.Response.Success>],
+  DeleteStepVersion.Response.Success,
+  DeleteStepVersion.Response.Error,
+  [
+    DeleteStepVersion.PathParameters,
+    RequestOptions<DeleteStepVersion.Response.Success>,
+  ],
   unknown
 > {
-  return useMutation(deleteStep, options)
+  return useMutation(deleteStepVersion, options)
 }
 
 /**
@@ -11497,7 +11512,7 @@ export function useUpdateStep(
  * Delete step by its persistentId and workflow persistentId
  */
 
-export namespace DeleteStep1 {
+export namespace DeleteStep {
   export type PathParameters = {
     persistentId: string
     stepPersistentId: string
@@ -11511,11 +11526,11 @@ export namespace DeleteStep1 {
   }
 }
 
-export async function deleteStep1([pathParams, queryParams, requestOptions]: [
-  pathParams: DeleteStep1.PathParameters,
-  queryParams: DeleteStep1.QueryParameters,
-  requestOptions?: RequestOptions<DeleteStep1.Response.Success>,
-]): Promise<DeleteStep1.Response.Success> {
+export async function deleteStep([pathParams, queryParams, requestOptions]: [
+  pathParams: DeleteStep.PathParameters,
+  queryParams: DeleteStep.QueryParameters,
+  requestOptions?: RequestOptions<DeleteStep.Response.Success>,
+]): Promise<DeleteStep.Response.Success> {
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
@@ -11533,28 +11548,28 @@ export async function deleteStep1([pathParams, queryParams, requestOptions]: [
   })
 }
 
-export function useDeleteStep1(
+export function useDeleteStep(
   options?: UseMutationOptions<
-    DeleteStep1.Response.Success,
-    DeleteStep1.Response.Error,
+    DeleteStep.Response.Success,
+    DeleteStep.Response.Error,
     [
-      DeleteStep1.PathParameters,
-      DeleteStep1.QueryParameters,
-      RequestOptions<DeleteStep1.Response.Success>,
+      DeleteStep.PathParameters,
+      DeleteStep.QueryParameters,
+      RequestOptions<DeleteStep.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteStep1.Response.Success,
-  DeleteStep1.Response.Error,
+  DeleteStep.Response.Success,
+  DeleteStep.Response.Error,
   [
-    DeleteStep1.PathParameters,
-    DeleteStep1.QueryParameters,
-    RequestOptions<DeleteStep1.Response.Success>,
+    DeleteStep.PathParameters,
+    DeleteStep.QueryParameters,
+    RequestOptions<DeleteStep.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteStep1, options)
+  return useMutation(deleteStep, options)
 }
 
 /**
@@ -11724,7 +11739,7 @@ export function useGetWorkflowVersion(
  * Delete workflow by its persistentId and versionId
  */
 
-export namespace DeleteWorkflow {
+export namespace DeleteWorkflowVersion {
   export type PathParameters = {
     persistentId: string
     versionId: number /* int64 */
@@ -11735,10 +11750,10 @@ export namespace DeleteWorkflow {
   }
 }
 
-export async function deleteWorkflow([pathParams, requestOptions]: [
-  pathParams: DeleteWorkflow.PathParameters,
-  requestOptions?: RequestOptions<DeleteWorkflow.Response.Success>,
-]): Promise<DeleteWorkflow.Response.Success> {
+export async function deleteWorkflowVersion([pathParams, requestOptions]: [
+  pathParams: DeleteWorkflowVersion.PathParameters,
+  requestOptions?: RequestOptions<DeleteWorkflowVersion.Response.Success>,
+]): Promise<DeleteWorkflowVersion.Response.Success> {
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
@@ -11756,26 +11771,26 @@ export async function deleteWorkflow([pathParams, requestOptions]: [
   })
 }
 
-export function useDeleteWorkflow(
+export function useDeleteWorkflowVersion(
   options?: UseMutationOptions<
-    DeleteWorkflow.Response.Success,
-    DeleteWorkflow.Response.Error,
+    DeleteWorkflowVersion.Response.Success,
+    DeleteWorkflowVersion.Response.Error,
     [
-      DeleteWorkflow.PathParameters,
-      RequestOptions<DeleteWorkflow.Response.Success>,
+      DeleteWorkflowVersion.PathParameters,
+      RequestOptions<DeleteWorkflowVersion.Response.Success>,
     ],
     unknown
   >,
 ): UseMutationResult<
-  DeleteWorkflow.Response.Success,
-  DeleteWorkflow.Response.Error,
+  DeleteWorkflowVersion.Response.Success,
+  DeleteWorkflowVersion.Response.Error,
   [
-    DeleteWorkflow.PathParameters,
-    RequestOptions<DeleteWorkflow.Response.Success>,
+    DeleteWorkflowVersion.PathParameters,
+    RequestOptions<DeleteWorkflowVersion.Response.Success>,
   ],
   unknown
 > {
-  return useMutation(deleteWorkflow, options)
+  return useMutation(deleteWorkflowVersion, options)
 }
 
 /**
