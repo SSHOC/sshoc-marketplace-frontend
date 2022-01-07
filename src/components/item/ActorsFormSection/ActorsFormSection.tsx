@@ -398,7 +398,10 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
           <form
             noValidate
             className="flex flex-col space-y-6"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              handleSubmit(e)
+              e.stopPropagation()
+            }}
           >
             <FormTextField
               name="name"

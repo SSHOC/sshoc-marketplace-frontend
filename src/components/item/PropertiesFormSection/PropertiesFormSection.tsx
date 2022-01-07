@@ -515,7 +515,10 @@ function CreateConceptForm(props: CreateConceptFormProps) {
           <form
             noValidate
             className="flex flex-col space-y-6"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              handleSubmit(e)
+              e.stopPropagation()
+            }}
           >
             <FormSelect
               isRequired
