@@ -160,14 +160,18 @@ export function PropertiesFormSection(
                                 initialValues={props.initialValues}
                                 index={index}
                               />
-                              <button
-                                className="text-ui-base text-primary-750 hover:text-secondary-600"
-                                onClick={() => {
-                                  openSuggestConceptDialog(id)
-                                }}
-                              >
-                                Suggest new concept
-                              </button>
+                              {propertyTypesById[id].allowedVocabularies?.every(
+                                (vocab) => vocab.closed === false,
+                              ) === true ? (
+                                <button
+                                  className="text-ui-base text-primary-750 hover:text-secondary-600"
+                                  onClick={() => {
+                                    openSuggestConceptDialog(id)
+                                  }}
+                                >
+                                  Suggest new concept
+                                </button>
+                              ) : null}
                             </Fragment>
                           )
                         }}
