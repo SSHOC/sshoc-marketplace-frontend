@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query'
 
 import type {
   ConceptCore,
+  ConceptDto,
   PaginatedPropertyTypes,
   PropertyTypeDto,
   SearchConcept,
@@ -96,6 +97,33 @@ export function PropertiesFormSection(
     setShowSuggestConceptDialog(false)
   }
 
+  /**
+   * When a new concept is suggested, it won't immediately show up in the response from
+   * `/api/concept-search` because it takes a while for the search index to be updated.
+   * So we keep any newly suggested concepts in memory for the lifetime of the form.
+   */
+  const [suggestedConcepts, setSuggestedConcepts] = useState<
+    Record<Exclude<PropertyTypeDto['code'], undefined>, Array<ConceptDto>>
+  >({})
+
+  function onConceptSuggested(
+    addedConcept: ConceptDto,
+    propertyType: PropertyTypeDto,
+  ) {
+    setSuggestedConcepts((concepts) => {
+      const code = propertyType.code!
+
+      const newConcepts = { ...concepts }
+      if (!(code in newConcepts)) {
+        newConcepts[code] = []
+      }
+
+      newConcepts[code].push(addedConcept)
+
+      return newConcepts
+    })
+  }
+
   return (
     <FormSection title={'Properties'}>
       <FormFieldArray name={`${prefix}properties`}>
@@ -159,6 +187,7 @@ export function PropertiesFormSection(
                                 propertyTypeId={id}
                                 initialValues={props.initialValues}
                                 index={index}
+                                suggestedConcepts={suggestedConcepts[id]}
                               />
                               {propertyTypesById[id].allowedVocabularies?.every(
                                 (vocab) => vocab.closed === false,
@@ -211,6 +240,7 @@ export function PropertiesFormSection(
       </FormFieldArray>
       <SuggestConceptDialog
         isOpen={showSuggestConceptDialog}
+        onSuccess={onConceptSuggested}
         onDismiss={closeSuggestConceptDialog}
         propertyType={
           propertyTypeIdForDialog != null
@@ -254,6 +284,7 @@ interface PropertyConceptComboBoxProps {
   propertyTypeId?: string
   initialValues?: any
   index: number
+  suggestedConcepts?: Array<ConceptDto>
 }
 
 /**
@@ -306,8 +337,14 @@ function PropertyConceptComboBox(
       }
     })
 
+    props.suggestedConcepts?.forEach((concept) => {
+      if (concept.uri !== undefined) {
+        map[concept.uri] = concept
+      }
+    })
+
     return map
-  }, [concepts.data])
+  }, [concepts.data, props.suggestedConcepts])
 
   return (
     <Fragment>
@@ -361,6 +398,7 @@ function PropertyConceptComboBox(
 interface SuggestConceptDialogProps {
   isOpen: boolean
   onDismiss: () => void
+  onSuccess: (addedConcept: ConceptDto, propertyType: PropertyTypeDto) => void
   propertyType?: PropertyTypeDto
 }
 
@@ -389,7 +427,7 @@ function SuggestConceptDialog(props: SuggestConceptDialogProps) {
         { token: auth.session.accessToken },
       ],
       {
-        onSuccess() {
+        onSuccess(data) {
           queryClient.invalidateQueries(['searchConcepts'])
           queryClient.invalidateQueries(['getAllConceptRelations'])
           queryClient.invalidateQueries([
@@ -397,6 +435,7 @@ function SuggestConceptDialog(props: SuggestConceptDialogProps) {
             { code: vocabularyId },
           ])
           toast.success('Sucessfully suggested concept.')
+          props.onSuccess(data, props.propertyType!)
         },
         onError() {
           toast.error('Failed to suggest concept.')
