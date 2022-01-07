@@ -626,7 +626,7 @@ function useItemMetadata({
                         <ul className="inline">
                           {properties.map((property, index) => {
                             return (
-                              <li key={property.id} className="inline">
+                              <li key={index} className="inline">
                                 {index !== 0 ? ', ' : null}
                                 <ItemPropertyValue property={property} />
                               </li>
