@@ -137,46 +137,19 @@ export function ItemSearchComboBox(
     },
   )
   const suggestions = items.data?.suggestions ?? []
-  /**
-   * Suggested phrases are *not* unique. For example, the response from
-   *
-   * ```
-   * https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at/api/item-search/autocomplete?q=Generating
-   * ```
-   *
-   * returns:
-   *
-   * ```json
-   * {
-   *   "phrase": "Generating",
-   *   "suggestions": [
-   *     {
-   *       "phrase": "Generating an Ordered Data Set from an OCR Text File",
-   *       "persistentId": "WpRbMx"
-   *     },
-   *     {
-   *       "phrase": "Generating an Ordered Data Set from an OCR Text File",
-   *       "persistentId": "r8cjen"
-   *     }
-   *   ]
-   * }
-   * ```
-   *
-   * Therefore, we use a compound key of persistentId+phrase.
-   */
 
-  function createKey(suggestion: SuggestedObject) {
-    return [suggestion.persistentId, suggestion.phrase].join('+')
-  }
-
-  const suggestionsById = Object.fromEntries(
-    suggestions.map((suggestion) => [createKey(suggestion), suggestion.phrase]),
+  const suggestionsById: Record<
+    string,
+    { phrase: string; persistentId: string }
+  > = Object.fromEntries(
+    suggestions.map((suggestion) => [suggestion.persistentId, suggestion]),
   )
 
   function onSelectionChange(key: Key | null) {
     if (props.shouldSubmitOnSelect === true && key != null) {
-      const phrase = suggestionsById[key]
-      if (phrase != null && phrase.length > 0) {
+      const suggestion = suggestionsById[key]
+      const phrase = suggestion.phrase
+      if (phrase.length > 0) {
         router.push({ pathname: '/search', query: { q: phrase } })
       }
     }
@@ -187,7 +160,7 @@ export function ItemSearchComboBox(
       name="q"
       aria-label="Search term"
       allowsCustomValue
-      items={suggestions}
+      items={Object.values(suggestionsById)}
       isLoading={items.isLoading}
       inputValue={searchTerm}
       onInputChange={setSearchTerm}
@@ -204,7 +177,7 @@ export function ItemSearchComboBox(
       }
     >
       {(item) => (
-        <ComboBox.Item key={createKey(item)} textValue={item.phrase}>
+        <ComboBox.Item key={item.persistentId} textValue={item.phrase}>
           <HighlightedText
             text={item.phrase}
             searchPhrase={debouncedSearchTerm}
