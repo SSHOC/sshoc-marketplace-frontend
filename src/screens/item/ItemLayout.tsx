@@ -653,15 +653,7 @@ function useItemMetadata({
       }
     })
 
-    const sorted = Object.entries(grouped)
-      .map(([key, value]) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return [key, value.sort((a, b) => a.name!.localeCompare(b.name!))] as [
-          string,
-          Array<ActorDto>,
-        ]
-      })
-      .sort(([a], [b]) => (a > b ? 1 : -1))
+    const sorted = Object.entries(grouped).sort(([a], [b]) => (a > b ? 1 : -1))
 
     metadata.contributors =
       sorted.length === 0 ? null : (
