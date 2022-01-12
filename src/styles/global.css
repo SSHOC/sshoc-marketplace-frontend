@@ -1,3 +1,11 @@
+@custom-media --screen-2xs (min-width: 320px);
+@custom-media --screen-xs (min-width: 480px);
+@custom-media --screen-sm (min-width: 640px);
+@custom-media --screen-md (min-width: 768px);
+@custom-media --screen-lg (min-width: 1024px);
+@custom-media --screen-xl (min-width: 1280px);
+@custom-media --screen-2xl (min-width: 1600px);
+
 :root {
   --screen-2xs: 320px;
   --screen-xs: 480px;
@@ -15,52 +23,4 @@ body {
 
 *:focus:not(:focus-visible) {
   outline: none;
-}
-
-@screen 2xs {
-  html {
-    font-size: 40%;
-  }
-}
-
-@screen xs {
-  html {
-    font-size: 50%;
-  }
-}
-
-@screen sm {
-  html {
-    font-size: 60%;
-  }
-}
-
-@screen md {
-  html {
-    font-size: 70%;
-  }
-}
-
-@screen lg {
-  html {
-    font-size: 70%;
-  }
-}
-
-@screen xl {
-  html {
-    font-size: 80%;
-  }
-}
-
-@screen 2xl {
-  html {
-    font-size: 90%;
-  }
-}
-
-@screen 3xl {
-  html {
-    font-size: 100%;
-  }
 }

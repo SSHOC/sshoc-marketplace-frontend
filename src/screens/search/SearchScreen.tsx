@@ -102,7 +102,7 @@ export default function SearchScreen(): JSX.Element {
           </div>
         </ContentColumn>
         <SideColumn>
-          <HStack className="items-center justify-between h-full pb-6">
+          <HStack className="flex-col items-center justify-between h-full pb-6 md:flex-row md:gap-x-2">
             <SubSectionTitle as="h2">Refine your search</SubSectionTitle>
             <button
               onClick={() => {
@@ -156,7 +156,7 @@ function MainColumn({
   className,
 }: PropsWithChildren<{ className?: string }>) {
   const classNames = {
-    section: cx('pr-6', className, styles.mainColumn),
+    section: cx('px-6 md:pl-0', className, styles.mainColumn),
   }
   return <section className={classNames.section}>{children}</section>
 }
@@ -166,7 +166,7 @@ function MainColumn({
  */
 function SideColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('px-6 mr-6', styles.sideColumn),
+    section: cx('px-6 mr-6 hidden md:block', styles.sideColumn),
   }
   return <section className={classNames.section}>{children}</section>
 }
@@ -877,7 +877,7 @@ function ItemSearchResult({
   const pathname = `/${item.category}/${item.persistentId}`
 
   return (
-    <article className="flex flex-col py-8 pl-16 pr-6 space-y-4">
+    <article className="flex flex-col py-8 space-y-4 md:pl-16 md:pr-6">
       <div className="flex justify-between">
         <h3 className="flex items-center space-x-4 text-xl font-medium">
           <ItemCategoryIcon

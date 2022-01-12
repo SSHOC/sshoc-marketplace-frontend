@@ -76,12 +76,12 @@ function Hero() {
         // to add position: relative to content that should be layered above
         className="object-cover -z-10"
       />
-      <div className="relative max-w-screen-md p-6 mx-auto mt-24 space-y-6 text-sm xl:max-w-screen-lg">
+      <div className="relative max-w-screen-md p-6 mx-auto mt-12 space-y-6 text-sm md:mt-24 xl:max-w-screen-lg">
         <Title>{meta.title}</Title>
         <Mdx>
           <Content />
         </Mdx>
-        <ItemSearchForm className="flex px-8 py-3 space-x-2 text-base bg-white rounded-md shadow-md">
+        <ItemSearchForm className="grid px-4 md:px-8 py-3 text-base bg-white rounded-md shadow-md gap-y-2 md:grid-cols-[256px_1fr_auto] md:gap-x-2">
           <ItemCategorySelect />
           <ItemSearchComboBox />
           <SubmitButton />
@@ -118,7 +118,7 @@ function Browse({ facets }: { facets?: Facets }) {
   if (facets === undefined) return null
 
   return (
-    <VStack className="space-y-6">
+    <VStack className="space-y-4 md:space-y-6">
       <SectionTitle>Browse</SectionTitle>
       <SubSection
         title="Browse by activity"
@@ -175,7 +175,7 @@ function LastAdded({ items }: { items?: Items }) {
   const query: ItemSearchQuery = { order: ['modified-on'] }
 
   return (
-    <VStack className="space-y-6">
+    <VStack className="space-y-4 md:space-y-6">
       <SectionTitle>Last added</SectionTitle>
       <SubSection title="See what's new" href={{ pathname: '/search', query }}>
         <VStack as="ul" className="divide-y divide-gray-200">
@@ -197,7 +197,10 @@ function LastAdded({ items }: { items?: Items }) {
  */
 function MainColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('px-6 py-12 space-y-24', styles.mainColumn),
+    section: cx(
+      'px-6 py-6 md:py-12 space-y-12 md:space-y-24',
+      styles.mainColumn,
+    ),
     bleed: cx(styles.leftBleed),
   }
 
@@ -215,13 +218,14 @@ function MainColumn({ children }: PropsWithChildren<unknown>) {
 function SideColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
     section: cx('bg-gray-50 px-6 py-12', styles.sideColumn),
-    bleed: cx('bg-gray-50', styles.rightBleed),
+    bleed: 'bg-gray-50',
   }
 
   return (
     <Fragment>
+      <b className={cx(classNames.bleed, styles.leftBleed, styles.hideXl)} />
       <section className={classNames.section}>{children}</section>
-      <b className={classNames.bleed} />
+      <b className={cx(classNames.bleed, styles.rightBleed)} />
     </Fragment>
   )
 }
@@ -256,7 +260,7 @@ function RecommendedItems() {
   const { data: categories = {} } = useGetItemCategories()
 
   return (
-    <VStack className="space-y-6">
+    <VStack className="space-y-4 md:space-y-6">
       <SectionTitle>Recommended</SectionTitle>
       {Object.entries(categories).map(([category, label]) => {
         return (

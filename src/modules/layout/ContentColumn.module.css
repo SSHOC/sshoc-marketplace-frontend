@@ -1,4 +1,10 @@
 .layout {
-  grid-column: 3 / -3;
+  grid-column: 2 / -2;
   position: relative;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-column: 3 / -3;
+  }
 }

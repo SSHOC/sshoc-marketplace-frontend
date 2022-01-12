@@ -1,14 +1,16 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Dialog, Menu, Transition } from '@headlessui/react'
 import cx from 'clsx'
 import Link from 'next/link'
 import type { NextRouter } from 'next/router'
 import { useRouter } from 'next/router'
-import type { PropsWithChildren, Ref } from 'react'
+import type { PropsWithChildren, ReactNode, Ref } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import { useGetItemCategories } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
+import { Svg as MenuIcon } from '@/elements/icons/small/menu.svg'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import FullWidth from '@/modules/layout/FullWidth'
@@ -24,6 +26,17 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
+
+import { useDisclosure } from '../a11y/useDisclosure'
+import { useDisclosureState } from '../a11y/useDisclosureState'
+
+const aboutLinks = [
+  { pathname: '/about', label: 'About the project' },
+  { pathname: '/about/service', label: 'About the service' },
+  { pathname: '/about/implementation', label: 'About the technical aspects' },
+  { pathname: '/about/team', label: 'About the team' },
+]
+
 /**
  * Page header.
  */
@@ -50,11 +63,11 @@ function MainNavigation(): JSX.Element {
         className="flex items-center justify-between border-b border-gray-200"
       >
         <Link href={{ pathname: '/' }}>
-          <a className="mx-8">
-            <Logo aria-label="Home" height="4.5em" />
+          <a className="mx-4 my-6 md:mx-8">
+            <Logo aria-label="Home" height="4em" className={styles.logo} />
           </a>
         </Link>
-        <VStack className="items-end space-y-2">
+        <VStack className="items-end hidden space-y-2 2xl:flex">
           <HStack as="ul">
             <li>
               <AuthButton />
@@ -158,46 +171,20 @@ function MainNavigation(): JSX.Element {
                     <MenuButton isOpen={open}>About</MenuButton>
                     <FadeIn show={open}>
                       <MenuPopover static>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/about' }}
-                              highlighted={active}
-                            >
-                              About the project
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/about/service' }}
-                              highlighted={active}
-                            >
-                              About the service
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/about/implementation' }}
-                              highlighted={active}
-                            >
-                              About the technical aspects
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/about/team' }}
-                              highlighted={active}
-                            >
-                              About the team
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
+                        {aboutLinks.map(({ label, pathname }) => {
+                          return (
+                            <Menu.Item key={pathname}>
+                              {({ active }) => (
+                                <MenuLink
+                                  href={{ pathname }}
+                                  highlighted={active}
+                                >
+                                  {label}
+                                </MenuLink>
+                              )}
+                            </Menu.Item>
+                          )
+                        })}
                       </MenuPopover>
                     </FadeIn>
                   </Fragment>
@@ -206,6 +193,7 @@ function MainNavigation(): JSX.Element {
             </li>
           </HStack>
         </VStack>
+        <MobileNavigation />
       </FullWidth>
       <b className={cx(styles.rightBleed, 'border-b border-gray-200')} />
       <ProtectedView>
@@ -371,14 +359,17 @@ function NavLink({
   href,
   children,
   isMatching,
+  variant,
 }: PropsWithChildren<{
   href: UrlObject
   isMatching?: (href: UrlObject, router: NextRouter) => boolean
+  variant?: 'secondary'
 }>) {
   const isActive = useActiveLink(href, isMatching)
   const classNames = cx(
     'px-8 py-6 hover:bg-gray-50 transition-colors duration-150 text-center inline-flex items-center',
     isActive ? 'text-gray-800' : 'text-primary-500',
+    variant === 'secondary' ? 'bg-white' : '',
   )
   return (
     <Link href={href}>
@@ -518,9 +509,11 @@ function CreateItemsMenu() {
         <nav>
           <HStack
             as="ul"
-            className="justify-end px-6 py-4 space-x-12 text-sm bg-highlight-50 text-secondary-750"
+            className="justify-end hidden px-6 py-4 space-x-12 text-sm bg-highlight-50 text-secondary-750 2xl:flex"
           >
             {Object.keys(itemCategories).map((category) => {
+              if (category === 'step') return null
+
               return (
                 <li key={category}>
                   <Link href={{ pathname: `/${category}/create` }}>
@@ -536,6 +529,226 @@ function CreateItemsMenu() {
         </nav>
       </FullWidth>
       <b className="bg-highlight-50" />
+    </Fragment>
+  )
+}
+
+/**
+ * Mobile navigation.
+ */
+function MobileNavigation(): JSX.Element {
+  const router = useRouter()
+  const dialog = useDialogState()
+  const auth = useAuth()
+  const { data: itemCategories = {} } = useGetItemCategories()
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', dialog.close)
+
+    return () => {
+      router.events.off('routeChangeStart', dialog.close)
+    }
+  }, [router.events, dialog.close])
+
+  return (
+    <div className="m-8 2xl:hidden">
+      <button onClick={dialog.toggle}>
+        <MenuIcon
+          aria-label="Open navigation menu"
+          width="1em"
+          className="w-6 h-6"
+        />
+      </button>
+      <Transition
+        show={dialog.isOpen}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform translate-x-12 opacity-0"
+        enterTo="transform translate-x-0 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform translate-x-0 opacity-100"
+        leaveTo="transform translate-x-12 opacity-0"
+      >
+        <Dialog
+          // open={dialog.isOpen}
+          static
+          onClose={dialog.close}
+          className="fixed inset-0 z-10"
+        >
+          <div className="flex justify-end min-h-screen ">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+            <div className="relative w-full max-w-xl bg-gray-100">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+                <Dialog.Title className="sr-only">
+                  Main navigation menu
+                </Dialog.Title>
+                <Link href="/">
+                  <a>
+                    <Logo aria-label="Home" height="4em" />
+                  </a>
+                </Link>
+                <button onClick={dialog.close}>
+                  <CloseIcon
+                    aria-label="Close navigation menu"
+                    width="1em"
+                    className="w-5 h-5 m-5"
+                  />
+                </button>
+              </header>
+
+              <HStack as="ul" className="flex flex-col ">
+                <li className="grid">
+                  <NavLink href={{ pathname: '/auth/sign-in' }}>
+                    Sign in
+                  </NavLink>
+                </li>
+                <li role="separator" className="w-full border-b" />
+                {Object.entries(itemCategories).map(([category, label]) => {
+                  if (category === 'step') return null
+
+                  const query: ItemSearchQuery = {
+                    categories: [category as ItemCategory],
+                    order: ['label'],
+                  }
+
+                  return (
+                    <li key={category} className="grid">
+                      <NavLink
+                        href={{ pathname: '/search', query }}
+                        isMatching={(href, router) => {
+                          return (
+                            router.pathname === '/search' &&
+                            router.query.category === category
+                          )
+                        }}
+                      >
+                        {label as string}
+                      </NavLink>
+                    </li>
+                  )
+                })}
+                <li role="separator" className="w-full border-b" />
+                <li className="grid">
+                  <NavDisclosure label="Browse">
+                    <ul>
+                      <li className="grid">
+                        <NavLink
+                          variant="secondary"
+                          href={{ pathname: '/browse/activity' }}
+                        >
+                          Browse activities
+                        </NavLink>
+                      </li>
+                      <li className="grid">
+                        <NavLink
+                          variant="secondary"
+                          href={{ pathname: '/browse/keyword' }}
+                        >
+                          Browse keywords
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </NavDisclosure>
+                </li>
+                <li role="separator" className="w-full border-b" />
+                <li className="grid">
+                  <NavDisclosure label="Contribute">
+                    <ul>
+                      {contributeLinks.map(({ label, pathname }) => {
+                        return (
+                          <li key={pathname} className="grid">
+                            <NavLink variant="secondary" href={{ pathname }}>
+                              {label}
+                            </NavLink>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </NavDisclosure>
+                </li>
+                <li className="grid">
+                  <NavDisclosure label="About">
+                    <ul>
+                      {aboutLinks.map(({ label, pathname }) => {
+                        return (
+                          <li key={pathname} className="grid">
+                            <NavLink variant="secondary" href={{ pathname }}>
+                              {label}
+                            </NavLink>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </NavDisclosure>
+                </li>
+                <li role="separator" className="w-full border-b" />
+                {auth.session?.accessToken != null
+                  ? Object.entries(itemCategories).map(([category, label]) => {
+                      if (category === 'step') return null
+
+                      return (
+                        <li key={category} className="grid">
+                          <NavLink href={{ pathname: `/${category}/create` }}>
+                            Create{' '}
+                            {getSingularItemCategoryLabel(
+                              category as ItemCategory,
+                            )}
+                          </NavLink>
+                        </li>
+                      )
+                    })
+                  : null}
+              </HStack>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </div>
+  )
+}
+
+function useDialogState() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return {
+    isOpen,
+    open() {
+      setIsOpen(true)
+    },
+    close() {
+      setIsOpen(false)
+    },
+    toggle() {
+      setIsOpen((isOpen) => !isOpen)
+    },
+  }
+}
+
+function NavDisclosure({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
+  const state = useDisclosureState({})
+  const { panelProps, triggerProps } = useDisclosure(state)
+
+  return (
+    <Fragment>
+      <button
+        className={cx(
+          'flex items-center justify-between px-8 py-6 text-center transition-colors duration-150',
+          state.isOpen
+            ? 'bg-secondary-600 text-white hover:bg-secondary-600'
+            : 'text-primary-500 hover:bg-gray-50',
+        )}
+        onClick={state.toggle}
+        {...triggerProps}
+      >
+        {label}
+      </button>
+      {state.isOpen ? <div {...panelProps}>{children}</div> : null}
     </Fragment>
   )
 }

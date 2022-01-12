@@ -5,3 +5,13 @@
 .rightBleed {
   grid-column: -2 / span 1;
 }
+
+.logo {
+  max-width: 192px;
+}
+
+@media (min-width: 480px) {
+  .logo {
+    max-width: 256px;
+  }
+}

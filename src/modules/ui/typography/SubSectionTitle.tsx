@@ -11,7 +11,7 @@ export function SubSectionTitle({
   className,
   ...props
 }: SubSectionTitleProps): JSX.Element {
-  const classNames = cx('font-medium text-xl', className)
+  const classNames = cx('font-medium text-xl leading-tight', className)
 
   return (
     <Type className={classNames} {...props}>

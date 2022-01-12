@@ -57,16 +57,16 @@ function SecondaryNavigation() {
         aria-label="Secondary Menu"
         className="bg-gray-200"
       >
-        <HStack as="ul">
-          <li>
+        <HStack as="ul" className="flex flex-col py-2 md:flex-row md:py-0">
+          <li className="grid">
             <NavLink href={{ pathname: '/about' }}>About</NavLink>
           </li>
-          <li>
+          <li className="grid">
             <NavLink href={{ pathname: '/privacy-policy' }}>
               Privacy policy
             </NavLink>
           </li>
-          <li>
+          <li className="grid">
             <NavLink href={{ pathname: '/contact' }}>Contact</NavLink>
           </li>
         </HStack>

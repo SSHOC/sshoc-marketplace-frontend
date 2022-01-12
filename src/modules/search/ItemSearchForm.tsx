@@ -96,6 +96,7 @@ export function ItemCategorySelect(): JSX.Element {
       /** Use explicit "All categories" option, not placeholder text as initial value. */
       defaultSelectedKey=""
       variant="search"
+      style={{ flex: 1 }}
     >
       {(item) => <Select.Item key={item.id}>{item.label}</Select.Item>}
     </Select>

@@ -6,7 +6,7 @@ function px(px) {
 }
 
 module.exports = {
-  purge: ['src/**/*.tsx', 'content/**/*.mdx'],
+  content: ['src/**/*.tsx', 'content/**/*.mdx'],
   theme: {
     extend: {
       backgroundSize: {
