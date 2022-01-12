@@ -3,7 +3,7 @@ import cx from 'clsx'
 import Link from 'next/link'
 import type { NextRouter } from 'next/router'
 import { useRouter } from 'next/router'
-import type { PropsWithChildren, ReactNode, Ref } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import { useGetItemCategories } from '@/api/sshoc'
@@ -11,6 +11,9 @@ import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { Svg as MenuIcon } from '@/elements/icons/small/menu.svg'
+import { useDialogState } from '@/lib/hooks/useDialogState'
+import { useDisclosure } from '@/modules/a11y/useDisclosure'
+import { useDisclosureState } from '@/modules/a11y/useDisclosureState'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import FullWidth from '@/modules/layout/FullWidth'
@@ -26,9 +29,6 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
-
-import { useDisclosure } from '../a11y/useDisclosure'
-import { useDisclosureState } from '../a11y/useDisclosureState'
 
 const aboutLinks = [
   { pathname: '/about', label: 'About the project' },
@@ -273,27 +273,22 @@ function AuthButton() {
 
   if (auth.session !== null) {
     return (
-      <div className="relative flex items-center space-x-6 text-gray-500">
+      <div className="relative z-20 flex items-center space-x-6 text-gray-500">
         <ReportAnIssueButton path={router.asPath} user={user} />
-        <Menu>
-          {({ open }) => (
-            <Fragment>
-              <Menu.Button
-                className={cx(
-                  'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2.5 px-12 text-sm inline-block hover:bg-primary-700',
-                  'truncate max-w-xs',
-                  open ? '' : '',
-                )}
-              >
-                Hi, {user?.displayName ?? auth.session?.user.username}
-              </Menu.Button>
-              <FadeIn show={open} as={Fragment}>
-                {(ref: Ref<HTMLDivElement>) => (
-                  <MenuPopover
-                    static
-                    className="top-full text-primary-500"
-                    popoverRef={ref}
-                  >
+        <div>
+          <Menu>
+            {({ open }) => (
+              <Fragment>
+                <Menu.Button
+                  className={cx(
+                    'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2.5 px-12 text-sm inline-block hover:bg-primary-700',
+                    'truncate max-w-xs',
+                  )}
+                >
+                  Hi, {user?.displayName ?? auth.session?.user.username}
+                </Menu.Button>
+                <FadeIn show={open}>
+                  <MenuPopover static className="text-primary-500">
                     <Menu.Item>
                       {({ active }) => (
                         <MenuAction
@@ -314,11 +309,11 @@ function AuthButton() {
                       )}
                     </Menu.Item>
                   </MenuPopover>
-                )}
-              </FadeIn>
-            </Fragment>
-          )}
-        </Menu>
+                </FadeIn>
+              </Fragment>
+            )}
+          </Menu>
+        </div>
       </div>
     )
   }
@@ -383,10 +378,8 @@ function NavLink({
 function FadeIn({
   show,
   children,
-  as,
 }: PropsWithChildren<{
   show: boolean
-  as?: React.ElementType
 }>) {
   return (
     <Transition
@@ -397,9 +390,6 @@ function FadeIn({
       leave="transition ease-in duration-75"
       leaveFrom="transform opacity-100 scale-100"
       leaveTo="transform opacity-0 scale-95"
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      as={as}
     >
       {children}
     </Transition>
@@ -427,17 +417,12 @@ function MenuPopover({
   children,
   static: isStatic,
   className,
-  popoverRef,
 }: PropsWithChildren<{
   static: boolean
   className?: string
-  popoverRef?: Ref<HTMLDivElement>
 }>) {
   return (
     <Menu.Items
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      ref={popoverRef}
       static={isStatic}
       className={cx(
         'absolute right-0 top-full z-20 flex flex-col w-64 mt-1 overflow-hidden origin-top-right bg-white border border-gray-200 rounded shadow-md',
@@ -705,23 +690,6 @@ function MobileNavigation(): JSX.Element {
       </Transition>
     </div>
   )
-}
-
-function useDialogState() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return {
-    isOpen,
-    open() {
-      setIsOpen(true)
-    },
-    close() {
-      setIsOpen(false)
-    },
-    toggle() {
-      setIsOpen((isOpen) => !isOpen)
-    },
-  }
 }
 
 function NavDisclosure({
