@@ -229,13 +229,13 @@ function EditItemMenuButton({
   const draft = useGetItem(
     { persistentId },
     { draft: true },
-    { enabled: auth.session?.accessToken != null },
+    { enabled: auth.session?.accessToken != null, retry: false },
     { token: auth.session?.accessToken },
   )
   const suggested = useGetItem(
     { persistentId },
     { approved: false },
-    { enabled: auth.session?.accessToken != null },
+    { enabled: auth.session?.accessToken != null, retry: false },
     { token: auth.session?.accessToken },
   )
 
