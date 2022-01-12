@@ -22,11 +22,7 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
   const trainingMaterial = useGetTrainingMaterial(
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
-    /**
-     * If there is a not-yet-approved item version accessible by the authenticated user
-     * (either a draft, or suggested version), use that, otherwise fall back to last approved version.
-     */
-    { approved: false, draft: true },
+    {},
     {
       enabled: id != null,
       refetchOnMount: false,

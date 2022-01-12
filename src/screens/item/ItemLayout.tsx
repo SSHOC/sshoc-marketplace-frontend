@@ -13,11 +13,16 @@ import {
   useDeleteTool,
   useDeleteTrainingMaterial,
   useDeleteWorkflow,
+  useGetDataset,
   useGetDatasetVersionInformationContributors,
   useGetItemCategories,
+  useGetPublication,
   useGetPublicationVersionInformationContributors,
+  useGetTool,
   useGetToolVersionInformationContributors,
+  useGetTrainingMaterial,
   useGetTrainingMaterialVersionInformationContributors,
+  useGetWorkflow,
   useGetWorkflowVersionInformationContributors,
 } from '@/api/sshoc'
 import { getMediaFileUrl, getMediaThumbnailUrl } from '@/api/sshoc/client'
@@ -27,6 +32,7 @@ import type {
   ItemSearchQuery,
 } from '@/api/sshoc/types'
 import { Icon } from '@/elements/Icon/Icon'
+import { Svg as AlertIcon } from '@/elements/icons/small/alert.svg'
 import DocumentIcon from '@/elements/icons/small/document.svg'
 import { useToast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -115,37 +121,6 @@ export default function ItemLayout({
               />
               <Title>{item.label}</Title>
             </div>
-            <ProtectedView>
-              <div className="flex flex-col space-y-2 xl:flex-row xl:space-y-0 xl:space-x-4">
-                <Link
-                  href={{
-                    pathname: `/${item.category}/${item.persistentId}/edit`,
-                  }}
-                >
-                  <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
-                    Edit
-                  </a>
-                </Link>
-                {item.status === 'approved' ? (
-                  <Link
-                    href={{
-                      pathname: `/${item.category}/${item.persistentId}/history`,
-                    }}
-                  >
-                    <a className="w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
-                      History
-                    </a>
-                  </Link>
-                ) : null}
-                <ProtectedView roles={['administrator']}>
-                  <DeleteItemButton
-                    id={item.persistentId}
-                    category={item.category as ItemCategory}
-                    draft={item.status === 'draft'}
-                  />
-                </ProtectedView>
-              </div>
-            </ProtectedView>
           </HStack>
           <ItemDescription description={item.description} />
         </VStack>
@@ -162,15 +137,7 @@ export default function ItemLayout({
               accessibleAt={item.accessibleAt}
               category={item.category as ItemCategory}
             />
-            <ItemPropertiesList
-              properties={item.properties as ItemProperties}
-              contributors={item.contributors as ItemContributors}
-              source={item.source}
-              sourceItemId={item.sourceItemId}
-              dateCreated={item.dateCreated}
-              dateLastUpdated={item.dateLastUpdated}
-              externalIds={item.externalIds}
-            />
+            <ItemPropertiesList item={item} />
             <ItemContributors
               id={item.persistentId}
               category={item.category as Exclude<ItemCategory, 'step'>}
@@ -180,6 +147,174 @@ export default function ItemLayout({
         </SideColumn>
       </GridLayout>
     </Fragment>
+  )
+}
+
+/**
+ * Edit item.
+ *
+ * If we are showing a draft or suggested/ingested version, the edit button points to that version.
+ *
+ * For approved versions, we show a menu button which allows editing the currently approved version,
+ * or any draft/suggested versions the user might have created previously.
+ */
+function EditItemButton({
+  category,
+  persistentId,
+  id,
+  status,
+}: {
+  category: ItemCategory
+  persistentId: string
+  id: number
+  status: Exclude<Item['status'], undefined>
+}) {
+  if (status === 'draft') {
+    const href = { pathname: `/${category}/${persistentId}/draft/edit` }
+
+    return (
+      <Link href={href}>
+        <a className="w-full px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+          Edit
+        </a>
+      </Link>
+    )
+  }
+
+  if (status === 'suggested' || status === 'ingested') {
+    const href = { pathname: `/${category}/${persistentId}/version/${id}/edit` }
+
+    return (
+      <Link href={href}>
+        <a className="w-full px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+          Edit
+        </a>
+      </Link>
+    )
+  }
+
+  if (status !== 'approved') return null
+
+  return (
+    <EditItemMenuButton
+      category={category}
+      persistentId={persistentId}
+      id={id}
+    />
+  )
+}
+
+function getItem({ category }: { category: ItemCategory }) {
+  const map = {
+    dataset: useGetDataset,
+    publication: useGetPublication,
+    'tool-or-service': useGetTool,
+    'training-material': useGetTrainingMaterial,
+    workflow: useGetWorkflow,
+  }
+  return map[category]
+}
+
+function EditItemMenuButton({
+  category,
+  persistentId,
+  id,
+}: {
+  category: ItemCategory
+  persistentId: string
+  id: number
+}) {
+  const auth = useAuth()
+  const useGetItem = getItem({ category })
+  const draft = useGetItem(
+    { persistentId },
+    { draft: true },
+    { enabled: auth.session?.accessToken != null },
+    { token: auth.session?.accessToken },
+  )
+  const suggested = useGetItem(
+    { persistentId },
+    { approved: false },
+    { enabled: auth.session?.accessToken != null },
+    { token: auth.session?.accessToken },
+  )
+
+  const pathnames = [
+    {
+      label: 'Current version',
+      pathname: `/${category}/${persistentId}/edit`,
+    },
+    draft.data != null && {
+      label: 'Latest draft',
+      pathname: `/${category}/${persistentId}/draft/edit`,
+    },
+    suggested.data != null &&
+      suggested.data.status !== 'approved' && {
+        label: 'Latest suggestion',
+        pathname: `/${category}/${persistentId}/version/${suggested.data.id}/edit`,
+      },
+  ].filter(Boolean) as Array<{ label: string; pathname: string }>
+
+  if (pathnames.length === 1) {
+    const { pathname } = pathnames[0]
+    return (
+      <Link href={{ pathname }}>
+        <a className="w-full px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+          Edit
+        </a>
+      </Link>
+    )
+  }
+
+  return (
+    <Menu>
+      {({ open }) => (
+        <div className="relative block w-full">
+          <Menu.Button className="inline-flex items-center justify-between w-full py-3 text-lg text-white transition-colors duration-150 rounded bg-primary-750 hover:bg-secondary-600">
+            <span className="px-8 text-left">Edit</span>
+            <span className="px-2 border-l border-primary-500">
+              <Triangle />
+            </span>
+          </Menu.Button>
+          <Menu.Items className="absolute z-10 w-full mt-1 overflow-hidden bg-white border rounded shadow-md">
+            {pathnames.map(({ pathname, label }) => (
+              <Menu.Item key={pathname} as={Fragment}>
+                <Link href={{ pathname }}>
+                  <a className="block px-6 py-6 truncate transition-colors duration-150 text-primary-500 hover:bg-gray-50">
+                    {label}
+                  </a>
+                </Link>
+              </Menu.Item>
+            ))}
+          </Menu.Items>
+        </div>
+      )}
+    </Menu>
+  )
+}
+
+/**
+ * Item history. Only shown for approved items.
+ */
+function ItemHistoryButton({
+  category,
+  persistentId,
+  id,
+  approved,
+}: {
+  category: ItemCategory
+  persistentId: string
+  id: number
+  approved: boolean
+}) {
+  if (!approved) return null
+
+  return (
+    <Link href={{ pathname: `/${category}/${persistentId}/history` }}>
+      <a className="w-full px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
+        History
+      </a>
+    </Link>
   )
 }
 
@@ -243,7 +378,7 @@ function DeleteItemButton({
     <button
       onClick={deleteItem}
       className={cx(
-        'w-32 px-6 py-3 text-lg text-center text-white transition rounded bg-error-600 hover:bg-error-700',
+        'w-full px-6 py-3 text-lg text-center text-white transition rounded bg-error-600 hover:bg-error-700',
         status !== 'idle' && 'pointer-events-none',
       )}
     >
@@ -513,30 +648,51 @@ function ItemMedia({ media }: { media: Item['media'] }) {
   )
 }
 
-interface ItemMetadata {
-  properties: ItemProperties
-  contributors: ItemContributors
-  source?: Item['source']
-  sourceItemId?: Item['sourceItemId']
-  dateCreated?: string
-  dateLastUpdated?: string
-  externalIds?: Item['externalIds']
-}
-
 /**
  * Properties.
  */
-function ItemPropertiesList(props: ItemMetadata) {
-  const metadata = useItemMetadata(props)
-
-  if (metadata == null) return null
+function ItemPropertiesList({ item }: { item: Item }) {
+  const metadata = useItemMetadata(item)
 
   return (
     <aside className="">
+      <HStack className="items-start justify-between space-x-4">
+        <ProtectedView>
+          <div className="flex flex-col w-full mb-12 space-y-2 max-w-64">
+            <EditItemButton
+              category={item.category as ItemCategory}
+              persistentId={item.persistentId!}
+              id={item.id!}
+              status={item.status!}
+            />
+            <ItemHistoryButton
+              category={item.category as ItemCategory}
+              persistentId={item.persistentId!}
+              id={item.id!}
+              approved={item.status === 'approved'}
+            />
+            <ProtectedView roles={['administrator']}>
+              <DeleteItemButton
+                id={item.persistentId!}
+                category={item.category as ItemCategory}
+                draft={item.status === 'draft'}
+              />
+            </ProtectedView>
+          </div>
+        </ProtectedView>
+      </HStack>
+      {item.status !== 'approved' ? (
+        <small className="flex items-center mb-12 space-x-1 text-error-600">
+          <Icon icon={AlertIcon} />
+          <span>You are currently viewing a {item.status} version</span>
+        </small>
+      ) : null}
       <h2 className="text-xl font-medium">Details</h2>
-      <div className="text-sm break-words divide-y">
-        {Object.values(metadata)}
-      </div>
+      {metadata != null ? (
+        <div className="text-sm break-words divide-y">
+          {Object.values(metadata)}
+        </div>
+      ) : null}
     </aside>
   )
 }
@@ -573,7 +729,7 @@ function useItemMetadata({
   dateCreated,
   dateLastUpdated,
   externalIds,
-}: ItemMetadata) {
+}: Item) {
   const metadata: any = {}
 
   if (Array.isArray(properties) && properties.length > 0) {
@@ -788,14 +944,14 @@ function useItemMetadata({
       <ul className="py-8 space-y-6" key="item-externalids">
         {externalIds.map((id) => {
           return (
-            <li key={id.identifier} className="flex">
-              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
+            <li key={id.identifierService?.code} className="flex">
+              <span className="font-medium text-gray-550 whitespace-nowrap">
                 {id.identifierService?.label}
               </span>
               {id.identifierService?.urlTemplate != null &&
               id.identifierService.urlTemplate.length > 0 ? (
                 <>
-                  <span>: </span>
+                  <span className="mr-2">: </span>
                   <Anchor
                     href={id.identifierService.urlTemplate.replace(
                       '{source-item-id}',
