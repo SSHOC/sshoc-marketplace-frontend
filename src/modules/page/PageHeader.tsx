@@ -526,6 +526,7 @@ function MobileNavigation(): JSX.Element {
   const dialog = useDialogState()
   const auth = useAuth()
   const { data: itemCategories = {} } = useGetItemCategories()
+  const { data: user } = useCurrentUser()
 
   useEffect(() => {
     router.events.on('routeChangeStart', dialog.close)
@@ -583,9 +584,35 @@ function MobileNavigation(): JSX.Element {
 
               <HStack as="ul" className="flex flex-col ">
                 <li className="grid">
-                  <NavLink href={{ pathname: '/auth/sign-in' }}>
-                    Sign in
-                  </NavLink>
+                  {user == null ? (
+                    <NavLink href={{ pathname: '/auth/sign-in' }}>
+                      Sign in
+                    </NavLink>
+                  ) : (
+                    <NavDisclosure label={`Hi, ${user.displayName}`}>
+                      <ul>
+                        <li className="grid">
+                          <NavLink
+                            variant="secondary"
+                            href={{ pathname: '/account' }}
+                          >
+                            My account
+                          </NavLink>
+                        </li>
+                        <li className="grid">
+                          <button
+                            className="inline-flex items-center px-8 py-6 text-center transition-colors duration-150 bg-white hover:bg-gray-50 text-primary-500"
+                            onClick={() => {
+                              dialog.close()
+                              auth.signOut()
+                            }}
+                          >
+                            Sign out
+                          </button>
+                        </li>
+                      </ul>
+                    </NavDisclosure>
+                  )}
                 </li>
                 <li role="separator" className="w-full border-b" />
                 {Object.entries(itemCategories).map(([category, label]) => {
