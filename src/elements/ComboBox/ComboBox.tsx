@@ -156,7 +156,7 @@ export function ComboBox<T extends object>(
 
   const variant = variants[props.variant ?? 'default']
   const styles = {
-    container: 'inline-flex relative',
+    container: 'inline-flex relative flex-1',
     inputContainer: cx(
       'w-64',
       'transition inline-flex min-w-0 items-center justify-between rounded border border-gray-300',

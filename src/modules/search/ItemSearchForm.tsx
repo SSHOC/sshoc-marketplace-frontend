@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import type { FormEvent, Key, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
-import type { SuggestedObject } from '@/api/sshoc'
 import { useAutocompleteItems, useGetItemCategories } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { Button } from '@/elements/Button/Button'

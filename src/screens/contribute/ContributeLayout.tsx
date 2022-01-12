@@ -28,7 +28,7 @@ export default function ContributeLayout({
   title: string
   breadcrumb: { pathname: string; label: string }
   lastUpdatedAt: string
-  links: Array<{ label: string; pathname: string }>
+  links: Array<{ label: string; pathname: string; menu: string }>
 }>): JSX.Element {
   return (
     <Fragment>
@@ -54,10 +54,10 @@ export default function ContributeLayout({
         <SideColumn>
           <nav aria-label="Page navigation">
             <ul className="pl-6">
-              {links.map(({ label, pathname }) => {
+              {links.map(({ menu, pathname }) => {
                 return (
                   <li key={pathname}>
-                    <NavLink href={{ pathname }}>{label}</NavLink>
+                    <NavLink href={{ pathname }}>{menu}</NavLink>
                   </li>
                 )
               })}

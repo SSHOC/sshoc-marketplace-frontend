@@ -9,8 +9,11 @@ import { Fragment, useEffect, useState } from 'react'
 import { useGetItemCategories } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import { Button } from '@/elements/Button/Button'
+import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { Svg as MenuIcon } from '@/elements/icons/small/menu.svg'
+import { Svg as TriangleIcon } from '@/elements/icons/small/triangle.svg'
 import { useDialogState } from '@/lib/hooks/useDialogState'
 import { useDisclosure } from '@/modules/a11y/useDisclosure'
 import { useDisclosureState } from '@/modules/a11y/useDisclosureState'
@@ -21,6 +24,7 @@ import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import styles from '@/modules/page/PageHeader.module.css'
+import aboutLinks from '@/utils/aboutPages.preval'
 import contributeLinks from '@/utils/contributePages.preval'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
@@ -29,13 +33,6 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
-
-const aboutLinks = [
-  { pathname: '/about', label: 'About the project' },
-  { pathname: '/about/service', label: 'About the service' },
-  { pathname: '/about/implementation', label: 'About the technical aspects' },
-  { pathname: '/about/team', label: 'About the team' },
-]
 
 /**
  * Page header.
@@ -141,7 +138,7 @@ function MainNavigation(): JSX.Element {
                         <MenuButton isOpen={open}>Contribute</MenuButton>
                         <FadeIn show={open}>
                           <MenuPopover static>
-                            {contributeLinks.map(({ label, pathname }) => {
+                            {contributeLinks.map(({ menu, pathname }) => {
                               return (
                                 <Menu.Item key={pathname}>
                                   {({ active }) => (
@@ -149,7 +146,7 @@ function MainNavigation(): JSX.Element {
                                       href={{ pathname }}
                                       highlighted={active}
                                     >
-                                      {label}
+                                      {menu}
                                     </MenuLink>
                                   )}
                                 </Menu.Item>
@@ -171,7 +168,7 @@ function MainNavigation(): JSX.Element {
                     <MenuButton isOpen={open}>About</MenuButton>
                     <FadeIn show={open}>
                       <MenuPopover static>
-                        {aboutLinks.map(({ label, pathname }) => {
+                        {aboutLinks.map(({ menu, pathname }) => {
                           return (
                             <Menu.Item key={pathname}>
                               {({ active }) => (
@@ -179,7 +176,7 @@ function MainNavigation(): JSX.Element {
                                   href={{ pathname }}
                                   highlighted={active}
                                 >
-                                  {label}
+                                  {menu}
                                 </MenuLink>
                               )}
                             </Menu.Item>
@@ -224,7 +221,7 @@ function ReportAnIssueButton({
         },
       }}
     >
-      <a className="mx-6 my-2.5 text-gray-550">Report an issue</a>
+      <a className="mx-6 my-2.5 text-gray-550 text-sm">Report an issue</a>
     </Link>
   )
 }
@@ -537,14 +534,24 @@ function MobileNavigation(): JSX.Element {
   }, [router.events, dialog.close])
 
   return (
-    <div className="m-8 2xl:hidden">
-      <button onClick={dialog.toggle}>
+    <div className="m-4 md:m-8 2xl:hidden">
+      <Button
+        style={{
+          width: 40,
+          height: 40,
+          display: 'grid',
+          placeItems: 'center',
+          padding: 0,
+        }}
+        variant="gradient"
+        onPress={dialog.toggle}
+      >
         <MenuIcon
           aria-label="Open navigation menu"
           width="1em"
           className="w-6 h-6"
         />
-      </button>
+      </Button>
       <Transition
         show={dialog.isOpen}
         enter="transition duration-100 ease-out"
@@ -558,13 +565,13 @@ function MobileNavigation(): JSX.Element {
           // open={dialog.isOpen}
           static
           onClose={dialog.close}
-          className="fixed inset-0 z-10"
+          className="fixed inset-0 z-10 overflow-y-auto"
         >
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             <div className="relative w-full max-w-xl bg-gray-100">
-              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
                 <Dialog.Title className="sr-only">
                   Main navigation menu
                 </Dialog.Title>
@@ -573,7 +580,10 @@ function MobileNavigation(): JSX.Element {
                     <Logo aria-label="Home" height="4em" />
                   </a>
                 </Link>
-                <button onClick={dialog.close}>
+                <button
+                  onClick={dialog.close}
+                  className="transition text-primary-750 hover:text-secondary-600"
+                >
                   <CloseIcon
                     aria-label="Close navigation menu"
                     width="1em"
@@ -614,7 +624,10 @@ function MobileNavigation(): JSX.Element {
                     </NavDisclosure>
                   )}
                 </li>
-                <li role="separator" className="w-full border-b" />
+                <li
+                  role="separator"
+                  className="w-full border-b border-gray-250"
+                />
                 {Object.entries(itemCategories).map(([category, label]) => {
                   if (category === 'step') return null
 
@@ -639,7 +652,10 @@ function MobileNavigation(): JSX.Element {
                     </li>
                   )
                 })}
-                <li role="separator" className="w-full border-b" />
+                <li
+                  role="separator"
+                  className="w-full border-b border-gray-250"
+                />
                 <li className="grid">
                   <NavDisclosure label="Browse">
                     <ul>
@@ -662,15 +678,18 @@ function MobileNavigation(): JSX.Element {
                     </ul>
                   </NavDisclosure>
                 </li>
-                <li role="separator" className="w-full border-b" />
+                <li
+                  role="separator"
+                  className="w-full border-b border-gray-250"
+                />
                 <li className="grid">
                   <NavDisclosure label="Contribute">
                     <ul>
-                      {contributeLinks.map(({ label, pathname }) => {
+                      {contributeLinks.map(({ menu, pathname }) => {
                         return (
                           <li key={pathname} className="grid">
                             <NavLink variant="secondary" href={{ pathname }}>
-                              {label}
+                              {menu}
                             </NavLink>
                           </li>
                         )
@@ -681,11 +700,11 @@ function MobileNavigation(): JSX.Element {
                 <li className="grid">
                   <NavDisclosure label="About">
                     <ul>
-                      {aboutLinks.map(({ label, pathname }) => {
+                      {aboutLinks.map(({ menu, pathname }) => {
                         return (
                           <li key={pathname} className="grid">
                             <NavLink variant="secondary" href={{ pathname }}>
-                              {label}
+                              {menu}
                             </NavLink>
                           </li>
                         )
@@ -693,7 +712,10 @@ function MobileNavigation(): JSX.Element {
                     </ul>
                   </NavDisclosure>
                 </li>
-                <li role="separator" className="w-full border-b" />
+                <li
+                  role="separator"
+                  className="w-full border-b border-gray-250"
+                />
                 {auth.session?.accessToken != null
                   ? Object.entries(itemCategories).map(([category, label]) => {
                       if (category === 'step') return null
@@ -741,7 +763,12 @@ function NavDisclosure({
         onClick={state.toggle}
         {...triggerProps}
       >
-        {label}
+        <span>{label}</span>
+        <Icon
+          icon={TriangleIcon}
+          aria-hidden
+          className={cx('w-2.5 h-2.5', state.isOpen && 'transform rotate-180')}
+        />
       </button>
       {state.isOpen ? <div {...panelProps}>{children}</div> : null}
     </Fragment>

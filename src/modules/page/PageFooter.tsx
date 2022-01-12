@@ -59,7 +59,7 @@ function SecondaryNavigation() {
       >
         <HStack as="ul" className="flex flex-col py-2 md:flex-row md:py-0">
           <li className="grid">
-            <NavLink href={{ pathname: '/about' }}>About</NavLink>
+            <NavLink href={{ pathname: '/about/service' }}>About</NavLink>
           </li>
           <li className="grid">
             <NavLink href={{ pathname: '/privacy-policy' }}>

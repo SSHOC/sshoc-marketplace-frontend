@@ -15,13 +15,6 @@ import styles from '@/screens/about/AboutLayout.module.css'
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 
-const links = [
-  { label: 'About the project', pathname: '/about' },
-  { label: 'About the service', pathname: '/about/service' },
-  { label: 'About the technical aspects', pathname: '/about/implementation' },
-  { label: 'About the team', pathname: '/about/team' },
-]
-
 /**
  * Shared about screen layout.
  */
@@ -30,10 +23,12 @@ export default function AboutLayout({
   title,
   lastUpdatedAt,
   children,
+  links,
 }: PropsWithChildren<{
   title: string
   breadcrumb: { pathname: string; label: string }
   lastUpdatedAt: string
+  links: Array<{ label: string; pathname: string; menu: string }>
 }>): JSX.Element {
   return (
     <Fragment>
@@ -59,10 +54,10 @@ export default function AboutLayout({
         <SideColumn>
           <nav aria-label="Page navigation">
             <ul className="pl-6">
-              {links.map(({ label, pathname }) => {
+              {links.map(({ menu, pathname }) => {
                 return (
                   <li key={pathname}>
-                    <NavLink href={{ pathname }}>{label}</NavLink>
+                    <NavLink href={{ pathname }}>{menu}</NavLink>
                   </li>
                 )
               })}

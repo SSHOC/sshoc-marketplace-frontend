@@ -39,7 +39,7 @@ export default function ContactScreen({
           />
         </Header>
         <ContentColumn>
-          <div className="space-y-6 max-w-80ch mx-auto pb-12">
+          <div className="pb-12 mx-auto space-y-6 max-w-80ch">
             <Title>{meta.title}</Title>
             <Mdx>
               <Content />

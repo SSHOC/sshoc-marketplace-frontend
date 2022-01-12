@@ -40,46 +40,6 @@ collections:
           - name: body
             label: Text
             widget: markdown
-      - name: about
-        label: About page
-        file: content/pages/about.mdx
-        format: frontmatter
-        fields:
-          - name: title
-            label: Title
-          - name: body
-            label: Text
-            widget: markdown
-      - name: service
-        label: About the Service page
-        file: content/pages/service.mdx
-        format: frontmatter
-        fields:
-          - name: title
-            label: Title
-          - name: body
-            label: Text
-            widget: markdown
-      - name: implementation
-        label: About the Technical Aspects page
-        file: content/pages/implementation.mdx
-        format: frontmatter
-        fields:
-          - name: title
-            label: Title
-          - name: body
-            label: Text
-            widget: markdown
-      - name: team
-        label: About the Team page
-        file: content/pages/team.mdx
-        format: frontmatter
-        fields:
-          - name: title
-            label: Title
-          - name: body
-            label: Text
-            widget: markdown
       - name: contact
         label: Contact page
         file: content/pages/contact.mdx
@@ -100,6 +60,27 @@ collections:
           - name: body
             label: Text
             widget: markdown
+  - name: about-pages
+    label: About pages
+    label_singular: Contribute page
+    editor:
+      preview: false
+    format: frontmatter
+    extension: mdx
+    folder: content/about-pages
+    create: true
+    delete: false
+    fields:
+      - name: title
+        label: Title
+      - name: ord
+        label: Order
+        widget: number
+      - name: menu
+        label: Menu label
+      - name: body
+        label: Text
+        widget: markdown
   - name: contribute-pages
     label: Contribute pages
     label_singular: Contribute page
@@ -113,6 +94,11 @@ collections:
     fields:
       - name: title
         label: Title
+      - name: ord
+        label: Order
+        widget: number
+      - name: menu
+        label: Menu label
       - name: body
         label: Text
         widget: markdown

@@ -1,7 +1,7 @@
 import { useButton } from '@react-aria/button'
 import type { AriaButtonProps } from '@react-types/button'
 import cx from 'clsx'
-import type { RefObject } from 'react'
+import type { CSSProperties, RefObject } from 'react'
 import { forwardRef, Fragment, useRef } from 'react'
 
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -12,6 +12,7 @@ export interface ButtonProps extends AriaButtonProps {
   /** @default "primary" */
   variant?: 'primary' | 'gradient' | 'link' | 'header' | 'nav'
   className?: string
+  style?: CSSProperties
 }
 
 function Button(
@@ -119,7 +120,12 @@ function Button(
     )
 
   return (
-    <ElementType {...buttonProps} className={styles.button} ref={ref}>
+    <ElementType
+      {...buttonProps}
+      className={styles.button}
+      style={props.style}
+      ref={ref}
+    >
       {children}
     </ElementType>
   )

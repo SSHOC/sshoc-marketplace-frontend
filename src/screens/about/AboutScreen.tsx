@@ -1,24 +1,27 @@
-import type { PageProps } from '@/pages/about/index'
+import type { PageProps } from '@/pages/about/[id]'
 import AboutLayout from '@/screens/about/AboutLayout'
-import Content, { metadata } from '@@/content/pages/about.mdx'
-
-type ContentMetadata = {
-  title: string
-}
-
-const meta = metadata as ContentMetadata
 
 /**
  * About screen.
  */
-export default function AboutScreen({ lastUpdatedAt }: PageProps): JSX.Element {
+export default function AboutScreen({
+  lastUpdatedAt,
+  metadata,
+  html,
+  id,
+  pages,
+}: PageProps): JSX.Element {
   return (
     <AboutLayout
-      breadcrumb={{ pathname: '/about', label: 'About' }}
-      title={meta.title}
+      breadcrumb={{ pathname: `/about/${id}`, label: metadata.title }}
+      title={metadata.title}
       lastUpdatedAt={lastUpdatedAt}
+      links={pages}
     >
-      <Content />
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </AboutLayout>
   )
 }

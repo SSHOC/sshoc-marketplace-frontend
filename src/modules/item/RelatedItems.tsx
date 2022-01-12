@@ -46,7 +46,7 @@ export default function RelatedItems({
         <SectionTitle>Related</SectionTitle>
         <span className="text-xl text-gray-500">({relatedItems.length})</span>
       </HStack>
-      <ul className="grid grid-cols-2 border-t border-b border-gray-200">
+      <ul className="grid border-t border-b border-gray-200 md:grid-cols-2">
         {relatedItems.slice(0, cursor).map((item) => {
           return (
             <li key={item.id} className="-mt-px border-t border-gray-200">

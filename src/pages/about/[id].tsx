@@ -15,7 +15,7 @@ import toHast from 'remark-rehype'
 import unified from 'unified'
 
 import { getLastUpdatedTimestamp } from '@/api/git'
-import ContributeScreen from '@/screens/contribute/ContributeScreen'
+import AboutScreen from '@/screens/about/AboutScreen'
 
 interface PageParams extends ParsedUrlQuery {
   id: string
@@ -29,12 +29,12 @@ export interface PageProps {
   pages: Array<{ pathname: string; label: string; menu: string }>
 }
 
-export default function ContributePage(props: PageProps): JSX.Element {
-  return <ContributeScreen {...props} />
+export default function AboutPage(props: PageProps): JSX.Element {
+  return <AboutScreen {...props} />
 }
 
 const extension = '.mdx'
-const folder = path.join(process.cwd(), 'content', 'contribute-pages')
+const folder = path.join(process.cwd(), 'content', 'about-pages')
 const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
@@ -45,7 +45,7 @@ const processor = unified()
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<PageParams>
 > {
-  const ids = await getContributePageIds()
+  const ids = await getAboutPageIds()
 
   const paths = ids.map((id) => {
     return { params: { id } }
@@ -70,9 +70,9 @@ export async function getStaticProps(
     lastUpdatedAt = new Date().toISOString()
   }
 
-  const { metadata, html } = await getContributePageById(id)
+  const { metadata, html } = await getAboutPageById(id)
 
-  const pages = await getContributePageRoutes()
+  const pages = await getAboutPageRoutes()
 
   return {
     props: {
@@ -85,7 +85,7 @@ export async function getStaticProps(
   }
 }
 
-async function getContributePageIds() {
+async function getAboutPageIds() {
   try {
     const ids = (await fs.readdir(folder, 'utf-8')).map((fileName) => {
       return fileName.slice(0, -extension.length)
@@ -96,8 +96,8 @@ async function getContributePageIds() {
   }
 }
 
-async function getContributePageById(id: string) {
-  const { data, content } = await getContributePageMetadataById(id)
+async function getAboutPageById(id: string) {
+  const { data, content } = await getAboutPageMetadataById(id)
   const html = String(await processor.process(content))
 
   return {
@@ -106,18 +106,18 @@ async function getContributePageById(id: string) {
   }
 }
 
-async function getContributePageMetadataById(id: string) {
+async function getAboutPageMetadataById(id: string) {
   const filePath = path.join(folder, id + extension)
   return matter(await fs.readFile(filePath, 'utf-8'))
 }
 
-async function getContributePageRoutes() {
-  const ids = await getContributePageIds()
+async function getAboutPageRoutes() {
+  const ids = await getAboutPageIds()
   const pages = await Promise.all(
     ids.map(async (id) => {
-      const { data } = await getContributePageMetadataById(id)
+      const { data } = await getAboutPageMetadataById(id)
       return {
-        pathname: `/contribute/${id}`,
+        pathname: `/about/${id}`,
         label: data.title,
         menu: data.menu,
         position: data.ord,

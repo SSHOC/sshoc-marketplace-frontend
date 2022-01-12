@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.section {
+  position: relative;
+  grid-column: 2 / -2;
+}
+
+@media (min-width: 768px) {
+  .section {
+    grid-column: 3 / span 11;
+  }
+}

@@ -58,6 +58,18 @@ const nextConfig = {
   images: {},
   poweredByHeader: false,
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/about',
+        destination: '/about/service',
+      },
+      {
+        source: '/browse',
+        destination: '/browse/activity',
+      },
+    ]
+  },
 }
 
 const plugins = [withBundleAnalyzer, withMdx, withSvg, withPreval]

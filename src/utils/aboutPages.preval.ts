@@ -4,20 +4,20 @@ import preval from 'next-plugin-preval'
 import * as path from 'path'
 
 const extension = '.mdx'
-const folder = path.join(process.cwd(), 'content', 'contribute-pages')
+const folder = path.join(process.cwd(), 'content', 'about-pages')
 
 /**
  * There is currently not good mechanism in Next.js to statically provide
  * async data to all pages (e.g. via getStaticProps in pages/_app.tsx).
  * So we preval at build time to generate json data which can be imported.
  */
-async function getContributePageRoutes() {
-  const ids = await getContributePageIds()
+async function getAboutPageRoutes() {
+  const ids = await getAboutPageIds()
   const pages = await Promise.all(
     ids.map(async (id) => {
-      const { data } = await getContributePageMetadataById(id)
+      const { data } = await getAboutPageMetadataById(id)
       return {
-        pathname: `/contribute/${id}`,
+        pathname: `/about/${id}`,
         label: data.title,
         menu: data.menu,
         position: data.ord,
@@ -32,7 +32,7 @@ async function getContributePageRoutes() {
   return pages
 }
 
-async function getContributePageIds() {
+async function getAboutPageIds() {
   try {
     const ids = (await fs.readdir(folder, 'utf-8')).map((fileName) => {
       return fileName.slice(0, -extension.length)
@@ -43,9 +43,9 @@ async function getContributePageIds() {
   }
 }
 
-async function getContributePageMetadataById(id: string) {
+async function getAboutPageMetadataById(id: string) {
   const filePath = path.join(folder, id + extension)
   return matter(await fs.readFile(filePath, 'utf-8'))
 }
 
-export default preval(getContributePageRoutes())
+export default preval(getAboutPageRoutes())

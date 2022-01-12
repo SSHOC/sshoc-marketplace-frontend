@@ -19,6 +19,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/contact/ContactScreen.module.css'
 import Content, { metadata } from '@@/content/pages/contact.mdx'
 
 type ContentMetadata = {
@@ -34,7 +35,7 @@ export default function ContactScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata title={meta.title} />
-      <GridLayout style={{ gridTemplateRows: 'auto 1fr' }}>
+      <GridLayout className={styles.container}>
         <Header>
           <Breadcrumbs
             links={[
@@ -46,7 +47,7 @@ export default function ContactScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <section style={{ gridColumn: '3 / span 11' }} className="relative">
+        <section className={styles.section}>
           <Image
             src={'/assets/images/contact/people@2x.png'}
             alt=""
