@@ -12,6 +12,7 @@ import { Svg as DraftItemsIcon } from '@/elements/icons/big/draft-items.svg'
 import { Svg as ModerateItemsIcon } from '@/elements/icons/big/moderate-items.svg'
 import { Svg as SourcesIcon } from '@/elements/icons/big/sources.svg'
 import { Svg as UsersIcon } from '@/elements/icons/big/users.svg'
+import { Svg as VocabulariesIcon } from '@/elements/icons/big/vocabularies.svg'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
@@ -50,6 +51,12 @@ const fields = [
     label: 'Actors',
     pathname: '/account/actors',
     icon: ActorsIcon,
+    roles: ['administrator', 'moderator'],
+  },
+  {
+    label: 'Vocabularies',
+    pathname: '/account/vocabularies',
+    icon: VocabulariesIcon,
     roles: ['administrator', 'moderator'],
   },
   {

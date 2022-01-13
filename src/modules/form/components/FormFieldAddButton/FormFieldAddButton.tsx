@@ -23,7 +23,7 @@ export function FormFieldAddButton(
 
   const styles = {
     button: cx(
-      'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal font-ui-base hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
+      'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal text-ui-base hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
       props.isDisabled === true
         ? 'pointer-events-none text-gray-550'
         : 'text-primary-750',
