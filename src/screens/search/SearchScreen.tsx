@@ -85,15 +85,17 @@ export default function SearchScreen(): JSX.Element {
       <Metadata title="Search results" />
       <GridLayout className={styles.grid}>
         <Header image={'/assets/images/search/clouds@2x.png'}>
-          <Breadcrumbs
-            links={[
-              { pathname: '/', label: 'Home' },
-              { pathname: '/search', label: 'Search' },
-            ]}
-          />
+          <div className="hidden md:block">
+            <Breadcrumbs
+              links={[
+                { pathname: '/', label: 'Home' },
+                { pathname: '/search', label: 'Search' },
+              ]}
+            />
+          </div>
         </Header>
         <ContentColumn>
-          <div className="px-6 xs:pb-12">
+          <div className="px-6 xs:pb-6 sm:pb-12">
             <Title className="space-x-3">
               <span>Search results</span>
               {Number(results?.hits) > 0 ? (
@@ -119,9 +121,12 @@ export default function SearchScreen(): JSX.Element {
           </aside>
         </ContentColumn>
         <SideColumn>
-          <HStack className="flex-col items-center justify-between h-full pb-6 md:flex-row md:gap-x-2">
-            <SubSectionTitle as="h2">Refine your search</SubSectionTitle>
+          <HStack className="flex-col w-full h-full pb-6 space-y-2 lg:space-y-0 lg:items-center lg:justify-between lg:flex-row lg:gap-x-2">
+            <SubSectionTitle className="leading-tight" as="h2">
+              Refine your search
+            </SubSectionTitle>
             <button
+              className="text-left lg:text-right"
               onClick={() => {
                 /**
                  * because we are using an uncontrolled form we need to manually sync the form to query params
@@ -137,7 +142,7 @@ export default function SearchScreen(): JSX.Element {
           </HStack>
         </SideColumn>
         <MainColumn>
-          <VStack className="items-center justify-between h-full pb-6 space-y-3 xs:flex-row xs:space-y-0">
+          <VStack className="items-center justify-between h-full pb-6 space-y-3 sm:flex-row sm:space-y-0">
             <ItemSearchSortOrder filter={query} />
             <ItemSearchPagination filter={query} results={results} />
           </VStack>
@@ -283,8 +288,8 @@ function ItemSearchPagination({
   if (pages <= 1) return null
 
   return (
-    <nav aria-label="Pagination">
-      <HStack as="ol" className="items-center space-x-3 xs:space-x-6">
+    <nav aria-label="Pagination" className="text-ui-base">
+      <HStack as="ol" className="items-center space-x-3 sm:space-x-6">
         <li className="flex items-center">
           <PreviousPageLink currentPage={currentPage} filter={filter} />
         </li>
@@ -335,8 +340,8 @@ function ItemSearchLongPagination({
   if (pages <= 1) return null
 
   return (
-    <nav aria-label="Pagination">
-      <HStack as="ol" className="items-center space-x-6">
+    <nav aria-label="Pagination" className="text-ui-base">
+      <HStack as="ol" className="items-center space-x-3 sm:space-x-6">
         <li className="flex items-center border-b border-transparent">
           <PreviousPageLink currentPage={currentPage} filter={filter} />
         </li>
@@ -897,7 +902,7 @@ function ItemSearchResult({
   const pathname = `/${item.category}/${item.persistentId}`
 
   return (
-    <article className="flex flex-col py-8 space-y-4 md:pl-16 md:pr-6">
+    <article className="flex flex-col py-8 space-y-4 md:pl-8 lg:pl-16 md:pr-6">
       <div className="flex justify-between">
         <h3 className="flex items-center space-x-4 text-xl font-medium">
           <ItemCategoryIcon
