@@ -658,7 +658,8 @@ function ItemMedia({ media }: { media: Item['media'] }) {
  * Properties.
  */
 function ItemPropertiesList({ item }: { item: Item }) {
-  const metadata = useItemMetadata(item)
+  const auth = useAuth()
+  const metadata = useItemMetadata(item, auth.session?.accessToken != null)
 
   return (
     <aside className="">
@@ -727,20 +728,28 @@ function ItemPropertyValue({ property }: { property: ItemProperty }) {
   }
 }
 
-function useItemMetadata({
-  properties,
-  contributors,
-  source,
-  sourceItemId,
-  dateCreated,
-  dateLastUpdated,
-  externalIds,
-}: Item) {
+function useItemMetadata(
+  {
+    properties,
+    contributors,
+    source,
+    sourceItemId,
+    dateCreated,
+    dateLastUpdated,
+    externalIds,
+  }: Item,
+  isAuthenticated: boolean,
+) {
   const metadata: any = {}
 
   if (Array.isArray(properties) && properties.length > 0) {
     const grouped: Record<string, Record<string, Array<PropertyDto>>> = {}
     properties.forEach((property) => {
+      // AFAIU the backend always returns all properties,
+      // but only authenticated users should be able to see them,
+      // for non-authenticated users they should be hidden.
+      if (!isAuthenticated && property.type?.hidden === true) return
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const type = property.type!
 
