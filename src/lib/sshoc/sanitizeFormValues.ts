@@ -33,8 +33,12 @@ export function sanitizeFormValues<
   values.relatedItems = values.relatedItems?.filter(
     (v) => v != null && v.persistentId != null && v.relation != null,
   )
-  values.externalIds?.filter(
-    (v) => v != null && v.identifier != null && v.identifierService != null,
+  values.externalIds = values.externalIds?.filter(
+    (v) =>
+      v != null &&
+      v.identifier != null &&
+      v.identifier.length > 0 &&
+      v.identifierService != null,
   )
   /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
