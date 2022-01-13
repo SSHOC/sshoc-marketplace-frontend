@@ -8,7 +8,7 @@ export function Title({
   className,
   ...props
 }: TitleProps): JSX.Element {
-  const classNames = cx('font-medium text-3xl leading-9', className)
+  const classNames = cx('font-medium text-3xl leading-9 break-words', className)
 
   return (
     <h1 className={classNames} {...props}>

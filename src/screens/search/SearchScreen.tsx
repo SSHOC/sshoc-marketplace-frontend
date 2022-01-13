@@ -93,7 +93,7 @@ export default function SearchScreen(): JSX.Element {
           />
         </Header>
         <ContentColumn>
-          <div className="px-6 pb-12">
+          <div className="px-6 xs:pb-12">
             <Title className="space-x-3">
               <span>Search results</span>
               {Number(results?.hits) > 0 ? (
@@ -137,10 +137,10 @@ export default function SearchScreen(): JSX.Element {
           </HStack>
         </SideColumn>
         <MainColumn>
-          <HStack className="items-center justify-between h-full pb-6">
+          <VStack className="items-center justify-between h-full pb-6 space-y-3 xs:flex-row xs:space-y-0">
             <ItemSearchSortOrder filter={query} />
             <ItemSearchPagination filter={query} results={results} />
-          </HStack>
+          </VStack>
         </MainColumn>
         <SideColumn>
           <div className="pb-12">
@@ -156,8 +156,11 @@ export default function SearchScreen(): JSX.Element {
         </MainColumn>
         <b className={cx('bg-gray-50', styles.rightBleed)} />
         <MainColumn>
-          <div className="flex justify-end px-6 pt-6 pb-12">
+          <div className="justify-end hidden px-6 pt-6 pb-12 xs:flex">
             <ItemSearchLongPagination filter={query} results={results} />
+          </div>
+          <div className="flex justify-center pt-6 pb-12 xs:hidden">
+            <ItemSearchPagination filter={query} results={results} />
           </div>
         </MainColumn>
       </GridLayout>
@@ -281,7 +284,7 @@ function ItemSearchPagination({
 
   return (
     <nav aria-label="Pagination">
-      <HStack as="ol" className="items-center space-x-6">
+      <HStack as="ol" className="items-center space-x-3 xs:space-x-6">
         <li className="flex items-center">
           <PreviousPageLink currentPage={currentPage} filter={filter} />
         </li>
@@ -1093,7 +1096,7 @@ function RefineSearchDialogTrigger({
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             <div className="relative w-full max-w-xl bg-gray-100">
-              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
                 <Dialog.Title as={SubSectionTitle}>
                   Refine your search
                 </Dialog.Title>
@@ -1126,7 +1129,7 @@ function SearchTermDialog() {
 
   return (
     <div className="xs:hidden">
-      <Button variant="gradient" className="w-full">
+      <Button onPress={dialog.open} variant="gradient" className="w-full">
         Search
       </Button>
       <Transition
@@ -1146,7 +1149,7 @@ function SearchTermDialog() {
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
             <div className="relative w-full max-w-xl bg-gray-100">
-              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
                 <Dialog.Title as={SubSectionTitle}>Search</Dialog.Title>
                 <button onClick={dialog.close}>
                   <CloseIcon
@@ -1158,10 +1161,12 @@ function SearchTermDialog() {
               </header>
               <div className="px-6 pb-12">
                 <ItemSearchForm>
-                  <ItemSearchComboBox shouldSubmitOnSelect />
-                  <Button type="submit" variant="gradient">
-                    Search
-                  </Button>
+                  <div className="flex flex-col my-3 space-y-3">
+                    <ItemSearchComboBox shouldSubmitOnSelect />
+                    <Button type="submit" variant="gradient">
+                      Search
+                    </Button>
+                  </div>
                 </ItemSearchForm>
               </div>
             </div>

@@ -412,7 +412,7 @@ function ItemThumbnail({
       <img
         src={getMediaThumbnailUrl({ mediaId: thumbnail.info.mediaId })}
         alt=""
-        className="object-contain w-24 h-24"
+        className="flex-shrink-0 object-contain w-16 h-16 xs:w-24 xs:h-24"
       />
     )
   }
@@ -420,7 +420,7 @@ function ItemThumbnail({
     <ItemCategoryIcon
       category={category}
       width="6em"
-      className="flex-shrink-0"
+      className="flex-shrink-0 w-16 h-16 xs:w-24 xs:h-24"
     />
   )
 }
@@ -455,7 +455,7 @@ function AccessibleAtLinks({
   /** we only get plural labels from the backend in GET items-categories */
   const label = getSingularItemCategoryLabel(category)
   const buttonClassNames =
-    'w-full text-xl rounded py-4 px-4 bg-primary-800 text-white hover:bg-primary-700 transition-colors duration-150 inline-flex items-center'
+    'w-full text-lg sm:text-xl rounded py-4 px-4 bg-primary-800 text-white hover:bg-primary-700 transition-colors duration-150 inline-flex items-center'
 
   /** when more than one upstream link is provided render a menu button */
   if (accessibleAt.length > 1) {

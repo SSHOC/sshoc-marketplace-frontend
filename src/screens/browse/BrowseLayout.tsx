@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
@@ -11,6 +12,7 @@ import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/browse/BrowseLayout.module.css'
 import { groupAlphabetically } from '@/utils/groupAlphabetically'
 
 type BrowseFacet = 'activity' | 'keyword'
@@ -58,7 +60,7 @@ function Browse({ facet }: { facet: BrowseFacet }) {
   const grouped = groupAlphabetically(results.facets[facet])
 
   return (
-    <ul className="py-12 space-y-8 gap-x-12" style={{ columnCount: 3 }}>
+    <ul className={cx('py-12 space-y-8 gap-x-12', styles.columns)}>
       {Object.keys(grouped)
         .sort()
         .map((char) => {
