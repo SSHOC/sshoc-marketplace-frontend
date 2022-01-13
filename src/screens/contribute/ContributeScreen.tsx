@@ -17,6 +17,7 @@ export default function ContributeScreen({
       title={metadata.title}
       lastUpdatedAt={lastUpdatedAt}
       links={pages}
+      toc={metadata.toc}
     >
       <div
         className="prose max-w-none"

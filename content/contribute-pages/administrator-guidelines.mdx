@@ -3,24 +3,64 @@ title: Administrator Guidelines
 ord: 6
 menu: Administrator Guidelines
 ---
+
 ## Ingest pipeline management
 
-As described in the [“data ingestion workflow” section](/about/implementation), the ingestion pipeline covers several steps that should be overseen by an Administrator for every new source to be added to the SSH Open Marketplace.  
+As described in the ["data ingestion workflow" section](/about/implementation),
+the ingestion pipeline covers several steps that should be overseen by an
+Administrator for every new source to be added to the SSH Open Marketplace.
 
-1. **Suggest a new source to harvest**. A source can be suggested by a Contributor or Moderator via the [contact form](/contact). The decision to include a new source has to be met based on the [source inclusion criteria](/about/data) and on a consensual basis within the Editorial team. 
-2. **Define mappings**. A mapping from the source data model to the Marketplace data model has to be devised in each case. This mapping is prepared in a spreadsheet by one of the Moderators and reviewed by at least another. This mapping represents the prescription for the custom ingestion pipeline. 
-3. **Implement a custom pipeline**. Based on the mapping defined in the previous step, a custom ETL (extract, transform, load) pipeline is implemented, which fetches the data from the source, iteratively processes all the items and maps the structured data in the source format to the MP data model, ingesting the transformed items expressed as JSON-objects via the API of the Marketplace. 
-4. **Test ingest and review**. After the mappings are defined, ingestion against a test instance and automatic checks are performed, as the basis for a review of the quality of the mapping. Identified problems inform refining of the mappings in an iterative process, until the test ingest passes the review (by the Editorial team). This work is handled by the assigned Moderator in cooperation with the Administrators. 
-Note: in this stage, the checks are performed, but no curation or editing of the data is performed, only adjustments to the mapping. 
-5. **Production ingest**. After the test ingest has been approved, the assigned Moderator can invoke the ingestion against the production instance. The ingest triggers automatic checks delivering reports for manual curation via the curation dashboard.  
-6. **Continuous ingest**. For sources, the content of which is expected to change substantially over time, the production ingest is configured as a recurring task. The ingestion pipeline is able to match the source items against Marketplace items and updates them accordingly, and processes previously unseen items to create new Marketplace items.
-
+1. **Suggest a new source to harvest**. A source can be suggested by a
+   Contributor or Moderator via the [contact form](/contact). The decision to
+   include a new source has to be met based on the
+   [source inclusion criteria](/about/data) and on a consensual basis within the
+   Editorial team.
+2. **Define mappings**. A mapping from the source data model to the Marketplace
+   data model has to be devised in each case. This mapping is prepared in a
+   spreadsheet by one of the Moderators and reviewed by at least another. This
+   mapping represents the prescription for the custom ingestion pipeline.
+3. **Implement a custom pipeline**. Based on the mapping defined in the previous
+   step, a custom ETL (extract, transform, load) pipeline is implemented, which
+   fetches the data from the source, iteratively processes all the items and
+   maps the structured data in the source format to the MP data model, ingesting
+   the transformed items expressed as JSON-objects via the API of the
+   Marketplace.
+4. **Test ingest and review**. After the mappings are defined, ingestion against
+   a test instance and automatic checks are performed, as the basis for a review
+   of the quality of the mapping. Identified problems inform refining of the
+   mappings in an iterative process, until the test ingest passes the review (by
+   the Editorial team). This work is handled by the assigned Moderator in
+   cooperation with the Administrators. Note: in this stage, the checks are
+   performed, but no curation or editing of the data is performed, only
+   adjustments to the mapping.
+5. **Production ingest**. After the test ingest has been approved, the assigned
+   Moderator can invoke the ingestion against the production instance. The
+   ingest triggers automatic checks delivering reports for manual curation via
+   the curation dashboard.
+6. **Continuous ingest**. For sources, the content of which is expected to
+   change substantially over time, the production ingest is configured as a
+   recurring task. The ingestion pipeline is able to match the source items
+   against Marketplace items and updates them accordingly, and processes
+   previously unseen items to create new Marketplace items.
 
 ## User management
-Administrators of the SSH Open Marketplace are in charge of the users' management. Because all logins to the SSH Open Marketplace are done via the EOSC Authentication and Authorization Infrastructure (AAI) that gathers social and academic accounts (log in via many Academic and Research Institutions worldwide is possible and Google or Linkedin accounts can also be used), administrators are not in charge of supporting the users in this authentication process. In case any problems arise to log in, users can communicate issues via <https://www.eosc-portal.eu/helpdesk>.
 
-In very rare and specific cases, administrators may create a local account to ensure access to the editing functions for a user who would encounter difficulties with the EOSC log in. Creating users can be done, with the administrators credentials, via the Marketplace API. 
+Administrators of the SSH Open Marketplace are in charge of the users'
+management. Because all logins to the SSH Open Marketplace are done via the EOSC
+Authentication and Authorization Infrastructure (AAI) that gathers social and
+academic accounts (log in via many Academic and Research Institutions worldwide
+is possible and Google or Linkedin accounts can also be used), administrators
+are not in charge of supporting the users in this authentication process. In
+case any problems arise to log in, users can communicate issues via
+<https://www.eosc-portal.eu/helpdesk>.
 
-Via the API or in the “My account” dashboard, administrators have the possibility to change the user roles of any Marketplace users. User roles available in the SSH Open Marketplace: Contributor, Moderator, Administrator. System Importer and System Moderator also exist but are only used to support the automatic actions performed on the system (such as mass ingestion or curation).  
+In very rare and specific cases, administrators may create a local account to
+ensure access to the editing functions for a user who would encounter
+difficulties with the EOSC log in. Creating users can be done, with the
+administrators credentials, via the Marketplace API.
 
-
+Via the API or in the "My account" dashboard, administrators have the
+possibility to change the user roles of any Marketplace users. User roles
+available in the SSH Open Marketplace: Contributor, Moderator, Administrator.
+System Importer and System Moderator also exist but are only used to support the
+automatic actions performed on the system (such as mass ingestion or curation).

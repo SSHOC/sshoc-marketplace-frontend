@@ -1,3 +1,5 @@
+import type { Toc } from '@stefanprobst/remark-extract-toc'
+import withToc from '@stefanprobst/remark-extract-toc'
 import { promises as fs } from 'fs'
 import matter from 'gray-matter'
 import type {
@@ -12,6 +14,7 @@ import toHtml from 'rehype-stringify'
 import withGfm from 'remark-gfm'
 import fromMarkdown from 'remark-parse'
 import toHast from 'remark-rehype'
+import withHeadingIds from 'remark-slug'
 import unified from 'unified'
 
 import { getLastUpdatedTimestamp } from '@/api/git'
@@ -24,7 +27,7 @@ interface PageParams extends ParsedUrlQuery {
 export interface PageProps {
   lastUpdatedAt: string
   html: string
-  metadata: { title: string }
+  metadata: { title: string; menu: string; ord: number; toc: Toc }
   id: string
   pages: Array<{ pathname: string; label: string; menu: string }>
 }
@@ -38,6 +41,8 @@ const folder = path.join(process.cwd(), 'content', 'about-pages')
 const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
+  .use(withHeadingIds)
+  .use(withToc)
   .use(toHast, { allowDangerousHtml: true })
   .use(withRawHtml)
   .use(toHtml)
@@ -97,13 +102,15 @@ async function getAboutPageIds() {
 }
 
 async function getAboutPageById(id: string) {
-  const { data, content } = await getAboutPageMetadataById(id)
-  const html = String(await processor.process(content))
+  const { data: frontmatter, content } = await getAboutPageMetadataById(id)
+  const vfile = await processor.process(content)
+  const html = String(vfile)
 
-  return {
-    metadata: data as { title: string; menu: string; ord: number },
-    html,
-  }
+  const data = frontmatter as { title: string; menu: string; ord: number }
+  const { toc = [] } = vfile.data as { toc: Toc }
+  const metadata = { ...data, toc }
+
+  return { metadata, html }
 }
 
 async function getAboutPageMetadataById(id: string) {

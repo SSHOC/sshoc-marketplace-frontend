@@ -1,3 +1,4 @@
+import type { Toc } from '@stefanprobst/remark-extract-toc'
 import cx from 'clsx'
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
@@ -24,11 +25,13 @@ export default function AboutLayout({
   lastUpdatedAt,
   children,
   links,
+  toc,
 }: PropsWithChildren<{
   title: string
   breadcrumb: { pathname: string; label: string }
   lastUpdatedAt: string
   links: Array<{ label: string; pathname: string; menu: string }>
+  toc: Toc
 }>): JSX.Element {
   return (
     <Fragment>
@@ -122,7 +125,7 @@ function NavLink({ href, children }: PropsWithChildren<{ href: UrlObject }>) {
     <Link href={href}>
       <a className={classNames}>
         <span>{children}</span>
-        <span className="transform -rotate-90">
+        <span className="flex transform -rotate-90">
           <Triangle />
         </span>
       </a>
