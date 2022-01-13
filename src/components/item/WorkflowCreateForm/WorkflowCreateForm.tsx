@@ -227,7 +227,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function onValidateWorkflow(values: Partial<ItemFormValues>) {
     const errors: Partial<Record<keyof typeof values, string>> = {}
 
-    validateCommonFormFields(values, errors)
+    validateCommonFormFields(sanitizeFormValues(values as any), errors)
 
     return errors
   }
@@ -239,7 +239,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
 
     const step = get(values, prefix)
     if (step == null) return errors
-    validateCommonFormFields(step, errors)
+    validateCommonFormFields(sanitizeFormValues(step as any), errors)
 
     return set({}, prefix, errors)
   }

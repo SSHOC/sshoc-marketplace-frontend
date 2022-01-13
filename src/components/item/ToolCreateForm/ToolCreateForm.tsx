@@ -157,7 +157,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function onValidate(values: Partial<ItemFormValues>) {
     const errors: Partial<Record<keyof typeof values, string>> = {}
 
-    validateCommonFormFields(values, errors)
+    validateCommonFormFields(sanitizeFormValues(values as any), errors)
 
     return errors
   }

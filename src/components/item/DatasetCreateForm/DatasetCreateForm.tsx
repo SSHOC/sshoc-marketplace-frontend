@@ -160,7 +160,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const errors: Partial<Record<keyof typeof values, any>> = {}
 
-    validateCommonFormFields(values, errors)
+    validateCommonFormFields(sanitizeFormValues(values as any), errors)
     validateDateFormFields(values, errors)
 
     return errors

@@ -19,14 +19,24 @@ export function sanitizeFormValues<
   /**
    * Backend crashes with `[null]`
    */
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.accessibleAt = values.accessibleAt?.filter((v) => v != null)
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.contributors = values.contributors?.filter((v) => v != null)
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.properties = values.properties?.filter((v) => v != null)
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.relatedItems = values.relatedItems?.filter((v) => v != null)
+  /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+  values.accessibleAt = values.accessibleAt?.filter(
+    (v) => v != null && v.length > 0,
+  )
+  values.contributors = values.contributors?.filter(
+    (v) => v != null && v.role != null && v.actor != null,
+  )
+  values.properties = values.properties?.filter(
+    (v) =>
+      v != null && v.type != null && (v.concept != null || v.value != null),
+  )
+  values.relatedItems = values.relatedItems?.filter(
+    (v) => v != null && v.persistentId != null && v.relation != null,
+  )
+  values.externalIds?.filter(
+    (v) => v != null && v.identifier != null && v.identifierService != null,
+  )
+  /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
   /**
    * Backend crashes with `source: {}`.
