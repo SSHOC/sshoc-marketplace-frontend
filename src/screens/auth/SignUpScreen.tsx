@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
@@ -20,19 +21,20 @@ import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
 import { Anchor } from '@/modules/ui/Anchor'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/auth/SignInScreen.module.css'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
 
 /**
- * Sign in screen.
+ * Sign up screen.
  */
-export default function SignInScreen(): JSX.Element {
+export default function SignUpScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex nofollow title="Sign in" />
-      <GridLayout style={{ gridTemplateRows: '1fr' }}>
-        <ContentColumn style={{ gridColumn: '4 / -2' }}>
+      <GridLayout className={styles.layout}>
+        <ContentColumn className={cx(styles.content, 'px-6')}>
           <Image
             src={'/assets/images/auth/signup/people@2x.png'}
             alt=""
@@ -41,7 +43,7 @@ export default function SignInScreen(): JSX.Element {
             quality={100}
             className="object-contain object-right-bottom -z-10"
           />
-          <div className="relative max-w-xl px-12 py-16 my-12 space-y-6 bg-white rounded-md shadow-md">
+          <div className="relative max-w-xl px-8 py-16 my-12 space-y-6 bg-white rounded-md shadow-md md:px-16">
             <Title>Sign up</Title>
             <hr className="border-gray-200" />
             <SignUpForm />

@@ -1,3 +1,4 @@
+import { Dialog, Transition } from '@headlessui/react'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -15,7 +16,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import type { QueryStatus } from 'react-query'
 
 import type { SearchItems } from '@/api/sshoc'
-import { HttpError, useSearchItems } from '@/api/sshoc'
+import { HttpError, useGetItemCategories, useSearchItems } from '@/api/sshoc'
 import type {
   ItemCategory,
   ItemSearchFacet,
@@ -28,12 +29,17 @@ import {
   itemSortOrders,
   sanitizeItemSearchQuery,
 } from '@/api/sshoc/validation'
+import { Button } from '@/elements/Button/Button'
 import { Select } from '@/elements/Select/Select'
+import { useDialogState } from '@/lib/hooks/useDialogState'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
+import ItemSearchForm, {
+  ItemSearchComboBox,
+} from '@/modules/search/ItemSearchForm'
 import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Checkbox from '@/modules/ui/Checkbox'
@@ -100,6 +106,16 @@ export default function SearchScreen(): JSX.Element {
               ) : null}
             </Title>
           </div>
+          <aside className="block px-6 py-6 md:hidden">
+            <div className="flex flex-col p-2 space-y-2 border rounded">
+              <RefineSearchDialogTrigger
+                query={query}
+                results={results}
+                formRef={formRef}
+              />
+              <ActiveFilters filter={query} />
+            </div>
+          </aside>
         </ContentColumn>
         <SideColumn>
           <HStack className="flex-col items-center justify-between h-full pb-6 md:flex-row md:gap-x-2">
@@ -951,5 +967,173 @@ function CopyToClipboardButton({ pathname }: { pathname: string }) {
     >
       <LinkIcon height="0.75em" />
     </button>
+  )
+}
+
+function ActiveFilters({ filter }: { filter: ItemSearchQuery }) {
+  const itemCategories = useGetItemCategories()
+
+  return (
+    <div className="text-sm">
+      <dl>
+        <ActiveFilterValues
+          label="Categories"
+          facet="categories"
+          filter={filter}
+          values={filter.categories?.map((category) => {
+            if (itemCategories.data != null) {
+              return itemCategories.data[category]
+            }
+            return category
+          })}
+        />
+        <ActiveFilterValues
+          label="Activities"
+          facet="f.activity"
+          filter={filter}
+          values={filter['f.activity']}
+        />
+        <ActiveFilterValues
+          label="Keywords"
+          facet="f.keyword"
+          filter={filter}
+          values={filter['f.keyword']}
+        />
+        <ActiveFilterValues
+          label="Sources"
+          facet="f.source"
+          filter={filter}
+          values={filter['f.source']}
+        />
+      </dl>
+    </div>
+  )
+}
+
+function ActiveFilterValues({
+  label,
+  filter,
+  facet,
+  values,
+}: {
+  label: string
+  filter: ItemSearchQuery
+  facet: 'categories' | 'f.activity' | 'f.keyword' | 'f.source'
+  values?: Array<string>
+}) {
+  const router = useRouter()
+
+  if (values == null || values.length === 0) return null
+
+  return (
+    <div>
+      <dt className="font-medium">{label}</dt>
+      <dd>
+        <ul className="flex flex-wrap">
+          {values.map((value) => {
+            return (
+              <li key={value} className="flex mb-2 mr-2 space-x-1">
+                <span>{value}</span>
+                <button
+                  onClick={() => {
+                    const query = {
+                      ...filter,
+                      [facet]: values.filter((v) => value !== v),
+                    }
+                    router.push({ query })
+                  }}
+                >
+                  <CloseIcon
+                    aria-label={`Remove ${value}`}
+                    width="1em"
+                    className="w-2 h-2"
+                  />
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </dd>
+    </div>
+  )
+}
+
+function RefineSearchDialogTrigger({
+  query,
+  results,
+  formRef,
+}: {
+  query: any
+  results: any
+  formRef: any
+}) {
+  const dialog = useDialogState()
+
+  return (
+    <div>
+      <Button onPress={dialog.toggle} className="w-full" variant="gradient">
+        Refine your search
+      </Button>
+      <Transition
+        show={dialog.isOpen}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform translate-x-12 opacity-0"
+        enterTo="transform translate-x-0 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform translate-x-0 opacity-100"
+        leaveTo="transform translate-x-12 opacity-0"
+      >
+        <Dialog
+          static
+          onClose={dialog.close}
+          className="fixed inset-0 z-10 overflow-y-auto"
+        >
+          <div className="flex justify-end min-h-screen ">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+            <div className="relative w-full max-w-xl bg-gray-100">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+                <Dialog.Title as={SubSectionTitle}>
+                  Refine your search
+                </Dialog.Title>
+                <button onClick={dialog.close}>
+                  <CloseIcon
+                    aria-label="Close navigation menu"
+                    width="1em"
+                    className="w-5 h-5 m-5"
+                  />
+                </button>
+              </header>
+
+              <div className="px-6 pb-12">
+                <ItemSearchFilter
+                  filter={query}
+                  results={results}
+                  formRef={formRef}
+                />
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </div>
+  )
+}
+
+function SearchTermDialog() {
+  const dialog = useDialogState()
+
+  return (
+    <div>
+      <Button variant="gradient">Search</Button>
+      <Dialog open={dialog.isOpen} onClose={dialog.close}>
+        <ItemSearchForm>
+          <ItemSearchComboBox shouldSubmitOnSelect />
+          <Button type="submit" variant="gradient">
+            Search
+          </Button>
+        </ItemSearchForm>
+      </Dialog>
+    </div>
   )
 }

@@ -6,10 +6,28 @@ import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
 
 import type { SearchItem, SearchItems } from '@/api/sshoc'
-import { useGetSources, useGetUsers, useSearchItems } from '@/api/sshoc'
+import {
+  useDeleteDatasetVersion,
+  useDeletePublicationVersion,
+  useDeleteToolVersion,
+  useDeleteTrainingMaterialVersion,
+  useDeleteWorkflowVersion,
+  useGetSources,
+  useGetUsers,
+  useRevertDataset,
+  useRevertPublication,
+  useRevertTool,
+  useRevertTrainingMaterial,
+  useRevertWorkflow,
+  useSearchItems,
+} from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
 import { CheckBox } from '@/elements/CheckBox/CheckBox'
 import { CheckBoxGroup } from '@/elements/CheckBoxGroup/CheckBoxGroup'
+import { Icon } from '@/elements/Icon/Icon'
+import { Svg as CheckMarkIcon } from '@/elements/icons/small/checkmark.svg'
+import { Svg as CrossIcon } from '@/elements/icons/small/cross.svg'
+import { Svg as ReviewIcon } from '@/elements/icons/small/document.svg'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
 import { TextField } from '@/elements/TextField/TextField'
@@ -579,6 +597,70 @@ interface ContributedItemProps {
 function ContributedItem(props: ContributedItemProps) {
   const { item } = props
   const category = item.category as Exclude<ItemCategory, 'step'>
+  const auth = useAuth()
+  const toast = useToast()
+
+  const approveItem = {
+    dataset: useRevertDataset,
+    publication: useRevertPublication,
+    'tool-or-service': useRevertTool,
+    'training-material': useRevertTrainingMaterial,
+    workflow: useRevertWorkflow,
+  }[category]()
+
+  const rejectItem = {
+    dataset: useDeleteDatasetVersion,
+    publication: useDeletePublicationVersion,
+    'tool-or-service': useDeleteToolVersion,
+    'training-material': useDeleteTrainingMaterialVersion,
+    workflow: useDeleteWorkflowVersion,
+  }[category]()
+
+  function onApprove() {
+    approveItem.mutate(
+      [
+        { persistentId: item.persistentId!, versionId: item.id! },
+        { token: auth.session?.accessToken },
+      ],
+      {
+        onError() {
+          toast.error('Failed to approve item version')
+        },
+        onSuccess() {
+          toast.success('Successfully approved item version')
+        },
+      },
+    )
+  }
+
+  function onReject() {
+    rejectItem.mutate(
+      [
+        { persistentId: item.persistentId!, versionId: item.id! },
+        {
+          token: auth.session?.accessToken,
+          hooks: {
+            /**
+             * We wrongly assume in the OpenApi document that
+             * DELETE returns a json response, so we override this here
+             * to avoid trying to parse an empty response.
+             */
+            response() {
+              return Promise.resolve()
+            },
+          },
+        },
+      ],
+      {
+        onError() {
+          toast.error('Failed to reject item version')
+        },
+        onSuccess() {
+          toast.success('Successfully rejectd item version')
+        },
+      },
+    )
+  }
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
@@ -600,14 +682,22 @@ function ContributedItem(props: ContributedItemProps) {
             </a>
           </Link>
         </h2>
-        {item.lastInfoUpdate != null ? (
-          <div className="space-x-1.5 flex-shrink-0">
-            <span className="text-gray-550">Date:</span>
-            <LastUpdate isoDate={item.lastInfoUpdate} />
-          </div>
-        ) : null}
+        <div className="flex flex-wrap items-center justify-end space-x-4">
+          {item.owner != null ? (
+            <div className="space-x-1.5 flex-shrink-0">
+              <span className="text-gray-550">User:</span>
+              <span>{item.owner}</span>
+            </div>
+          ) : null}
+          {item.lastInfoUpdate != null ? (
+            <div className="space-x-1.5 flex-shrink-0">
+              <span className="text-gray-550">Date:</span>
+              <LastUpdate isoDate={item.lastInfoUpdate} />
+            </div>
+          ) : null}
+        </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-2">
         <div className="flex space-x-4">
           <div className="space-x-1.5">
             <span className="text-gray-550">Category:</span>
@@ -632,6 +722,28 @@ function ContributedItem(props: ContributedItemProps) {
         </div>
         <div className="text-sm">
           <ProtectedView roles={['moderator', 'administrator']}>
+            <button
+              onClick={onApprove}
+              className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
+            >
+              <Icon
+                icon={CheckMarkIcon}
+                aria-hidden
+                className="flex-shrink-0 w-4 h-4"
+              />
+              <span>Approve</span>
+            </button>
+            <button
+              onClick={onReject}
+              className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
+            >
+              <Icon
+                icon={CrossIcon}
+                aria-hidden
+                className="flex-shrink-0 w-4 h-4"
+              />
+              <span>Reject</span>
+            </button>
             <Link
               passHref
               href={{
@@ -648,7 +760,14 @@ function ContributedItem(props: ContributedItemProps) {
                 },
               }}
             >
-              <Anchor className="cursor-default text-ui-base">Edit</Anchor>
+              <Anchor className="flex items-center space-x-1 cursor-default text-ui-base">
+                <Icon
+                  icon={ReviewIcon}
+                  aria-hidden
+                  className="flex-shrink-0 w-4 h-4"
+                />
+                <span>Review</span>
+              </Anchor>
             </Link>
           </ProtectedView>
         </div>

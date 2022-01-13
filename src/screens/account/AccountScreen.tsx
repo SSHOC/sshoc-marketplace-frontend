@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
@@ -17,6 +18,7 @@ import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/AccountScreen.module.css'
 
 const fields = [
   {
@@ -136,15 +138,12 @@ export default function AccountScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
           <Title>My account</Title>
           <p className="py-6 leading-relaxed text-gray-550">
             {welcomeMessage[user.data.role as NonSystemUserRole]}
           </p>
-          <ul className="grid grid-cols-3 gap-10">
+          <ul className={styles.grid}>
             {fields.map((route, index) => {
               if (
                 Array.isArray(route.roles) &&

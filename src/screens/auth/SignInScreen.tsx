@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -17,6 +18,7 @@ import GridLayout from '@/modules/layout/GridLayout'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/auth/SignInScreen.module.css'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
@@ -29,8 +31,8 @@ export default function SignInScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex nofollow title="Sign in" />
-      <GridLayout style={{ gridTemplateRows: '1fr' }}>
-        <ContentColumn style={{ gridColumn: '4 / -2' }}>
+      <GridLayout className={styles.layout}>
+        <ContentColumn className={cx(styles.content, 'px-6')}>
           <Image
             src={'/assets/images/auth/signin/people@2x.png'}
             alt=""
@@ -39,7 +41,7 @@ export default function SignInScreen(): JSX.Element {
             quality={100}
             className="object-contain object-right-bottom -z-10"
           />
-          <div className="relative max-w-1.5xl px-16 py-16 my-12 space-y-8 bg-white rounded-md shadow-md">
+          <div className="relative max-w-1.5xl px-8 mx:px-16 py-16 my-12 space-y-8 bg-white rounded-md shadow-md">
             <Title className="font-bold">Sign in</Title>
             <hr className="border-gray-200" />
             <p>
