@@ -56,7 +56,7 @@ export default function ContactScreen(): JSX.Element {
             quality={100}
             className="object-contain object-right-bottom -z-10"
           />
-          <div className="relative max-w-screen-sm p-6 pb-12 space-y-6">
+          <div className="relative max-w-screen-sm p-6 pb-12 space-y-6 break-words">
             <Title>{meta.title}</Title>
             <Mdx>
               <Content />

@@ -577,7 +577,11 @@ function MobileNavigation(): JSX.Element {
                 </Dialog.Title>
                 <Link href="/">
                   <a>
-                    <Logo aria-label="Home" height="4em" />
+                    <Logo
+                      aria-label="Home"
+                      height="4em"
+                      className={styles.logo}
+                    />
                   </a>
                 </Link>
                 <button

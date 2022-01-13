@@ -282,7 +282,7 @@ function EoscLoginLink() {
   return (
     <div>
       <a
-        className="flex items-center justify-between px-4 text-sm font-medium bg-gray-100 border border-gray-200 rounded shadow text-primary-800 hover:bg-gray-200"
+        className="flex items-center justify-between px-4 space-x-2 text-sm font-medium bg-gray-100 border border-gray-200 rounded shadow text-primary-800 hover:bg-gray-200"
         href={url}
       >
         <span className="w-10">

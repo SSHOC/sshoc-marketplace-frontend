@@ -108,6 +108,7 @@ export default function SearchScreen(): JSX.Element {
           </div>
           <aside className="block px-6 py-6 md:hidden">
             <div className="flex flex-col p-2 space-y-2 border rounded">
+              <SearchTermDialog />
               <RefineSearchDialogTrigger
                 query={query}
                 results={results}
@@ -1098,7 +1099,7 @@ function RefineSearchDialogTrigger({
                 </Dialog.Title>
                 <button onClick={dialog.close}>
                   <CloseIcon
-                    aria-label="Close navigation menu"
+                    aria-label="Close search filter dialog"
                     width="1em"
                     className="w-5 h-5 m-5"
                   />
@@ -1124,16 +1125,49 @@ function SearchTermDialog() {
   const dialog = useDialogState()
 
   return (
-    <div>
-      <Button variant="gradient">Search</Button>
-      <Dialog open={dialog.isOpen} onClose={dialog.close}>
-        <ItemSearchForm>
-          <ItemSearchComboBox shouldSubmitOnSelect />
-          <Button type="submit" variant="gradient">
-            Search
-          </Button>
-        </ItemSearchForm>
-      </Dialog>
+    <div className="xs:hidden">
+      <Button variant="gradient" className="w-full">
+        Search
+      </Button>
+      <Transition
+        show={dialog.isOpen}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform translate-x-12 opacity-0"
+        enterTo="transform translate-x-0 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform translate-x-0 opacity-100"
+        leaveTo="transform translate-x-12 opacity-0"
+      >
+        <Dialog
+          static
+          onClose={dialog.close}
+          className="fixed inset-0 z-10 overflow-y-auto"
+        >
+          <div className="flex justify-end min-h-screen ">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+            <div className="relative w-full max-w-xl bg-gray-100">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b">
+                <Dialog.Title as={SubSectionTitle}>Search</Dialog.Title>
+                <button onClick={dialog.close}>
+                  <CloseIcon
+                    aria-label="Close search dialog"
+                    width="1em"
+                    className="w-5 h-5 m-5"
+                  />
+                </button>
+              </header>
+              <div className="px-6 pb-12">
+                <ItemSearchForm>
+                  <ItemSearchComboBox shouldSubmitOnSelect />
+                  <Button type="submit" variant="gradient">
+                    Search
+                  </Button>
+                </ItemSearchForm>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   )
 }

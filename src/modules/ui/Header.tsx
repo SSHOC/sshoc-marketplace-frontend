@@ -22,7 +22,7 @@ export default function Header({
 }>): JSX.Element {
   return (
     <Fragment>
-      <ContentColumn>
+      <ContentColumn className="pt-6 xs:pt-0">
         {image !== undefined ? (
           <Image
             src={image}
@@ -33,7 +33,7 @@ export default function Header({
             className="object-cover object-top -z-10"
           />
         ) : null}
-        <VStack className="relative p-6 space-y-6">
+        <VStack className="relative hidden p-6 space-y-6 xs:flex">
           {showSearchBar ? (
             <ItemSearchForm className="flex items-center self-end w-full max-w-screen-md px-2 py-1 my-4 space-x-2 bg-white border border-gray-200 rounded">
               <ItemSearchComboBox shouldSubmitOnSelect variant="invisible" />
