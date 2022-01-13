@@ -722,28 +722,32 @@ function ContributedItem(props: ContributedItemProps) {
         </div>
         <div className="text-sm">
           <ProtectedView roles={['moderator', 'administrator']}>
-            <button
-              onClick={onApprove}
-              className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
-            >
-              <Icon
-                icon={CheckMarkIcon}
-                aria-hidden
-                className="flex-shrink-0 w-4 h-4"
-              />
-              <span>Approve</span>
-            </button>
-            <button
-              onClick={onReject}
-              className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
-            >
-              <Icon
-                icon={CrossIcon}
-                aria-hidden
-                className="flex-shrink-0 w-4 h-4"
-              />
-              <span>Reject</span>
-            </button>
+            {['suggested', 'ingested'].includes(item.status!) ? (
+              <Fragment>
+                <button
+                  onClick={onApprove}
+                  className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
+                >
+                  <Icon
+                    icon={CheckMarkIcon}
+                    aria-hidden
+                    className="flex-shrink-0 w-4 h-4"
+                  />
+                  <span>Approve</span>
+                </button>
+                <button
+                  onClick={onReject}
+                  className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
+                >
+                  <Icon
+                    icon={CrossIcon}
+                    aria-hidden
+                    className="flex-shrink-0 w-4 h-4"
+                  />
+                  <span>Reject</span>
+                </button>
+              </Fragment>
+            ) : null}
             <Link
               passHref
               href={{
