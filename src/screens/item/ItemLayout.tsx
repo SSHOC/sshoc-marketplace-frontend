@@ -169,6 +169,8 @@ function EditItemButton({
   id: number
   status: Exclude<Item['status'], undefined>
 }) {
+  const router = useRouter()
+
   if (status === 'draft') {
     const href = { pathname: `/${category}/${persistentId}/draft/edit` }
 
@@ -182,7 +184,11 @@ function EditItemButton({
   }
 
   if (status === 'suggested' || status === 'ingested') {
-    const href = { pathname: `/${category}/${persistentId}/version/${id}/edit` }
+    const query = router.query.review != null ? { review: true } : {}
+    const href = {
+      pathname: `/${category}/${persistentId}/version/${id}/edit`,
+      query,
+    }
 
     return (
       <Link href={href}>
@@ -682,8 +688,8 @@ function ItemPropertiesList({ item }: { item: Item }) {
         </ProtectedView>
       </HStack>
       {item.status !== 'approved' ? (
-        <small className="flex items-center mb-12 space-x-1 text-error-600">
-          <Icon icon={AlertIcon} />
+        <small className="flex items-center mb-12 space-x-1.5 leading-tight text-error-600">
+          <Icon icon={AlertIcon} className="flex-shrink-0" />
           <span>You are currently viewing a {item.status} version</span>
         </small>
       ) : null}

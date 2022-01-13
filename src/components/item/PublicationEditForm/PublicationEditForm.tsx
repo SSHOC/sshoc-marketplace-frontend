@@ -9,6 +9,7 @@ import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFor
 import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
 import { MediaFormSection } from '@/components/item/MediaFormSection/MediaFormSection'
+import { OtherSuggestedItemVersions } from '@/components/item/OtherSuggestedItemVersions'
 import { PropertiesFormSection } from '@/components/item/PropertiesFormSection/PropertiesFormSection'
 import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSection/RelatedItemsFormSection'
 import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/ThumbnailFormSection'
@@ -216,6 +217,12 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             <MediaFormSection initialValues={{ ...props.item }} />
             <ThumbnailFormSection initialValues={{ ...props.item }} />
             <RelatedItemsFormSection initialValues={{ ...props.item }} />
+            {isReviewToApprove ? (
+              <OtherSuggestedItemVersions
+                category={props.item.category}
+                persistentId={props.item.persistentId}
+              />
+            ) : null}
             <div className="flex items-center justify-end space-x-6">
               <Button onPress={onCancel} variant="link">
                 Cancel

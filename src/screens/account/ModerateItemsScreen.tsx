@@ -675,6 +675,9 @@ function ContributedItem(props: ContributedItemProps) {
                 'version',
                 item.id,
               ].join('/'),
+              query: {
+                review: true,
+              },
             }}
           >
             <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">

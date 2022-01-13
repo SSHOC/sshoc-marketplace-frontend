@@ -136,7 +136,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
   const variant = variants[props.variant ?? 'default']
   const size = sizes[props.size ?? 'medium']
   const styles = {
-    container: 'relative inline-flex flex-1',
+    container: 'relative inline-flex',
     button: cx(
       'cursor-default',
       'font-body font-normal text-gray-800 inline-flex items-center justify-between focus:outline-none',
