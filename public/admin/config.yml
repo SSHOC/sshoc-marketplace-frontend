@@ -62,7 +62,7 @@ collections:
             widget: markdown
   - name: about-pages
     label: About pages
-    label_singular: Contribute page
+    label_singular: About page
     editor:
       preview: false
     format: frontmatter
