@@ -1,5 +1,6 @@
 import cx from 'clsx'
 import { Fragment } from 'react'
+import { useQueryClient } from 'react-query'
 
 import type { SearchConcept } from '@/api/sshoc'
 import {
@@ -125,6 +126,7 @@ function Concept(props: ConceptProps) {
   const toast = useToast()
   const approve = useCommitConcept()
   const reject = useDeleteConcept()
+  const queryClient = useQueryClient()
 
   function onApprove() {
     approve.mutate(
@@ -140,6 +142,7 @@ function Concept(props: ConceptProps) {
         },
         onSuccess() {
           toast.success('Successfully approved concept.')
+          queryClient.invalidateQueries(['searchConcepts'])
         },
       },
     )
@@ -165,6 +168,7 @@ function Concept(props: ConceptProps) {
         },
         onSuccess() {
           toast.success('Successfully rejected concept.')
+          queryClient.invalidateQueries(['searchConcepts'])
         },
       },
     )

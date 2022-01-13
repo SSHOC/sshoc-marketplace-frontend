@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import type { ParsedUrlQuery } from 'querystring'
 import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
+import { useQueryClient } from 'react-query'
 
 import type { SearchItem, SearchItems } from '@/api/sshoc'
 import {
@@ -599,6 +600,7 @@ function ContributedItem(props: ContributedItemProps) {
   const category = item.category as Exclude<ItemCategory, 'step'>
   const auth = useAuth()
   const toast = useToast()
+  const queryClient = useQueryClient()
 
   const approveItem = {
     dataset: useRevertDataset,
@@ -628,6 +630,7 @@ function ContributedItem(props: ContributedItemProps) {
         },
         onSuccess() {
           toast.success('Successfully approved item version')
+          queryClient.invalidateQueries(['searchItems'])
         },
       },
     )
@@ -657,6 +660,7 @@ function ContributedItem(props: ContributedItemProps) {
         },
         onSuccess() {
           toast.success('Successfully rejectd item version')
+          queryClient.invalidateQueries(['searchItems'])
         },
       },
     )
