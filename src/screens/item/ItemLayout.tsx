@@ -960,23 +960,22 @@ function useItemMetadata(
         {externalIds.map((id) => {
           return (
             <li key={id.identifierService?.code} className="flex">
-              <span className="font-medium text-gray-550 whitespace-nowrap">
-                {id.identifierService?.label}
+              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
+                {id.identifierService?.label}:
               </span>
               {id.identifierService?.urlTemplate != null &&
               id.identifierService.urlTemplate.length > 0 ? (
-                <>
-                  <span className="mr-2">: </span>
-                  <Anchor
-                    href={id.identifierService.urlTemplate.replace(
-                      '{source-item-id}',
-                      id.identifier!,
-                    )}
-                  >
-                    {id.identifier}
-                  </Anchor>
-                </>
-              ) : null}
+                <Anchor
+                  href={id.identifierService.urlTemplate.replace(
+                    '{source-item-id}',
+                    id.identifier!,
+                  )}
+                >
+                  {id.identifier}
+                </Anchor>
+              ) : (
+                <span>: {id.identifier}</span>
+              )}
             </li>
           )
         })}
