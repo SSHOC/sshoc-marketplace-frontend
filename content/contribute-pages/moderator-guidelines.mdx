@@ -21,11 +21,12 @@ Suggested items should be evaluated based on the quality criteria described in t
 
    ![Items to moderate - screenshot](/assets/images/moder_item.png "Items to moderate - screenshot")
 2. By clicking on the “Edit” button, a moderator can access the edit form of a suggested item and check the metadata 
-3. Approve or reject the item. 
-   - Approving an item sets its status to “approved”, 
-   - while rejecting an item reverts it to its previous status
+3. Approve or reject a suggested version of an item. 
 
-### Suggested items by system importer (= via the ingest pipeline) 
+   * Approving: makes the suggested version “approved”, 
+   * Rejecting: makes the suggested version rejected and the last approved version remains “approved”. (If this was a newly suggested item, it will become deprecated and won’t be visible to normal users at all).
+
+### Suggested items by system importer (= via the ingest pipeline)
 
 Though not an everyday occurrence, at times Moderators will, in concert with the SSH Open Marketplace Administrators, choose and approve newly-ingested materials. In such cases, moderators will have to firstly assess the quality and pertinence of the data source before its ingestion and once this is complete, perform “mass validation” of (meta)data before the Marketplace population. See Ingest pipeline workflow in the Administrator Guidelines for more details.
 
@@ -39,10 +40,12 @@ The continued control of existing Marketplace items revolves around ensuring tha
 2. **Non-redundancy**: the same entity should only be referenced once in the SSH Open Marketplace. Duplicate items are merged to ensure the coherence of the items showcased in the portal. 
 3. **Completeness of item description**. This criterion concerns the number of metadata filled out to describe an item and answer to the question of how an entity is described comprehensively. 
 4. **Verification of conformity and relevance** of metadata. Information value checks depend on the type of content expected. 
-- if a verbose description is expected, quality criteria revolves around correctness, understandability and concision (i.e. length), 
-- while for URLs based fields, the quality criteria relate to the link accessibility. 
-- In order to support discoverability of the Marketplace content, a lot of fields are also (re)using controlled vocabularies, thus the validation checks of vocabulary concepts is also supported by the Marketplace. 
-- Quality of the media objects is yet another dimension, e.g. ensuring a good picture quality.
+
+* if a verbose description is expected, quality criteria revolves around correctness, understandability and concision (i.e. length), 
+* while for URLs based fields, the quality criteria relate to the link accessibility. 
+* In order to support discoverability of the Marketplace content, a lot of fields are also (re)using controlled vocabularies, thus the validation checks of vocabulary concepts is also supported by the Marketplace. 
+* Quality of the media objects is yet another dimension, e.g. ensuring a good picture quality.
+
 5. **Interlinking**. To ensure serendipity and reinforce the browsing experience of the Marketplace, the quality of the links between items is an important criterion. The number of related items for a given entry, and the pertinence of the links are some of the checks performed to ensure that this criterion is met (e.g. whether the link goes to a resource internal or external to the Marketplace). 
 
 Based on the quality criteria defined above, some quality metrics have been established (e.g. media quality for images or number of characters in a description) and are automatically checked. These checks are run via a series of Python notebooks. Results of the checks are recorded in a set of metadata specially created for curation purposes - the curation flags - and only visible for moderators. 
@@ -85,7 +88,6 @@ hidden property, marks an item that is the result of a merge command and should 
 
 </div>
 
-
 ### Python notebooks
 
 In order to gain an overview of the SSH Open Marketplace data and to perform some analysis to prioritise the curation tasks and improve the Marketplace data quality, Python Jupyter notebooks have been created by Cesare Concordia (CNR). These flexible scripts allow moderators and administrators to query the SSH Open Marketplace with advanced parameters and filters and, in some cases, to write back to the system to flag some items for curation in the editorial dashboard. 
@@ -95,15 +97,14 @@ A dedicated Python library and a set of notebooks are available. For some of the
 1. Ingest review notebook
 2. Data analysis notebook including some Items provenance analysis, providing a non-redundancy overview, performing some completeness checks (overview of null values; description length), and checking the detailed coverage of given fields.
 3. Automatic checks notebooks = curation-flags.
-3.1 curation-flag-URL
-3.2 curation-flag-description
-3.3 Curation-flag-relations (to be completed)
-3.4 curation-flag-coverage
+   3.1 curation-flag-URL
+   3.2 curation-flag-description
+   3.3 Curation-flag-relations (to be completed)
+   3.4 curation-flag-coverage
 4. Mass analysis and/or corrections notebooks
-4.1 Duplicates & merging
-4.2 Actors curation
-4.3 Vocabulary management (to be developed)
-
+   4.1 Duplicates & merging
+   4.2 Actors curation
+   4.3 Vocabulary management (to be developed)
 
 ### Vocabulary management
 
@@ -113,8 +114,6 @@ One of the central roles the moderators have is vocabulary management in the SSH
 
 While the functionality for basic curation of the vocabularies is integrated as part of the curation dashboard, it remains possible to effect major vocabulary management changes. The chosen vocabulary can be exported in SKOS format, imported into a separate vocabulary management tool, where the curation is performed and the new version of the vocabulary is again exported in SKOS and reimported into MP via the API. Similarly, if there is an update of the closed (external) vocabularies introduced by the authorities managing these vocabularies, this new version can be introduced to MP via SKOS import. This specific curation task will be further described in a dedicated vocabulary curation notebook. 
 
-
 ### Actors management
 
-Moderators ensure the consistency of the actors' database and a specific notebook can help to identify the main issues (duplication of actors, wrong URLs or disambiguation of names and affiliations are the most frequent issues). Because any contributor can enrich the actor records, regular checks should be performed by moderators to continuously ensure the quality of the Marketplace actors. 
-
+Moderators ensure the consistency of the actors' database and a specific notebook can help to identify the main issues (duplication of actors, wrong URLs or disambiguation of names and affiliations are the most frequent issues). Because any contributor can enrich the actor records, regular checks should be performed by moderators to continuously ensure the quality of the Marketplace actors.
