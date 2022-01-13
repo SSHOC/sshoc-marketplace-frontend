@@ -239,7 +239,20 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       style={{ flex: 1 }}
       helpText={helpText.actor}
     >
-      {(item) => <FormComboBox.Item>{item.name}</FormComboBox.Item>}
+      {(item) => (
+        <FormComboBox.Item textValue={item.name}>
+          <span>{item.name}</span>
+          {item.affiliations != null && item.affiliations.length > 0 ? (
+            <span className="ml-1.5 text-ui-sm text-gray-550">
+              (
+              {item.affiliations
+                .map((affiliation) => affiliation.name)
+                .join(', ')}
+              )
+            </span>
+          ) : null}
+        </FormComboBox.Item>
+      )}
     </FormComboBox>
   )
 }
