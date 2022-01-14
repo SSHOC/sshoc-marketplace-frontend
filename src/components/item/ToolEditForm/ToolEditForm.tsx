@@ -15,6 +15,7 @@ import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/Thu
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
+import { ensureIsoDates } from '@/lib/sshoc/ensureIsoDates'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -129,7 +130,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       return Promise.reject()
     }
 
-    const values = sanitizeFormValues(unsanitized)
+    const values = ensureIsoDates(sanitizeFormValues(unsanitized))
 
     await create.mutateAsync([
       { persistentId: id },

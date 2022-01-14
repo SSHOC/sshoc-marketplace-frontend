@@ -2,11 +2,7 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
 import type { DatasetCore, DatasetDto } from '@/api/sshoc'
-import {
-  useDeleteDatasetVersion,
-  useGetDatasetHistory,
-  useUpdateDataset,
-} from '@/api/sshoc'
+import { useDeleteDatasetVersion, useUpdateDataset } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
@@ -20,6 +16,7 @@ import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/Thu
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
+import { ensureIsoDates } from '@/lib/sshoc/ensureIsoDates'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { validateDateFormFields } from '@/lib/sshoc/validateDateFormFields'
@@ -135,7 +132,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       return Promise.reject()
     }
 
-    const values = sanitizeFormValues(unsanitized)
+    const values = ensureIsoDates(sanitizeFormValues(unsanitized))
 
     await create.mutateAsync([
       { persistentId: id },

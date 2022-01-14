@@ -17,6 +17,7 @@ import { RelatedItemsFormSection } from '@/components/item/RelatedItemsFormSecti
 import { ThumbnailFormSection } from '@/components/item/ThumbnailFormSection/ThumbnailFormSection'
 import { Button } from '@/elements/Button/Button'
 import { useToast } from '@/elements/Toast/useToast'
+import { ensureIsoDates } from '@/lib/sshoc/ensureIsoDates'
 import { sanitizeFormValues } from '@/lib/sshoc/sanitizeFormValues'
 import { useValidateCommonFormFields } from '@/lib/sshoc/validateCommonFormFields'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -126,7 +127,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       return Promise.reject()
     }
 
-    const values = sanitizeFormValues(unsanitized)
+    const values = ensureIsoDates(sanitizeFormValues(unsanitized))
 
     if (persistentIdFromSavedDraft == null) {
       const mutateAsync = create.mutateAsync as ReturnType<
