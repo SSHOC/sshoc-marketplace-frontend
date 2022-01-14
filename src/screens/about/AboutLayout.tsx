@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 
+import { TableOfContents } from '@/components/common/TableOfContents'
 import GridLayout from '@/modules/layout/GridLayout'
 import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
@@ -70,6 +71,7 @@ export default function AboutLayout({
         <MainColumn>
           <div className="mx-auto space-y-6 max-w-80ch">
             <Title>{title}</Title>
+            <TableOfContents toc={toc} />
             <Mdx>{children}</Mdx>
             <LastUpdatedAt date={lastUpdatedAt} />
           </div>

@@ -108,9 +108,14 @@ async function getAboutPageById(id: string) {
   const vfile = await processor.process(content)
   const html = String(vfile)
 
-  const data = frontmatter as { title: string; menu: string; ord: number }
+  const data = frontmatter as {
+    title: string
+    menu: string
+    ord: number
+    toc: boolean
+  }
   const { toc = [] } = vfile.data as { toc: Toc }
-  const metadata = { ...data, toc }
+  const metadata = { ...data, toc: data.toc === true ? toc : [] }
 
   return { metadata, html }
 }

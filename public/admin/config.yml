@@ -78,6 +78,10 @@ collections:
         widget: number
       - name: menu
         label: Menu label
+      - name: toc
+        label: Table of contents
+        widget: boolean
+        required: false
       - name: body
         label: Text
         widget: markdown
@@ -99,6 +103,10 @@ collections:
         widget: number
       - name: menu
         label: Menu label
+      - name: toc
+        label: Table of contents
+        widget: boolean
+        required: false
       - name: body
         label: Text
         widget: markdown
