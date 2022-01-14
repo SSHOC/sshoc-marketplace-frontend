@@ -1,24 +1,35 @@
 import cx from 'clsx'
-import { Fragment } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import type { ParsedUrlQuery } from 'querystring'
+import type { ChangeEvent, FormEvent } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { SearchConcept } from '@/api/sshoc'
+import type { SearchConcept, SearchConcepts } from '@/api/sshoc'
 import {
   useCommitConcept,
   useDeleteConcept,
   useSearchConcepts,
 } from '@/api/sshoc'
+import { Icon } from '@/elements/Icon/Icon'
+import { Svg as SearchIcon } from '@/elements/icons/small/search.svg'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { useToast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
+import HStack from '@/modules/layout/HStack'
 import Metadata from '@/modules/metadata/Metadata'
+import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
+import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/account/VocabulariesScreen.module.css'
+import { ensureScalar } from '@/utils/ensureScalar'
+import usePagination from '@/utils/usePagination'
 
 /**
  * Vocabularies screen.
@@ -84,13 +95,12 @@ export default function VocabulariesScreen(): JSX.Element {
             <ProgressSpinner />
           ) : (
             <Fragment>
-              {/* <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-8">
-                  <ItemSortOrder filter={query} />
                   <ItemSearch filter={query} />
                 </div>
-                <ItemPagination filter={query} results={sources.data} />
-              </div> */}
+                <ItemPagination filter={query} results={concepts.data} />
+              </div>
               {concepts.data.concepts?.length === 0 ? (
                 <div>No candidate concepts found.</div>
               ) : (
@@ -104,9 +114,9 @@ export default function VocabulariesScreen(): JSX.Element {
                   })}
                 </ul>
               )}
-              {/* <div className="flex justify-end">
-                <ItemLongPagination filter={query} results={sources.data} />
-              </div> */}
+              <div className="flex justify-end">
+                <ItemLongPagination filter={query} results={concepts.data} />
+              </div>
             </Fragment>
           )}
         </ContentColumn>
@@ -210,4 +220,288 @@ function Concept(props: ConceptProps) {
       </div>
     </div>
   )
+}
+
+interface ItemSearchProps {
+  filter: SearchConcepts.QueryParameters
+}
+
+/**
+ * Search.
+ */
+function ItemSearch(props: ItemSearchProps) {
+  const router = useRouter()
+  const { filter } = props
+  const [searchTerm, setSearchTerm] = useState(filter.q ?? '')
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(event.currentTarget.value)
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    router.push({ query: { ...filter, q: searchTerm } })
+  }
+
+  return (
+    <form className="relative inline-flex" onSubmit={onSubmit}>
+      <input
+        value={searchTerm}
+        onChange={onChange}
+        className="px-4 py-3 pr-8 font-normal border border-gray-300 rounded font-body text-ui-base"
+        placeholder="Search"
+      />
+      <button
+        type="submit"
+        className="absolute inset-y-0 right-0 flex items-center justify-center p-4 text-gray-350 placeholder-gray-350"
+      >
+        <Icon icon={SearchIcon} className="w-4 h-4" />
+      </button>
+    </form>
+  )
+}
+
+/**
+ * Top pagination.
+ */
+function ItemPagination({
+  filter,
+  results,
+}: {
+  filter: SearchConcepts.QueryParameters
+  results?: SearchConcepts.Response.Success
+}) {
+  const router = useRouter()
+  const currentPage = filter.page ?? 1
+  const pages = results?.pages ?? 1
+
+  /**
+   * input value is both controlled and uncontrolled:
+   * when page in url changes the input should be updated,
+   * but when user types in input, page value should only
+   * be reflected in url upon submit, not immediately on change.
+   */
+  const [input, setInput] = useState(String(currentPage))
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.currentTarget.value
+    if (value === '') {
+      setInput('')
+    } else {
+      const page = parseInt(value, 10)
+      if (!Number.isNaN(page)) {
+        setInput(String(page))
+      }
+    }
+  }
+  useEffect(() => {
+    setInput(String(currentPage))
+  }, [currentPage])
+
+  function onChangePage(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const input = new FormData(event.currentTarget).get('page') as string
+    const page = parseInt(input, 10)
+    if (!Number.isNaN(page) && page > 0 && page <= pages) {
+      router.push({ query: { ...filter, page } })
+    }
+  }
+
+  if (pages <= 1) return null
+
+  return (
+    <nav aria-label="Pagination">
+      <HStack as="ol" className="items-center space-x-6">
+        <li className="flex items-center">
+          <PreviousPageLink currentPage={currentPage} filter={filter} />
+        </li>
+        <li className="flex items-center">
+          <HStack as="form" onSubmit={onChangePage} className="space-x-2">
+            <input
+              type="text"
+              name="page"
+              inputMode="numeric"
+              value={input}
+              onChange={onChange}
+              aria-label="Go to page"
+              className="w-8 text-right border-b border-gray-800"
+            />
+            <span>of {pages}</span>
+          </HStack>
+        </li>
+        <li className="flex items-center">
+          <NextPageLink
+            currentPage={currentPage}
+            pages={pages}
+            filter={filter}
+          />
+        </li>
+      </HStack>
+    </nav>
+  )
+}
+
+/**
+ * Bottom pagination.
+ */
+function ItemLongPagination({
+  filter,
+  results,
+}: {
+  filter: SearchConcepts.QueryParameters
+  results?: SearchConcepts.Response.Success
+}) {
+  const currentPage = filter.page ?? 1
+  const pages = results?.pages ?? 1
+
+  const items = usePagination({
+    page: currentPage,
+    count: pages,
+  })
+
+  if (pages <= 1) return null
+
+  return (
+    <nav aria-label="Pagination">
+      <HStack as="ol" className="items-center space-x-6">
+        <li className="flex items-center border-b border-transparent">
+          <PreviousPageLink currentPage={currentPage} filter={filter} />
+        </li>
+        {items.map(({ page, isCurrent }) => {
+          if (page === 'ellipsis')
+            return (
+              <span key={page} className="select-none">
+                ...
+              </span>
+            )
+
+          return (
+            <li key={page} className="flex items-center">
+              <Link href={{ query: { ...filter, page } }} passHref>
+                <Anchor
+                  aria-label={`Page ${page}`}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  className={cx(
+                    'border-b',
+                    isCurrent
+                      ? ['pointer-events-none', 'border-primary-800']
+                      : 'border-transparent',
+                  )}
+                >
+                  {page}
+                </Anchor>
+              </Link>
+            </li>
+          )
+        })}
+        <li className="flex items-center border-b border-transparent">
+          <NextPageLink
+            currentPage={currentPage}
+            pages={pages}
+            filter={filter}
+          />
+        </li>
+      </HStack>
+    </nav>
+  )
+}
+
+/**
+ * Previous page.
+ */
+function PreviousPageLink({
+  currentPage = 1,
+  filter,
+}: {
+  currentPage?: number
+  filter: SearchConcepts.QueryParameters
+}) {
+  const isDisabled = currentPage <= 1
+  const label = (
+    <Fragment>
+      <span className="transform rotate-90">
+        <Triangle />
+      </span>
+      <span>Previous </span>
+    </Fragment>
+  )
+  if (isDisabled) {
+    return (
+      <div className="inline-flex items-center text-gray-500 pointer-events-none">
+        {label}
+      </div>
+    )
+  }
+  return (
+    <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
+      <Anchor rel="prev" className="inline-flex items-center">
+        {label}
+      </Anchor>
+    </Link>
+  )
+}
+
+/**
+ * Next page.
+ */
+function NextPageLink({
+  currentPage = 1,
+  pages = 1,
+  filter,
+}: {
+  currentPage?: number
+  pages?: number
+  filter: SearchConcepts.QueryParameters
+}) {
+  const isDisabled = currentPage >= pages
+  const label = (
+    <Fragment>
+      <span>Next </span>
+      <span className="transform -rotate-90">
+        <Triangle />
+      </span>
+    </Fragment>
+  )
+  if (isDisabled) {
+    return (
+      <div className="inline-flex items-center text-gray-500 pointer-events-none">
+        {label}
+      </div>
+    )
+  }
+  return (
+    <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
+      <Anchor rel="next" className="inline-flex items-center">
+        {label}
+      </Anchor>
+    </Link>
+  )
+}
+
+function sanitizeQuery(
+  params?: ParsedUrlQuery,
+): SearchConcepts.QueryParameters {
+  if (params === undefined) return {}
+
+  const sanitized = []
+
+  if (params.q != null && params.q.length > 0) {
+    sanitized.push(['q', params.q])
+  }
+
+  if (params.page !== undefined) {
+    const page = parseInt(ensureScalar(params.page), 10)
+    if (!Number.isNaN(page) && page > 0) {
+      sanitized.push(['page', page])
+    }
+  }
+
+  if (params.perpage !== undefined) {
+    const perpage = parseInt(ensureScalar(params.perpage), 10)
+    if (!Number.isNaN(perpage) && perpage > 0 && perpage <= 50) {
+      sanitized.push(['perpage', perpage])
+    }
+  }
+
+  const sanitizedParams = Object.fromEntries(sanitized)
+  return sanitizedParams
 }
