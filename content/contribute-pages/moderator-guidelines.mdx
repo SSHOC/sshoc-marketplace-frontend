@@ -109,46 +109,14 @@ and can be used to filter the “items to moderate” in the dashboard. As well,
 when examining a flagged entry, Moderators should briefly look over the other
 metadata fields to ensure that they are correct.
 
-<div className="grid" style="grid-template-columns: 150px 1fr; gap: 2rem 1rem">
-
-Field's name
-
-Quality checks: what moderators should know
-
-curation-detail
-
-hidden property of type string that contains all curation issues in a human
-readable structured format. For example, this field describes when the
-curation-flag-url is TRUE where the url has problems and the http status code as
-a json, e.g. `{"AccessibleAt": "404"}`
-
-curation-flag-url
-
-hidden property of type boolean, is "TRUE" when an error on at least one of the
-URL-based fields of an item has been identified
-
-curation-flag-description
-
-hidden property of type boolean, is "TRUE" when there is a problem with the
-description of an item (for example when the description is “no description
-provided” and should be changed).
-
-curation-flag-coverage
-
-hidden property of type boolean, is "TRUE" when coverage ratio of recommended
-properties is lesser as expected
-
-curation-flag-relations
-
-hidden property of type boolean, is "TRUE" when the contextualisation quality is
-low (based on interlinked items)
-
-curation-flag-merged
-
-hidden property, marks an item that is the result of a merge command and should
-be curated
-
-</div>
+| Field's name              | Quality checks: what moderators should know                                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| curation-detail           | hidden property of type string that contains all curation issues in a human readable structured format. For example, this field describes when the curation-flag-url is TRUE where the url has problems and the http status code as a json, e.g. `{"AccessibleAt": "404"}` |
+| curation-flag-url         | hidden property of type boolean, is "TRUE" when an error on at least one of the URL-based fields of an item has been identified                                                                                                                                            |
+| curation-flag-description | hidden property of type boolean, is "TRUE" when there is a problem with the description of an item (for example when the description is "no description provided" and should be changed).                                                                                  |
+| curation-flag-coverage    | hidden property of type boolean, is "TRUE" when coverage ratio of recommended properties is lesser as expected                                                                                                                                                             |
+| curation-flag-relations   | hidden property of type boolean, is "TRUE" when the contextualisation quality is low (based on interlinked items)                                                                                                                                                          |
+| curation-flag-merged      | hidden property, marks an item that is the result of a merge command and should be curated                                                                                                                                                                                 |
 
 ### Python notebooks
 
