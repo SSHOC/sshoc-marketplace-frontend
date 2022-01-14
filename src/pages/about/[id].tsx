@@ -11,6 +11,7 @@ import * as path from 'path'
 import type { ParsedUrlQuery } from 'querystring'
 import withRawHtml from 'rehype-raw'
 import toHtml from 'rehype-stringify'
+import withFootnotes from 'remark-footnotes'
 import withGfm from 'remark-gfm'
 import fromMarkdown from 'remark-parse'
 import toHast from 'remark-rehype'
@@ -41,6 +42,7 @@ const folder = path.join(process.cwd(), 'content', 'about-pages')
 const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
+  .use(withFootnotes)
   .use(withHeadingIds)
   .use(withToc)
   .use(toHast, { allowDangerousHtml: true })

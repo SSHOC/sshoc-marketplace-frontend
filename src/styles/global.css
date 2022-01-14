@@ -28,3 +28,7 @@ body {
 *:focus:not(:focus-visible) {
   outline: none;
 }
+
+.footnotes {
+  font-size: 80%;
+}
