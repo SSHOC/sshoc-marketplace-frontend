@@ -1,0 +1,28 @@
+.layout {
+}
+
+.content {
+  grid-column: 2 / -2;
+}
+
+.facets {
+  grid-column: 2 / -2;
+}
+
+.results {
+  grid-column: 2 / -2;
+}
+
+@media (min-width: 768px) {
+  .content {
+    grid-column: 4 / span 8;
+  }
+
+  .facets {
+    grid-column: 3 / span 3;
+  }
+
+  .results {
+    grid-column: -10 / span 7;
+  }
+}

@@ -1,3 +1,4 @@
+import { Dialog, Transition } from '@headlessui/react'
 import cx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -23,6 +24,7 @@ import {
   useSearchItems,
 } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery } from '@/api/sshoc/types'
+import { Button } from '@/elements/Button/Button'
 import { CheckBox } from '@/elements/CheckBox/CheckBox'
 import { CheckBoxGroup } from '@/elements/CheckBoxGroup/CheckBoxGroup'
 import { Icon } from '@/elements/Icon/Icon'
@@ -34,6 +36,7 @@ import { Select } from '@/elements/Select/Select'
 import { TextField } from '@/elements/TextField/TextField'
 import { useToast } from '@/elements/Toast/useToast'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
+import { useDialogState } from '@/lib/hooks/useDialogState'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -46,11 +49,14 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Spinner from '@/modules/ui/Spinner'
 import Triangle from '@/modules/ui/Triangle'
+import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/ModerateItemsScreen.module.css'
 import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import usePagination from '@/utils/usePagination'
+import { Svg as CloseIcon } from '@@/assets/icons/close.svg'
 
 const itemSortOrders = ['label', 'modified-on'] as const
 type ItemSortOrder = typeof itemSortOrders[number]
@@ -89,7 +95,7 @@ export default function ModerateItemsScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="Items to moderate" />
-      <GridLayout>
+      <GridLayout className={styles.layout}>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
           showSearchBar={false}
@@ -105,36 +111,39 @@ export default function ModerateItemsScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn>
+        <ContentColumn className={styles.header}>
           <div className="px-6 pb-12">
-            <Title className="space-x-3">
+            <Title className="flex flex-wrap gap-x-3">
               <span>Items to moderate</span>
-              {Number(items.data?.hits) > 0 ? (
-                <span className="text-2xl font-normal">
-                  ({items.data?.hits})
-                </span>
-              ) : null}
               {items.isFetching ? (
                 <span>
                   <Spinner className="w-6 h-6 text-secondary-600" />
+                </span>
+              ) : Number(items.data?.hits) > 0 ? (
+                <span className="text-2xl font-normal">
+                  ({items.data?.hits})
                 </span>
               ) : null}
             </Title>
           </div>
         </ContentColumn>
         <section
-          className="px-6 pb-12 mr-6 space-y-8"
-          style={{ gridColumn: '3 / span 3' }}
+          className={cx(
+            'hidden md:block px-6 pb-12 mr-6 space-y-8',
+            styles.facets,
+          )}
         >
           <SearchFacets filter={query} />
         </section>
-        <section
-          className="px-6 pb-12 space-y-12"
-          style={{ gridColumn: '-10 / span 7' }}
-        >
+        <section className={cx('block md:hidden px-6 pb-6', styles.facets)}>
+          <FacetsDialog filter={query} />
+        </section>
+        <section className={cx('px-6 pb-12 space-y-12', styles.results)}>
           {items.data === undefined ? (
             items.isError ? null : (
-              <ProgressSpinner />
+              <div>
+                <ProgressSpinner />
+              </div>
             )
           ) : items.data.items?.length === 0 ? (
             <div>Nothing to moderate.</div>
@@ -666,9 +675,11 @@ function ContributedItem(props: ContributedItemProps) {
     )
   }
 
+  const isReview = ['ingested', 'suggested'].includes(item.status!)
+
   return (
-    <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between space-x-2">
+    <div className="p-4 space-y-2 text-xs border border-gray-200 rounded md:space-y-4 bg-gray-75">
+      <div className="flex flex-col space-y-1 md_space-y-0 md:space-x-2 md:items-center md:justify-between md:flex-row">
         <h2>
           <Link
             href={{
@@ -679,17 +690,15 @@ function ContributedItem(props: ContributedItemProps) {
                 'version',
                 item.id,
               ].join('/'),
-              query: {
-                review: true,
-              },
+              query: isReview ? { review: true } : {},
             }}
           >
-            <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">
+            <a className="text-base font-bold leading-tight transition text-primary-750 hover:text-secondary-600">
               {item.label}
             </a>
           </Link>
         </h2>
-        <div className="flex flex-wrap items-center justify-end space-x-4">
+        <div className="flex flex-wrap items-center space-x-4 md:justify-end">
           {item.owner != null ? (
             <div className="space-x-1.5 flex-shrink-0">
               <span className="text-gray-550">User:</span>
@@ -704,8 +713,8 @@ function ContributedItem(props: ContributedItemProps) {
           ) : null}
         </div>
       </div>
-      <div className="flex items-center justify-between space-x-2">
-        <div className="flex space-x-4">
+      <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between">
+        <div className="flex space-x-4 md:flex-col md:space-x-0 md:space-y-1">
           <div className="space-x-1.5">
             <span className="text-gray-550">Category:</span>
             <span>{getSingularItemCategoryLabel(category)}</span>
@@ -727,9 +736,9 @@ function ContributedItem(props: ContributedItemProps) {
             </div>
           ) : null}
         </div>
-        <div className="text-sm">
+        <div className="text-sm text-right">
           <ProtectedView roles={['moderator', 'administrator']}>
-            {['suggested', 'ingested'].includes(item.status!) ? (
+            {isReview ? (
               <Fragment>
                 <button
                   onClick={onApprove}
@@ -766,18 +775,22 @@ function ContributedItem(props: ContributedItemProps) {
                   item.id,
                   'edit',
                 ].join('/'),
-                query: {
-                  review: true,
-                },
+                query: isReview ? { review: true } : {},
               }}
             >
               <Anchor className="flex items-center space-x-1 cursor-default text-ui-base">
-                <Icon
-                  icon={ReviewIcon}
-                  aria-hidden
-                  className="flex-shrink-0 w-4 h-4"
-                />
-                <span>Review</span>
+                {isReview ? (
+                  <Fragment>
+                    <Icon
+                      icon={ReviewIcon}
+                      aria-hidden
+                      className="flex-shrink-0 w-4 h-4"
+                    />
+                    <span>Review</span>
+                  </Fragment>
+                ) : (
+                  <span>Edit</span>
+                )}
               </Anchor>
             </Link>
           </ProtectedView>
@@ -1176,4 +1189,54 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
 
   const sanitizedParams = Object.fromEntries(sanitized)
   return sanitizedParams
+}
+
+function FacetsDialog({ filter }: { filter: ItemSearchQuery }) {
+  const dialog = useDialogState()
+
+  return (
+    <div>
+      <Button onPress={dialog.toggle} className="w-full" variant="gradient">
+        Refine your search
+      </Button>
+      <Transition
+        show={dialog.isOpen}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform translate-x-12 opacity-0"
+        enterTo="transform translate-x-0 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform translate-x-0 opacity-100"
+        leaveTo="transform translate-x-12 opacity-0"
+      >
+        <Dialog
+          static
+          onClose={dialog.close}
+          className="fixed inset-0 z-10 overflow-y-auto"
+        >
+          <div className="flex justify-end min-h-screen ">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+            <div className="relative w-full max-w-xl bg-gray-100">
+              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
+                <Dialog.Title as={SubSectionTitle}>
+                  Refine your search
+                </Dialog.Title>
+                <button onClick={dialog.close}>
+                  <CloseIcon
+                    aria-label="Close search filter dialog"
+                    width="1em"
+                    className="w-5 h-5 m-5"
+                  />
+                </button>
+              </header>
+
+              <div className="px-6 pb-12">
+                <SearchFacets filter={filter} />
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </div>
+  )
 }

@@ -36,10 +36,7 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Edit training material" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit training material</Title>
           {trainingMaterial.data === undefined || id == undefined ? (
             <div className="flex flex-col items-center justify-center">

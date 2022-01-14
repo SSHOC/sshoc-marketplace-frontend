@@ -17,6 +17,10 @@
   --screen-3xl: 1920px;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   @apply font-sans antialiased text-gray-800;
 }

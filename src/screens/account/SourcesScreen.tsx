@@ -38,6 +38,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/SourcesScreen.module.css'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
 
@@ -85,7 +86,7 @@ export default function SourcesScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="Sources" />
-      <GridLayout>
+      <GridLayout className={styles.layout}>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
           showSearchBar={false}
@@ -101,11 +102,8 @@ export default function SourcesScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
-          <div className="flex justify-between">
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
+          <div className="space-y-2 sm:space-y-0 sm:flex sm:justify-between">
             <Title>
               Sources
               {sources.data != null ? (
@@ -122,7 +120,7 @@ export default function SourcesScreen(): JSX.Element {
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-8">
+                <div className="space-y-2 sm:flex sm:items-center sm:space-x-8 sm:space-y-0">
                   <ItemSortOrder filter={query} />
                   <ItemSearch filter={query} />
                 </div>
@@ -174,8 +172,8 @@ function Source(props: SourceProps) {
           </div>
         ) : null}
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-4">
+      <div className="flex flex-col space-y-2 sm:items-center sm:justify-between sm:flex-row sm:space-y-0">
+        <div className="flex flex-col space-x-4">
           <div className="space-x-1.5">
             <span className="text-gray-550">URL:</span>
             <a

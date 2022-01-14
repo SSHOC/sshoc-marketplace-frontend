@@ -37,6 +37,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/UsersScreen.module.css'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
 
@@ -85,7 +86,7 @@ export default function UsersScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="Users" />
-      <GridLayout>
+      <GridLayout className={styles.layout}>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
           showSearchBar={false}
@@ -101,10 +102,7 @@ export default function UsersScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
           <Title>
             Users
             {users.data != null ? (
@@ -116,7 +114,7 @@ export default function UsersScreen(): JSX.Element {
           ) : (
             <Fragment>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-8">
+                <div className="space-y-2 sm:flex sm:items-center sm:space-x-8 sm:space-y-0">
                   <ItemSortOrder filter={query} />
                   <ItemSearch filter={query} />
                 </div>
@@ -155,7 +153,7 @@ function User(props: UserProps) {
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between space-x-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-x-2">
         <h2 className="space-x-1.5">
           <span className="text-gray-550">Username:</span>
           <span className="text-base font-bold transition text-primary-750">
@@ -167,8 +165,8 @@ function User(props: UserProps) {
           <FormattedDate isoDate={user.registrationDate} />
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-4">
+      <div className="flex flex-col space-y-2 sm:items-center sm:justify-between sm:flex-row sm:space-y-0">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
           <div className="space-x-1.5">
             <span className="text-gray-550">Display name:</span>
             <span>{user.displayName}</span>
@@ -180,7 +178,7 @@ function User(props: UserProps) {
             </Anchor>
           </div>
         </div>
-        <div className="flex space-x-4 text-sm text-primary-750">
+        <div className="flex flex-col space-y-2 text-sm sm:flex-row sm:space-y-0 sm:space-x-4 text-primary-750">
           <ProtectedView roles={['administrator']}>
             <UserRoleSelect user={user} />
             <UserStatusSelect user={user} />

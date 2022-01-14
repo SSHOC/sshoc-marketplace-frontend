@@ -35,10 +35,7 @@ export default function WorkflowEditScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Edit workflow" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           {workflow.data === undefined || id == undefined ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />

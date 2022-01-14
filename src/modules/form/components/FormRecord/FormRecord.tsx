@@ -12,10 +12,17 @@ export interface FormRecordProps {
  */
 export function FormRecord(props: FormRecordProps): JSX.Element {
   return (
-    <div className={cx('flex space-x-4 relative', props.className)}>
+    <div
+      className={cx(
+        'flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 relative',
+        props.className,
+      )}
+    >
       {props.children}
       {props.actions !== undefined ? (
-        <div className="absolute top-0 right-0">{props.actions}</div>
+        <div className="absolute top-0 right-0" style={{ marginTop: 0 }}>
+          {props.actions}
+        </div>
       ) : null}
     </div>
   )

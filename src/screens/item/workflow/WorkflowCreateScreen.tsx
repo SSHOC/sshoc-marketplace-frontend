@@ -15,10 +15,7 @@ export default function WorkflowCreateScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Create workflow" />
       <GridLayout>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <ItemForm
             category="workflow"
             initialValues={createInitialRecommendedFields(forms.workflow)}

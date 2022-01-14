@@ -16,10 +16,7 @@ export default function DatasetCreateScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Create dataset" />
       <GridLayout>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Create dataset</Title>
           <ItemForm
             category="dataset"

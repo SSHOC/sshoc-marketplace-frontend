@@ -23,6 +23,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/DraftItemsScreen.module.css'
 import { ensureScalar } from '@/utils/ensureScalar'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import usePagination from '@/utils/usePagination'
@@ -63,7 +64,7 @@ export default function DraftItemsScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="My draft items" />
-      <GridLayout>
+      <GridLayout className={styles.layout}>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
           showSearchBar={false}
@@ -76,10 +77,7 @@ export default function DraftItemsScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
           <Title>My draft items</Title>
           {items.data === undefined ? (
             <ProgressSpinner />
@@ -100,8 +98,11 @@ export default function DraftItemsScreen(): JSX.Element {
                   )
                 })}
               </ul>
-              <div className="flex justify-end">
+              <div className="justify-end hidden md:flex">
                 <ItemLongPagination filter={query} results={items.data} />
+              </div>
+              <div className="flex justify-end md:hidden">
+                <ItemPagination filter={query} results={items.data} />
               </div>
             </Fragment>
           )}
@@ -120,15 +121,15 @@ function DraftItem(props: DraftItemProps) {
   const category = item.category as Exclude<ItemCategory, 'step'>
 
   return (
-    <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between space-x-2">
+    <div className="p-4 space-y-2 text-xs border border-gray-200 rounded md:space-y-4 bg-gray-75">
+      <div className="flex flex-col space-y-1 md_space-y-0 md:space-x-2 md:items-center md:justify-between md:flex-row">
         <h2>
           <Link
             href={{
               pathname: ['', category, item.persistentId, 'draft'].join('/'),
             }}
           >
-            <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">
+            <a className="text-base font-bold leading-tight transition text-primary-750 hover:text-secondary-600">
               {item.label}
               {typeof item.version === 'string' && item.version.length > 0 ? (
                 <span> ({item.version})</span>
@@ -143,12 +144,12 @@ function DraftItem(props: DraftItemProps) {
           </div>
         ) : null}
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between">
         <div className="space-x-1.5">
           <span className="text-gray-550">Category:</span>
           <span>{getSingularItemCategoryLabel(category)}</span>
         </div>
-        <div className="text-sm">
+        <div className="text-sm text-right">
           <ProtectedView>
             <Link
               passHref

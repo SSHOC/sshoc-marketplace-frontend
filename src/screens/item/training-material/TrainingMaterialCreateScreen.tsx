@@ -16,10 +16,7 @@ export default function TrainingMaterialCreateScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Create training material" />
       <GridLayout>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Create training material</Title>
           <ItemForm
             category="training-material"

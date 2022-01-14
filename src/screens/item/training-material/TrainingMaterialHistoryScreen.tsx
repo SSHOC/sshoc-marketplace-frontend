@@ -52,10 +52,7 @@ export default function TrainingMaterialHistoryScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Training material version history</Title>
           {trainingMaterial.data === undefined || id == undefined ? (
             <div className="flex flex-col items-center justify-center h-full">

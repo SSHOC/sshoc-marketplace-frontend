@@ -174,7 +174,7 @@ function ItemVersion(props: ItemVersionProps) {
 
   return (
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col justify-between sm:flex-row sm:items-center sm:space-x-2">
         <h2>
           <Link
             href={{
@@ -202,8 +202,8 @@ function ItemVersion(props: ItemVersionProps) {
           </div>
         ) : null}
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-8">
+      <div className="flex flex-col space-y-2 sm:items-center sm:justify-between sm:flex-row sm:space-y-0">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-8 sm:space-y-0">
           <div className="space-x-1.5">
             <span className="text-gray-550">Status:</span>
             <span>{item.status}</span>
@@ -219,7 +219,7 @@ function ItemVersion(props: ItemVersionProps) {
             </a>
           </div>
         </div>
-        <div className="text-sm">
+        <div className="text-sm text-right">
           {item.status === 'approved' ? (
             <ProtectedView>
               <Link

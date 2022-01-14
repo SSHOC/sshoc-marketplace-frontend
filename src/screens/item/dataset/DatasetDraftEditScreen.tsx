@@ -49,10 +49,7 @@ export default function DatasetDraftEditScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Edit dataset" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit dataset</Title>
           {dataset.data === undefined || id == null ? (
             <div className="flex flex-col items-center justify-center">
