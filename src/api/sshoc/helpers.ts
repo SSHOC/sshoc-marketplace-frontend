@@ -115,11 +115,21 @@ export function convertToInitialFormValues(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  if (['dataset', 'publication'].includes(item.category!)) {
+  if (
+    ['dataset', 'publication', 'training-material'].includes(item.category!)
+  ) {
     // @ts-expect-error items are not discriminated unions
-    initialValues.dateCreated = item.dateCreated
+    if (item.dateCreated != null && item.dateCreated.length > 0) {
+      // convert to format accepted by html <input type="date">
+      // @ts-expect-error items are not discriminated unions
+      initialValues.dateCreated = formatDate(new Date(item.dateCreated))
+    }
     // @ts-expect-error items are not discriminated unions
-    initialValues.dateLastUpdated = item.dateLastUpdated
+    if (item.dateLastUpdated != null && item.dateLastUpdated.length > 0) {
+      // convert to format accepted by html <input type="date">
+      // @ts-expect-error items are not discriminated unions
+      initialValues.dateLastUpdated = formatDate(new Date(item.dateLastUpdated))
+    }
   }
 
   if (item.category === 'workflow') {
@@ -180,4 +190,11 @@ export function createInitialRecommendedFields({
     })
 
   return initialValues
+}
+
+function formatDate(d: Date): string {
+  const year = d.getUTCFullYear()
+  const month = d.getUTCMonth() + 1
+  const day = d.getUTCDate()
+  return [year, month > 9 ? month : '0' + month, day].join('-')
 }
