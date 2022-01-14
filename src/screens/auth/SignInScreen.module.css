@@ -6,7 +6,7 @@
   grid-column: 2 / -2;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .content {
     grid-column: 4 / -2;
   }

@@ -32,7 +32,7 @@ export default function SignInScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex nofollow title="Sign in" />
       <GridLayout className={styles.layout}>
-        <ContentColumn className={cx(styles.content, 'px-6')}>
+        <ContentColumn className={cx(styles.content, 'xs:px-6 px-2')}>
           <Image
             src={'/assets/images/auth/signin/people@2x.png'}
             alt=""
@@ -41,8 +41,8 @@ export default function SignInScreen(): JSX.Element {
             quality={100}
             className="object-contain object-right-bottom -z-10"
           />
-          <div className="relative max-w-1.5xl px-8 mx:px-16 py-16 my-12 space-y-8 bg-white rounded-md shadow-md">
-            <Title className="font-bold">Sign in</Title>
+          <div className="relative max-w-1.5xl px-4 xs:px-8 md:px-16 py-8 xs:py-16 mx-auto lg:mx-0 my-6 xs:my-12 space-y-8 bg-white rounded-md shadow-md">
+            <Title>Sign in</Title>
             <hr className="border-gray-200" />
             <p>
               Sign in with EOSC using existing accounts such as{' '}
