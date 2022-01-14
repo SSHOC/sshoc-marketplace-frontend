@@ -527,7 +527,10 @@ function ItemMedia({ media }: { media: Item['media'] }) {
   return (
     <section>
       <SectionTitle className="sr-only">Media</SectionTitle>
-      <div className="relative w-full h-64 border border-b-0 border-gray-200">
+      <div
+        className="relative w-full border border-b-0 border-gray-200 min-h-64"
+        style={{ aspectRatio: 'calc(16/10)' }}
+      >
         <div className="absolute inset-0 flex flex-col items-center justify-center p-2.5">
           {currentMediaCategory === 'image' ? (
             <img
@@ -547,7 +550,7 @@ function ItemMedia({ media }: { media: Item['media'] }) {
               src={currentMediaUrl}
               className="object-contain w-full h-full"
               title="Embedded content"
-              allow="autoplay; fullscreen; picture-in-picture"
+              // allow="autoplay; fullscreen; picture-in-picture"
               loading="lazy"
             />
           ) : (
