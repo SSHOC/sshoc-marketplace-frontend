@@ -32,3 +32,13 @@ body {
 .footnotes {
   font-size: 80%;
 }
+
+.metadata-table td[colspan] {
+  text-align: center;
+  background: #f5f5f5;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: hsl(0, 0%, 92.5%);
+  font-size: 12px;
+  padding-inline: 4px;
+}
