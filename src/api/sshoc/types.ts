@@ -47,6 +47,7 @@ export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
   'd.curation-flag-url'?: string
   'd.curation-flag-coverage'?: string
   'd.curation-flag-relations'?: string
+  'd.curation-flag-merged'?: string
 }
 
 /**

@@ -216,7 +216,13 @@ function CurationFlags(props: CurationFlagsProps) {
     router.push({ query })
   }
 
-  const allowedFlags = ['description', 'url', 'coverage', 'relations'] as const
+  const allowedFlags = [
+    'description',
+    'url',
+    'coverage',
+    'relations',
+    'merged',
+  ] as const
 
   const defaultValue = [] as Array<string>
   allowedFlags.forEach((flag) => {
