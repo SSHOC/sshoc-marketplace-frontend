@@ -81,7 +81,7 @@ function Hero() {
         <Mdx>
           <Content />
         </Mdx>
-        <ItemSearchForm className="grid px-4 md:px-8 py-3 text-base bg-white rounded-md shadow-md gap-y-2 md:grid-cols-[256px_1fr_auto] md:gap-x-2">
+        <ItemSearchForm className="grid px-4 md:px-8 py-3 items-center text-base bg-white rounded-md shadow-md gap-y-2 md:grid-cols-[256px_1fr_auto] md:gap-x-2">
           <ItemCategorySelect />
           <ItemSearchComboBox />
           <SubmitButton />
