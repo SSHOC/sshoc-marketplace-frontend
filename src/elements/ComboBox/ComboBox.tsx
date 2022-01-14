@@ -278,13 +278,12 @@ function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
   const ref = props.listBoxRef
   const { listBoxProps } = useListBox<T>(
     {
-      ...menuProps,
+      ...(menuProps as any),
       shouldFocusWrap: props.shouldFocusWrap,
       /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
       autoFocus: state.focusStrategy || true,
       disallowEmptySelection: true,
       /** Uses `aria-activedescendant` instead of actual focus. */
-      /* @ts-expect-error Missing from upstream type. */
       shouldUseVirtualFocus,
     },
     state,

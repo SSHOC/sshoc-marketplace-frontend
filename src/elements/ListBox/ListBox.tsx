@@ -21,6 +21,7 @@ export interface ListBoxProps<T>
     Validation,
     LabelableProps {
   isDisabled?: boolean
+  isLoading?: boolean
   placeholder?: string
   validationMessage?: ReactNode
   /** @default "icon" */
