@@ -19,11 +19,13 @@ interface SearchFormValues {
 const ItemSearchFormContext = createContext<{
   category?: ItemCategory
   onCategoryChange?: (category: Key | null) => void
+  onSubmit?: () => void
 }>({})
 
 export interface ItemSearchFormProps {
   children?: ReactNode
   className?: string
+  onSubmit?: () => void
 }
 
 export default function ItemSearchForm(
@@ -57,11 +59,14 @@ export default function ItemSearchForm(
     }
 
     router.push({ pathname: '/search', query })
+    props.onSubmit?.()
   }
 
   return (
     <form onSubmit={onSubmit} role="search" className={props.className}>
-      <ItemSearchFormContext.Provider value={{ category, onCategoryChange }}>
+      <ItemSearchFormContext.Provider
+        value={{ category, onCategoryChange, onSubmit: props.onSubmit }}
+      >
         {props.children}
       </ItemSearchFormContext.Provider>
     </form>
@@ -105,12 +110,13 @@ export function ItemCategorySelect(): JSX.Element {
 export interface ItemSearchComboBoxProps {
   variant?: 'invisible'
   shouldSubmitOnSelect?: boolean
+  onSubmit?: () => void
 }
 
 export function ItemSearchComboBox(
   props: ItemSearchComboBoxProps,
 ): JSX.Element {
-  const { category } = useContext(ItemSearchFormContext)
+  const { category, onSubmit } = useContext(ItemSearchFormContext)
   const router = useRouter()
   const defaultSearchTerm = useQueryParam('q', false)
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm ?? '')
@@ -151,6 +157,7 @@ export function ItemSearchComboBox(
       const phrase = suggestion.phrase
       if (phrase.length > 0) {
         router.push({ pathname: '/search', query: { q: phrase } })
+        onSubmit?.()
       }
     }
   }

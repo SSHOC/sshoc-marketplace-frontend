@@ -1,4 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { useButton } from '@react-aria/button'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -96,15 +97,14 @@ export default function SearchScreen(): JSX.Element {
         </Header>
         <ContentColumn>
           <div className="px-6 xs:pb-6 sm:pb-12">
-            <Title className="space-x-3">
+            <Title className="flex flex-wrap gap-x-3">
               <span>Search results</span>
-              {Number(results?.hits) > 0 ? (
-                <span className="text-2xl font-normal">({results?.hits})</span>
-              ) : null}
               {isFetching ? (
                 <span>
-                  <Spinner className="w-6 h-6 text-secondary-600" />
+                  <Spinner className="w-5 h-5 text-secondary-600" />
                 </span>
+              ) : Number(results?.hits) > 0 ? (
+                <span className="text-2xl font-normal">({results?.hits})</span>
               ) : null}
             </Title>
           </div>
@@ -116,6 +116,11 @@ export default function SearchScreen(): JSX.Element {
                 results={results}
                 formRef={formRef}
               />
+              <div className="my-2.5 flex justify-end">
+                <Link href={{ query: {} }}>
+                  <a className="text-primary-800">Clear filters</a>
+                </Link>
+              </div>
               <ActiveFilters filter={query} />
             </div>
           </aside>
@@ -125,20 +130,7 @@ export default function SearchScreen(): JSX.Element {
             <SubSectionTitle className="leading-tight" as="h2">
               Refine your search
             </SubSectionTitle>
-            <button
-              className="text-left lg:text-right"
-              onClick={() => {
-                /**
-                 * because we are using an uncontrolled form we need to manually sync the form to query params
-                 * any time we change query params without interacting with the form.
-                 * to avoid this, we put a `key` on the form and rerender on every query param change
-                 */
-                // formRef.current.reset()
-                router.push({ query: {} })
-              }}
-            >
-              <span className="text-primary-800">Clear filters</span>
-            </button>
+            <ClearButton />
           </HStack>
         </SideColumn>
         <MainColumn>
@@ -170,6 +162,24 @@ export default function SearchScreen(): JSX.Element {
         </MainColumn>
       </GridLayout>
     </Fragment>
+  )
+}
+
+function ClearButton() {
+  const router = useRouter()
+  const ref = useRef<HTMLButtonElement>(null)
+  const { buttonProps } = useButton({}, ref)
+  return (
+    <button
+      className="text-left lg:text-right"
+      {...buttonProps}
+      ref={ref}
+      onPress={() => {
+        router.push({ query: {} })
+      }}
+    >
+      <span className="text-primary-800">Clear filters</span>
+    </button>
   )
 }
 
@@ -1132,6 +1142,9 @@ function RefineSearchDialogTrigger({
 function SearchTermDialog() {
   const dialog = useDialogState()
 
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const { buttonProps } = useButton({ onPress: dialog.close }, closeButtonRef)
+
   return (
     <div className="xs:hidden">
       <Button onPress={dialog.open} variant="gradient" className="w-full">
@@ -1154,9 +1167,9 @@ function SearchTermDialog() {
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
             <div className="relative w-full max-w-xl bg-gray-100">
-              <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
+              <header className="flex items-center justify-between px-4 py-3 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
                 <Dialog.Title as={SubSectionTitle}>Search</Dialog.Title>
-                <button onClick={dialog.close}>
+                <button {...buttonProps} ref={closeButtonRef}>
                   <CloseIcon
                     aria-label="Close search dialog"
                     width="1em"
@@ -1165,7 +1178,7 @@ function SearchTermDialog() {
                 </button>
               </header>
               <div className="px-6 pb-12">
-                <ItemSearchForm>
+                <ItemSearchForm onSubmit={dialog.close}>
                   <div className="flex flex-col my-3 space-y-3">
                     <ItemSearchComboBox shouldSubmitOnSelect />
                     <Button type="submit" variant="gradient">

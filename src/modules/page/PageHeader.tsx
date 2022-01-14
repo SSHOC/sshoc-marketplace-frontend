@@ -1,10 +1,11 @@
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import { useButton } from '@react-aria/button'
 import cx from 'clsx'
 import Link from 'next/link'
 import type { NextRouter } from 'next/router'
 import { useRouter } from 'next/router'
 import type { PropsWithChildren, ReactNode } from 'react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
 import { useGetItemCategories } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
@@ -525,6 +526,9 @@ function MobileNavigation(): JSX.Element {
   const { data: itemCategories = {} } = useGetItemCategories()
   const { data: user } = useCurrentUser()
 
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const { buttonProps } = useButton({ onPress: dialog.close }, closeButtonRef)
+
   useEffect(() => {
     router.events.on('routeChangeStart', dialog.close)
 
@@ -544,7 +548,7 @@ function MobileNavigation(): JSX.Element {
           padding: 0,
         }}
         variant="gradient"
-        onPress={dialog.toggle}
+        onPress={dialog.open}
       >
         <MenuIcon
           aria-label="Open navigation menu"
@@ -585,7 +589,8 @@ function MobileNavigation(): JSX.Element {
                   </a>
                 </Link>
                 <button
-                  onClick={dialog.close}
+                  {...buttonProps}
+                  ref={closeButtonRef}
                   className="transition text-primary-750 hover:text-secondary-600"
                 >
                   <CloseIcon
