@@ -257,18 +257,6 @@ function AuthButton() {
     )
   }
 
-  /* Disable login on production deploy. */
-  if (
-    process.env.NEXT_PUBLIC_SSHOC_BASE_URL ===
-    'https://marketplace.sshopencloud.eu'
-  ) {
-    return (
-      <div className="relative flex items-center space-x-6 text-gray-500">
-        <ReportAnIssueButton path={router.asPath} user={user} />
-      </div>
-    )
-  }
-
   if (auth.session !== null) {
     return (
       <div className="relative z-20 flex items-center space-x-6 text-gray-500">

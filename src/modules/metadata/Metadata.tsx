@@ -3,6 +3,7 @@ import Meta from '@stefanprobst/next-page-metadata'
 
 import { useCanonicalUrl } from '@/modules/metadata/useCanonicalUrl'
 import {
+  description as siteDescription,
   openGraph,
   title as siteTitle,
   twitter,
@@ -18,6 +19,7 @@ export default function Metadata(props: PageMetadataProps): JSX.Element {
   const canonicalUrl = useCanonicalUrl(siteUrl)
   return (
     <Meta
+      description={siteDescription}
       canonicalUrl={canonicalUrl}
       titleTemplate={titleTemplate}
       openGraph={openGraph}

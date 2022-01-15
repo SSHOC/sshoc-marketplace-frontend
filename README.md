@@ -39,11 +39,6 @@ precedence over values in `.env.local`.
 - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` for ReCaptcha.
 - `NEXT_PUBLIC_MATOMO_BASE_URL` and `NEXT_PUBLIC_MATOMO_SITE_ID` for analytics.
 
-### robots.txt
-
-By default, `robots.txt` disallows all crawlers – change this for production by
-editing `scripts/sitemap.ts`.
-
 ### Performance metrics
 
 Currently,

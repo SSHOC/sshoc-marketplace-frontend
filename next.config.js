@@ -43,6 +43,13 @@ const withPreval = createPrevalPlugin()
 
 const nextConfig = {
   async headers() {
+    if (
+      process.env['NEXT_PUBLIC_SSHOC_BASE_URL'] ===
+      'https://marketplace.sshopencloud.eu'
+    ) {
+      return []
+    }
+
     return [
       {
         source: '/:path*',

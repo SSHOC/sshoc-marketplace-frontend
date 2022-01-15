@@ -17,7 +17,6 @@
     "format:fix": "yarn format --write",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "yarn lint --fix",
-    "postbuild": "yarn create:sitemap",
     "prebuild": "rimraf .next && yarn create:favicons",
     "preexport": "rimraf out",
     "start": "next start",
