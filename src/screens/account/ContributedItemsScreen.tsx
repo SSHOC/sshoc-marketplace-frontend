@@ -98,7 +98,7 @@ export default function ContributedItemsScreen(): JSX.Element {
             <div>Nothing contributed yet.</div>
           ) : (
             <Fragment>
-              <div className="flex flex-col items-center justify-between md:flex-row">
+              <div className="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                 <ItemSortOrder filter={query} />
                 <ItemPagination filter={query} results={items.data} />
               </div>

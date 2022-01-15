@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -6,6 +7,7 @@ import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/item/ItemSubmitSuccessScreen.module.css'
 
 export default function ItemSubmitSuccessScreen(): JSX.Element {
   const router = useRouter()
@@ -13,13 +15,10 @@ export default function ItemSubmitSuccessScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata title="Success" nofollow noindex />
-      <GridLayout style={{ gridTemplateRows: '1fr' }}>
-        <ContentColumn style={{ gridColumn: '4 / span 6' }}>
-          <div className="relative flex flex-col max-w-xl px-12 py-16 my-12 space-y-10 bg-white rounded-md shadow-md">
-            <div>
-              <Title className="font-bold">Successfully submitted!</Title>
-              <p>A moderator has been notified (well, not yet, but soon)</p>
-            </div>
+      <GridLayout className={styles.layout}>
+        <ContentColumn className={cx('xs:px-6 px-2', styles.content)}>
+          <div className="relative max-w-1.5xl px-4 xs:px-8 md:px-16 py-8 xs:py-16 mx-auto lg:mx-0 my-6 xs:my-12 space-y-8 bg-white rounded-md shadow-md">
+            <Title className="font-bold">Successfully submitted!</Title>
             <hr />
             <p>
               Thanks! Your changes have been successfully submitted and sent to

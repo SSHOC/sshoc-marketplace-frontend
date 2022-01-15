@@ -668,7 +668,7 @@ function ItemPropertiesList({ item }: { item: Item }) {
     <aside className="">
       <HStack className="items-start justify-between space-x-4">
         <ProtectedView>
-          <div className="flex flex-col w-full mb-12 space-y-2 max-w-64">
+          <div className="flex flex-row mx-auto mb-12 space-x-2 lg:mx-0 lg:space-x-0 lg:w-full lg:space-y-2 lg:flex-col lg:max-w-64">
             <EditItemButton
               category={item.category as ItemCategory}
               persistentId={item.persistentId!}

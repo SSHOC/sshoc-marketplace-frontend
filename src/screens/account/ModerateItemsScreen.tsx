@@ -149,7 +149,7 @@ export default function ModerateItemsScreen(): JSX.Element {
             <div>Nothing to moderate.</div>
           ) : (
             <Fragment>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                 <ItemSortOrder filter={query} />
                 <ItemPagination filter={query} results={items.data} />
               </div>

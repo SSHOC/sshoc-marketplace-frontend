@@ -8,6 +8,16 @@
 
 @media (min-width: 768px) {
   .mainColumn {
+    grid-column: 3 / -3;
+  }
+
+  .sideColumn {
+    grid-column: 3 / -3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainColumn {
     grid-column: 3 / span 7;
   }
 

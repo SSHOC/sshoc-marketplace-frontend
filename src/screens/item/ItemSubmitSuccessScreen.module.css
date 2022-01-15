@@ -1,0 +1,13 @@
+.layout {
+  grid-template-rows: 1fr;
+}
+
+.content {
+  grid-column: 2 / -2;
+}
+
+@media (min-width: 768px) {
+  .content {
+    grid-column: 4 / span 6;
+  }
+}

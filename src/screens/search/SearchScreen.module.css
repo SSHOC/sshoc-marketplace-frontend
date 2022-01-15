@@ -28,6 +28,16 @@
   }
 
   .mainColumn {
+    grid-column: 3 / -3;
+  }
+
+  .sideColumn {
+    grid-column: 3 / -3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainColumn {
     grid-column: -10 / span 7;
   }
 

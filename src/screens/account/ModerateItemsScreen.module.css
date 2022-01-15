@@ -15,6 +15,20 @@
 
 @media (min-width: 768px) {
   .content {
+    grid-column: 3 / -3;
+  }
+
+  .facets {
+    grid-column: 3 / -3;
+  }
+
+  .results {
+    grid-column: 3 / -3;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
     grid-column: 4 / span 8;
   }
 

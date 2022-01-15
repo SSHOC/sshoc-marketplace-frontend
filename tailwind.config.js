@@ -93,17 +93,6 @@ module.exports = {
       height: {
         3.75: px(15),
       },
-      /** see custom properties in global.css */
-      screens: {
-        '2xs': '320px',
-        xs: '480px',
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1600px',
-        '3xl': '1920px',
-      },
       /** @tailwindcss/typography plugin */
       typography: (theme) => ({
         DEFAULT: {
@@ -141,6 +130,17 @@ module.exports = {
       zIndex: {
         '-10': '-10',
       },
+    },
+    /** see custom properties in global.css */
+    screens: {
+      '2xs': '320px',
+      xs: '480px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1600px',
+      '3xl': '1920px',
     },
   },
   variants: {

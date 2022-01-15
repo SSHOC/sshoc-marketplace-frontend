@@ -86,7 +86,7 @@ export default function SearchScreen(): JSX.Element {
       <Metadata title="Search results" />
       <GridLayout className={styles.grid}>
         <Header image={'/assets/images/search/clouds@2x.png'}>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Breadcrumbs
               links={[
                 { pathname: '/', label: 'Home' },
@@ -108,7 +108,7 @@ export default function SearchScreen(): JSX.Element {
               ) : null}
             </Title>
           </div>
-          <aside className="block px-6 py-6 md:hidden">
+          <aside className="block px-6 py-6 lg:hidden">
             <div className="flex flex-col p-2 space-y-2 border rounded">
               <SearchTermDialog />
               <RefineSearchDialogTrigger
@@ -191,7 +191,7 @@ function MainColumn({
   className,
 }: PropsWithChildren<{ className?: string }>) {
   const classNames = {
-    section: cx('px-6 md:pl-0', className, styles.mainColumn),
+    section: cx('px-6 lg:pl-0', className, styles.mainColumn),
   }
   return <section className={classNames.section}>{children}</section>
 }
@@ -201,7 +201,7 @@ function MainColumn({
  */
 function SideColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('px-6 mr-6 hidden md:block', styles.sideColumn),
+    section: cx('px-6 mr-6 hidden lg:block', styles.sideColumn),
   }
   return <section className={classNames.section}>{children}</section>
 }
@@ -415,7 +415,7 @@ function PreviousPageLink({
   )
   if (isDisabled) {
     return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
+      <div className="inline-flex items-center pointer-events-none text-gray-550">
         {label}
       </div>
     )
@@ -452,7 +452,7 @@ function NextPageLink({
   )
   if (isDisabled) {
     return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
+      <div className="inline-flex items-center pointer-events-none text-gray-550">
         {label}
       </div>
     )
@@ -929,7 +929,7 @@ function ItemSearchResult({
         <CopyToClipboardButton pathname={pathname} />
       </div>
       <dl
-        className="grid text-xs text-gray-500"
+        className="grid text-xs text-gray-550"
         style={{ gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem' }}
       >
         {activities !== undefined && activities.length > 0 ? (

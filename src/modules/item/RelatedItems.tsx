@@ -44,9 +44,9 @@ export default function RelatedItems({
     <VStack as="section" className="space-y-4">
       <HStack className="items-baseline space-x-2">
         <SectionTitle>Related</SectionTitle>
-        <span className="text-xl text-gray-500">({relatedItems.length})</span>
+        <span className="text-xl text-gray-550">({relatedItems.length})</span>
       </HStack>
-      <ul className="grid border-t border-b border-gray-200 md:grid-cols-2">
+      <ul className="grid border-t border-b border-gray-200 lg:grid-cols-2">
         {relatedItems.slice(0, cursor).map((item) => {
           return (
             <li key={item.id} className="-mt-px border-t border-gray-200">

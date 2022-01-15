@@ -15,6 +15,7 @@ import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import Triangle from '@/modules/ui/Triangle'
 import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
+import styles from '@/screens/item/workflow/Steps.module.css'
 
 const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
 
@@ -29,19 +30,8 @@ export default function Steps({ steps }: { steps: Steps }): JSX.Element | null {
   if (steps.length === 0) return null
 
   return (
-    <div
-      className="grid mb-6"
-      style={{
-        gridColumn: '1 / span 9',
-        /** "sub-grid" */
-        gridTemplateColumns:
-          'calc(50vw - (var(--screen-3xl) / 2)) repeat(8, minmax(0, calc(var(--screen, var(--screen-3xl)) / 12)))',
-      }}
-    >
-      <HStack
-        className="items-baseline p-6 space-x-2"
-        style={{ gridColumn: '3 / span 7' }}
-      >
+    <div className={cx('mb-6', styles.layout)}>
+      <HStack className={cx('items-baseline p-6 space-x-2', styles.content)}>
         <SectionTitle>Steps</SectionTitle>
         <span className="text-xl text-gray-500">({steps.length})</span>
       </HStack>
@@ -79,11 +69,13 @@ function Step({ step, index }: { step: Step; index: number }) {
        */
       id={`step-${step.persistentId}`}
     >
-      <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-100" />
+      <b className={cx('bg-gray-100', styles.leftBleed)} />
       <HStack
         as="header"
-        className="items-center justify-between p-6 bg-gray-100"
-        style={{ gridColumn: '3 / span 7' }}
+        className={cx(
+          'items-center justify-between p-6 bg-gray-100',
+          styles.content,
+        )}
       >
         <HStack className="items-center space-x-6">
           <span className="text-2xl font-bold">{index + 1}</span>
@@ -109,10 +101,9 @@ function Step({ step, index }: { step: Step; index: number }) {
         </DisclosureButton>
       </HStack>
 
-      <b style={{ gridColumn: '1 / span 2' }} className="bg-gray-50" />
+      <b className={cx('bg-gray-50', styles.leftBleed)} />
       <DisclosurePanel
-        style={{ gridColumn: '3 / span 7' }}
-        className="px-6 py-12 space-y-12 bg-gray-50"
+        className={cx('px-6 py-12 space-y-12 bg-gray-50', styles.content)}
       >
         <ItemMetadata item={step} />
         <div className="leading-8">

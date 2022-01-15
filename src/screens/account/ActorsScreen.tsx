@@ -38,9 +38,9 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import Triangle from '@/modules/ui/Triangle'
 import { Title } from '@/modules/ui/typography/Title'
+import styles from '@/screens/account/ActorsScreen.module.css'
 import { ensureScalar } from '@/utils/ensureScalar'
 import usePagination from '@/utils/usePagination'
-
 /**
  * Actors screen.
  */
@@ -78,7 +78,7 @@ export default function ActorsScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="Actors" />
-      <GridLayout>
+      <GridLayout className={styles.layout}>
         <Header
           image={'/assets/images/search/clouds@2x.png'}
           showSearchBar={false}
@@ -94,10 +94,7 @@ export default function ActorsScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn
-          className="px-6 py-12 space-y-12"
-          style={{ gridColumn: '4 / span 8' }}
-        >
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
           <div className="flex justify-between">
             <Title>
               Actors
@@ -114,7 +111,7 @@ export default function ActorsScreen(): JSX.Element {
             <ProgressSpinner />
           ) : (
             <Fragment>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                 <ItemSearch filter={query} />
                 <ItemPagination filter={query} results={actors.data} />
               </div>

@@ -95,7 +95,7 @@ export default function VocabulariesScreen(): JSX.Element {
             <ProgressSpinner />
           ) : (
             <Fragment>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                 <div className="flex items-center space-x-8">
                   <ItemSearch filter={query} />
                 </div>
