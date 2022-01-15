@@ -38,12 +38,12 @@ export default function VocabulariesScreen(): JSX.Element {
   const auth = useAuth()
   const handleErrors = useErrorHandlers()
   const toast = useToast()
-
-  const query = {}
+  const router = useRouter()
+  const query = sanitizeQuery(router.query)
 
   const concepts = useSearchConcepts(
     // @ts-expect-error Facet exists.
-    { 'f.candidate': true },
+    { 'f.candidate': true, ...query },
     {
       enabled: auth.session?.accessToken != null,
       keepPreviousData: true,
@@ -240,7 +240,9 @@ function ItemSearch(props: ItemSearchProps) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    router.push({ query: { ...filter, q: searchTerm } })
+    const query = { ...filter }
+    delete query.page
+    router.push({ query: { ...query, q: searchTerm } })
   }
 
   return (

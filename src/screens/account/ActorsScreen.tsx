@@ -219,7 +219,9 @@ function ItemSearch(props: ItemSearchProps) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    router.push({ query: { ...filter, q: searchTerm } })
+    const query = { ...filter }
+    delete query.page
+    router.push({ query: { ...query, q: searchTerm } })
   }
 
   return (
