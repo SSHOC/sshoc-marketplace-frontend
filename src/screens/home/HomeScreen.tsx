@@ -134,7 +134,7 @@ function Browse({ facets }: { facets?: Facets }) {
                   <Link href={{ pathname: '/search', query }} passHref>
                     <Anchor>
                       {activity}{' '}
-                      <span className="text-gray-500">({count})</span>
+                      <span className="text-gray-550">({count})</span>
                     </Anchor>
                   </Link>
                 </li>
@@ -155,7 +155,7 @@ function Browse({ facets }: { facets?: Facets }) {
                 <li key={keyword} className="mb-4 mr-4">
                   <Link href={{ pathname: '/search', query }} passHref>
                     <Anchor>
-                      {keyword} <span className="text-gray-500">({count})</span>
+                      {keyword} <span className="text-gray-550">({count})</span>
                     </Anchor>
                   </Link>
                 </li>
