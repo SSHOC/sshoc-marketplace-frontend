@@ -168,16 +168,16 @@ export default function SearchScreen(): JSX.Element {
 function ClearButton() {
   const router = useRouter()
   const ref = useRef<HTMLButtonElement>(null)
-  const { buttonProps } = useButton({}, ref)
-  return (
-    <button
-      className="text-left lg:text-right"
-      {...buttonProps}
-      ref={ref}
-      onPress={() => {
+  const { buttonProps } = useButton(
+    {
+      onPress() {
         router.push({ query: {} })
-      }}
-    >
+      },
+    },
+    ref,
+  )
+  return (
+    <button className="text-left lg:text-right" {...buttonProps} ref={ref}>
       <span className="text-primary-800">Clear filters</span>
     </button>
   )
