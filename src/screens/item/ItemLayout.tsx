@@ -962,7 +962,7 @@ function useItemMetadata(
       <ul className="py-8 space-y-6" key="item-externalids">
         {externalIds.map((id) => {
           return (
-            <li key={id.identifierService?.code} className="flex">
+            <li key={id.identifierService?.code}>
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
                 {id.identifierService?.label}:
               </span>
