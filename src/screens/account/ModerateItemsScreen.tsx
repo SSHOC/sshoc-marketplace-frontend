@@ -129,13 +129,13 @@ export default function ModerateItemsScreen(): JSX.Element {
         </ContentColumn>
         <section
           className={cx(
-            'hidden md:block px-6 pb-12 mr-6 space-y-8',
+            'hidden lg:block px-6 pb-12 mr-6 space-y-8',
             styles.facets,
           )}
         >
           <SearchFacets filter={query} />
         </section>
-        <section className={cx('block md:hidden px-6 pb-6', styles.facets)}>
+        <section className={cx('block lg:hidden px-6 pb-6', styles.facets)}>
           <FacetsDialog filter={query} />
         </section>
         <section className={cx('px-6 pb-12 space-y-12', styles.results)}>
