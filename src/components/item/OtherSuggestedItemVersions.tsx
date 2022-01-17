@@ -57,7 +57,8 @@ export function OtherSuggestedItemVersions({
                 <h3>
                   <Link
                     href={{
-                      pathname: `/${item.category}/${item.persistentId}/versions/${item.id}/edit`,
+                      pathname: `/${item.category}/${item.persistentId}/version/${item.id}/edit`,
+                      query: { review: true },
                     }}
                   >
                     <a className="transition text-primary-750 hover:text-secondary-600">
