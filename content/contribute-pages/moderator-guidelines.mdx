@@ -27,7 +27,7 @@ material.
 Suggested items should be evaluated based on the quality criteria described in
 the "Inclusion criteria" section. As well, Moderators should make sure that
 metadata fields are as fully described as possible, especially those that are
-recommended. See metadata guidelines section.
+recommended. See [metadata guidelines](/contribute/metadata-guidelines) section.
 
 ### Suggested items by contributors
 
@@ -52,7 +52,7 @@ SSH Open Marketplace Administrators, choose and approve newly-ingested
 materials. In such cases, moderators will have to firstly assess the quality and
 pertinence of the data source before its ingestion and once this is complete,
 perform "mass validation" of (meta)data before the Marketplace population. See
-Ingest pipeline workflow in the Administrator Guidelines for more details.
+Ingest pipeline workflow in the [Administrator Guidelines](/contribute/administrator-guidelines) for more details.
 
 ## Continuously improving (meta)data quality
 
@@ -123,7 +123,7 @@ metadata fields to ensure that they are correct.
 
 In order to gain an overview of the SSH Open Marketplace data and to perform
 some analysis to prioritise the curation tasks and improve the Marketplace data
-quality, Python Jupyter notebooks have been created by Cesare Concordia (CNR).
+quality, [a Python library and a set of Jupyter notebooks](https://gitlab.gwdg.de/sshoc/marketplace-curation) have been created by Cesare Concordia (CNR).
 These flexible scripts allow moderators and administrators to query the SSH Open
 Marketplace with advanced parameters and filters and, in some cases, to write
 back to the system to flag some items for curation in the editorial dashboard.
@@ -131,21 +131,28 @@ back to the system to flag some items for curation in the editorial dashboard.
 A dedicated Python library and a set of notebooks are available. For some of the
 notebooks, specific authorisations (=credentials) are needed.
 
-1. Ingest review notebook
+1. Ingest review notebook (to be developed)
 2. Data analysis notebook including some Items provenance analysis, providing a
    non-redundancy overview, performing some completeness checks (overview of
    null values; description length), and checking the detailed coverage of given
    fields.
-3. Automatic checks notebooks = curation-flags. 3.1 curation-flag-URL 3.2
-   curation-flag-description 3.3 Curation-flag-relations (to be completed) 3.4
+3. Automatic checks notebooks = curation-flags. 
+- 3.1 curation-flag-URL 
+- 3.2
+   curation-flag-description 
+- 3.3 Curation-flag-relations (to be completed) 
+- 3.4
    curation-flag-coverage
-4. Mass analysis and/or corrections notebooks 4.1 Duplicates & merging 4.2
-   Actors curation 4.3 Vocabulary management (to be developed)
+4. Mass analysis and/or corrections notebooks 
+- 4.1 Duplicates & merging 
+- 4.2
+   Actors curation 
+- 4.3 Vocabulary management (to be developed)
 
 ### Vocabulary management
 
-Some of the metadata fields used in the Marketplace are using (controlled)
-vocabularies, meaning that contributors can select concepts among a pre-existing
+Some of the metadata fields used in the Marketplace are [using (controlled)
+vocabularies](/contribute/moderator-guidelines#vocabulary-management), meaning that contributors can select concepts among a pre-existing
 list. For some fields this list is open and new terms can be added (i.e.
 keywords) if they don't appear yet, for some others no new concepts can be added
 (i.e activity is using the TaDIRAH taxonomy that is developed and maintained
