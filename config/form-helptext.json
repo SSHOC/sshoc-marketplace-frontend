@@ -1,7 +1,7 @@
 {
   "accessibleAt": "URL, ideally landing page, of the resource",
   "actor": "Person/group/body who helped create resource",
-  "description": "Should be concise and raise interest in entry",
+  "description": "Should be concise and raise interest in entry, allows Markdown content",
   "externalId": "Other URLs relevant to resource, eg code, DOI, etc.",
   "label": "Name of the MP entry, max 255 char",
   "media-object": "Media can be images or videos",
