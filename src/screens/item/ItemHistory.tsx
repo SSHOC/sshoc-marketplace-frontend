@@ -211,12 +211,14 @@ function ItemVersion(props: ItemVersionProps) {
           <div className="space-x-1.5">
             <span className="text-gray-550">Contributor:</span>
             <span>{item.informationContributor?.displayName}</span>
-            <a
-              href={`mailto:${item.informationContributor?.email}`}
-              className="transition text-primary-750 hover:text-secondary-600"
-            >
-              <span>{item.informationContributor?.email}</span>
-            </a>
+            <ProtectedView roles={['administrator', 'moderator']}>
+              <a
+                href={`mailto:${item.informationContributor?.email}`}
+                className="transition text-primary-750 hover:text-secondary-600"
+              >
+                <span>{item.informationContributor?.email}</span>
+              </a>
+            </ProtectedView>
           </div>
         </div>
         <div className="text-sm text-right">

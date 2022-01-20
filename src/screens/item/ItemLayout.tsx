@@ -1029,6 +1029,9 @@ function ItemContributors({
           return (
             <li key={contributor.id} className="flex flex-col">
               <span>{contributor.displayName}</span>
+              <ProtectedView roles={['administrator', 'moderator']}>
+                <span className="text-gray-550">{contributor.email}</span>
+              </ProtectedView>
             </li>
           )
         })}
