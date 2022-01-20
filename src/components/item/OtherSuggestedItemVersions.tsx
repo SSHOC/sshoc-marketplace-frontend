@@ -22,9 +22,11 @@ const useItemHistory = {
 export function OtherSuggestedItemVersions({
   category,
   persistentId,
+  versionId,
 }: {
   category: Exclude<ItemCategory, 'step'>
   persistentId: string
+  versionId: number
 }): JSX.Element | null {
   const auth = useAuth()
   const history = useItemHistory[category](
@@ -36,8 +38,9 @@ export function OtherSuggestedItemVersions({
 
   if (history.data == null) return null
 
-  const unapprovedItemVersions = history.data.filter((item) =>
-    ['suggested', 'ingested'].includes(item.status!),
+  const unapprovedItemVersions = history.data.filter(
+    (item) =>
+      ['suggested', 'ingested'].includes(item.status!) && item.id !== versionId,
   )
 
   if (unapprovedItemVersions.length === 0) return null

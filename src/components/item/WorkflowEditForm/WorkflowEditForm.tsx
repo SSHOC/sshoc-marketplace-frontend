@@ -623,6 +623,7 @@ function WorkflowPage(props: FormPageProps) {
         <OtherSuggestedItemVersions
           category="workflow"
           persistentId={props.item.persistentId!}
+          versionId={props.item.id!}
         />
       ) : null}
     </Fragment>

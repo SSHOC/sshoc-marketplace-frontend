@@ -222,6 +222,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
               <OtherSuggestedItemVersions
                 category={props.item.category}
                 persistentId={props.item.persistentId}
+                versionId={props.item.id}
               />
             ) : null}
             <div className="flex items-center justify-end space-x-6">
