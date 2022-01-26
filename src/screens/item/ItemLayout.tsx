@@ -865,16 +865,31 @@ function useItemMetadata(
                         ) : null}
                         {Array.isArray(actor.externalIds)
                           ? actor.externalIds.map((id) => {
+                              if (
+                                id.identifierService == null ||
+                                id.identifierService.code === 'SourceActorId'
+                              ) {
+                                return null
+                              }
+
+                              if (id.identifierService.urlTemplate == null) {
+                                return (
+                                  <span key={id.identifierService.code}>
+                                    {id.identifierService.label}:{' '}
+                                    {id.identifier}
+                                  </span>
+                                )
+                              }
+
                               // TODO: should icons be returned on externalIds?
                               const icon =
-                                id.identifierService?.code === 'ORCID'
+                                id.identifierService.code === 'ORCID'
                                   ? OrcidIcon
                                   : null
 
-                              return id.identifierService?.urlTemplate !=
-                                null &&
-                                id.identifierService.urlTemplate.length > 0 ? (
+                              return (
                                 <Anchor
+                                  key={id.identifierService.code}
                                   href={id.identifierService.urlTemplate.replace(
                                     '{source-actor-id}',
                                     id.identifier!,
@@ -884,7 +899,7 @@ function useItemMetadata(
                                   {icon != null ? <Icon icon={icon} /> : null}
                                   <span>{id.identifierService.label}</span>
                                 </Anchor>
-                              ) : null
+                              )
                             })
                           : null}
                       </li>
@@ -961,12 +976,19 @@ function useItemMetadata(
     metadata.externalIds = (
       <ul className="py-8 space-y-6" key="item-externalids">
         {externalIds.map((id) => {
+          if (
+            id.identifierService == null ||
+            id.identifierService.code === 'SourceItemId'
+          ) {
+            return null
+          }
+
           return (
-            <li key={id.identifierService?.code}>
+            <li key={id.identifierService.code}>
               <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-                {id.identifierService?.label}:
+                {id.identifierService.label}:
               </span>
-              {id.identifierService?.urlTemplate != null &&
+              {id.identifierService.urlTemplate != null &&
               id.identifierService.urlTemplate.length > 0 ? (
                 <Anchor
                   href={id.identifierService.urlTemplate.replace(
