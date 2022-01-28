@@ -35,13 +35,14 @@ export interface ItemFormProps<T> {
   category: ItemCategory
   initialValues?: Partial<T>
   item?: any
+  diff?: any
 }
 
 /**
  * Item edit form.
  */
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
-  const { id, versionId, category, initialValues } = props
+  const { id, versionId, category, initialValues, diff } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
 

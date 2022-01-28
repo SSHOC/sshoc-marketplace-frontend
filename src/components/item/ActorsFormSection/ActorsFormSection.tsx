@@ -1,4 +1,5 @@
 import { Dialog } from '@reach/dialog'
+import get from 'lodash.get'
 import { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
@@ -26,6 +27,9 @@ import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { DiffField } from '@/modules/form/diff/DiffField'
+import { DiffFormComboBox } from '@/modules/form/diff/DiffFormComboBox'
+import { DiffFormSelect } from '@/modules/form/diff/DiffFormSelect'
 import { Form } from '@/modules/form/Form'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { isEmail, isUrl } from '@/modules/form/validate'
@@ -34,6 +38,7 @@ import helpText from '@@/config/form-helptext.json'
 export interface ActorsFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: any
 }
 
 /**
@@ -41,6 +46,7 @@ export interface ActorsFormSectionProps {
  */
 export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
+  const diff = props.diff ?? {}
 
   /**
    * This is an ugly hack.
@@ -106,21 +112,67 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       </div>
                     }
                   >
-                    <ActorRoleSelect
-                      name={`${name}.role.code`}
-                      label={'Actor role'}
-                    />
-                    <ActorComboBox
-                      // TODO: try make this a compound key of id+name
-                      key={refresh}
-                      name={`${name}.actor.id`}
-                      label={'Name'}
-                      index={index}
-                      initialValues={props.initialValues}
-                    />
+                    <DiffField
+                      name={name}
+                      approvedValue={get(diff.item, name)}
+                      suggestedValue={get(diff.other, name)}
+                      isArrayField
+                    >
+                      <ActorRoleSelect
+                        name={`${name}.role.code`}
+                        label={'Actor role'}
+                        approvedKey={get(diff.item, `${name}.role.code`)}
+                        approvedItem={get(diff.item, `${name}.role`)}
+                      />
+                      <ActorComboBox
+                        // TODO: try make this a compound key of id+name
+                        key={refresh}
+                        name={`${name}.actor.id`}
+                        label={'Name'}
+                        index={index}
+                        initialValues={props.initialValues}
+                        approvedKey={get(diff.item, `${name}.actor.id`)}
+                        approvedItem={get(diff.item, `${name}.actor`)}
+                      />
+                    </DiffField>
                   </FormRecord>
                 )
               })}
+              {/* Items might have been deleted so the array will be shorter than in the approved version. */}
+              {get(diff.item, `${prefix}contributors`)
+                .slice(fields.length)
+                .map((field: string, _index: number) => {
+                  const index = (fields.length ?? 0) + _index
+                  const name = `${prefix}contributors.${index}`
+
+                  return (
+                    <FormRecord key={name}>
+                      <DiffField
+                        name={name}
+                        approvedValue={get(diff.item, name)}
+                        suggestedValue={get(diff.other, name)}
+                        isArrayField
+                      >
+                        <ActorRoleSelect
+                          name={`${name}.role.code`}
+                          label={'Actor role'}
+                          approvedKey={get(diff.item, `${name}.role.code`)}
+                          approvedItem={get(diff.item, `${name}.role`)}
+                        />
+                        <ActorComboBox
+                          // TODO: try make this a compound key of id+name
+                          key={refresh}
+                          name={`${name}.actor.id`}
+                          label={'Name'}
+                          index={index}
+                          initialValues={props.initialValues}
+                          approvedKey={get(diff.item, `${name}.actor.id`)}
+                          approvedItem={get(diff.item, `${name}.actor`)}
+                        />
+                      </DiffField>
+                    </FormRecord>
+                  )
+                })}
               <FormFieldAddButton onPress={() => fields.push(undefined)}>
                 {'Add actor'}
               </FormFieldAddButton>
@@ -171,6 +223,8 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
 interface ActorRoleSelectProps {
   name: string
   label: string
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -180,17 +234,19 @@ function ActorRoleSelect(props: ActorRoleSelectProps): JSX.Element {
   const actorRoles = useGetAllActorRoles()
 
   return (
-    <FormSelect
+    <DiffFormSelect
       name={props.name}
       label={props.label}
       items={actorRoles.data ?? []}
       isLoading={actorRoles.isLoading}
       variant="form"
+      approvedKey={props.approvedKey}
+      approvedItem={props.approvedItem}
     >
       {(item) => (
         <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
       )}
-    </FormSelect>
+    </DiffFormSelect>
   )
 }
 
@@ -199,6 +255,8 @@ interface ActorComboBoxProps {
   label: string
   index: number
   initialValues?: any
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -229,7 +287,7 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
   }, [initialLabel])
 
   return (
-    <FormComboBox
+    <DiffFormComboBox
       name={props.name}
       label={props.label}
       items={actors.data?.actors ?? []}
@@ -238,6 +296,8 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       variant="form"
       style={{ flex: 1 }}
       helpText={helpText.actor}
+      approvedKey={props.approvedKey}
+      approvedItem={props.approvedItem}
     >
       {(item) => (
         <FormComboBox.Item textValue={item.name}>
@@ -246,14 +306,14 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
             <span className="ml-1.5 text-ui-sm text-gray-550">
               (
               {item.affiliations
-                .map((affiliation) => affiliation.name)
+                .map((affiliation: any) => affiliation.name)
                 .join(', ')}
               )
             </span>
           ) : null}
         </FormComboBox.Item>
       )}
-    </FormComboBox>
+    </DiffFormComboBox>
   )
 }
 

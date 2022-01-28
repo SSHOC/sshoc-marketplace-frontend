@@ -77,6 +77,9 @@ const nextConfig = {
       },
     ]
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
 
 const plugins = [withBundleAnalyzer, withMdx, withSvg, withPreval]

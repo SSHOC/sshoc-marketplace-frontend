@@ -1,3 +1,4 @@
+import get from 'lodash.get'
 import { useEffect, useState } from 'react'
 
 import { useGetItemRelations, useSearchItems } from '@/api/sshoc'
@@ -9,12 +10,16 @@ import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
 import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
+import { DiffField } from '@/modules/form/diff/DiffField'
+import { DiffFormComboBox } from '@/modules/form/diff/DiffFormComboBox'
+import { DiffFormSelect } from '@/modules/form/diff/DiffFormSelect'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import helpText from '@@/config/form-helptext.json'
 
 export interface RelatedItemsFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: any
 }
 
 /**
@@ -24,6 +29,7 @@ export function RelatedItemsFormSection(
   props: RelatedItemsFormSectionProps,
 ): JSX.Element {
   const prefix = props.prefix ?? ''
+  const diff = props.diff ?? {}
 
   return (
     <FormSection title={'Related items'}>
@@ -50,19 +56,63 @@ export function RelatedItemsFormSection(
                       />
                     }
                   >
-                    <RelationTypeSelect
-                      name={`${name}.relation.code`}
-                      label={'Relation type'}
-                    />
-                    <RelatedItemComboBox
-                      name={`${name}.persistentId`}
-                      label={'Item'}
-                      initialValues={props.initialValues}
-                      index={index}
-                    />
+                    <DiffField
+                      name={name}
+                      approvedValue={get(diff.item, name)}
+                      suggestedValue={get(diff.other, name)}
+                      isArrayField
+                    >
+                      <RelationTypeSelect
+                        name={`${name}.relation.code`}
+                        label={'Relation type'}
+                        approvedKey={get(diff.item, `${name}.relation.code`)}
+                        approvedItem={get(diff.item, `${name}.relation`)}
+                      />
+                      <RelatedItemComboBox
+                        name={`${name}.persistentId`}
+                        label={'Item'}
+                        initialValues={props.initialValues}
+                        index={index}
+                        approvedKey={get(diff.item, `${name}.persistentId`)}
+                        approvedItem={get(diff.item, `${name}`)}
+                      />
+                    </DiffField>
                   </FormRecord>
                 )
               })}
+              {/* Items might have been deleted so the array will be shorter than in the approved version. */}
+              {get(diff.item, `${prefix}relatedItems`)
+                .slice(fields.length)
+                .map((field: string, _index: number) => {
+                  const index = (fields.length ?? 0) + _index
+                  const name = `${prefix}relatedItems.${index}`
+
+                  return (
+                    <FormRecord key={name}>
+                      <DiffField
+                        name={name}
+                        approvedValue={get(diff.item, name)}
+                        suggestedValue={get(diff.other, name)}
+                        isArrayField
+                      >
+                        <RelationTypeSelect
+                          name={`${name}.relation.code`}
+                          label={'Relation type'}
+                          approvedKey={get(diff.item, `${name}.relation.code`)}
+                          approvedItem={get(diff.item, `${name}.relation`)}
+                        />
+                        <RelatedItemComboBox
+                          name={`${name}.persistentId`}
+                          label={'Item'}
+                          initialValues={props.initialValues}
+                          index={index}
+                          approvedKey={get(diff.item, `${name}.persistentId`)}
+                          approvedItem={get(diff.item, `${name}`)}
+                        />
+                      </DiffField>
+                    </FormRecord>
+                  )
+                })}
               <FormFieldAddButton onPress={() => fields.push(undefined)}>
                 {'Add related item'}
               </FormFieldAddButton>
@@ -77,6 +127,8 @@ export function RelatedItemsFormSection(
 interface RelationTypeSelectProps {
   name: string
   label: string
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -89,17 +141,19 @@ function RelationTypeSelect(props: RelationTypeSelectProps): JSX.Element {
   const types = relationTypes.data?.itemRelations ?? []
 
   return (
-    <FormSelect
+    <DiffFormSelect
       name={props.name}
       label={props.label}
       items={types}
       isLoading={relationTypes.isLoading}
       variant="form"
+      approvedKey={props.approvedKey}
+      approvedItem={props.approvedItem}
     >
       {(item) => (
         <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
       )}
-    </FormSelect>
+    </DiffFormSelect>
   )
 }
 
@@ -108,6 +162,8 @@ interface RelatedItemComboBoxProps {
   label: string
   initialValues?: any
   index: number
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -145,7 +201,7 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
   }, [initialLabel])
 
   return (
-    <FormComboBox
+    <DiffFormComboBox
       name={props.name}
       label={props.label}
       items={searchResults.data?.items ?? []}
@@ -154,12 +210,14 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
       variant="form"
       style={{ flex: 1 }}
       helpText={helpText.relatedItem}
+      approvedKey={props.approvedKey}
+      approvedItem={props.approvedItem}
     >
       {(item) => (
         <FormComboBox.Item key={item.persistentId}>
           {item.label}
         </FormComboBox.Item>
       )}
-    </FormComboBox>
+    </DiffFormComboBox>
   )
 }

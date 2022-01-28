@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { useGetWorkflowVersion } from '@/api/sshoc'
+import {
+  useGetWorkflowAndVersionedItemDifferences,
+  useGetWorkflowVersion,
+} from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/WorkflowEditForm/WorkflowEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -45,12 +48,24 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
     { token: auth.session?.accessToken },
   )
 
+  const isReview = useQueryParam('review', false, Boolean) === true
+  const diff = useGetWorkflowAndVersionedItemDifferences(
+    { persistentId: id! },
+    { with: id!, otherVersionId: versionId! },
+    {
+      enabled: isReview && auth.session?.accessToken != null,
+    },
+    { token: auth.session?.accessToken },
+  )
+
   return (
     <Fragment>
       <Metadata noindex title="Edit workflow" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
-          {workflow.data === undefined || id == null ? (
+          {workflow.data === undefined ||
+          id == null ||
+          (isReview && diff.data == null) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
@@ -60,6 +75,7 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
               category="workflow"
               initialValues={convertToInitialFormValues(workflow.data)}
               item={workflow.data}
+              diff={diff.data}
             />
           )}
         </ContentColumn>

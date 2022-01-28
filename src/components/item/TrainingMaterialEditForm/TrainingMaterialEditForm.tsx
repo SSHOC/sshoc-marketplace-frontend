@@ -36,6 +36,7 @@ export interface ItemFormProps<T> {
   category: ItemCategory
   initialValues?: Partial<T>
   item?: any
+  diff?: any
 }
 
 /**

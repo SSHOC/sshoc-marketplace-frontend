@@ -188,6 +188,7 @@
       "plugin:testing-library/react"
     ],
     "rules": {
+      "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "error"
     }
   },

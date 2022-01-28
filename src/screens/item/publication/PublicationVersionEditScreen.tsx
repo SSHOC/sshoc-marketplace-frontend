@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { useGetPublicationVersion } from '@/api/sshoc'
+import {
+  useGetPublicationAndVersionedItemDifferences,
+  useGetPublicationVersion,
+} from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/PublicationEditForm/PublicationEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -46,13 +49,25 @@ export default function PublicationVersionEditScreen(): JSX.Element {
     { token: auth.session?.accessToken },
   )
 
+  const isReview = useQueryParam('review', false, Boolean) === true
+  const diff = useGetPublicationAndVersionedItemDifferences(
+    { persistentId: id! },
+    { with: id!, otherVersionId: versionId! },
+    {
+      enabled: isReview && auth.session?.accessToken != null,
+    },
+    { token: auth.session?.accessToken },
+  )
+
   return (
     <Fragment>
       <Metadata noindex title="Edit publication" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit publication</Title>
-          {publication.data === undefined || id == null ? (
+          {publication.data === undefined ||
+          id == null ||
+          (isReview && diff.data == null) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
@@ -62,6 +77,7 @@ export default function PublicationVersionEditScreen(): JSX.Element {
               category="publication"
               initialValues={convertToInitialFormValues(publication.data)}
               item={publication.data}
+              diff={diff.data}
             />
           )}
         </ContentColumn>

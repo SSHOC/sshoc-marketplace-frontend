@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { useGetTrainingMaterialVersion } from '@/api/sshoc'
+import {
+  useGetTrainingMaterialAndVersionedItemDifferences,
+  useGetTrainingMaterialVersion,
+} from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/TrainingMaterialEditForm/TrainingMaterialEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -46,13 +49,25 @@ export default function TrainingMaterialVersionEditScreen(): JSX.Element {
     { token: auth.session?.accessToken },
   )
 
+  const isReview = useQueryParam('review', false, Boolean) === true
+  const diff = useGetTrainingMaterialAndVersionedItemDifferences(
+    { persistentId: id! },
+    { with: id!, otherVersionId: versionId! },
+    {
+      enabled: isReview && auth.session?.accessToken != null,
+    },
+    { token: auth.session?.accessToken },
+  )
+
   return (
     <Fragment>
       <Metadata noindex title="Edit trainingMaterial" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit training material</Title>
-          {trainingMaterial.data === undefined || id == null ? (
+          {trainingMaterial.data === undefined ||
+          id == null ||
+          (isReview && diff.data == null) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
@@ -62,6 +77,7 @@ export default function TrainingMaterialVersionEditScreen(): JSX.Element {
               category="training-material"
               initialValues={convertToInitialFormValues(trainingMaterial.data)}
               item={trainingMaterial.data}
+              diff={diff.data}
             />
           )}
         </ContentColumn>

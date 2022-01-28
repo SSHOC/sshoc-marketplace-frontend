@@ -47,7 +47,7 @@ export interface ComboBoxProps<T>
   /** @default "text" */
   type?: 'text' | 'search'
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'search' | 'form' | 'form-diff'
   style?: CSSProperties
 }
 
@@ -152,6 +152,22 @@ export function ComboBox<T extends object>(
         ? 'text-primary-750'
         : 'text-gray-800 hover:text-primary-750',
     },
+    'form-diff': {
+      inputContainer: cx(
+        'bg-[#EAFBFF] border border-[#92BFF5]',
+        'hover:border-secondary-600 focus:bg-highlight-75 focus:border-secondary-600',
+        state.isOpen
+          ? 'bg-highlight-75 border-secondary-600'
+          : 'bg-gray-75 hover:bg-white',
+        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        !state.selectedItem && 'group',
+      ),
+      input: state.isOpen && 'placeholder-highlight-300',
+      button: 'border-transparent',
+      icon: state.isOpen
+        ? 'text-primary-750'
+        : 'text-gray-800 hover:text-primary-750',
+    },
   }
 
   const variant = variants[props.variant ?? 'default']
@@ -161,6 +177,7 @@ export function ComboBox<T extends object>(
       'w-64',
       'transition inline-flex min-w-0 items-center justify-between rounded border border-gray-300',
       variant.inputContainer,
+      props.isReadOnly === true && 'pointer-events-none',
     ),
     input: cx(
       'min-w-0 flex-1 rounded-l font-body font-normal text-ui-base px-4 py-3 transition focus:outline-none bg-transparent placeholder-gray-350',
@@ -201,6 +218,11 @@ export function ComboBox<T extends object>(
             {...mergeProps(inputProps, fieldProps)}
             className={styles.input}
             ref={inputRef}
+            style={
+              props.variant === 'form-diff'
+                ? { textDecoration: 'inherit' }
+                : undefined
+            }
           />
           {isLoading ? (
             <span className={styles.spinnerContainer}>
@@ -262,7 +284,7 @@ interface ListBoxProps<T> {
   placeholder?: string
   shouldFocusWrap?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'search' | 'form' | 'form-diff'
   hideSelectionIcon?: boolean
 }
 
@@ -302,7 +324,7 @@ function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
       isDisabled={props.isDisabled}
       isLoading={props.isLoading}
       placeholder={props.placeholder}
-      variant={props.variant}
+      variant={props.variant === 'form-diff' ? 'form' : props.variant}
       shouldSelectOnPressUp
       shouldFocusOnHover
       shouldUseVirtualFocus={shouldUseVirtualFocus}

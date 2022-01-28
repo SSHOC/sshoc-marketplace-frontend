@@ -12,6 +12,7 @@ export interface LabelProps
   elementType?: ElementType
   isDisabled?: boolean
   isRequired?: boolean
+  isReadOnly?: boolean
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
 }
@@ -25,6 +26,7 @@ export function Label(props: LabelProps): JSX.Element {
     elementType: ElementType = 'label',
     isDisabled,
     isRequired,
+    isReadOnly,
     necessityIndicator,
     ...labelProps
   } = props
@@ -33,6 +35,7 @@ export function Label(props: LabelProps): JSX.Element {
     label: cx(
       'font-body font-normal text-ui-base text-gray-800 inline-flex space-x-1 select-none cursor-default',
       isDisabled === true && 'pointer-events-none',
+      isReadOnly === true && 'pointer-events-none',
     ),
   }
 

@@ -1,5 +1,6 @@
 import { Dialog } from '@reach/dialog'
 import { camelCase } from 'change-case'
+import get from 'lodash.get'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import type { QueryObserverResult } from 'react-query'
 import { useQueryClient } from 'react-query'
@@ -31,6 +32,12 @@ import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { DiffField } from '@/modules/form/diff/DiffField'
+import { DiffFormComboBox } from '@/modules/form/diff/DiffFormComboBox'
+import { DiffFormFieldCondition } from '@/modules/form/diff/DiffFormFieldCondition'
+import { DiffFormSelect } from '@/modules/form/diff/DiffFormSelect'
+import { DiffFormTextField } from '@/modules/form/diff/DiffFormTextField'
+import { useDiffStateContext } from '@/modules/form/diff/DiffStateContext'
 import { Form } from '@/modules/form/Form'
 import { FormField } from '@/modules/form/FormField'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
@@ -40,6 +47,7 @@ import helpText from '@@/config/form-helptext.json'
 export interface PropertiesFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: any
 }
 
 /**
@@ -51,6 +59,7 @@ export function PropertiesFormSection(
   const auth = useAuth()
 
   const prefix = props.prefix ?? ''
+  const diff = props.diff ?? {}
 
   const propertyTypes = useGetPropertyTypes(
     {
@@ -163,74 +172,232 @@ export function PropertiesFormSection(
                         />
                       }
                     >
-                      <PropertyTypeSelect
-                        name={`${name}.type.code`}
-                        label={'Property type'}
-                        propertyTypes={propertyTypes}
-                      />
-                      <FormFieldCondition
-                        name={`${name}.type.code`}
-                        condition={(id) =>
-                          id !== '' &&
-                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                          propertyTypesById[id] !== undefined &&
-                          propertyTypesById[id].type === 'concept'
-                        }
+                      <DiffField
+                        name={name}
+                        approvedValue={get(diff.item, name)}
+                        suggestedValue={get(diff.other, name)}
+                        isArrayField
                       >
-                        {(id: string) => {
-                          return (
-                            <Fragment>
-                              <PropertyConceptComboBox
-                                name={`${name}.concept.uri`}
-                                parentName={name}
-                                label={'Concept'}
-                                propertyTypeId={id}
-                                initialValues={props.initialValues}
-                                index={index}
-                                suggestedConcepts={suggestedConcepts[id]}
+                        <PropertyTypeSelect
+                          name={`${name}.type.code`}
+                          label={'Property type'}
+                          propertyTypes={propertyTypes}
+                          approvedKey={get(diff.item, `${name}.type.code`)}
+                          approvedItem={get(diff.item, `${name}.type`)}
+                        />
+                        <DiffFormFieldCondition
+                          name={`${name}.type.code`}
+                          condition={(id) =>
+                            id !== '' &&
+                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                            propertyTypesById[id] !== undefined &&
+                            propertyTypesById[id].type === 'concept'
+                          }
+                          approvedValue={get(diff.item, `${name}.type.code`)}
+                          suggestedValue={get(diff.other, `${name}.type.code`)}
+                        >
+                          {(id: string) => {
+                            return (
+                              <Fragment>
+                                <PropertyConceptComboBox
+                                  name={`${name}.concept.uri`}
+                                  parentName={name}
+                                  label={'Concept'}
+                                  propertyTypeId={id}
+                                  initialValues={props.initialValues}
+                                  index={index}
+                                  suggestedConcepts={suggestedConcepts[id]}
+                                  approvedKey={get(
+                                    diff.item,
+                                    `${name}.concept.uri`,
+                                  )}
+                                  approvedItem={get(
+                                    diff.item,
+                                    `${name}.concept`,
+                                  )}
+                                />
+                                {propertyTypesById[
+                                  id
+                                ].allowedVocabularies?.every(
+                                  (vocab) => vocab.closed === false,
+                                ) === true ? (
+                                  <SuggestButton
+                                    onClick={() => {
+                                      openSuggestConceptDialog(id)
+                                    }}
+                                  />
+                                ) : null}
+                              </Fragment>
+                            )
+                          }}
+                        </DiffFormFieldCondition>
+                        <DiffFormFieldCondition
+                          name={`${name}.type.code`}
+                          condition={(id) =>
+                            id !== '' &&
+                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                            propertyTypesById[id] !== undefined &&
+                            propertyTypesById[id].type !== 'concept'
+                          }
+                          approvedValue={get(diff.item, `${name}.type.code`)}
+                          suggestedValue={get(diff.other, `${name}.type.code`)}
+                        >
+                          {(id: string) => {
+                            return (
+                              <DiffFormTextField
+                                name={`${name}.value`}
+                                label={'Value'}
+                                variant="form"
+                                style={{ flex: 1 }}
+                                // @ts-expect-error It's ok
+                                helpText={helpText.properties[id]}
+                                approvedValue={get(diff.item, `${name}.value`)}
                               />
-                              {propertyTypesById[id].allowedVocabularies?.every(
-                                (vocab) => vocab.closed === false,
-                              ) === true ? (
-                                <button
-                                  className="text-ui-base text-primary-750 hover:text-secondary-600"
-                                  onClick={() => {
-                                    openSuggestConceptDialog(id)
-                                  }}
-                                >
-                                  Suggest new concept
-                                </button>
-                              ) : null}
-                            </Fragment>
-                          )
-                        }}
-                      </FormFieldCondition>
-                      <FormFieldCondition
-                        name={`${name}.type.code`}
-                        condition={(id) =>
-                          id !== '' &&
-                          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                          propertyTypesById[id] !== undefined &&
-                          propertyTypesById[id].type !== 'concept'
-                        }
-                      >
-                        {(id: string) => {
-                          return (
-                            <FormTextField
-                              name={`${name}.value`}
-                              label={'Value'}
-                              variant="form"
-                              style={{ flex: 1 }}
-                              // @ts-expect-error It's ok
-                              helpText={helpText.properties[id]}
-                            />
-                          )
-                        }}
-                      </FormFieldCondition>
+                            )
+                          }}
+                        </DiffFormFieldCondition>
+                      </DiffField>
                     </FormRecord>
                   </FormFieldCondition>
                 )
               })}
+              {/* Items might have been deleted so the array will be shorter than in the approved version. */}
+              {get(diff.item, `${prefix}properties`)
+                .slice(fields.length)
+                .map((field: string, _index: number) => {
+                  const index = (fields.length ?? 0) + _index
+                  const name = `${prefix}properties.${index}`
+
+                  return (
+                    /** Don't display hidden properties */
+                    <FormFieldCondition
+                      key={name}
+                      name={`${name}.type.hidden`}
+                      condition={(hidden) => {
+                        /** Always show hidden properties for admins. */
+                        /** Requires that `property-types` are fetch with token. */
+                        if (auth.session?.user.username === 'Administrator') {
+                          return true
+                        }
+
+                        return hidden !== true
+                      }}
+                    >
+                      <FormRecord
+                        key={name}
+                        actions={
+                          <FormFieldRemoveButton
+                            onPress={() => {
+                              fields.remove(index)
+                              /** YUCK! */
+                              if (
+                                Array.isArray(props.initialValues?.properties)
+                              ) {
+                                props.initialValues.properties.splice(index, 1)
+                              }
+                            }}
+                            aria-label={'Remove property'}
+                          />
+                        }
+                      >
+                        <DiffField
+                          name={name}
+                          approvedValue={get(diff.item, name)}
+                          suggestedValue={get(diff.other, name)}
+                          isArrayField
+                        >
+                          <PropertyTypeSelect
+                            name={`${name}.type.code`}
+                            label={'Property type'}
+                            propertyTypes={propertyTypes}
+                            approvedKey={get(diff.item, `${name}.type.code`)}
+                            approvedItem={get(diff.item, `${name}.type`)}
+                          />
+                          <DiffFormFieldCondition
+                            name={`${name}.type.code`}
+                            condition={(id) =>
+                              id !== '' &&
+                              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              propertyTypesById[id] !== undefined &&
+                              propertyTypesById[id].type === 'concept'
+                            }
+                            approvedValue={get(diff.item, `${name}.type.code`)}
+                            suggestedValue={get(
+                              diff.other,
+                              `${name}.type.code`,
+                            )}
+                          >
+                            {(id: string) => {
+                              return (
+                                <Fragment>
+                                  <PropertyConceptComboBox
+                                    name={`${name}.concept.uri`}
+                                    parentName={name}
+                                    label={'Concept'}
+                                    propertyTypeId={id}
+                                    initialValues={props.initialValues}
+                                    index={index}
+                                    suggestedConcepts={suggestedConcepts[id]}
+                                    approvedKey={get(
+                                      diff.item,
+                                      `${name}.concept.uri`,
+                                    )}
+                                    approvedItem={get(
+                                      diff.item,
+                                      `${name}.concept`,
+                                    )}
+                                  />
+                                  {propertyTypesById[
+                                    id
+                                  ].allowedVocabularies?.every(
+                                    (vocab) => vocab.closed === false,
+                                  ) === true ? (
+                                    <SuggestButton
+                                      onClick={() => {
+                                        openSuggestConceptDialog(id)
+                                      }}
+                                    />
+                                  ) : null}
+                                </Fragment>
+                              )
+                            }}
+                          </DiffFormFieldCondition>
+                          <DiffFormFieldCondition
+                            name={`${name}.type.code`}
+                            condition={(id) =>
+                              id !== '' &&
+                              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                              propertyTypesById[id] !== undefined &&
+                              propertyTypesById[id].type !== 'concept'
+                            }
+                            approvedValue={get(diff.item, `${name}.type.code`)}
+                            suggestedValue={get(
+                              diff.other,
+                              `${name}.type.code`,
+                            )}
+                          >
+                            {(id: string) => {
+                              return (
+                                <DiffFormTextField
+                                  name={`${name}.value`}
+                                  label={'Value'}
+                                  variant="form"
+                                  style={{ flex: 1 }}
+                                  // @ts-expect-error It's ok
+                                  helpText={helpText.properties[id]}
+                                  approvedValue={get(
+                                    diff.item,
+                                    `${name}.value`,
+                                  )}
+                                />
+                              )
+                            }}
+                          </DiffFormFieldCondition>
+                        </DiffField>
+                      </FormRecord>
+                    </FormFieldCondition>
+                  )
+                })}
               <FormFieldAddButton onPress={() => fields.push(undefined)}>
                 {'Add property'}
               </FormFieldAddButton>
@@ -252,10 +419,27 @@ export function PropertiesFormSection(
   )
 }
 
+function SuggestButton({ onClick }: { onClick: () => void }) {
+  const { requiresReview } = useDiffStateContext()
+
+  if (requiresReview) return null
+
+  return (
+    <button
+      className="text-ui-base text-primary-750 hover:text-secondary-600"
+      onClick={onClick}
+    >
+      Suggest new concept
+    </button>
+  )
+}
+
 interface PropertyTypeSelectProps {
   name: string
   label: string
   propertyTypes: QueryObserverResult<PaginatedPropertyTypes, unknown>
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -263,17 +447,19 @@ interface PropertyTypeSelectProps {
  */
 function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
   return (
-    <FormSelect
+    <DiffFormSelect
       name={props.name}
       label={props.label}
       items={props.propertyTypes.data?.propertyTypes ?? []}
       isLoading={props.propertyTypes.isLoading}
       variant="form"
+      approvedKey={props.approvedKey}
+      approvedItem={props.approvedItem}
     >
       {(item) => (
         <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
       )}
-    </FormSelect>
+    </DiffFormSelect>
   )
 }
 
@@ -285,6 +471,8 @@ interface PropertyConceptComboBoxProps {
   initialValues?: any
   index: number
   suggestedConcepts?: Array<ConceptDto>
+  approvedKey?: string | undefined
+  approvedItem?: any | undefined
 }
 
 /**
@@ -348,7 +536,7 @@ function PropertyConceptComboBox(
 
   return (
     <Fragment>
-      <FormComboBox
+      <DiffFormComboBox
         name={props.name}
         label={props.label}
         items={concepts.data?.concepts ?? []}
@@ -362,11 +550,13 @@ function PropertyConceptComboBox(
               helpText.properties[props.propertyTypeId]
             : undefined
         }
+        approvedKey={props.approvedKey}
+        approvedItem={props.approvedItem}
       >
         {(item) => (
           <FormComboBox.Item key={item.uri}>{item.label}</FormComboBox.Item>
         )}
-      </FormComboBox>
+      </DiffFormComboBox>
       <FormFieldCondition name={props.name} condition={(id) => id !== ''}>
         {(id: string) => {
           const concept = conceptsByUri[id]

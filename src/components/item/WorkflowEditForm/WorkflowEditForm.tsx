@@ -50,6 +50,7 @@ export interface ItemFormProps<T> {
   category: ItemCategory
   initialValues?: Partial<T>
   item?: WorkflowDto
+  diff?: any
 }
 
 /**

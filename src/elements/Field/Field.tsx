@@ -22,6 +22,7 @@ export interface FieldProps extends LabelableProps, Validation {
   /** @default "label" */
   labelElementType?: ElementType
   isDisabled?: boolean
+  isReadOnly?: boolean
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
@@ -40,14 +41,20 @@ export function Field(props: FieldProps): JSX.Element {
 
   if (props.label === undefined && props.validationState === undefined) {
     return (
-      <div className={styles.field} style={props.style}>
+      <div
+        className={styles.field}
+        style={{ ...props.style, textDecoration: 'none' }}
+      >
         {props.children}
       </div>
     )
   }
 
   return (
-    <div className={styles.field} style={props.style}>
+    <div
+      className={styles.field}
+      style={{ ...props.style, textDecoration: 'none' }}
+    >
       {props.label !== undefined ? (
         <Label
           {...props.labelProps}
@@ -55,6 +62,7 @@ export function Field(props: FieldProps): JSX.Element {
           isDisabled={props.isDisabled}
           isRequired={props.isRequired}
           necessityIndicator={props.necessityIndicator}
+          isReadOnly={props.isReadOnly}
         >
           {props.label}
         </Label>

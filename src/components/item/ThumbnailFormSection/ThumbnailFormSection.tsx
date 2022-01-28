@@ -1,4 +1,5 @@
 import { Dialog } from '@reach/dialog'
+import get from 'lodash.get'
 import { Fragment } from 'react'
 
 import type { MediaDetails } from '@/api/sshoc'
@@ -10,12 +11,15 @@ import { MediaError } from '@/lib/error/MediaError'
 import { useDialogState } from '@/lib/hooks/useDialogState'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
+import { DiffField } from '@/modules/form/diff/DiffField'
+import { DiffThumbnail } from '@/modules/form/diff/DiffThumbnail'
 import { FormField } from '@/modules/form/FormField'
 import helpText from '@@/config/form-helptext.json'
 
 export interface ThumbnailFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: any
 }
 
 /**
@@ -25,22 +29,37 @@ export function ThumbnailFormSection(
   props: ThumbnailFormSectionProps,
 ): JSX.Element {
   const prefix = props.prefix ?? ''
+  const diff = props.diff ?? {}
 
   const addThumbnailDialog = useDialogState()
   const chooseThumbnailDialog = useDialogState()
 
+  const name = `${prefix}thumbnail.info`
+
+  const approved = get(diff.item, name)
+  const suggested = get(diff.other, name)
+
   return (
     <FormSection title={'Thumbnail'}>
-      <FormField name={`${prefix}thumbnail.info`}>
+      <FormField name={name}>
         {({ input }) => {
           return (
             <div>
               {input.value != null && input.value !== '' ? (
                 <div className="grid grid-cols-3">
-                  <Thumbnail
-                    onRemove={() => input.onChange(null)}
-                    media={{ ...input.value, hasThumbnail: true }}
-                  />
+                  <DiffField
+                    name={name}
+                    approvedValue={get(diff.item, name)}
+                    suggestedValue={get(diff.other, name)}
+                    isArrayField
+                  >
+                    <DiffThumbnail
+                      name={name}
+                      approvedValue={get(diff.item, name)}
+                      onRemove={() => input.onChange(null)}
+                      media={{ ...input.value, hasThumbnail: true }}
+                    />
+                  </DiffField>
                 </div>
               ) : null}
               <div className="flex items-center space-x-8">
@@ -95,6 +114,23 @@ export function ThumbnailFormSection(
           )
         }}
       </FormField>
+      {/* Deleted thumbnail. */}
+      {suggested == null && approved != null && approved !== '' ? (
+        <div className="grid grid-cols-3">
+          <DiffField
+            name={name}
+            approvedValue={approved}
+            suggestedValue={suggested}
+            isArrayField
+          >
+            <DiffThumbnail
+              name={name}
+              approvedValue={approved}
+              media={{ ...approved, hasThumbnail: true }}
+            />
+          </DiffField>
+        </div>
+      ) : null}
     </FormSection>
   )
 }

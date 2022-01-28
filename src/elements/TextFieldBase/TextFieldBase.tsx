@@ -85,6 +85,24 @@ export function TextFieldBase(
         },
       },
     },
+    'form-diff': {
+      textField: {
+        default: cx(
+          'text-ui-base rounded bg-[#EAFBFF] border border-[#92BFF5] placeholder-gray-350 focus:bg-highlight-75 focus:border-secondary-600 focus:placeholder-highlight-300 hover:border-secondary-600 hover:bg-white',
+          size === 'lg'
+            ? 'px-4 py-4'
+            : size === 'md'
+            ? 'px-4 py-3'
+            : 'px-3 py-1.5 text-ui-base',
+        ),
+        states: {
+          enabled: 'text-gray-800',
+          disabled: 'pointer-events-none bg-gray-100 text-gray-500',
+          invalid: '',
+          valid: '',
+        },
+      },
+    },
   }
 
   const variant = variants[props.variant ?? 'default']
@@ -95,6 +113,7 @@ export function TextFieldBase(
       validationState !== undefined &&
         variant.textField.states[validationState],
       variant.textField.states[isDisabled ? 'disabled' : 'enabled'],
+      props.isReadOnly === true && 'pointer-events-none',
     ),
   }
 
@@ -104,6 +123,7 @@ export function TextFieldBase(
       labelProps={labelProps}
       isDisabled={isDisabled}
       isRequired={props.isRequired}
+      isReadOnly={props.isReadOnly}
       necessityIndicator={props.necessityIndicator}
       validationState={props.validationState}
       validationMessage={props.validationMessage}
@@ -116,6 +136,7 @@ export function TextFieldBase(
         className={styles.textField}
         /* @ts-expect-error Overloaded ref. */
         ref={ref}
+        style={props.style}
       />
     </Field>
   )

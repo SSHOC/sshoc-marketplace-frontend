@@ -1,20 +1,22 @@
 import { Dialog } from '@reach/dialog'
+import get from 'lodash.get'
 import { useState } from 'react'
 
 import type { MediaDetails } from '@/api/sshoc'
 import { AddMediaForm } from '@/components/item/AddMediaForm/AddMediaForm'
-import { Thumbnail } from '@/components/item/Thumbnail/Thumbnail'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
-import { FormField } from '@/modules/form/FormField'
+import { DiffField } from '@/modules/form/diff/DiffField'
+import { DiffThumbnail } from '@/modules/form/diff/DiffThumbnail'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import helpText from '@@/config/form-helptext.json'
 
 export interface MediaFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: any
 }
 
 /**
@@ -22,6 +24,7 @@ export interface MediaFormSectionProps {
  */
 export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
+  const diff = props.diff ?? {}
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   function openDialog() {
@@ -41,20 +44,47 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
                 {fields.map((name, index) => {
                   return (
                     <li key={name}>
-                      <FormField name={name}>
-                        {({ input }) => {
-                          return (
-                            <Thumbnail
-                              onRemove={() => fields.remove(index)}
-                              media={input.value.info}
-                              caption={input.value.caption}
-                            />
-                          )
-                        }}
-                      </FormField>
+                      <DiffField
+                        name={name}
+                        approvedValue={get(diff.item, name)}
+                        suggestedValue={get(diff.other, name)}
+                        isArrayField
+                        variant="media"
+                      >
+                        <DiffThumbnail
+                          name={name}
+                          approvedValue={get(diff.item, name)}
+                          onRemove={() => fields.remove(index)}
+                        />
+                      </DiffField>
                     </li>
                   )
                 })}
+                {/* Items might have been deleted so the array will be shorter than in the approved version. */}
+                {get(diff.item, `${prefix}media`)
+                  .slice(fields.length)
+                  .map((field: string, _index: number) => {
+                    const index = (fields.length ?? 0) + _index
+                    const name = `${prefix}media.${index}`
+
+                    return (
+                      <li key={name}>
+                        <DiffField
+                          name={name}
+                          approvedValue={get(diff.item, name)}
+                          suggestedValue={get(diff.other, name)}
+                          isArrayField
+                          variant="media"
+                        >
+                          <DiffThumbnail
+                            name={name}
+                            approvedValue={get(diff.item, name)}
+                            onRemove={() => fields.remove(index)}
+                          />
+                        </DiffField>
+                      </li>
+                    )
+                  })}
               </ul>
               <FormFieldAddButton onPress={openDialog}>
                 {'Add media'}

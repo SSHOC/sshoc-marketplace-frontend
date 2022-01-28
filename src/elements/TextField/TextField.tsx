@@ -8,7 +8,7 @@ import { TextFieldBase } from '@/elements/TextFieldBase/TextFieldBase'
 
 export interface TextFieldProps extends AriaTextFieldProps {
   /** @default "default" */
-  variant?: 'default' | 'form'
+  variant?: 'default' | 'form' | 'form-diff'
   /** @default "md" */
   size?: 'sm' | 'md' | 'lg'
   necessityIndicator?: NecessityIndicator

@@ -1,4 +1,5 @@
 import { mergeProps } from '@react-aria/utils'
+import type { CSSProperties } from 'react'
 
 import type { TextAreaProps } from '@/elements/TextArea/TextArea'
 import { TextArea } from '@/elements/TextArea/TextArea'
@@ -7,6 +8,7 @@ import { getFormFieldValidationState } from '@/modules/form/getFormFieldValidati
 
 export interface FormTextAreaProps extends TextAreaProps {
   name: string
+  style?: CSSProperties
 }
 
 /**
