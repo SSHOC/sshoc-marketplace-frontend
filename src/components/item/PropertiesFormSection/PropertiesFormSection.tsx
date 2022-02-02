@@ -562,7 +562,14 @@ function PropertyConceptComboBox(
         }
       >
         {(item) => (
-          <FormComboBox.Item key={item.uri}>{item.label}</FormComboBox.Item>
+          <FormComboBox.Item key={item.uri} textValue={item.label}>
+            {item.label}
+            {item.uri != null ? (
+              <span className="ml-1.5 text-ui-sm text-gray-550">
+                {item.uri}
+              </span>
+            ) : null}
+          </FormComboBox.Item>
         )}
       </FormComboBox>
       <FormFieldCondition name={props.name} condition={(id) => id !== ''}>
