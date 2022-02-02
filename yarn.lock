@@ -3471,6 +3471,20 @@
   dependencies:
     final-form "4.x.x"
 
+"@types/final-form-set-field-data@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@types/final-form-set-field-data/-/final-form-set-field-data-1.0.0.tgz#b46a04e4b1990e2616799d9f8086899bde52adde"
+  integrity sha512-KaCgXsa0M6enzWDrNWngMTE8sLdn08cEHmUdWmO2hCm483j5Q4HtdOTtYhmkFdepkLeA8nQ/mHFNQWrK66nC1A==
+  dependencies:
+    final-form "4.x.x"
+
+"@types/final-form-set-field-touched@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@types/final-form-set-field-touched/-/final-form-set-field-touched-1.0.0.tgz#f8115c56b7b2c6d343ebad526cd6f01513b6504a"
+  integrity sha512-8J6vYUi5qODR+zhqiRUupBpHyIPXu/YxatSiRDfiTxTGkyZo6Qoh6w4FBIg+wDfoRepRiS8zR4dPIuhr0VL7ZQ==
+  dependencies:
+    final-form "4.x.x"
+
 "@types/graceful-fs@^4.1.2":
   version "4.1.4"
   resolved "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.4.tgz#4ff9f641a7c6d1a3508ff88bc3141b152772e753"
@@ -6564,6 +6578,16 @@ final-form-focus@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/final-form-focus/-/final-form-focus-1.1.2.tgz#8ea5c4bd802e220cebaa47a587bb0be164eb6806"
   integrity sha512-Gd+Bd2Ll7ijo3/sd6kJ/bwLkhc2bUJPxTON6fIqee/008EJpACWhT+zoWCm9q6NcfMcWRS+Sp5ikRX8iqdXeGQ==
+
+final-form-set-field-data@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/final-form-set-field-data/-/final-form-set-field-data-1.0.2.tgz#ce19095af5d607148c1e6ce3403d75d40223d848"
+  integrity sha512-gAnENimyQ5GW3OEGca5pbwm4lYshW2orzfBlPUYqzcm7ZxkQrVO8FqCAgEcCM+Rq9U1OU0q+D+UkqETvvDY6jw==
+
+final-form-set-field-touched@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/final-form-set-field-touched/-/final-form-set-field-touched-1.0.1.tgz#cfbfc0c623df157a1dd0f1a120faa4e2274950f2"
+  integrity sha512-yvE5AAs9U3OgJQ9YF8NhSF0I0mJEECvOpkaXNqovloxji5Q6gOZ0DCIAyLAKHluGSpsXKUGORyBm8Hq0beZIqQ==
 
 final-form@4.x.x, final-form@^4.20.1:
   version "4.20.1"

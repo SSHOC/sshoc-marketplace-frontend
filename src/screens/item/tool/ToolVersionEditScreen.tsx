@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { useGetToolVersion } from '@/api/sshoc'
+import {
+  useGetToolAndVersionedItemDifferences,
+  useGetToolVersion,
+} from '@/api/sshoc'
 import { convertToInitialFormValues } from '@/api/sshoc/helpers'
 import { ItemForm } from '@/components/item/ToolEditForm/ToolEditForm'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -46,13 +49,28 @@ export default function ToolVersionEditScreen(): JSX.Element {
     { token: auth.session?.accessToken },
   )
 
+  const isReview = useQueryParam('review', false, Boolean) === true
+  const diff = useGetToolAndVersionedItemDifferences(
+    { persistentId: id! },
+    { with: id!, otherVersionId: versionId! },
+    {
+      enabled: isReview && auth.session?.accessToken != null,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
+    { token: auth.session?.accessToken },
+  )
+
   return (
     <Fragment>
       <Metadata noindex title="Edit tool" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit tool</Title>
-          {tool.data === undefined || id == null ? (
+          {tool.data == null ||
+          id == null ||
+          (isReview && diff.data == null) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
@@ -62,6 +80,7 @@ export default function ToolVersionEditScreen(): JSX.Element {
               category="tool-or-service"
               initialValues={convertToInitialFormValues(tool.data)}
               item={tool.data}
+              diff={diff.data}
             />
           )}
         </ContentColumn>

@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import type { StepCore, WorkflowCore } from '@/api/sshoc'
+import type { ItemsDifferencesDto, StepCore, WorkflowCore } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CrossIcon } from '@/elements/icons/small/cross.svg'
@@ -20,6 +20,7 @@ export interface WorkflowStepsFormSectionProps {
     prefix?: string,
     onReset?: () => void, // when step creation/editing is canceled
   ) => void
+  diff?: ItemsDifferencesDto
 }
 
 /**
@@ -28,6 +29,9 @@ export interface WorkflowStepsFormSectionProps {
 export function WorkflowStepsFormSection(
   props: WorkflowStepsFormSectionProps,
 ): JSX.Element {
+  const isDiffingEnabled = props.diff != null && props.diff.equal === false
+  const diff = props.diff ?? {}
+
   return (
     <section className="flex flex-col space-y-2">
       <FormFieldArray name="composedOf">

@@ -9,7 +9,12 @@ import type { FC } from 'react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
+import type {
+  ItemsDifferencesDto,
+  StepCore,
+  WorkflowCore,
+  WorkflowDto,
+} from '@/api/sshoc'
 import {
   useCreateStep,
   useDeleteWorkflowVersion,
@@ -50,13 +55,14 @@ export interface ItemFormProps<T> {
   category: ItemCategory
   initialValues?: Partial<T>
   item?: WorkflowDto
+  diff?: ItemsDifferencesDto
 }
 
 /**
  * Item edit form.
  */
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
-  const { id, versionId, category, initialValues } = props
+  const { id, versionId, category, initialValues, diff } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
   const stepLabel = getSingularItemCategoryLabel('step')
@@ -608,17 +614,20 @@ interface FormPageProps {
   prefix?: string
   item?: WorkflowDto
   isReviewToApprove?: boolean
+  diff?: ItemsDifferencesDto
 }
 
 function WorkflowPage(props: FormPageProps) {
+  const { diff } = props
+
   return (
     <Fragment>
-      <MainFormSection />
-      <ActorsFormSection initialValues={{ ...props.item }} />
-      <PropertiesFormSection initialValues={{ ...props.item }} />
-      <MediaFormSection initialValues={{ ...props.item }} />
-      <ThumbnailFormSection initialValues={{ ...props.item }} />
-      <RelatedItemsFormSection initialValues={{ ...props.item }} />
+      <MainFormSection diff={diff} />
+      <ActorsFormSection initialValues={{ ...props.item }} diff={diff} />
+      <PropertiesFormSection initialValues={{ ...props.item }} diff={diff} />
+      <MediaFormSection initialValues={{ ...props.item }} diff={diff} />
+      <ThumbnailFormSection initialValues={{ ...props.item }} diff={diff} />
+      <RelatedItemsFormSection initialValues={{ ...props.item }} diff={diff} />
       {props.item && props.isReviewToApprove === true ? (
         <OtherSuggestedItemVersions
           category="workflow"
@@ -631,9 +640,11 @@ function WorkflowPage(props: FormPageProps) {
 }
 
 function WorkflowStepsPage(props: FormPageProps) {
+  const { diff } = props
+
   return (
     <Fragment>
-      <WorkflowStepsFormSection onSetPage={props.onSetPage} />
+      <WorkflowStepsFormSection onSetPage={props.onSetPage} diff={diff} />
     </Fragment>
   )
 }
@@ -643,18 +654,25 @@ function WorkflowStepPage(props: FormPageProps) {
   const initialValues = prefix
     ? get(props.item, prefix.slice(0, -1))
     : undefined
+  const { diff } = props
 
   return (
     <Fragment>
-      <MainFormSection prefix={prefix} />
-      <ActorsFormSection prefix={prefix} initialValues={{ ...initialValues }} />
+      <MainFormSection prefix={prefix} diff={diff} />
+      <ActorsFormSection
+        prefix={prefix}
+        initialValues={{ ...initialValues }}
+        diff={diff}
+      />
       <PropertiesFormSection
         prefix={prefix}
         initialValues={{ ...initialValues }}
+        diff={diff}
       />
       <RelatedItemsFormSection
         prefix={prefix}
         initialValues={{ ...initialValues }}
+        diff={diff}
       />
     </Fragment>
   )

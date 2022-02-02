@@ -1,8 +1,9 @@
 import { Dialog } from '@reach/dialog'
-import { useEffect, useState } from 'react'
+import get from 'lodash.get'
+import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { ActorCore, ActorDto } from '@/api/sshoc'
+import type { ActorCore, ActorDto, ItemsDifferencesDto } from '@/api/sshoc'
 import {
   useCreateActor,
   useGetActor,
@@ -12,8 +13,11 @@ import {
   useUpdateActor,
 } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
+import { ComboBox } from '@/elements/ComboBox/ComboBox'
+import { HelpText } from '@/elements/HelpText/HelpText'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
+import { Select } from '@/elements/Select/Select'
 import { useToast } from '@/elements/Toast/useToast'
 import { useDebouncedState } from '@/lib/hooks/useDebouncedState'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -26,6 +30,8 @@ import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
+import { DiffControls } from '@/modules/form/diff/DiffControls'
+import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
 import { Form } from '@/modules/form/Form'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { isEmail, isUrl } from '@/modules/form/validate'
@@ -34,6 +40,7 @@ import helpText from '@@/config/form-helptext.json'
 export interface ActorsFormSectionProps {
   initialValues?: any
   prefix?: string
+  diff?: ItemsDifferencesDto
 }
 
 /**
@@ -41,6 +48,16 @@ export interface ActorsFormSectionProps {
  */
 export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
+  const isDiffingEnabled = props.diff != null && props.diff.equal === false
+  const diff = props.diff ?? {}
+
+  const actorsFieldArray = {
+    name: `${prefix}contributors`,
+    label: 'Actors',
+    approvedValue: get(diff.item, `${prefix}contributors`),
+    suggestedValue: get(diff.other, `${prefix}contributors`),
+    help: helpText.actor,
+  }
 
   /**
    * This is an ugly hack.
@@ -65,23 +82,154 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
   }
 
   return (
-    <FormSection
-      title={'Actors'}
-      actions={
-        <FormFieldAddButton onPress={openCreateNewDialog}>
-          {'Create new actor'}
-        </FormFieldAddButton>
-      }
-    >
-      <FormFieldArray name={`${prefix}contributors`}>
-        {({ fields }) => {
+    <Fragment>
+      <DiffFieldArray
+        name={actorsFieldArray.name}
+        approvedValue={actorsFieldArray.approvedValue}
+        suggestedValue={actorsFieldArray.suggestedValue}
+        actions={({ onAdd, arrayRequiresReview }) => {
+          if (arrayRequiresReview === true) return null
+
           return (
-            <FormRecords>
-              {fields.map((name, index) => {
-                return (
-                  <FormRecord
-                    key={name}
-                    actions={
+            <FormFieldAddButton onPress={onAdd}>Add actor</FormFieldAddButton>
+          )
+        }}
+        isEnabled={isDiffingEnabled}
+        wrapper={({ arrayRequiresReview, children }) => {
+          return (
+            <FormSection
+              title={actorsFieldArray.label}
+              actions={
+                arrayRequiresReview === true ? null : (
+                  <FormFieldAddButton onPress={openCreateNewDialog}>
+                    Create new actor
+                  </FormFieldAddButton>
+                )
+              }
+            >
+              {children}
+            </FormSection>
+          )
+        }}
+      >
+        {({
+          name,
+          index,
+          fields,
+          isReviewed,
+          status,
+          onApprove,
+          onReject,
+          approvedValue,
+          suggestedValue,
+          onRemove,
+          arrayRequiresReview,
+        }) => {
+          const requiresReview = status !== 'unchanged' && !isReviewed
+
+          const actorRoleField = {
+            name: `${name}.role.code`,
+            label: 'Role',
+            approvedValue: get(approvedValue, 'role.code'),
+            approvedItem: get(approvedValue, 'role'),
+            suggestedValue: get(suggestedValue, 'role.code'),
+            suggestedItem: get(suggestedValue, 'role'),
+          }
+
+          const actorField = {
+            name: `${name}.actor.id`,
+            label: 'Name',
+            approvedValue: get(approvedValue, 'actor.id'),
+            approvedItem: get(approvedValue, 'actor'),
+            suggestedValue: get(suggestedValue, 'actor.id'),
+            suggestedItem: get(suggestedValue, 'actor'),
+          }
+
+          return (
+            <Fragment>
+              {requiresReview ? (
+                <FormRecord
+                  className="py-2"
+                  actions={
+                    <DiffControls
+                      status={status}
+                      onApprove={onApprove}
+                      onReject={() => {
+                        /** YUCK! */
+                        if (index < props.initialValues.contributors.length) {
+                          props.initialValues.contributors[
+                            index
+                          ] = approvedValue
+                        }
+                        onReject()
+                      }}
+                    />
+                  }
+                >
+                  <div className="grid content-start gap-1">
+                    <Select
+                      label={actorRoleField.label}
+                      isReadOnly
+                      variant="form-diff"
+                      selectedKey={actorRoleField.suggestedValue}
+                      items={[actorRoleField.suggestedItem]}
+                    >
+                      {(item) => {
+                        return (
+                          <Select.Item key={item.code}>
+                            {item.label}
+                          </Select.Item>
+                        )
+                      }}
+                    </Select>
+                    <Select
+                      aria-label={`${actorRoleField.label} (approved)`}
+                      isReadOnly
+                      variant="form"
+                      selectedKey={actorRoleField.approvedValue}
+                      items={[actorRoleField.approvedItem]}
+                    >
+                      {(item) => {
+                        return (
+                          <Select.Item key={item.code}>
+                            {item.label}
+                          </Select.Item>
+                        )
+                      }}
+                    </Select>
+                  </div>
+                  <div className="grid content-start flex-1 gap-1">
+                    <ComboBox
+                      label={actorField.label}
+                      isReadOnly
+                      variant="form-diff"
+                      selectedKey={actorField.suggestedValue}
+                      items={[actorField.suggestedItem]}
+                      style={{ flex: 1 }}
+                    >
+                      {(item) => {
+                        return <ComboBox.Item>{item.name}</ComboBox.Item>
+                      }}
+                    </ComboBox>
+                    <ComboBox
+                      aria-label={`${actorField.label} (approved)`}
+                      isReadOnly
+                      variant="form"
+                      selectedKey={actorField.approvedValue}
+                      items={[actorField.approvedItem]}
+                      style={{ flex: 1 }}
+                    >
+                      {(item) => {
+                        return <ComboBox.Item>{item.name}</ComboBox.Item>
+                      }}
+                    </ComboBox>
+                    <HelpText>{actorsFieldArray.help}</HelpText>
+                  </div>
+                </FormRecord>
+              ) : (
+                <FormRecord
+                  actions={
+                    arrayRequiresReview === true ? null : (
                       <div className="flex items-center space-x-6">
                         <FormFieldEditButton
                           onPress={() => {
@@ -93,41 +241,44 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                         </FormFieldEditButton>
                         <FormFieldRemoveButton
                           onPress={() => {
-                            fields.remove(index)
+                            onRemove()
                             /** YUCK! */
                             if (
                               Array.isArray(props.initialValues?.contributors)
                             ) {
+                              // FIXME: pretty sure this will break when rejecting a suggested change
+                              // unless we mutate initialValues in onReject.
+                              // Still, very brittle.
                               props.initialValues.contributors.splice(index, 1)
+                              doRefresh((i) => i + 1)
                             }
                           }}
-                          aria-label={'Remove actor'}
+                          aria-label="Remove actor"
                         />
                       </div>
+                    )
+                  }
+                >
+                  <ActorRoleSelect
+                    name={actorRoleField.name}
+                    label={actorRoleField.label}
+                  />
+                  <ActorComboBox
+                    // TODO: try make this a compound key of id+name
+                    key={refresh}
+                    name={actorField.name}
+                    label={actorField.label}
+                    initialValue={
+                      props.initialValues?.contributors?.[index]?.actor
                     }
-                  >
-                    <ActorRoleSelect
-                      name={`${name}.role.code`}
-                      label={'Actor role'}
-                    />
-                    <ActorComboBox
-                      // TODO: try make this a compound key of id+name
-                      key={refresh}
-                      name={`${name}.actor.id`}
-                      label={'Name'}
-                      index={index}
-                      initialValues={props.initialValues}
-                    />
-                  </FormRecord>
-                )
-              })}
-              <FormFieldAddButton onPress={() => fields.push(undefined)}>
-                {'Add actor'}
-              </FormFieldAddButton>
-            </FormRecords>
+                  />
+                </FormRecord>
+              )}
+            </Fragment>
           )
         }}
-      </FormFieldArray>
+      </DiffFieldArray>
+
       <CreateActorDialog
         isOpen={showCreateNewDialog}
         onDismiss={closeCreateNewDialog}
@@ -138,7 +289,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
         actorId={actorToEdit}
         onSuccess={(actor) => {
           /**
-           * We need to öotentially mutate initial values to update the displayed actor name,
+           * We need to potentially mutate initial values to update the displayed actor name,
            * because initially, `ActorComboBox` is populated by reading from the form's `initialValues`.
            * Only subsequent actor searches hit the `searchActors` endpoint.
            *
@@ -164,7 +315,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
           }
         }}
       />
-    </FormSection>
+    </Fragment>
   )
 }
 
@@ -197,8 +348,7 @@ function ActorRoleSelect(props: ActorRoleSelectProps): JSX.Element {
 interface ActorComboBoxProps {
   name: string
   label: string
-  index: number
-  initialValues?: any
+  initialValue?: any
 }
 
 /**
@@ -211,8 +361,7 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
    *
    * TODO: should the initial value always be included in the combobox options?
    */
-  const initialLabel =
-    props.initialValues?.contributors?.[props.index]?.actor.name ?? ''
+  const initialLabel = props.initialValue?.name ?? ''
 
   const [searchTerm, setSearchTerm] = useState(initialLabel)
   const debouncedsearchTerm = useDebouncedState(searchTerm, 150).trim()
@@ -492,7 +641,6 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
                           <ActorComboBox
                             name={`${name}.id`}
                             label="Affiliation"
-                            index={index}
                           />
                         </FormRecord>
                       )

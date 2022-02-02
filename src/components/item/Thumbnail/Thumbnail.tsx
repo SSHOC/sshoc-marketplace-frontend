@@ -1,3 +1,5 @@
+import cx from 'clsx'
+
 import type { MediaDetails } from '@/api/sshoc'
 import { getMediaThumbnailUrl } from '@/api/sshoc/client'
 import { Icon } from '@/elements/Icon/Icon'
@@ -8,6 +10,7 @@ export interface ThumbnailProps {
   onRemove?: () => void
   media?: MediaDetails
   caption?: string
+  variant?: 'form' | 'form-diff'
 }
 
 /**
@@ -19,8 +22,16 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
   const { mediaId, filename, hasThumbnail, location } = props.media
   const caption = props.caption
 
+  if (mediaId == null) {
+    return null
+  }
+
   return (
-    <figure className="relative flex flex-col items-center max-w-xs p-2 space-y-2">
+    <figure
+      className={cx(
+        'relative flex flex-col items-center max-w-xs p-2 space-y-2',
+      )}
+    >
       {props.onRemove !== undefined ? (
         <button
           onClick={props.onRemove}
@@ -31,17 +42,25 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
           <Icon icon={CloseIcon} className="w-5 h-5 p-1" />
         </button>
       ) : null}
-      {hasThumbnail === true && mediaId != null ? (
-        <img
-          src={getMediaThumbnailUrl({ mediaId })}
-          alt=""
-          className="object-contain w-full h-48 rounded shadow-md"
-        />
-      ) : (
-        <div className="grid object-contain w-full h-48 rounded shadow-md place-items-center">
-          <img src={DocumentIcon} alt="" className="w-6 h-6" />
-        </div>
-      )}
+      <div
+        className={cx(
+          'w-full',
+          props.variant === 'form-diff' &&
+            'bg-[#EAFBFF] border border-[#92BFF5]',
+        )}
+      >
+        {hasThumbnail === true && mediaId != null ? (
+          <img
+            src={getMediaThumbnailUrl({ mediaId })}
+            alt=""
+            className="object-contain w-full h-48 rounded shadow-md"
+          />
+        ) : (
+          <div className="grid object-contain w-full h-48 rounded shadow-md place-items-center">
+            <img src={DocumentIcon} alt="" className="w-6 h-6" />
+          </div>
+        )}
+      </div>
       <figcaption className="break-all">
         {caption ?? filename ?? location?.sourceUrl}
       </figcaption>

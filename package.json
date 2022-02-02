@@ -78,6 +78,8 @@
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
     "final-form-focus": "^1.1.2",
+    "final-form-set-field-data": "^1.0.2",
+    "final-form-set-field-touched": "^1.0.1",
     "focus-visible": "^5.2.0",
     "gray-matter": "^4.0.2",
     "highlight-words-core": "^1.2.2",
@@ -99,8 +101,8 @@
     "react-toastify": "^6.1.0",
     "rehype-raw": "^5.0.0",
     "rehype-stringify": "^8.0.0",
-    "remark-gfm": "^1.0.0",
     "remark-footnotes": "3.0.0",
+    "remark-gfm": "^1.0.0",
     "remark-parse": "^9.0.0",
     "remark-rehype": "^8.0.0",
     "remark-slug": "^6.0.0",
@@ -124,6 +126,8 @@
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^12.2.0",
     "@types/final-form-focus": "^1.1.1",
+    "@types/final-form-set-field-data": "^1.0.0",
+    "@types/final-form-set-field-touched": "^1.0.0",
     "@types/highlight-words-core": "^1.2.0",
     "@types/jest": "^26.0.15",
     "@types/jwt-decode": "^3.1.0",
@@ -188,6 +192,7 @@
       "plugin:testing-library/react"
     ],
     "rules": {
+      "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "error"
     }
   },

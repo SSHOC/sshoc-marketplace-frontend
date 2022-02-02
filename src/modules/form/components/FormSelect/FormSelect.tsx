@@ -21,6 +21,7 @@ export function FormSelect<T>(props: FormSelectProps<T>): JSX.Element {
         return (
           /* @ts-expect-error HTMLElement vs Element generic. */
           <Select
+            variant="form"
             {...mergeProps(props, {
               onBlur: input.onBlur,
               onFocus: input.onFocus,

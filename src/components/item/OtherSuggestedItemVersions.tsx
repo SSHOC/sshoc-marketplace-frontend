@@ -55,7 +55,7 @@ export function OtherSuggestedItemVersions({
       <ul className="flex flex-col space-y-2 text-sm">
         {unapprovedItemVersions.map((item) => {
           return (
-            <li key={item.version}>
+            <li key={item.id}>
               <article>
                 <h3>
                   <Link

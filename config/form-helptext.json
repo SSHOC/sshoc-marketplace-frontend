@@ -4,9 +4,12 @@
   "description": "Should be concise and raise interest in entry, allows Markdown content",
   "externalId": "Other URLs relevant to resource, eg code, DOI, etc.",
   "label": "Name of the MP entry, max 255 char",
+  "version": "",
   "media-object": "Media can be images or videos",
   "relatedItem": "Relations with other Marketplace items",
   "thumbnail": "Logo related to MP entry",
+  "dateCreated": "",
+  "dateLastUpdated": "",
   "properties": {
     "access-policy-url": "URL pointing to info about the access policy",
     "activity": "The activities you can do with the resource",

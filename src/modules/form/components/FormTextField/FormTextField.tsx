@@ -20,6 +20,7 @@ export function FormTextField(props: FormTextFieldProps): JSX.Element {
       {({ input, meta }) => {
         return (
           <TextField
+            variant="form"
             {...mergeProps(props, {
               onBlur: input.onBlur,
               onFocus: input.onFocus,

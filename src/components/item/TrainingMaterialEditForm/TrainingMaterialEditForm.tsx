@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
-import type { TrainingMaterialCore, TrainingMaterialDto } from '@/api/sshoc'
+import type {
+  ItemsDifferencesDto,
+  TrainingMaterialCore,
+  TrainingMaterialDto,
+} from '@/api/sshoc'
 import {
   useDeleteTrainingMaterialVersion,
   useUpdateTrainingMaterial,
@@ -36,13 +40,14 @@ export interface ItemFormProps<T> {
   category: ItemCategory
   initialValues?: Partial<T>
   item?: any
+  diff?: ItemsDifferencesDto
 }
 
 /**
  * Item edit form.
  */
 export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
-  const { id, versionId, category, initialValues } = props
+  const { id, versionId, category, initialValues, diff } = props
 
   const categoryLabel = getSingularItemCategoryLabel(category)
 
@@ -214,12 +219,21 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             noValidate
             className="flex flex-col space-y-12"
           >
-            <MainFormSection />
-            <ActorsFormSection initialValues={{ ...props.item }} />
-            <PropertiesFormSection initialValues={{ ...props.item }} />
-            <MediaFormSection initialValues={{ ...props.item }} />
-            <ThumbnailFormSection initialValues={{ ...props.item }} />
-            <RelatedItemsFormSection initialValues={{ ...props.item }} />
+            <MainFormSection diff={diff} />
+            <ActorsFormSection initialValues={{ ...props.item }} diff={diff} />
+            <PropertiesFormSection
+              initialValues={{ ...props.item }}
+              diff={diff}
+            />
+            <MediaFormSection initialValues={{ ...props.item }} diff={diff} />
+            <ThumbnailFormSection
+              initialValues={{ ...props.item }}
+              diff={diff}
+            />
+            <RelatedItemsFormSection
+              initialValues={{ ...props.item }}
+              diff={diff}
+            />
             {isReviewToApprove ? (
               <OtherSuggestedItemVersions
                 category={props.item.category}
