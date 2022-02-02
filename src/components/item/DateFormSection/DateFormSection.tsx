@@ -2,6 +2,7 @@ import get from 'lodash.get'
 import { Fragment } from 'react'
 
 import type { ItemsDifferencesDto } from '@/api/sshoc'
+import { formatDate } from '@/api/sshoc/helpers'
 import { HelpText } from '@/elements/HelpText/HelpText'
 import { TextField } from '@/elements/TextField/TextField'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
@@ -26,18 +27,16 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
   const dateCreatedField = {
     name: `${prefix}dateCreated`,
     label: 'Date created',
-    // FIXME: date format
-    approvedValue: get(diff.item, `${prefix}dateCreated`),
-    suggestedValue: get(diff.other, `${prefix}dateCreated`),
+    approvedValue: getDateString(get(diff.item, `${prefix}dateCreated`)),
+    suggestedValue: getDateString(get(diff.other, `${prefix}dateCreated`)),
     help: helpText.dateCreated,
   }
 
   const dateLastUpdatedField = {
     name: `${prefix}dateLastUpdated`,
     label: 'Date last updated',
-    // FIXME: date format
-    approvedValue: get(diff.item, `${prefix}dateLastUpdated`),
-    suggestedValue: get(diff.other, `${prefix}dateLastUpdated`),
+    approvedValue: getDateString(get(diff.item, `${prefix}dateLastUpdated`)),
+    suggestedValue: getDateString(get(diff.other, `${prefix}dateLastUpdated`)),
     help: helpText.dateLastUpdated,
   }
 
@@ -69,7 +68,7 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
                     onApprove={onApprove}
                     onReject={onReject}
                   />
-                  <div className="grid flex-1 gap-1">
+                  <div className="grid flex-1 gap-1 py-2">
                     <TextField
                       type="date"
                       label={dateCreatedField.label}
@@ -126,7 +125,7 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
                     onApprove={onApprove}
                     onReject={onReject}
                   />
-                  <div className="grid flex-1 gap-1">
+                  <div className="grid flex-1 gap-1 py-2">
                     <TextField
                       type="date"
                       label={dateLastUpdatedField.label}
@@ -158,4 +157,12 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
       </DiffField>
     </FormSection>
   )
+}
+
+function getDateString(str: string | undefined): string | undefined {
+  if (str == null) return undefined
+
+  const date = new Date(str)
+
+  return formatDate(date)
 }

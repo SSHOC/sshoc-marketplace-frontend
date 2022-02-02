@@ -77,22 +77,21 @@ function getStatus(
   suggestedValue: unknown,
   name: string,
 ): FieldStatus {
-  // Mandatory scalar fields (label, description) will be omitted when unchanged.
-  if (name.endsWith('label') || name.endsWith('description')) {
-    if (suggestedValue == null) {
-      return 'unchanged'
-    }
-    // Optional scalar fields (version, sourceItemId) will return 'unaltered' when unchanged.
-  } else {
+  if (name.endsWith('version') || name.endsWith('sourceItemId')) {
     if (suggestedValue === 'unaltered') {
       return 'unchanged'
     }
+  } else {
     if (suggestedValue == null) {
-      return 'deleted'
+      return 'unchanged'
     }
-    if (approvedValue == null) {
-      return 'inserted'
-    }
+  }
+
+  if (suggestedValue == null) {
+    return 'deleted'
+  }
+  if (approvedValue == null) {
+    return 'inserted'
   }
 
   return 'changed'

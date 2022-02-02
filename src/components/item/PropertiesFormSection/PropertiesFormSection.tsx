@@ -152,7 +152,7 @@ export function PropertiesFormSection(
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={onAdd}>
+            <FormFieldAddButton onPress={() => onAdd()}>
               Add property
             </FormFieldAddButton>
           )
@@ -359,6 +359,7 @@ export function PropertiesFormSection(
                             parentName={name}
                             label={propertyConceptField.label}
                             propertyTypeId={id}
+                            propertyType={propertyTypesById[id]}
                             initialValue={
                               props.initialValues?.properties?.[index]?.concept
                             }
@@ -369,6 +370,7 @@ export function PropertiesFormSection(
                             (vocab) => vocab.closed === false,
                           ) === true ? (
                             <button
+                              type="button"
                               className="text-ui-base text-primary-750 hover:text-secondary-600"
                               onClick={() => {
                                 openSuggestConceptDialog(id)
@@ -453,6 +455,7 @@ interface PropertyConceptComboBoxProps {
   parentName: string
   label: string
   propertyTypeId?: string
+  propertyType?: any
   initialValue?: any
   suggestedConcepts?: Array<ConceptDto>
 }
@@ -515,6 +518,14 @@ function PropertyConceptComboBox(
     return map
   }, [concepts.data, props.suggestedConcepts])
 
+  const vocabLinks = Array.isArray(props.propertyType?.allowedVocabularies)
+    ? props.propertyType.allowedVocabularies
+        .map((vocab: any) => {
+          return vocab.accessibleAt
+        })
+        .filter(Boolean)
+    : []
+
   return (
     <Fragment>
       <FormComboBox
@@ -526,10 +537,28 @@ function PropertyConceptComboBox(
         variant="form"
         style={{ flex: 1 }}
         helpText={
-          props.propertyTypeId != null
-            ? // @ts-expect-error It's ok
+          props.propertyTypeId != null ? (
+            vocabLinks.length > 0 ? (
+              <Fragment>
+                {/* @ts-expect-error It's ok */}
+                {helpText.properties[props.propertyTypeId]}. See{' '}
+                {vocabLinks.map((href: string, index: number) => {
+                  return (
+                    <Fragment key={href}>
+                      {index !== 0 ? <span>, </span> : null}
+                      <a href={href} target="_blank" rel="noreferrer">
+                        concepts
+                      </a>
+                    </Fragment>
+                  )
+                })}
+                .
+              </Fragment>
+            ) : (
+              // @ts-expect-error It's ok
               helpText.properties[props.propertyTypeId]
-            : undefined
+            )
+          ) : undefined
         }
       >
         {(item) => (

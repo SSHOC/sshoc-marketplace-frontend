@@ -101,7 +101,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       onApprove={onApprove}
                       onReject={onReject}
                     />
-                    <div className="grid flex-1 gap-1">
+                    <div className="grid flex-1 gap-1 py-2">
                       <TextField
                         label={labelField.label}
                         isRequired
@@ -157,7 +157,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       onApprove={onApprove}
                       onReject={onReject}
                     />
-                    <div className="grid flex-1 gap-1">
+                    <div className="grid flex-1 gap-1 py-2">
                       <TextField
                         label={versionField.label}
                         isReadOnly
@@ -212,7 +212,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                     onApprove={onApprove}
                     onReject={onReject}
                   />
-                  <div className="grid flex-1 gap-1">
+                  <div className="grid flex-1 gap-1 py-2">
                     <TextArea
                       isRequired
                       label={descriptionField.label}
@@ -253,7 +253,9 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={onAdd}>Add URL</FormFieldAddButton>
+            <FormFieldAddButton onPress={() => onAdd()}>
+              Add URL
+            </FormFieldAddButton>
           )
         }}
         isEnabled={isDiffingEnabled}
@@ -332,7 +334,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={onAdd}>
+            <FormFieldAddButton onPress={() => onAdd()}>
               Add external ID
             </FormFieldAddButton>
           )

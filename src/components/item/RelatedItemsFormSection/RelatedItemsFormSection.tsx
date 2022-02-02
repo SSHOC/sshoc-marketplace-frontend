@@ -50,7 +50,7 @@ export function RelatedItemsFormSection(
         if (arrayRequiresReview === true) return null
 
         return (
-          <FormFieldAddButton onPress={onAdd}>
+          <FormFieldAddButton onPress={() => onAdd()}>
             Add related item
           </FormFieldAddButton>
         )

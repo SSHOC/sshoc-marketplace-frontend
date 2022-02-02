@@ -91,7 +91,9 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={onAdd}>Add actor</FormFieldAddButton>
+            <FormFieldAddButton onPress={() => onAdd()}>
+              Add actor
+            </FormFieldAddButton>
           )
         }}
         isEnabled={isDiffingEnabled}
@@ -101,7 +103,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
               title={actorsFieldArray.label}
               actions={
                 arrayRequiresReview === true ? null : (
-                  <FormFieldAddButton onPress={openCreateNewDialog}>
+                  <FormFieldAddButton onPress={() => openCreateNewDialog()}>
                     Create new actor
                   </FormFieldAddButton>
                 )

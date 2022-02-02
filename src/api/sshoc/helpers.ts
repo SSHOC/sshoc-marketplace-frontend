@@ -192,9 +192,13 @@ export function createInitialRecommendedFields({
   return initialValues
 }
 
-function formatDate(d: Date): string {
+export function formatDate(d: Date): string {
   const year = d.getUTCFullYear()
   const month = d.getUTCMonth() + 1
   const day = d.getUTCDate()
-  return [year, month > 9 ? month : '0' + month, day].join('-')
+  return [
+    year,
+    month > 9 ? month : '0' + month,
+    day > 9 ? day : '0' + day,
+  ].join('-')
 }

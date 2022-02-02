@@ -23,7 +23,7 @@ export default function ItemSubmitSuccessScreen(): JSX.Element {
             <p>
               Thanks! Your changes have been successfully submitted and sent to
               a moderator for review. After approval, the changes will be
-              visible on the SSH Open Marketplace.
+              visible on the SSHOC Marketplace.
             </p>
             <hr />
             <div className="self-end">
