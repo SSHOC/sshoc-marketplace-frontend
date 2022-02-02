@@ -104,13 +104,13 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
                     onReject={onReject}
                   />
                   <Thumbnail
-                    media={mediaField.suggestedValue.info}
-                    caption={mediaField.suggestedValue.caption}
+                    media={mediaField.suggestedValue?.info}
+                    caption={mediaField.suggestedValue?.caption}
                     variant="form-diff"
                   />
                   <Thumbnail
-                    media={mediaField.approvedValue.info}
-                    caption={mediaField.approvedValue.caption}
+                    media={mediaField.approvedValue?.info}
+                    caption={mediaField.approvedValue?.caption}
                   />
                 </li>
               ) : (

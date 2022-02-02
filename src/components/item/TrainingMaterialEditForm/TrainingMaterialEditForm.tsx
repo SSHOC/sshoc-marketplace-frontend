@@ -13,6 +13,7 @@ import {
 import { useCurrentUser } from '@/api/sshoc/client'
 import type { ItemCategory } from '@/api/sshoc/types'
 import { ActorsFormSection } from '@/components/item/ActorsFormSection/ActorsFormSection'
+import { DateFormSection } from '@/components/item/DateFormSection/DateFormSection'
 import { MainFormSection } from '@/components/item/MainFormSection/MainFormSection'
 import { MediaFormSection } from '@/components/item/MediaFormSection/MediaFormSection'
 import { OtherSuggestedItemVersions } from '@/components/item/OtherSuggestedItemVersions'
@@ -220,6 +221,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             className="flex flex-col space-y-12"
           >
             <MainFormSection diff={diff} />
+            <DateFormSection diff={diff} />
             <ActorsFormSection initialValues={{ ...props.item }} diff={diff} />
             <PropertiesFormSection
               initialValues={{ ...props.item }}
