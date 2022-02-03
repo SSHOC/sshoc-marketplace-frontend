@@ -521,7 +521,9 @@ function PropertyConceptComboBox(
   const vocabLinks = Array.isArray(props.propertyType?.allowedVocabularies)
     ? props.propertyType.allowedVocabularies
         .map((vocab: any) => {
-          return vocab.accessibleAt
+          // TODO: accessibleAt is currently empty for all vocabs
+          return vocab.namespace
+          // return vocab.accessibleAt
         })
         .filter(Boolean)
     : []
