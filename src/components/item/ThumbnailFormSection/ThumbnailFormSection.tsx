@@ -36,7 +36,7 @@ export function ThumbnailFormSection(
   const chooseThumbnailDialog = useDialogState()
 
   const thumbnailField = {
-    name: `${prefix}thumbnail.info`,
+    name: `${prefix}thumbnail`,
     label: 'Thumbnail',
     approvedValue: get(diff.item, `${prefix}thumbnail`),
     suggestedValue: get(diff.other, `${prefix}thumbnail`),
@@ -89,8 +89,13 @@ export function ThumbnailFormSection(
                         {input.value != null && input.value !== '' ? (
                           <div className="grid grid-cols-3">
                             <Thumbnail
-                              onRemove={() => input.onChange(null)}
-                              media={{ ...input.value, hasThumbnail: true }}
+                              onRemove={() => {
+                                input.onChange(null)
+                              }}
+                              media={{
+                                ...input.value.info,
+                                hasThumbnail: true,
+                              }}
                             />
                           </div>
                         ) : null}
@@ -110,7 +115,7 @@ export function ThumbnailFormSection(
                                   'A thumbnail must be an image.',
                                 )
                               }
-                              input.onChange(info)
+                              input.onChange({ info })
                             }}
                           />
                           <div>or</div>
@@ -135,7 +140,7 @@ export function ThumbnailFormSection(
                                     isOpen={chooseThumbnailDialog.isOpen}
                                     onDismiss={chooseThumbnailDialog.close}
                                     onSuccess={(info) => {
-                                      input.onChange(info)
+                                      input.onChange({ info })
                                     }}
                                     images={images}
                                   />
