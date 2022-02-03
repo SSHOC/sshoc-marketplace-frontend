@@ -521,9 +521,12 @@ function PropertyConceptComboBox(
   const vocabLinks = Array.isArray(props.propertyType?.allowedVocabularies)
     ? props.propertyType.allowedVocabularies
         .map((vocab: any) => {
-          // TODO: accessibleAt is currently empty for all vocabs
-          return vocab.namespace
-          // return vocab.accessibleAt
+          // TODO: accessibleAt is currently empty for all vocabs, so we use namespace
+          if (vocab.namespace == null || vocab.namespace.length === 0)
+            return null
+
+          // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+          return { href: vocab.namespace, label: vocab.label || vocab.code }
         })
         .filter(Boolean)
     : []
@@ -543,18 +546,31 @@ function PropertyConceptComboBox(
             vocabLinks.length > 0 ? (
               <Fragment>
                 {/* @ts-expect-error It's ok */}
-                {helpText.properties[props.propertyTypeId]}. See{' '}
-                {vocabLinks.map((href: string, index: number) => {
-                  return (
-                    <Fragment key={href}>
-                      {index !== 0 ? <span>, </span> : null}
-                      <a href={href} target="_blank" rel="noreferrer">
-                        concepts
-                      </a>
-                    </Fragment>
-                  )
-                })}
-                .
+                {helpText.properties[props.propertyTypeId]}.
+                <div className="text-ui-sm">
+                  See{' '}
+                  {vocabLinks.map(
+                    (
+                      { href, label }: { href: string; label: string },
+                      index: number,
+                    ) => {
+                      return (
+                        <Fragment key={href}>
+                          {index !== 0 ? <span>, </span> : null}
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-primary-750 hover:text-secondary-600"
+                          >
+                            {label}
+                          </a>
+                        </Fragment>
+                      )
+                    },
+                  )}
+                  .
+                </div>
               </Fragment>
             ) : (
               // @ts-expect-error It's ok
