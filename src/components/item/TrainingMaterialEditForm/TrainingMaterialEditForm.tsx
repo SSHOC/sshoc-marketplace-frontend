@@ -103,6 +103,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
             { persistentId: data.persistentId },
           ],
         })
+        queryClient.invalidateQueries({
+          queryKey: ['getTrainingMaterialAndVersionedItemDifferences'],
+        })
       }
       if (data.status === 'draft') {
         queryClient.invalidateQueries({

@@ -154,6 +154,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       queryClient.invalidateQueries({
         queryKey: ['getWorkflow', { persistentId: data.persistentId }],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['getWorkflowAndVersionedItemDifferences'],
+      })
     }
     if (data.status === 'draft') {
       queryClient.invalidateQueries({

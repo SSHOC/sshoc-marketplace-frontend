@@ -94,6 +94,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
         queryClient.invalidateQueries({
           queryKey: ['getDataset', { persistentId: data.persistentId }],
         })
+        queryClient.invalidateQueries({
+          queryKey: ['getDatasetAndVersionedItemDifferences'],
+        })
       }
       if (data.status === 'draft') {
         queryClient.invalidateQueries({
