@@ -7,6 +7,7 @@ import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { useAuth } from '@/modules/auth/AuthContext'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import ItemLayout from '@/screens/item/ItemLayout'
+import Steps from '@/screens/item/workflow/Steps'
 
 /**
  * Draft workflow screen.
@@ -47,5 +48,9 @@ export default function WorkflowDraftScreen(): JSX.Element {
     )
   }
 
-  return <ItemLayout item={workflow.data} />
+  return (
+    <ItemLayout item={workflow.data}>
+      <Steps steps={workflow.data.composedOf} />
+    </ItemLayout>
+  )
 }
