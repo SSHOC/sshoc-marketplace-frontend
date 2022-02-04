@@ -12,11 +12,13 @@ import { useQueryClient } from 'react-query'
 import type {
   ItemsDifferencesDto,
   StepCore,
+  StepDto,
   WorkflowCore,
   WorkflowDto,
 } from '@/api/sshoc'
 import {
   useCreateStep,
+  useDeleteStep,
   useDeleteWorkflowVersion,
   useUpdateStep,
   useUpdateWorkflow,
@@ -98,6 +100,17 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     },
   })
   const updateStep = useUpdateStep({
+    onError(error) {
+      toast.error(
+        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
+      )
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
+    },
+  })
+  const deleteStep = useDeleteStep({
     onError(error) {
       toast.error(
         `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
@@ -202,51 +215,74 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     const workflowId = updatedWorkflow.persistentId!
 
     /**
-     * We cannot dispatch all at once with Promise,all because this crashes the backend.
+     * We cannot dispatch all at once with Promise.all because this crashes the backend.
      * create/update step operations must be run sequentially.
      */
-    await (composedOf ?? []).reduce((operations, { dirty, ...data }, index) => {
-      return operations.then(() => {
-        const step = { ...data, stepNo: index + 1 }
-
-        /** Step has an id, so it's an updated operation. */
-        if (step.persistentId !== undefined) {
-          const originalStep = props.item?.composedOf?.[index]
-
-          /**
-           * Step has either been edited (dirty), or has been re-ordered,
-           * in which case the id at the index differs from the one in the
-           * original workflow. Othewwise, there's nothing to do.
-           */
-          if (
-            dirty === true ||
-            step.persistentId !== originalStep?.persistentId
-          ) {
-            return updateStep.mutateAsync([
-              {
-                persistentId: workflowId,
-                stepPersistentId: step.persistentId,
-              },
-              { draft },
-              sanitizeFormValues(step),
-              { token: auth.session?.accessToken },
-            ])
-          } else {
-            return Promise.resolve()
-          }
+    const allSteps: Array<StepDto> = []
+    for (const [index, { dirty, ...data }] of (composedOf ?? []).entries()) {
+      const step = { ...sanitizeFormValues(data), stepNo: index + 1 }
+      /** If the step has a persistentId it means it has been saved before (as draft). */
+      if (step.persistentId != null) {
+        const originalStep = updatedWorkflow.composedOf?.[index]
+        if (
+          dirty === true ||
+          step.persistentId !== originalStep?.persistentId
+        ) {
+          const updatedStep = await updateStep.mutateAsync([
+            { persistentId: workflowId, stepPersistentId: step.persistentId },
+            { draft },
+            step,
+            { token: auth.session.accessToken },
+          ])
+          allSteps.push(updatedStep)
+        } else {
+          allSteps.push(originalStep)
         }
-
-        return createStep.mutateAsync([
+      } else {
+        const createdStep = await createStep.mutateAsync([
           { persistentId: workflowId },
           { draft },
-          sanitizeFormValues(step),
-          { token: auth.session?.accessToken },
+          step,
+          { token: auth.session.accessToken },
         ])
-      })
-    }, Promise.resolve() as any)
+        allSteps.push(createdStep)
+      }
+    }
+    /** Steps might have been deleted since the last saved draft. */
+    if (allSteps.length < updatedWorkflow.composedOf!.length) {
+      const deletedSteps = updatedWorkflow.composedOf!.filter(
+        ({ persistentId }) => {
+          return !allSteps.find((step) => step.persistentId === persistentId)
+        },
+      )
+      for (const deletedStep of deletedSteps) {
+        await deleteStep.mutateAsync([
+          {
+            persistentId: workflowId,
+            stepPersistentId: deletedStep.persistentId!,
+          },
+          { draft },
+          {
+            token: auth.session.accessToken,
+            hooks: {
+              response() {
+                return Promise.resolve()
+              },
+            },
+          },
+        ])
+      }
+    }
 
     /** This will only get called when the above didn't throw. */
     onSuccess(updatedWorkflow)
+
+    /**
+     * We re-initialize the form with the values returned from the server,
+     * so we can track if a step has been created before (it already has a persistentId).
+     */
+    // @ts-expect-error Dto vs Core types
+    form.initialize({ ...updatedWorkflow, composedOf: allSteps })
 
     /**
      * If `onSubmit` resolves to `undefined` it's a successful submit.

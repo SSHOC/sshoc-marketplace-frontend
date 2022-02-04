@@ -1,7 +1,7 @@
 import { useButton } from '@react-aria/button'
 import type { AriaButtonProps } from '@react-types/button'
 import cx from 'clsx'
-import type { Config as FormConfig } from 'final-form'
+import type { Config as FormConfig, FormApi } from 'final-form'
 import get from 'lodash.get'
 import set from 'lodash.set'
 import { useRouter } from 'next/router'
@@ -9,10 +9,12 @@ import type { FC } from 'react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
-import type { StepCore, WorkflowCore, WorkflowDto } from '@/api/sshoc'
+import type { StepCore, StepDto, WorkflowCore, WorkflowDto } from '@/api/sshoc'
 import {
   useCreateStep,
   useCreateWorkflow,
+  useDeleteStep,
+  useUpdateStep,
   useUpdateWorkflow,
 } from '@/api/sshoc'
 import { useCurrentUser } from '@/api/sshoc/client'
@@ -55,17 +57,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const categoryLabel = getSingularItemCategoryLabel(category)
   const stepLabel = getSingularItemCategoryLabel('step')
 
-  /**
-   * When a user saves a first draft, we dispatch a POST request,
-   * which will return a persistent id, which we need to use in
-   * subsequent PUT requests, to avoid creating multiple items.
-   */
-  const [persistentIdFromSavedDraft, setPersistentIdFromSavedDraft] = useState<
-    string | undefined
-  >(undefined)
-  const useItemMutation =
-    persistentIdFromSavedDraft != null ? useUpdateWorkflow : useCreateWorkflow
-
   const toast = useToast()
   const router = useRouter()
   const auth = useAuth()
@@ -88,7 +79,42 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       }
     },
   })
-  const createWorkflow = useItemMutation({
+  const updateStep = useUpdateStep({
+    onError(error) {
+      toast.error(
+        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
+      )
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
+    },
+  })
+  const deleteStep = useDeleteStep({
+    onError(error) {
+      toast.error(
+        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
+      )
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
+    },
+  })
+  const createWorkflow = useCreateWorkflow({
+    onError(error) {
+      toast.error(
+        `Failed to ${
+          isAllowedToPublish ? 'publish' : 'submit'
+        } ${categoryLabel}.`,
+      )
+
+      if (error instanceof Error) {
+        handleErrors(error)
+      }
+    },
+  })
+  const updateWorkflow = useUpdateWorkflow({
     onError(error) {
       toast.error(
         `Failed to ${
@@ -130,8 +156,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       queryClient.invalidateQueries({
         queryKey: ['getMyDraftItems'],
       })
-
-      setPersistentIdFromSavedDraft(data.persistentId)
     }
 
     /**
@@ -148,7 +172,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     }
   }
 
-  async function onSubmit({ draft, ...unsanitized }: ItemFormValues) {
+  async function onSubmit(
+    { draft, ...unsanitized }: ItemFormValues,
+    form: FormApi<ItemFormValues>,
+  ) {
     if (auth.session?.accessToken == null) {
       toast.error('Authentication required.')
       return Promise.reject()
@@ -161,24 +188,21 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
      */
     const { composedOf, ...workflow } = values
 
+    /**
+     * When a user saves a first draft, we dispatch a POST request,
+     * which will return a persistent id, which we need to use in
+     * subsequent PUT requests, to avoid creating multiple items.
+     */
     let createdWorkflow
-    if (persistentIdFromSavedDraft == null) {
-      const mutateAsync = createWorkflow.mutateAsync as ReturnType<
-        typeof useCreateWorkflow
-      >['mutateAsync']
-
-      createdWorkflow = await mutateAsync([
+    if ((workflow as WorkflowDto).persistentId == null) {
+      createdWorkflow = await createWorkflow.mutateAsync([
         { draft },
         workflow,
         { token: auth.session.accessToken },
       ])
     } else {
-      const mutateAsync = createWorkflow.mutateAsync as ReturnType<
-        typeof useUpdateWorkflow
-      >['mutateAsync']
-
-      createdWorkflow = await mutateAsync([
-        { persistentId: persistentIdFromSavedDraft },
+      createdWorkflow = await updateWorkflow.mutateAsync([
+        { persistentId: (workflow as WorkflowDto).persistentId! },
         { draft },
         workflow,
         { token: auth.session.accessToken },
@@ -189,25 +213,66 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     const workflowId = createdWorkflow.persistentId!
 
     /**
-     * We cannot dispatch all at once with Promise,all because this crashes the backend.
+     * We cannot dispatch all at once with Promise.all because this crashes the backend.
      * create/update step operations must be run sequentially.
-     *
-     * Also, no need to supply `stepNo` since every steps is newly created.
-     * Also, no need to check for `dirty` flag.
      */
-    await (composedOf ?? []).reduce((operations, step) => {
-      return operations.then(() => {
-        return createStep.mutateAsync([
+    const allSteps: Array<StepDto> = []
+    for (const [index, data] of (composedOf ?? []).entries()) {
+      const step = { ...sanitizeFormValues(data), stepNo: index + 1 }
+      /** If the step has a persistentId it means it has been saved before (as draft). */
+      if (step.persistentId != null) {
+        const updatedStep = await updateStep.mutateAsync([
+          { persistentId: workflowId, stepPersistentId: step.persistentId },
+          { draft },
+          step,
+          { token: auth.session.accessToken },
+        ])
+        allSteps.push(updatedStep)
+      } else {
+        const createdStep = await createStep.mutateAsync([
           { persistentId: workflowId },
           { draft },
-          sanitizeFormValues(step),
-          { token: auth.session?.accessToken },
+          step,
+          { token: auth.session.accessToken },
         ])
-      })
-    }, Promise.resolve() as any)
+        allSteps.push(createdStep)
+      }
+    }
+    /** Steps might have been deleted since the last saved draft. */
+    if (allSteps.length < createdWorkflow.composedOf!.length) {
+      const deletedSteps = createdWorkflow.composedOf!.filter(
+        ({ persistentId }) => {
+          return !allSteps.find((step) => step.persistentId === persistentId)
+        },
+      )
+      for (const deletedStep of deletedSteps) {
+        await deleteStep.mutateAsync([
+          {
+            persistentId: workflowId,
+            stepPersistentId: deletedStep.persistentId!,
+          },
+          { draft },
+          {
+            token: auth.session.accessToken,
+            hooks: {
+              response() {
+                return Promise.resolve()
+              },
+            },
+          },
+        ])
+      }
+    }
 
     /** This will only get called when the above didn't throw. */
     onSuccess(createdWorkflow)
+
+    /**
+     * We re-initialize the form with the values returned from the server,
+     * so we can track if a step has been created before (it already has a persistentId).
+     */
+    // @ts-expect-error Dto vs Core types
+    form.initialize({ ...createdWorkflow, composedOf: allSteps })
 
     /**
      * If `onSubmit` resolves to `undefined` it's a successful submit.
@@ -305,9 +370,12 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     }
   }
 
-  function handleSubmit(values: Partial<ItemFormValues>) {
+  function handleSubmit(
+    values: Partial<ItemFormValues>,
+    form: FormApi<ItemFormValues>,
+  ) {
     if (currentPageKey === 'steps') {
-      return onSubmit(values as ItemFormValues)
+      return onSubmit(values as ItemFormValues, form)
     } else {
       onNextPage(values)
     }
