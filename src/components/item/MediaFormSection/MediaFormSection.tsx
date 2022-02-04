@@ -69,11 +69,10 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
         isEnabled={isDiffingEnabled}
         wrapper={({ children }) => {
           return (
-            <FormSection title={mediaFieldArray.label}>
-              <ul className="grid grid-cols-3">{children}</ul>
-            </FormSection>
+            <FormSection title={mediaFieldArray.label}>{children}</FormSection>
           )
         }}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}
       >
         {({
           name,
@@ -97,7 +96,7 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
           return (
             <Fragment>
               {requiresReview ? (
-                <li className="py-2">
+                <div className="py-2">
                   <DiffControls
                     status={status}
                     onApprove={onApprove}
@@ -112,11 +111,11 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
                     media={mediaField.approvedValue?.info}
                     caption={mediaField.approvedValue?.caption}
                   />
-                </li>
+                </div>
               ) : (
-                <li>
+                <div>
                   <FormThumbnail name={name} onRemove={onRemove} />
-                </li>
+                </div>
               )}
             </Fragment>
           )

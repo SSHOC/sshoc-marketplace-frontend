@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-final-form'
 import { useFieldArray } from 'react-final-form-arrays'
@@ -24,6 +24,7 @@ export interface DiffFieldArrayProps {
     arrayRequiresReview: boolean
     children: ReactNode
   }) => JSX.Element
+  style?: CSSProperties
 }
 
 export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
@@ -101,88 +102,90 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
 
   const children = (
     <FormRecords>
-      {fields.map((name, index) => {
-        const field = status[index] ?? {
-          isReviewed: true,
-          status: 'unchanged',
-          approvedValue: null,
-          suggestedValue: null,
-        }
-
-        function onApprove() {
-          /** No need to change anything, since the field was never part of the form's initial values (= suggested values). */
-          switch (field.status) {
-            case 'deleted':
-              fields.remove(index)
-              setStatus((status) => [
-                ...status.slice(0, index),
-                /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
-                ...status.slice(index + 1),
-              ])
-              break
-            case 'inserted':
-            case 'changed':
-              form.mutators.setFieldTouched(name)
-              setStatus((status) => [
-                ...status.slice(0, index),
-                { ...status[index], isReviewed: true },
-                ...status.slice(index + 1),
-              ])
-              break
-            default:
-              return
+      <div style={props.style}>
+        {fields.map((name, index) => {
+          const field = status[index] ?? {
+            isReviewed: true,
+            status: 'unchanged',
+            approvedValue: null,
+            suggestedValue: null,
           }
-          props.onApprove?.()
-        }
 
-        function onReject() {
-          switch (field.status) {
-            case 'inserted':
-              fields.remove(index)
-              setStatus((status) => [
-                ...status.slice(0, index),
-                /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
-                ...status.slice(index + 1),
-              ])
-              break
-            case 'deleted':
-            case 'changed':
-              fields.update(index, field.approvedValue)
-              setStatus((status) => [
-                ...status.slice(0, index),
-                { ...status[index], isReviewed: true },
-                ...status.slice(index + 1),
-              ])
-              break
-            default:
-              return
+          function onApprove() {
+            /** No need to change anything, since the field was never part of the form's initial values (= suggested values). */
+            switch (field.status) {
+              case 'deleted':
+                fields.remove(index)
+                setStatus((status) => [
+                  ...status.slice(0, index),
+                  /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
+                  ...status.slice(index + 1),
+                ])
+                break
+              case 'inserted':
+              case 'changed':
+                form.mutators.setFieldTouched(name)
+                setStatus((status) => [
+                  ...status.slice(0, index),
+                  { ...status[index], isReviewed: true },
+                  ...status.slice(index + 1),
+                ])
+                break
+              default:
+                return
+            }
+            props.onApprove?.()
           }
-          props.onReject?.()
-        }
 
-        function onRemove() {
-          fields.remove(index)
-        }
+          function onReject() {
+            switch (field.status) {
+              case 'inserted':
+                fields.remove(index)
+                setStatus((status) => [
+                  ...status.slice(0, index),
+                  /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
+                  ...status.slice(index + 1),
+                ])
+                break
+              case 'deleted':
+              case 'changed':
+                fields.update(index, field.approvedValue)
+                setStatus((status) => [
+                  ...status.slice(0, index),
+                  { ...status[index], isReviewed: true },
+                  ...status.slice(index + 1),
+                ])
+                break
+              default:
+                return
+            }
+            props.onReject?.()
+          }
 
-        const state: DiffFieldState = {
-          name,
-          index,
-          fields,
-          ...field,
-          onApprove,
-          onReject,
-          onRemove,
-          arrayRequiresReview,
-        }
+          function onRemove() {
+            fields.remove(index)
+          }
 
-        return typeof props.children === 'function' ? (
-          <Fragment key={index}>{props.children(state)}</Fragment>
-        ) : (
-          <DiffFieldStateContext.Provider value={state} key={index}>
-            {props.children}
-          </DiffFieldStateContext.Provider>
-        )
-      })}
+          const state: DiffFieldState = {
+            name,
+            index,
+            fields,
+            ...field,
+            onApprove,
+            onReject,
+            onRemove,
+            arrayRequiresReview,
+          }
+
+          return typeof props.children === 'function' ? (
+            <Fragment key={index}>{props.children(state)}</Fragment>
+          ) : (
+            <DiffFieldStateContext.Provider value={state} key={index}>
+              {props.children}
+            </DiffFieldStateContext.Provider>
+          )
+        })}
+      </div>
       {typeof props.actions === 'function'
         ? props.actions({ onAdd, arrayRequiresReview })
         : null}
@@ -194,6 +197,9 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
     : children
 }
 
+/**
+ * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/127#note_502140
+ */
 function getStatus(
   approvedValue: unknown,
   suggestedValue: unknown,

@@ -1,9 +1,10 @@
 import cx from 'clsx'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 export interface FormRecordsProps {
   className?: string
   children?: ReactNode
+  style?: CSSProperties
 }
 
 /**
@@ -11,7 +12,10 @@ export interface FormRecordsProps {
  */
 export function FormRecords(props: FormRecordsProps): JSX.Element {
   return (
-    <div className={cx('flex flex-col space-y-6', props.className)}>
+    <div
+      className={cx('flex flex-col space-y-6', props.className)}
+      style={props.style}
+    >
       {props.children}
     </div>
   )
