@@ -58,6 +58,8 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
+      /** 404 error is legitimate, since it just means there is no existing approved vesion. */
+      retry: false,
     },
     { token: auth.session?.accessToken },
   )
