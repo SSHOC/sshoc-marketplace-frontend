@@ -71,7 +71,7 @@ export default function PublicationVersionEditScreen(): JSX.Element {
           <Title>Edit publication</Title>
           {publication.data == null ||
           id == null ||
-          (isReview && diff.data == null) ||
+          (isReview && diff.data == null && diff.error == null) ||
           // when there is no approved version yet, the diff endpoint will return 404
           (isReview &&
             diff.error instanceof HttpError &&
