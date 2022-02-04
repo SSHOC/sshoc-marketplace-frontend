@@ -102,19 +102,31 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       onReject={onReject}
                     />
                     <div className="grid flex-1 gap-1 py-2">
-                      <TextField
-                        label={labelField.label}
-                        isRequired
-                        isReadOnly
-                        variant="form-diff"
-                        value={suggestedValue as string | undefined}
-                      />
-                      <TextField
-                        aria-label={`${labelField.label} (approved)`}
-                        isReadOnly
-                        variant="form"
-                        value={approvedValue as string | undefined}
-                      />
+                      {status !== 'deleted' ? (
+                        <TextField
+                          label={labelField.label}
+                          isRequired
+                          isReadOnly
+                          variant="form-diff"
+                          value={suggestedValue as string | undefined}
+                        />
+                      ) : null}
+                      {status !== 'inserted' ? (
+                        <TextField
+                          {...(status === 'deleted'
+                            ? {
+                                label: labelField.label,
+                                variant: 'form-diff',
+                                style: { textDecoration: 'line-through 2px' },
+                              }
+                            : {
+                                'aria-label': `${labelField.label} (approved)`,
+                                variant: 'form',
+                              })}
+                          isReadOnly
+                          value={approvedValue as string | undefined}
+                        />
+                      ) : null}
                       <HelpText>{labelField.help}</HelpText>
                     </div>
                   </div>
@@ -158,18 +170,30 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                       onReject={onReject}
                     />
                     <div className="grid flex-1 gap-1 py-2">
-                      <TextField
-                        label={versionField.label}
-                        isReadOnly
-                        variant="form-diff"
-                        value={suggestedValue as string | undefined}
-                      />
-                      <TextField
-                        aria-label={`${versionField.label} (approved)`}
-                        isReadOnly
-                        variant="form"
-                        value={approvedValue as string | undefined}
-                      />
+                      {status !== 'deleted' ? (
+                        <TextField
+                          label={versionField.label}
+                          isReadOnly
+                          variant="form-diff"
+                          value={suggestedValue as string | undefined}
+                        />
+                      ) : null}
+                      {status !== 'inserted' ? (
+                        <TextField
+                          {...(status === 'deleted'
+                            ? {
+                                label: versionField.label,
+                                variant: 'form-diff',
+                                style: { textDecoration: 'line-through 2px' },
+                              }
+                            : {
+                                'aria-label': `${versionField.label} (approved)`,
+                                variant: 'form',
+                              })}
+                          isReadOnly
+                          value={approvedValue as string | undefined}
+                        />
+                      ) : null}
                       <HelpText>{versionField.help}</HelpText>
                     </div>
                   </div>
@@ -213,21 +237,33 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                     onReject={onReject}
                   />
                   <div className="grid flex-1 gap-1 py-2">
-                    <TextArea
-                      isRequired
-                      label={descriptionField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      value={suggestedValue as string | undefined}
-                      rows={8}
-                    />
-                    <TextArea
-                      aria-label={`${descriptionField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      value={approvedValue as string | undefined}
-                      rows={8}
-                    />
+                    {status !== 'deleted' ? (
+                      <TextArea
+                        isRequired
+                        label={descriptionField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        value={suggestedValue as string | undefined}
+                        rows={8}
+                      />
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <TextArea
+                        {...(status === 'deleted'
+                          ? {
+                              label: descriptionField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${descriptionField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        value={approvedValue as string | undefined}
+                        rows={8}
+                      />
+                    ) : null}
                     <HelpText>{descriptionField.help}</HelpText>
                   </div>
                 </div>
@@ -287,18 +323,30 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                   }
                 >
                   <div className="grid flex-1 gap-1">
-                    <TextField
-                      label={accessibleAtFieldArray.label}
-                      isReadOnly
-                      variant="form-diff"
-                      value={suggestedValue as string | undefined}
-                    />
-                    <TextField
-                      aria-label={`${accessibleAtFieldArray.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      value={approvedValue as string | undefined}
-                    />
+                    {status !== 'deleted' ? (
+                      <TextField
+                        label={accessibleAtFieldArray.label}
+                        isReadOnly
+                        variant="form-diff"
+                        value={suggestedValue as string | undefined}
+                      />
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <TextField
+                        {...(status === 'deleted'
+                          ? {
+                              label: accessibleAtFieldArray.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${accessibleAtFieldArray.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        value={approvedValue as string | undefined}
+                      />
+                    ) : null}
                     <HelpText>{accessibleAtFieldArray.help}</HelpText>
                   </div>
                 </FormRecord>
@@ -388,50 +436,74 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                   }
                 >
                   <div className="grid content-start gap-1">
-                    <Select
-                      label={identifierServiceField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      selectedKey={identifierServiceField.suggestedValue}
-                      items={[identifierServiceField.suggestedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
-                    <Select
-                      aria-label={`${identifierServiceField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      selectedKey={identifierServiceField.approvedValue}
-                      items={[identifierServiceField.approvedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
+                    {status !== 'deleted' ? (
+                      <Select
+                        label={identifierServiceField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        selectedKey={identifierServiceField.suggestedValue}
+                        items={[identifierServiceField.suggestedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <Select
+                        {...(status === 'deleted'
+                          ? {
+                              label: identifierServiceField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${identifierServiceField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        selectedKey={identifierServiceField.approvedValue}
+                        items={[identifierServiceField.approvedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
                   </div>
                   <div className="grid content-start flex-1 gap-1">
-                    <TextField
-                      label={identifierField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      value={identifierField.suggestedValue}
-                    />
-                    <TextField
-                      aria-label={`${identifierField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      value={identifierField.approvedValue}
-                    />
+                    {status !== 'deleted' ? (
+                      <TextField
+                        label={identifierField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        value={identifierField.suggestedValue}
+                      />
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <TextField
+                        {...(status === 'deleted'
+                          ? {
+                              label: identifierField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${identifierField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        value={identifierField.approvedValue}
+                      />
+                    ) : null}
                     <HelpText>{externalIdsFieldArray.help}</HelpText>
                   </div>
                 </FormRecord>

@@ -21,7 +21,6 @@ import {
 } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { ComboBox } from '@/elements/ComboBox/ComboBox'
-import { HelpText } from '@/elements/HelpText/HelpText'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { Select } from '@/elements/Select/Select'
@@ -33,7 +32,6 @@ import { FormComboBox } from '@/modules/form/components/FormComboBox/FormComboBo
 import { FormFieldAddButton } from '@/modules/form/components/FormFieldAddButton/FormFieldAddButton'
 import { FormFieldRemoveButton } from '@/modules/form/components/FormFieldRemoveButton/FormFieldRemoveButton'
 import { FormRecord } from '@/modules/form/components/FormRecord/FormRecord'
-import { FormRecords } from '@/modules/form/components/FormRecords/FormRecords'
 import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
@@ -41,7 +39,6 @@ import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
 import { Form } from '@/modules/form/Form'
 import { FormField } from '@/modules/form/FormField'
-import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { FormFieldCondition } from '@/modules/form/FormFieldCondition'
 import helpText from '@@/config/form-helptext.json'
 
@@ -237,88 +234,123 @@ export function PropertiesFormSection(
                   }
                 >
                   <div className="grid content-start gap-1">
-                    <Select
-                      label={propertyTypeField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      selectedKey={propertyTypeField.suggestedValue}
-                      items={[propertyTypeField.suggestedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
-                    <Select
-                      aria-label={`${propertyTypeField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      selectedKey={propertyTypeField.approvedValue}
-                      items={[propertyTypeField.approvedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
+                    {status !== 'deleted' ? (
+                      <Select
+                        label={propertyTypeField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        selectedKey={propertyTypeField.suggestedValue}
+                        items={[propertyTypeField.suggestedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <Select
+                        {...(status === 'deleted'
+                          ? {
+                              label: propertyTypeField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${propertyTypeField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        selectedKey={propertyTypeField.approvedValue}
+                        items={[propertyTypeField.approvedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
                   </div>
                   <div className="grid content-start flex-1 gap-1">
-                    {get(suggestedValue, 'type.type') === 'concept' ? (
-                      <ComboBox
-                        label={propertyConceptField.label}
-                        isReadOnly
-                        variant="form-diff"
-                        selectedKey={propertyConceptField.suggestedValue}
-                        items={[propertyConceptField.suggestedItem]}
-                        style={{ flex: 1 }}
-                      >
-                        {(item) => {
-                          return (
-                            <ComboBox.Item key={item.uri}>
-                              {item.label}
-                            </ComboBox.Item>
-                          )
-                        }}
-                      </ComboBox>
-                    ) : (
-                      <TextField
-                        label={propertyValueField.label}
-                        isReadOnly
-                        variant="form-diff"
-                        value={propertyValueField.suggestedValue}
-                      />
-                    )}
-                    {get(approvedValue, 'type.type') === 'concept' ? (
-                      <ComboBox
-                        aria-label={`${propertyConceptField.label} (approved)`}
-                        isReadOnly
-                        variant="form"
-                        selectedKey={propertyConceptField.approvedValue}
-                        items={[propertyConceptField.approvedItem]}
-                        style={{ flex: 1 }}
-                      >
-                        {(item) => {
-                          return (
-                            <ComboBox.Item key={item.uri}>
-                              {item.label}
-                            </ComboBox.Item>
-                          )
-                        }}
-                      </ComboBox>
-                    ) : (
-                      <TextField
-                        aria-label={propertyValueField.label}
-                        isReadOnly
-                        variant="form"
-                        value={propertyValueField.approvedValue}
-                      />
-                    )}
+                    {status !== 'deleted' ? (
+                      get(suggestedValue, 'type.type') === 'concept' ? (
+                        <ComboBox
+                          label={propertyConceptField.label}
+                          isReadOnly
+                          variant="form-diff"
+                          selectedKey={propertyConceptField.suggestedValue}
+                          items={[propertyConceptField.suggestedItem]}
+                          style={{ flex: 1 }}
+                        >
+                          {(item) => {
+                            return (
+                              <ComboBox.Item key={item.uri}>
+                                {item.label}
+                              </ComboBox.Item>
+                            )
+                          }}
+                        </ComboBox>
+                      ) : (
+                        <TextField
+                          label={propertyValueField.label}
+                          isReadOnly
+                          variant="form-diff"
+                          value={propertyValueField.suggestedValue}
+                        />
+                      )
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      get(approvedValue, 'type.type') === 'concept' ? (
+                        <ComboBox
+                          isReadOnly
+                          selectedKey={propertyConceptField.approvedValue}
+                          items={[propertyConceptField.approvedItem]}
+                          {...(status === 'deleted'
+                            ? {
+                                label: propertyConceptField.label,
+                                variant: 'form-diff',
+                                style: {
+                                  textDecoration: 'line-through 2px',
+                                  flex: 1,
+                                },
+                              }
+                            : {
+                                'aria-label': `${propertyConceptField.label} (approved)`,
+                                variant: 'form',
+                                style: { flex: 1 },
+                              })}
+                        >
+                          {(item) => {
+                            return (
+                              <ComboBox.Item key={item.uri}>
+                                {item.label}
+                              </ComboBox.Item>
+                            )
+                          }}
+                        </ComboBox>
+                      ) : (
+                        <TextField
+                          isReadOnly
+                          {...(status === 'deleted'
+                            ? {
+                                label: propertyValueField.label,
+                                variant: 'form-diff',
+                                style: { textDecoration: 'line-through 2px' },
+                              }
+                            : {
+                                'aria-label': `${propertyValueField.label} (approved)`,
+                                variant: 'form',
+                              })}
+                          value={propertyValueField.approvedValue}
+                        />
+                      )
+                    ) : null}
                     {/* <HelpText>{propertiesFieldArray.help}</HelpText> */}
                   </div>
                 </FormRecord>

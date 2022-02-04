@@ -70,7 +70,7 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
           {workflow.data == null ||
           id == null ||
           (isReview && diff.data == null) ||
-          // when there is not approved version yet, the diff endpoint will return 404
+          // when there is no approved version yet, the diff endpoint will return 404
           (isReview &&
             diff.error instanceof HttpError &&
             diff.error.statusCode !== 404) ? (

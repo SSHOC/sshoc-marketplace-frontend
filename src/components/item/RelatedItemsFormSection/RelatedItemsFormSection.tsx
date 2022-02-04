@@ -116,66 +116,97 @@ export function RelatedItemsFormSection(
                 }
               >
                 <div className="grid content-start gap-1">
-                  <Select
-                    label={relationTypeField.label}
-                    isReadOnly
-                    variant="form-diff"
-                    selectedKey={relationTypeField.suggestedValue}
-                    items={[relationTypeField.suggestedItem]}
-                  >
-                    {(item) => {
-                      return (
-                        <Select.Item key={item.code}>{item.label}</Select.Item>
-                      )
-                    }}
-                  </Select>
-                  <Select
-                    aria-label={`${relationTypeField.label} (approved)`}
-                    isReadOnly
-                    variant="form"
-                    selectedKey={relationTypeField.approvedValue}
-                    items={[relationTypeField.approvedItem]}
-                  >
-                    {(item) => {
-                      return (
-                        <Select.Item key={item.code}>{item.label}</Select.Item>
-                      )
-                    }}
-                  </Select>
+                  {status !== 'deleted' ? (
+                    <Select
+                      label={relationTypeField.label}
+                      isReadOnly
+                      variant="form-diff"
+                      selectedKey={relationTypeField.suggestedValue}
+                      items={[relationTypeField.suggestedItem]}
+                    >
+                      {(item) => {
+                        return (
+                          <Select.Item key={item.code}>
+                            {item.label}
+                          </Select.Item>
+                        )
+                      }}
+                    </Select>
+                  ) : null}
+                  {status !== 'inserted' ? (
+                    <Select
+                      isReadOnly
+                      {...(status === 'deleted'
+                        ? {
+                            label: relationTypeField.label,
+                            variant: 'form-diff',
+                            style: { textDecoration: 'line-through 2px' },
+                          }
+                        : {
+                            'aria-label': `${relationTypeField.label} (approved)`,
+                            variant: 'form',
+                          })}
+                      selectedKey={relationTypeField.approvedValue}
+                      items={[relationTypeField.approvedItem]}
+                    >
+                      {(item) => {
+                        return (
+                          <Select.Item key={item.code}>
+                            {item.label}
+                          </Select.Item>
+                        )
+                      }}
+                    </Select>
+                  ) : null}
                 </div>
                 <div className="grid content-start flex-1 gap-1">
-                  <ComboBox
-                    label={relatedItemField.label}
-                    isReadOnly
-                    variant="form-diff"
-                    selectedKey={relatedItemField.suggestedValue}
-                    items={[relatedItemField.suggestedItem]}
-                    style={{ flex: 1 }}
-                  >
-                    {(item) => {
-                      return (
-                        <ComboBox.Item key={item.persistentId}>
-                          {item.label}
-                        </ComboBox.Item>
-                      )
-                    }}
-                  </ComboBox>
-                  <ComboBox
-                    aria-label={`${relatedItemField.label} (approved)`}
-                    isReadOnly
-                    variant="form"
-                    selectedKey={relatedItemField.approvedValue}
-                    items={[relatedItemField.approvedItem]}
-                    style={{ flex: 1 }}
-                  >
-                    {(item) => {
-                      return (
-                        <ComboBox.Item key={item.persistentId}>
-                          {item.label}
-                        </ComboBox.Item>
-                      )
-                    }}
-                  </ComboBox>
+                  {status !== 'deleted' ? (
+                    <ComboBox
+                      label={relatedItemField.label}
+                      isReadOnly
+                      variant="form-diff"
+                      selectedKey={relatedItemField.suggestedValue}
+                      items={[relatedItemField.suggestedItem]}
+                      style={{ flex: 1 }}
+                    >
+                      {(item) => {
+                        return (
+                          <ComboBox.Item key={item.persistentId}>
+                            {item.label}
+                          </ComboBox.Item>
+                        )
+                      }}
+                    </ComboBox>
+                  ) : null}
+                  {status !== 'inserted' ? (
+                    <ComboBox
+                      isReadOnly
+                      {...(status === 'deleted'
+                        ? {
+                            label: relatedItemField.label,
+                            variant: 'form-diff',
+                            style: {
+                              textDecoration: 'line-through 2px',
+                              flex: 1,
+                            },
+                          }
+                        : {
+                            'aria-label': `${relatedItemField.label} (approved)`,
+                            variant: 'form',
+                            style: { flex: 1 },
+                          })}
+                      selectedKey={relatedItemField.approvedValue}
+                      items={[relatedItemField.approvedItem]}
+                    >
+                      {(item) => {
+                        return (
+                          <ComboBox.Item key={item.persistentId}>
+                            {item.label}
+                          </ComboBox.Item>
+                        )
+                      }}
+                    </ComboBox>
+                  ) : null}
                   <HelpText>{relatedItemsFieldArray.help}</HelpText>
                 </div>
               </FormRecord>

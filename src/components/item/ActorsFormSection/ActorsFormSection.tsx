@@ -169,62 +169,89 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                   }
                 >
                   <div className="grid content-start gap-1">
-                    <Select
-                      label={actorRoleField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      selectedKey={actorRoleField.suggestedValue}
-                      items={[actorRoleField.suggestedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
-                    <Select
-                      aria-label={`${actorRoleField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      selectedKey={actorRoleField.approvedValue}
-                      items={[actorRoleField.approvedItem]}
-                    >
-                      {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
-                      }}
-                    </Select>
+                    {status !== 'deleted' ? (
+                      <Select
+                        label={actorRoleField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        selectedKey={actorRoleField.suggestedValue}
+                        items={[actorRoleField.suggestedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <Select
+                        {...(status === 'deleted'
+                          ? {
+                              label: actorRoleField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${actorRoleField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        isReadOnly
+                        selectedKey={actorRoleField.approvedValue}
+                        items={[actorRoleField.approvedItem]}
+                      >
+                        {(item) => {
+                          return (
+                            <Select.Item key={item.code}>
+                              {item.label}
+                            </Select.Item>
+                          )
+                        }}
+                      </Select>
+                    ) : null}
                   </div>
                   <div className="grid content-start flex-1 gap-1">
-                    <ComboBox
-                      label={actorField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      selectedKey={actorField.suggestedValue}
-                      items={[actorField.suggestedItem]}
-                      style={{ flex: 1 }}
-                    >
-                      {(item) => {
-                        return <ComboBox.Item>{item.name}</ComboBox.Item>
-                      }}
-                    </ComboBox>
-                    <ComboBox
-                      aria-label={`${actorField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      selectedKey={actorField.approvedValue}
-                      items={[actorField.approvedItem]}
-                      style={{ flex: 1 }}
-                    >
-                      {(item) => {
-                        return <ComboBox.Item>{item.name}</ComboBox.Item>
-                      }}
-                    </ComboBox>
+                    {status !== 'deleted' ? (
+                      <ComboBox
+                        label={actorField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        selectedKey={actorField.suggestedValue}
+                        items={[actorField.suggestedItem]}
+                        style={{ flex: 1 }}
+                      >
+                        {(item) => {
+                          return <ComboBox.Item>{item.name}</ComboBox.Item>
+                        }}
+                      </ComboBox>
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <ComboBox
+                        {...(status === 'deleted'
+                          ? {
+                              label: actorField.label,
+                              variant: 'form-diff',
+                              style: {
+                                textDecoration: 'line-through 2px',
+                                flex: 1,
+                              },
+                            }
+                          : {
+                              'aria-label': `${actorField.label} (approved)`,
+                              variant: 'form',
+                              style: { flex: 1 },
+                            })}
+                        isReadOnly
+                        selectedKey={actorField.approvedValue}
+                        items={[actorField.approvedItem]}
+                      >
+                        {(item) => {
+                          return <ComboBox.Item>{item.name}</ComboBox.Item>
+                        }}
+                      </ComboBox>
+                    ) : null}
                     <HelpText>{actorsFieldArray.help}</HelpText>
                   </div>
                 </FormRecord>

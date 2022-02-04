@@ -69,20 +69,32 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
                     onReject={onReject}
                   />
                   <div className="grid flex-1 gap-1 py-2">
-                    <TextField
-                      type="date"
-                      label={dateCreatedField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      value={suggestedValue as string | undefined}
-                    />
-                    <TextField
-                      type="date"
-                      aria-label={`${dateCreatedField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      value={approvedValue as string | undefined}
-                    />
+                    {status !== 'deleted' ? (
+                      <TextField
+                        type="date"
+                        label={dateCreatedField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        value={suggestedValue as string | undefined}
+                      />
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <TextField
+                        {...(status === 'deleted'
+                          ? {
+                              label: dateCreatedField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${dateCreatedField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        type="date"
+                        isReadOnly
+                        value={approvedValue as string | undefined}
+                      />
+                    ) : null}
                     <HelpText>{dateCreatedField.help}</HelpText>
                   </div>
                 </div>
@@ -126,20 +138,32 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
                     onReject={onReject}
                   />
                   <div className="grid flex-1 gap-1 py-2">
-                    <TextField
-                      type="date"
-                      label={dateLastUpdatedField.label}
-                      isReadOnly
-                      variant="form-diff"
-                      value={suggestedValue as string | undefined}
-                    />
-                    <TextField
-                      type="date"
-                      aria-label={`${dateLastUpdatedField.label} (approved)`}
-                      isReadOnly
-                      variant="form"
-                      value={approvedValue as string | undefined}
-                    />
+                    {status !== 'deleted' ? (
+                      <TextField
+                        type="date"
+                        label={dateLastUpdatedField.label}
+                        isReadOnly
+                        variant="form-diff"
+                        value={suggestedValue as string | undefined}
+                      />
+                    ) : null}
+                    {status !== 'inserted' ? (
+                      <TextField
+                        {...(status === 'deleted'
+                          ? {
+                              label: dateLastUpdatedField.label,
+                              variant: 'form-diff',
+                              style: { textDecoration: 'line-through 2px' },
+                            }
+                          : {
+                              'aria-label': `${dateLastUpdatedField.label} (approved)`,
+                              variant: 'form',
+                            })}
+                        type="date"
+                        isReadOnly
+                        value={approvedValue as string | undefined}
+                      />
+                    ) : null}
                     <HelpText>{dateLastUpdatedField.help}</HelpText>
                   </div>
                 </div>
