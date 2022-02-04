@@ -60,5 +60,12 @@ export function sanitizeFormValues<
     values.thumbnail = { info: { mediaId: values.thumbnail.info.mediaId } }
   }
 
+  /**
+   * FIXME: Not 100% sure, but it sounds like we should not provide `source` and `sourceItemId`.
+   * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/85#note_536637
+   */
+  delete values.source
+  delete values.sourceItemId
+
   return values
 }
