@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
 import {
+  HttpError,
   useGetPublicationAndVersionedItemDifferences,
   useGetPublicationVersion,
 } from '@/api/sshoc'
@@ -70,7 +71,11 @@ export default function PublicationVersionEditScreen(): JSX.Element {
           <Title>Edit publication</Title>
           {publication.data == null ||
           id == null ||
-          (isReview && diff.data == null) ? (
+          (isReview && diff.data == null) ||
+          // when there is not approved version yet, the diff endpoint will return 404
+          (isReview &&
+            diff.error instanceof HttpError &&
+            diff.error.statusCode !== 404) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>
