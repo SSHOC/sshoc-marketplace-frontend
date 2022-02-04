@@ -102,7 +102,7 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
 
   const children = (
     <FormRecords>
-      <div style={props.style}>
+      <div className="flex flex-col space-y-6" style={props.style}>
         {fields.map((name, index) => {
           const field = status[index] ?? {
             isReviewed: true,
