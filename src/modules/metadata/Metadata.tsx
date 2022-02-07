@@ -2,13 +2,15 @@ import type { PageMetadataProps } from '@stefanprobst/next-page-metadata'
 import Meta from '@stefanprobst/next-page-metadata'
 
 import { useCanonicalUrl } from '@/modules/metadata/useCanonicalUrl'
-import {
-  description as siteDescription,
+import metadata from '@@/config/metadata.json'
+
+const {
+  description: siteDescription,
   openGraph,
-  title as siteTitle,
+  title: siteTitle,
   twitter,
-  url as siteUrl,
-} from '@@/config/metadata.json'
+  url: siteUrl,
+} = metadata
 
 export type { PageMetadata } from '@stefanprobst/next-page-metadata'
 
