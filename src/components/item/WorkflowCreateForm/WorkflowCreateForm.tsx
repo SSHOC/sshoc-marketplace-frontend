@@ -352,7 +352,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     if (currentPageKey === 'steps') {
       return onSubmit(values as ItemFormValues, form)
     } else {
-      onNextPage(values)
+      return onNextPage(values)
     }
   }
 

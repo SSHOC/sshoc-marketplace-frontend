@@ -35,7 +35,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
   function onSubmit(values: AddMediaFormValues) {
     if (auth.session?.accessToken === undefined) {
       toast.error('Authentication required.')
-      return Promise.reject()
+      return
     }
 
     const caption = values.caption

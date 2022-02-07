@@ -173,9 +173,9 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       return Promise.reject()
     }
 
-    if (versionId == null) return
+    if (versionId == null) return undefined
 
-    rejectVersion.mutate([
+    return rejectVersion.mutate([
       { persistentId: id, versionId },
       {
         token: auth.session.accessToken,

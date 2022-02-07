@@ -1,6 +1,8 @@
+// @ts-expect-error Missing module declaration.
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** convert pixel to rem */
+/** @type {(px: number) => string} */
 function px(px) {
   return `${px / 16}rem`
 }
@@ -94,7 +96,7 @@ module.exports = {
         3.75: px(15),
       },
       /** @tailwindcss/typography plugin */
-      typography: (theme) => {
+      typography: (/** @type {(token: string) => string} */ theme) => {
         return {
           DEFAULT: {
             css: {
@@ -151,6 +153,7 @@ module.exports = {
     },
   },
   plugins: [
+    // @ts-expect-error Missing module declaration.
     require('@tailwindcss/typography')({
       modifiers: [],
     }),
