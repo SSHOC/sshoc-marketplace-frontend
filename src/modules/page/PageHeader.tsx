@@ -25,8 +25,8 @@ import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import styles from '@/modules/page/PageHeader.module.css'
-import aboutLinks from '@/utils/aboutPages.preval'
-import contributeLinks from '@/utils/contributePages.preval'
+import _aboutLinks from '@/utils/aboutPages.static'
+import _contributeLinks from '@/utils/contributePages.static'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
@@ -34,6 +34,16 @@ import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLab
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
+
+type Pages = Array<{
+  pathname: string
+  label: string
+  menu: string
+  position: number
+}>
+
+const aboutLinks = _aboutLinks as unknown as Pages
+const contributeLinks = _contributeLinks as unknown as Pages
 
 /**
  * Page header.
@@ -54,7 +64,7 @@ function MainNavigation(): JSX.Element {
 
   return (
     <Fragment>
-      <b className={cx(styles.leftBleed, 'border-b border-gray-200')} />
+      <b className={cx(styles['leftBleed'], 'border-b border-gray-200')} />
       <FullWidth
         as="nav"
         aria-label="Main menu"
@@ -62,7 +72,7 @@ function MainNavigation(): JSX.Element {
       >
         <Link href={{ pathname: '/' }}>
           <a className="mx-4 my-6 md:mx-8">
-            <Logo aria-label="Home" height="4em" className={styles.logo} />
+            <Logo aria-label="Home" height="4em" className={styles['logo']} />
           </a>
         </Link>
         <VStack className="items-end hidden space-y-2 2xl:flex">
@@ -84,10 +94,7 @@ function MainNavigation(): JSX.Element {
                   <NavLink
                     href={{ pathname: '/search', query }}
                     isMatching={(href, router) => {
-                      return (
-                        router.pathname === '/search' &&
-                        router.query.category === category
-                      )
+                      return router.pathname === '/search' && router.query['category'] === category
                     }}
                   >
                     {label as string}
@@ -98,35 +105,41 @@ function MainNavigation(): JSX.Element {
             <Separator />
             <li className="relative z-10 inline-flex">
               <Menu>
-                {({ open }) => (
-                  <Fragment>
-                    <MenuButton isOpen={open}>Browse</MenuButton>
-                    <FadeIn show={open}>
-                      <MenuPopover static>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/browse/activity' }}
-                              highlighted={active}
-                            >
-                              Browse activities
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <MenuLink
-                              href={{ pathname: '/browse/keyword' }}
-                              highlighted={active}
-                            >
-                              Browse keywords
-                            </MenuLink>
-                          )}
-                        </Menu.Item>
-                      </MenuPopover>
-                    </FadeIn>
-                  </Fragment>
-                )}
+                {({ open }) => {
+                  return (
+                    <Fragment>
+                      <MenuButton isOpen={open}>Browse</MenuButton>
+                      <FadeIn show={open}>
+                        <MenuPopover static>
+                          <Menu.Item>
+                            {({ active }) => {
+                              return (
+                                <MenuLink
+                                  href={{ pathname: '/browse/activity' }}
+                                  highlighted={active}
+                                >
+                                  Browse activities
+                                </MenuLink>
+                              )
+                            }}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => {
+                              return (
+                                <MenuLink
+                                  href={{ pathname: '/browse/keyword' }}
+                                  highlighted={active}
+                                >
+                                  Browse keywords
+                                </MenuLink>
+                              )
+                            }}
+                          </Menu.Item>
+                        </MenuPopover>
+                      </FadeIn>
+                    </Fragment>
+                  )
+                }}
               </Menu>
             </li>
             {contributeLinks.length > 0 ? (
@@ -134,29 +147,30 @@ function MainNavigation(): JSX.Element {
                 <Separator />
                 <li className="relative z-10 inline-flex">
                   <Menu>
-                    {({ open }) => (
-                      <Fragment>
-                        <MenuButton isOpen={open}>Contribute</MenuButton>
-                        <FadeIn show={open}>
-                          <MenuPopover static>
-                            {contributeLinks.map(({ menu, pathname }) => {
-                              return (
-                                <Menu.Item key={pathname}>
-                                  {({ active }) => (
-                                    <MenuLink
-                                      href={{ pathname }}
-                                      highlighted={active}
-                                    >
-                                      {menu}
-                                    </MenuLink>
-                                  )}
-                                </Menu.Item>
-                              )
-                            })}
-                          </MenuPopover>
-                        </FadeIn>
-                      </Fragment>
-                    )}
+                    {({ open }) => {
+                      return (
+                        <Fragment>
+                          <MenuButton isOpen={open}>Contribute</MenuButton>
+                          <FadeIn show={open}>
+                            <MenuPopover static>
+                              {contributeLinks.map(({ menu, pathname }) => {
+                                return (
+                                  <Menu.Item key={pathname}>
+                                    {({ active }) => {
+                                      return (
+                                        <MenuLink href={{ pathname }} highlighted={active}>
+                                          {menu}
+                                        </MenuLink>
+                                      )
+                                    }}
+                                  </Menu.Item>
+                                )
+                              })}
+                            </MenuPopover>
+                          </FadeIn>
+                        </Fragment>
+                      )
+                    }}
                   </Menu>
                 </li>
               </Fragment>
@@ -164,36 +178,37 @@ function MainNavigation(): JSX.Element {
             <Separator />
             <li className="relative z-10 inline-flex">
               <Menu>
-                {({ open }) => (
-                  <Fragment>
-                    <MenuButton isOpen={open}>About</MenuButton>
-                    <FadeIn show={open}>
-                      <MenuPopover static>
-                        {aboutLinks.map(({ menu, pathname }) => {
-                          return (
-                            <Menu.Item key={pathname}>
-                              {({ active }) => (
-                                <MenuLink
-                                  href={{ pathname }}
-                                  highlighted={active}
-                                >
-                                  {menu}
-                                </MenuLink>
-                              )}
-                            </Menu.Item>
-                          )
-                        })}
-                      </MenuPopover>
-                    </FadeIn>
-                  </Fragment>
-                )}
+                {({ open }) => {
+                  return (
+                    <Fragment>
+                      <MenuButton isOpen={open}>About</MenuButton>
+                      <FadeIn show={open}>
+                        <MenuPopover static>
+                          {aboutLinks.map(({ menu, pathname }) => {
+                            return (
+                              <Menu.Item key={pathname}>
+                                {({ active }) => {
+                                  return (
+                                    <MenuLink href={{ pathname }} highlighted={active}>
+                                      {menu}
+                                    </MenuLink>
+                                  )
+                                }}
+                              </Menu.Item>
+                            )
+                          })}
+                        </MenuPopover>
+                      </FadeIn>
+                    </Fragment>
+                  )
+                }}
               </Menu>
             </li>
           </HStack>
         </VStack>
         <MobileNavigation />
       </FullWidth>
-      <b className={cx(styles.rightBleed, 'border-b border-gray-200')} />
+      <b className={cx(styles['rightBleed'], 'border-b border-gray-200')} />
       <ProtectedView>
         <CreateItemsMenu />
       </ProtectedView>
@@ -201,13 +216,7 @@ function MainNavigation(): JSX.Element {
   )
 }
 
-function ReportAnIssueButton({
-  user,
-  path,
-}: {
-  user?: { email?: string }
-  path: string
-}) {
+function ReportAnIssueButton({ user, path }: { user?: { email?: string }; path: string }) {
   return (
     <Link
       href={{
@@ -217,7 +226,7 @@ function ReportAnIssueButton({
           subject: 'Report an issue',
           message: `I have found an issue on page ${new URL(
             path,
-            process.env.NEXT_PUBLIC_SSHOC_BASE_URL,
+            process.env['NEXT_PUBLIC_SSHOC_BASE_URL'],
           ).toString()}.\n\nPlease describe:\n\n`,
         },
       }}
@@ -252,9 +261,7 @@ function AuthButton() {
 
   function onSignOut() {
     auth.signOut()
-    router.replace(
-      getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
-    )
+    router.replace(getRedirectPath(getScalarQueryParameter(router.query['from'])) ?? '/')
   }
 
   if (auth.session !== null) {
@@ -263,41 +270,47 @@ function AuthButton() {
         <ReportAnIssueButton path={router.asPath} user={user} />
         <div>
           <Menu>
-            {({ open }) => (
-              <Fragment>
-                <Menu.Button
-                  className={cx(
-                    'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2.5 px-12 text-sm inline-block hover:bg-primary-700',
-                    'truncate max-w-xs',
-                  )}
-                >
-                  Hi, {user?.displayName ?? auth.session?.user.username}
-                </Menu.Button>
-                <FadeIn show={open}>
-                  <MenuPopover static className="text-primary-500">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MenuAction
-                          highlighted={active}
-                          onClick={() => {
-                            router.push({ pathname: '/account' })
-                          }}
-                        >
-                          My account
-                        </MenuAction>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MenuAction highlighted={active} onClick={onSignOut}>
-                          Sign out
-                        </MenuAction>
-                      )}
-                    </Menu.Item>
-                  </MenuPopover>
-                </FadeIn>
-              </Fragment>
-            )}
+            {({ open }) => {
+              return (
+                <Fragment>
+                  <Menu.Button
+                    className={cx(
+                      'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2.5 px-12 text-sm inline-block hover:bg-primary-700',
+                      'truncate max-w-xs',
+                    )}
+                  >
+                    Hi, {user?.displayName ?? auth.session?.user.username}
+                  </Menu.Button>
+                  <FadeIn show={open}>
+                    <MenuPopover static className="text-primary-500">
+                      <Menu.Item>
+                        {({ active }) => {
+                          return (
+                            <MenuAction
+                              highlighted={active}
+                              onClick={() => {
+                                router.push({ pathname: '/account' })
+                              }}
+                            >
+                              My account
+                            </MenuAction>
+                          )
+                        }}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => {
+                          return (
+                            <MenuAction highlighted={active} onClick={onSignOut}>
+                              Sign out
+                            </MenuAction>
+                          )
+                        }}
+                      </Menu.Item>
+                    </MenuPopover>
+                  </FadeIn>
+                </Fragment>
+              )
+            }}
           </Menu>
         </div>
       </div>
@@ -319,10 +332,7 @@ function AuthButton() {
   )
 }
 
-function NavLinkButton({
-  href,
-  children,
-}: PropsWithChildren<{ href: UrlObject }>) {
+function NavLinkButton({ href, children }: PropsWithChildren<{ href: UrlObject }>) {
   const isActive = useActiveLink(href)
   const classNames = cx(
     'bg-primary-800 text-white rounded-b transition-colors duration-150 py-2 px-12 text-sm inline-flex items-center hover:bg-primary-700',
@@ -382,17 +392,12 @@ function FadeIn({
   )
 }
 
-function MenuButton({
-  isOpen,
-  ...props
-}: PropsWithChildren<{ isOpen: boolean }>) {
+function MenuButton({ isOpen, ...props }: PropsWithChildren<{ isOpen: boolean }>) {
   return (
     <Menu.Button
       className={cx(
         'inline py-6 px-8 transition-colors duration-150',
-        isOpen
-          ? 'text-white bg-secondary-600 rounded-t'
-          : 'text-primary-500 hover:bg-gray-50',
+        isOpen ? 'text-white bg-secondary-600 rounded-t' : 'text-primary-500 hover:bg-gray-50',
       )}
       {...props}
     />
@@ -456,11 +461,7 @@ function MenuLink({
   )
   return (
     <Link href={href}>
-      <a
-        aria-current={isActive ? 'page' : undefined}
-        className={classNames}
-        {...props}
-      >
+      <a aria-current={isActive ? 'page' : undefined} className={classNames} {...props}>
         {children}
       </a>
     </Link>
@@ -489,8 +490,7 @@ function CreateItemsMenu() {
                 <li key={category}>
                   <Link href={{ pathname: `/${category}/create` }}>
                     <a className="transition-colors duration-150 hover:text-secondary-500">
-                      Create{' '}
-                      {getSingularItemCategoryLabel(category as ItemCategory)}
+                      Create {getSingularItemCategoryLabel(category as ItemCategory)}
                     </a>
                   </Link>
                 </li>
@@ -538,11 +538,7 @@ function MobileNavigation(): JSX.Element {
         variant="gradient"
         onPress={dialog.open}
       >
-        <MenuIcon
-          aria-label="Open navigation menu"
-          width="1em"
-          className="w-6 h-6"
-        />
+        <MenuIcon aria-label="Open navigation menu" width="1em" className="w-6 h-6" />
       </Button>
       <Transition
         show={dialog.isOpen}
@@ -564,16 +560,10 @@ function MobileNavigation(): JSX.Element {
 
             <div className="relative w-full max-w-xl bg-gray-100">
               <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
-                <Dialog.Title className="sr-only">
-                  Main navigation menu
-                </Dialog.Title>
+                <Dialog.Title className="sr-only">Main navigation menu</Dialog.Title>
                 <Link href="/">
                   <a>
-                    <Logo
-                      aria-label="Home"
-                      height="4em"
-                      className={styles.logo}
-                    />
+                    <Logo aria-label="Home" height="4em" className={styles.logo} />
                   </a>
                 </Link>
                 <button
@@ -592,17 +582,12 @@ function MobileNavigation(): JSX.Element {
               <HStack as="ul" className="flex flex-col ">
                 <li className="grid">
                   {user == null ? (
-                    <NavLink href={{ pathname: '/auth/sign-in' }}>
-                      Sign in
-                    </NavLink>
+                    <NavLink href={{ pathname: '/auth/sign-in' }}>Sign in</NavLink>
                   ) : (
                     <NavDisclosure label={`Hi, ${user.displayName}`}>
                       <ul>
                         <li className="grid">
-                          <NavLink
-                            variant="secondary"
-                            href={{ pathname: '/account' }}
-                          >
+                          <NavLink variant="secondary" href={{ pathname: '/account' }}>
                             My account
                           </NavLink>
                         </li>
@@ -621,10 +606,7 @@ function MobileNavigation(): JSX.Element {
                     </NavDisclosure>
                   )}
                 </li>
-                <li
-                  role="separator"
-                  className="w-full border-b border-gray-250"
-                />
+                <li role="separator" className="w-full border-b border-gray-250" />
                 {Object.entries(itemCategories).map(([category, label]) => {
                   if (category === 'step') return null
 
@@ -639,8 +621,7 @@ function MobileNavigation(): JSX.Element {
                         href={{ pathname: '/search', query }}
                         isMatching={(href, router) => {
                           return (
-                            router.pathname === '/search' &&
-                            router.query.category === category
+                            router.pathname === '/search' && router.query['category'] === category
                           )
                         }}
                       >
@@ -649,36 +630,24 @@ function MobileNavigation(): JSX.Element {
                     </li>
                   )
                 })}
-                <li
-                  role="separator"
-                  className="w-full border-b border-gray-250"
-                />
+                <li role="separator" className="w-full border-b border-gray-250" />
                 <li className="grid">
                   <NavDisclosure label="Browse">
                     <ul>
                       <li className="grid">
-                        <NavLink
-                          variant="secondary"
-                          href={{ pathname: '/browse/activity' }}
-                        >
+                        <NavLink variant="secondary" href={{ pathname: '/browse/activity' }}>
                           Browse activities
                         </NavLink>
                       </li>
                       <li className="grid">
-                        <NavLink
-                          variant="secondary"
-                          href={{ pathname: '/browse/keyword' }}
-                        >
+                        <NavLink variant="secondary" href={{ pathname: '/browse/keyword' }}>
                           Browse keywords
                         </NavLink>
                       </li>
                     </ul>
                   </NavDisclosure>
                 </li>
-                <li
-                  role="separator"
-                  className="w-full border-b border-gray-250"
-                />
+                <li role="separator" className="w-full border-b border-gray-250" />
                 <li className="grid">
                   <NavDisclosure label="Contribute">
                     <ul>
@@ -709,21 +678,15 @@ function MobileNavigation(): JSX.Element {
                     </ul>
                   </NavDisclosure>
                 </li>
-                <li
-                  role="separator"
-                  className="w-full border-b border-gray-250"
-                />
+                <li role="separator" className="w-full border-b border-gray-250" />
                 {auth.session?.accessToken != null
-                  ? Object.entries(itemCategories).map(([category, label]) => {
+                  ? Object.entries(itemCategories).map(([category, _label]) => {
                       if (category === 'step') return null
 
                       return (
                         <li key={category} className="grid">
                           <NavLink href={{ pathname: `/${category}/create` }}>
-                            Create{' '}
-                            {getSingularItemCategoryLabel(
-                              category as ItemCategory,
-                            )}
+                            Create {getSingularItemCategoryLabel(category as ItemCategory)}
                           </NavLink>
                         </li>
                       )
@@ -738,13 +701,7 @@ function MobileNavigation(): JSX.Element {
   )
 }
 
-function NavDisclosure({
-  label,
-  children,
-}: {
-  label: string
-  children: ReactNode
-}) {
+function NavDisclosure({ label, children }: { label: string; children: ReactNode }) {
   const state = useDisclosureState({})
   const { panelProps, triggerProps } = useDisclosure(state)
 

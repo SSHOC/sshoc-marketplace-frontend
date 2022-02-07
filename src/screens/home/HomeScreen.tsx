@@ -6,11 +6,7 @@ import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 
 import { useGetItemCategories, useSearchItems } from '@/api/sshoc'
-import type {
-  ItemCategory,
-  ItemSearchQuery,
-  ItemSearchResults,
-} from '@/api/sshoc/types'
+import type { ItemCategory, ItemSearchQuery, ItemSearchResults } from '@/api/sshoc/types'
 import ItemCard from '@/modules/item/ItemCard'
 import FullWidth from '@/modules/layout/FullWidth'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -78,9 +74,7 @@ function Hero() {
       />
       <div className="relative max-w-screen-md p-6 mx-auto mt-12 space-y-6 text-sm md:mt-24 xl:max-w-screen-lg">
         <Title>{meta.title}</Title>
-        <Mdx>
-          <Content />
-        </Mdx>
+        <Mdx content={Content} />
         <ItemSearchForm className="grid px-4 md:px-8 py-3 items-center text-base bg-white rounded-md shadow-md gap-y-2 md:grid-cols-[256px_1fr_auto] md:gap-x-2">
           <ItemCategorySelect />
           <ItemSearchComboBox />
@@ -120,10 +114,7 @@ function Browse({ facets }: { facets?: Facets }) {
   return (
     <VStack className="space-y-4 md:space-y-6">
       <SectionTitle>Browse</SectionTitle>
-      <SubSection
-        title="Browse by activity"
-        href={{ pathname: '/browse/activity' }}
-      >
+      <SubSection title="Browse by activity" href={{ pathname: '/browse/activity' }}>
         <ul className="flex flex-wrap">
           {Object.entries(facets.activity)
             .slice(0, MAX_BROWSE_ITEMS)
@@ -133,8 +124,7 @@ function Browse({ facets }: { facets?: Facets }) {
                 <li key={activity} className="mb-4 mr-4">
                   <Link href={{ pathname: '/search', query }} passHref>
                     <Anchor>
-                      {activity}{' '}
-                      <span className="text-gray-550">({count})</span>
+                      {activity} <span className="text-gray-550">({count})</span>
                     </Anchor>
                   </Link>
                 </li>
@@ -142,10 +132,7 @@ function Browse({ facets }: { facets?: Facets }) {
             })}
         </ul>
       </SubSection>
-      <SubSection
-        title="Browse by keyword"
-        href={{ pathname: '/browse/keyword' }}
-      >
+      <SubSection title="Browse by keyword" href={{ pathname: '/browse/keyword' }}>
         <ul className="flex flex-wrap">
           {Object.entries(facets.keyword)
             .slice(0, MAX_BROWSE_ITEMS)
@@ -197,10 +184,7 @@ function LastAdded({ items }: { items?: Items }) {
  */
 function MainColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx(
-      'px-6 py-6 md:py-12 space-y-12 md:space-y-24',
-      styles.mainColumn,
-    ),
+    section: cx('px-6 py-6 md:py-12 space-y-12 md:space-y-24', styles.mainColumn),
     bleed: cx(styles.leftBleed),
   }
 
@@ -290,10 +274,7 @@ function RecommendedItemsForCategory({
   }
   const recommendedItems = useSearchItems(query)
 
-  if (
-    recommendedItems.status !== 'success' ||
-    recommendedItems.data.items?.length === 0
-  ) {
+  if (recommendedItems.status !== 'success' || recommendedItems.data.items?.length === 0) {
     return null
   }
 
@@ -309,11 +290,13 @@ function RecommendedItemsForCategory({
       }}
     >
       <ul className="grid grid-cols-2 gap-8">
-        {recommendedItems.data.items?.map((item) => (
-          <li key={item.persistentId}>
-            <ItemCard item={item} />
-          </li>
-        ))}
+        {recommendedItems.data.items?.map((item) => {
+          return (
+            <li key={item.persistentId}>
+              <ItemCard item={item} />
+            </li>
+          )
+        })}
       </ul>
     </SubSection>
   )

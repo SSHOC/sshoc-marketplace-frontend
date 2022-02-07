@@ -1,48 +1,28 @@
+/* @ts-expect-error Missing module declaration. */
 import createBundleAnalyzerPlugin from '@next/bundle-analyzer'
 import createSvgPlugin from '@stefanprobst/next-svg'
-import createPrevalPlugin from 'next-plugin-preval/config.js'
+import withParsedFrontmatter from '@stefanprobst/remark-extract-yaml-frontmatter'
+import withParsedFrontmatterExport from '@stefanprobst/remark-extract-yaml-frontmatter/mdx'
+import withSmartQuotes from '@stefanprobst/remark-smart-quotes'
+import withFrontmatter from 'remark-frontmatter'
+import withGfm from 'remark-gfm'
 
-const withBundleAnalyzer = createBundleAnalyzerPlugin({
-  enabled: process.env.ANALYZE === 'true',
-})
+/** @typedef {import('next').NextConfig} NextConfig */
+/** @typedef {import('webpack').Configuration} WebpackConfig */
+/** @typedef {import('@mdx-js/loader').Options} MdxOptions */
 
-const withMdx = (nextConfig = {}) => {
-  return {
-    ...nextConfig,
-    webpack(config, options) {
-      config.module.rules.push({
-        test: /\.mdx?$/,
-        use: [options.defaultLoaders.babel, '@mdx-js/loader', './frontmatter'],
-      })
-      if (typeof nextConfig.webpack === 'function') {
-        return nextConfig.webpack(config, options)
-      }
-      return config
-    },
-  }
+function isProductionDeploy() {
+  return process.env['NEXT_PUBLIC_SSHOC_BASE_URL'] === 'https://marketplace.sshopencloud.eu'
 }
 
-const withSvg = createSvgPlugin({
-  svgo: {
-    plugins: [
-      { prefixIds: true },
-      { removeDimensions: true },
-      { removeViewBox: false },
-    ],
-  },
-  svgr: {
-    titleProp: true,
-  },
-})
-
-const withPreval = createPrevalPlugin()
-
+/** @type {NextConfig} */
 const nextConfig = {
+  eslint: {
+    dirs: ['.'],
+    ignoreDuringBuilds: true,
+  },
   async headers() {
-    if (
-      process.env['NEXT_PUBLIC_SSHOC_BASE_URL'] ===
-      'https://marketplace.sshopencloud.eu'
-    ) {
+    if (isProductionDeploy()) {
       return []
     }
 
@@ -58,7 +38,6 @@ const nextConfig = {
       },
     ]
   },
-  images: {},
   poweredByHeader: false,
   reactStrictMode: true,
   async rewrites() {
@@ -76,8 +55,65 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  webpack(/** @type {WebpackConfig} */ config, context) {
+    config.infrastructureLogging = { level: 'error' }
+
+    config.module?.rules?.push({
+      test: /\.mjs$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false,
+      },
+    })
+
+    config.module?.rules?.push({
+      test: /\.static\.ts$/,
+      use: [{ loader: '@stefanprobst/val-loader' }],
+      exclude: /node_modules/,
+    })
+
+    config.module.rules.push({
+      test: /\.mdx?$/,
+      use: [
+        context.defaultLoaders.babel,
+        {
+          loader: '@mdx-js/loader',
+          /** @type {MdxOptions} */
+          options: {
+            jsx: true,
+            remarkPlugins: [
+              withFrontmatter,
+              withParsedFrontmatter,
+              withParsedFrontmatterExport,
+              withGfm,
+              withSmartQuotes,
+            ],
+            rehypePlugins: [],
+            recmaPlugins: [],
+          },
+        },
+      ],
+    })
+
+    return config
+  },
 }
 
-const plugins = [withBundleAnalyzer, withMdx, withSvg, withPreval]
+/** @type {Array<(config: NextConfig) => NextConfig>} */
+const plugins = [
+  createBundleAnalyzerPlugin({
+    enabled: process.env['BUNDLE_ANALYZER'] === 'enabled',
+  }),
+  createSvgPlugin({
+    svgo: {
+      plugins: [{ prefixIds: true }, { removeDimensions: true }, { removeViewBox: false }],
+    },
+    svgr: {
+      titleProp: true,
+    },
+  }),
+]
 
-export default plugins.reduce((acc, plugin) => plugin(acc), nextConfig)
+export default plugins.reduce((config, plugin) => {
+  return plugin(config)
+}, nextConfig)

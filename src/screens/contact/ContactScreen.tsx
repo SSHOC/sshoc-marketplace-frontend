@@ -58,9 +58,7 @@ export default function ContactScreen(): JSX.Element {
           />
           <div className="relative max-w-screen-sm p-6 pb-12 space-y-6 break-words">
             <Title>{meta.title}</Title>
-            <Mdx>
-              <Content />
-            </Mdx>
+            <Mdx content={Content} />
             <ContactForm />
           </div>
         </section>
@@ -105,11 +103,7 @@ function ContactForm() {
   function onValidate(values: Partial<ContactFormData>) {
     const errors: Partial<Record<keyof typeof values, any>> = {}
 
-    if (
-      values.email == null ||
-      values.email.length === 0 ||
-      !isEmail(values.email)
-    ) {
+    if (values.email == null || values.email.length === 0 || !isEmail(values.email)) {
       errors.email = 'Please provide a valid email address.'
     }
 
@@ -137,11 +131,7 @@ function ContactForm() {
   return (
     <Fragment>
       <SubSectionTitle>Contact us</SubSectionTitle>
-      <Form
-        onSubmit={onSubmit}
-        validate={onValidate}
-        initialValues={initialValues}
-      >
+      <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
         {({ handleSubmit, pristine, invalid, submitting }) => {
           return (
             <VStack as="form" onSubmit={handleSubmit} className="space-y-4">

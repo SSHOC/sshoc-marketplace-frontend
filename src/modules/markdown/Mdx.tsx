@@ -1,7 +1,6 @@
-import type { MDXProviderProps } from '@mdx-js/react'
-import { MDXProvider } from '@mdx-js/react'
+import type { MDXProps } from 'mdx/types'
 import Link from 'next/link'
-import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
+import type { ComponentPropsWithoutRef, FC, PropsWithChildren } from 'react'
 
 import { Anchor } from '@/modules/ui/Anchor'
 
@@ -9,26 +8,19 @@ import { SectionTitle } from '../ui/typography/SectionTitle'
 import { SubSectionTitle } from '../ui/typography/SubSectionTitle'
 
 type MdxProps = PropsWithChildren<{
-  components?: MDXProviderProps['components']
+  components?: MDXProps['components']
+  content: FC<MDXProps>
 }>
 
-/**
- * Provides default components for rendering mdx content.
- *
- * We don't put the `MDXProvider` in `pages/_app` to avoid
- * bundling components which are only needed on static pages
- * rendering mdx content.
- */
-export default function Mdx({ children, components }: MdxProps): JSX.Element {
+export default function Mdx({ content: Content, components }: MdxProps): JSX.Element {
   return (
-    <MDXProvider
+    <Content
+      // @ts-expect-error fix types later
       components={{
         ...defaultComponents,
         ...components,
       }}
-    >
-      {children}
-    </MDXProvider>
+    />
   )
 }
 
@@ -39,11 +31,7 @@ const defaultComponents = {
   wrapper: Prose,
 }
 
-function AbsoluteOrRelativeLink({
-  children,
-  href,
-  ...props
-}: ComponentPropsWithoutRef<'a'>) {
+function AbsoluteOrRelativeLink({ children, href, ...props }: ComponentPropsWithoutRef<'a'>) {
   if (href === undefined) return null
 
   if (isAbsoluteUrl(href)) {

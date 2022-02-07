@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 
 import { TableOfContents } from '@/components/common/TableOfContents'
 import GridLayout from '@/modules/layout/GridLayout'
-import Mdx from '@/modules/markdown/Mdx'
+// import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
@@ -41,18 +41,8 @@ export default function ContributeLayout({
         <Header image={'/assets/images/about/clouds@2x.png'}>
           <Breadcrumbs links={[{ pathname: '/', label: 'Home' }, breadcrumb]} />
         </Header>
-        <b
-          className={cx(
-            'border-b bg-gray-50 border-gray-200',
-            styles.leftBleed,
-          )}
-        />
-        <div
-          className={cx(
-            'border-b bg-gray-50 border-gray-200',
-            styles.sideColumn,
-          )}
-        >
+        <b className={cx('border-b bg-gray-50 border-gray-200', styles.leftBleed)} />
+        <div className={cx('border-b bg-gray-50 border-gray-200', styles.sideColumn)}>
           <p className="p-6 text-lg font-bold">Find out more</p>
         </div>
         <SideColumn>
@@ -72,7 +62,7 @@ export default function ContributeLayout({
           <div className="mx-auto space-y-6 max-w-80ch">
             <Title>{title}</Title>
             <TableOfContents toc={toc} />
-            <Mdx>{children}</Mdx>
+            {children}
             <LastUpdatedAt date={lastUpdatedAt} />
           </div>
         </MainColumn>
@@ -119,9 +109,7 @@ function NavLink({ href, children }: PropsWithChildren<{ href: UrlObject }>) {
   const isActive = useActiveLink(href)
   const classNames = cx(
     'px-8 py-10 inline-flex border-l-4 w-full justify-between',
-    isActive
-      ? 'border-gray-800 bg-gray-200'
-      : 'text-primary-800 border-gray-200 hover:bg-gray-100',
+    isActive ? 'border-gray-800 bg-gray-200' : 'text-primary-800 border-gray-200 hover:bg-gray-100',
   )
   return (
     <Link href={href}>

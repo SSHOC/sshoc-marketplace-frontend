@@ -20,9 +20,7 @@ const meta = metadata as ContentMetadata
 /**
  * Privacy policy screen.
  */
-export default function ContactScreen({
-  lastUpdatedAt,
-}: PageProps): JSX.Element {
+export default function ContactScreen({ lastUpdatedAt }: PageProps): JSX.Element {
   return (
     <Fragment>
       <Metadata title={meta.title} />
@@ -41,9 +39,7 @@ export default function ContactScreen({
         <ContentColumn>
           <div className="px-6 pb-12 mx-auto space-y-6 max-w-80ch">
             <Title>{meta.title}</Title>
-            <Mdx>
-              <Content />
-            </Mdx>
+            <Mdx content={Content} />
             <LastUpdatedAt date={lastUpdatedAt} />
           </div>
         </ContentColumn>

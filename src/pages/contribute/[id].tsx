@@ -1,25 +1,28 @@
 import type { Toc } from '@stefanprobst/remark-extract-toc'
 import withToc from '@stefanprobst/remark-extract-toc'
 import { promises as fs } from 'fs'
-import matter from 'gray-matter'
-import type {
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from 'next'
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import * as path from 'path'
 import type { ParsedUrlQuery } from 'querystring'
 import withRawHtml from 'rehype-raw'
 import toHtml from 'rehype-stringify'
-import withFootnotes from 'remark-footnotes'
 import withGfm from 'remark-gfm'
 import fromMarkdown from 'remark-parse'
 import toHast from 'remark-rehype'
 import withHeadingIds from 'remark-slug'
-import unified from 'unified'
+import { toVFile } from 'to-vfile'
+import { unified } from 'unified'
+import { matter } from 'vfile-matter'
 
 import { getLastUpdatedTimestamp } from '@/api/git'
 import ContributeScreen from '@/screens/contribute/ContributeScreen'
+
+interface Frontmatter {
+  title: string
+  menu: string
+  ord: number
+  toc: boolean
+}
 
 interface PageParams extends ParsedUrlQuery {
   id: string
@@ -42,16 +45,13 @@ const folder = path.join(process.cwd(), 'content', 'contribute-pages')
 const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
-  .use(withFootnotes)
   .use(withHeadingIds)
   .use(withToc)
   .use(toHast, { allowDangerousHtml: true })
   .use(withRawHtml)
   .use(toHtml)
 
-export async function getStaticPaths(): Promise<
-  GetStaticPathsResult<PageParams>
-> {
+export async function getStaticPaths(): Promise<GetStaticPathsResult<PageParams>> {
   const ids = await getContributePageIds()
 
   const paths = ids.map((id) => {
@@ -104,37 +104,33 @@ async function getContributePageIds() {
 }
 
 async function getContributePageById(id: string) {
-  const { data: frontmatter, content } = await getContributePageMetadataById(id)
-  const vfile = await processor.process(content)
+  const vfile = await processor.process(await getContributePageMetadataById(id))
+  const frontmatter = vfile.data.matter as Frontmatter
+  const toc = (vfile.data.toc ?? []) as Toc
   const html = String(vfile)
 
-  const data = frontmatter as {
-    title: string
-    menu: string
-    ord: number
-    toc: boolean
-  }
-  const { toc = [] } = vfile.data as { toc: Toc }
-  const metadata = { ...data, toc: data.toc === true ? toc : [] }
+  const metadata = { ...frontmatter, toc: frontmatter.toc === true ? toc : [] }
 
   return { metadata, html }
 }
 
 async function getContributePageMetadataById(id: string) {
   const filePath = path.join(folder, id + extension)
-  return matter(await fs.readFile(filePath, 'utf-8'))
+  const vfile = await toVFile.read(filePath)
+  return matter(vfile, { strip: true })
 }
 
 async function getContributePageRoutes() {
   const ids = await getContributePageIds()
   const pages = await Promise.all(
     ids.map(async (id) => {
-      const { data } = await getContributePageMetadataById(id)
+      const vfile = await getContributePageMetadataById(id)
+      const frontmatter = vfile.data.matter as Frontmatter
       return {
         pathname: `/contribute/${id}`,
-        label: data.title,
-        menu: data.menu,
-        position: data.ord,
+        label: frontmatter.title,
+        menu: frontmatter.menu,
+        position: frontmatter.ord,
       }
     }),
   )
