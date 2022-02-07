@@ -21,9 +21,8 @@ export default function ItemSubmitSuccessScreen(): JSX.Element {
             <Title className="font-bold">Successfully submitted!</Title>
             <hr />
             <p>
-              Thanks! Your changes have been successfully submitted and sent to
-              a moderator for review. After approval, the changes will be
-              visible on the SSHOC Marketplace.
+              Thanks! Your changes have been successfully submitted and sent to a moderator for
+              review. After approval, the changes will be visible on the SSHOC Marketplace.
             </p>
             <hr />
             <div className="self-end">

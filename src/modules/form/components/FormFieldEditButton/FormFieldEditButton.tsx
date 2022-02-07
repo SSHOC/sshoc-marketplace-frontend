@@ -15,9 +15,7 @@ export interface FormFieldEditButtonProps extends AriaButtonProps {
 /**
  * Edit record in field array.
  */
-export function FormFieldEditButton(
-  props: FormFieldEditButtonProps,
-): JSX.Element {
+export function FormFieldEditButton(props: FormFieldEditButtonProps): JSX.Element {
   const ref = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(props, ref)
 

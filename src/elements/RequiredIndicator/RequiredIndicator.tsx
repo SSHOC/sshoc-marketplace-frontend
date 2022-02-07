@@ -14,9 +14,7 @@ export interface RequiredIndicatorProps {
 /**
  * Indicates if a form field is required or not.
  */
-export function RequiredIndicator(
-  props: RequiredIndicatorProps,
-): JSX.Element | null {
+export function RequiredIndicator(props: RequiredIndicatorProps): JSX.Element | null {
   const t = useMessageFormatter(dictionary)
 
   const isRequired = props.isRequired === true

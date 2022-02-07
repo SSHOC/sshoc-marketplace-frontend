@@ -4,9 +4,7 @@ function Separator(): JSX.Element | null {
   return null
 }
 
-Separator.getCollectionNode = function* getCollectionNode<T>(): Generator<
-  PartialNode<T>
-> {
+Separator.getCollectionNode = function* getCollectionNode<T>(): Generator<PartialNode<T>> {
   yield {
     type: 'separator',
     hasChildNodes: false,

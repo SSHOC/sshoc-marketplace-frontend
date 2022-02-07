@@ -10,8 +10,7 @@ export function getFormFieldValidationState<T>(
   meta: FieldRenderProps<T>['meta'],
 ): FormFieldValidationState {
   return {
-    validationState:
-      meta.touched === true && meta.invalid === true ? 'invalid' : undefined,
+    validationState: meta.touched === true && meta.invalid === true ? 'invalid' : undefined,
     validationMessage: meta.error,
   }
 }

@@ -15,9 +15,7 @@ export interface FormFieldRemoveButtonProps extends AriaButtonProps {
 /**
  * Removes record from field array.
  */
-export function FormFieldRemoveButton(
-  props: FormFieldRemoveButtonProps,
-): JSX.Element {
+export function FormFieldRemoveButton(props: FormFieldRemoveButtonProps): JSX.Element {
   const ref = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(props, ref)
 

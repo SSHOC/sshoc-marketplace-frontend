@@ -14,9 +14,7 @@ export default function PrivacyPolicyPage(props: PageProps): JSX.Element {
   return <PrivacyPolicyScreen {...props} />
 }
 
-export async function getStaticProps(): Promise<
-  GetStaticPropsResult<PageProps>
-> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<PageProps>> {
   const pageId = 'privacy-policy'
   const lastUpdatedAt = (await getLastUpdatedTimestamp(pageId)).toISOString()
   return { props: { lastUpdatedAt } }

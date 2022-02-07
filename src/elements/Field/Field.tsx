@@ -1,8 +1,4 @@
-import type {
-  LabelableProps,
-  NecessityIndicator,
-  Validation,
-} from '@react-types/shared'
+import type { LabelableProps, NecessityIndicator, Validation } from '@react-types/shared'
 import type {
   CSSProperties,
   ElementType,
@@ -41,20 +37,14 @@ export function Field(props: FieldProps): JSX.Element {
 
   if (props.label === undefined && props.validationState === undefined) {
     return (
-      <div
-        className={styles.field}
-        style={{ ...props.style, textDecoration: 'none' }}
-      >
+      <div className={styles.field} style={{ ...props.style, textDecoration: 'none' }}>
         {props.children}
       </div>
     )
   }
 
   return (
-    <div
-      className={styles.field}
-      style={{ ...props.style, textDecoration: 'none' }}
-    >
+    <div className={styles.field} style={{ ...props.style, textDecoration: 'none' }}>
       {props.label !== undefined ? (
         <Label
           {...props.labelProps}
@@ -68,13 +58,9 @@ export function Field(props: FieldProps): JSX.Element {
         </Label>
       ) : null}
       {props.children}
-      {props.validationState === 'invalid' &&
-      props.validationMessage !== undefined ? (
-        <ErrorMessage {...props.errorMessageProps}>
-          {props.validationMessage}
-        </ErrorMessage>
-      ) : props.validationState === 'valid' &&
-        props.validationMessage !== undefined ? (
+      {props.validationState === 'invalid' && props.validationMessage !== undefined ? (
+        <ErrorMessage {...props.errorMessageProps}>{props.validationMessage}</ErrorMessage>
+      ) : props.validationState === 'valid' && props.validationMessage !== undefined ? (
         <SuccessMessage>{props.validationMessage}</SuccessMessage>
       ) : props.helpText !== undefined ? (
         <HelpText>{props.helpText}</HelpText>

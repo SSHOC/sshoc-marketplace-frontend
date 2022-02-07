@@ -5,10 +5,7 @@ export function TableOfContents({ toc }: { toc: Toc }): JSX.Element | null {
 
   return (
     <nav aria-labelledby="toc-title" className="text-sm text-muted">
-      <h3
-        className="mb-2 text-xs font-medium tracking-wide uppercase text-muted"
-        id="toc-title"
-      >
+      <h3 className="mb-2 text-xs font-medium tracking-wide uppercase text-muted" id="toc-title">
         Table of contents
       </h3>
       <Level level={toc} />

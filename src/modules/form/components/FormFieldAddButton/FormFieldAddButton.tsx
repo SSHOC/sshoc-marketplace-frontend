@@ -15,18 +15,14 @@ export interface FormFieldAddButtonProps extends AriaButtonProps {
 /**
  * Adds new record to field array.
  */
-export function FormFieldAddButton(
-  props: FormFieldAddButtonProps,
-): JSX.Element {
+export function FormFieldAddButton(props: FormFieldAddButtonProps): JSX.Element {
   const ref = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(props, ref)
 
   const styles = {
     button: cx(
       'transition cursor-default inline-flex space-x-1.5 items-center font-body font-normal text-ui-base hover:text-secondary-600 focus:text-gray-800 focus:outline-none',
-      props.isDisabled === true
-        ? 'pointer-events-none text-gray-550'
-        : 'text-primary-750',
+      props.isDisabled === true ? 'pointer-events-none text-gray-550' : 'text-primary-750',
     ),
     icon: 'w-2.5 h-2.5',
   }

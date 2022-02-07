@@ -1,6 +1,4 @@
-export function groupAlphabetically<T>(
-  obj: Record<string, T>,
-): Record<string, Record<string, T>> {
+export function groupAlphabetically<T>(obj: Record<string, T>): Record<string, Record<string, T>> {
   const grouped: Record<string, Record<string, T>> = {}
   Object.entries(obj).forEach(([key, value]) => {
     const firstChar = key.charAt(0).toLowerCase()

@@ -46,9 +46,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
         toast.success('Sucessfully added media.')
       },
       onError(error: unknown) {
-        toast.error(
-          error instanceof MediaError ? error.message : 'Failed to add media.',
-        )
+        toast.error(error instanceof MediaError ? error.message : 'Failed to add media.')
       },
       onSettled() {
         props.onDismiss()
@@ -77,10 +75,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
         callbacks,
       )
     } else {
-      importMedia.mutate(
-        [values, { token: auth.session.accessToken }],
-        callbacks,
-      )
+      importMedia.mutate([values, { token: auth.session.accessToken }], callbacks)
     }
   }
 
@@ -90,11 +85,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
     if (values.sourceUrl !== undefined && !isUrl(values.sourceUrl)) {
       errors.sourceUrl = 'Must be a valid URL.'
     }
-    if (
-      values.sourceUrl !== undefined &&
-      values.files !== undefined &&
-      values.files.length > 0
-    ) {
+    if (values.sourceUrl !== undefined && values.files !== undefined && values.files.length > 0) {
       errors.sourceUrl = errors.files =
         'Please choose between uploading a file, or importing a URL.'
     }
@@ -106,11 +97,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
     <Form onSubmit={onSubmit} validate={onValidate}>
       {({ handleSubmit, pristine, invalid, submitting }) => {
         return (
-          <form
-            noValidate
-            className="flex flex-col space-y-6"
-            onSubmit={handleSubmit}
-          >
+          <form noValidate className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             <FormFileInput
               name="files"
               accept={accept}
@@ -126,12 +113,7 @@ export function AddMediaForm(props: AddMediaFormProps): JSX.Element {
               style={{ flex: 1 }}
               placeholder="https://"
             />
-            <FormTextField
-              name="caption"
-              label="Caption"
-              variant="form"
-              style={{ flex: 1 }}
-            />
+            <FormTextField name="caption" label="Caption" variant="form" style={{ flex: 1 }} />
             <div className="flex justify-end space-x-12">
               <Button variant="link" onPress={props.onDismiss}>
                 Cancel

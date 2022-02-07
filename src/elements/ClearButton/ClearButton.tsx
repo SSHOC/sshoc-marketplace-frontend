@@ -39,12 +39,7 @@ export function ClearButton(props: ClearButtonProps): JSX.Element {
   }
 
   return (
-    <button
-      {...buttonProps}
-      aria-label={ariaLabel}
-      className={styles.button}
-      ref={ref}
-    >
+    <button {...buttonProps} aria-label={ariaLabel} className={styles.button} ref={ref}>
       <Icon icon={CrossIcon} className="h-2" />
     </button>
   )

@@ -48,11 +48,11 @@ export default function AuthProvider({
 }: PropsWithChildren<{
   onChange?: () => void
 }>): JSX.Element {
-  const [
-    session,
-    setSession,
-    hasCheckedLocalStorage,
-  ] = useLocalStorage<Session | null>('session', null, onChange)
+  const [session, setSession, hasCheckedLocalStorage] = useLocalStorage<Session | null>(
+    'session',
+    null,
+    onChange,
+  )
 
   const auth = useMemo(() => {
     function signIn(token: string) {

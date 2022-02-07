@@ -20,15 +20,10 @@ export type AriaErrorMessage = {
 /**
  * Associates an error message with a form field.
  */
-export function useErrorMessage(
-  props: AriaErrorMessageProps,
-): AriaErrorMessage {
+export function useErrorMessage(props: AriaErrorMessageProps): AriaErrorMessage {
   const id = useId()
 
-  if (
-    props.validationMessage === undefined ||
-    props.validationState !== 'invalid'
-  ) {
+  if (props.validationMessage === undefined || props.validationState !== 'invalid') {
     return {
       fieldProps: {},
       errorMessageProps: {},

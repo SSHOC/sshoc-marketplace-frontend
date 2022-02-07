@@ -8,12 +8,7 @@ import { forwardRefWithAs } from '@/utils/ts/as'
 type ContentColumnLayoutProps = PropsWithAs<unknown, 'section'>
 
 function ContentColumnLayout(
-  {
-    as: Type = 'section',
-    children,
-    className,
-    ...props
-  }: ContentColumnLayoutProps,
+  { as: Type = 'section', children, className, ...props }: ContentColumnLayoutProps,
   ref: Ref<HTMLElement>,
 ): JSX.Element {
   const classNames = cx(styles.layout, className)

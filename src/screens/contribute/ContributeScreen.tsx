@@ -19,10 +19,7 @@ export default function ContributeScreen({
       links={pages}
       toc={metadata.toc}
     >
-      <div
-        className="prose max-w-none"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
     </ContributeLayout>
   )
 }

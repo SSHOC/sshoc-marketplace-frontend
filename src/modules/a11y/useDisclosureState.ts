@@ -8,15 +8,12 @@ export interface DisclosureState {
   setOpen: ToggleState['setSelected']
 }
 
-export interface DisclosureStateProps
-  extends Omit<ToggleProps, 'defaultSelected' | 'isSelected'> {
+export interface DisclosureStateProps extends Omit<ToggleProps, 'defaultSelected' | 'isSelected'> {
   defaultOpen?: ToggleProps['defaultSelected']
   isOpen?: ToggleProps['isSelected']
 }
 
-export function useDisclosureState(
-  props: DisclosureStateProps,
-): DisclosureState {
+export function useDisclosureState(props: DisclosureStateProps): DisclosureState {
   const state = useToggleState({
     ...props,
     defaultSelected: props.defaultOpen,

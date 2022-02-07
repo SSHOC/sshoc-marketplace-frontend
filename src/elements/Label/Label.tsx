@@ -4,9 +4,7 @@ import type { ElementType, LabelHTMLAttributes, ReactNode } from 'react'
 
 import { RequiredIndicator } from '@/elements/RequiredIndicator/RequiredIndicator'
 
-export interface LabelProps
-  extends DOMProps,
-    LabelHTMLAttributes<HTMLLabelElement> {
+export interface LabelProps extends DOMProps, LabelHTMLAttributes<HTMLLabelElement> {
   children?: ReactNode
   /** @default "label" */
   elementType?: ElementType
@@ -42,10 +40,7 @@ export function Label(props: LabelProps): JSX.Element {
   return (
     <ElementType {...labelProps} className={styles.label}>
       <span>{children}</span>
-      <RequiredIndicator
-        isRequired={isRequired}
-        necessityIndicator={necessityIndicator}
-      />
+      <RequiredIndicator isRequired={isRequired} necessityIndicator={necessityIndicator} />
     </ElementType>
   )
 }

@@ -11,10 +11,7 @@ export type UrlObject = Exclude<LinkProps['href'], string>
  *
  * By default, matches by pathname, but a custom matching function can be provided.
  */
-export function useActiveLink(
-  href: UrlObject,
-  isMatching = isMatchingPathnameExactly,
-): boolean {
+export function useActiveLink(href: UrlObject, isMatching = isMatchingPathnameExactly): boolean {
   const router = useRouter()
   return isMatching(href, router)
 }

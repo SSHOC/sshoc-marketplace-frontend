@@ -6,24 +6,22 @@ menu: About the technical aspects
 
 ## Data model
 
-The data model of the SSH Open Marketplace was designed to be generic and
-flexible enough to support a variety of sources. The data model v1.5 is
-presented in the
+The data model of the SSH Open Marketplace was designed to be generic and flexible enough to support
+a variety of sources. The data model v1.5 is presented in the
 [Marketplace – Implementation report](https://doi.org/10.5281/zenodo.5749464).
 
 ## Data ingestion workflow
 
-The SSH Open Marketplace provides a REST API at the backend where data can not
-only be read but also inserted or updated. This approach allows
-technology-agnostic ingestion. During the development phase, two main ingestion
-pipelines - covering the gathering of the data at the source (e.g. via an API or
-a Git repository), the mapping of the data to the SSH Open Marketplace data
-model including transformation of parts of the data (e.g. connecting terms from
-the source to a vocabulary like TaDiRAH) and the integration of the processed
-data into the SSH Open Marketplace via the API - were used:
+The SSH Open Marketplace provides a REST API at the backend where data can not only be read but also
+inserted or updated. This approach allows technology-agnostic ingestion. During the development
+phase, two main ingestion pipelines - covering the gathering of the data at the source (e.g. via an
+API or a Git repository), the mapping of the data to the SSH Open Marketplace data model including
+transformation of parts of the data (e.g. connecting terms from the source to a vocabulary like
+TaDiRAH) and the integration of the processed data into the SSH Open Marketplace via the API - were
+used:
 
-- [PoolParty UnifiedViews](https://www.poolparty.biz/agile-data-integration)
-  provided by [Semantic Web Company (SWC)](https://semantic-web.com/).
+- [PoolParty UnifiedViews](https://www.poolparty.biz/agile-data-integration) provided by
+  [Semantic Web Company (SWC)](https://semantic-web.com/).
 - [Data Aggregation and proCessing Engine (DACE)](https://gitlab.pcss.pl/dl-team/aggregation/dace)
   developed by the Poznan Supercomputing and Networking Center (PSNC)
 
@@ -33,34 +31,30 @@ _Illustration: Overview on the different components of the ingestion workflow_
 
 ## Information about the development of the website
 
-The development of the SSH Open Marketplace is managed via GitLab. If you want
-to know more, pay a visit to our GitLab instance: <https://gitlab.gwdg.de/sshoc>
+The development of the SSH Open Marketplace is managed via GitLab. If you want to know more, pay a
+visit to our GitLab instance: <https://gitlab.gwdg.de/sshoc>
 
 ## API documentation
 
-The SSH Open Marketplace also includes an Application Programming Interface
-(API), which is opened for anyone to use. Some of the functionalities are
-closed, but most are opened, such as searching and retrieving detailed
-information on all items of the Marketplace.
+The SSH Open Marketplace also includes an Application Programming Interface (API), which is opened
+for anyone to use. Some of the functionalities are closed, but most are opened, such as searching
+and retrieving detailed information on all items of the Marketplace.
 
 You can inspect the API Swagger documentation here:
 <https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs>
 
-The endpoint of the SSH Open Marketplace API is:
-<https://marketplace-api.sshopencloud.eu/api/>
+The endpoint of the SSH Open Marketplace API is: <https://marketplace-api.sshopencloud.eu/api/>
 
-The API responses are in JSON and follow the data model that we have created for
-the Marketplace (see "Data model" section above).
+The API responses are in JSON and follow the data model that we have created for the Marketplace
+(see "Data model" section above).
 
-For example, you can request a description of all the "tools and services" that
-the SSH Open Marketplace provides at
-<https://marketplace-api.sshopencloud.eu/api/tools-services> and following pages
-<https://marketplace-api.sshopencloud.eu/api/tools-services?page=2>.
+For example, you can request a description of all the "tools and services" that the SSH Open
+Marketplace provides at <https://marketplace-api.sshopencloud.eu/api/tools-services> and following
+pages <https://marketplace-api.sshopencloud.eu/api/tools-services?page=2>.
 
-The API also includes some endpoints that are only accessible to logged in
-users. To use them, you need to ask for a JWT (JSON Web Token) to the
-authentication endpoint and then use the Token to connect to the other endpoint,
-by passing the Token as a Bearer Authentication.
+The API also includes some endpoints that are only accessible to logged in users. To use them, you
+need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to
+connect to the other endpoint, by passing the Token as a Bearer Authentication.
 
 ### Example
 
@@ -74,8 +68,7 @@ Will respond with a Token as such:
 Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn
 ```
 
-And this is then used in the following requests to prove you are authenticated,
-for example:
+And this is then used in the following requests to prove you are authenticated, for example:
 
 ```
 curl -X DELETE 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/datasets/3752' --header 'Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn'

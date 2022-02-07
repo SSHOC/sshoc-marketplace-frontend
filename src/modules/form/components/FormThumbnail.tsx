@@ -18,13 +18,7 @@ export function FormThumbnail(props: FormThumbnailProps): JSX.Element {
       {({ input }) => {
         if (input.value == null) return null
 
-        return (
-          <Thumbnail
-            {...props}
-            media={input.value.info}
-            caption={input.value.caption}
-          />
-        )
+        return <Thumbnail {...props} media={input.value.info} caption={input.value.caption} />
       }}
     </FormField>
   )

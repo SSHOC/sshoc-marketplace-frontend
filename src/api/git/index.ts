@@ -18,11 +18,7 @@ async function request(req: Request) {
 
 function createGitlabApiRequest(path: string, query?: Record<string, unknown>) {
   const url = new URL(
-    posix.join(
-      '/api/v4/projects/',
-      encodeURIComponent(gitlabRepository as string),
-      path,
-    ),
+    posix.join('/api/v4/projects/', encodeURIComponent(gitlabRepository as string), path),
     gitlabBaseUrl,
   )
   if (query) {
@@ -46,12 +42,9 @@ function createGitlabApiRequest(path: string, query?: Record<string, unknown>) {
 }
 
 export async function getLastCommitId(fileName: string): Promise<string> {
-  const req = createGitlabApiRequest(
-    'repository/files/' + encodeURIComponent(fileName),
-    {
-      ref: gitlabBranch,
-    },
-  )
+  const req = createGitlabApiRequest('repository/files/' + encodeURIComponent(fileName), {
+    ref: gitlabBranch,
+  })
   const { last_commit_id: lastCommitId } = await request(req)
   return lastCommitId
 }

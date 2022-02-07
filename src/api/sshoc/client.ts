@@ -178,18 +178,12 @@ export function useValidateImplicitGrantTokenWithRegistration(
 }
 
 export function getMediaThumbnailUrl({ mediaId }: { mediaId: string }): string {
-  const url = new URL(
-    `/api/media/thumbnail/${encodeURIComponent(mediaId)}`,
-    baseUrl,
-  )
+  const url = new URL(`/api/media/thumbnail/${encodeURIComponent(mediaId)}`, baseUrl)
   return String(url)
 }
 
 export function getMediaFileUrl({ mediaId }: { mediaId: string }): string {
-  const url = new URL(
-    `/api/media/download/${encodeURIComponent(mediaId)}`,
-    baseUrl,
-  )
+  const url = new URL(`/api/media/download/${encodeURIComponent(mediaId)}`, baseUrl)
   return String(url)
 }
 

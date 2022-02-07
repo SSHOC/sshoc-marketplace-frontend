@@ -5,10 +5,7 @@ import { Fragment } from 'react'
 
 import ContentColumn from '@/modules/layout/ContentColumn'
 import VStack from '@/modules/layout/VStack'
-import ItemSearchForm, {
-  ItemSearchComboBox,
-  SubmitButton,
-} from '@/modules/search/ItemSearchForm'
+import ItemSearchForm, { ItemSearchComboBox, SubmitButton } from '@/modules/search/ItemSearchForm'
 
 /**
  * Shared header with top search bar.

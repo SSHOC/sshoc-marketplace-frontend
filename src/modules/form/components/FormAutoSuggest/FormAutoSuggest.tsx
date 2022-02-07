@@ -21,9 +21,7 @@ export interface FormAutoSuggestProps<T> extends ComboBoxProps<T> {
  * Initial values must only be set via `Form`, not
  * with `defaultInputValue` on the combobox component.
  */
-export function FormAutoSuggest<T>(
-  props: FormAutoSuggestProps<T>,
-): JSX.Element {
+export function FormAutoSuggest<T>(props: FormAutoSuggestProps<T>): JSX.Element {
   return (
     <FormField name={props.name}>
       {({ input, meta }) => {

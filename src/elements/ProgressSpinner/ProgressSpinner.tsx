@@ -5,8 +5,7 @@ import type { SVGProps } from 'react'
 
 import dictionary from '@/elements/ProgressSpinner/dictionary.json'
 
-export interface ProgressSpinnerProps
-  extends Omit<AriaProgressCircleProps, 'isIndeterminate'> {
+export interface ProgressSpinnerProps extends Omit<AriaProgressCircleProps, 'isIndeterminate'> {
   className?: string
 }
 

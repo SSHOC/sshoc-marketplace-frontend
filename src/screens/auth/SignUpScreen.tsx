@@ -95,14 +95,11 @@ function SignUpForm(): JSX.Element {
          * endpoint returns full user data.
          */
         queryCache.setQueryData('getLoggedInUser', userData)
-        router.replace(
-          getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
-        )
+        router.replace(getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/')
       },
       onError(error) {
         const message =
-          (error instanceof Error && error.message) ||
-          'An unexpected error has occurred.'
+          (error instanceof Error && error.message) || 'An unexpected error has occurred.'
         toast.error(message)
       },
     })
@@ -143,11 +140,7 @@ function SignUpForm(): JSX.Element {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
       {({ handleSubmit, pristine, submitting, invalid }) => {
         return (
           <form onSubmit={handleSubmit}>
@@ -223,13 +216,9 @@ function useValidateAuthCode() {
        */
       validateToken([{ token: authCode, registration: true }])
       /** remove token fragment from url */
-      router.replace(
-        { pathname: url.pathname, query: url.search.slice(1) },
-        undefined,
-        {
-          shallow: true,
-        },
-      )
+      router.replace({ pathname: url.pathname, query: url.search.slice(1) }, undefined, {
+        shallow: true,
+      })
     }
   }, [router, auth, validateToken, status])
 

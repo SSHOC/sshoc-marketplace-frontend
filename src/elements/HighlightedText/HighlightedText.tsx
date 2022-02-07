@@ -14,9 +14,7 @@ export interface HighlightedTextProps {
  *
  * @private
  */
-export function HighlightedText(
-  props: HighlightedTextProps,
-): JSX.Element | null {
+export function HighlightedText(props: HighlightedTextProps): JSX.Element | null {
   const { text, searchPhrase } = props
 
   if (typeof text !== 'string') {

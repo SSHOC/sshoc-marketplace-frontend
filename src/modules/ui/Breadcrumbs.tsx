@@ -10,11 +10,7 @@ type Item = {
   label: string
 }
 
-export default function Breadcrumbs({
-  links,
-}: {
-  links: Array<Item>
-}): JSX.Element {
+export default function Breadcrumbs({ links }: { links: Array<Item> }): JSX.Element {
   return (
     <nav aria-label="Breadcrumbs navigation">
       <ul className="flex space-x-3 py-4 text-sm">

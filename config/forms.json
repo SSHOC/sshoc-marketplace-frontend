@@ -115,13 +115,7 @@
   },
   "workflow": {
     "required": ["label", "description"],
-    "recommended": [
-      "contributors",
-      "externalIds",
-      "media",
-      "thumbnail",
-      "relatedItems"
-    ],
+    "recommended": ["contributors", "externalIds", "media", "thumbnail", "relatedItems"],
     "recommendedProperties": [
       "activity",
       "keyword",

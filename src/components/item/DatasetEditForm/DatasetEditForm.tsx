@@ -61,9 +61,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const handleErrors = useErrorHandlers()
   const validateCommonFormFields = useValidateCommonFormFields()
   const isAllowedToPublish =
-    user.data?.role !== undefined
-      ? ['administrator', 'moderator'].includes(user.data.role)
-      : false
+    user.data?.role !== undefined ? ['administrator', 'moderator'].includes(user.data.role) : false
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: DatasetDto) {
@@ -118,11 +116,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       }
     },
     onError(error) {
-      toast.error(
-        `Failed to ${
-          isAllowedToPublish ? 'publish' : 'submit'
-        } ${categoryLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${categoryLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -203,34 +197,17 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
       {({ handleSubmit, form, pristine, invalid, submitting }) => {
         return (
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="flex flex-col space-y-12"
-          >
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col space-y-12">
             <MainFormSection diff={diff} />
             <DateFormSection diff={diff} />
             <ActorsFormSection initialValues={{ ...props.item }} diff={diff} />
-            <PropertiesFormSection
-              initialValues={{ ...props.item }}
-              diff={diff}
-            />
+            <PropertiesFormSection initialValues={{ ...props.item }} diff={diff} />
             <MediaFormSection initialValues={{ ...props.item }} diff={diff} />
-            <ThumbnailFormSection
-              initialValues={{ ...props.item }}
-              diff={diff}
-            />
-            <RelatedItemsFormSection
-              initialValues={{ ...props.item }}
-              diff={diff}
-            />
+            <ThumbnailFormSection initialValues={{ ...props.item }} diff={diff} />
+            <RelatedItemsFormSection initialValues={{ ...props.item }} diff={diff} />
             {isReviewToApprove ? (
               <OtherSuggestedItemVersions
                 category={props.item.category}
@@ -271,11 +248,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                 }}
                 isDisabled={submitting || create.isLoading}
               >
-                {isAllowedToPublish
-                  ? isReviewToApprove
-                    ? 'Approve'
-                    : 'Publish'
-                  : 'Submit'}
+                {isAllowedToPublish ? (isReviewToApprove ? 'Approve' : 'Publish') : 'Submit'}
               </Button>
             </div>
           </form>
