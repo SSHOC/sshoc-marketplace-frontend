@@ -72,6 +72,9 @@ export function DiffField(props: DiffFieldProps): JSX.Element {
   )
 }
 
+/**
+ * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/152#note_565636
+ */
 function getStatus(
   approvedValue: unknown,
   suggestedValue: unknown,
