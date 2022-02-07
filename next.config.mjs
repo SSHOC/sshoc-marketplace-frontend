@@ -1,5 +1,6 @@
 /* @ts-expect-error Missing module declaration. */
 import createBundleAnalyzerPlugin from '@next/bundle-analyzer'
+/* @ts-expect-error Missing module declaration. */
 import createSvgPlugin from '@stefanprobst/next-svg'
 import withParsedFrontmatter from '@stefanprobst/remark-extract-yaml-frontmatter'
 import withParsedFrontmatterExport from '@stefanprobst/remark-extract-yaml-frontmatter/mdx'
@@ -72,7 +73,7 @@ const nextConfig = {
       exclude: /node_modules/,
     })
 
-    config.module.rules.push({
+    config.module?.rules?.push({
       test: /\.mdx?$/,
       use: [
         context.defaultLoaders.babel,
