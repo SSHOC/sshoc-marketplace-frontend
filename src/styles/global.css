@@ -34,27 +34,27 @@ body {
 }
 
 .metadata-table th[scope='rowgroup'] {
-  font-weight: 500;
   padding-block: 8px;
+  border-color: hsl(0deg 0% 92.5%);
   border-top: 1px solid;
-  border-color: hsl(0, 0%, 92.5%);
-  background: #fcfcfc;
+  background: hsl(0deg 0% 99%);
+  font-weight: 500;
 }
 
 .metadata-table th[scope='row'] {
+  border-color: hsl(0deg 0% 93%);
+  border-right: 1px solid;
   font-weight: 400;
   font-style: italic;
-  border-right: 1px solid;
-  border-color: hsl(0, 0%, 92.5%);
 }
 
 .metadata-table td[colspan] {
-  text-align: center;
-  background: #f5f5f5;
-  border-left: 1px solid;
-  border-right: 1px solid;
-  border-color: hsl(0, 0%, 92.5%);
-  font-size: 12px;
-  padding-inline: 4px;
   vertical-align: middle;
+  padding-inline: 4px;
+  border-color: hsl(0deg 0% 92.5%);
+  border-right: 1px solid;
+  border-left: 1px solid;
+  background: hsl(0deg 0% 96%);
+  font-size: 12px;
+  text-align: center;
 }

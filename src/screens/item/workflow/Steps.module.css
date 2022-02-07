@@ -1,8 +1,8 @@
 .layout {
   display: grid;
+  grid-template-columns: 1fr;
   grid-column: 2 / -2;
   padding-inline: 24px;
-  grid-template-columns: 1fr;
 }
 
 .leftBleed {
@@ -17,12 +17,12 @@
 
 @media (min-width: 1024px) {
   .layout {
-    padding-inline: 0;
-    grid-column: 1 / span 9;
     grid-template-columns: calc(50vw - (var(--screen-3xl) / 2)) repeat(
         8,
         minmax(0, calc(var(--screen, var(--screen-3xl)) / 12))
       );
+    grid-column: 1 / span 9;
+    padding-inline: 0;
   }
 
   .content {

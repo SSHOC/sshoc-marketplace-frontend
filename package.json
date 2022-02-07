@@ -227,6 +227,10 @@
     "pre-push": "yarn run validate"
   },
   "stylelint": {
-    "extends": "@stefanprobst/stylelint-config"
+    "extends": "@stefanprobst/stylelint-config",
+    "rules": {
+      "block-no-empty": null,
+      "selector-class-pattern": null
+    }
   }
 }
