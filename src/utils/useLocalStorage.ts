@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { JSON } from '@/utils/ts/json'
+import type { JsonSerializable } from '@/utils/ts/json'
 
 type ValueOrSetter<T> = T | ((previousValue: T) => T)
 
 /**
  * Synchronizes state to local storage.
  */
-export function useLocalStorage<T extends JSON>(
+export function useLocalStorage<T extends JsonSerializable>(
   key: string,
   initialValue: T,
   onChange?: () => void,

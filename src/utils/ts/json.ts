@@ -1,2 +1,8 @@
 /** JSON serializable */
-export type JSON = Array<JSON> | boolean | number | string | { [key: string]: JSON } | null
+export type JsonSerializable =
+  | Array<JsonSerializable>
+  | boolean
+  | number
+  | string
+  | { [key: string]: JsonSerializable }
+  | null
