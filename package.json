@@ -11,6 +11,7 @@
     "dev": "next dev",
     "format": "prettier . --list-different --ignore-path .gitignore",
     "format:fix": "yarn run format --write",
+    "lint": "yarn run lint:code && yarn run lint:style",
     "lint:code": "eslint . --cache --cache-location .next/cache/eslint/ --ignore-path .gitignore",
     "lint:code:fix": "yarn run lint:code --fix",
     "lint:style": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
