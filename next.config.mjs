@@ -1,6 +1,6 @@
-const createBundleAnalyzerPlugin = require('@next/bundle-analyzer')
-const createSvgPlugin = require('@stefanprobst/next-svg')
-const createPrevalPlugin = require('next-plugin-preval/config')
+import createBundleAnalyzerPlugin from '@next/bundle-analyzer'
+import createSvgPlugin from '@stefanprobst/next-svg'
+import createPrevalPlugin from 'next-plugin-preval/config.js'
 
 const withBundleAnalyzer = createBundleAnalyzerPlugin({
   enabled: process.env.ANALYZE === 'true',
@@ -12,11 +12,7 @@ const withMdx = (nextConfig = {}) => {
     webpack(config, options) {
       config.module.rules.push({
         test: /\.mdx?$/,
-        use: [
-          options.defaultLoaders.babel,
-          require.resolve('@mdx-js/loader'),
-          require.resolve('./frontmatter'),
-        ],
+        use: [options.defaultLoaders.babel, '@mdx-js/loader', './frontmatter'],
       })
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options)
@@ -84,4 +80,4 @@ const nextConfig = {
 
 const plugins = [withBundleAnalyzer, withMdx, withSvg, withPreval]
 
-module.exports = plugins.reduce((acc, plugin) => plugin(acc), nextConfig)
+export default plugins.reduce((acc, plugin) => plugin(acc), nextConfig)

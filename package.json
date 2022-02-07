@@ -191,6 +191,11 @@
       "plugin:jest-dom/recommended",
       "plugin:testing-library/react"
     ],
+    "parserOptions": {
+      "extraFileExtensions": [
+        ".mjs"
+      ]
+    },
     "rules": {
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "error"
