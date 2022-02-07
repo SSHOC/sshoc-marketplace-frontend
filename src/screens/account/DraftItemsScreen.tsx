@@ -65,10 +65,7 @@ export default function DraftItemsScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="My draft items" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -154,13 +151,7 @@ function DraftItem(props: DraftItemProps) {
             <Link
               passHref
               href={{
-                pathname: [
-                  '',
-                  category,
-                  item.persistentId,
-                  'draft',
-                  'edit',
-                ].join('/'),
+                pathname: ['', category, item.persistentId, 'draft', 'edit'].join('/'),
               }}
             >
               <Anchor className="cursor-default text-ui-base">Edit</Anchor>
@@ -222,7 +213,9 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     'modified-on': 'last modification',
   }
 
-  const items = draftItemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = draftItemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -231,11 +224,13 @@ function ItemSortOrder(props: ItemSortOrderProps) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -308,11 +303,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -373,11 +364,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -404,11 +391,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -441,11 +424,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -456,9 +435,7 @@ function NextPageLink({
   )
 }
 
-function sanitizeQuery(
-  params?: ParsedUrlQuery,
-): GetMyDraftItems.QueryParameters {
+function sanitizeQuery(params?: ParsedUrlQuery): GetMyDraftItems.QueryParameters {
   if (params === undefined) return {}
 
   const sanitized = []

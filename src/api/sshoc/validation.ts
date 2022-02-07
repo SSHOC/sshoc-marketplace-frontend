@@ -7,11 +7,7 @@
 
 import type { ParsedUrlQuery } from 'querystring'
 
-import type {
-  ItemCategory,
-  ItemSearchQuery,
-  ItemSortOrder,
-} from '@/api/sshoc/types'
+import type { ItemCategory, ItemSearchQuery, ItemSortOrder } from '@/api/sshoc/types'
 import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 
@@ -29,11 +25,7 @@ export const itemCategories: Array<Exclude<ItemCategory, 'step'>> = [
 /**
  * Item sort order.
  */
-export const itemSortOrders: Array<ItemSortOrder> = [
-  'score',
-  'label',
-  'modified-on',
-]
+export const itemSortOrders: Array<ItemSortOrder> = ['score', 'label', 'modified-on']
 
 /**
  * Default item sort order.
@@ -43,9 +35,7 @@ export const defaultItemSortOrder: ItemSortOrder = 'score'
 /**
  * Sanitize item search query.
  */
-export function sanitizeItemSearchQuery(
-  params?: ParsedUrlQuery,
-): ItemSearchQuery {
+export function sanitizeItemSearchQuery(params?: ParsedUrlQuery): ItemSearchQuery {
   if (params === undefined) return {}
 
   const sanitized = []
@@ -56,20 +46,18 @@ export function sanitizeItemSearchQuery(
   }
 
   if (params.categories !== undefined) {
-    const categories = ensureArray(
-      params.categories,
-    ).filter((category): category is ItemCategory =>
-      (itemCategories as Array<string>).includes(category),
+    const categories = ensureArray(params.categories).filter(
+      (category): category is ItemCategory => {
+        return (itemCategories as Array<string>).includes(category)
+      },
     )
     sanitized.push(['categories', categories])
   }
 
   if (params.order !== undefined) {
-    const order = ensureArray(
-      params.order,
-    ).filter((sortOrder): sortOrder is ItemSortOrder =>
-      (itemSortOrders as Array<string>).includes(sortOrder),
-    )
+    const order = ensureArray(params.order).filter((sortOrder): sortOrder is ItemSortOrder => {
+      return (itemSortOrders as Array<string>).includes(sortOrder)
+    })
     sanitized.push(['order', order])
   }
 

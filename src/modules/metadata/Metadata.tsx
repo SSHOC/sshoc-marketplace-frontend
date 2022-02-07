@@ -2,7 +2,7 @@ import type { PageMetadataProps } from '@stefanprobst/next-page-metadata'
 import Meta from '@stefanprobst/next-page-metadata'
 
 import { useCanonicalUrl } from '@/modules/metadata/useCanonicalUrl'
-import metadata from '@@/config/metadata.json'
+import metadata from '~/config/metadata.json'
 
 const {
   description: siteDescription,

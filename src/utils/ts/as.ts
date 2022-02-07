@@ -1,10 +1,10 @@
+/* eslint-disable */
+
 /**
  * Typescript helpers for polymorphic components with `as` prop.
  *
  * @see https://codesandbox.io/s/typescript-as-prop-dicj8
  */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as React from 'react'
 
@@ -23,7 +23,7 @@ type As<Props = any> = React.ElementType<Props>
  * type Test = PropsWithAs<{ prop: string }, 'a'>['href']
  */
 export type PropsWithAs<Props = unknown, Type extends As = As> = Props &
-  Omit<React.ComponentProps<Type>, 'as' | keyof Props> & {
+  Omit<React.ComponentProps<Type>, keyof Props | 'as'> & {
     as?: Type
   }
 
@@ -55,8 +55,5 @@ export type ComponentWithAs<Props, DefaultType extends As> = {
 export function forwardRefWithAs<Props, DefaultType extends As>(
   component: React.ForwardRefRenderFunction<any, any>,
 ): ComponentWithAs<Props, DefaultType> {
-  return (React.forwardRef(component) as unknown) as ComponentWithAs<
-    Props,
-    DefaultType
-  >
+  return React.forwardRef(component) as unknown as ComponentWithAs<Props, DefaultType>
 }

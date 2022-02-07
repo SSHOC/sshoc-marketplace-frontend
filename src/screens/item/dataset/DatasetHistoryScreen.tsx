@@ -17,13 +17,9 @@ import { ItemHistory } from '@/screens/item/ItemHistory'
 export default function DatasetHistoryScreen(): JSX.Element {
   const router = useRouter()
 
-  const id = router.query.id as string | undefined
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const dataset = useGetDataset(
-    { persistentId: id! },
-    {},
-    { enabled: id != null },
-  )
+  const id = router.query['id'] as string | undefined
+
+  const dataset = useGetDataset({ persistentId: id! }, {}, { enabled: id != null })
 
   return (
     <Fragment>
@@ -54,7 +50,7 @@ export default function DatasetHistoryScreen(): JSX.Element {
         </Header>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Dataset version history</Title>
-          {dataset.data === undefined || id == undefined ? (
+          {dataset.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

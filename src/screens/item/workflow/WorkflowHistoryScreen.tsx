@@ -17,13 +17,8 @@ import { ItemHistory } from '@/screens/item/ItemHistory'
 export default function WorkflowHistoryScreen(): JSX.Element {
   const router = useRouter()
 
-  const id = router.query.id as string | undefined
-  const workflow = useGetWorkflow(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { persistentId: id! },
-    {},
-    { enabled: id != null },
-  )
+  const id = router.query['id'] as string | undefined
+  const workflow = useGetWorkflow({ persistentId: id! }, {}, { enabled: id != null })
 
   return (
     <Fragment>
@@ -54,7 +49,7 @@ export default function WorkflowHistoryScreen(): JSX.Element {
         </Header>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Workflow version history</Title>
-          {workflow.data === undefined || id == undefined ? (
+          {workflow.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

@@ -11,10 +11,10 @@ export function ensureIsoDates<
   T extends
     | DatasetCore
     | PublicationCore
+    | StepCore
     | ToolCore
     | TrainingMaterialCore
-    | WorkflowCore
-    | StepCore
+    | WorkflowCore,
 >(values: T): T {
   if ('dateCreated' in values) {
     if (values.dateCreated != null && values.dateCreated.length > 0) {

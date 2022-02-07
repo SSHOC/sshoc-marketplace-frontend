@@ -33,7 +33,7 @@ import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
-import { Svg as Logo } from '@@/assets/images/logo-with-text.svg'
+import { Svg as Logo } from '~/assets/images/logo-with-text.svg'
 
 type Pages = Array<{
   pathname: string

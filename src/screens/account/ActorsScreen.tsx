@@ -8,12 +8,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { ActorCore, ActorDto, SearchActors } from '@/api/sshoc'
-import {
-  useCreateActor,
-  useDeleteActor,
-  useSearchActors,
-  useUpdateActor,
-} from '@/api/sshoc'
+import { useCreateActor, useDeleteActor, useSearchActors, useUpdateActor } from '@/api/sshoc'
 import {
   CreateActorForm as AddActorForm,
   sanitizeActorFormValues as sanitizeFormValues,
@@ -79,10 +74,7 @@ export default function ActorsScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Actors" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -99,10 +91,7 @@ export default function ActorsScreen(): JSX.Element {
             <Title>
               Actors
               {actors.data != null ? (
-                <span className="text-xl font-normal">
-                  {' '}
-                  ({actors.data.hits})
-                </span>
+                <span className="text-xl font-normal"> ({actors.data.hits})</span>
               ) : null}
             </Title>
             <AddActorButton />
@@ -150,9 +139,7 @@ function Actor(props: ActorProps) {
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
       <div className="flex items-center justify-between">
         <h2 className="space-x-4">
-          <span className="text-base font-bold transition text-primary-750">
-            {actor.name}
-          </span>
+          <span className="text-base font-bold transition text-primary-750">{actor.name}</span>
           {actor.email != null ? (
             <Anchor href={`mailto:${actor.email}`} className="text-primary-750">
               {actor.email}
@@ -175,8 +162,7 @@ function Actor(props: ActorProps) {
               </a>
             </div>
           ) : null}
-          {Array.isArray(actor.affiliations) &&
-          actor.affiliations.length > 0 ? (
+          {Array.isArray(actor.affiliations) && actor.affiliations.length > 0 ? (
             <div className="space-x-1.5">
               <span className="text-gray-550">Affiliations:</span>
               <span>
@@ -191,7 +177,7 @@ function Actor(props: ActorProps) {
         </div>
         <div className="flex space-x-4 text-sm text-primary-750">
           <ProtectedView roles={['administrator']}>
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+            {}
             <DeleteActorButton id={actor.id!} />
           </ProtectedView>
           <EditActorButton actor={actor} />
@@ -310,11 +296,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -375,11 +357,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -406,11 +384,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -443,11 +417,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -513,10 +483,7 @@ function AddActorButton() {
   })
 
   function onSubmit(actor: ActorCore) {
-    addActor.mutate([
-      sanitizeFormValues(actor),
-      { token: auth.session?.accessToken },
-    ])
+    addActor.mutate([sanitizeFormValues(actor), { token: auth.session?.accessToken }])
   }
 
   return (
@@ -583,7 +550,6 @@ function EditActorButton(props: EditActorButtonProps) {
 
   function onSubmit(actor: ActorCore) {
     editActor.mutate([
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       { id: props.actor.id! },
       sanitizeFormValues(actor),
       { token: auth.session?.accessToken },
@@ -696,10 +662,11 @@ function convertToFormValues(actor: ActorDto): ActorCore {
     name: actor.name!,
     email: actor.email,
     website: actor.website,
-    affiliations: actor.affiliations?.map(({ id }) => ({ id })),
+    affiliations: actor.affiliations?.map(({ id }) => {
+      return { id }
+    }),
     externalIds: actor.externalIds?.map((externalId) => {
       return {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         identifier: externalId.identifier!,
         identifierService: { code: externalId.identifierService?.code },
       }

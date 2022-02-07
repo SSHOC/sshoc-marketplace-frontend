@@ -8,8 +8,7 @@ import DocumentIcon from '@/elements/icons/small/document.svg'
 import type { TextFieldProps } from '@/elements/TextField/TextField'
 import { useErrorMessage } from '@/modules/a11y/useErrorMessage'
 
-export interface FileInputProps
-  extends Omit<TextFieldProps, 'type' | 'onChange'> {
+export interface FileInputProps extends Omit<TextFieldProps, 'onChange' | 'type'> {
   accept?: string
   multiple?: boolean
   onChange?: (files: FileList | null) => void
@@ -29,7 +28,9 @@ export function FileInput(props: FileInputProps): JSX.Element {
     const files = event.currentTarget.files
     setFiles(files)
     // FileList is being mutated, so we force rerender
-    forceRender((v) => !v)
+    forceRender((v) => {
+      return !v
+    })
     props.onChange?.(files)
   }
 

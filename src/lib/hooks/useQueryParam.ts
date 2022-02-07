@@ -4,10 +4,7 @@ import { useMemo } from 'react'
 import { getQueryParam } from '@/lib/hooks/getQueryParam'
 
 export function useQueryParam(name: string, multiple: false): string | undefined
-export function useQueryParam(
-  name: string,
-  multiple: true,
-): Array<string> | undefined
+export function useQueryParam(name: string, multiple: true): Array<string> | undefined
 export function useQueryParam<T>(
   name: string,
   multiple: false,
@@ -30,7 +27,7 @@ export function useQueryParam<T>(
   name: string,
   multiple: boolean,
   transform?: (value: string) => T,
-): string | Array<string> | T | Array<T> | undefined {
+): Array<string> | Array<T> | T | string | undefined {
   const router = useRouter()
 
   const value = useMemo(() => {

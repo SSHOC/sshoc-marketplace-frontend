@@ -9,7 +9,7 @@ import Header from '@/modules/ui/Header'
 import LastUpdatedAt from '@/modules/ui/LastUpdatedAt'
 import { Title } from '@/modules/ui/typography/Title'
 import type { PageProps } from '@/pages/privacy-policy/index'
-import Content, { metadata } from '@@/content/pages/privacy-policy.mdx'
+import Content, { metadata } from '~/content/pages/privacy-policy.mdx'
 
 type ContentMetadata = {
   title: string

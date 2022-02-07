@@ -8,7 +8,7 @@ export default function ProtectedView({
   children,
   roles,
 }: PropsWithChildren<{
-  roles?: Array<'contributor' | 'moderator' | 'administrator'>
+  roles?: Array<'administrator' | 'contributor' | 'moderator'>
 }>): JSX.Element | null {
   const { session } = useAuth()
   const user = useCurrentUser()

@@ -4,10 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useMemo } from 'react'
 
-import {
-  useSignInUser,
-  useValidateImplicitGrantTokenWithoutRegistration,
-} from '@/api/sshoc/client'
+import { useSignInUser, useValidateImplicitGrantTokenWithoutRegistration } from '@/api/sshoc/client'
 import { Button } from '@/elements/Button/Button'
 import { toast } from '@/elements/Toast/useToast'
 import { useAuth } from '@/modules/auth/AuthContext'
@@ -22,7 +19,7 @@ import styles from '@/screens/auth/SignInScreen.module.css'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
-import { Svg as EoscLogo } from '@@/assets/icons/eosc.svg'
+import { Svg as EoscLogo } from '~/assets/icons/eosc.svg'
 
 /**
  * Sign in screen.
@@ -46,20 +43,15 @@ export default function SignInScreen(): JSX.Element {
             <hr className="border-gray-200" />
             <p>
               Sign in with EOSC using existing accounts such as{' '}
-              <span className="font-bold">Google</span>,{' '}
-              <span className="font-bold">Dariah</span>,{' '}
-              <span className="font-bold">eduTEAMS</span> and multiple academic
-              accounts.
+              <span className="font-bold">Google</span>, <span className="font-bold">Dariah</span>,{' '}
+              <span className="font-bold">eduTEAMS</span> and multiple academic accounts.
             </p>
             <EoscLoginLink />
             <div className="flex items-baseline space-x-4">
               <span className="text-xl font-bold">or</span>
               <span className="flex-1 border-b border-gray-200" />
             </div>
-            <p>
-              Sign in with a local account is used by maintainers to manage the
-              website.
-            </p>
+            <p>Sign in with a local account is used by maintainers to manage the website.</p>
             <SignInForm />
             <div className="flex items-baseline space-x-4">
               {/* <span className="text-xl font-bold">or</span> */}
@@ -117,15 +109,12 @@ function SignInForm() {
       onSuccess({ token }) {
         if (token !== null) {
           auth.signIn(token)
-          router.replace(
-            getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/',
-          )
+          router.replace(getRedirectPath(getScalarQueryParameter(router.query.from)) ?? '/')
         }
       },
       onError(error) {
         const message =
-          (error instanceof Error && error.message) ||
-          'An unexpected error has occurred.'
+          (error instanceof Error && error.message) || 'An unexpected error has occurred.'
         toast.error(message)
       },
     })
@@ -150,13 +139,7 @@ function SignInForm() {
       {({ handleSubmit, pristine, submitting, invalid }) => {
         return (
           <VStack as="form" onSubmit={handleSubmit} className="space-y-5">
-            <FormTextField
-              name="username"
-              label="Username"
-              isRequired
-              variant="form"
-              size="lg"
-            />
+            <FormTextField name="username" label="Username" isRequired variant="form" size="lg" />
             <FormTextField
               name="password"
               label="Password"
@@ -220,19 +203,14 @@ function useValidateToken() {
         },
         onError(error) {
           const message =
-            (error instanceof Error && error.message) ||
-            'An unexpected error has occurred.'
+            (error instanceof Error && error.message) || 'An unexpected error has occurred.'
           toast.error(message)
         },
       })
       /** remove token fragment from url */
-      router.replace(
-        { pathname: url.pathname, query: url.search.slice(1) },
-        undefined,
-        {
-          shallow: true,
-        },
-      )
+      router.replace({ pathname: url.pathname, query: url.search.slice(1) }, undefined, {
+        shallow: true,
+      })
     }
   }, [router, auth, validateToken, status])
 
@@ -245,10 +223,8 @@ function useValidateToken() {
 function EoscLoginLink() {
   const router = useRouter()
   const url = useMemo(() => {
-    const backendBaseUrl =
-      process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL ?? 'http://localhost:8080'
-    const frontEndBaseUrl =
-      process.env.NEXT_PUBLIC_SSHOC_BASE_URL ?? 'http://localhost:3000'
+    const backendBaseUrl = process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL ?? 'http://localhost:8080'
+    const frontEndBaseUrl = process.env.NEXT_PUBLIC_SSHOC_BASE_URL ?? 'http://localhost:3000'
 
     const eoscAuthLink = new URL('/oauth2/authorize/eosc', backendBaseUrl)
 
@@ -263,18 +239,9 @@ function EoscLoginLink() {
       registrationRedirectUrl.searchParams.set('from', from)
     }
 
-    eoscAuthLink.searchParams.set(
-      'success-redirect-url',
-      String(successRedirectUrl),
-    )
-    eoscAuthLink.searchParams.set(
-      'failure-redirect-url',
-      String(failureRedirectUrl),
-    )
-    eoscAuthLink.searchParams.set(
-      'registration-redirect-url',
-      String(registrationRedirectUrl),
-    )
+    eoscAuthLink.searchParams.set('success-redirect-url', String(successRedirectUrl))
+    eoscAuthLink.searchParams.set('failure-redirect-url', String(failureRedirectUrl))
+    eoscAuthLink.searchParams.set('registration-redirect-url', String(registrationRedirectUrl))
 
     return String(eoscAuthLink)
   }, [router])

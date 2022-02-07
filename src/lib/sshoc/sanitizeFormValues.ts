@@ -11,35 +11,32 @@ export function sanitizeFormValues<
   T extends
     | DatasetCore
     | PublicationCore
+    | StepCore
     | ToolCore
     | TrainingMaterialCore
-    | WorkflowCore
-    | StepCore
+    | WorkflowCore,
 >(values: T): T {
   /**
    * Backend crashes with `[null]`
    */
-  /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-  values.accessibleAt = values.accessibleAt?.filter(
-    (v) => v != null && v.length > 0,
-  )
-  values.contributors = values.contributors?.filter(
-    (v) => v != null && v.role != null && v.actor != null,
-  )
-  values.properties = values.properties?.filter(
-    (v) =>
-      v != null && v.type != null && (v.concept != null || v.value != null),
-  )
-  values.relatedItems = values.relatedItems?.filter(
-    (v) => v != null && v.persistentId != null && v.relation != null,
-  )
-  values.externalIds = values.externalIds?.filter(
-    (v) =>
-      v != null &&
-      v.identifier != null &&
-      v.identifier.length > 0 &&
-      v.identifierService != null,
-  )
+
+  values.accessibleAt = values.accessibleAt?.filter((v) => {
+    return v != null && v.length > 0
+  })
+  values.contributors = values.contributors?.filter((v) => {
+    return v != null && v.role != null && v.actor != null
+  })
+  values.properties = values.properties?.filter((v) => {
+    return v != null && v.type != null && (v.concept != null || v.value != null)
+  })
+  values.relatedItems = values.relatedItems?.filter((v) => {
+    return v != null && v.persistentId != null && v.relation != null
+  })
+  values.externalIds = values.externalIds?.filter((v) => {
+    return (
+      v != null && v.identifier != null && v.identifier.length > 0 && v.identifierService != null
+    )
+  })
   /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
   /**
@@ -50,10 +47,12 @@ export function sanitizeFormValues<
   }
 
   if (Array.isArray(values.media) && values.media.length > 0) {
-    values.media = values.media.map((m) => ({
-      caption: m.caption,
-      info: { mediaId: m.info?.mediaId },
-    }))
+    values.media = values.media.map((m) => {
+      return {
+        caption: m.caption,
+        info: { mediaId: m.info?.mediaId },
+      }
+    })
   }
 
   if (values.thumbnail != null && values.thumbnail.info?.mediaId != null) {

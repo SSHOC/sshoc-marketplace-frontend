@@ -12,9 +12,7 @@ import Steps from '@/screens/item/workflow/Steps'
 /**
  * Workflow screen.
  */
-export default function WorkflowScreen({
-  workflow: initialData,
-}: PageProps): JSX.Element {
+export default function WorkflowScreen({ workflow: initialData }: PageProps): JSX.Element {
   /** token is used to get hidden properties */
   const auth = useAuth()
 
@@ -47,16 +45,24 @@ export default function WorkflowScreen({
             description: workflow.description,
             url: workflow.accessibleAt,
             about: workflow.properties
-              .filter((property) => property.type.code === 'keyword')
-              .map((property) => property.value),
+              .filter((property) => {
+                return property.type.code === 'keyword'
+              })
+              .map((property) => {
+                return property.value
+              }),
             license,
             version: workflow.version,
-            contributor: workflow.contributors.map(
-              (contributor) => contributor.actor.name,
-            ),
+            contributor: workflow.contributors.map((contributor) => {
+              return contributor.actor.name
+            }),
             inLanguage: workflow.properties
-              .filter((property) => property.type.code === 'language')
-              .map((property) => property.concept.label),
+              .filter((property) => {
+                return property.type.code === 'language'
+              })
+              .map((property) => {
+                return property.concept.label
+              }),
             // step => composedOf
           }}
         />

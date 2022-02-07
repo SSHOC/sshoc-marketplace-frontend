@@ -31,9 +31,9 @@ export interface SelectProps<T> extends AriaSelectProps<T> {
   shouldFocusWrap?: boolean
   hideSelectionIcon?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form' | 'form-diff'
+  variant?: 'default' | 'form-diff' | 'form' | 'search'
   /** @default "medium" */
-  size?: 'small' | 'medium'
+  size?: 'medium' | 'small'
   isReadOnly?: boolean
   style?: CSSProperties
 }
@@ -41,24 +41,18 @@ export interface SelectProps<T> extends AriaSelectProps<T> {
 /**
  * Select.
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+
 export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
   const state = useSelectState<T>(props)
   const ref = useRef<HTMLButtonElement>(null)
-  const { labelProps, menuProps, triggerProps, valueProps } = useSelect<T>(
-    props,
-    state,
-    ref,
-  )
+  const { labelProps, menuProps, triggerProps, valueProps } = useSelect<T>(props, state, ref)
   const { buttonProps } = useButton(triggerProps, ref)
   const { fieldProps, errorMessageProps } = useErrorMessage(props)
   const t = useMessageFormatter(dictionary)
 
   const placeholder = props.placeholder ?? t('placeholder')
-  /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
-  const textValue = state.selectedItem
-    ? state.selectedItem.rendered
-    : placeholder
+  /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
+  const textValue = state.selectedItem ? state.selectedItem.rendered : placeholder
 
   const isLoading = props.isLoading === true
   const isLoadingInitial = isLoading && state.collection.size === 0
@@ -81,7 +75,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
     default: {
       button: cx('hover:bg-gray-90', state.isOpen ? 'bg-gray-90' : 'bg-white'),
       value: cx(
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'text-gray-350',
       ),
       iconContainer: cx('border-gray-300', state.isOpen && 'bg-white'),
@@ -90,7 +84,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
     search: {
       button: cx('hover:bg-gray-90', state.isOpen ? 'bg-gray-90' : 'bg-white'),
       value: cx(
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'text-gray-350',
       ),
       iconContainer: cx('border-gray-300', state.isOpen && 'bg-white'),
@@ -99,45 +93,33 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
     form: {
       button: cx(
         'hover:border-secondary-600 focus:bg-highlight-75 focus:border-secondary-600',
-        state.isOpen
-          ? 'bg-highlight-75 border-secondary-600'
-          : 'bg-gray-75 hover:bg-white',
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        state.isOpen ? 'bg-highlight-75 border-secondary-600' : 'bg-gray-75 hover:bg-white',
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'group',
       ),
       value: cx(
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem &&
-          (state.isOpen
-            ? 'text-highlight-300'
-            : 'text-gray-350 group-focus:text-highlight-300'),
+          (state.isOpen ? 'text-highlight-300' : 'text-gray-350 group-focus:text-highlight-300'),
       ),
       iconContainer: 'border-transparent',
-      icon: state.isOpen
-        ? 'text-primary-750'
-        : 'text-gray-800 hover:text-primary-750',
+      icon: state.isOpen ? 'text-primary-750' : 'text-gray-800 hover:text-primary-750',
     },
     'form-diff': {
       button: cx(
         'bg-[#EAFBFF] border border-[#92BFF5]',
         'hover:border-secondary-600 focus:bg-highlight-75 focus:border-secondary-600',
-        state.isOpen
-          ? 'bg-highlight-75 border-secondary-600'
-          : 'bg-gray-75 hover:bg-white',
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        state.isOpen ? 'bg-highlight-75 border-secondary-600' : 'bg-gray-75 hover:bg-white',
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'group',
       ),
       value: cx(
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem &&
-          (state.isOpen
-            ? 'text-highlight-300'
-            : 'text-gray-350 group-focus:text-highlight-300'),
+          (state.isOpen ? 'text-highlight-300' : 'text-gray-350 group-focus:text-highlight-300'),
       ),
       iconContainer: 'border-transparent',
-      icon: state.isOpen
-        ? 'text-primary-750'
-        : 'text-gray-800 hover:text-primary-750',
+      icon: state.isOpen ? 'text-primary-750' : 'text-gray-800 hover:text-primary-750',
     },
   }
 
@@ -159,10 +141,7 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
   const variant = variants[props.variant ?? 'default']
   const size = sizes[props.size ?? 'medium']
   const styles = {
-    container: cx(
-      'relative inline-flex',
-      props.isReadOnly === true && 'pointer-events-none',
-    ),
+    container: cx('relative inline-flex', props.isReadOnly === true && 'pointer-events-none'),
     button: cx(
       'cursor-default',
       'font-body font-normal text-gray-800 inline-flex items-center justify-between focus:outline-none',
@@ -170,23 +149,13 @@ export function Select<T extends object>(props: SelectProps<T>): JSX.Element {
       variant.button,
       size.button,
     ),
-    value: cx(
-      'flex-1 text-left',
-      isLoadingInitial && 'pr-0',
-      variant.value,
-      size.value,
-    ),
+    value: cx('flex-1 text-left', isLoadingInitial && 'pr-0', variant.value, size.value),
     iconContainer: cx(
       'transition self-stretch inline-flex items-center justify-center border-l',
       variant.iconContainer,
       size.iconContainer,
     ),
-    icon: cx(
-      'transition transform',
-      state.isOpen && 'rotate-180',
-      variant.icon,
-      size.icon,
-    ),
+    icon: cx('transition transform', state.isOpen && 'rotate-180', variant.icon, size.icon),
     spinnerContainer: 'inline-flex items-center justify-center',
     spinner: 'w-4 h-4 text-primary-750',
   }
@@ -261,7 +230,7 @@ interface ListBoxProps<T> {
   shouldFocusWrap?: boolean
   hideSelectionIcon?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form' | 'form-diff'
+  variant?: 'default' | 'form-diff' | 'form' | 'search'
 }
 
 /**
@@ -269,7 +238,7 @@ interface ListBoxProps<T> {
  *
  * @private
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+
 function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
   const { state, menuProps } = props
 
@@ -278,7 +247,7 @@ function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
     {
       ...(menuProps as any),
       shouldFocusWrap: props.shouldFocusWrap,
-      /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
+
       autoFocus: state.focusStrategy || true,
       disallowEmptySelection: true,
     },

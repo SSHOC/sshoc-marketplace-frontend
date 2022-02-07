@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import type { JSON } from '@/utils/ts/json'
+import { JSON } from '@/utils/ts/json'
 
 type ValueOrSetter<T> = T | ((previousValue: T) => T)
 
@@ -36,8 +36,7 @@ export function useLocalStorage<T extends JSON>(
   const setValue = useCallback(
     function setValue(value: ValueOrSetter<T>) {
       setStoredValue((previousValue) => {
-        const newValue =
-          typeof value === 'function' ? value(previousValue) : value
+        const newValue = typeof value === 'function' ? value(previousValue) : value
 
         setItem(key, newValue)
         setStoredValue(newValue)

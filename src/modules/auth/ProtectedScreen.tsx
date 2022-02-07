@@ -10,7 +10,7 @@ export default function ProtectedScreen({
   children,
   roles,
 }: PropsWithChildren<{
-  roles?: Array<'contributor' | 'moderator' | 'administrator'>
+  roles?: Array<'administrator' | 'contributor' | 'moderator'>
 }>): JSX.Element | null {
   const router = useRouter()
   const { session, hasCheckedLocalStorage } = useAuth()
@@ -40,7 +40,7 @@ export default function ProtectedScreen({
 }
 
 function hasAppropriateRole(
-  roles?: Array<'contributor' | 'moderator' | 'administrator'>,
+  roles?: Array<'administrator' | 'contributor' | 'moderator'>,
   user?: UserDto,
 ) {
   if (Array.isArray(roles)) {

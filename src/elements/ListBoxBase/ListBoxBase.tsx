@@ -21,7 +21,7 @@ export interface ListBoxBaseProps<T> extends AsyncLoadable {
   shouldFocusOnHover?: boolean
   shouldUseVirtualFocus?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'form' | 'search'
   hideSelectionIcon?: boolean
 }
 
@@ -30,18 +30,15 @@ export interface ListBoxBaseProps<T> extends AsyncLoadable {
  *
  * @private
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
-export function ListBoxBase<T extends object>(
-  props: ListBoxBaseProps<T>,
-): JSX.Element {
+
+export function ListBoxBase<T extends object>(props: ListBoxBaseProps<T>): JSX.Element {
   const { state, listBoxProps, listBoxRef } = props
 
   const isDisabled = props.isDisabled === true
   const isLoading = props.isLoading === true
 
   const items = Array.from(state.collection)
-  const placeholder =
-    state.collection.size === 0 ? props.placeholder : undefined
+  const placeholder = state.collection.size === 0 ? props.placeholder : undefined
 
   const variant = props.variant ?? 'default'
 
@@ -51,8 +48,7 @@ export function ListBoxBase<T extends object>(
       'py-2 max-h-64 border border-gray-300 rounded overflow-x-hidden overflow-y-auto flex flex-col bg-white focus:outline-none',
       variant === 'search' ? '' : '',
     ),
-    placeholder:
-      'font-body font-normal text-ui-base px-4 py-2 cursor-default select-none italic',
+    placeholder: 'font-body font-normal text-ui-base px-4 py-2 cursor-default select-none italic',
     loading: 'inline-flex items-center justify-center py-2 text-secondary-600',
     spinner: 'w-4 h-4',
   }
@@ -124,7 +120,7 @@ interface ListBoxItemProps<T> {
   shouldFocusOnHover?: boolean
   shouldUseVirtualFocus?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'form' | 'search'
   hideSelectionIcon?: boolean
 }
 
@@ -137,8 +133,7 @@ function ListBoxItem<T>(props: ListBoxItemProps<T>): JSX.Element {
   const { state, item } = props
 
   const ref = useRef<HTMLLIElement>(null)
-  const isDisabled =
-    state.disabledKeys.has(item.key) || props.isDisabled === true
+  const isDisabled = state.disabledKeys.has(item.key) || props.isDisabled === true
   const isSelected = state.selectionManager.isSelected(item.key)
   const { optionProps } = useOption(
     {
@@ -199,7 +194,7 @@ interface ListBoxSectionProps<T> {
   shouldFocusOnHover?: boolean
   shouldUseVirtualFocus?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'form' | 'search'
   hideSelectionIcon?: boolean
 }
 

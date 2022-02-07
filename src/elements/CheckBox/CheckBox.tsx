@@ -11,7 +11,7 @@ export interface CheckBoxProps extends AriaCheckboxProps {
   validationMessage?: ReactNode
   necessityIndicator?: NecessityIndicator
   /** @default "default" */
-  variant?: 'default' | 'form' | 'facet'
+  variant?: 'default' | 'facet' | 'form'
 }
 
 /**

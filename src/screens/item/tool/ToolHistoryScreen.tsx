@@ -17,8 +17,8 @@ import { ItemHistory } from '@/screens/item/ItemHistory'
 export default function ToolHistoryScreen(): JSX.Element {
   const router = useRouter()
 
-  const id = router.query.id as string | undefined
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const id = router.query['id'] as string | undefined
+
   const tool = useGetTool({ persistentId: id! }, {}, { enabled: id != null })
 
   return (
@@ -50,7 +50,7 @@ export default function ToolHistoryScreen(): JSX.Element {
         </Header>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Tool version history</Title>
-          {tool.data === undefined || id == undefined ? (
+          {tool.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

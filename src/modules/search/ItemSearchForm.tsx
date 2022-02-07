@@ -28,9 +28,7 @@ export interface ItemSearchFormProps {
   onSubmit?: () => void
 }
 
-export default function ItemSearchForm(
-  props: ItemSearchFormProps,
-): JSX.Element {
+export default function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
   const router = useRouter()
   const [category, setCategory] = useState<ItemCategory | undefined>(undefined)
 
@@ -45,9 +43,7 @@ export default function ItemSearchForm(
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const values: SearchFormValues = Object.fromEntries(
-      new FormData(event.currentTarget),
-    )
+    const values: SearchFormValues = Object.fromEntries(new FormData(event.currentTarget))
 
     const query: ItemSearchQuery = {}
 
@@ -102,7 +98,9 @@ export function ItemCategorySelect(): JSX.Element {
       variant="search"
       style={{ flex: 1 }}
     >
-      {(item) => <Select.Item key={item.id}>{item.label}</Select.Item>}
+      {(item) => {
+        return <Select.Item key={item.id}>{item.label}</Select.Item>
+      }}
     </Select>
   )
 }
@@ -113,9 +111,7 @@ export interface ItemSearchComboBoxProps {
   onSubmit?: () => void
 }
 
-export function ItemSearchComboBox(
-  props: ItemSearchComboBoxProps,
-): JSX.Element {
+export function ItemSearchComboBox(props: ItemSearchComboBoxProps): JSX.Element {
   const { category, onSubmit } = useContext(ItemSearchFormContext)
   const router = useRouter()
   const defaultSearchTerm = useQueryParam('q', false)
@@ -144,12 +140,12 @@ export function ItemSearchComboBox(
   )
   const suggestions = items.data?.suggestions ?? []
 
-  const suggestionsById: Record<
-    string,
-    { phrase: string; persistentId: string }
-  > = Object.fromEntries(
-    suggestions.map((suggestion) => [suggestion.persistentId, suggestion]),
-  )
+  const suggestionsById: Record<string, { phrase: string; persistentId: string }> =
+    Object.fromEntries(
+      suggestions.map((suggestion) => {
+        return [suggestion.persistentId, suggestion]
+      }),
+    )
 
   function onSelectionChange(key: Key | null) {
     if (props.shouldSubmitOnSelect === true && key != null) {
@@ -177,20 +173,15 @@ export function ItemSearchComboBox(
       allowsEmptyCollection
       hideSelectionIcon
       hideButton
-      style={
-        props.variant === 'invisible'
-          ? { borderWidth: 0, flex: 1 }
-          : { flex: 1 }
-      }
+      style={props.variant === 'invisible' ? { borderWidth: 0, flex: 1 } : { flex: 1 }}
     >
-      {(item) => (
-        <ComboBox.Item key={item.persistentId} textValue={item.phrase}>
-          <HighlightedText
-            text={item.phrase}
-            searchPhrase={debouncedSearchTerm}
-          />
-        </ComboBox.Item>
-      )}
+      {(item) => {
+        return (
+          <ComboBox.Item key={item.persistentId} textValue={item.phrase}>
+            <HighlightedText text={item.phrase} searchPhrase={debouncedSearchTerm} />
+          </ComboBox.Item>
+        )
+      }}
     </ComboBox>
   )
 }

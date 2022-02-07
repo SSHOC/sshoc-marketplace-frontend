@@ -1,3 +1,3 @@
-export function ensureArray<T extends string>(value: T | Array<T>): Array<T> {
+export function ensureArray<T extends string>(value: Array<T> | T): Array<T> {
   return Array.isArray(value) ? value : [value]
 }

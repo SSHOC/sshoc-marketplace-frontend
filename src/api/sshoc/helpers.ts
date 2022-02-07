@@ -13,17 +13,15 @@ import type {
   WorkflowDto,
 } from '@/api/sshoc'
 import type { Item } from '@/api/sshoc/types'
-import allowedPropertyTypes from '@/utils/propertyTypes.preval'
+import _allowedPropertyTypes from '@/utils/propertyTypes.static'
+
+const allowedPropertyTypes = _allowedPropertyTypes as unknown as Array<string>
 
 export function convertToInitialFormValues(item: DatasetDto): DatasetCore
-export function convertToInitialFormValues(
-  item: PublicationDto,
-): PublicationCore
+export function convertToInitialFormValues(item: PublicationDto): PublicationCore
 export function convertToInitialFormValues(item: StepDto): StepCore
 export function convertToInitialFormValues(item: ToolDto): ToolCore
-export function convertToInitialFormValues(
-  item: TrainingMaterialDto,
-): TrainingMaterialCore
+export function convertToInitialFormValues(item: TrainingMaterialDto): TrainingMaterialCore
 export function convertToInitialFormValues(item: WorkflowDto): WorkflowCore
 
 /**
@@ -31,21 +29,14 @@ export function convertToInitialFormValues(item: WorkflowDto): WorkflowCore
  * i.e. `${ItemCategory}Dto` into `${ItemCategory}Core`.
  */
 export function convertToInitialFormValues(
-  item:
-    | DatasetDto
-    | PublicationDto
-    | StepDto
-    | ToolDto
-    | TrainingMaterialDto
-    | WorkflowDto,
-): (
+  item: DatasetDto | PublicationDto | StepDto | ToolDto | TrainingMaterialDto | WorkflowDto,
+):
   | DatasetCore
-  | PublicationCore
   | StepCore
   | ToolCore
   | TrainingMaterialCore
   | WorkflowCore
-) & { persistentId?: string } {
+  | (PublicationCore & { persistentId?: string }) {
   const initialValues = {
     label: item.label!,
     version: item.version,
@@ -89,7 +80,7 @@ export function convertToInitialFormValues(
      */
     externalIds: item.externalIds?.map((id) => {
       const identifierService = { code: id.identifierService?.code }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       const identifier = id.identifier!
       const externalId = {
         identifier,
@@ -114,10 +105,7 @@ export function convertToInitialFormValues(
     media: item.media,
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  if (
-    ['dataset', 'publication', 'training-material'].includes(item.category!)
-  ) {
+  if (['dataset', 'publication', 'training-material'].includes(item.category!)) {
     // @ts-expect-error items are not discriminated unions
     if (item.dateCreated != null && item.dateCreated.length > 0) {
       // convert to format accepted by html <input type="date">
@@ -134,9 +122,9 @@ export function convertToInitialFormValues(
 
   if (item.category === 'workflow') {
     // @ts-expect-error items are not discriminated unions
-    initialValues.composedOf = item.composedOf?.map((step) =>
-      convertToInitialFormValues(step),
-    )
+    initialValues.composedOf = item.composedOf?.map((step) => {
+      return convertToInitialFormValues(step)
+    })
   }
 
   if (item.category === 'step') {
@@ -184,7 +172,9 @@ export function createInitialRecommendedFields({
 
   initialValues.properties = []
   recommendedProperties
-    .filter((id) => allowedPropertyTypes.includes(id))
+    .filter((id) => {
+      return allowedPropertyTypes.includes(id)
+    })
     .forEach((id) => {
       initialValues.properties.push({ type: { code: id } })
     })
@@ -196,9 +186,5 @@ export function formatDate(d: Date): string {
   const year = d.getUTCFullYear()
   const month = d.getUTCMonth() + 1
   const day = d.getUTCDate()
-  return [
-    year,
-    month > 9 ? month : '0' + month,
-    day > 9 ? day : '0' + day,
-  ].join('-')
+  return [year, month > 9 ? month : '0' + month, day > 9 ? day : '0' + day].join('-')
 }

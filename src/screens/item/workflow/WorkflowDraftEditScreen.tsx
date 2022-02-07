@@ -12,7 +12,6 @@ import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
-import { Title } from '@/modules/ui/typography/Title'
 
 /**
  * Edit draft workflow screen.
@@ -24,7 +23,6 @@ export default function WorkflowDraftEditScreen(): JSX.Element {
 
   const id = useQueryParam('id', false)
   const workflow = useGetWorkflow(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     { draft: true },
     {

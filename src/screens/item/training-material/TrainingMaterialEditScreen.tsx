@@ -18,9 +18,8 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
 
-  const id = router.query.id as string | undefined
+  const id = router.query['id'] as string | undefined
   const trainingMaterial = useGetTrainingMaterial(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     {},
     {
@@ -38,7 +37,7 @@ export default function TrainingMaterialEditScreen(): JSX.Element {
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Edit training material</Title>
-          {trainingMaterial.data === undefined || id == undefined ? (
+          {trainingMaterial.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>

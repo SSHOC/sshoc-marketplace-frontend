@@ -3,17 +3,16 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import type {
-  Item,
-  ItemCategory as ItemCategoryWithStep,
-} from '@/api/sshoc/types'
+import type { Item, ItemCategory as ItemCategoryWithStep } from '@/api/sshoc/types'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import { Anchor } from '@/modules/ui/Anchor'
 import { ItemCategoryIcon } from '@/modules/ui/ItemCategoryIcon'
 import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
 
-const Plaintext = dynamic(() => import('@/modules/markdown/Plaintext'))
+const Plaintext = dynamic(() => {
+  return import('@/modules/markdown/Plaintext')
+})
 
 type ItemCategory = ItemCategoryWithStep
 type RelatedItems = Exclude<Item['relatedItems'], undefined>
@@ -24,17 +23,15 @@ const MAX_RELATED_ITEMS_DESCRIPTION = 120
 /**
  * Related items.
  */
-export default function RelatedItems({
-  items,
-}: {
-  items: RelatedItems
-}): JSX.Element | null {
+export default function RelatedItems({ items }: { items: RelatedItems }): JSX.Element | null {
   const relatedItems = items
 
   const [cursor, setCursor] = useState(4)
 
   function incrementCursor() {
-    setCursor((prev) => prev + 10)
+    setCursor((prev) => {
+      return prev + 10
+    })
   }
 
   if (relatedItems === undefined || relatedItems.length === 0) return null
@@ -94,10 +91,7 @@ function RelatedItem({ item }: { item: RelatedItem }): JSX.Element {
         </Link>
       </h3>
       <div className="text-sm leading-7">
-        <Plaintext
-          text={item.description}
-          maxLength={MAX_RELATED_ITEMS_DESCRIPTION}
-        />
+        <Plaintext text={item.description} maxLength={MAX_RELATED_ITEMS_DESCRIPTION} />
       </div>
       <Link href={{ pathname, query }} passHref>
         <Anchor className="self-end text-sm" aria-label={item.label}>

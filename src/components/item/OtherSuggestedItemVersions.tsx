@@ -38,19 +38,17 @@ export function OtherSuggestedItemVersions({
 
   if (history.data == null) return null
 
-  const unapprovedItemVersions = history.data.filter(
-    (item) =>
-      ['suggested', 'ingested'].includes(item.status!) && item.id !== versionId,
-  )
+  const unapprovedItemVersions = history.data.filter((item) => {
+    return ['suggested', 'ingested'].includes(item.status!) && item.id !== versionId
+  })
 
   if (unapprovedItemVersions.length === 0) return null
 
   return (
     <FormSection title="Other suggested changes">
       <p>
-        There are {unapprovedItemVersions.length} other suggested changes to
-        this item. Note that approving one will automatically reject all other
-        suggestions.
+        There are {unapprovedItemVersions.length} other suggested changes to this item. Note that
+        approving one will automatically reject all other suggestions.
       </p>
       <ul className="flex flex-col space-y-2 text-sm">
         {unapprovedItemVersions.map((item) => {
@@ -71,10 +69,7 @@ export function OtherSuggestedItemVersions({
                 </h3>
                 <small className="text-gray-550">
                   Suggested by {item.informationContributor?.displayName} on{' '}
-                  <time dateTime={item.lastInfoUpdate}>
-                    {item.lastInfoUpdate}
-                  </time>
-                  .
+                  <time dateTime={item.lastInfoUpdate}>{item.lastInfoUpdate}</time>.
                 </small>
               </article>
             </li>

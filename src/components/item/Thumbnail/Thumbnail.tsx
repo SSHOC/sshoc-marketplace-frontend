@@ -10,7 +10,7 @@ export interface ThumbnailProps {
   onRemove?: () => void
   media?: MediaDetails
   caption?: string
-  variant?: 'form' | 'form-diff'
+  variant?: 'form-diff' | 'form'
 }
 
 /**
@@ -27,11 +27,7 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
   }
 
   return (
-    <figure
-      className={cx(
-        'relative flex flex-col items-center max-w-xs p-2 space-y-2',
-      )}
-    >
+    <figure className={cx('relative flex flex-col items-center max-w-xs p-2 space-y-2')}>
       {props.onRemove !== undefined ? (
         <button
           onClick={props.onRemove}
@@ -45,8 +41,7 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
       <div
         className={cx(
           'w-full',
-          props.variant === 'form-diff' &&
-            'bg-[#EAFBFF] border border-[#92BFF5]',
+          props.variant === 'form-diff' && 'bg-[#EAFBFF] border border-[#92BFF5]',
         )}
       >
         {hasThumbnail === true && mediaId != null ? (
@@ -61,9 +56,7 @@ export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
           </div>
         )}
       </div>
-      <figcaption className="break-all">
-        {caption ?? filename ?? location?.sourceUrl}
-      </figcaption>
+      <figcaption className="break-all">{caption ?? filename ?? location?.sourceUrl}</figcaption>
     </figure>
   )
 }

@@ -54,7 +54,7 @@ export default function ContributedItemsScreen(): JSX.Element {
       // When a user is logged in as admin, this will not return the user's
       // items, but *all* items, so we specifically query by username, even though
       // this is not necessary for non-admin users.
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       'd.owner': user.data?.username,
     } as SearchItems.QueryParameters,
     {
@@ -75,10 +75,7 @@ export default function ContributedItemsScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="My contributed items" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -139,13 +136,7 @@ function ContributedItem(props: ContributedItemProps) {
         <h2>
           <Link
             href={{
-              pathname: [
-                '',
-                category,
-                item.persistentId,
-                'version',
-                item.id,
-              ].join('/'),
+              pathname: ['', category, item.persistentId, 'version', item.id].join('/'),
             }}
           >
             <a className="text-base font-bold leading-tight transition text-primary-750 hover:text-secondary-600">
@@ -176,14 +167,7 @@ function ContributedItem(props: ContributedItemProps) {
             <Link
               passHref
               href={{
-                pathname: [
-                  '',
-                  category,
-                  item.persistentId,
-                  'version',
-                  item.id,
-                  'edit',
-                ].join('/'),
+                pathname: ['', category, item.persistentId, 'version', item.id, 'edit'].join('/'),
               }}
             >
               <Anchor className="cursor-default text-ui-base">Edit</Anchor>
@@ -227,9 +211,7 @@ function ItemSortOrder(props: ItemSortOrderProps) {
   const router = useRouter()
 
   const currentSortOrder =
-    filter.order === undefined
-      ? defaultItemSortOrder
-      : (filter.order[0] as ItemSortOrder)
+    filter.order === undefined ? defaultItemSortOrder : (filter.order[0] as ItemSortOrder)
 
   function onSubmit(order: Key) {
     const query = { ...filter }
@@ -247,7 +229,9 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     'modified-on': 'last modification',
   }
 
-  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -256,11 +240,13 @@ function ItemSortOrder(props: ItemSortOrderProps) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -333,11 +319,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -398,11 +380,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -429,11 +407,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -466,11 +440,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -487,11 +457,9 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
   const sanitized = []
 
   if (params.order !== undefined) {
-    const order = ensureArray(
-      params.order,
-    ).filter((sortOrder): sortOrder is ItemSortOrder =>
-      itemSortOrders.includes(sortOrder as ItemSortOrder),
-    )
+    const order = ensureArray(params.order).filter((sortOrder): sortOrder is ItemSortOrder => {
+      return itemSortOrders.includes(sortOrder as ItemSortOrder)
+    })
     sanitized.push(['order', order])
   }
 

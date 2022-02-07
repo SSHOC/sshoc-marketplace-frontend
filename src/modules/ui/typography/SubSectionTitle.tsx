@@ -2,7 +2,7 @@ import cx from 'clsx'
 import type { ComponentPropsWithoutRef } from 'react'
 
 type SubSectionTitleProps = ComponentPropsWithoutRef<'h3'> & {
-  as?: 'h2' | 'h3' | 'h4' | 'div'
+  as?: 'div' | 'h2' | 'h3' | 'h4'
 }
 
 export function SubSectionTitle({

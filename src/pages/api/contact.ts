@@ -3,9 +3,7 @@ import * as nodemailer from 'nodemailer'
 
 const SMTP_SERVER = process.env.SMTP_SERVER
 const SMTP_PORT =
-  process.env.SMTP_PORT !== undefined
-    ? parseInt(process.env.SMTP_PORT, 10)
-    : undefined
+  process.env.SMTP_PORT !== undefined ? parseInt(process.env.SMTP_PORT, 10) : undefined
 const SSHOC_CONTACT_EMAIL = process.env.SSHOC_CONTACT_EMAIL
 
 export default async function contact(
@@ -13,28 +11,25 @@ export default async function contact(
   response: NextApiResponse,
 ): Promise<void> {
   if (request.method !== 'POST') {
-    return response.status(405).end()
+    response.status(405).end()
+    return
   }
 
-  if (
-    SMTP_SERVER === undefined ||
-    SMTP_PORT === undefined ||
-    SSHOC_CONTACT_EMAIL === undefined
-  ) {
-    return response
-      .status(500)
-      .json({ message: 'Email service not configured.' })
+  if (SMTP_SERVER === undefined || SMTP_PORT === undefined || SSHOC_CONTACT_EMAIL === undefined) {
+    return response.status(500).json({ message: 'Email service not configured.' })
   }
 
   const formSubmission = request.body
 
   if (formSubmission === null) {
-    return response.status(400).end()
+    response.status(400).end()
+    return
   }
 
   /** honeypot field */
   if (formSubmission.bot !== undefined) {
-    return response.status(400).end()
+    response.status(400).end()
+    return
   }
 
   const transporter = nodemailer.createTransport({
@@ -51,10 +46,13 @@ export default async function contact(
       text: formSubmission.message,
     })
 
+    // eslint-disable-next-line no-console
     console.log(`Contact message sent`, info)
 
-    return response.end()
+    response.end()
+    return
   } catch {
-    return response.status(500).end()
+    response.status(500).end()
+    return
   }
 }

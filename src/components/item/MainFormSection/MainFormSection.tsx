@@ -17,7 +17,7 @@ import { FormTextField } from '@/modules/form/components/FormTextField/FormTextF
 import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffField } from '@/modules/form/diff/DiffField'
 import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface MainFormSectionProps {
   prefix?: string
@@ -81,26 +81,14 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           suggestedValue={labelField.suggestedValue}
           isEnabled={isDiffingEnabled}
         >
-          {({
-            name,
-            isReviewed,
-            status,
-            onApprove,
-            onReject,
-            approvedValue,
-            suggestedValue,
-          }) => {
+          {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
             const requiresReview = status !== 'unchanged' && !isReviewed
 
             return (
               <Fragment>
                 {requiresReview ? (
                   <div className="relative" style={{ gridColumn: '1 / -1' }}>
-                    <DiffControls
-                      status={status}
-                      onApprove={onApprove}
-                      onReject={onReject}
-                    />
+                    <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                     <div className="grid flex-1 gap-1 py-2">
                       {status !== 'deleted' ? (
                         <TextField
@@ -149,26 +137,14 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           suggestedValue={versionField.suggestedValue}
           isEnabled={isDiffingEnabled}
         >
-          {({
-            name,
-            isReviewed,
-            status,
-            onApprove,
-            onReject,
-            approvedValue,
-            suggestedValue,
-          }) => {
+          {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
             const requiresReview = status !== 'unchanged' && !isReviewed
 
             return (
               <Fragment>
                 {requiresReview ? (
                   <div className="relative" style={{ gridColumn: '1 / -1' }}>
-                    <DiffControls
-                      status={status}
-                      onApprove={onApprove}
-                      onReject={onReject}
-                    />
+                    <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                     <div className="grid flex-1 gap-1 py-2">
                       {status !== 'deleted' ? (
                         <TextField
@@ -216,26 +192,14 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
         suggestedValue={descriptionField.suggestedValue}
         isEnabled={isDiffingEnabled}
       >
-        {({
-          name,
-          isReviewed,
-          status,
-          onApprove,
-          onReject,
-          approvedValue,
-          suggestedValue,
-        }) => {
+        {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
           const requiresReview = status !== 'unchanged' && !isReviewed
 
           return (
             <Fragment>
               {requiresReview ? (
                 <div className="relative">
-                  <DiffControls
-                    status={status}
-                    onApprove={onApprove}
-                    onReject={onReject}
-                  />
+                  <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   <div className="grid flex-1 gap-1 py-2">
                     {status !== 'deleted' ? (
                       <TextArea
@@ -289,7 +253,11 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={() => onAdd()}>
+            <FormFieldAddButton
+              onPress={() => {
+                return onAdd()
+              }}
+            >
               Add URL
             </FormFieldAddButton>
           )
@@ -315,11 +283,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                 <FormRecord
                   className="py-2"
                   actions={
-                    <DiffControls
-                      status={status}
-                      onApprove={onApprove}
-                      onReject={onReject}
-                    />
+                    <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   }
                 >
                   <div className="grid flex-1 gap-1">
@@ -354,10 +318,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                 <FormRecord
                   actions={
                     arrayRequiresReview === true ? null : (
-                      <FormFieldRemoveButton
-                        onPress={onRemove}
-                        aria-label="Remove URL"
-                      />
+                      <FormFieldRemoveButton onPress={onRemove} aria-label="Remove URL" />
                     )
                   }
                 >
@@ -382,7 +343,11 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={() => onAdd()}>
+            <FormFieldAddButton
+              onPress={() => {
+                return onAdd()
+              }}
+            >
               Add external ID
             </FormFieldAddButton>
           )
@@ -414,12 +379,8 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
           const identifierField = {
             name: `${name}.identifier`,
             label: 'Identifier',
-            approvedValue: get(approvedValue, 'identifier') as
-              | string
-              | undefined,
-            suggestedValue: get(suggestedValue, 'identifier') as
-              | string
-              | undefined,
+            approvedValue: get(approvedValue, 'identifier') as string | undefined,
+            suggestedValue: get(suggestedValue, 'identifier') as string | undefined,
           }
 
           return (
@@ -428,11 +389,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                 <FormRecord
                   className="py-2"
                   actions={
-                    <DiffControls
-                      status={status}
-                      onApprove={onApprove}
-                      onReject={onReject}
-                    />
+                    <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   }
                 >
                   <div className="grid content-start gap-1">
@@ -445,11 +402,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                         items={[identifierServiceField.suggestedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -470,11 +423,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                         items={[identifierServiceField.approvedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -511,10 +460,7 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
                 <FormRecord
                   actions={
                     arrayRequiresReview === true ? null : (
-                      <FormFieldRemoveButton
-                        onPress={onRemove}
-                        aria-label="Remove external ID"
-                      />
+                      <FormFieldRemoveButton onPress={onRemove} aria-label="Remove external ID" />
                     )
                   }
                 >
@@ -546,9 +492,7 @@ export interface ExternalIdServiceSelectProps {
 /**
  * External item ID.
  */
-function ExternalIdServiceSelect(
-  props: ExternalIdServiceSelectProps,
-): JSX.Element {
+function ExternalIdServiceSelect(props: ExternalIdServiceSelectProps): JSX.Element {
   const sources = useGetAllItemSources()
 
   return (
@@ -559,9 +503,9 @@ function ExternalIdServiceSelect(
       isLoading={sources.isLoading}
       variant="form"
     >
-      {(item) => (
-        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
-      )}
+      {(item) => {
+        return <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      }}
     </FormSelect>
   )
 }

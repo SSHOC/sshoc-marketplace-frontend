@@ -3,11 +3,7 @@ import { mergeProps } from '@react-aria/utils'
 import { Item, Section } from '@react-stately/collections'
 import { useListState } from '@react-stately/list'
 import type { AriaListBoxProps } from '@react-types/listbox'
-import type {
-  LabelableProps,
-  NecessityIndicator,
-  Validation,
-} from '@react-types/shared'
+import type { LabelableProps, NecessityIndicator, Validation } from '@react-types/shared'
 import type { ReactNode } from 'react'
 import { useRef } from 'react'
 
@@ -16,10 +12,7 @@ import { Field } from '@/elements/Field/Field'
 import { ListBoxBase } from '@/elements/ListBoxBase/ListBoxBase'
 import { useErrorMessage } from '@/modules/a11y/useErrorMessage'
 
-export interface ListBoxProps<T>
-  extends AriaListBoxProps<T>,
-    Validation,
-    LabelableProps {
+export interface ListBoxProps<T> extends AriaListBoxProps<T>, Validation, LabelableProps {
   isDisabled?: boolean
   isLoading?: boolean
   placeholder?: string
@@ -27,13 +20,13 @@ export interface ListBoxProps<T>
   /** @default "icon" */
   necessityIndicator?: NecessityIndicator
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form'
+  variant?: 'default' | 'form' | 'search'
 }
 
 /**
  * ListBox.
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+
 export function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
   const state = useListState<T>(props)
   const ref = useRef<HTMLUListElement>(null)

@@ -10,15 +10,12 @@ export interface ButtonProps extends AriaButtonProps {
   isLoading?: boolean
   isPressed?: boolean
   /** @default "primary" */
-  variant?: 'primary' | 'gradient' | 'link' | 'header' | 'nav'
+  variant?: 'gradient' | 'header' | 'link' | 'nav' | 'primary'
   className?: string
   style?: CSSProperties
 }
 
-function Button(
-  props: ButtonProps,
-  externalRef?: RefObject<HTMLButtonElement>,
-): JSX.Element {
+function Button(props: ButtonProps, externalRef?: RefObject<HTMLButtonElement>): JSX.Element {
   const internalRef = useRef<HTMLButtonElement>(null)
   const ref = externalRef ?? internalRef
   const { buttonProps } = useButton(props, ref)
@@ -33,8 +30,7 @@ function Button(
       button: {
         default: 'transition px-10 py-3 text-ui-lg rounded',
         states: {
-          enabled:
-            'bg-primary-750 text-gray-75 hover:bg-secondary-600 focus:bg-primary-750',
+          enabled: 'bg-primary-750 text-gray-75 hover:bg-secondary-600 focus:bg-primary-750',
           disabled: 'pointer-events-none bg-gray-100 text-gray-350',
         },
       },
@@ -57,8 +53,7 @@ function Button(
       button: {
         default: 'transition text-ui-base',
         states: {
-          enabled:
-            'text-primary-750 hover:text-secondary-600 focus:text-gray-800',
+          enabled: 'text-primary-750 hover:text-secondary-600 focus:text-gray-800',
           disabled: 'pointer-events-none text-gray-350',
         },
       },
@@ -120,12 +115,7 @@ function Button(
     )
 
   return (
-    <ElementType
-      {...buttonProps}
-      className={styles.button}
-      style={props.style}
-      ref={ref}
-    >
+    <ElementType {...buttonProps} className={styles.button} style={props.style} ref={ref}>
       {children}
     </ElementType>
   )

@@ -16,14 +16,13 @@ export default function usePagination({
 }): Array<{ page: number | 'ellipsis'; isCurrent: boolean }> {
   function range(start: number, end: number) {
     const length = end - start + 1
-    return Array.from({ length }, (_, i) => start + i)
+    return Array.from({ length }, (_, i) => {
+      return start + i
+    })
   }
 
   const startPages = range(1, Math.min(boundaryCount, count))
-  const endPages = range(
-    Math.max(count - boundaryCount + 1, boundaryCount + 1),
-    count,
-  )
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count)
 
   const siblingsStart = Math.max(
     Math.min(page - siblingCount, count - boundaryCount - siblingCount * 2 - 1),

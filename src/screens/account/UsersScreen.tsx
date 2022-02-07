@@ -1,33 +1,21 @@
-import { Dialog } from '@reach/dialog'
 import cx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { ParsedUrlQuery } from 'querystring'
 import type { ChangeEvent, FormEvent, Key } from 'react'
 import { Fragment, useEffect, useState } from 'react'
-import { QueryClientProvider, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import type { GetUsers, UserDto } from '@/api/sshoc'
-import {
-  useGetUsers,
-  useUpdateUserRole,
-  useUpdateUserStatus,
-} from '@/api/sshoc'
-import { Button } from '@/elements/Button/Button'
+import { useGetUsers, useUpdateUserRole, useUpdateUserStatus } from '@/api/sshoc'
 import { Icon } from '@/elements/Icon/Icon'
-import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { Svg as SearchIcon } from '@/elements/icons/small/search.svg'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
 import { useToast } from '@/elements/Toast/useToast'
-import { useDialogState } from '@/lib/hooks/useDialogState'
-import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
-import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
-import { Form } from '@/modules/form/Form'
-import { isUrl } from '@/modules/form/validate'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
@@ -87,10 +75,7 @@ export default function UsersScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Users" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -156,9 +141,7 @@ function User(props: UserProps) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-x-2">
         <h2 className="space-x-1.5">
           <span className="text-gray-550">Username:</span>
-          <span className="text-base font-bold transition text-primary-750">
-            {user.username}
-          </span>
+          <span className="text-base font-bold transition text-primary-750">{user.username}</span>
         </h2>
         <div className="space-x-1.5 flex-shrink-0">
           <span className="text-gray-550">Registration date:</span>
@@ -183,7 +166,7 @@ function User(props: UserProps) {
             <UserRoleSelect user={user} />
             <UserStatusSelect user={user} />
             {/* FIXME: Needs endpoint */}
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+            {}
             {/* <DeleteUsereButton id={user.id!} /> */}
             {/* <EditUserButton user={user} /> */}
           </ProtectedView>
@@ -228,9 +211,7 @@ function ItemSortOrder(props: ItemSortOrderProps) {
   const router = useRouter()
 
   const currentSortOrder =
-    filter.order === undefined
-      ? defaultItemSortOrder
-      : (filter.order as ItemSortOrder)
+    filter.order === undefined ? defaultItemSortOrder : (filter.order as ItemSortOrder)
 
   function onSubmit(order: Key) {
     const query = { ...filter }
@@ -248,7 +229,9 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     date: 'registration date',
   }
 
-  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -257,11 +240,13 @@ function ItemSortOrder(props: ItemSortOrderProps) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -375,11 +360,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -440,11 +421,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -471,11 +448,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -508,11 +481,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -588,20 +557,17 @@ function UserStatusSelect(props: UserStatusSelectProps) {
     },
   })
 
-  const allowedStatus: Array<AllowedUserStatus> = [
-    'enabled',
-    'locked',
-    'during-registration',
-  ]
-  const labeledAllowedStatus = allowedStatus.map((id) => ({
-    id,
-    label: id.split('-').map(capitalize).join(' '),
-  }))
+  const allowedStatus: Array<AllowedUserStatus> = ['enabled', 'locked', 'during-registration']
+  const labeledAllowedStatus = allowedStatus.map((id) => {
+    return {
+      id,
+      label: id.split('-').map(capitalize).join(' '),
+    }
+  })
 
   function onSubmit(status: Key) {
     updateUserStatus.mutate([
       {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         id: user.id!,
         userStatus: status as AllowedUserStatus,
       },
@@ -619,7 +585,9 @@ function UserStatusSelect(props: UserStatusSelectProps) {
         selectedKey={user.status}
         size="small"
       >
-        {(item) => <Select.Item>{item.label}</Select.Item>}
+        {(item) => {
+          return <Select.Item>{item.label}</Select.Item>
+        }}
       </Select>
     </label>
   )
@@ -667,15 +635,16 @@ function UserRoleSelect(props: UserRoleSelectProps) {
     'system-moderator',
     'administrator',
   ]
-  const labeledAllowedRoles = allowedRoles.map((id) => ({
-    id,
-    label: id.split('-').map(capitalize).join(' '),
-  }))
+  const labeledAllowedRoles = allowedRoles.map((id) => {
+    return {
+      id,
+      label: id.split('-').map(capitalize).join(' '),
+    }
+  })
 
   function onSubmit(role: Key) {
     updateUserRole.mutate([
       {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         id: user.id!,
         userRole: role as AllowedUserRole,
       },
@@ -693,7 +662,9 @@ function UserRoleSelect(props: UserRoleSelectProps) {
         selectedKey={user.role}
         size="small"
       >
-        {(item) => <Select.Item>{item.label}</Select.Item>}
+        {(item) => {
+          return <Select.Item>{item.label}</Select.Item>
+        }}
       </Select>
     </label>
   )

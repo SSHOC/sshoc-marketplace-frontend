@@ -14,11 +14,7 @@ import type {
   SearchConcept,
   VocabularyBasicDto,
 } from '@/api/sshoc'
-import {
-  useCreateConcept,
-  useGetPropertyTypes,
-  useSearchConcepts,
-} from '@/api/sshoc'
+import { useCreateConcept, useGetPropertyTypes, useSearchConcepts } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { ComboBox } from '@/elements/ComboBox/ComboBox'
 import { Icon } from '@/elements/Icon/Icon'
@@ -40,7 +36,7 @@ import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
 import { Form } from '@/modules/form/Form'
 import { FormField } from '@/modules/form/FormField'
 import { FormFieldCondition } from '@/modules/form/FormFieldCondition'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface PropertiesFormSectionProps {
   initialValues?: any
@@ -51,9 +47,7 @@ export interface PropertiesFormSectionProps {
 /**
  * Form section for item properties.
  */
-export function PropertiesFormSection(
-  props: PropertiesFormSectionProps,
-): JSX.Element {
+export function PropertiesFormSection(props: PropertiesFormSectionProps): JSX.Element {
   const auth = useAuth()
 
   const prefix = props.prefix ?? ''
@@ -67,8 +61,9 @@ export function PropertiesFormSection(
     },
     {
       select(data) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        data.propertyTypes?.sort((a, b) => a.label!.localeCompare(b.label!))
+        data.propertyTypes?.sort((a, b) => {
+          return a.label!.localeCompare(b.label!)
+        })
         return data
       },
     },
@@ -90,12 +85,8 @@ export function PropertiesFormSection(
     return map
   }, [propertyTypes.data])
 
-  const [showSuggestConceptDialog, setShowSuggestConceptDialog] = useState(
-    false,
-  )
-  const [propertyTypeIdForDialog, setPropertyTypeIdForDialog] = useState<
-    string | null
-  >(null)
+  const [showSuggestConceptDialog, setShowSuggestConceptDialog] = useState(false)
+  const [propertyTypeIdForDialog, setPropertyTypeIdForDialog] = useState<string | null>(null)
   function openSuggestConceptDialog(propertyTypeId: string) {
     setPropertyTypeIdForDialog(propertyTypeId)
     setShowSuggestConceptDialog(true)
@@ -114,10 +105,7 @@ export function PropertiesFormSection(
     Record<Exclude<PropertyTypeDto['code'], undefined>, Array<ConceptDto>>
   >({})
 
-  function onConceptSuggested(
-    addedConcept: ConceptDto,
-    propertyType: PropertyTypeDto,
-  ) {
+  function onConceptSuggested(addedConcept: ConceptDto, propertyType: PropertyTypeDto) {
     setSuggestedConcepts((concepts) => {
       const code = propertyType.code!
 
@@ -149,18 +137,18 @@ export function PropertiesFormSection(
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={() => onAdd()}>
+            <FormFieldAddButton
+              onPress={() => {
+                return onAdd()
+              }}
+            >
               Add property
             </FormFieldAddButton>
           )
         }}
         isEnabled={isDiffingEnabled}
         wrapper={({ children }) => {
-          return (
-            <FormSection title={propertiesFieldArray.label}>
-              {children}
-            </FormSection>
-          )
+          return <FormSection title={propertiesFieldArray.label}>{children}</FormSection>
         }}
       >
         {({
@@ -243,11 +231,7 @@ export function PropertiesFormSection(
                         items={[propertyTypeField.suggestedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -268,11 +252,7 @@ export function PropertiesFormSection(
                         items={[propertyTypeField.approvedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -289,11 +269,7 @@ export function PropertiesFormSection(
                           style={{ flex: 1 }}
                         >
                           {(item) => {
-                            return (
-                              <ComboBox.Item key={item.uri}>
-                                {item.label}
-                              </ComboBox.Item>
-                            )
+                            return <ComboBox.Item key={item.uri}>{item.label}</ComboBox.Item>
                           }}
                         </ComboBox>
                       ) : (
@@ -327,11 +303,7 @@ export function PropertiesFormSection(
                               })}
                         >
                           {(item) => {
-                            return (
-                              <ComboBox.Item key={item.uri}>
-                                {item.label}
-                              </ComboBox.Item>
-                            )
+                            return <ComboBox.Item key={item.uri}>{item.label}</ComboBox.Item>
                           }}
                         </ComboBox>
                       ) : (
@@ -376,12 +348,13 @@ export function PropertiesFormSection(
                   />
                   <FormFieldCondition
                     name={propertyTypeField.name}
-                    condition={(id) =>
-                      id !== '' &&
-                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                      propertyTypesById[id] !== undefined &&
-                      propertyTypesById[id].type === 'concept'
-                    }
+                    condition={(id) => {
+                      return (
+                        id !== '' &&
+                        propertyTypesById[id] !== undefined &&
+                        propertyTypesById[id].type === 'concept'
+                      )
+                    }}
                   >
                     {(id: string) => {
                       return (
@@ -392,15 +365,13 @@ export function PropertiesFormSection(
                             label={propertyConceptField.label}
                             propertyTypeId={id}
                             propertyType={propertyTypesById[id]}
-                            initialValue={
-                              props.initialValues?.properties?.[index]?.concept
-                            }
+                            initialValue={props.initialValues?.properties?.[index]?.concept}
                             suggestedConcepts={suggestedConcepts[id]}
                           />
                           {arrayRequiresReview !== true &&
-                          propertyTypesById[id].allowedVocabularies?.every(
-                            (vocab) => vocab.closed === false,
-                          ) === true ? (
+                          propertyTypesById[id].allowedVocabularies?.every((vocab) => {
+                            return vocab.closed === false
+                          }) === true ? (
                             <button
                               type="button"
                               className="text-ui-base text-primary-750 hover:text-secondary-600"
@@ -417,12 +388,13 @@ export function PropertiesFormSection(
                   </FormFieldCondition>
                   <FormFieldCondition
                     name={propertyTypeField.name}
-                    condition={(id) =>
-                      id !== '' &&
-                      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                      propertyTypesById[id] !== undefined &&
-                      propertyTypesById[id].type !== 'concept'
-                    }
+                    condition={(id) => {
+                      return (
+                        id !== '' &&
+                        propertyTypesById[id] !== undefined &&
+                        propertyTypesById[id].type !== 'concept'
+                      )
+                    }}
                   >
                     {(id: string) => {
                       return (
@@ -448,9 +420,7 @@ export function PropertiesFormSection(
         onSuccess={onConceptSuggested}
         onDismiss={closeSuggestConceptDialog}
         propertyType={
-          propertyTypeIdForDialog != null
-            ? propertyTypesById[propertyTypeIdForDialog]
-            : undefined
+          propertyTypeIdForDialog != null ? propertyTypesById[propertyTypeIdForDialog] : undefined
         }
       />
     </Fragment>
@@ -475,9 +445,9 @@ function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
       isLoading={props.propertyTypes.isLoading}
       variant="form"
     >
-      {(item) => (
-        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
-      )}
+      {(item) => {
+        return <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      }}
     </FormSelect>
   )
 }
@@ -498,9 +468,7 @@ interface PropertyConceptComboBoxProps {
  * The form control displays the concept `uri`, but we also need to submit
  * the concept `id` and vocabulary `id`.
  */
-function PropertyConceptComboBox(
-  props: PropertyConceptComboBoxProps,
-): JSX.Element {
+function PropertyConceptComboBox(props: PropertyConceptComboBoxProps): JSX.Element {
   /**
    * Populate the input field with the label of the initially selected item (if any),
    * which triggers a search request. The result set should include the initial item.
@@ -513,7 +481,6 @@ function PropertyConceptComboBox(
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
   const concepts = useSearchConcepts(
     {
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
       types: [String(props.propertyTypeId)!],
       q: debouncedSearchTerm,
       /* vocabs like nemo-activity-type or tadirah-activity can have very many very similarly named entries */
@@ -554,8 +521,7 @@ function PropertyConceptComboBox(
     ? props.propertyType.allowedVocabularies
         .map((vocab: any) => {
           // TODO: accessibleAt is currently empty for all vocabs, so we use namespace
-          if (vocab.namespace == null || vocab.namespace.length === 0)
-            return null
+          if (vocab.namespace == null || vocab.namespace.length === 0) return null
 
           // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
           return { href: vocab.namespace, label: vocab.label || vocab.code }
@@ -582,10 +548,7 @@ function PropertyConceptComboBox(
                 <div className="text-ui-sm">
                   See{' '}
                   {vocabLinks.map(
-                    (
-                      { href, label }: { href: string; label: string },
-                      index: number,
-                    ) => {
+                    ({ href, label }: { href: string; label: string }, index: number) => {
                       return (
                         <Fragment key={href}>
                           {index !== 0 ? <span>, </span> : null}
@@ -611,18 +574,23 @@ function PropertyConceptComboBox(
           ) : undefined
         }
       >
-        {(item) => (
-          <FormComboBox.Item key={item.uri} textValue={item.label}>
-            {item.label}
-            {item.uri != null ? (
-              <span className="ml-1.5 text-ui-sm text-gray-550">
-                {item.uri}
-              </span>
-            ) : null}
-          </FormComboBox.Item>
-        )}
+        {(item) => {
+          return (
+            <FormComboBox.Item key={item.uri} textValue={item.label}>
+              {item.label}
+              {item.uri != null ? (
+                <span className="ml-1.5 text-ui-sm text-gray-550">{item.uri}</span>
+              ) : null}
+            </FormComboBox.Item>
+          )
+        }}
       </FormComboBox>
-      <FormFieldCondition name={props.name} condition={(id) => id !== ''}>
+      <FormFieldCondition
+        name={props.name}
+        condition={(id) => {
+          return id !== ''
+        }}
+      >
         {(id: string) => {
           const concept = conceptsByUri[id]
 
@@ -685,10 +653,7 @@ function SuggestConceptDialog(props: SuggestConceptDialogProps) {
         onSuccess(data) {
           queryClient.invalidateQueries(['searchConcepts'])
           queryClient.invalidateQueries(['getAllConceptRelations'])
-          queryClient.invalidateQueries([
-            'getVocabulary',
-            { code: vocabularyId },
-          ])
+          queryClient.invalidateQueries(['getVocabulary', { code: vocabularyId }])
           toast.success('Sucessfully suggested concept.')
           props.onSuccess(data, props.propertyType!)
         },
@@ -714,11 +679,7 @@ function SuggestConceptDialog(props: SuggestConceptDialogProps) {
       style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
       aria-label="Suggest new candidate concept"
     >
-      <button
-        onClick={props.onDismiss}
-        className="self-end"
-        aria-label="Close dialog"
-      >
+      <button onClick={props.onDismiss} className="self-end" aria-label="Close dialog">
         <Icon icon={CloseIcon} className="" />
       </button>
       <section className="flex flex-col space-y-6">
@@ -760,11 +721,7 @@ function CreateConceptForm(props: CreateConceptFormProps) {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
       {({ handleSubmit, submitting, pristine, invalid }) => {
         return (
           <form
@@ -801,12 +758,7 @@ function CreateConceptForm(props: CreateConceptFormProps) {
               variant="form"
               style={{ flex: 1 }}
             />
-            <FormTextField
-              name="notation"
-              label="Notation"
-              variant="form"
-              style={{ flex: 1 }}
-            />
+            <FormTextField name="notation" label="Notation" variant="form" style={{ flex: 1 }} />
             <FormTextField
               name="definition"
               label="Definition"
@@ -824,11 +776,7 @@ function CreateConceptForm(props: CreateConceptFormProps) {
               <Button variant="link" onPress={props.onDismiss}>
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="gradient"
-                isDisabled={submitting || isLoading}
-              >
+              <Button type="submit" variant="gradient" isDisabled={submitting || isLoading}>
                 {buttonLabel}
               </Button>
             </div>
@@ -843,7 +791,7 @@ function sanitizeConceptFormValues(unsanitizedValues: ConceptFormValues) {
   const values = {
     ...unsanitizedValues,
     /** Auto-generate concept id from label. */
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     code: camelCase(unsanitizedValues.label!),
   }
 

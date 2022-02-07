@@ -11,18 +11,13 @@ import { isEmptyString } from '@/lib/util/isEmptyString'
 import { isDate, isUrl } from '@/modules/form/validate'
 
 export function validateCommonFormFields<
-  T extends
-    | DatasetCore
-    | PublicationCore
-    | ToolCore
-    | TrainingMaterialCore
-    | WorkflowCore
+  T extends DatasetCore | PublicationCore | ToolCore | TrainingMaterialCore | WorkflowCore,
 >(
   values: Partial<T>,
   errors: Partial<Record<keyof typeof values, any>>,
   propertyTypes?: Record<
     string,
-    'string' | 'concept' | 'url' | 'int' | 'float' | 'date' | undefined
+    'concept' | 'date' | 'float' | 'int' | 'string' | 'url' | undefined
   >,
 ): void {
   /** Required field `label`. */
@@ -38,7 +33,6 @@ export function validateCommonFormFields<
   /** Accesible at field must be a valid URL. */
   if (values.accessibleAt !== undefined) {
     values.accessibleAt.forEach((url, index) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (url != null && !isUrl(url)) {
         if (errors.accessibleAt === undefined) {
           errors.accessibleAt = []
@@ -51,11 +45,7 @@ export function validateCommonFormFields<
   /** Required actor name when actor role is set. */
   if (values.contributors !== undefined) {
     values.contributors.forEach((contributor, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        contributor != null &&
-        contributor.actor === undefined
-      ) {
+      if (contributor != null && contributor.actor === undefined) {
         if (errors.contributors === undefined) {
           errors.contributors = []
         }
@@ -70,7 +60,6 @@ export function validateCommonFormFields<
   if (values.contributors !== undefined) {
     values.contributors.forEach((contributor, index) => {
       if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         contributor != null &&
         contributor.actor !== undefined &&
         contributor.role === undefined
@@ -88,12 +77,7 @@ export function validateCommonFormFields<
   /** Required property type when property value is set. */
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        property != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        property.type == null
-      ) {
+      if (property != null && property.type == null) {
         if (errors.properties === undefined) {
           errors.properties = []
         }
@@ -107,16 +91,9 @@ export function validateCommonFormFields<
   /** Valid property value. */
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        property != null &&
-        property.type !== undefined &&
-        property.value !== undefined
-      ) {
+      if (property != null && property.type !== undefined && property.value !== undefined) {
         const type =
-          property.type.code != null &&
-          propertyTypes != null &&
-          propertyTypes[property.type.code]
+          property.type.code != null && propertyTypes != null && propertyTypes[property.type.code]
         if (type != null) {
           if (
             (type === 'date' && !isDate(property.value)) ||
@@ -140,9 +117,7 @@ export function validateCommonFormFields<
   if (values.properties !== undefined) {
     values.properties.forEach((property, index) => {
       if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         property != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         property.type != null &&
         property.value == null &&
         property.concept == null
@@ -161,11 +136,7 @@ export function validateCommonFormFields<
   /** Required related item id when relation type is set. */
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        item != null &&
-        item.persistentId === undefined
-      ) {
+      if (item != null && item.persistentId === undefined) {
         if (errors.relatedItems === undefined) {
           errors.relatedItems = []
         }
@@ -177,12 +148,7 @@ export function validateCommonFormFields<
   /** Required relation type when related item id is set. */
   if (values.relatedItems !== undefined) {
     values.relatedItems.forEach((item, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        item != null &&
-        item.persistentId !== undefined &&
-        item.relation === undefined
-      ) {
+      if (item != null && item.persistentId !== undefined && item.relation === undefined) {
         if (errors.relatedItems === undefined) {
           errors.relatedItems = []
         }
@@ -195,12 +161,7 @@ export function validateCommonFormFields<
 
   if (values.externalIds !== undefined) {
     values.externalIds.forEach((id, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.identifier == null
-      ) {
+      if (id != null && id.identifier == null) {
         if (errors.externalIds === undefined) {
           errors.externalIds = []
         }
@@ -213,14 +174,7 @@ export function validateCommonFormFields<
 
   if (values.externalIds !== undefined) {
     values.externalIds.forEach((id, index) => {
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.identifier != null &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        id.identifierService?.code == null
-      ) {
+      if (id != null && id.identifier != null && id.identifierService?.code == null) {
         if (errors.externalIds === undefined) {
           errors.externalIds = []
         }
@@ -264,17 +218,9 @@ export function useValidateCommonFormFields() {
 function mapPropertyTypes(response: PaginatedPropertyTypes) {
   const map: Record<
     string,
-    | 'string'
-    | 'boolean'
-    | 'concept'
-    | 'url'
-    | 'int'
-    | 'float'
-    | 'date'
-    | undefined
+    'boolean' | 'concept' | 'date' | 'float' | 'int' | 'string' | 'url' | undefined
   > = {}
   response.propertyTypes?.forEach((propertyType) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const id = propertyType.code!
     map[id] = propertyType.type
   })

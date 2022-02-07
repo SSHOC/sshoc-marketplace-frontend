@@ -32,7 +32,7 @@ export interface ItemHistoryProps {
 export function ItemHistory(props: ItemHistoryProps): JSX.Element {
   const { item } = props
   const category = item.category as Exclude<ItemCategory, 'step'>
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   const itemHistory = useGetItemHistory(category, item.persistentId!, {
     onError() {
       toast.error('Failed to fetch item history')
@@ -60,11 +60,7 @@ export function ItemHistory(props: ItemHistoryProps): JSX.Element {
   )
 }
 
-function useGetItemHistory(
-  category: ItemCategory,
-  id: string,
-  options?: UseQueryOptions<any>,
-) {
+function useGetItemHistory(category: ItemCategory, id: string, options?: UseQueryOptions<any>) {
   switch (category) {
     case 'dataset':
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -136,9 +132,7 @@ function ItemVersion(props: ItemVersionProps) {
         queryKey: [
           getByIdKey,
           {
-            [category === 'workflow'
-              ? 'persistentId'
-              : 'persistentId']: item.persistentId,
+            [category === 'workflow' ? 'persistentId' : 'persistentId']: item.persistentId,
           },
         ],
       })
@@ -178,13 +172,7 @@ function ItemVersion(props: ItemVersionProps) {
         <h2>
           <Link
             href={{
-              pathname: [
-                '',
-                category,
-                item.persistentId,
-                'version',
-                item.id,
-              ].join('/'),
+              pathname: ['', category, item.persistentId, 'version', item.id].join('/'),
             }}
           >
             <a className="text-base font-bold transition text-primary-750 hover:text-secondary-600">

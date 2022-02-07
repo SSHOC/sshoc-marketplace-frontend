@@ -1,8 +1,4 @@
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from '@reach/disclosure'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@reach/disclosure'
 import cx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
@@ -17,7 +13,9 @@ import Triangle from '@/modules/ui/Triangle'
 import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
 import styles from '@/screens/item/workflow/Steps.module.css'
 
-const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
+const Markdown = dynamic(() => {
+  return import('@/modules/markdown/Markdown')
+})
 
 type Steps = WorkflowDto['composedOf']
 type Step = Exclude<Steps, undefined>[number]
@@ -25,7 +23,7 @@ type Step = Exclude<Steps, undefined>[number]
 export default function Steps({ steps }: { steps: Steps }): JSX.Element | null {
   if (steps === undefined) return null
   /** undocumented in openapi doc */
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
   if (steps === null) return null
   if (steps.length === 0) return null
 
@@ -49,7 +47,9 @@ function Step({ step, index }: { step: Step; index: number }) {
   const [isOpen, setOpen] = useState(false)
 
   function toggleOpen() {
-    setOpen((prev) => !prev)
+    setOpen((prev) => {
+      return !prev
+    })
   }
 
   /** if a step query parameter has been provided, open the disclosure in case the id matches. */
@@ -72,10 +72,7 @@ function Step({ step, index }: { step: Step; index: number }) {
       <b className={cx('bg-gray-100', styles.leftBleed)} />
       <HStack
         as="header"
-        className={cx(
-          'items-center justify-between p-6 bg-gray-100',
-          styles.content,
-        )}
+        className={cx('items-center justify-between p-6 bg-gray-100', styles.content)}
       >
         <HStack className="items-center space-x-6">
           <span className="text-2xl font-bold">{index + 1}</span>
@@ -102,9 +99,7 @@ function Step({ step, index }: { step: Step; index: number }) {
       </HStack>
 
       <b className={cx('bg-gray-50', styles.leftBleed)} />
-      <DisclosurePanel
-        className={cx('px-6 py-12 space-y-12 bg-gray-50', styles.content)}
-      >
+      <DisclosurePanel className={cx('px-6 py-12 space-y-12 bg-gray-50', styles.content)}>
         <ItemMetadata item={step} />
         <div className="leading-8">
           <Markdown text={step.description} />

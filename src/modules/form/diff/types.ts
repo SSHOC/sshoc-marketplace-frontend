@@ -1,1 +1,1 @@
-export type FieldStatus = 'unchanged' | 'changed' | 'inserted' | 'deleted'
+export type FieldStatus = 'changed' | 'deleted' | 'inserted' | 'unchanged'

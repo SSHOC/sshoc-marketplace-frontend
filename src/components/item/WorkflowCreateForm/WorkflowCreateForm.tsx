@@ -36,7 +36,7 @@ import { Form } from '@/modules/form/Form'
 import { Title } from '@/modules/ui/typography/Title'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 
-export type PageKey = 'workflow' | 'steps' | 'step'
+export type PageKey = 'step' | 'steps' | 'workflow'
 
 export interface ItemFormValues extends WorkflowCore {
   draft?: boolean
@@ -64,15 +64,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const handleErrors = useErrorHandlers()
   const validateCommonFormFields = useValidateCommonFormFields()
   const isAllowedToPublish =
-    user.data?.role !== undefined
-      ? ['administrator', 'moderator'].includes(user.data.role)
-      : false
+    user.data?.role !== undefined ? ['administrator', 'moderator'].includes(user.data.role) : false
   const queryClient = useQueryClient()
   const createStep = useCreateStep({
     onError(error) {
-      toast.error(
-        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -81,9 +77,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   })
   const updateStep = useUpdateStep({
     onError(error) {
-      toast.error(
-        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -92,9 +86,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   })
   const deleteStep = useDeleteStep({
     onError(error) {
-      toast.error(
-        `Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${stepLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -103,11 +95,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   })
   const createWorkflow = useCreateWorkflow({
     onError(error) {
-      toast.error(
-        `Failed to ${
-          isAllowedToPublish ? 'publish' : 'submit'
-        } ${categoryLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${categoryLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -116,11 +104,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   })
   const updateWorkflow = useUpdateWorkflow({
     onError(error) {
-      toast.error(
-        `Failed to ${
-          isAllowedToPublish ? 'publish' : 'submit'
-        } ${categoryLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${categoryLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -135,11 +119,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function onSuccess(data: WorkflowDto) {
     toast.success(
       `Successfully ${
-        data.status === 'draft'
-          ? 'saved as draft'
-          : isAllowedToPublish
-          ? 'published'
-          : 'submitted'
+        data.status === 'draft' ? 'saved as draft' : isAllowedToPublish ? 'published' : 'submitted'
       } ${categoryLabel}.`,
     )
 
@@ -209,7 +189,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       ])
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const workflowId = createdWorkflow.persistentId!
 
     /**
@@ -240,11 +219,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     }
     /** Steps might have been deleted since the last saved draft. */
     if (allSteps.length < createdWorkflow.composedOf!.length) {
-      const deletedSteps = createdWorkflow.composedOf!.filter(
-        ({ persistentId }) => {
-          return !allSteps.find((step) => step.persistentId === persistentId)
-        },
-      )
+      const deletedSteps = createdWorkflow.composedOf!.filter(({ persistentId }) => {
+        return !allSteps.find((step) => {
+          return step.persistentId === persistentId
+        })
+      })
       for (const deletedStep of deletedSteps) {
         await deleteStep.mutateAsync([
           {
@@ -340,25 +319,24 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }, [currentPageKey])
 
   function onNextPage(values: Partial<ItemFormValues>) {
-    setState((state) => ({
-      ...state,
-      values,
-      page:
-        state.page === 'workflow'
-          ? 'steps'
-          : state.page === 'step'
-          ? 'steps'
-          : state.page,
-    }))
+    setState((state) => {
+      return {
+        ...state,
+        values,
+        page: state.page === 'workflow' ? 'steps' : state.page === 'step' ? 'steps' : state.page,
+      }
+    })
   }
 
   function onSetPage(page: PageKey, prefix = '', onReset?: () => void) {
-    setState((state) => ({
-      ...state,
-      page,
-      prefix,
-      onReset,
-    }))
+    setState((state) => {
+      return {
+        ...state,
+        page,
+        prefix,
+        onReset,
+      }
+    })
   }
 
   function onCancel() {
@@ -370,10 +348,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     }
   }
 
-  function handleSubmit(
-    values: Partial<ItemFormValues>,
-    form: FormApi<ItemFormValues>,
-  ) {
+  function handleSubmit(values: Partial<ItemFormValues>, form: FormApi<ItemFormValues>) {
     if (currentPageKey === 'steps') {
       return onSubmit(values as ItemFormValues, form)
     } else {
@@ -409,27 +384,19 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   function isFormPristine(isCurrentPagePristine: boolean) {
     return (
       isCurrentPagePristine &&
-      Object.values(pageStatus).every((pristine) => pristine === true)
+      Object.values(pageStatus).every((pristine) => {
+        return pristine === true
+      })
     )
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      validate={validate}
-      initialValues={state.values}
-    >
+    <Form onSubmit={handleSubmit} validate={validate} initialValues={state.values}>
       {({ handleSubmit, form, pristine, invalid, submitting }) => {
         return (
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="flex flex-col space-y-12"
-          >
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col space-y-12">
             <div className="flex items-center justify-between space-x-12">
-              <Title>
-                {currentPageKey === 'step' ? 'Add step' : 'Create workflow'}
-              </Title>
+              <Title>{currentPageKey === 'step' ? 'Add step' : 'Create workflow'}</Title>
               {currentPageKey !== 'step' ? (
                 <div className="flex items-center space-x-12">
                   <ActionButton
@@ -440,9 +407,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     isDisabled={currentPageKey === 'workflow'}
                     className={cx(
                       'group inline-flex items-center space-x-4 font-body focus:outline-none',
-                      currentPageKey === 'workflow'
-                        ? 'pointer-events-none'
-                        : '',
+                      currentPageKey === 'workflow' ? 'pointer-events-none' : '',
                     )}
                   >
                     <span
@@ -457,9 +422,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     </span>
                     <span
                       className={cx(
-                        currentPageKey === 'workflow'
-                          ? 'text-gray-800'
-                          : 'text-primary-750',
+                        currentPageKey === 'workflow' ? 'text-gray-800' : 'text-primary-750',
                         'transition group-hover:text-secondary-600',
                       )}
                     >
@@ -515,11 +478,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     onPress={() => {
                       form.change('draft', true)
                     }}
-                    isDisabled={
-                      submitting ||
-                      createWorkflow.isLoading ||
-                      createStep.isLoading
-                    }
+                    isDisabled={submitting || createWorkflow.isLoading || createStep.isLoading}
                     variant="link"
                   >
                     Save as draft
@@ -529,11 +488,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
                     onPress={() => {
                       form.change('draft', undefined)
                     }}
-                    isDisabled={
-                      submitting ||
-                      createWorkflow.isLoading ||
-                      createStep.isLoading
-                    }
+                    isDisabled={submitting || createWorkflow.isLoading || createStep.isLoading}
                   >
                     {isAllowedToPublish ? 'Publish' : 'Submit'}
                   </Button>

@@ -8,9 +8,9 @@ import { TextFieldBase } from '@/elements/TextFieldBase/TextFieldBase'
 
 export interface TextAreaProps extends AriaTextFieldProps {
   /** @default "default" */
-  variant?: 'default' | 'form' | 'form-diff'
+  variant?: 'default' | 'form-diff' | 'form'
   /** @default "md" */
-  size?: 'md' | 'lg'
+  size?: 'lg' | 'md'
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
   helpText?: ReactNode
@@ -23,10 +23,7 @@ export interface TextAreaProps extends AriaTextFieldProps {
  */
 export function TextArea(props: TextAreaProps): JSX.Element {
   const ref = useRef<HTMLTextAreaElement>(null)
-  const { labelProps, inputProps } = useTextField(
-    { ...props, inputElementType: 'textarea' },
-    ref,
-  )
+  const { labelProps, inputProps } = useTextField({ ...props, inputElementType: 'textarea' }, ref)
 
   return (
     <TextFieldBase

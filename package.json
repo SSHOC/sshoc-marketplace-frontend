@@ -13,6 +13,8 @@
     "format:fix": "yarn run format --write",
     "lint:code": "eslint . --cache --cache-location .next/cache/eslint/ --ignore-path .gitignore",
     "lint:code:fix": "yarn run lint:code --fix",
+    "lint:style": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
+    "lint:style:fix": "yarn run lint:style --fix",
     "postbuild": "yarn run generate:favicons",
     "prepare": "simple-git-hooks || true",
     "start": "next start",
@@ -186,6 +188,13 @@
         }
       }
     ],
+    "rules": {
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/no-unused-vars": "off"
+    },
     "ignorePatterns": "public/mockServiceWorker.js"
   },
   "lint-staged": {

@@ -9,7 +9,7 @@ import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormTextField } from '@/modules/form/components/FormTextField/FormTextField'
 import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffField } from '@/modules/form/diff/DiffField'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface DateFormSectionProps {
   prefix?: string
@@ -48,26 +48,14 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
         suggestedValue={dateCreatedField.suggestedValue}
         isEnabled={isDiffingEnabled}
       >
-        {({
-          name,
-          isReviewed,
-          status,
-          onApprove,
-          onReject,
-          approvedValue,
-          suggestedValue,
-        }) => {
+        {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
           const requiresReview = status !== 'unchanged' && !isReviewed
 
           return (
             <Fragment>
               {requiresReview ? (
                 <div className="relative">
-                  <DiffControls
-                    status={status}
-                    onApprove={onApprove}
-                    onReject={onReject}
-                  />
+                  <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   <div className="grid flex-1 gap-1 py-2">
                     {status !== 'deleted' ? (
                       <TextField
@@ -117,26 +105,14 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
         suggestedValue={dateLastUpdatedField.suggestedValue}
         isEnabled={isDiffingEnabled}
       >
-        {({
-          name,
-          isReviewed,
-          status,
-          onApprove,
-          onReject,
-          approvedValue,
-          suggestedValue,
-        }) => {
+        {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
           const requiresReview = status !== 'unchanged' && !isReviewed
 
           return (
             <Fragment>
               {requiresReview ? (
                 <div className="relative">
-                  <DiffControls
-                    status={status}
-                    onApprove={onApprove}
-                    onReject={onReject}
-                  />
+                  <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   <div className="grid flex-1 gap-1 py-2">
                     {status !== 'deleted' ? (
                       <TextField

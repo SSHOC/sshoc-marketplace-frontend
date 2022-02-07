@@ -2,10 +2,7 @@ import { useCheckboxGroup, useCheckboxGroupItem } from '@react-aria/checkbox'
 import { mergeProps } from '@react-aria/utils'
 import type { CheckboxGroupState } from '@react-stately/checkbox'
 import { useCheckboxGroupState } from '@react-stately/checkbox'
-import type {
-  AriaCheckboxGroupItemProps,
-  AriaCheckboxGroupProps,
-} from '@react-types/checkbox'
+import type { AriaCheckboxGroupItemProps, AriaCheckboxGroupProps } from '@react-types/checkbox'
 import type { NecessityIndicator, Validation } from '@react-types/shared'
 import type { ReactElement, ReactNode } from 'react'
 import { Children, cloneElement, useRef } from 'react'
@@ -15,13 +12,11 @@ import { Field } from '@/elements/Field/Field'
 import { useErrorMessage } from '@/modules/a11y/useErrorMessage'
 
 export interface CheckBoxGroupProps extends AriaCheckboxGroupProps, Validation {
-  children:
-    | ReactElement<CheckBoxGroupItemProps>
-    | Array<ReactElement<CheckBoxGroupItemProps>>
+  children: Array<ReactElement<CheckBoxGroupItemProps>> | ReactElement<CheckBoxGroupItemProps>
   necessityIndicator?: NecessityIndicator
   validationMessage?: ReactNode
   /** @default "default" */
-  variant?: 'default' | 'form' | 'facet'
+  variant?: 'default' | 'facet' | 'form'
 }
 
 /**
@@ -62,7 +57,7 @@ export function CheckBoxGroup(props: CheckBoxGroupProps): JSX.Element {
 interface CheckBoxGroupItemProps extends AriaCheckboxGroupItemProps {
   state?: CheckboxGroupState
   /** @default "default" */
-  variant?: 'default' | 'form' | 'facet'
+  variant?: 'default' | 'facet' | 'form'
 }
 
 /**
@@ -74,7 +69,7 @@ interface CheckBoxGroupItemProps extends AriaCheckboxGroupItemProps {
  */
 function CheckBoxGroupItem(props: CheckBoxGroupItemProps): JSX.Element {
   const ref = useRef<HTMLInputElement>(null)
-  /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
   const state = props.state!
   const { inputProps } = useCheckboxGroupItem(props, state, ref)
   const isDisabled = props.isDisabled === true || state.isDisabled === true

@@ -12,7 +12,7 @@ import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormThumbnail } from '@/modules/form/components/FormThumbnail'
 import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface MediaFormSectionProps {
   initialValues?: any
@@ -55,22 +55,20 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
 
           return (
             <Fragment>
-              <FormFieldAddButton onPress={openDialog}>
-                Add media
-              </FormFieldAddButton>
+              <FormFieldAddButton onPress={openDialog}>Add media</FormFieldAddButton>
               <AddMediaDialog
                 isOpen={isDialogOpen}
                 onDismiss={closeDialog}
-                onSuccess={(info, caption) => onAdd({ info, caption })}
+                onSuccess={(info, caption) => {
+                  return onAdd({ info, caption })
+                }}
               />
             </Fragment>
           )
         }}
         isEnabled={isDiffingEnabled}
         wrapper={({ children }) => {
-          return (
-            <FormSection title={mediaFieldArray.label}>{children}</FormSection>
-          )
+          return <FormSection title={mediaFieldArray.label}>{children}</FormSection>
         }}
         style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}
       >
@@ -97,11 +95,7 @@ export function MediaFormSection(props: MediaFormSectionProps): JSX.Element {
             <Fragment>
               {requiresReview ? (
                 <div className="py-2">
-                  <DiffControls
-                    status={status}
-                    onApprove={onApprove}
-                    onReject={onReject}
-                  />
+                  <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   <Thumbnail
                     media={mediaField.suggestedValue?.info}
                     caption={mediaField.suggestedValue?.caption}

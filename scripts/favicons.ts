@@ -1,7 +1,7 @@
 import generate from '@stefanprobst/favicons'
 
 import { log } from '@/utils/log'
-import { image, shortTitle, title } from '@@/config/metadata.json'
+import { image, shortTitle, title } from '~/config/metadata.json'
 
 generate({
   inputFilePath: image.src,
@@ -11,5 +11,7 @@ generate({
   maskable: true,
   color: '#fff',
 })
-  .then(() => log.success('Successfully generated favicons.'))
+  .then(() => {
+    return log.success('Successfully generated favicons.')
+  })
   .catch(log.error)

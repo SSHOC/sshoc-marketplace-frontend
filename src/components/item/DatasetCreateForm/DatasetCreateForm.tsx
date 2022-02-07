@@ -46,11 +46,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
    * which will return a persistent id, which we need to use in
    * subsequent PUT requests, to avoid creating multiple items.
    */
-  const [persistentIdFromSavedDraft, setPersistentIdFromSavedDraft] = useState<
-    string | undefined
-  >(undefined)
-  const useItemMutation =
-    persistentIdFromSavedDraft != null ? useUpdateDataset : useCreateDataset
+  const [persistentIdFromSavedDraft, setPersistentIdFromSavedDraft] = useState<string | undefined>(
+    undefined,
+  )
+  const useItemMutation = persistentIdFromSavedDraft != null ? useUpdateDataset : useCreateDataset
 
   const toast = useToast()
   const router = useRouter()
@@ -59,9 +58,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   const handleErrors = useErrorHandlers()
   const validateCommonFormFields = useValidateCommonFormFields()
   const isAllowedToPublish =
-    user.data?.role !== undefined
-      ? ['administrator', 'moderator'].includes(user.data.role)
-      : false
+    user.data?.role !== undefined ? ['administrator', 'moderator'].includes(user.data.role) : false
   const queryClient = useQueryClient()
   const create = useItemMutation({
     onSuccess(data: DatasetDto) {
@@ -106,11 +103,7 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
       }
     },
     onError(error) {
-      toast.error(
-        `Failed to ${
-          isAllowedToPublish ? 'publish' : 'submit'
-        } ${categoryLabel}.`,
-      )
+      toast.error(`Failed to ${isAllowedToPublish ? 'publish' : 'submit'} ${categoryLabel}.`)
 
       if (error instanceof Error) {
         handleErrors(error)
@@ -127,19 +120,11 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
     const values = ensureIsoDates(sanitizeFormValues(unsanitized))
 
     if (persistentIdFromSavedDraft == null) {
-      const mutateAsync = create.mutateAsync as ReturnType<
-        typeof useCreateDataset
-      >['mutateAsync']
+      const mutateAsync = create.mutateAsync as ReturnType<typeof useCreateDataset>['mutateAsync']
 
-      await mutateAsync([
-        { draft },
-        values,
-        { token: auth.session.accessToken },
-      ])
+      await mutateAsync([{ draft }, values, { token: auth.session.accessToken }])
     } else {
-      const mutateAsync = create.mutateAsync as ReturnType<
-        typeof useUpdateDataset
-      >['mutateAsync']
+      const mutateAsync = create.mutateAsync as ReturnType<typeof useUpdateDataset>['mutateAsync']
 
       await mutateAsync([
         { persistentId: persistentIdFromSavedDraft },
@@ -158,7 +143,6 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }
 
   function onValidate(values: Partial<ItemFormValues>) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const errors: Partial<Record<keyof typeof values, any>> = {}
 
     validateCommonFormFields(sanitizeFormValues(values as any), errors)
@@ -172,18 +156,10 @@ export function ItemForm(props: ItemFormProps<ItemFormValues>): JSX.Element {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
       {({ handleSubmit, form, pristine, invalid, submitting }) => {
         return (
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="flex flex-col space-y-12"
-          >
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col space-y-12">
             <MainFormSection />
             <DateFormSection />
             <ActorsFormSection />

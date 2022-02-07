@@ -16,14 +16,8 @@ export interface DiffFieldArrayProps {
   onApprove?: () => void
   onReject?: () => void
   children: JSX.Element | ((state: DiffFieldState) => JSX.Element)
-  actions?: (props: {
-    onAdd: (value?: any) => void
-    arrayRequiresReview: boolean
-  }) => ReactNode
-  wrapper?: (props: {
-    arrayRequiresReview: boolean
-    children: ReactNode
-  }) => JSX.Element
+  actions?: (props: { onAdd: (value?: any) => void; arrayRequiresReview: boolean }) => ReactNode
+  wrapper?: (props: { arrayRequiresReview: boolean; children: ReactNode }) => JSX.Element
   style?: CSSProperties
 }
 
@@ -41,12 +35,14 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
     }>
   >(() => {
     if (!isEnabled) {
-      return fields.map(() => ({
-        approvedValue: null,
-        suggestedValue: null,
-        status: 'unchanged',
-        isReviewed: true,
-      }))
+      return fields.map(() => {
+        return {
+          approvedValue: null,
+          suggestedValue: null,
+          status: 'unchanged',
+          isReviewed: true,
+        }
+      })
     }
 
     const suggested = props.suggestedValue.map((suggestedValue, index) => {
@@ -85,16 +81,16 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
     if (fields.length == null) return
     if (fields.length >= props.approvedValue.length) return
 
-    Array.from({ length: props.approvedValue.length - fields.length }).forEach(
-      () => {
-        fields.push(null)
-      },
-    )
+    Array.from({ length: props.approvedValue.length - fields.length }).forEach(() => {
+      fields.push(null)
+    })
   }, [props.approvedValue, fields, isEnabled])
 
   const arrayRequiresReview =
     isEnabled &&
-    status.some((field) => field.status !== 'unchanged' && !field.isReviewed)
+    status.some((field) => {
+      return field.status !== 'unchanged' && !field.isReviewed
+    })
 
   function onAdd(value = undefined) {
     fields.push(value)
@@ -116,20 +112,24 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
             switch (field.status) {
               case 'deleted':
                 fields.remove(index)
-                setStatus((status) => [
-                  ...status.slice(0, index),
-                  /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
-                  ...status.slice(index + 1),
-                ])
+                setStatus((status) => {
+                  return [
+                    ...status.slice(0, index),
+                    /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
+                    ...status.slice(index + 1),
+                  ]
+                })
                 break
               case 'inserted':
               case 'changed':
                 form.mutators.setFieldTouched(name)
-                setStatus((status) => [
-                  ...status.slice(0, index),
-                  { ...status[index], isReviewed: true },
-                  ...status.slice(index + 1),
-                ])
+                setStatus((status) => {
+                  return [
+                    ...status.slice(0, index),
+                    { ...status[index], isReviewed: true },
+                    ...status.slice(index + 1),
+                  ]
+                })
                 break
               default:
                 return
@@ -141,20 +141,24 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
             switch (field.status) {
               case 'inserted':
                 fields.remove(index)
-                setStatus((status) => [
-                  ...status.slice(0, index),
-                  /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
-                  ...status.slice(index + 1),
-                ])
+                setStatus((status) => {
+                  return [
+                    ...status.slice(0, index),
+                    /** Remove item from approved state, so we don't render the "additional", i.e. deleted field anymore, and don't have stale state when the user adds a new item. */
+                    ...status.slice(index + 1),
+                  ]
+                })
                 break
               case 'deleted':
               case 'changed':
                 fields.update(index, field.approvedValue)
-                setStatus((status) => [
-                  ...status.slice(0, index),
-                  { ...status[index], isReviewed: true },
-                  ...status.slice(index + 1),
-                ])
+                setStatus((status) => {
+                  return [
+                    ...status.slice(0, index),
+                    { ...status[index], isReviewed: true },
+                    ...status.slice(index + 1),
+                  ]
+                })
                 break
               default:
                 return
@@ -186,9 +190,7 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
           )
         })}
       </div>
-      {typeof props.actions === 'function'
-        ? props.actions({ onAdd, arrayRequiresReview })
-        : null}
+      {typeof props.actions === 'function' ? props.actions({ onAdd, arrayRequiresReview }) : null}
     </FormRecords>
   )
 
@@ -200,10 +202,7 @@ export function DiffFieldArray(props: DiffFieldArrayProps): JSX.Element {
 /**
  * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/127#note_502140
  */
-function getStatus(
-  approvedValue: unknown,
-  suggestedValue: unknown,
-): FieldStatus {
+function getStatus(approvedValue: unknown, suggestedValue: unknown): FieldStatus {
   if (suggestedValue === null) {
     return 'unchanged'
   }

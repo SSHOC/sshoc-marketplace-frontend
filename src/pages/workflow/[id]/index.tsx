@@ -22,9 +22,8 @@ export async function getServerSideProps(
   const { id } = sanitizeItemQueryParams(context.params)
 
   if (id === undefined) {
-    console.log(
-      `Invalid workflow id provided: ${JSON.stringify(context.params?.id)}`,
-    )
+    // eslint-disable-next-line no-console
+    console.log(`Invalid workflow id provided: ${JSON.stringify(context.params?.id)}`)
     return { notFound: true }
   }
 
@@ -32,6 +31,7 @@ export async function getServerSideProps(
     const workflow = await getWorkflow({ persistentId: id }, {})
     return { props: { workflow } }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(`Failed to fetch workflow ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }

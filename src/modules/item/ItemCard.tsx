@@ -8,7 +8,9 @@ import { Anchor } from '@/modules/ui/Anchor'
 import { ItemCategoryIcon } from '@/modules/ui/ItemCategoryIcon'
 
 /** lazy load markdown processor */
-const Plaintext = dynamic(() => import('@/modules/markdown/Plaintext'))
+const Plaintext = dynamic(() => {
+  return import('@/modules/markdown/Plaintext')
+})
 
 const MAX_DESCRIPTION_LENGTH = 280
 
@@ -27,10 +29,7 @@ export default function ItemCard({ item }: { item: Item }): JSX.Element {
           className="flex-shrink-0"
           height="2.5em"
         />
-        <Link
-          href={{ pathname: `/${item.category}/${item.persistentId}` }}
-          passHref
-        >
+        <Link href={{ pathname: `/${item.category}/${item.persistentId}` }} passHref>
           <a className="transition-colors duration-150 hover:text-primary-800">
             <span>{item.label}</span>
           </a>
@@ -40,10 +39,7 @@ export default function ItemCard({ item }: { item: Item }): JSX.Element {
       <div className="text-sm leading-7 text-gray-600">
         <Plaintext text={item.description} maxLength={MAX_DESCRIPTION_LENGTH} />
       </div>
-      <Link
-        href={{ pathname: `/${item.category}/${item.persistentId}` }}
-        passHref
-      >
+      <Link href={{ pathname: `/${item.category}/${item.persistentId}` }} passHref>
         <Anchor className="self-end text-sm">Read more</Anchor>
       </Link>
     </VStack>

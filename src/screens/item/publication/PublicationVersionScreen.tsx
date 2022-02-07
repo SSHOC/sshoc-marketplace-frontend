@@ -21,7 +21,6 @@ export default function PublicationVersionScreen(): JSX.Element {
   const handleError = useErrorHandlers()
 
   const publication = useGetPublicationVersion(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id!, versionId: versionId! },
     {
       enabled: id != null && versionId != null && !Number.isNaN(versionId),

@@ -17,9 +17,8 @@ import { ItemHistory } from '@/screens/item/ItemHistory'
 export default function TrainingMaterialHistoryScreen(): JSX.Element {
   const router = useRouter()
 
-  const id = router.query.id as string | undefined
+  const id = router.query['id'] as string | undefined
   const trainingMaterial = useGetTrainingMaterial(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     {},
     { enabled: id != null },
@@ -54,7 +53,7 @@ export default function TrainingMaterialHistoryScreen(): JSX.Element {
         </Header>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Training material version history</Title>
-          {trainingMaterial.data === undefined || id == undefined ? (
+          {trainingMaterial.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

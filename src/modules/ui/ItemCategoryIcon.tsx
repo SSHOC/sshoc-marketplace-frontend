@@ -4,12 +4,12 @@ import { forwardRef } from 'react'
 import { useGetItemCategories } from '@/api/sshoc'
 import type { ItemCategory } from '@/api/sshoc/types'
 import UnreachableError from '@/utils/ts/UnreachableError'
-import { Svg as DatasetIcon } from '@@/assets/icons/dataset.svg'
-import { Svg as PublicationIcon } from '@@/assets/icons/publication.svg'
-import { Svg as StepIcon } from '@@/assets/icons/step.svg'
-import { Svg as ToolOrServiceIcon } from '@@/assets/icons/tool-or-service.svg'
-import { Svg as TrainingMaterialIcon } from '@@/assets/icons/training-material.svg'
-import { Svg as WorkflowIcon } from '@@/assets/icons/workflow.svg'
+import { Svg as DatasetIcon } from '~/assets/icons/dataset.svg'
+import { Svg as PublicationIcon } from '~/assets/icons/publication.svg'
+import { Svg as StepIcon } from '~/assets/icons/step.svg'
+import { Svg as ToolOrServiceIcon } from '~/assets/icons/tool-or-service.svg'
+import { Svg as TrainingMaterialIcon } from '~/assets/icons/training-material.svg'
+import { Svg as WorkflowIcon } from '~/assets/icons/workflow.svg'
 
 type ItemCategoryIconProps = ComponentPropsWithoutRef<'svg'> & {
   category: ItemCategory

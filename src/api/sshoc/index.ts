@@ -20,14 +20,14 @@ import { useMutation, useQuery } from 'react-query'
 export type MediaSourceDto = {
   code?: string
   serviceUrl?: string
-  mediaCategory?: 'image' | 'video' | 'embed' | 'object' | 'thumbnail'
+  mediaCategory?: 'embed' | 'image' | 'object' | 'thumbnail' | 'video'
   ord?: number /* int32 */
 }
 
 export type MediaSourceCore = {
   code?: string
   serviceUrl?: string
-  mediaCategory?: 'image' | 'video' | 'embed' | 'object' | 'thumbnail'
+  mediaCategory?: 'embed' | 'image' | 'object' | 'thumbnail' | 'video'
   ord?: number /* int32 */
 }
 
@@ -44,12 +44,7 @@ export type UserDto = {
   displayName?: string
   status?: 'during-registration' | 'enabled' | 'locked'
   registrationDate?: string
-  role?:
-    | 'contributor'
-    | 'system-contributor'
-    | 'moderator'
-    | 'system-moderator'
-    | 'administrator'
+  role?: 'administrator' | 'contributor' | 'moderator' | 'system-contributor' | 'system-moderator'
   email?: string
   config?: boolean
 }
@@ -215,7 +210,7 @@ export type ItemSourceDto = {
 
 export type MediaDetails = {
   mediaId?: string /* uuid */
-  category?: 'image' | 'video' | 'embed' | 'object' | 'thumbnail'
+  category?: 'embed' | 'image' | 'object' | 'thumbnail' | 'video'
   location?: MediaLocation
   filename?: string
   mimeType?: string
@@ -235,7 +230,7 @@ export type PropertyDto = {
 export type PropertyTypeDto = {
   code?: string
   label?: string
-  type?: 'concept' | 'string' | 'url' | 'int' | 'float' | 'date' | 'boolean'
+  type?: 'boolean' | 'concept' | 'date' | 'float' | 'int' | 'string' | 'url'
   groupName?: string
   hidden?: boolean
   ord?: number /* int32 */
@@ -246,12 +241,12 @@ export type RelatedItemDto = {
   id?: number /* int64 */
   persistentId?: string
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   description?: string
   relation?: ItemRelationDto
@@ -267,23 +262,17 @@ export type SourceBasicDto = {
 export type TrainingMaterialDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -319,23 +308,17 @@ export type SourceDto = {
 export type ItemDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -367,23 +350,17 @@ export type PaginatedTrainingMaterials = {
 export type ItemExtBasicDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
 }
 
@@ -406,12 +383,12 @@ export type PaginatedItemRelation = {
 export type ItemBasicDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
@@ -456,23 +433,17 @@ export type PublicationCore = {
 export type PublicationDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -513,7 +484,7 @@ export type ActorSourceCore = {
 export type PropertyTypeCore = {
   code: string
   label?: string
-  type?: 'concept' | 'string' | 'url' | 'int' | 'float' | 'date' | 'boolean'
+  type?: 'boolean' | 'concept' | 'date' | 'float' | 'int' | 'string' | 'url'
   groupName?: string
   hidden?: boolean
   ord?: number /* int32 */
@@ -571,12 +542,12 @@ export type SearchItemBasic = {
   id?: number /* int64 */
   persistentId?: string
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   lastInfoUpdate?: string
@@ -600,23 +571,17 @@ export type ToolCore = {
 export type ToolDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -679,12 +644,7 @@ export type UserCore = {
   username: string
   displayName?: string
   password: string
-  role?:
-    | 'contributor'
-    | 'system-contributor'
-    | 'moderator'
-    | 'system-moderator'
-    | 'administrator'
+  role?: 'administrator' | 'contributor' | 'moderator' | 'system-contributor' | 'system-moderator'
   email: string
 }
 
@@ -730,23 +690,17 @@ export type DatasetCore = {
 export type DatasetDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -895,23 +849,17 @@ export type WorkflowCore = {
 export type StepDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -928,23 +876,17 @@ export type StepDto = {
 export type WorkflowDto = {
   id?: number /* int64 */
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   persistentId?: string
   lastInfoUpdate?: string
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   informationContributor?: UserDto
   description?: string
   contributors?: Array<ItemContributorDto>
@@ -1031,7 +973,7 @@ export type PaginatedSearchItems = {
   perpage?: number /* int32 */
   pages?: number /* int32 */
   q?: string
-  order?: Array<'score' | 'label' | 'modified-on'>
+  order?: Array<'label' | 'modified-on' | 'score'>
   items?: Array<SearchItem>
   categories?: Record<string, LabeledCheckedCount>
   facets?: Record<string, Record<string, CheckedCount>>
@@ -1041,25 +983,19 @@ export type SearchItem = {
   id?: number /* int64 */
   persistentId?: string
   category?:
+    | 'dataset'
+    | 'publication'
+    | 'step'
     | 'tool-or-service'
     | 'training-material'
-    | 'publication'
-    | 'dataset'
     | 'workflow'
-    | 'step'
   label?: string
   version?: string
   lastInfoUpdate?: string
   description?: string
   contributors?: Array<ItemContributorDto>
   properties?: Array<PropertyDto>
-  status?:
-    | 'draft'
-    | 'ingested'
-    | 'suggested'
-    | 'approved'
-    | 'disapproved'
-    | 'deprecated'
+  status?: 'approved' | 'deprecated' | 'disapproved' | 'draft' | 'ingested' | 'suggested'
   owner?: string
 }
 
@@ -1092,8 +1028,7 @@ export type SearchActor = {
   affiliations?: Array<ActorDto>
 }
 
-const defaultBaseUrl =
-  process.env.SSHOC_API_BASE_URL ?? process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
+const defaultBaseUrl = process.env.SSHOC_API_BASE_URL ?? process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL
 
 export { defaultBaseUrl as baseUrl }
 
@@ -1109,11 +1044,7 @@ export class HttpError extends Error {
   }
 }
 
-function createUrl(
-  path: string,
-  baseUrl = defaultBaseUrl,
-  query: Record<string, unknown> = {},
-) {
+function createUrl(path: string, baseUrl = defaultBaseUrl, query: Record<string, unknown> = {}) {
   const url = new URL(path, baseUrl)
   Object.entries(query).forEach(([key, value]) => {
     if (Array.isArray(value)) {
@@ -1217,18 +1148,14 @@ export async function getAllMediaSources(
 }
 
 export function useGetAllMediaSources(
-  options?: UseQueryOptions<
-    GetAllMediaSources.Response.Success,
-    GetAllMediaSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetAllMediaSources.Response.Success, GetAllMediaSources.Response.Error>,
   requestOptions?: RequestOptions<GetAllMediaSources.Response.Success>,
-): UseQueryResult<
-  GetAllMediaSources.Response.Success,
-  GetAllMediaSources.Response.Error
-> {
+): UseQueryResult<GetAllMediaSources.Response.Success, GetAllMediaSources.Response.Error> {
   return useQuery(
     ['getAllMediaSources'],
-    () => getAllMediaSources(requestOptions),
+    () => {
+      return getAllMediaSources(requestOptions)
+    },
     options,
   )
 }
@@ -1268,19 +1195,13 @@ export function useCreateMediaSource(
   options?: UseMutationOptions<
     CreateMediaSource.Response.Success,
     CreateMediaSource.Response.Error,
-    [
-      CreateMediaSource.RequestBody,
-      RequestOptions<CreateMediaSource.Response.Success>,
-    ],
+    [CreateMediaSource.RequestBody, RequestOptions<CreateMediaSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateMediaSource.Response.Success,
   CreateMediaSource.Response.Error,
-  [
-    CreateMediaSource.RequestBody,
-    RequestOptions<CreateMediaSource.Response.Success>,
-  ],
+  [CreateMediaSource.RequestBody, RequestOptions<CreateMediaSource.Response.Success>],
   unknown
 > {
   return useMutation(createMediaSource, options)
@@ -1321,18 +1242,14 @@ export async function getMediaSource(
 
 export function useGetMediaSource(
   pathParams: GetMediaSource.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaSource.Response.Success,
-    GetMediaSource.Response.Error
-  >,
+  options?: UseQueryOptions<GetMediaSource.Response.Success, GetMediaSource.Response.Error>,
   requestOptions?: RequestOptions<GetMediaSource.Response.Success>,
-): UseQueryResult<
-  GetMediaSource.Response.Success,
-  GetMediaSource.Response.Error
-> {
+): UseQueryResult<GetMediaSource.Response.Success, GetMediaSource.Response.Error> {
   return useQuery(
     ['getMediaSource', pathParams],
-    () => getMediaSource(pathParams, requestOptions),
+    () => {
+      return getMediaSource(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -1433,19 +1350,13 @@ export function useDeleteMediaSource(
   options?: UseMutationOptions<
     DeleteMediaSource.Response.Success,
     DeleteMediaSource.Response.Error,
-    [
-      DeleteMediaSource.PathParameters,
-      RequestOptions<DeleteMediaSource.Response.Success>,
-    ],
+    [DeleteMediaSource.PathParameters, RequestOptions<DeleteMediaSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteMediaSource.Response.Success,
   DeleteMediaSource.Response.Error,
-  [
-    DeleteMediaSource.PathParameters,
-    RequestOptions<DeleteMediaSource.Response.Success>,
-  ],
+  [DeleteMediaSource.PathParameters, RequestOptions<DeleteMediaSource.Response.Success>],
   unknown
 > {
   return useMutation(deleteMediaSource, options)
@@ -1486,19 +1397,13 @@ export function useRegisterOAuth2User(
   options?: UseMutationOptions<
     RegisterOAuth2User.Response.Success,
     RegisterOAuth2User.Response.Error,
-    [
-      RegisterOAuth2User.RequestBody,
-      RequestOptions<RegisterOAuth2User.Response.Success>,
-    ],
+    [RegisterOAuth2User.RequestBody, RequestOptions<RegisterOAuth2User.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   RegisterOAuth2User.Response.Success,
   RegisterOAuth2User.Response.Error,
-  [
-    RegisterOAuth2User.RequestBody,
-    RequestOptions<RegisterOAuth2User.Response.Success>,
-  ],
+  [RegisterOAuth2User.RequestBody, RequestOptions<RegisterOAuth2User.Response.Success>],
   unknown
 > {
   return useMutation(registerOAuth2User, options)
@@ -1579,18 +1484,14 @@ export async function getLoggedInUser(
 }
 
 export function useGetLoggedInUser(
-  options?: UseQueryOptions<
-    GetLoggedInUser.Response.Success,
-    GetLoggedInUser.Response.Error
-  >,
+  options?: UseQueryOptions<GetLoggedInUser.Response.Success, GetLoggedInUser.Response.Error>,
   requestOptions?: RequestOptions<GetLoggedInUser.Response.Success>,
-): UseQueryResult<
-  GetLoggedInUser.Response.Success,
-  GetLoggedInUser.Response.Error
-> {
+): UseQueryResult<GetLoggedInUser.Response.Success, GetLoggedInUser.Response.Error> {
   return useQuery(
     ['getLoggedInUser'],
-    () => getLoggedInUser(requestOptions),
+    () => {
+      return getLoggedInUser(requestOptions)
+    },
     options,
   )
 }
@@ -1610,11 +1511,7 @@ export namespace MergeTrainingMaterial {
   export type RequestBody = TrainingMaterialCore
 }
 
-export async function mergeTrainingMaterial([
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function mergeTrainingMaterial([queryParams, body, requestOptions]: [
   queryParams: MergeTrainingMaterial.QueryParameters,
   body: MergeTrainingMaterial.RequestBody,
   requestOptions?: RequestOptions<MergeTrainingMaterial.Response.Success>,
@@ -1677,9 +1574,7 @@ export async function getTrainingMaterialSources(
   requestOptions?: RequestOptions<GetTrainingMaterialSources.Response.Success>,
 ): Promise<GetTrainingMaterialSources.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/sources`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}/sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -1706,7 +1601,9 @@ export function useGetTrainingMaterialSources(
 > {
   return useQuery(
     ['getTrainingMaterialSources', pathParams],
-    () => getTrainingMaterialSources(pathParams, requestOptions),
+    () => {
+      return getTrainingMaterialSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -1735,9 +1632,7 @@ export async function getTrainingMaterialAndVersionedItemDifferences(
   requestOptions?: RequestOptions<GetTrainingMaterialAndVersionedItemDifferences.Response.Success>,
 ): Promise<GetTrainingMaterialAndVersionedItemDifferences.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/diff`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -1765,12 +1660,9 @@ export function useGetTrainingMaterialAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getTrainingMaterialAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getTrainingMaterialAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getTrainingMaterialAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -1829,17 +1721,14 @@ export function useGetVersionedTrainingMaterialAndVersionedItemDifferences(
   GetVersionedTrainingMaterialAndVersionedItemDifferences.Response.Error
 > {
   return useQuery(
-    [
-      'getVersionedTrainingMaterialAndVersionedItemDifferences',
-      pathParams,
-      queryParams,
-    ],
-    () =>
-      getVersionedTrainingMaterialAndVersionedItemDifferences(
+    ['getVersionedTrainingMaterialAndVersionedItemDifferences', pathParams, queryParams],
+    () => {
+      return getVersionedTrainingMaterialAndVersionedItemDifferences(
         pathParams,
         queryParams,
         requestOptions,
-      ),
+      )
+    },
     options,
   )
 }
@@ -1886,13 +1775,12 @@ export function useGetTrainingMaterials(
     GetTrainingMaterials.Response.Error
   >,
   requestOptions?: RequestOptions<GetTrainingMaterials.Response.Success>,
-): UseQueryResult<
-  GetTrainingMaterials.Response.Success,
-  GetTrainingMaterials.Response.Error
-> {
+): UseQueryResult<GetTrainingMaterials.Response.Success, GetTrainingMaterials.Response.Error> {
   return useQuery(
     ['getTrainingMaterials', queryParams],
-    () => getTrainingMaterials(queryParams, requestOptions),
+    () => {
+      return getTrainingMaterials(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -1912,11 +1800,7 @@ export namespace CreateTrainingMaterial {
   export type RequestBody = TrainingMaterialCore
 }
 
-export async function createTrainingMaterial([
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function createTrainingMaterial([queryParams, body, requestOptions]: [
   queryParams: CreateTrainingMaterial.QueryParameters,
   body: CreateTrainingMaterial.RequestBody,
   requestOptions?: RequestOptions<CreateTrainingMaterial.Response.Success>,
@@ -1984,9 +1868,7 @@ export async function getTrainingMaterial(
   requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
 ): Promise<GetTrainingMaterial.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2008,13 +1890,12 @@ export function useGetTrainingMaterial(
     GetTrainingMaterial.Response.Error
   >,
   requestOptions?: RequestOptions<GetTrainingMaterial.Response.Success>,
-): UseQueryResult<
-  GetTrainingMaterial.Response.Success,
-  GetTrainingMaterial.Response.Error
-> {
+): UseQueryResult<GetTrainingMaterial.Response.Success, GetTrainingMaterial.Response.Error> {
   return useQuery(
     ['getTrainingMaterial', pathParams, queryParams],
-    () => getTrainingMaterial(pathParams, queryParams, requestOptions),
+    () => {
+      return getTrainingMaterial(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -2038,21 +1919,14 @@ export namespace UpdateTrainingMaterial {
   export type RequestBody = TrainingMaterialCore
 }
 
-export async function updateTrainingMaterial([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updateTrainingMaterial([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdateTrainingMaterial.PathParameters,
   queryParams: UpdateTrainingMaterial.QueryParameters,
   body: UpdateTrainingMaterial.RequestBody,
   requestOptions?: RequestOptions<UpdateTrainingMaterial.Response.Success>,
 ]): Promise<UpdateTrainingMaterial.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2109,19 +1983,13 @@ export namespace DeleteTrainingMaterial {
   }
 }
 
-export async function deleteTrainingMaterial([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deleteTrainingMaterial([pathParams, queryParams, requestOptions]: [
   pathParams: DeleteTrainingMaterial.PathParameters,
   queryParams: DeleteTrainingMaterial.QueryParameters,
   requestOptions?: RequestOptions<DeleteTrainingMaterial.Response.Success>,
 ]): Promise<DeleteTrainingMaterial.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2208,7 +2076,9 @@ export function useGetTrainingMaterialVersion(
 > {
   return useQuery(
     ['getTrainingMaterialVersion', pathParams],
-    () => getTrainingMaterialVersion(pathParams, requestOptions),
+    () => {
+      return getTrainingMaterialVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -2228,10 +2098,7 @@ export namespace DeleteTrainingMaterialVersion {
   }
 }
 
-export async function deleteTrainingMaterialVersion([
-  pathParams,
-  requestOptions,
-]: [
+export async function deleteTrainingMaterialVersion([pathParams, requestOptions]: [
   pathParams: DeleteTrainingMaterialVersion.PathParameters,
   requestOptions?: RequestOptions<DeleteTrainingMaterialVersion.Response.Success>,
 ]): Promise<DeleteTrainingMaterialVersion.Response.Success> {
@@ -2323,10 +2190,7 @@ export function useRevertTrainingMaterial(
 ): UseMutationResult<
   RevertTrainingMaterial.Response.Success,
   RevertTrainingMaterial.Response.Error,
-  [
-    RevertTrainingMaterial.PathParameters,
-    RequestOptions<RevertTrainingMaterial.Response.Success>,
-  ],
+  [RevertTrainingMaterial.PathParameters, RequestOptions<RevertTrainingMaterial.Response.Success>],
   unknown
 > {
   return useMutation(revertTrainingMaterial, options)
@@ -2351,9 +2215,7 @@ export async function publishTrainingMaterial([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<PublishTrainingMaterial.Response.Success>,
 ]): Promise<PublishTrainingMaterial.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/commit`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -2413,9 +2275,7 @@ export async function getTrainingMaterialHistory(
   requestOptions?: RequestOptions<GetTrainingMaterialHistory.Response.Success>,
 ): Promise<GetTrainingMaterialHistory.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/history`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}/history`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2443,7 +2303,9 @@ export function useGetTrainingMaterialHistory(
 > {
   return useQuery(
     ['getTrainingMaterialHistory', pathParams, queryParams],
-    () => getTrainingMaterialHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getTrainingMaterialHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -2496,8 +2358,9 @@ export function useGetTrainingMaterialInformationContributors(
 > {
   return useQuery(
     ['getTrainingMaterialInformationContributors', pathParams],
-    () =>
-      getTrainingMaterialInformationContributors(pathParams, requestOptions),
+    () => {
+      return getTrainingMaterialInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -2524,9 +2387,7 @@ export async function getTrainingMaterialVersionInformationContributors(
   return request({
     path: `/api/training-materials/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/versions/${encodeURIComponent(
-      pathParams['versionId'],
-    )}/information-contributors`,
+    )}/versions/${encodeURIComponent(pathParams['versionId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -2553,11 +2414,9 @@ export function useGetTrainingMaterialVersionInformationContributors(
 > {
   return useQuery(
     ['getTrainingMaterialVersionInformationContributors', pathParams],
-    () =>
-      getTrainingMaterialVersionInformationContributors(
-        pathParams,
-        requestOptions,
-      ),
+    () => {
+      return getTrainingMaterialVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -2585,9 +2444,7 @@ export async function getTrainingMaterialMerge(
   requestOptions?: RequestOptions<GetTrainingMaterialMerge.Response.Success>,
 ): Promise<GetTrainingMaterialMerge.Response.Success> {
   return request({
-    path: `/api/training-materials/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/merge`,
+    path: `/api/training-materials/${encodeURIComponent(pathParams['persistentId'])}/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2615,7 +2472,9 @@ export function useGetTrainingMaterialMerge(
 > {
   return useQuery(
     ['getTrainingMaterialMerge', pathParams, queryParams],
-    () => getTrainingMaterialMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getTrainingMaterialMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -2639,21 +2498,16 @@ export namespace CreateItemRelatedItem {
   export type RequestBody = ItemRelationId
 }
 
-export async function createItemRelatedItem([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function createItemRelatedItem([pathParams, queryParams, body, requestOptions]: [
   pathParams: CreateItemRelatedItem.PathParameters,
   queryParams: CreateItemRelatedItem.QueryParameters,
   body: CreateItemRelatedItem.RequestBody,
   requestOptions?: RequestOptions<CreateItemRelatedItem.Response.Success>,
 ]): Promise<CreateItemRelatedItem.Response.Success> {
   return request({
-    path: `/api/items-relations/${encodeURIComponent(
-      pathParams['subjectId'],
-    )}/${encodeURIComponent(pathParams['objectId'])}`,
+    path: `/api/items-relations/${encodeURIComponent(pathParams['subjectId'])}/${encodeURIComponent(
+      pathParams['objectId'],
+    )}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2711,19 +2565,15 @@ export namespace DeleteItemRelatedItem {
   }
 }
 
-export async function deleteItemRelatedItem([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deleteItemRelatedItem([pathParams, queryParams, requestOptions]: [
   pathParams: DeleteItemRelatedItem.PathParameters,
   queryParams: DeleteItemRelatedItem.QueryParameters,
   requestOptions?: RequestOptions<DeleteItemRelatedItem.Response.Success>,
 ]): Promise<DeleteItemRelatedItem.Response.Success> {
   return request({
-    path: `/api/items-relations/${encodeURIComponent(
-      pathParams['subjectId'],
-    )}/${encodeURIComponent(pathParams['objectId'])}`,
+    path: `/api/items-relations/${encodeURIComponent(pathParams['subjectId'])}/${encodeURIComponent(
+      pathParams['objectId'],
+    )}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -2796,18 +2646,14 @@ export async function getItemRelation(
 
 export function useGetItemRelation(
   pathParams: GetItemRelation.PathParameters,
-  options?: UseQueryOptions<
-    GetItemRelation.Response.Success,
-    GetItemRelation.Response.Error
-  >,
+  options?: UseQueryOptions<GetItemRelation.Response.Success, GetItemRelation.Response.Error>,
   requestOptions?: RequestOptions<GetItemRelation.Response.Success>,
-): UseQueryResult<
-  GetItemRelation.Response.Success,
-  GetItemRelation.Response.Error
-> {
+): UseQueryResult<GetItemRelation.Response.Success, GetItemRelation.Response.Error> {
   return useQuery(
     ['getItemRelation', pathParams],
-    () => getItemRelation(pathParams, requestOptions),
+    () => {
+      return getItemRelation(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -2888,11 +2734,7 @@ export namespace DeleteItemRelation {
   }
 }
 
-export async function deleteItemRelation([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deleteItemRelation([pathParams, queryParams, requestOptions]: [
   pathParams: DeleteItemRelation.PathParameters,
   queryParams: DeleteItemRelation.QueryParameters,
   requestOptions?: RequestOptions<DeleteItemRelation.Response.Success>,
@@ -2972,18 +2814,14 @@ export async function getItemRelations(
 
 export function useGetItemRelations(
   queryParams: GetItemRelations.QueryParameters,
-  options?: UseQueryOptions<
-    GetItemRelations.Response.Success,
-    GetItemRelations.Response.Error
-  >,
+  options?: UseQueryOptions<GetItemRelations.Response.Success, GetItemRelations.Response.Error>,
   requestOptions?: RequestOptions<GetItemRelations.Response.Success>,
-): UseQueryResult<
-  GetItemRelations.Response.Success,
-  GetItemRelations.Response.Error
-> {
+): UseQueryResult<GetItemRelations.Response.Success, GetItemRelations.Response.Error> {
   return useQuery(
     ['getItemRelations', queryParams],
-    () => getItemRelations(queryParams, requestOptions),
+    () => {
+      return getItemRelations(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -3023,19 +2861,13 @@ export function useCreateItemRelation(
   options?: UseMutationOptions<
     CreateItemRelation.Response.Success,
     CreateItemRelation.Response.Error,
-    [
-      CreateItemRelation.RequestBody,
-      RequestOptions<CreateItemRelation.Response.Success>,
-    ],
+    [CreateItemRelation.RequestBody, RequestOptions<CreateItemRelation.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateItemRelation.Response.Success,
   CreateItemRelation.Response.Error,
-  [
-    CreateItemRelation.RequestBody,
-    RequestOptions<CreateItemRelation.Response.Success>,
-  ],
+  [CreateItemRelation.RequestBody, RequestOptions<CreateItemRelation.Response.Success>],
   unknown
 > {
   return useMutation(createItemRelation, options)
@@ -3076,15 +2908,14 @@ export async function getComments(
 
 export function useGetComments(
   pathParams: GetComments.PathParameters,
-  options?: UseQueryOptions<
-    GetComments.Response.Success,
-    GetComments.Response.Error
-  >,
+  options?: UseQueryOptions<GetComments.Response.Success, GetComments.Response.Error>,
   requestOptions?: RequestOptions<GetComments.Response.Success>,
 ): UseQueryResult<GetComments.Response.Success, GetComments.Response.Error> {
   return useQuery(
     ['getComments', pathParams],
-    () => getComments(pathParams, requestOptions),
+    () => {
+      return getComments(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -3167,9 +2998,7 @@ export async function getLastComments(
   requestOptions?: RequestOptions<GetLastComments.Response.Success>,
 ): Promise<GetLastComments.Response.Success> {
   return request({
-    path: `/api/items/${encodeURIComponent(
-      pathParams['itemId'],
-    )}/last-comments`,
+    path: `/api/items/${encodeURIComponent(pathParams['itemId'])}/last-comments`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3185,18 +3014,14 @@ export async function getLastComments(
 
 export function useGetLastComments(
   pathParams: GetLastComments.PathParameters,
-  options?: UseQueryOptions<
-    GetLastComments.Response.Success,
-    GetLastComments.Response.Error
-  >,
+  options?: UseQueryOptions<GetLastComments.Response.Success, GetLastComments.Response.Error>,
   requestOptions?: RequestOptions<GetLastComments.Response.Success>,
-): UseQueryResult<
-  GetLastComments.Response.Success,
-  GetLastComments.Response.Error
-> {
+): UseQueryResult<GetLastComments.Response.Success, GetLastComments.Response.Error> {
   return useQuery(
     ['getLastComments', pathParams],
-    () => getLastComments(pathParams, requestOptions),
+    () => {
+      return getLastComments(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -3223,9 +3048,9 @@ export async function updateItemComment([pathParams, body, requestOptions]: [
   requestOptions?: RequestOptions<UpdateItemComment.Response.Success>,
 ]): Promise<UpdateItemComment.Response.Success> {
   return request({
-    path: `/api/items/${encodeURIComponent(
-      pathParams['itemId'],
-    )}/comments/${encodeURIComponent(pathParams['id'])}`,
+    path: `/api/items/${encodeURIComponent(pathParams['itemId'])}/comments/${encodeURIComponent(
+      pathParams['id'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3283,9 +3108,9 @@ export async function deleteItemComment([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<DeleteItemComment.Response.Success>,
 ]): Promise<DeleteItemComment.Response.Success> {
   return request({
-    path: `/api/items/${encodeURIComponent(
-      pathParams['itemId'],
-    )}/comments/${encodeURIComponent(pathParams['id'])}`,
+    path: `/api/items/${encodeURIComponent(pathParams['itemId'])}/comments/${encodeURIComponent(
+      pathParams['id'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3303,19 +3128,13 @@ export function useDeleteItemComment(
   options?: UseMutationOptions<
     DeleteItemComment.Response.Success,
     DeleteItemComment.Response.Error,
-    [
-      DeleteItemComment.PathParameters,
-      RequestOptions<DeleteItemComment.Response.Success>,
-    ],
+    [DeleteItemComment.PathParameters, RequestOptions<DeleteItemComment.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteItemComment.Response.Success,
   DeleteItemComment.Response.Error,
-  [
-    DeleteItemComment.PathParameters,
-    RequestOptions<DeleteItemComment.Response.Success>,
-  ],
+  [DeleteItemComment.PathParameters, RequestOptions<DeleteItemComment.Response.Success>],
   unknown
 > {
   return useMutation(deleteItemComment, options)
@@ -3399,9 +3218,7 @@ export async function getPublicationSources(
   requestOptions?: RequestOptions<GetPublicationSources.Response.Success>,
 ): Promise<GetPublicationSources.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/sources`,
+    path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}/sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3422,13 +3239,12 @@ export function useGetPublicationSources(
     GetPublicationSources.Response.Error
   >,
   requestOptions?: RequestOptions<GetPublicationSources.Response.Success>,
-): UseQueryResult<
-  GetPublicationSources.Response.Success,
-  GetPublicationSources.Response.Error
-> {
+): UseQueryResult<GetPublicationSources.Response.Success, GetPublicationSources.Response.Error> {
   return useQuery(
     ['getPublicationSources', pathParams],
-    () => getPublicationSources(pathParams, requestOptions),
+    () => {
+      return getPublicationSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -3470,18 +3286,14 @@ export async function getPublications(
 
 export function useGetPublications(
   queryParams: GetPublications.QueryParameters,
-  options?: UseQueryOptions<
-    GetPublications.Response.Success,
-    GetPublications.Response.Error
-  >,
+  options?: UseQueryOptions<GetPublications.Response.Success, GetPublications.Response.Error>,
   requestOptions?: RequestOptions<GetPublications.Response.Success>,
-): UseQueryResult<
-  GetPublications.Response.Success,
-  GetPublications.Response.Error
-> {
+): UseQueryResult<GetPublications.Response.Success, GetPublications.Response.Error> {
   return useQuery(
     ['getPublications', queryParams],
-    () => getPublications(queryParams, requestOptions),
+    () => {
+      return getPublications(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -3588,13 +3400,12 @@ export function useGetPublicationVersion(
     GetPublicationVersion.Response.Error
   >,
   requestOptions?: RequestOptions<GetPublicationVersion.Response.Success>,
-): UseQueryResult<
-  GetPublicationVersion.Response.Success,
-  GetPublicationVersion.Response.Error
-> {
+): UseQueryResult<GetPublicationVersion.Response.Success, GetPublicationVersion.Response.Error> {
   return useQuery(
     ['getPublicationVersion', pathParams],
-    () => getPublicationVersion(pathParams, requestOptions),
+    () => {
+      return getPublicationVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -3698,18 +3509,14 @@ export async function getPublication(
 export function useGetPublication(
   pathParams: GetPublication.PathParameters,
   queryParams: GetPublication.QueryParameters,
-  options?: UseQueryOptions<
-    GetPublication.Response.Success,
-    GetPublication.Response.Error
-  >,
+  options?: UseQueryOptions<GetPublication.Response.Success, GetPublication.Response.Error>,
   requestOptions?: RequestOptions<GetPublication.Response.Success>,
-): UseQueryResult<
-  GetPublication.Response.Success,
-  GetPublication.Response.Error
-> {
+): UseQueryResult<GetPublication.Response.Success, GetPublication.Response.Error> {
   return useQuery(
     ['getPublication', pathParams, queryParams],
-    () => getPublication(pathParams, queryParams, requestOptions),
+    () => {
+      return getPublication(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -3733,12 +3540,7 @@ export namespace UpdatePublication {
   export type RequestBody = PublicationCore
 }
 
-export async function updatePublication([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updatePublication([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdatePublication.PathParameters,
   queryParams: UpdatePublication.QueryParameters,
   body: UpdatePublication.RequestBody,
@@ -3802,11 +3604,7 @@ export namespace DeletePublication {
   }
 }
 
-export async function deletePublication([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deletePublication([pathParams, queryParams, requestOptions]: [
   pathParams: DeletePublication.PathParameters,
   queryParams: DeletePublication.QueryParameters,
   requestOptions?: RequestOptions<DeletePublication.Response.Success>,
@@ -3890,19 +3688,13 @@ export function useRevertPublication(
   options?: UseMutationOptions<
     RevertPublication.Response.Success,
     RevertPublication.Response.Error,
-    [
-      RevertPublication.PathParameters,
-      RequestOptions<RevertPublication.Response.Success>,
-    ],
+    [RevertPublication.PathParameters, RequestOptions<RevertPublication.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   RevertPublication.Response.Success,
   RevertPublication.Response.Error,
-  [
-    RevertPublication.PathParameters,
-    RequestOptions<RevertPublication.Response.Success>,
-  ],
+  [RevertPublication.PathParameters, RequestOptions<RevertPublication.Response.Success>],
   unknown
 > {
   return useMutation(revertPublication, options)
@@ -3927,9 +3719,7 @@ export async function publishPublication([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<PublishPublication.Response.Success>,
 ]): Promise<PublishPublication.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/commit`,
+    path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -3947,19 +3737,13 @@ export function usePublishPublication(
   options?: UseMutationOptions<
     PublishPublication.Response.Success,
     PublishPublication.Response.Error,
-    [
-      PublishPublication.PathParameters,
-      RequestOptions<PublishPublication.Response.Success>,
-    ],
+    [PublishPublication.PathParameters, RequestOptions<PublishPublication.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   PublishPublication.Response.Success,
   PublishPublication.Response.Error,
-  [
-    PublishPublication.PathParameters,
-    RequestOptions<PublishPublication.Response.Success>,
-  ],
+  [PublishPublication.PathParameters, RequestOptions<PublishPublication.Response.Success>],
   unknown
 > {
   return useMutation(publishPublication, options)
@@ -3989,9 +3773,7 @@ export async function getPublicationHistory(
   requestOptions?: RequestOptions<GetPublicationHistory.Response.Success>,
 ): Promise<GetPublicationHistory.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/history`,
+    path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}/history`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -4013,13 +3795,12 @@ export function useGetPublicationHistory(
     GetPublicationHistory.Response.Error
   >,
   requestOptions?: RequestOptions<GetPublicationHistory.Response.Success>,
-): UseQueryResult<
-  GetPublicationHistory.Response.Success,
-  GetPublicationHistory.Response.Error
-> {
+): UseQueryResult<GetPublicationHistory.Response.Success, GetPublicationHistory.Response.Error> {
   return useQuery(
     ['getPublicationHistory', pathParams, queryParams],
-    () => getPublicationHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getPublicationHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -4048,9 +3829,7 @@ export async function getPublicationAndVersionedItemDifferences(
   requestOptions?: RequestOptions<GetPublicationAndVersionedItemDifferences.Response.Success>,
 ): Promise<GetPublicationAndVersionedItemDifferences.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/diff`,
+    path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -4078,12 +3857,9 @@ export function useGetPublicationAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getPublicationAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getPublicationAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getPublicationAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -4142,17 +3918,14 @@ export function useGetVersionedPublicationAndVersionedItemDifferences(
   GetVersionedPublicationAndVersionedItemDifferences.Response.Error
 > {
   return useQuery(
-    [
-      'getVersionedPublicationAndVersionedItemDifferences',
-      pathParams,
-      queryParams,
-    ],
-    () =>
-      getVersionedPublicationAndVersionedItemDifferences(
+    ['getVersionedPublicationAndVersionedItemDifferences', pathParams, queryParams],
+    () => {
+      return getVersionedPublicationAndVersionedItemDifferences(
         pathParams,
         queryParams,
         requestOptions,
-      ),
+      )
+    },
     options,
   )
 }
@@ -4179,9 +3952,7 @@ export async function getPublicationVersionInformationContributors(
   return request({
     path: `/api/publications/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/versions/${encodeURIComponent(
-      pathParams['versionId'],
-    )}/information-contributors`,
+    )}/versions/${encodeURIComponent(pathParams['versionId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -4208,8 +3979,9 @@ export function useGetPublicationVersionInformationContributors(
 > {
   return useQuery(
     ['getPublicationVersionInformationContributors', pathParams],
-    () =>
-      getPublicationVersionInformationContributors(pathParams, requestOptions),
+    () => {
+      return getPublicationVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -4262,7 +4034,9 @@ export function useGetPublicationInformationContributors(
 > {
   return useQuery(
     ['getPublicationInformationContributors', pathParams],
-    () => getPublicationInformationContributors(pathParams, requestOptions),
+    () => {
+      return getPublicationInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -4290,9 +4064,7 @@ export async function getPublicationMerge(
   requestOptions?: RequestOptions<GetPublicationMerge.Response.Success>,
 ): Promise<GetPublicationMerge.Response.Success> {
   return request({
-    path: `/api/publications/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/merge`,
+    path: `/api/publications/${encodeURIComponent(pathParams['persistentId'])}/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -4314,13 +4086,12 @@ export function useGetPublicationMerge(
     GetPublicationMerge.Response.Error
   >,
   requestOptions?: RequestOptions<GetPublicationMerge.Response.Success>,
-): UseQueryResult<
-  GetPublicationMerge.Response.Success,
-  GetPublicationMerge.Response.Error
-> {
+): UseQueryResult<GetPublicationMerge.Response.Success, GetPublicationMerge.Response.Error> {
   return useQuery(
     ['getPublicationMerge', pathParams, queryParams],
-    () => getPublicationMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getPublicationMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -4355,18 +4126,14 @@ export async function getAllActorRoles(
 }
 
 export function useGetAllActorRoles(
-  options?: UseQueryOptions<
-    GetAllActorRoles.Response.Success,
-    GetAllActorRoles.Response.Error
-  >,
+  options?: UseQueryOptions<GetAllActorRoles.Response.Success, GetAllActorRoles.Response.Error>,
   requestOptions?: RequestOptions<GetAllActorRoles.Response.Success>,
-): UseQueryResult<
-  GetAllActorRoles.Response.Success,
-  GetAllActorRoles.Response.Error
-> {
+): UseQueryResult<GetAllActorRoles.Response.Success, GetAllActorRoles.Response.Error> {
   return useQuery(
     ['getAllActorRoles'],
-    () => getAllActorRoles(requestOptions),
+    () => {
+      return getAllActorRoles(requestOptions)
+    },
     options,
   )
 }
@@ -4402,19 +4169,13 @@ export function useCreateActorRole(
   options?: UseMutationOptions<
     CreateActorRole.Response.Success,
     CreateActorRole.Response.Error,
-    [
-      CreateActorRole.RequestBody,
-      RequestOptions<CreateActorRole.Response.Success>,
-    ],
+    [CreateActorRole.RequestBody, RequestOptions<CreateActorRole.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateActorRole.Response.Success,
   CreateActorRole.Response.Error,
-  [
-    CreateActorRole.RequestBody,
-    RequestOptions<CreateActorRole.Response.Success>,
-  ],
+  [CreateActorRole.RequestBody, RequestOptions<CreateActorRole.Response.Success>],
   unknown
 > {
   return useMutation(createActorRole, options)
@@ -4455,15 +4216,14 @@ export async function getActorRole(
 
 export function useGetActorRole(
   pathParams: GetActorRole.PathParameters,
-  options?: UseQueryOptions<
-    GetActorRole.Response.Success,
-    GetActorRole.Response.Error
-  >,
+  options?: UseQueryOptions<GetActorRole.Response.Success, GetActorRole.Response.Error>,
   requestOptions?: RequestOptions<GetActorRole.Response.Success>,
 ): UseQueryResult<GetActorRole.Response.Success, GetActorRole.Response.Error> {
   return useQuery(
     ['getActorRole', pathParams],
-    () => getActorRole(pathParams, requestOptions),
+    () => {
+      return getActorRole(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -4560,19 +4320,13 @@ export function useDeleteActorRole(
   options?: UseMutationOptions<
     DeleteActorRole.Response.Success,
     DeleteActorRole.Response.Error,
-    [
-      DeleteActorRole.PathParameters,
-      RequestOptions<DeleteActorRole.Response.Success>,
-    ],
+    [DeleteActorRole.PathParameters, RequestOptions<DeleteActorRole.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteActorRole.Response.Success,
   DeleteActorRole.Response.Error,
-  [
-    DeleteActorRole.PathParameters,
-    RequestOptions<DeleteActorRole.Response.Success>,
-  ],
+  [DeleteActorRole.PathParameters, RequestOptions<DeleteActorRole.Response.Success>],
   unknown
 > {
   return useMutation(deleteActorRole, options)
@@ -4613,18 +4367,14 @@ export async function getActorSource(
 
 export function useGetActorSource(
   pathParams: GetActorSource.PathParameters,
-  options?: UseQueryOptions<
-    GetActorSource.Response.Success,
-    GetActorSource.Response.Error
-  >,
+  options?: UseQueryOptions<GetActorSource.Response.Success, GetActorSource.Response.Error>,
   requestOptions?: RequestOptions<GetActorSource.Response.Success>,
-): UseQueryResult<
-  GetActorSource.Response.Success,
-  GetActorSource.Response.Error
-> {
+): UseQueryResult<GetActorSource.Response.Success, GetActorSource.Response.Error> {
   return useQuery(
     ['getActorSource', pathParams],
-    () => getActorSource(pathParams, requestOptions),
+    () => {
+      return getActorSource(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -4721,19 +4471,13 @@ export function useDeleteActorSource(
   options?: UseMutationOptions<
     DeleteActorSource.Response.Success,
     DeleteActorSource.Response.Error,
-    [
-      DeleteActorSource.PathParameters,
-      RequestOptions<DeleteActorSource.Response.Success>,
-    ],
+    [DeleteActorSource.PathParameters, RequestOptions<DeleteActorSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteActorSource.Response.Success,
   DeleteActorSource.Response.Error,
-  [
-    DeleteActorSource.PathParameters,
-    RequestOptions<DeleteActorSource.Response.Success>,
-  ],
+  [DeleteActorSource.PathParameters, RequestOptions<DeleteActorSource.Response.Success>],
   unknown
 > {
   return useMutation(deleteActorSource, options)
@@ -4769,18 +4513,14 @@ export async function getAllActorSources(
 }
 
 export function useGetAllActorSources(
-  options?: UseQueryOptions<
-    GetAllActorSources.Response.Success,
-    GetAllActorSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetAllActorSources.Response.Success, GetAllActorSources.Response.Error>,
   requestOptions?: RequestOptions<GetAllActorSources.Response.Success>,
-): UseQueryResult<
-  GetAllActorSources.Response.Success,
-  GetAllActorSources.Response.Error
-> {
+): UseQueryResult<GetAllActorSources.Response.Success, GetAllActorSources.Response.Error> {
   return useQuery(
     ['getAllActorSources'],
-    () => getAllActorSources(requestOptions),
+    () => {
+      return getAllActorSources(requestOptions)
+    },
     options,
   )
 }
@@ -4816,19 +4556,13 @@ export function useCreateActorSource(
   options?: UseMutationOptions<
     CreateActorSource.Response.Success,
     CreateActorSource.Response.Error,
-    [
-      CreateActorSource.RequestBody,
-      RequestOptions<CreateActorSource.Response.Success>,
-    ],
+    [CreateActorSource.RequestBody, RequestOptions<CreateActorSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateActorSource.Response.Success,
   CreateActorSource.Response.Error,
-  [
-    CreateActorSource.RequestBody,
-    RequestOptions<CreateActorSource.Response.Success>,
-  ],
+  [CreateActorSource.RequestBody, RequestOptions<CreateActorSource.Response.Success>],
   unknown
 > {
   return useMutation(createActorSource, options)
@@ -4871,18 +4605,14 @@ export async function getPropertyTypes(
 
 export function useGetPropertyTypes(
   queryParams: GetPropertyTypes.QueryParameters,
-  options?: UseQueryOptions<
-    GetPropertyTypes.Response.Success,
-    GetPropertyTypes.Response.Error
-  >,
+  options?: UseQueryOptions<GetPropertyTypes.Response.Success, GetPropertyTypes.Response.Error>,
   requestOptions?: RequestOptions<GetPropertyTypes.Response.Success>,
-): UseQueryResult<
-  GetPropertyTypes.Response.Success,
-  GetPropertyTypes.Response.Error
-> {
+): UseQueryResult<GetPropertyTypes.Response.Success, GetPropertyTypes.Response.Error> {
   return useQuery(
     ['getPropertyTypes', queryParams],
-    () => getPropertyTypes(queryParams, requestOptions),
+    () => {
+      return getPropertyTypes(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -4922,19 +4652,13 @@ export function useCreatePropertyType(
   options?: UseMutationOptions<
     CreatePropertyType.Response.Success,
     CreatePropertyType.Response.Error,
-    [
-      CreatePropertyType.RequestBody,
-      RequestOptions<CreatePropertyType.Response.Success>,
-    ],
+    [CreatePropertyType.RequestBody, RequestOptions<CreatePropertyType.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreatePropertyType.Response.Success,
   CreatePropertyType.Response.Error,
-  [
-    CreatePropertyType.RequestBody,
-    RequestOptions<CreatePropertyType.Response.Success>,
-  ],
+  [CreatePropertyType.RequestBody, RequestOptions<CreatePropertyType.Response.Success>],
   unknown
 > {
   return useMutation(createPropertyType, options)
@@ -4975,19 +4699,13 @@ export function useReorderPropertyTypes(
   options?: UseMutationOptions<
     ReorderPropertyTypes.Response.Success,
     ReorderPropertyTypes.Response.Error,
-    [
-      ReorderPropertyTypes.RequestBody,
-      RequestOptions<ReorderPropertyTypes.Response.Success>,
-    ],
+    [ReorderPropertyTypes.RequestBody, RequestOptions<ReorderPropertyTypes.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   ReorderPropertyTypes.Response.Success,
   ReorderPropertyTypes.Response.Error,
-  [
-    ReorderPropertyTypes.RequestBody,
-    RequestOptions<ReorderPropertyTypes.Response.Success>,
-  ],
+  [ReorderPropertyTypes.RequestBody, RequestOptions<ReorderPropertyTypes.Response.Success>],
   unknown
 > {
   return useMutation(reorderPropertyTypes, options)
@@ -5028,18 +4746,14 @@ export async function getPropertyType(
 
 export function useGetPropertyType(
   pathParams: GetPropertyType.PathParameters,
-  options?: UseQueryOptions<
-    GetPropertyType.Response.Success,
-    GetPropertyType.Response.Error
-  >,
+  options?: UseQueryOptions<GetPropertyType.Response.Success, GetPropertyType.Response.Error>,
   requestOptions?: RequestOptions<GetPropertyType.Response.Success>,
-): UseQueryResult<
-  GetPropertyType.Response.Success,
-  GetPropertyType.Response.Error
-> {
+): UseQueryResult<GetPropertyType.Response.Success, GetPropertyType.Response.Error> {
   return useQuery(
     ['getPropertyType', pathParams],
-    () => getPropertyType(pathParams, requestOptions),
+    () => {
+      return getPropertyType(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -5120,11 +4834,7 @@ export namespace DeletePropertyType {
   }
 }
 
-export async function deletePropertyType([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deletePropertyType([pathParams, queryParams, requestOptions]: [
   pathParams: DeletePropertyType.PathParameters,
   queryParams: DeletePropertyType.QueryParameters,
   requestOptions?: RequestOptions<DeletePropertyType.Response.Success>,
@@ -5203,13 +4913,12 @@ export function useGetAllConceptRelations(
     GetAllConceptRelations.Response.Error
   >,
   requestOptions?: RequestOptions<GetAllConceptRelations.Response.Success>,
-): UseQueryResult<
-  GetAllConceptRelations.Response.Success,
-  GetAllConceptRelations.Response.Error
-> {
+): UseQueryResult<GetAllConceptRelations.Response.Success, GetAllConceptRelations.Response.Error> {
   return useQuery(
     ['getAllConceptRelations'],
-    () => getAllConceptRelations(requestOptions),
+    () => {
+      return getAllConceptRelations(requestOptions)
+    },
     options,
   )
 }
@@ -5245,15 +4954,14 @@ export async function getSource(
 
 export function useGetSource(
   pathParams: GetSource.PathParameters,
-  options?: UseQueryOptions<
-    GetSource.Response.Success,
-    GetSource.Response.Error
-  >,
+  options?: UseQueryOptions<GetSource.Response.Success, GetSource.Response.Error>,
   requestOptions?: RequestOptions<GetSource.Response.Success>,
 ): UseQueryResult<GetSource.Response.Success, GetSource.Response.Error> {
   return useQuery(
     ['getSource', pathParams],
-    () => getSource(pathParams, requestOptions),
+    () => {
+      return getSource(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -5346,10 +5054,7 @@ export function useDeleteSource(
   options?: UseMutationOptions<
     DeleteSource.Response.Success,
     DeleteSource.Response.Error,
-    [
-      DeleteSource.PathParameters,
-      RequestOptions<DeleteSource.Response.Success>,
-    ],
+    [DeleteSource.PathParameters, RequestOptions<DeleteSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
@@ -5363,7 +5068,7 @@ export function useDeleteSource(
 
 export namespace GetSources {
   export type QueryParameters = {
-    order?: 'name' | 'date'
+    order?: 'date' | 'name'
     q?: string
     page?: number /* int32 */
     perpage?: number /* int32 */
@@ -5395,15 +5100,14 @@ export async function getSources(
 
 export function useGetSources(
   queryParams: GetSources.QueryParameters,
-  options?: UseQueryOptions<
-    GetSources.Response.Success,
-    GetSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetSources.Response.Success, GetSources.Response.Error>,
   requestOptions?: RequestOptions<GetSources.Response.Success>,
 ): UseQueryResult<GetSources.Response.Success, GetSources.Response.Error> {
   return useQuery(
     ['getSources', queryParams],
-    () => getSources(queryParams, requestOptions),
+    () => {
+      return getSources(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -5492,18 +5196,14 @@ export async function getItemsForSource(
 export function useGetItemsForSource(
   pathParams: GetItemsForSource.PathParameters,
   queryParams: GetItemsForSource.QueryParameters,
-  options?: UseQueryOptions<
-    GetItemsForSource.Response.Success,
-    GetItemsForSource.Response.Error
-  >,
+  options?: UseQueryOptions<GetItemsForSource.Response.Success, GetItemsForSource.Response.Error>,
   requestOptions?: RequestOptions<GetItemsForSource.Response.Success>,
-): UseQueryResult<
-  GetItemsForSource.Response.Success,
-  GetItemsForSource.Response.Error
-> {
+): UseQueryResult<GetItemsForSource.Response.Success, GetItemsForSource.Response.Error> {
   return useQuery(
     ['getItemsForSource', pathParams, queryParams],
-    () => getItemsForSource(pathParams, queryParams, requestOptions),
+    () => {
+      return getItemsForSource(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -5533,9 +5233,9 @@ export async function getItemsForSourceAndSourceItemId(
   requestOptions?: RequestOptions<GetItemsForSourceAndSourceItemId.Response.Success>,
 ): Promise<GetItemsForSourceAndSourceItemId.Response.Success> {
   return request({
-    path: `/api/sources/${encodeURIComponent(
-      pathParams['sourceId'],
-    )}/items/${encodeURIComponent(pathParams['sourceItemId'])}`,
+    path: `/api/sources/${encodeURIComponent(pathParams['sourceId'])}/items/${encodeURIComponent(
+      pathParams['sourceItemId'],
+    )}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -5563,8 +5263,9 @@ export function useGetItemsForSourceAndSourceItemId(
 > {
   return useQuery(
     ['getItemsForSourceAndSourceItemId', pathParams, queryParams],
-    () =>
-      getItemsForSourceAndSourceItemId(pathParams, queryParams, requestOptions),
+    () => {
+      return getItemsForSourceAndSourceItemId(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -5608,21 +5309,13 @@ export function useMergeTool(
   options?: UseMutationOptions<
     MergeTool.Response.Success,
     MergeTool.Response.Error,
-    [
-      MergeTool.QueryParameters,
-      MergeTool.RequestBody,
-      RequestOptions<MergeTool.Response.Success>,
-    ],
+    [MergeTool.QueryParameters, MergeTool.RequestBody, RequestOptions<MergeTool.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   MergeTool.Response.Success,
   MergeTool.Response.Error,
-  [
-    MergeTool.QueryParameters,
-    MergeTool.RequestBody,
-    RequestOptions<MergeTool.Response.Success>,
-  ],
+  [MergeTool.QueryParameters, MergeTool.RequestBody, RequestOptions<MergeTool.Response.Success>],
   unknown
 > {
   return useMutation(mergeTool, options)
@@ -5647,9 +5340,7 @@ export async function getToolSources(
   requestOptions?: RequestOptions<GetToolSources.Response.Success>,
 ): Promise<GetToolSources.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/sources`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}/sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -5665,18 +5356,14 @@ export async function getToolSources(
 
 export function useGetToolSources(
   pathParams: GetToolSources.PathParameters,
-  options?: UseQueryOptions<
-    GetToolSources.Response.Success,
-    GetToolSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetToolSources.Response.Success, GetToolSources.Response.Error>,
   requestOptions?: RequestOptions<GetToolSources.Response.Success>,
-): UseQueryResult<
-  GetToolSources.Response.Success,
-  GetToolSources.Response.Error
-> {
+): UseQueryResult<GetToolSources.Response.Success, GetToolSources.Response.Error> {
   return useQuery(
     ['getToolSources', pathParams],
-    () => getToolSources(pathParams, requestOptions),
+    () => {
+      return getToolSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -5719,18 +5406,14 @@ export async function getToolVersion(
 
 export function useGetToolVersion(
   pathParams: GetToolVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetToolVersion.Response.Success,
-    GetToolVersion.Response.Error
-  >,
+  options?: UseQueryOptions<GetToolVersion.Response.Success, GetToolVersion.Response.Error>,
   requestOptions?: RequestOptions<GetToolVersion.Response.Success>,
-): UseQueryResult<
-  GetToolVersion.Response.Success,
-  GetToolVersion.Response.Error
-> {
+): UseQueryResult<GetToolVersion.Response.Success, GetToolVersion.Response.Error> {
   return useQuery(
     ['getToolVersion', pathParams],
-    () => getToolVersion(pathParams, requestOptions),
+    () => {
+      return getToolVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -5775,19 +5458,13 @@ export function useDeleteToolVersion(
   options?: UseMutationOptions<
     DeleteToolVersion.Response.Success,
     DeleteToolVersion.Response.Error,
-    [
-      DeleteToolVersion.PathParameters,
-      RequestOptions<DeleteToolVersion.Response.Success>,
-    ],
+    [DeleteToolVersion.PathParameters, RequestOptions<DeleteToolVersion.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteToolVersion.Response.Success,
   DeleteToolVersion.Response.Error,
-  [
-    DeleteToolVersion.PathParameters,
-    RequestOptions<DeleteToolVersion.Response.Success>,
-  ],
+  [DeleteToolVersion.PathParameters, RequestOptions<DeleteToolVersion.Response.Success>],
   unknown
 > {
   return useMutation(deleteToolVersion, options)
@@ -5835,7 +5512,9 @@ export function useGetTools(
 ): UseQueryResult<GetTools.Response.Success, GetTools.Response.Error> {
   return useQuery(
     ['getTools', queryParams],
-    () => getTools(queryParams, requestOptions),
+    () => {
+      return getTools(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -5889,11 +5568,7 @@ export function useCreateTool(
 ): UseMutationResult<
   CreateTool.Response.Success,
   CreateTool.Response.Error,
-  [
-    CreateTool.QueryParameters,
-    CreateTool.RequestBody,
-    RequestOptions<CreateTool.Response.Success>,
-  ],
+  [CreateTool.QueryParameters, CreateTool.RequestBody, RequestOptions<CreateTool.Response.Success>],
   unknown
 > {
   return useMutation(createTool, options)
@@ -5947,7 +5622,9 @@ export function useGetToolInformationContributors(
 > {
   return useQuery(
     ['getToolInformationContributors', pathParams],
-    () => getToolInformationContributors(pathParams, requestOptions),
+    () => {
+      return getToolInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -5974,9 +5651,7 @@ export async function getToolVersionInformationContributors(
   return request({
     path: `/api/tools-services/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/versions/${encodeURIComponent(
-      pathParams['versionId'],
-    )}/information-contributors`,
+    )}/versions/${encodeURIComponent(pathParams['versionId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -6003,7 +5678,9 @@ export function useGetToolVersionInformationContributors(
 > {
   return useQuery(
     ['getToolVersionInformationContributors', pathParams],
-    () => getToolVersionInformationContributors(pathParams, requestOptions),
+    () => {
+      return getToolVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -6031,9 +5708,7 @@ export async function getToolMerge(
   requestOptions?: RequestOptions<GetToolMerge.Response.Success>,
 ): Promise<GetToolMerge.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/merge`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6050,15 +5725,14 @@ export async function getToolMerge(
 export function useGetToolMerge(
   pathParams: GetToolMerge.PathParameters,
   queryParams: GetToolMerge.QueryParameters,
-  options?: UseQueryOptions<
-    GetToolMerge.Response.Success,
-    GetToolMerge.Response.Error
-  >,
+  options?: UseQueryOptions<GetToolMerge.Response.Success, GetToolMerge.Response.Error>,
   requestOptions?: RequestOptions<GetToolMerge.Response.Success>,
 ): UseQueryResult<GetToolMerge.Response.Success, GetToolMerge.Response.Error> {
   return useQuery(
     ['getToolMerge', pathParams, queryParams],
-    () => getToolMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getToolMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -6087,9 +5761,7 @@ export async function getTool(
   requestOptions?: RequestOptions<GetTool.Response.Success>,
 ): Promise<GetTool.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6111,7 +5783,9 @@ export function useGetTool(
 ): UseQueryResult<GetTool.Response.Success, GetTool.Response.Error> {
   return useQuery(
     ['getTool', pathParams, queryParams],
-    () => getTool(pathParams, queryParams, requestOptions),
+    () => {
+      return getTool(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -6135,21 +5809,14 @@ export namespace UpdateTool {
   export type RequestBody = ToolCore
 }
 
-export async function updateTool([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updateTool([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdateTool.PathParameters,
   queryParams: UpdateTool.QueryParameters,
   body: UpdateTool.RequestBody,
   requestOptions?: RequestOptions<UpdateTool.Response.Success>,
 ]): Promise<UpdateTool.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6212,9 +5879,7 @@ export async function deleteTool([pathParams, queryParams, requestOptions]: [
   requestOptions?: RequestOptions<DeleteTool.Response.Success>,
 ]): Promise<DeleteTool.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6271,9 +5936,7 @@ export async function publishTool([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<PublishTool.Response.Success>,
 ]): Promise<PublishTool.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/commit`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -6327,9 +5990,7 @@ export async function getToolHistory(
   requestOptions?: RequestOptions<GetToolHistory.Response.Success>,
 ): Promise<GetToolHistory.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/history`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}/history`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6346,18 +6007,14 @@ export async function getToolHistory(
 export function useGetToolHistory(
   pathParams: GetToolHistory.PathParameters,
   queryParams: GetToolHistory.QueryParameters,
-  options?: UseQueryOptions<
-    GetToolHistory.Response.Success,
-    GetToolHistory.Response.Error
-  >,
+  options?: UseQueryOptions<GetToolHistory.Response.Success, GetToolHistory.Response.Error>,
   requestOptions?: RequestOptions<GetToolHistory.Response.Success>,
-): UseQueryResult<
-  GetToolHistory.Response.Success,
-  GetToolHistory.Response.Error
-> {
+): UseQueryResult<GetToolHistory.Response.Success, GetToolHistory.Response.Error> {
   return useQuery(
     ['getToolHistory', pathParams, queryParams],
-    () => getToolHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getToolHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -6386,9 +6043,7 @@ export async function getToolAndVersionedItemDifferences(
   requestOptions?: RequestOptions<GetToolAndVersionedItemDifferences.Response.Success>,
 ): Promise<GetToolAndVersionedItemDifferences.Response.Success> {
   return request({
-    path: `/api/tools-services/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/diff`,
+    path: `/api/tools-services/${encodeURIComponent(pathParams['persistentId'])}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6416,12 +6071,9 @@ export function useGetToolAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getToolAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getToolAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getToolAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -6481,12 +6133,9 @@ export function useGetVersionedToolAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getVersionedToolAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getVersionedToolAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getVersionedToolAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -6742,15 +6391,14 @@ export async function getMediaInfo(
 
 export function useGetMediaInfo(
   pathParams: GetMediaInfo.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaInfo.Response.Success,
-    GetMediaInfo.Response.Error
-  >,
+  options?: UseQueryOptions<GetMediaInfo.Response.Success, GetMediaInfo.Response.Error>,
   requestOptions?: RequestOptions<GetMediaInfo.Response.Success>,
 ): UseQueryResult<GetMediaInfo.Response.Success, GetMediaInfo.Response.Error> {
   return useQuery(
     ['getMediaInfo', pathParams],
-    () => getMediaInfo(pathParams, requestOptions),
+    () => {
+      return getMediaInfo(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -6823,19 +6471,13 @@ export namespace CompleteMediaUpload {
   }
 }
 
-export async function completeMediaUpload([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function completeMediaUpload([pathParams, queryParams, requestOptions]: [
   pathParams: CompleteMediaUpload.PathParameters,
   queryParams: CompleteMediaUpload.QueryParameters,
   requestOptions?: RequestOptions<CompleteMediaUpload.Response.Success>,
 ]): Promise<CompleteMediaUpload.Response.Success> {
   return request({
-    path: `/api/media/upload/complete/${encodeURIComponent(
-      pathParams['mediaId'],
-    )}`,
+    path: `/api/media/upload/complete/${encodeURIComponent(pathParams['mediaId'])}`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -6955,15 +6597,14 @@ export async function getMediaFile(
 
 export function useGetMediaFile(
   pathParams: GetMediaFile.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaFile.Response.Success,
-    GetMediaFile.Response.Error
-  >,
+  options?: UseQueryOptions<GetMediaFile.Response.Success, GetMediaFile.Response.Error>,
   requestOptions?: RequestOptions<GetMediaFile.Response.Success>,
 ): UseQueryResult<GetMediaFile.Response.Success, GetMediaFile.Response.Error> {
   return useQuery(
     ['getMediaFile', pathParams],
-    () => getMediaFile(pathParams, requestOptions),
+    () => {
+      return getMediaFile(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -7009,19 +6650,13 @@ export function useUploadMediaChunk(
   options?: UseMutationOptions<
     UploadMediaChunk.Response.Success,
     UploadMediaChunk.Response.Error,
-    [
-      UploadMediaChunk.QueryParameters,
-      RequestOptions<UploadMediaChunk.Response.Success>,
-    ],
+    [UploadMediaChunk.QueryParameters, RequestOptions<UploadMediaChunk.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   UploadMediaChunk.Response.Success,
   UploadMediaChunk.Response.Error,
-  [
-    UploadMediaChunk.QueryParameters,
-    RequestOptions<UploadMediaChunk.Response.Success>,
-  ],
+  [UploadMediaChunk.QueryParameters, RequestOptions<UploadMediaChunk.Response.Success>],
   unknown
 > {
   return useMutation(uploadMediaChunk, options)
@@ -7062,18 +6697,14 @@ export async function getMediaThumbnail(
 
 export function useGetMediaThumbnail(
   pathParams: GetMediaThumbnail.PathParameters,
-  options?: UseQueryOptions<
-    GetMediaThumbnail.Response.Success,
-    GetMediaThumbnail.Response.Error
-  >,
+  options?: UseQueryOptions<GetMediaThumbnail.Response.Success, GetMediaThumbnail.Response.Error>,
   requestOptions?: RequestOptions<GetMediaThumbnail.Response.Success>,
-): UseQueryResult<
-  GetMediaThumbnail.Response.Success,
-  GetMediaThumbnail.Response.Error
-> {
+): UseQueryResult<GetMediaThumbnail.Response.Success, GetMediaThumbnail.Response.Error> {
   return useQuery(
     ['getMediaThumbnail', pathParams],
-    () => getMediaThumbnail(pathParams, requestOptions),
+    () => {
+      return getMediaThumbnail(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -7120,7 +6751,9 @@ export function useOauth2(
 ): UseQueryResult<Oauth2.Response.Success, Oauth2.Response.Error> {
   return useQuery(
     ['oauth2', queryParams],
-    () => oauth2(queryParams, requestOptions),
+    () => {
+      return oauth2(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -7187,11 +6820,7 @@ export namespace UpdateUserDisplayName {
   export type RequestBody = UserDisplayNameCore
 }
 
-export async function updateUserDisplayName([
-  pathParams,
-  body,
-  requestOptions,
-]: [
+export async function updateUserDisplayName([pathParams, body, requestOptions]: [
   pathParams: UpdateUserDisplayName.PathParameters,
   body: UpdateUserDisplayName.RequestBody,
   requestOptions?: RequestOptions<UpdateUserDisplayName.Response.Success>,
@@ -7241,7 +6870,7 @@ export function useUpdateUserDisplayName(
 
 export namespace GetUsers {
   export type QueryParameters = {
-    order?: 'username' | 'date'
+    order?: 'date' | 'username'
     q?: string
     page?: number /* int32 */
     perpage?: number /* int32 */
@@ -7278,7 +6907,9 @@ export function useGetUsers(
 ): UseQueryResult<GetUsers.Response.Success, GetUsers.Response.Error> {
   return useQuery(
     ['getUsers', queryParams],
-    () => getUsers(queryParams, requestOptions),
+    () => {
+      return getUsers(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -7370,7 +7001,9 @@ export function useGetUser(
 ): UseQueryResult<GetUser.Response.Success, GetUser.Response.Error> {
   return useQuery(
     ['getUser', pathParams],
-    () => getUser(pathParams, requestOptions),
+    () => {
+      return getUser(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -7454,9 +7087,9 @@ export async function updateUserStatus([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<UpdateUserStatus.Response.Success>,
 ]): Promise<UpdateUserStatus.Response.Success> {
   return request({
-    path: `/api/users/${encodeURIComponent(
-      pathParams['id'],
-    )}/status/${encodeURIComponent(pathParams['userStatus'])}`,
+    path: `/api/users/${encodeURIComponent(pathParams['id'])}/status/${encodeURIComponent(
+      pathParams['userStatus'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -7474,19 +7107,13 @@ export function useUpdateUserStatus(
   options?: UseMutationOptions<
     UpdateUserStatus.Response.Success,
     UpdateUserStatus.Response.Error,
-    [
-      UpdateUserStatus.PathParameters,
-      RequestOptions<UpdateUserStatus.Response.Success>,
-    ],
+    [UpdateUserStatus.PathParameters, RequestOptions<UpdateUserStatus.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   UpdateUserStatus.Response.Success,
   UpdateUserStatus.Response.Error,
-  [
-    UpdateUserStatus.PathParameters,
-    RequestOptions<UpdateUserStatus.Response.Success>,
-  ],
+  [UpdateUserStatus.PathParameters, RequestOptions<UpdateUserStatus.Response.Success>],
   unknown
 > {
   return useMutation(updateUserStatus, options)
@@ -7500,11 +7127,11 @@ export namespace UpdateUserRole {
   export type PathParameters = {
     id: number /* int64 */
     userRole:
-      | 'contributor'
-      | 'system-contributor'
-      | 'moderator'
-      | 'system-moderator'
       | 'administrator'
+      | 'contributor'
+      | 'moderator'
+      | 'system-contributor'
+      | 'system-moderator'
   }
   export namespace Response {
     export type Success = UserDto
@@ -7517,9 +7144,9 @@ export async function updateUserRole([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<UpdateUserRole.Response.Success>,
 ]): Promise<UpdateUserRole.Response.Success> {
   return request({
-    path: `/api/users/${encodeURIComponent(
-      pathParams['id'],
-    )}/role/${encodeURIComponent(pathParams['userRole'])}`,
+    path: `/api/users/${encodeURIComponent(pathParams['id'])}/role/${encodeURIComponent(
+      pathParams['userRole'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -7537,19 +7164,13 @@ export function useUpdateUserRole(
   options?: UseMutationOptions<
     UpdateUserRole.Response.Success,
     UpdateUserRole.Response.Error,
-    [
-      UpdateUserRole.PathParameters,
-      RequestOptions<UpdateUserRole.Response.Success>,
-    ],
+    [UpdateUserRole.PathParameters, RequestOptions<UpdateUserRole.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   UpdateUserRole.Response.Success,
   UpdateUserRole.Response.Error,
-  [
-    UpdateUserRole.PathParameters,
-    RequestOptions<UpdateUserRole.Response.Success>,
-  ],
+  [UpdateUserRole.PathParameters, RequestOptions<UpdateUserRole.Response.Success>],
   unknown
 > {
   return useMutation(updateUserRole, options)
@@ -7585,18 +7206,14 @@ export async function getItemCategories(
 }
 
 export function useGetItemCategories(
-  options?: UseQueryOptions<
-    GetItemCategories.Response.Success,
-    GetItemCategories.Response.Error
-  >,
+  options?: UseQueryOptions<GetItemCategories.Response.Success, GetItemCategories.Response.Error>,
   requestOptions?: RequestOptions<GetItemCategories.Response.Success>,
-): UseQueryResult<
-  GetItemCategories.Response.Success,
-  GetItemCategories.Response.Error
-> {
+): UseQueryResult<GetItemCategories.Response.Success, GetItemCategories.Response.Error> {
   return useQuery(
     ['getItemCategories'],
-    () => getItemCategories(requestOptions),
+    () => {
+      return getItemCategories(requestOptions)
+    },
     options,
   )
 }
@@ -7638,18 +7255,14 @@ export async function getMyDraftItems(
 
 export function useGetMyDraftItems(
   queryParams: GetMyDraftItems.QueryParameters,
-  options?: UseQueryOptions<
-    GetMyDraftItems.Response.Success,
-    GetMyDraftItems.Response.Error
-  >,
+  options?: UseQueryOptions<GetMyDraftItems.Response.Success, GetMyDraftItems.Response.Error>,
   requestOptions?: RequestOptions<GetMyDraftItems.Response.Success>,
-): UseQueryResult<
-  GetMyDraftItems.Response.Success,
-  GetMyDraftItems.Response.Error
-> {
+): UseQueryResult<GetMyDraftItems.Response.Success, GetMyDraftItems.Response.Error> {
   return useQuery(
     ['getMyDraftItems', queryParams],
-    () => getMyDraftItems(queryParams, requestOptions),
+    () => {
+      return getMyDraftItems(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -7689,18 +7302,14 @@ export async function getItemSource(
 
 export function useGetItemSource(
   pathParams: GetItemSource.PathParameters,
-  options?: UseQueryOptions<
-    GetItemSource.Response.Success,
-    GetItemSource.Response.Error
-  >,
+  options?: UseQueryOptions<GetItemSource.Response.Success, GetItemSource.Response.Error>,
   requestOptions?: RequestOptions<GetItemSource.Response.Success>,
-): UseQueryResult<
-  GetItemSource.Response.Success,
-  GetItemSource.Response.Error
-> {
+): UseQueryResult<GetItemSource.Response.Success, GetItemSource.Response.Error> {
   return useQuery(
     ['getItemSource', pathParams],
-    () => getItemSource(pathParams, requestOptions),
+    () => {
+      return getItemSource(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -7801,19 +7410,13 @@ export function useDeleteItemSource(
   options?: UseMutationOptions<
     DeleteItemSource.Response.Success,
     DeleteItemSource.Response.Error,
-    [
-      DeleteItemSource.PathParameters,
-      RequestOptions<DeleteItemSource.Response.Success>,
-    ],
+    [DeleteItemSource.PathParameters, RequestOptions<DeleteItemSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteItemSource.Response.Success,
   DeleteItemSource.Response.Error,
-  [
-    DeleteItemSource.PathParameters,
-    RequestOptions<DeleteItemSource.Response.Success>,
-  ],
+  [DeleteItemSource.PathParameters, RequestOptions<DeleteItemSource.Response.Success>],
   unknown
 > {
   return useMutation(deleteItemSource, options)
@@ -7849,18 +7452,14 @@ export async function getAllItemSources(
 }
 
 export function useGetAllItemSources(
-  options?: UseQueryOptions<
-    GetAllItemSources.Response.Success,
-    GetAllItemSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetAllItemSources.Response.Success, GetAllItemSources.Response.Error>,
   requestOptions?: RequestOptions<GetAllItemSources.Response.Success>,
-): UseQueryResult<
-  GetAllItemSources.Response.Success,
-  GetAllItemSources.Response.Error
-> {
+): UseQueryResult<GetAllItemSources.Response.Success, GetAllItemSources.Response.Error> {
   return useQuery(
     ['getAllItemSources'],
-    () => getAllItemSources(requestOptions),
+    () => {
+      return getAllItemSources(requestOptions)
+    },
     options,
   )
 }
@@ -7900,19 +7499,13 @@ export function useCreateItemSource(
   options?: UseMutationOptions<
     CreateItemSource.Response.Success,
     CreateItemSource.Response.Error,
-    [
-      CreateItemSource.RequestBody,
-      RequestOptions<CreateItemSource.Response.Success>,
-    ],
+    [CreateItemSource.RequestBody, RequestOptions<CreateItemSource.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateItemSource.Response.Success,
   CreateItemSource.Response.Error,
-  [
-    CreateItemSource.RequestBody,
-    RequestOptions<CreateItemSource.Response.Success>,
-  ],
+  [CreateItemSource.RequestBody, RequestOptions<CreateItemSource.Response.Success>],
   unknown
 > {
   return useMutation(createItemSource, options)
@@ -7996,9 +7589,7 @@ export async function getDatasetSources(
   requestOptions?: RequestOptions<GetDatasetSources.Response.Success>,
 ): Promise<GetDatasetSources.Response.Success> {
   return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/sources`,
+    path: `/api/datasets/${encodeURIComponent(pathParams['persistentId'])}/sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -8014,18 +7605,14 @@ export async function getDatasetSources(
 
 export function useGetDatasetSources(
   pathParams: GetDatasetSources.PathParameters,
-  options?: UseQueryOptions<
-    GetDatasetSources.Response.Success,
-    GetDatasetSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetDatasetSources.Response.Success, GetDatasetSources.Response.Error>,
   requestOptions?: RequestOptions<GetDatasetSources.Response.Success>,
-): UseQueryResult<
-  GetDatasetSources.Response.Success,
-  GetDatasetSources.Response.Error
-> {
+): UseQueryResult<GetDatasetSources.Response.Success, GetDatasetSources.Response.Error> {
   return useQuery(
     ['getDatasetSources', pathParams],
-    () => getDatasetSources(pathParams, requestOptions),
+    () => {
+      return getDatasetSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -8071,15 +7658,14 @@ export async function getDataset(
 export function useGetDataset(
   pathParams: GetDataset.PathParameters,
   queryParams: GetDataset.QueryParameters,
-  options?: UseQueryOptions<
-    GetDataset.Response.Success,
-    GetDataset.Response.Error
-  >,
+  options?: UseQueryOptions<GetDataset.Response.Success, GetDataset.Response.Error>,
   requestOptions?: RequestOptions<GetDataset.Response.Success>,
 ): UseQueryResult<GetDataset.Response.Success, GetDataset.Response.Error> {
   return useQuery(
     ['getDataset', pathParams, queryParams],
-    () => getDataset(pathParams, queryParams, requestOptions),
+    () => {
+      return getDataset(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8103,12 +7689,7 @@ export namespace UpdateDataset {
   export type RequestBody = DatasetCore
 }
 
-export async function updateDataset([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updateDataset([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdateDataset.PathParameters,
   queryParams: UpdateDataset.QueryParameters,
   body: UpdateDataset.RequestBody,
@@ -8235,9 +7816,7 @@ export async function publishDataset([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<PublishDataset.Response.Success>,
 ]): Promise<PublishDataset.Response.Success> {
   return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/commit`,
+    path: `/api/datasets/${encodeURIComponent(pathParams['persistentId'])}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -8255,19 +7834,13 @@ export function usePublishDataset(
   options?: UseMutationOptions<
     PublishDataset.Response.Success,
     PublishDataset.Response.Error,
-    [
-      PublishDataset.PathParameters,
-      RequestOptions<PublishDataset.Response.Success>,
-    ],
+    [PublishDataset.PathParameters, RequestOptions<PublishDataset.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   PublishDataset.Response.Success,
   PublishDataset.Response.Error,
-  [
-    PublishDataset.PathParameters,
-    RequestOptions<PublishDataset.Response.Success>,
-  ],
+  [PublishDataset.PathParameters, RequestOptions<PublishDataset.Response.Success>],
   unknown
 > {
   return useMutation(publishDataset, options)
@@ -8297,9 +7870,7 @@ export async function getDatasetHistory(
   requestOptions?: RequestOptions<GetDatasetHistory.Response.Success>,
 ): Promise<GetDatasetHistory.Response.Success> {
   return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/history`,
+    path: `/api/datasets/${encodeURIComponent(pathParams['persistentId'])}/history`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -8316,18 +7887,14 @@ export async function getDatasetHistory(
 export function useGetDatasetHistory(
   pathParams: GetDatasetHistory.PathParameters,
   queryParams: GetDatasetHistory.QueryParameters,
-  options?: UseQueryOptions<
-    GetDatasetHistory.Response.Success,
-    GetDatasetHistory.Response.Error
-  >,
+  options?: UseQueryOptions<GetDatasetHistory.Response.Success, GetDatasetHistory.Response.Error>,
   requestOptions?: RequestOptions<GetDatasetHistory.Response.Success>,
-): UseQueryResult<
-  GetDatasetHistory.Response.Success,
-  GetDatasetHistory.Response.Error
-> {
+): UseQueryResult<GetDatasetHistory.Response.Success, GetDatasetHistory.Response.Error> {
   return useQuery(
     ['getDatasetHistory', pathParams, queryParams],
-    () => getDatasetHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getDatasetHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8380,7 +7947,9 @@ export function useGetDatasetInformationContributors(
 > {
   return useQuery(
     ['getDatasetInformationContributors', pathParams],
-    () => getDatasetInformationContributors(pathParams, requestOptions),
+    () => {
+      return getDatasetInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -8407,9 +7976,7 @@ export async function getDatasetVersionInformationContributors(
   return request({
     path: `/api/datasets/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/versions/${encodeURIComponent(
-      pathParams['versionId'],
-    )}/information-contributors`,
+    )}/versions/${encodeURIComponent(pathParams['versionId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -8436,7 +8003,9 @@ export function useGetDatasetVersionInformationContributors(
 > {
   return useQuery(
     ['getDatasetVersionInformationContributors', pathParams],
-    () => getDatasetVersionInformationContributors(pathParams, requestOptions),
+    () => {
+      return getDatasetVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -8464,9 +8033,7 @@ export async function getDatasetMerge(
   requestOptions?: RequestOptions<GetDatasetMerge.Response.Success>,
 ): Promise<GetDatasetMerge.Response.Success> {
   return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/merge`,
+    path: `/api/datasets/${encodeURIComponent(pathParams['persistentId'])}/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -8483,18 +8050,14 @@ export async function getDatasetMerge(
 export function useGetDatasetMerge(
   pathParams: GetDatasetMerge.PathParameters,
   queryParams: GetDatasetMerge.QueryParameters,
-  options?: UseQueryOptions<
-    GetDatasetMerge.Response.Success,
-    GetDatasetMerge.Response.Error
-  >,
+  options?: UseQueryOptions<GetDatasetMerge.Response.Success, GetDatasetMerge.Response.Error>,
   requestOptions?: RequestOptions<GetDatasetMerge.Response.Success>,
-): UseQueryResult<
-  GetDatasetMerge.Response.Success,
-  GetDatasetMerge.Response.Error
-> {
+): UseQueryResult<GetDatasetMerge.Response.Success, GetDatasetMerge.Response.Error> {
   return useQuery(
     ['getDatasetMerge', pathParams, queryParams],
-    () => getDatasetMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getDatasetMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8537,18 +8100,14 @@ export async function getDatasetVersion(
 
 export function useGetDatasetVersion(
   pathParams: GetDatasetVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetDatasetVersion.Response.Success,
-    GetDatasetVersion.Response.Error
-  >,
+  options?: UseQueryOptions<GetDatasetVersion.Response.Success, GetDatasetVersion.Response.Error>,
   requestOptions?: RequestOptions<GetDatasetVersion.Response.Success>,
-): UseQueryResult<
-  GetDatasetVersion.Response.Success,
-  GetDatasetVersion.Response.Error
-> {
+): UseQueryResult<GetDatasetVersion.Response.Success, GetDatasetVersion.Response.Error> {
   return useQuery(
     ['getDatasetVersion', pathParams],
-    () => getDatasetVersion(pathParams, requestOptions),
+    () => {
+      return getDatasetVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -8593,19 +8152,13 @@ export function useDeleteDatasetVersion(
   options?: UseMutationOptions<
     DeleteDatasetVersion.Response.Success,
     DeleteDatasetVersion.Response.Error,
-    [
-      DeleteDatasetVersion.PathParameters,
-      RequestOptions<DeleteDatasetVersion.Response.Success>,
-    ],
+    [DeleteDatasetVersion.PathParameters, RequestOptions<DeleteDatasetVersion.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteDatasetVersion.Response.Success,
   DeleteDatasetVersion.Response.Error,
-  [
-    DeleteDatasetVersion.PathParameters,
-    RequestOptions<DeleteDatasetVersion.Response.Success>,
-  ],
+  [DeleteDatasetVersion.PathParameters, RequestOptions<DeleteDatasetVersion.Response.Success>],
   unknown
 > {
   return useMutation(deleteDatasetVersion, options)
@@ -8648,15 +8201,14 @@ export async function getDatasets(
 
 export function useGetDatasets(
   queryParams: GetDatasets.QueryParameters,
-  options?: UseQueryOptions<
-    GetDatasets.Response.Success,
-    GetDatasets.Response.Error
-  >,
+  options?: UseQueryOptions<GetDatasets.Response.Success, GetDatasets.Response.Error>,
   requestOptions?: RequestOptions<GetDatasets.Response.Success>,
 ): UseQueryResult<GetDatasets.Response.Success, GetDatasets.Response.Error> {
   return useQuery(
     ['getDatasets', queryParams],
-    () => getDatasets(queryParams, requestOptions),
+    () => {
+      return getDatasets(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8744,9 +8296,7 @@ export async function getDatasetAndVersionedItemDifferences(
   requestOptions?: RequestOptions<GetDatasetAndVersionedItemDifferences.Response.Success>,
 ): Promise<GetDatasetAndVersionedItemDifferences.Response.Success> {
   return request({
-    path: `/api/datasets/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/diff`,
+    path: `/api/datasets/${encodeURIComponent(pathParams['persistentId'])}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -8774,12 +8324,9 @@ export function useGetDatasetAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getDatasetAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getDatasetAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getDatasetAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8839,12 +8386,9 @@ export function useGetVersionedDatasetAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getVersionedDatasetAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getVersionedDatasetAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getVersionedDatasetAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -8889,19 +8433,13 @@ export function useRevertDataset(
   options?: UseMutationOptions<
     RevertDataset.Response.Success,
     RevertDataset.Response.Error,
-    [
-      RevertDataset.PathParameters,
-      RequestOptions<RevertDataset.Response.Success>,
-    ],
+    [RevertDataset.PathParameters, RequestOptions<RevertDataset.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   RevertDataset.Response.Success,
   RevertDataset.Response.Error,
-  [
-    RevertDataset.PathParameters,
-    RequestOptions<RevertDataset.Response.Success>,
-  ],
+  [RevertDataset.PathParameters, RequestOptions<RevertDataset.Response.Success>],
   unknown
 > {
   return useMutation(revertDataset, options)
@@ -8943,15 +8481,14 @@ export async function getActors(
 
 export function useGetActors(
   queryParams: GetActors.QueryParameters,
-  options?: UseQueryOptions<
-    GetActors.Response.Success,
-    GetActors.Response.Error
-  >,
+  options?: UseQueryOptions<GetActors.Response.Success, GetActors.Response.Error>,
   requestOptions?: RequestOptions<GetActors.Response.Success>,
 ): UseQueryResult<GetActors.Response.Success, GetActors.Response.Error> {
   return useQuery(
     ['getActors', queryParams],
-    () => getActors(queryParams, requestOptions),
+    () => {
+      return getActors(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -9039,7 +8576,9 @@ export function useGetActor(
 ): UseQueryResult<GetActor.Response.Success, GetActor.Response.Error> {
   return useQuery(
     ['getActor', pathParams],
-    () => getActor(pathParams, requestOptions),
+    () => {
+      return getActor(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -9244,18 +8783,14 @@ export async function getActorHistory(
 
 export function useGetActorHistory(
   pathParams: GetActorHistory.PathParameters,
-  options?: UseQueryOptions<
-    GetActorHistory.Response.Success,
-    GetActorHistory.Response.Error
-  >,
+  options?: UseQueryOptions<GetActorHistory.Response.Success, GetActorHistory.Response.Error>,
   requestOptions?: RequestOptions<GetActorHistory.Response.Success>,
-): UseQueryResult<
-  GetActorHistory.Response.Success,
-  GetActorHistory.Response.Error
-> {
+): UseQueryResult<GetActorHistory.Response.Success, GetActorHistory.Response.Error> {
   return useQuery(
     ['getActorHistory', pathParams],
-    () => getActorHistory(pathParams, requestOptions),
+    () => {
+      return getActorHistory(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -9296,18 +8831,14 @@ export async function getVocabularies(
 
 export function useGetVocabularies(
   queryParams: GetVocabularies.QueryParameters,
-  options?: UseQueryOptions<
-    GetVocabularies.Response.Success,
-    GetVocabularies.Response.Error
-  >,
+  options?: UseQueryOptions<GetVocabularies.Response.Success, GetVocabularies.Response.Error>,
   requestOptions?: RequestOptions<GetVocabularies.Response.Success>,
-): UseQueryResult<
-  GetVocabularies.Response.Success,
-  GetVocabularies.Response.Error
-> {
+): UseQueryResult<GetVocabularies.Response.Success, GetVocabularies.Response.Error> {
   return useQuery(
     ['getVocabularies', queryParams],
-    () => getVocabularies(queryParams, requestOptions),
+    () => {
+      return getVocabularies(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -9352,19 +8883,13 @@ export function useCreateVocabulary(
   options?: UseMutationOptions<
     CreateVocabulary.Response.Success,
     CreateVocabulary.Response.Error,
-    [
-      CreateVocabulary.QueryParameters,
-      RequestOptions<CreateVocabulary.Response.Success>,
-    ],
+    [CreateVocabulary.QueryParameters, RequestOptions<CreateVocabulary.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CreateVocabulary.Response.Success,
   CreateVocabulary.Response.Error,
-  [
-    CreateVocabulary.QueryParameters,
-    RequestOptions<CreateVocabulary.Response.Success>,
-  ],
+  [CreateVocabulary.QueryParameters, RequestOptions<CreateVocabulary.Response.Success>],
   unknown
 > {
   return useMutation(createVocabulary, options)
@@ -9411,18 +8936,14 @@ export async function getVocabulary(
 export function useGetVocabulary(
   pathParams: GetVocabulary.PathParameters,
   queryParams: GetVocabulary.QueryParameters,
-  options?: UseQueryOptions<
-    GetVocabulary.Response.Success,
-    GetVocabulary.Response.Error
-  >,
+  options?: UseQueryOptions<GetVocabulary.Response.Success, GetVocabulary.Response.Error>,
   requestOptions?: RequestOptions<GetVocabulary.Response.Success>,
-): UseQueryResult<
-  GetVocabulary.Response.Success,
-  GetVocabulary.Response.Error
-> {
+): UseQueryResult<GetVocabulary.Response.Success, GetVocabulary.Response.Error> {
   return useQuery(
     ['getVocabulary', pathParams, queryParams],
-    () => getVocabulary(pathParams, queryParams, requestOptions),
+    () => {
+      return getVocabulary(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -9448,11 +8969,7 @@ export namespace UpdateVocabulary {
   }
 }
 
-export async function updateVocabulary([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function updateVocabulary([pathParams, queryParams, requestOptions]: [
   pathParams: UpdateVocabulary.PathParameters,
   queryParams: UpdateVocabulary.QueryParameters,
   requestOptions?: RequestOptions<UpdateVocabulary.Response.Success>,
@@ -9513,11 +9030,7 @@ export namespace DeleteVocabulary {
   }
 }
 
-export async function deleteVocabulary([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deleteVocabulary([pathParams, queryParams, requestOptions]: [
   pathParams: DeleteVocabulary.PathParameters,
   queryParams: DeleteVocabulary.QueryParameters,
   requestOptions?: RequestOptions<DeleteVocabulary.Response.Success>,
@@ -9596,18 +9109,14 @@ export async function exportVocabulary(
 
 export function useExportVocabulary(
   pathParams: ExportVocabulary.PathParameters,
-  options?: UseQueryOptions<
-    ExportVocabulary.Response.Success,
-    ExportVocabulary.Response.Error
-  >,
+  options?: UseQueryOptions<ExportVocabulary.Response.Success, ExportVocabulary.Response.Error>,
   requestOptions?: RequestOptions<ExportVocabulary.Response.Success>,
-): UseQueryResult<
-  ExportVocabulary.Response.Success,
-  ExportVocabulary.Response.Error
-> {
+): UseQueryResult<ExportVocabulary.Response.Success, ExportVocabulary.Response.Error> {
   return useQuery(
     ['exportVocabulary', pathParams],
-    () => exportVocabulary(pathParams, requestOptions),
+    () => {
+      return exportVocabulary(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -9649,19 +9158,13 @@ export function useCloseVocabulary(
   options?: UseMutationOptions<
     CloseVocabulary.Response.Success,
     CloseVocabulary.Response.Error,
-    [
-      CloseVocabulary.PathParameters,
-      RequestOptions<CloseVocabulary.Response.Success>,
-    ],
+    [CloseVocabulary.PathParameters, RequestOptions<CloseVocabulary.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CloseVocabulary.Response.Success,
   CloseVocabulary.Response.Error,
-  [
-    CloseVocabulary.PathParameters,
-    RequestOptions<CloseVocabulary.Response.Success>,
-  ],
+  [CloseVocabulary.PathParameters, RequestOptions<CloseVocabulary.Response.Success>],
   unknown
 > {
   return useMutation(closeVocabulary, options)
@@ -9704,19 +9207,13 @@ export function useOpenVocabulary(
   options?: UseMutationOptions<
     OpenVocabulary.Response.Success,
     OpenVocabulary.Response.Error,
-    [
-      OpenVocabulary.PathParameters,
-      RequestOptions<OpenVocabulary.Response.Success>,
-    ],
+    [OpenVocabulary.PathParameters, RequestOptions<OpenVocabulary.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   OpenVocabulary.Response.Success,
   OpenVocabulary.Response.Error,
-  [
-    OpenVocabulary.PathParameters,
-    RequestOptions<OpenVocabulary.Response.Success>,
-  ],
+  [OpenVocabulary.PathParameters, RequestOptions<OpenVocabulary.Response.Success>],
   unknown
 > {
   return useMutation(openVocabulary, options)
@@ -9760,15 +9257,14 @@ export async function getConcept(
 
 export function useGetConcept(
   pathParams: GetConcept.PathParameters,
-  options?: UseQueryOptions<
-    GetConcept.Response.Success,
-    GetConcept.Response.Error
-  >,
+  options?: UseQueryOptions<GetConcept.Response.Success, GetConcept.Response.Error>,
   requestOptions?: RequestOptions<GetConcept.Response.Success>,
 ): UseQueryResult<GetConcept.Response.Success, GetConcept.Response.Error> {
   return useQuery(
     ['getConcept', pathParams],
-    () => getConcept(pathParams, requestOptions),
+    () => {
+      return getConcept(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -9917,21 +9413,14 @@ export namespace CreateConcept {
   export type RequestBody = ConceptCore
 }
 
-export async function createConcept([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function createConcept([pathParams, queryParams, body, requestOptions]: [
   pathParams: CreateConcept.PathParameters,
   queryParams: CreateConcept.QueryParameters,
   body: CreateConcept.RequestBody,
   requestOptions?: RequestOptions<CreateConcept.Response.Success>,
 ]): Promise<CreateConcept.Response.Success> {
   return request({
-    path: `/api/vocabularies/${encodeURIComponent(
-      pathParams['vocabulary-code'],
-    )}/concepts`,
+    path: `/api/vocabularies/${encodeURIComponent(pathParams['vocabulary-code'])}/concepts`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -10011,19 +9500,13 @@ export function useCommitConcept(
   options?: UseMutationOptions<
     CommitConcept.Response.Success,
     CommitConcept.Response.Error,
-    [
-      CommitConcept.PathParameters,
-      RequestOptions<CommitConcept.Response.Success>,
-    ],
+    [CommitConcept.PathParameters, RequestOptions<CommitConcept.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   CommitConcept.Response.Success,
   CommitConcept.Response.Error,
-  [
-    CommitConcept.PathParameters,
-    RequestOptions<CommitConcept.Response.Success>,
-  ],
+  [CommitConcept.PathParameters, RequestOptions<CommitConcept.Response.Success>],
   unknown
 > {
   return useMutation(commitConcept, options)
@@ -10171,9 +9654,7 @@ export async function getWorkflowSources(
   requestOptions?: RequestOptions<GetWorkflowSources.Response.Success>,
 ): Promise<GetWorkflowSources.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/sources`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/sources`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -10189,18 +9670,14 @@ export async function getWorkflowSources(
 
 export function useGetWorkflowSources(
   pathParams: GetWorkflowSources.PathParameters,
-  options?: UseQueryOptions<
-    GetWorkflowSources.Response.Success,
-    GetWorkflowSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflowSources.Response.Success, GetWorkflowSources.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflowSources.Response.Success>,
-): UseQueryResult<
-  GetWorkflowSources.Response.Success,
-  GetWorkflowSources.Response.Error
-> {
+): UseQueryResult<GetWorkflowSources.Response.Success, GetWorkflowSources.Response.Error> {
   return useQuery(
     ['getWorkflowSources', pathParams],
-    () => getWorkflowSources(pathParams, requestOptions),
+    () => {
+      return getWorkflowSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -10224,12 +9701,7 @@ export namespace CreateSubstep {
   export type RequestBody = StepCore
 }
 
-export async function createSubstep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function createSubstep([pathParams, queryParams, body, requestOptions]: [
   pathParams: CreateSubstep.PathParameters,
   queryParams: CreateSubstep.QueryParameters,
   body: CreateSubstep.RequestBody,
@@ -10297,9 +9769,7 @@ export async function publishWorkflow([pathParams, requestOptions]: [
   requestOptions?: RequestOptions<PublishWorkflow.Response.Success>,
 ]): Promise<PublishWorkflow.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/commit`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/commit`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -10317,19 +9787,13 @@ export function usePublishWorkflow(
   options?: UseMutationOptions<
     PublishWorkflow.Response.Success,
     PublishWorkflow.Response.Error,
-    [
-      PublishWorkflow.PathParameters,
-      RequestOptions<PublishWorkflow.Response.Success>,
-    ],
+    [PublishWorkflow.PathParameters, RequestOptions<PublishWorkflow.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   PublishWorkflow.Response.Success,
   PublishWorkflow.Response.Error,
-  [
-    PublishWorkflow.PathParameters,
-    RequestOptions<PublishWorkflow.Response.Success>,
-  ],
+  [PublishWorkflow.PathParameters, RequestOptions<PublishWorkflow.Response.Success>],
   unknown
 > {
   return useMutation(publishWorkflow, options)
@@ -10359,9 +9823,7 @@ export async function getWorkflowHistory(
   requestOptions?: RequestOptions<GetWorkflowHistory.Response.Success>,
 ): Promise<GetWorkflowHistory.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/history`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/history`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -10378,18 +9840,14 @@ export async function getWorkflowHistory(
 export function useGetWorkflowHistory(
   pathParams: GetWorkflowHistory.PathParameters,
   queryParams: GetWorkflowHistory.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflowHistory.Response.Success,
-    GetWorkflowHistory.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflowHistory.Response.Success, GetWorkflowHistory.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflowHistory.Response.Success>,
-): UseQueryResult<
-  GetWorkflowHistory.Response.Success,
-  GetWorkflowHistory.Response.Error
-> {
+): UseQueryResult<GetWorkflowHistory.Response.Success, GetWorkflowHistory.Response.Error> {
   return useQuery(
     ['getWorkflowHistory', pathParams, queryParams],
-    () => getWorkflowHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getWorkflowHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -10438,18 +9896,14 @@ export async function getStepHistory(
 export function useGetStepHistory(
   pathParams: GetStepHistory.PathParameters,
   queryParams: GetStepHistory.QueryParameters,
-  options?: UseQueryOptions<
-    GetStepHistory.Response.Success,
-    GetStepHistory.Response.Error
-  >,
+  options?: UseQueryOptions<GetStepHistory.Response.Success, GetStepHistory.Response.Error>,
   requestOptions?: RequestOptions<GetStepHistory.Response.Success>,
-): UseQueryResult<
-  GetStepHistory.Response.Success,
-  GetStepHistory.Response.Error
-> {
+): UseQueryResult<GetStepHistory.Response.Success, GetStepHistory.Response.Error> {
   return useQuery(
     ['getStepHistory', pathParams, queryParams],
-    () => getStepHistory(pathParams, queryParams, requestOptions),
+    () => {
+      return getStepHistory(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -10495,15 +9949,14 @@ export async function getWorkflow(
 export function useGetWorkflow(
   pathParams: GetWorkflow.PathParameters,
   queryParams: GetWorkflow.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflow.Response.Success,
-    GetWorkflow.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflow.Response.Success, GetWorkflow.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflow.Response.Success>,
 ): UseQueryResult<GetWorkflow.Response.Success, GetWorkflow.Response.Error> {
   return useQuery(
     ['getWorkflow', pathParams, queryParams],
-    () => getWorkflow(pathParams, queryParams, requestOptions),
+    () => {
+      return getWorkflow(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -10527,12 +9980,7 @@ export namespace UpdateWorkflow {
   export type RequestBody = WorkflowCore
 }
 
-export async function updateWorkflow([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updateWorkflow([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdateWorkflow.PathParameters,
   queryParams: UpdateWorkflow.QueryParameters,
   body: UpdateWorkflow.RequestBody,
@@ -10596,11 +10044,7 @@ export namespace DeleteWorkflow {
   }
 }
 
-export async function deleteWorkflow([
-  pathParams,
-  queryParams,
-  requestOptions,
-]: [
+export async function deleteWorkflow([pathParams, queryParams, requestOptions]: [
   pathParams: DeleteWorkflow.PathParameters,
   queryParams: DeleteWorkflow.QueryParameters,
   requestOptions?: RequestOptions<DeleteWorkflow.Response.Success>,
@@ -10667,9 +10111,7 @@ export async function getStepVersionInformationContributors(
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/versions/${encodeURIComponent(
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/versions/${encodeURIComponent(
       pathParams['stepVersionId'],
     )}/information-contributors`,
     baseUrl: undefined,
@@ -10698,7 +10140,9 @@ export function useGetStepVersionInformationContributors(
 > {
   return useQuery(
     ['getStepVersionInformationContributors', pathParams],
-    () => getStepVersionInformationContributors(pathParams, requestOptions),
+    () => {
+      return getStepVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -10725,9 +10169,7 @@ export async function getStepInformationContributors(
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/information-contributors`,
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -10754,7 +10196,9 @@ export function useGetStepInformationContributors(
 > {
   return useQuery(
     ['getStepInformationContributors', pathParams],
-    () => getStepInformationContributors(pathParams, requestOptions),
+    () => {
+      return getStepInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -10802,15 +10246,14 @@ export async function getStepMerge(
 export function useGetStepMerge(
   pathParams: GetStepMerge.PathParameters,
   queryParams: GetStepMerge.QueryParameters,
-  options?: UseQueryOptions<
-    GetStepMerge.Response.Success,
-    GetStepMerge.Response.Error
-  >,
+  options?: UseQueryOptions<GetStepMerge.Response.Success, GetStepMerge.Response.Error>,
   requestOptions?: RequestOptions<GetStepMerge.Response.Success>,
 ): UseQueryResult<GetStepMerge.Response.Success, GetStepMerge.Response.Error> {
   return useQuery(
     ['getStepMerge', pathParams, queryParams],
-    () => getStepMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getStepMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -10833,21 +10276,14 @@ export namespace MergeStep {
   export type RequestBody = StepCore
 }
 
-export async function mergeStep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function mergeStep([pathParams, queryParams, body, requestOptions]: [
   pathParams: MergeStep.PathParameters,
   queryParams: MergeStep.QueryParameters,
   body: MergeStep.RequestBody,
   requestOptions?: RequestOptions<MergeStep.Response.Success>,
 ]): Promise<MergeStep.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/steps/merge`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/steps/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -10925,18 +10361,14 @@ export async function getStepSources(
 
 export function useGetStepSources(
   pathParams: GetStepSources.PathParameters,
-  options?: UseQueryOptions<
-    GetStepSources.Response.Success,
-    GetStepSources.Response.Error
-  >,
+  options?: UseQueryOptions<GetStepSources.Response.Success, GetStepSources.Response.Error>,
   requestOptions?: RequestOptions<GetStepSources.Response.Success>,
-): UseQueryResult<
-  GetStepSources.Response.Success,
-  GetStepSources.Response.Error
-> {
+): UseQueryResult<GetStepSources.Response.Success, GetStepSources.Response.Error> {
   return useQuery(
     ['getStepSources', pathParams],
-    () => getStepSources(pathParams, requestOptions),
+    () => {
+      return getStepSources(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -10965,9 +10397,7 @@ export async function getWorkflowAndVersionedItemDifferences(
   requestOptions?: RequestOptions<GetWorkflowAndVersionedItemDifferences.Response.Success>,
 ): Promise<GetWorkflowAndVersionedItemDifferences.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/diff`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -10995,12 +10425,9 @@ export function useGetWorkflowAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getWorkflowAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getWorkflowAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getWorkflowAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -11059,17 +10486,14 @@ export function useGetVersionedWorkflowAndVersionedItemDifferences(
   GetVersionedWorkflowAndVersionedItemDifferences.Response.Error
 > {
   return useQuery(
-    [
-      'getVersionedWorkflowAndVersionedItemDifferences',
-      pathParams,
-      queryParams,
-    ],
-    () =>
-      getVersionedWorkflowAndVersionedItemDifferences(
+    ['getVersionedWorkflowAndVersionedItemDifferences', pathParams, queryParams],
+    () => {
+      return getVersionedWorkflowAndVersionedItemDifferences(
         pathParams,
         queryParams,
         requestOptions,
-      ),
+      )
+    },
     options,
   )
 }
@@ -11129,12 +10553,9 @@ export function useGetStepAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getStepAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getStepAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getStepAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -11167,9 +10588,9 @@ export async function getVersionedStepAndVersionedItemDifferences(
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/versions/${encodeURIComponent(pathParams['versionId'])}/diff`,
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/versions/${encodeURIComponent(
+      pathParams['versionId'],
+    )}/diff`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -11197,12 +10618,9 @@ export function useGetVersionedStepAndVersionedItemDifferences(
 > {
   return useQuery(
     ['getVersionedStepAndVersionedItemDifferences', pathParams, queryParams],
-    () =>
-      getVersionedStepAndVersionedItemDifferences(
-        pathParams,
-        queryParams,
-        requestOptions,
-      ),
+    () => {
+      return getVersionedStepAndVersionedItemDifferences(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -11230,9 +10648,9 @@ export async function revertStep([pathParams, requestOptions]: [
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/versions/${encodeURIComponent(pathParams['stepVersionId'])}/revert`,
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/versions/${encodeURIComponent(
+      pathParams['stepVersionId'],
+    )}/revert`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -11285,9 +10703,9 @@ export async function getStepVersion(
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/versions/${encodeURIComponent(pathParams['stepVersionId'])}`,
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/versions/${encodeURIComponent(
+      pathParams['stepVersionId'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -11303,18 +10721,14 @@ export async function getStepVersion(
 
 export function useGetStepVersion(
   pathParams: GetStepVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetStepVersion.Response.Success,
-    GetStepVersion.Response.Error
-  >,
+  options?: UseQueryOptions<GetStepVersion.Response.Success, GetStepVersion.Response.Error>,
   requestOptions?: RequestOptions<GetStepVersion.Response.Success>,
-): UseQueryResult<
-  GetStepVersion.Response.Success,
-  GetStepVersion.Response.Error
-> {
+): UseQueryResult<GetStepVersion.Response.Success, GetStepVersion.Response.Error> {
   return useQuery(
     ['getStepVersion', pathParams],
-    () => getStepVersion(pathParams, requestOptions),
+    () => {
+      return getStepVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -11342,9 +10756,9 @@ export async function deleteStepVersion([pathParams, requestOptions]: [
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/steps/${encodeURIComponent(
-      pathParams['stepPersistentId'],
-    )}/versions/${encodeURIComponent(pathParams['stepVersionId'])}`,
+    )}/steps/${encodeURIComponent(pathParams['stepPersistentId'])}/versions/${encodeURIComponent(
+      pathParams['stepVersionId'],
+    )}`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -11362,19 +10776,13 @@ export function useDeleteStepVersion(
   options?: UseMutationOptions<
     DeleteStepVersion.Response.Success,
     DeleteStepVersion.Response.Error,
-    [
-      DeleteStepVersion.PathParameters,
-      RequestOptions<DeleteStepVersion.Response.Success>,
-    ],
+    [DeleteStepVersion.PathParameters, RequestOptions<DeleteStepVersion.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteStepVersion.Response.Success,
   DeleteStepVersion.Response.Error,
-  [
-    DeleteStepVersion.PathParameters,
-    RequestOptions<DeleteStepVersion.Response.Success>,
-  ],
+  [DeleteStepVersion.PathParameters, RequestOptions<DeleteStepVersion.Response.Success>],
   unknown
 > {
   return useMutation(deleteStepVersion, options)
@@ -11429,7 +10837,9 @@ export function useGetStep(
 ): UseQueryResult<GetStep.Response.Success, GetStep.Response.Error> {
   return useQuery(
     ['getStep', pathParams, queryParams],
-    () => getStep(pathParams, queryParams, requestOptions),
+    () => {
+      return getStep(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -11454,12 +10864,7 @@ export namespace UpdateStep {
   export type RequestBody = StepCore
 }
 
-export async function updateStep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function updateStep([pathParams, queryParams, body, requestOptions]: [
   pathParams: UpdateStep.PathParameters,
   queryParams: UpdateStep.QueryParameters,
   body: UpdateStep.RequestBody,
@@ -11609,15 +11014,14 @@ export async function getWorkflows(
 
 export function useGetWorkflows(
   queryParams: GetWorkflows.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflows.Response.Success,
-    GetWorkflows.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflows.Response.Success, GetWorkflows.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflows.Response.Success>,
 ): UseQueryResult<GetWorkflows.Response.Success, GetWorkflows.Response.Error> {
   return useQuery(
     ['getWorkflows', queryParams],
-    () => getWorkflows(queryParams, requestOptions),
+    () => {
+      return getWorkflows(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -11719,18 +11123,14 @@ export async function getWorkflowVersion(
 
 export function useGetWorkflowVersion(
   pathParams: GetWorkflowVersion.PathParameters,
-  options?: UseQueryOptions<
-    GetWorkflowVersion.Response.Success,
-    GetWorkflowVersion.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflowVersion.Response.Success, GetWorkflowVersion.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflowVersion.Response.Success>,
-): UseQueryResult<
-  GetWorkflowVersion.Response.Success,
-  GetWorkflowVersion.Response.Error
-> {
+): UseQueryResult<GetWorkflowVersion.Response.Success, GetWorkflowVersion.Response.Error> {
   return useQuery(
     ['getWorkflowVersion', pathParams],
-    () => getWorkflowVersion(pathParams, requestOptions),
+    () => {
+      return getWorkflowVersion(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -11775,19 +11175,13 @@ export function useDeleteWorkflowVersion(
   options?: UseMutationOptions<
     DeleteWorkflowVersion.Response.Success,
     DeleteWorkflowVersion.Response.Error,
-    [
-      DeleteWorkflowVersion.PathParameters,
-      RequestOptions<DeleteWorkflowVersion.Response.Success>,
-    ],
+    [DeleteWorkflowVersion.PathParameters, RequestOptions<DeleteWorkflowVersion.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   DeleteWorkflowVersion.Response.Success,
   DeleteWorkflowVersion.Response.Error,
-  [
-    DeleteWorkflowVersion.PathParameters,
-    RequestOptions<DeleteWorkflowVersion.Response.Success>,
-  ],
+  [DeleteWorkflowVersion.PathParameters, RequestOptions<DeleteWorkflowVersion.Response.Success>],
   unknown
 > {
   return useMutation(deleteWorkflowVersion, options)
@@ -11841,7 +11235,9 @@ export function useGetWorkflowInformationContributors(
 > {
   return useQuery(
     ['getWorkflowInformationContributors', pathParams],
-    () => getWorkflowInformationContributors(pathParams, requestOptions),
+    () => {
+      return getWorkflowInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -11868,9 +11264,7 @@ export async function getWorkflowVersionInformationContributors(
   return request({
     path: `/api/workflows/${encodeURIComponent(
       pathParams['persistentId'],
-    )}/versions/${encodeURIComponent(
-      pathParams['versionId'],
-    )}/information-contributors`,
+    )}/versions/${encodeURIComponent(pathParams['versionId'])}/information-contributors`,
     baseUrl: undefined,
     query: undefined,
     options: {
@@ -11897,7 +11291,9 @@ export function useGetWorkflowVersionInformationContributors(
 > {
   return useQuery(
     ['getWorkflowVersionInformationContributors', pathParams],
-    () => getWorkflowVersionInformationContributors(pathParams, requestOptions),
+    () => {
+      return getWorkflowVersionInformationContributors(pathParams, requestOptions)
+    },
     options,
   )
 }
@@ -11925,9 +11321,7 @@ export async function getWorkflowMerge(
   requestOptions?: RequestOptions<GetWorkflowMerge.Response.Success>,
 ): Promise<GetWorkflowMerge.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/merge`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/merge`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -11944,18 +11338,14 @@ export async function getWorkflowMerge(
 export function useGetWorkflowMerge(
   pathParams: GetWorkflowMerge.PathParameters,
   queryParams: GetWorkflowMerge.QueryParameters,
-  options?: UseQueryOptions<
-    GetWorkflowMerge.Response.Success,
-    GetWorkflowMerge.Response.Error
-  >,
+  options?: UseQueryOptions<GetWorkflowMerge.Response.Success, GetWorkflowMerge.Response.Error>,
   requestOptions?: RequestOptions<GetWorkflowMerge.Response.Success>,
-): UseQueryResult<
-  GetWorkflowMerge.Response.Success,
-  GetWorkflowMerge.Response.Error
-> {
+): UseQueryResult<GetWorkflowMerge.Response.Success, GetWorkflowMerge.Response.Error> {
   return useQuery(
     ['getWorkflowMerge', pathParams, queryParams],
-    () => getWorkflowMerge(pathParams, queryParams, requestOptions),
+    () => {
+      return getWorkflowMerge(pathParams, queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -12000,19 +11390,13 @@ export function useRevertWorkflow(
   options?: UseMutationOptions<
     RevertWorkflow.Response.Success,
     RevertWorkflow.Response.Error,
-    [
-      RevertWorkflow.PathParameters,
-      RequestOptions<RevertWorkflow.Response.Success>,
-    ],
+    [RevertWorkflow.PathParameters, RequestOptions<RevertWorkflow.Response.Success>],
     unknown
   >,
 ): UseMutationResult<
   RevertWorkflow.Response.Success,
   RevertWorkflow.Response.Error,
-  [
-    RevertWorkflow.PathParameters,
-    RequestOptions<RevertWorkflow.Response.Success>,
-  ],
+  [RevertWorkflow.PathParameters, RequestOptions<RevertWorkflow.Response.Success>],
   unknown
 > {
   return useMutation(revertWorkflow, options)
@@ -12036,21 +11420,14 @@ export namespace CreateStep {
   export type RequestBody = StepCore
 }
 
-export async function createStep([
-  pathParams,
-  queryParams,
-  body,
-  requestOptions,
-]: [
+export async function createStep([pathParams, queryParams, body, requestOptions]: [
   pathParams: CreateStep.PathParameters,
   queryParams: CreateStep.QueryParameters,
   body: CreateStep.RequestBody,
   requestOptions?: RequestOptions<CreateStep.Response.Success>,
 ]): Promise<CreateStep.Response.Success> {
   return request({
-    path: `/api/workflows/${encodeURIComponent(
-      pathParams['persistentId'],
-    )}/steps`,
+    path: `/api/workflows/${encodeURIComponent(pathParams['persistentId'])}/steps`,
     baseUrl: undefined,
     query: queryParams,
     options: {
@@ -12130,18 +11507,14 @@ export async function searchConcepts(
 
 export function useSearchConcepts(
   queryParams: SearchConcepts.QueryParameters,
-  options?: UseQueryOptions<
-    SearchConcepts.Response.Success,
-    SearchConcepts.Response.Error
-  >,
+  options?: UseQueryOptions<SearchConcepts.Response.Success, SearchConcepts.Response.Error>,
   requestOptions?: RequestOptions<SearchConcepts.Response.Success>,
-): UseQueryResult<
-  SearchConcepts.Response.Success,
-  SearchConcepts.Response.Error
-> {
+): UseQueryResult<SearchConcepts.Response.Success, SearchConcepts.Response.Error> {
   return useQuery(
     ['searchConcepts', queryParams],
-    () => searchConcepts(queryParams, requestOptions),
+    () => {
+      return searchConcepts(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -12155,14 +11528,9 @@ export namespace SearchItems {
     q?: string
     d?: string
     categories?: Array<
-      | 'tool-or-service'
-      | 'training-material'
-      | 'publication'
-      | 'dataset'
-      | 'workflow'
-      | 'step'
+      'dataset' | 'publication' | 'step' | 'tool-or-service' | 'training-material' | 'workflow'
     >
-    order?: Array<'score' | 'label' | 'modified-on'>
+    order?: Array<'label' | 'modified-on' | 'score'>
     page?: number /* int32 */
     perpage?: number /* int32 */
     advanced?: boolean
@@ -12196,15 +11564,14 @@ export async function searchItems(
 
 export function useSearchItems(
   queryParams: SearchItems.QueryParameters,
-  options?: UseQueryOptions<
-    SearchItems.Response.Success,
-    SearchItems.Response.Error
-  >,
+  options?: UseQueryOptions<SearchItems.Response.Success, SearchItems.Response.Error>,
   requestOptions?: RequestOptions<SearchItems.Response.Success>,
 ): UseQueryResult<SearchItems.Response.Success, SearchItems.Response.Error> {
   return useQuery(
     ['searchItems', queryParams],
-    () => searchItems(queryParams, requestOptions),
+    () => {
+      return searchItems(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -12217,12 +11584,12 @@ export namespace AutocompleteItems {
   export type QueryParameters = {
     q: string
     category?:
+      | 'dataset'
+      | 'publication'
+      | 'step'
       | 'tool-or-service'
       | 'training-material'
-      | 'publication'
-      | 'dataset'
       | 'workflow'
-      | 'step'
   }
   export namespace Response {
     export type Success = SuggestedSearchPhrases
@@ -12251,18 +11618,14 @@ export async function autocompleteItems(
 
 export function useAutocompleteItems(
   queryParams: AutocompleteItems.QueryParameters,
-  options?: UseQueryOptions<
-    AutocompleteItems.Response.Success,
-    AutocompleteItems.Response.Error
-  >,
+  options?: UseQueryOptions<AutocompleteItems.Response.Success, AutocompleteItems.Response.Error>,
   requestOptions?: RequestOptions<AutocompleteItems.Response.Success>,
-): UseQueryResult<
-  AutocompleteItems.Response.Success,
-  AutocompleteItems.Response.Error
-> {
+): UseQueryResult<AutocompleteItems.Response.Success, AutocompleteItems.Response.Error> {
   return useQuery(
     ['autocompleteItems', queryParams],
-    () => autocompleteItems(queryParams, requestOptions),
+    () => {
+      return autocompleteItems(queryParams, requestOptions)
+    },
     options,
   )
 }
@@ -12306,15 +11669,14 @@ export async function searchActors(
 
 export function useSearchActors(
   queryParams: SearchActors.QueryParameters,
-  options?: UseQueryOptions<
-    SearchActors.Response.Success,
-    SearchActors.Response.Error
-  >,
+  options?: UseQueryOptions<SearchActors.Response.Success, SearchActors.Response.Error>,
   requestOptions?: RequestOptions<SearchActors.Response.Success>,
 ): UseQueryResult<SearchActors.Response.Success, SearchActors.Response.Error> {
   return useQuery(
     ['searchActors', queryParams],
-    () => searchActors(queryParams, requestOptions),
+    () => {
+      return searchActors(queryParams, requestOptions)
+    },
     options,
   )
 }

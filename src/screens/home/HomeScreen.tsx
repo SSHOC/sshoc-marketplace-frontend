@@ -24,8 +24,8 @@ import { SectionTitle } from '@/modules/ui/typography/SectionTitle'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/home/HomeScreen.module.css'
-import { Svg as PeopleImage } from '@@/assets/images/home/people.svg'
-import Content, { metadata } from '@@/content/pages/home.mdx'
+import { Svg as PeopleImage } from '~/assets/images/home/people.svg'
+import Content, { metadata } from '~/content/pages/home.mdx'
 
 type ContentMetadata = {
   title: string
@@ -116,7 +116,7 @@ function Browse({ facets }: { facets?: Facets }) {
       <SectionTitle>Browse</SectionTitle>
       <SubSection title="Browse by activity" href={{ pathname: '/browse/activity' }}>
         <ul className="flex flex-wrap">
-          {Object.entries(facets.activity)
+          {Object.entries(facets['activity']!)
             .slice(0, MAX_BROWSE_ITEMS)
             .map(([activity, { count }]) => {
               const query: ItemSearchQuery = { 'f.activity': [activity] }
@@ -134,7 +134,7 @@ function Browse({ facets }: { facets?: Facets }) {
       </SubSection>
       <SubSection title="Browse by keyword" href={{ pathname: '/browse/keyword' }}>
         <ul className="flex flex-wrap">
-          {Object.entries(facets.keyword)
+          {Object.entries(facets['keyword']!)
             .slice(0, MAX_BROWSE_ITEMS)
             .map(([keyword, { count }]) => {
               const query: ItemSearchQuery = { 'f.keyword': [keyword] }
@@ -184,8 +184,8 @@ function LastAdded({ items }: { items?: Items }) {
  */
 function MainColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('px-6 py-6 md:py-12 space-y-12 md:space-y-24', styles.mainColumn),
-    bleed: cx(styles.leftBleed),
+    section: cx('px-6 py-6 md:py-12 space-y-12 md:space-y-24', styles['mainColumn']),
+    bleed: cx(styles['leftBleed']),
   }
 
   return (
@@ -201,15 +201,15 @@ function MainColumn({ children }: PropsWithChildren<unknown>) {
  */
 function SideColumn({ children }: PropsWithChildren<unknown>) {
   const classNames = {
-    section: cx('bg-gray-50 px-6 py-12', styles.sideColumn),
+    section: cx('bg-gray-50 px-6 py-12', styles['sideColumn']),
     bleed: 'bg-gray-50',
   }
 
   return (
     <Fragment>
-      <b className={cx(classNames.bleed, styles.leftBleed, styles.hideXl)} />
+      <b className={cx(classNames.bleed, styles['leftBleed'], styles['hideXl'])} />
       <section className={classNames.section}>{children}</section>
-      <b className={cx(classNames.bleed, styles.rightBleed)} />
+      <b className={cx(classNames.bleed, styles['rightBleed'])} />
     </Fragment>
   )
 }

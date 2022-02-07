@@ -7,11 +7,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { SearchConcept, SearchConcepts } from '@/api/sshoc'
-import {
-  useCommitConcept,
-  useDeleteConcept,
-  useSearchConcepts,
-} from '@/api/sshoc'
+import { useCommitConcept, useDeleteConcept, useSearchConcepts } from '@/api/sshoc'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as SearchIcon } from '@/elements/icons/small/search.svg'
 import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
@@ -64,10 +60,7 @@ export default function VocabulariesScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Vocabularies" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -84,10 +77,7 @@ export default function VocabulariesScreen(): JSX.Element {
             <Title>
               Candidate concepts
               {concepts.data != null ? (
-                <span className="text-xl font-normal">
-                  {' '}
-                  ({concepts.data.hits})
-                </span>
+                <span className="text-xl font-normal"> ({concepts.data.hits})</span>
               ) : null}
             </Title>
           </div>
@@ -188,9 +178,7 @@ function Concept(props: ConceptProps) {
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
       <div className="flex items-center justify-between space-x-2">
         <h2>
-          <span className="text-base font-bold text-gray-600">
-            {concept.label}
-          </span>
+          <span className="text-base font-bold text-gray-600">{concept.label}</span>
         </h2>
       </div>
 
@@ -198,9 +186,16 @@ function Concept(props: ConceptProps) {
         <div className="space-x-1.5">
           <span className="text-gray-550">Vocabulary: </span>
           <span>
-            {concept.vocabulary?.code}{' '}
-            {/* We don't get the vocabulary label. */}
-            <span>({concept.types?.map((type) => type.code).join(', ')})</span>
+            {concept.vocabulary?.code} {/* We don't get the vocabulary label. */}
+            <span>
+              (
+              {concept.types
+                ?.map((type) => {
+                  return type.code
+                })
+                .join(', ')}
+              )
+            </span>
           </span>
         </div>
         <div className="flex space-x-4">
@@ -331,11 +326,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -396,11 +387,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -427,11 +414,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -464,11 +447,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -479,9 +458,7 @@ function NextPageLink({
   )
 }
 
-function sanitizeQuery(
-  params?: ParsedUrlQuery,
-): SearchConcepts.QueryParameters {
+function sanitizeQuery(params?: ParsedUrlQuery): SearchConcepts.QueryParameters {
   if (params === undefined) return {}
 
   const sanitized = []

@@ -16,7 +16,7 @@ export interface ItemFormValues extends WorkflowCore {
 
 export interface WorkflowStepsFormSectionProps {
   onSetPage: (
-    page: 'workflow' | 'steps' | 'step',
+    page: 'step' | 'steps' | 'workflow',
     prefix?: string,
     onReset?: () => void, // when step creation/editing is canceled
   ) => void
@@ -26,9 +26,7 @@ export interface WorkflowStepsFormSectionProps {
 /**
  * Form section for workflow steps.
  */
-export function WorkflowStepsFormSection(
-  props: WorkflowStepsFormSectionProps,
-): JSX.Element {
+export function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Element {
   const isDiffingEnabled = props.diff != null && props.diff.equal === false
   const diff = props.diff ?? {}
 
@@ -42,24 +40,17 @@ export function WorkflowStepsFormSection(
                 {({ input }) => {
                   return (
                     <div className="flex flex-col px-4 py-3 space-y-3 border border-gray-200 rounded bg-gray-75">
-                      <h2 className="text-base font-bold text-gray-800 font-body">
-                        {input.value}
-                      </h2>
+                      <h2 className="text-base font-bold text-gray-800 font-body">{input.value}</h2>
                       <div className="flex self-end space-x-8 text-primary-750">
                         <Button
                           onPress={() => {
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             const lastIndex = fields.length!
 
                             fields.push(undefined)
 
-                            props.onSetPage(
-                              'step',
-                              `${fields.name}.${lastIndex}.`,
-                              () => {
-                                fields.remove(lastIndex)
-                              },
-                            )
+                            props.onSetPage('step', `${fields.name}.${lastIndex}.`, () => {
+                              fields.remove(lastIndex)
+                            })
                           }}
                           variant="link"
                         >
@@ -86,10 +77,7 @@ export function WorkflowStepsFormSection(
                       key={name}
                       className="flex flex-col px-4 py-3 space-y-3 border border-gray-200 rounded bg-gray-75"
                     >
-                      <FormField
-                        name={`${name}.label`}
-                        subscription={{ value: true }}
-                      >
+                      <FormField name={`${name}.label`} subscription={{ value: true }}>
                         {({ input }) => {
                           return (
                             <h3 className="text-base font-medium text-gray-800 font-body">
@@ -106,21 +94,17 @@ export function WorkflowStepsFormSection(
                           isDisabled={index === 0}
                           variant="link"
                         >
-                          <Icon
-                            icon={TriangleIcon}
-                            className="w-2.5 h-2.5 transform rotate-180"
-                          />
+                          <Icon icon={TriangleIcon} className="w-2.5 h-2.5 transform rotate-180" />
                           <span>Move up</span>
                         </Button>
                         <Button
                           onPress={() => {
                             fields.move(
                               index,
-                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                               Math.min(fields.length! - 1, index + 1),
                             )
                           }}
-                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                           isDisabled={index === fields.length! - 1}
                           variant="link"
                         >
@@ -143,13 +127,9 @@ export function WorkflowStepsFormSection(
                         <Button
                           onPress={() => {
                             const currentValue = fields.value[index]
-                            props.onSetPage(
-                              'step',
-                              `${fields.name}.${index}.`,
-                              () => {
-                                fields.update(index, currentValue)
-                              },
-                            )
+                            props.onSetPage('step', `${fields.name}.${index}.`, () => {
+                              fields.update(index, currentValue)
+                            })
                           }}
                           variant="link"
                         >

@@ -3,9 +3,7 @@ import { useState } from 'react'
 /**
  * Manages dialog state.
  */
-export function useDialogState(
-  initialState = false,
-): {
+export function useDialogState(initialState = false): {
   isOpen: boolean
   open: () => void
   close: () => void
@@ -19,7 +17,9 @@ export function useDialogState(
     setIsOpen(false)
   }
   function toggle() {
-    setIsOpen((isOpen) => !isOpen)
+    setIsOpen((isOpen) => {
+      return !isOpen
+    })
   }
   return { isOpen, open, close, toggle }
 }

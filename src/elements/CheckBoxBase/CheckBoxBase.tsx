@@ -17,7 +17,7 @@ export interface CheckBoxBaseProps extends CheckBoxProps {
   isDisabled?: boolean
   isSelected?: boolean
   /** @default "default" */
-  variant?: 'default' | 'form' | 'facet'
+  variant?: 'default' | 'facet' | 'form'
 }
 
 /**
@@ -61,9 +61,7 @@ export function CheckBoxBase(props: CheckBoxBaseProps): JSX.Element {
       variant === 'facet' && 'flex-1',
     ),
     icon: 'h-full',
-    text: cx(
-      variant === 'facet' && 'flex-1 inline-flex justify-between space-x-1',
-    ),
+    text: cx(variant === 'facet' && 'flex-1 inline-flex justify-between space-x-1'),
   }
 
   return (

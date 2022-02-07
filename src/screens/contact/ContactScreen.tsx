@@ -20,7 +20,7 @@ import Header from '@/modules/ui/Header'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/contact/ContactScreen.module.css'
-import Content, { metadata } from '@@/content/pages/contact.mdx'
+import Content, { metadata } from '~/content/pages/contact.mdx'
 
 type ContentMetadata = {
   title: string

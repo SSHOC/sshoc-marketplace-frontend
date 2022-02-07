@@ -18,7 +18,6 @@ type ErrorScreenProps = {
  */
 export default function ErrorScreen({
   message = 'An unexpected error has occurred.',
-  statusCode = 500,
   className,
 }: ErrorScreenProps): JSX.Element {
   return (
@@ -32,13 +31,13 @@ export default function ErrorScreen({
             loading="lazy"
             layout="fill"
             quality={100}
-            className="-z-10 object-cover object-right-bottom"
+            className="object-cover object-right-bottom -z-10"
           />
-          <div className="py-12 space-y-12 relative h-full flex flex-col justify-center items-start">
+          <div className="relative flex flex-col items-start justify-center h-full py-12 space-y-12">
             <Title>{message}</Title>
             <p>Sorry for the inconvenience.</p>
             <Link href="/">
-              <a className="rounded text-white bg-secondary-700 py-3 px-12 inline-block hover:bg-secondary-500 transition-colors duration-150">
+              <a className="inline-block px-12 py-3 text-white transition-colors duration-150 rounded bg-secondary-700 hover:bg-secondary-500">
                 Go to Main page
               </a>
             </Link>

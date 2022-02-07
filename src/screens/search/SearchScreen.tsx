@@ -38,9 +38,7 @@ import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import Metadata from '@/modules/metadata/Metadata'
-import ItemSearchForm, {
-  ItemSearchComboBox,
-} from '@/modules/search/ItemSearchForm'
+import ItemSearchForm, { ItemSearchComboBox } from '@/modules/search/ItemSearchForm'
 import { Anchor } from '@/modules/ui/Anchor'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Checkbox from '@/modules/ui/Checkbox'
@@ -54,10 +52,10 @@ import ErrorScreen from '@/screens/error/ErrorScreen'
 import styles from '@/screens/search/SearchScreen.module.css'
 import { useDebounce } from '@/utils/useDebounce'
 import usePagination from '@/utils/usePagination'
-import { Svg as CloseIcon } from '@@/assets/icons/close.svg'
-import { Svg as LinkIcon } from '@@/assets/icons/link.svg'
-import { Svg as NoResultsIcon } from '@@/assets/icons/no-results.svg'
-import siteMetadata from '@@/config/metadata.json'
+import { Svg as CloseIcon } from '~/assets/icons/close.svg'
+import { Svg as LinkIcon } from '~/assets/icons/link.svg'
+import { Svg as NoResultsIcon } from '~/assets/icons/no-results.svg'
+import siteMetadata from '~/config/metadata.json'
 
 const MAX_DESCRIPTION_LENGTH = 280
 const MAX_METADATA_VALUES = 5
@@ -65,12 +63,19 @@ const MAX_METADATA_VALUES = 5
 const baseUrl = process.env.NEXT_PUBLIC_SSHOC_BASE_URL ?? siteMetadata.url
 
 /** lazy load markdown processor */
-const Plaintext = dynamic(() => import('@/modules/markdown/Plaintext'))
+const Plaintext = dynamic(() => {
+  return import('@/modules/markdown/Plaintext')
+})
 
 export default function SearchScreen(): JSX.Element {
   const router = useRouter()
   const query = sanitizeItemSearchQuery(router.query)
-  const { data: results, status, error, isFetching } = useSearchItems(query, {
+  const {
+    data: results,
+    status,
+    error,
+    isFetching,
+  } = useSearchItems(query, {
     keepPreviousData: true,
   })
   const formRef = useRef<HTMLFormElement>(null)
@@ -111,11 +116,7 @@ export default function SearchScreen(): JSX.Element {
           <aside className="block px-6 py-6 lg:hidden">
             <div className="flex flex-col p-2 space-y-2 border rounded">
               <SearchTermDialog />
-              <RefineSearchDialogTrigger
-                query={query}
-                results={results}
-                formRef={formRef}
-              />
+              <RefineSearchDialogTrigger query={query} results={results} formRef={formRef} />
               <div className="my-2.5 flex justify-end">
                 <Link href={{ query: {} }}>
                   <a className="text-primary-800">Clear filters</a>
@@ -141,11 +142,7 @@ export default function SearchScreen(): JSX.Element {
         </MainColumn>
         <SideColumn>
           <div className="pb-12">
-            <ItemSearchFilter
-              filter={query}
-              results={results}
-              formRef={formRef}
-            />
+            <ItemSearchFilter filter={query} results={results} formRef={formRef} />
           </div>
         </SideColumn>
         <MainColumn className="bg-gray-50">
@@ -186,10 +183,7 @@ function ClearButton() {
 /**
  * Main column layout.
  */
-function MainColumn({
-  children,
-  className,
-}: PropsWithChildren<{ className?: string }>) {
+function MainColumn({ children, className }: PropsWithChildren<{ className?: string }>) {
   const classNames = {
     section: cx('px-6 lg:pl-0', className, styles.mainColumn),
   }
@@ -212,8 +206,7 @@ function SideColumn({ children }: PropsWithChildren<unknown>) {
 function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
   const router = useRouter()
 
-  const currentSortOrder =
-    filter.order === undefined ? defaultItemSortOrder : filter.order[0]
+  const currentSortOrder = filter.order === undefined ? defaultItemSortOrder : filter.order[0]
 
   function onSubmit(order: Key) {
     const query = { ...filter }
@@ -232,7 +225,9 @@ function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
     'modified-on': 'last modification',
   }
 
-  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -241,11 +236,13 @@ function ItemSearchSortOrder({ filter }: { filter: ItemSearchQuery }) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -318,11 +315,7 @@ function ItemSearchPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -383,11 +376,7 @@ function ItemSearchLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -414,11 +403,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center pointer-events-none text-gray-550">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center pointer-events-none text-gray-550">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -451,11 +436,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center pointer-events-none text-gray-550">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center pointer-events-none text-gray-550">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -478,10 +459,7 @@ function ItemSearchFilter({
   results?: SearchItems.Response.Success
   formRef: Ref<HTMLFormElement>
 }) {
-  const [
-    detailedFilterList,
-    setDetailedFilterList,
-  ] = useState<ItemSearchFacet | null>(null)
+  const [detailedFilterList, setDetailedFilterList] = useState<ItemSearchFacet | null>(null)
 
   const filterLists = {
     categories: { label: 'Categories', values: results?.categories },
@@ -660,7 +638,9 @@ function ItemSearchFilterList({
   /** response shape is different for categories */
   if (
     name === 'categories' &&
-    Object.values(values).every((value) => value.count === 0)
+    Object.values(values).every((value) => {
+      return value.count === 0
+    })
   ) {
     return null
   }
@@ -698,7 +678,9 @@ function ItemSearchFilterList({
       })}
       {visibleFilterValues.size < allValues.length ? (
         <button
-          onClick={() => setDetailedFilterList(name)}
+          onClick={() => {
+            return setDetailedFilterList(name)
+          }}
           className="inline-flex justify-start py-2 transition-colors duration-150 text-primary-800 hover:text-primary-700"
         >
           More&hellip;
@@ -747,7 +729,9 @@ function ItemSearchFilterDetailedList({
       <header className="flex items-center justify-between py-6 pl-6 pr-4">
         <span className="font-medium uppercase">{label}</span>
         <button
-          onClick={() => setDetailedFilterList(null)}
+          onClick={() => {
+            return setDetailedFilterList(null)
+          }}
           aria-label="Close"
           className="p-2 rounded"
         >
@@ -808,12 +792,7 @@ function ItemSearchFilterValue({
   hidden?: boolean
 }) {
   return (
-    <div
-      className={cx(
-        'justify-between text-sm',
-        hidden === true ? 'hidden' : 'flex',
-      )}
-    >
+    <div className={cx('justify-between text-sm', hidden === true ? 'hidden' : 'flex')}>
       <Checkbox
         name={name}
         /** uncontrolled checkbox, since we rerender on every form `onChange` */
@@ -839,8 +818,7 @@ function ItemSearchResultsList({
 }) {
   if (status === 'loading') return <ItemSearchResultsLoading />
   const { items } = results ?? {}
-  if (items === undefined || items.length === 0)
-    return <ItemSearchResultsNotFound />
+  if (items === undefined || items.length === 0) return <ItemSearchResultsNotFound />
   return (
     <ul className="divide-y-4 divide-white">
       {items.map((item) => {
@@ -894,19 +872,23 @@ function ItemSearchResult({
 }: {
   item: Exclude<SearchItems.Response.Success['items'], undefined>[0]
 }) {
-  const allActivities = item.properties?.filter(
-    (property) => property.type?.code === 'activity',
-  )
+  const allActivities = item.properties?.filter((property) => {
+    return property.type?.code === 'activity'
+  })
   const activities = allActivities
     ?.slice(0, MAX_METADATA_VALUES)
-    ?.map((activity) => activity.concept?.label)
+    ?.map((activity) => {
+      return activity.concept?.label
+    })
     ?.join(', ')
-  const allKeywords = item.properties?.filter(
-    (property) => property.type?.code === 'keyword',
-  )
+  const allKeywords = item.properties?.filter((property) => {
+    return property.type?.code === 'keyword'
+  })
   const keywords = allKeywords
     ?.slice(0, MAX_METADATA_VALUES)
-    ?.map((keyword) => keyword.concept?.label)
+    ?.map((keyword) => {
+      return keyword.concept?.label
+    })
     ?.join(', ')
 
   const pathname = `/${item.category}/${item.persistentId}`
@@ -921,9 +903,7 @@ function ItemSearchResult({
             height="2.5em"
           />
           <Link href={{ pathname }}>
-            <a className="transition-colors duration-150 hover:text-primary-800">
-              {item.label}
-            </a>
+            <a className="transition-colors duration-150 hover:text-primary-800">{item.label}</a>
           </Link>
         </h3>
         <CopyToClipboardButton pathname={pathname} />
@@ -937,8 +917,7 @@ function ItemSearchResult({
             <dt>Activities:</dt>
             <dd>
               {activities}
-              {allActivities !== undefined &&
-              allActivities.length > MAX_METADATA_VALUES
+              {allActivities !== undefined && allActivities.length > MAX_METADATA_VALUES
                 ? '...'
                 : null}
             </dd>
@@ -949,10 +928,7 @@ function ItemSearchResult({
             <dt>Keywords:</dt>
             <dd>
               {keywords}
-              {allKeywords !== undefined &&
-              allKeywords.length > MAX_METADATA_VALUES
-                ? '...'
-                : null}
+              {allKeywords !== undefined && allKeywords.length > MAX_METADATA_VALUES ? '...' : null}
             </dd>
           </Fragment>
         ) : null}
@@ -1057,16 +1033,14 @@ function ActiveFilterValues({
                   onClick={() => {
                     const query = {
                       ...filter,
-                      [facet]: values.filter((v) => value !== v),
+                      [facet]: values.filter((v) => {
+                        return value !== v
+                      }),
                     }
                     router.push({ query })
                   }}
                 >
-                  <CloseIcon
-                    aria-label={`Remove ${value}`}
-                    width="1em"
-                    className="w-2 h-2"
-                  />
+                  <CloseIcon aria-label={`Remove ${value}`} width="1em" className="w-2 h-2" />
                 </button>
               </li>
             )
@@ -1102,19 +1076,13 @@ function RefineSearchDialogTrigger({
         leaveFrom="transform translate-x-0 opacity-100"
         leaveTo="transform translate-x-12 opacity-0"
       >
-        <Dialog
-          static
-          onClose={dialog.close}
-          className="fixed inset-0 z-10 overflow-y-auto"
-        >
+        <Dialog static onClose={dialog.close} className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             <div className="relative w-full max-w-xl bg-gray-100">
               <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
-                <Dialog.Title as={SubSectionTitle}>
-                  Refine your search
-                </Dialog.Title>
+                <Dialog.Title as={SubSectionTitle}>Refine your search</Dialog.Title>
                 <button onClick={dialog.close}>
                   <CloseIcon
                     aria-label="Close search filter dialog"
@@ -1125,11 +1093,7 @@ function RefineSearchDialogTrigger({
               </header>
 
               <div className="px-6 pb-12">
-                <ItemSearchFilter
-                  filter={query}
-                  results={results}
-                  formRef={formRef}
-                />
+                <ItemSearchFilter filter={query} results={results} formRef={formRef} />
               </div>
             </div>
           </div>
@@ -1159,22 +1123,14 @@ function SearchTermDialog() {
         leaveFrom="transform translate-x-0 opacity-100"
         leaveTo="transform translate-x-12 opacity-0"
       >
-        <Dialog
-          static
-          onClose={dialog.close}
-          className="fixed inset-0 z-10 overflow-y-auto"
-        >
+        <Dialog static onClose={dialog.close} className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
             <div className="relative w-full max-w-xl bg-gray-100">
               <header className="flex items-center justify-between px-4 py-3 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
                 <Dialog.Title as={SubSectionTitle}>Search</Dialog.Title>
                 <button {...buttonProps} ref={closeButtonRef}>
-                  <CloseIcon
-                    aria-label="Close search dialog"
-                    width="1em"
-                    className="w-5 h-5 m-5"
-                  />
+                  <CloseIcon aria-label="Close search dialog" width="1em" className="w-5 h-5 m-5" />
                 </button>
               </header>
               <div className="px-6 pb-12">

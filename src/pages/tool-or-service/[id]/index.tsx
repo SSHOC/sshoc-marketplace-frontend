@@ -22,9 +22,8 @@ export async function getServerSideProps(
   const { id } = sanitizeItemQueryParams(context.params)
 
   if (id === undefined) {
-    console.log(
-      `Invalid tool id provided: ${JSON.stringify(context.params?.id)}`,
-    )
+    // eslint-disable-next-line no-console
+    console.log(`Invalid tool id provided: ${JSON.stringify(context.params?.id)}`)
     return { notFound: true }
   }
 
@@ -32,6 +31,7 @@ export async function getServerSideProps(
     const tool = await getTool({ persistentId: id }, {})
     return { props: { tool } }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(`Failed to fetch tool ${id}: ${JSON.stringify(error)}`)
     return { notFound: true }
   }

@@ -17,9 +17,8 @@ export default function WorkflowEditScreen(): JSX.Element {
   const router = useRouter()
   const auth = useAuth()
 
-  const id = router.query.id as string | undefined
+  const id = router.query['id'] as string | undefined
   const workflow = useGetWorkflow(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     {},
     {
@@ -36,7 +35,7 @@ export default function WorkflowEditScreen(): JSX.Element {
       <Metadata noindex title="Edit workflow" />
       <GridLayout style={{ alignContent: 'stretch ' }}>
         <ContentColumn className="px-6 py-12 space-y-12">
-          {workflow.data === undefined || id == undefined ? (
+          {workflow.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

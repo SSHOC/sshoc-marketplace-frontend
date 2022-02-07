@@ -94,39 +94,41 @@ module.exports = {
         3.75: px(15),
       },
       /** @tailwindcss/typography plugin */
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            maxWidth: '',
-            color: theme('colors.gray.800'),
-            a: {
-              color: theme('colors.primary.800'),
-              '&:hover': {
-                color: theme('colors.primary.700'),
+      typography: (theme) => {
+        return {
+          DEFAULT: {
+            css: {
+              maxWidth: '',
+              color: theme('colors.gray.800'),
+              a: {
+                color: theme('colors.primary.800'),
+                '&:hover': {
+                  color: theme('colors.primary.700'),
+                },
+              },
+              h1: {
+                color: theme('colors.gray.800'),
+                fontWeight: '500',
+              },
+              h2: {
+                color: theme('colors.gray.800'),
+                fontWeight: '500',
+              },
+              h3: {
+                color: theme('colors.gray.800'),
+                fontWeight: '500',
+              },
+              h4: {
+                color: theme('colors.gray.800'),
+                fontWeight: '500',
+              },
+              '.grid img': {
+                marginTop: 0,
               },
             },
-            h1: {
-              color: theme('colors.gray.800'),
-              fontWeight: '500',
-            },
-            h2: {
-              color: theme('colors.gray.800'),
-              fontWeight: '500',
-            },
-            h3: {
-              color: theme('colors.gray.800'),
-              fontWeight: '500',
-            },
-            h4: {
-              color: theme('colors.gray.800'),
-              fontWeight: '500',
-            },
-            '.grid img': {
-              marginTop: 0,
-            },
           },
-        },
-      }),
+        }
+      },
       zIndex: {
         '-10': '-10',
       },

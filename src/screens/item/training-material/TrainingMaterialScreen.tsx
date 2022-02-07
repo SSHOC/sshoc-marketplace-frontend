@@ -28,8 +28,7 @@ export default function TrainingMaterialScreen({
     { token: auth.session?.accessToken },
   )
   /** backend does not specify required fields. should be safe here */
-  const trainingMaterial = (data ??
-    initialData) as DeepRequired<TrainingMaterialDto>
+  const trainingMaterial = (data ?? initialData) as DeepRequired<TrainingMaterialDto>
 
   const license = trainingMaterial.properties.find((property) => {
     return property.type.code === 'license'
@@ -47,18 +46,26 @@ export default function TrainingMaterialScreen({
             description: trainingMaterial.description,
             url: trainingMaterial.accessibleAt,
             about: trainingMaterial.properties
-              .filter((property) => property.type.code === 'keyword')
-              .map((property) => property.value),
+              .filter((property) => {
+                return property.type.code === 'keyword'
+              })
+              .map((property) => {
+                return property.value
+              }),
             license,
             version: trainingMaterial.version,
-            contributor: trainingMaterial.contributors.map(
-              (contributor) => contributor.actor.name,
-            ),
+            contributor: trainingMaterial.contributors.map((contributor) => {
+              return contributor.actor.name
+            }),
             dateCreated: trainingMaterial.dateCreated,
             dateModified: trainingMaterial.dateLastUpdated,
             inLanguage: trainingMaterial.properties
-              .filter((property) => property.type.code === 'language')
-              .map((property) => property.concept.label),
+              .filter((property) => {
+                return property.type.code === 'language'
+              })
+              .map((property) => {
+                return property.concept.label
+              }),
           }}
         />
       ) : null}

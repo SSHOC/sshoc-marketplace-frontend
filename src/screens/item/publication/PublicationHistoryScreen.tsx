@@ -17,13 +17,8 @@ import { ItemHistory } from '@/screens/item/ItemHistory'
 export default function PublicationHistoryScreen(): JSX.Element {
   const router = useRouter()
 
-  const id = router.query.id as string | undefined
-  const publication = useGetPublication(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    { persistentId: id! },
-    {},
-    { enabled: id != null },
-  )
+  const id = router.query['id'] as string | undefined
+  const publication = useGetPublication({ persistentId: id! }, {}, { enabled: id != null })
 
   return (
     <Fragment>
@@ -54,7 +49,7 @@ export default function PublicationHistoryScreen(): JSX.Element {
         </Header>
         <ContentColumn className="px-6 py-12 space-y-12">
           <Title>Publication version history</Title>
-          {publication.data === undefined || id == undefined ? (
+          {publication.data == null || id == null ? (
             <div className="flex flex-col items-center justify-center h-full">
               <ProgressSpinner />
             </div>

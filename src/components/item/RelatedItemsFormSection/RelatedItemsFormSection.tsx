@@ -15,7 +15,7 @@ import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { FormSelect } from '@/modules/form/components/FormSelect/FormSelect'
 import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface RelatedItemsFormSectionProps {
   initialValues?: any
@@ -26,9 +26,7 @@ export interface RelatedItemsFormSectionProps {
 /**
  * Form section for related items.
  */
-export function RelatedItemsFormSection(
-  props: RelatedItemsFormSectionProps,
-): JSX.Element {
+export function RelatedItemsFormSection(props: RelatedItemsFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
   const isDiffingEnabled = props.diff != null && props.diff.equal === false
   const diff = props.diff ?? {}
@@ -50,18 +48,18 @@ export function RelatedItemsFormSection(
         if (arrayRequiresReview === true) return null
 
         return (
-          <FormFieldAddButton onPress={() => onAdd()}>
+          <FormFieldAddButton
+            onPress={() => {
+              return onAdd()
+            }}
+          >
             Add related item
           </FormFieldAddButton>
         )
       }}
       isEnabled={isDiffingEnabled}
       wrapper={({ children }) => {
-        return (
-          <FormSection title={relatedItemsFieldArray.label}>
-            {children}
-          </FormSection>
-        )
+        return <FormSection title={relatedItemsFieldArray.label}>{children}</FormSection>
       }}
     >
       {({
@@ -125,11 +123,7 @@ export function RelatedItemsFormSection(
                       items={[relationTypeField.suggestedItem]}
                     >
                       {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
+                        return <Select.Item key={item.code}>{item.label}</Select.Item>
                       }}
                     </Select>
                   ) : null}
@@ -150,11 +144,7 @@ export function RelatedItemsFormSection(
                       items={[relationTypeField.approvedItem]}
                     >
                       {(item) => {
-                        return (
-                          <Select.Item key={item.code}>
-                            {item.label}
-                          </Select.Item>
-                        )
+                        return <Select.Item key={item.code}>{item.label}</Select.Item>
                       }}
                     </Select>
                   ) : null}
@@ -170,11 +160,7 @@ export function RelatedItemsFormSection(
                       style={{ flex: 1 }}
                     >
                       {(item) => {
-                        return (
-                          <ComboBox.Item key={item.persistentId}>
-                            {item.label}
-                          </ComboBox.Item>
-                        )
+                        return <ComboBox.Item key={item.persistentId}>{item.label}</ComboBox.Item>
                       }}
                     </ComboBox>
                   ) : null}
@@ -199,11 +185,7 @@ export function RelatedItemsFormSection(
                       items={[relatedItemField.approvedItem]}
                     >
                       {(item) => {
-                        return (
-                          <ComboBox.Item key={item.persistentId}>
-                            {item.label}
-                          </ComboBox.Item>
-                        )
+                        return <ComboBox.Item key={item.persistentId}>{item.label}</ComboBox.Item>
                       }}
                     </ComboBox>
                   ) : null}
@@ -228,10 +210,7 @@ export function RelatedItemsFormSection(
                   )
                 }
               >
-                <RelationTypeSelect
-                  name={relationTypeField.name}
-                  label={relationTypeField.label}
-                />
+                <RelationTypeSelect name={relationTypeField.name} label={relationTypeField.label} />
                 <RelatedItemComboBox
                   // key={refresh}
                   name={relatedItemField.name}
@@ -269,9 +248,9 @@ function RelationTypeSelect(props: RelationTypeSelectProps): JSX.Element {
       isLoading={relationTypes.isLoading}
       variant="form"
     >
-      {(item) => (
-        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
-      )}
+      {(item) => {
+        return <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      }}
     </FormSelect>
   )
 }
@@ -326,11 +305,9 @@ function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
       style={{ flex: 1 }}
       helpText={helpText.relatedItem}
     >
-      {(item) => (
-        <FormComboBox.Item key={item.persistentId}>
-          {item.label}
-        </FormComboBox.Item>
-      )}
+      {(item) => {
+        return <FormComboBox.Item key={item.persistentId}>{item.label}</FormComboBox.Item>
+      }}
     </FormComboBox>
   )
 }

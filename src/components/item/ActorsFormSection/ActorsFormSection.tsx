@@ -35,7 +35,7 @@ import { DiffFieldArray } from '@/modules/form/diff/DiffFieldArray'
 import { Form } from '@/modules/form/Form'
 import { FormFieldArray } from '@/modules/form/FormFieldArray'
 import { isEmail, isUrl } from '@/modules/form/validate'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface ActorsFormSectionProps {
   initialValues?: any
@@ -91,7 +91,11 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
           if (arrayRequiresReview === true) return null
 
           return (
-            <FormFieldAddButton onPress={() => onAdd()}>
+            <FormFieldAddButton
+              onPress={() => {
+                return onAdd()
+              }}
+            >
               Add actor
             </FormFieldAddButton>
           )
@@ -103,7 +107,11 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
               title={actorsFieldArray.label}
               actions={
                 arrayRequiresReview === true ? null : (
-                  <FormFieldAddButton onPress={() => openCreateNewDialog()}>
+                  <FormFieldAddButton
+                    onPress={() => {
+                      return openCreateNewDialog()
+                    }}
+                  >
                     Create new actor
                   </FormFieldAddButton>
                 )
@@ -159,9 +167,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                       onReject={() => {
                         /** YUCK! */
                         if (index < props.initialValues.contributors.length) {
-                          props.initialValues.contributors[
-                            index
-                          ] = approvedValue
+                          props.initialValues.contributors[index] = approvedValue
                         }
                         onReject()
                       }}
@@ -178,11 +184,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                         items={[actorRoleField.suggestedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -203,11 +205,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                         items={[actorRoleField.approvedItem]}
                       >
                         {(item) => {
-                          return (
-                            <Select.Item key={item.code}>
-                              {item.label}
-                            </Select.Item>
-                          )
+                          return <Select.Item key={item.code}>{item.label}</Select.Item>
                         }}
                       </Select>
                     ) : null}
@@ -272,14 +270,14 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                           onPress={() => {
                             onRemove()
                             /** YUCK! */
-                            if (
-                              Array.isArray(props.initialValues?.contributors)
-                            ) {
+                            if (Array.isArray(props.initialValues?.contributors)) {
                               // FIXME: pretty sure this will break when rejecting a suggested change
                               // unless we mutate initialValues in onReject.
                               // Still, very brittle.
                               props.initialValues.contributors.splice(index, 1)
-                              doRefresh((i) => i + 1)
+                              doRefresh((i) => {
+                                return i + 1
+                              })
                             }
                           }}
                           aria-label="Remove actor"
@@ -288,18 +286,13 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                     )
                   }
                 >
-                  <ActorRoleSelect
-                    name={actorRoleField.name}
-                    label={actorRoleField.label}
-                  />
+                  <ActorRoleSelect name={actorRoleField.name} label={actorRoleField.label} />
                   <ActorComboBox
                     // TODO: try make this a compound key of id+name
                     key={refresh}
                     name={actorField.name}
                     label={actorField.label}
-                    initialValue={
-                      props.initialValues?.contributors?.[index]?.actor
-                    }
+                    initialValue={props.initialValues?.contributors?.[index]?.actor}
                   />
                 </FormRecord>
               )}
@@ -308,10 +301,7 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
         }}
       </DiffFieldArray>
 
-      <CreateActorDialog
-        isOpen={showCreateNewDialog}
-        onDismiss={closeCreateNewDialog}
-      />
+      <CreateActorDialog isOpen={showCreateNewDialog} onDismiss={closeCreateNewDialog} />
       <EditActorDialog
         isOpen={showEditDialog && actorToEdit.id !== 0}
         onDismiss={closeEditDialog}
@@ -328,9 +318,9 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
           if (actor.id === actorToEdit.id) {
             const contributors = props.initialValues?.contributors
             if (Array.isArray(contributors)) {
-              const _actor = contributors.find(
-                (contributor) => contributor.actor.id === actor.id,
-              )?.actor
+              const _actor = contributors.find((contributor) => {
+                return contributor.actor.id === actor.id
+              })?.actor
               if (_actor != null) {
                 _actor.name = actor.name
               }
@@ -339,7 +329,9 @@ export function ActorsFormSection(props: ActorsFormSectionProps): JSX.Element {
                * Invalidating `searchActor` query alone will force new request, but would
                * not update the input text value.
                */
-              doRefresh((i) => i + 1)
+              doRefresh((i) => {
+                return i + 1
+              })
             }
           }
         }}
@@ -367,9 +359,9 @@ function ActorRoleSelect(props: ActorRoleSelectProps): JSX.Element {
       isLoading={actorRoles.isLoading}
       variant="form"
     >
-      {(item) => (
-        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
-      )}
+      {(item) => {
+        return <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      }}
     </FormSelect>
   )
 }
@@ -417,20 +409,24 @@ function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       style={{ flex: 1 }}
       helpText={helpText.actor}
     >
-      {(item) => (
-        <FormComboBox.Item textValue={item.name}>
-          <span>{item.name}</span>
-          {item.affiliations != null && item.affiliations.length > 0 ? (
-            <span className="ml-1.5 text-ui-sm text-gray-550">
-              (
-              {item.affiliations
-                .map((affiliation) => affiliation.name)
-                .join(', ')}
-              )
-            </span>
-          ) : null}
-        </FormComboBox.Item>
-      )}
+      {(item) => {
+        return (
+          <FormComboBox.Item textValue={item.name}>
+            <span>{item.name}</span>
+            {item.affiliations != null && item.affiliations.length > 0 ? (
+              <span className="ml-1.5 text-ui-sm text-gray-550">
+                (
+                {item.affiliations
+                  .map((affiliation) => {
+                    return affiliation.name
+                  })
+                  .join(', ')}
+                )
+              </span>
+            ) : null}
+          </FormComboBox.Item>
+        )
+      }}
     </FormComboBox>
   )
 }
@@ -457,22 +453,19 @@ function CreateActorDialog(props: CreateActorDialogProps) {
 
     const values = sanitizeActorFormValues(unsanitized)
 
-    return createActor.mutateAsync(
-      [values, { token: auth.session.accessToken }],
-      {
-        onSuccess() {
-          queryClient.invalidateQueries(['getActors'])
-          queryClient.invalidateQueries(['searchActors'])
-          toast.success('Sucessfully created actor.')
-        },
-        onError() {
-          toast.error('Failed to submit actor.')
-        },
-        onSettled() {
-          props.onDismiss()
-        },
+    return createActor.mutateAsync([values, { token: auth.session.accessToken }], {
+      onSuccess() {
+        queryClient.invalidateQueries(['getActors'])
+        queryClient.invalidateQueries(['searchActors'])
+        toast.success('Sucessfully created actor.')
       },
-    )
+      onError() {
+        toast.error('Failed to submit actor.')
+      },
+      onSettled() {
+        props.onDismiss()
+      },
+    })
   }
 
   return (
@@ -483,11 +476,7 @@ function CreateActorDialog(props: CreateActorDialogProps) {
       style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
       aria-label="Create new actor"
     >
-      <button
-        onClick={props.onDismiss}
-        className="self-end"
-        aria-label="Close dialog"
-      >
+      <button onClick={props.onDismiss} className="self-end" aria-label="Close dialog">
         <Icon icon={CloseIcon} className="" />
       </button>
       <section className="flex flex-col space-y-6">
@@ -537,14 +526,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
 
     if (values.externalIds != null) {
       values.externalIds.forEach((id, index) => {
-        if (
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id != null &&
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.identifierService?.code != null &&
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.identifier == null
-        ) {
+        if (id != null && id.identifierService?.code != null && id.identifier == null) {
           if (errors.externalIds == null) {
             errors.externalIds = []
           }
@@ -557,14 +539,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
 
     if (values.externalIds != null) {
       values.externalIds.forEach((id, index) => {
-        if (
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id != null &&
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.identifier != null &&
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          id.identifierService?.code == null
-        ) {
+        if (id != null && id.identifier != null && id.identifierService?.code == null) {
           if (errors.externalIds == null) {
             errors.externalIds = []
           }
@@ -579,11 +554,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
       {({ handleSubmit, pristine, invalid, submitting }) => {
         return (
           <form
@@ -594,13 +565,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
               e.stopPropagation()
             }}
           >
-            <FormTextField
-              name="name"
-              label="Name"
-              isRequired
-              variant="form"
-              style={{ flex: 1 }}
-            />
+            <FormTextField name="name" label="Name" isRequired variant="form" style={{ flex: 1 }} />
             <FormFieldArray name="externalIds">
               {({ fields }) => {
                 return (
@@ -631,25 +596,19 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
                         </FormRecord>
                       )
                     })}
-                    <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                    <FormFieldAddButton
+                      onPress={() => {
+                        return fields.push(undefined)
+                      }}
+                    >
                       {'Add external ID'}
                     </FormFieldAddButton>
                   </FormRecords>
                 )
               }}
             </FormFieldArray>
-            <FormTextField
-              name="email"
-              label="Email"
-              variant="form"
-              style={{ flex: 1 }}
-            />
-            <FormTextField
-              name="website"
-              label="Website"
-              variant="form"
-              style={{ flex: 1 }}
-            />
+            <FormTextField name="email" label="Email" variant="form" style={{ flex: 1 }} />
+            <FormTextField name="website" label="Website" variant="form" style={{ flex: 1 }} />
             <FormFieldArray name="affiliations">
               {({ fields }) => {
                 return (
@@ -667,14 +626,15 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
                             />
                           }
                         >
-                          <ActorComboBox
-                            name={`${name}.id`}
-                            label="Affiliation"
-                          />
+                          <ActorComboBox name={`${name}.id`} label="Affiliation" />
                         </FormRecord>
                       )
                     })}
-                    <FormFieldAddButton onPress={() => fields.push(undefined)}>
+                    <FormFieldAddButton
+                      onPress={() => {
+                        return fields.push(undefined)
+                      }}
+                    >
                       {'Add affiliation'}
                     </FormFieldAddButton>
                   </FormRecords>
@@ -685,11 +645,7 @@ export function CreateActorForm(props: CreateActorFormProps): JSX.Element {
               <Button variant="link" onPress={props.onDismiss}>
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="gradient"
-                isDisabled={submitting || isLoading}
-              >
+              <Button type="submit" variant="gradient" isDisabled={submitting || isLoading}>
                 {buttonLabel}
               </Button>
             </div>
@@ -724,24 +680,21 @@ function EditActorDialog(props: EditActorDialogProps) {
 
     const values = sanitizeActorFormValues(unsanitized)
 
-    return updateActor.mutateAsync(
-      [{ id }, values, { token: auth.session.accessToken }],
-      {
-        onSuccess(actor) {
-          queryClient.invalidateQueries(['getActors'])
-          queryClient.invalidateQueries(['searchActors'])
-          queryClient.invalidateQueries(['getActor', { id }])
-          toast.success('Sucessfully updated actor.')
-          props.onSuccess?.(actor)
-        },
-        onError() {
-          toast.error('Failed to update actor.')
-        },
-        onSettled() {
-          props.onDismiss()
-        },
+    return updateActor.mutateAsync([{ id }, values, { token: auth.session.accessToken }], {
+      onSuccess(actor) {
+        queryClient.invalidateQueries(['getActors'])
+        queryClient.invalidateQueries(['searchActors'])
+        queryClient.invalidateQueries(['getActor', { id }])
+        toast.success('Sucessfully updated actor.')
+        props.onSuccess?.(actor)
       },
-    )
+      onError() {
+        toast.error('Failed to update actor.')
+      },
+      onSettled() {
+        props.onDismiss()
+      },
+    })
   }
 
   return (
@@ -752,11 +705,7 @@ function EditActorDialog(props: EditActorDialogProps) {
       style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
       aria-label="Edit actor"
     >
-      <button
-        onClick={props.onDismiss}
-        className="self-end"
-        aria-label="Close dialog"
-      >
+      <button onClick={props.onDismiss} className="self-end" aria-label="Close dialog">
         <Icon icon={CloseIcon} className="" />
       </button>
       <section className="flex flex-col space-y-6">
@@ -774,13 +723,14 @@ function EditActorDialog(props: EditActorDialogProps) {
   )
 }
 
-export function sanitizeActorFormValues(
-  values: ActorFormValues,
-): ActorFormValues {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.affiliations = values.affiliations?.filter((v) => v != null)
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  values.externalIds = values.externalIds?.filter((v) => v != null)
+export function sanitizeActorFormValues(values: ActorFormValues): ActorFormValues {
+  values.affiliations = values.affiliations?.filter((v) => {
+    return v != null
+  })
+
+  values.externalIds = values.externalIds?.filter((v) => {
+    return v != null
+  })
 
   return values
 }
@@ -793,9 +743,7 @@ export interface ExternalIdServiceSelectProps {
 /**
  * External actor ID.
  */
-function ExternalIdServiceSelect(
-  props: ExternalIdServiceSelectProps,
-): JSX.Element {
+function ExternalIdServiceSelect(props: ExternalIdServiceSelectProps): JSX.Element {
   const sources = useGetAllActorSources()
 
   return (
@@ -806,9 +754,9 @@ function ExternalIdServiceSelect(
       isLoading={sources.isLoading}
       variant="form"
     >
-      {(item) => (
-        <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
-      )}
+      {(item) => {
+        return <FormSelect.Item key={item.code}>{item.label}</FormSelect.Item>
+      }}
     </FormSelect>
   )
 }

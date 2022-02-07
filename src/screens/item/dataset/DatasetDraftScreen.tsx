@@ -19,7 +19,6 @@ export default function DatasetDraftScreen(): JSX.Element {
   const id = useQueryParam('id', false)
 
   const dataset = useGetDataset(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id! },
     { draft: true },
     {

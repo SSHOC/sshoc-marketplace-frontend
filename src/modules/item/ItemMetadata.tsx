@@ -11,20 +11,24 @@ type Item = Items[number]
 /**
  * Item metadata.
  */
-export default function ItemMetadata({
-  item,
-}: {
-  item: Item
-}): JSX.Element | null {
+export default function ItemMetadata({ item }: { item: Item }): JSX.Element | null {
   const activities = item.properties
-    ?.filter((property) => property.type?.code === 'activity')
+    ?.filter((property) => {
+      return property.type?.code === 'activity'
+    })
     ?.slice(0, MAX_METADATA_VALUES)
-    ?.map((activity) => activity.concept?.label)
+    ?.map((activity) => {
+      return activity.concept?.label
+    })
     ?.join(', ')
   const keywords = item.properties
-    ?.filter((property) => property.type?.code === 'keyword')
+    ?.filter((property) => {
+      return property.type?.code === 'keyword'
+    })
     ?.slice(0, MAX_METADATA_VALUES)
-    ?.map((keyword) => keyword.concept?.label)
+    ?.map((keyword) => {
+      return keyword.concept?.label
+    })
     ?.join(', ')
 
   if (

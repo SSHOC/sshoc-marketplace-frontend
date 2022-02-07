@@ -8,12 +8,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import type { GetSources, SourceCore, SourceDto } from '@/api/sshoc'
-import {
-  useCreateSource,
-  useDeleteSource,
-  useGetSources,
-  useUpdateSource,
-} from '@/api/sshoc'
+import { useCreateSource, useDeleteSource, useGetSources, useUpdateSource } from '@/api/sshoc'
 import { Button } from '@/elements/Button/Button'
 import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
@@ -22,7 +17,6 @@ import { ProgressSpinner } from '@/elements/ProgressSpinner/ProgressSpinner'
 import { Select } from '@/elements/Select/Select'
 import { useToast } from '@/elements/Toast/useToast'
 import { useDialogState } from '@/lib/hooks/useDialogState'
-import { useQueryParam } from '@/lib/hooks/useQueryParam'
 import { useAuth } from '@/modules/auth/AuthContext'
 import ProtectedView from '@/modules/auth/ProtectedView'
 import { useErrorHandlers } from '@/modules/error/useErrorHandlers'
@@ -86,11 +80,8 @@ export default function SourcesScreen(): JSX.Element {
   return (
     <Fragment>
       <Metadata noindex title="Sources" />
-      <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+      <GridLayout className={styles['layout']}>
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -102,15 +93,12 @@ export default function SourcesScreen(): JSX.Element {
             ]}
           />
         </Header>
-        <ContentColumn className={cx('px-6 py-12 space-y-12', styles.content)}>
+        <ContentColumn className={cx('px-6 py-12 space-y-12', styles['content'])}>
           <div className="space-y-2 sm:space-y-0 sm:flex sm:justify-between">
             <Title>
               Sources
               {sources.data != null ? (
-                <span className="text-xl font-normal">
-                  {' '}
-                  ({sources.data.hits})
-                </span>
+                <span className="text-xl font-normal"> ({sources.data.hits})</span>
               ) : null}
             </Title>
             <AddSourceButton />
@@ -161,9 +149,7 @@ function Source(props: SourceProps) {
     <div className="p-4 space-y-4 text-xs border border-gray-200 rounded bg-gray-75">
       <div className="flex items-center justify-between space-x-2">
         <h2>
-          <span className="text-base font-bold transition text-primary-750">
-            {source.label}
-          </span>
+          <span className="text-base font-bold transition text-primary-750">{source.label}</span>
         </h2>
         {source.lastHarvestedDate != null ? (
           <div className="space-x-1.5 flex-shrink-0">
@@ -188,7 +174,7 @@ function Source(props: SourceProps) {
         </div>
         <div className="flex space-x-4 text-sm text-primary-750">
           <ProtectedView roles={['administrator']}>
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+            {}
             <DeleteSourceButton id={source.id!} />
           </ProtectedView>
           <EditSourceButton source={source} />
@@ -233,9 +219,7 @@ function ItemSortOrder(props: ItemSortOrderProps) {
   const router = useRouter()
 
   const currentSortOrder =
-    filter.order === undefined
-      ? defaultItemSortOrder
-      : (filter.order as ItemSortOrder)
+    filter.order === undefined ? defaultItemSortOrder : (filter.order as ItemSortOrder)
 
   function onSubmit(order: Key) {
     const query = { ...filter }
@@ -253,7 +237,9 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     date: 'last harvest date',
   }
 
-  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -262,11 +248,13 @@ function ItemSortOrder(props: ItemSortOrderProps) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -380,11 +368,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -445,11 +429,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -476,11 +456,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -513,11 +489,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -533,11 +505,11 @@ function sanitizeQuery(params?: ParsedUrlQuery): GetSources.QueryParameters {
 
   const sanitized = []
 
-  if (params.q != null && params.q.length > 0) {
+  if (params['q'] != null && params.q.length > 0) {
     sanitized.push(['q', params.q])
   }
 
-  if (params.order !== undefined) {
+  if (params['order'] !== undefined) {
     const order = ensureScalar(params.order)
     if (itemSortOrders.includes(order as ItemSortOrder)) {
       sanitized.push(['order', order])
@@ -655,12 +627,8 @@ function AddSourceForm(props: AddSourceFormProps) {
       errors.urlTemplate = 'URL Template is required.'
     }
 
-    if (
-      values.urlTemplate !== undefined &&
-      !values.urlTemplate.includes('{source-item-id}')
-    ) {
-      errors.urlTemplate =
-        'URL Template must include the substring "{source-item-id}".'
+    if (values.urlTemplate !== undefined && !values.urlTemplate.includes('{source-item-id}')) {
+      errors.urlTemplate = 'URL Template must include the substring "{source-item-id}".'
     }
 
     if (values.urlTemplate !== undefined && !isUrl(values.urlTemplate)) {
@@ -671,18 +639,10 @@ function AddSourceForm(props: AddSourceFormProps) {
   }
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      validate={onValidate}
-      initialValues={initialValues}
-    >
-      {({ handleSubmit, pristine, invalid, submitting }) => {
+    <Form onSubmit={onSubmit} validate={onValidate} initialValues={initialValues}>
+      {({ handleSubmit, submitting }) => {
         return (
-          <form
-            noValidate
-            className="flex flex-col space-y-6"
-            onSubmit={handleSubmit}
-          >
+          <form noValidate className="flex flex-col space-y-6" onSubmit={handleSubmit}>
             <FormTextField
               style={{ flex: 1 }}
               variant="form"
@@ -690,13 +650,7 @@ function AddSourceForm(props: AddSourceFormProps) {
               label="Label"
               isRequired
             />
-            <FormTextField
-              style={{ flex: 1 }}
-              variant="form"
-              name="url"
-              label="URL"
-              isRequired
-            />
+            <FormTextField style={{ flex: 1 }} variant="form" name="url" label="URL" isRequired />
             <FormTextField
               style={{ flex: 1 }}
               variant="form"
@@ -708,11 +662,7 @@ function AddSourceForm(props: AddSourceFormProps) {
               <Button variant="link" onPress={props.onDismiss}>
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="gradient"
-                isDisabled={submitting || isLoading}
-              >
+              <Button type="submit" variant="gradient" isDisabled={submitting || isLoading}>
                 {buttonLabel}
               </Button>
             </div>
@@ -756,12 +706,7 @@ function EditSourceButton(props: EditSourceButtonProps) {
   })
 
   function onSubmit(source: SourceCore) {
-    editSource.mutate([
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      { id: props.source.id! },
-      source,
-      { token: auth.session?.accessToken },
-    ])
+    editSource.mutate([{ id: props.source.id! }, source, { token: auth.session?.accessToken }])
   }
 
   return (

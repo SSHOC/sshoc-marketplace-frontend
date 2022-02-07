@@ -44,13 +44,17 @@ export function DiffField(props: DiffFieldProps): JSX.Element {
 
   function onApprove() {
     /** Nothing to do, form is already populated with suggested values as initial values. */
-    setStatus((status) => ({ ...status, isReviewed: true }))
+    setStatus((status) => {
+      return { ...status, isReviewed: true }
+    })
     props.onApprove?.()
   }
 
   function onReject() {
     form.change(name, approvedValue)
-    setStatus((status) => ({ ...status, isReviewed: true }))
+    setStatus((status) => {
+      return { ...status, isReviewed: true }
+    })
     props.onReject?.()
   }
 
@@ -59,27 +63,23 @@ export function DiffField(props: DiffFieldProps): JSX.Element {
     ...status,
     onApprove,
     onReject,
-    onRemove: () => null,
+    onRemove: () => {
+      return null
+    },
     index: -1,
   }
 
   return typeof props.children === 'function' ? (
     props.children(state)
   ) : (
-    <DiffFieldStateContext.Provider value={state}>
-      {props.children}
-    </DiffFieldStateContext.Provider>
+    <DiffFieldStateContext.Provider value={state}>{props.children}</DiffFieldStateContext.Provider>
   )
 }
 
 /**
  * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/152#note_565636
  */
-function getStatus(
-  approvedValue: unknown,
-  suggestedValue: unknown,
-  name: string,
-): FieldStatus {
+function getStatus(approvedValue: unknown, suggestedValue: unknown, name: string): FieldStatus {
   if (name.endsWith('version') || name.endsWith('sourceItemId')) {
     if (suggestedValue === 'unaltered') {
       return 'unchanged'

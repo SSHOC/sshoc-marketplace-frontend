@@ -5,7 +5,7 @@ import { ItemForm } from '@/components/item/WorkflowCreateForm/WorkflowCreateFor
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
-import forms from '@@/config/forms.json'
+import forms from '~/config/forms.json'
 
 /**
  * Create workflow screen.

@@ -23,10 +23,7 @@ export type ItemSearchResults = Required<SearchItems.Response.Success>
 /**
  * Sort order for item search results.
  */
-export type ItemSortOrder = Exclude<
-  SearchItems.QueryParameters['order'],
-  undefined
->[0]
+export type ItemSortOrder = Exclude<SearchItems.QueryParameters['order'], undefined>[0]
 
 /**
  * Item category.
@@ -36,7 +33,7 @@ export type ItemCategory = Exclude<ItemBasicDto['category'], undefined>
 /**
  * item search query parameters.
  */
-export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
+export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'd' | 'f'> & {
   'f.activity'?: Array<string>
   'f.keyword'?: Array<string>
   'f.source'?: Array<string>
@@ -53,11 +50,7 @@ export type ItemSearchQuery = Omit<SearchItems.QueryParameters, 'f' | 'd'> & {
 /**
  * Item search facet.
  */
-export type ItemSearchFacet =
-  | 'categories'
-  | 'f.activity'
-  | 'f.keyword'
-  | 'f.source'
+export type ItemSearchFacet = 'categories' | 'f.activity' | 'f.keyword' | 'f.source'
 
 /**
  * Item search facet value.
@@ -74,9 +67,4 @@ export type ISODateString = string
 /**
  * Item details.
  */
-export type Item =
-  | DatasetDto
-  | PublicationDto
-  | ToolDto
-  | TrainingMaterialDto
-  | WorkflowDto
+export type Item = DatasetDto | PublicationDto | ToolDto | TrainingMaterialDto | WorkflowDto

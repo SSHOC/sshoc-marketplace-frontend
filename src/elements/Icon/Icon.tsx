@@ -10,7 +10,7 @@ export interface IconProps {
   'aria-label'?: string
   /** @default true */
   'aria-hidden'?: boolean
-  height?: string | number
+  height?: number | string
   title?: string
 }
 

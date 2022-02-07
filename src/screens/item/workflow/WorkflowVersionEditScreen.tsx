@@ -28,11 +28,9 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
   const id = useQueryParam('id', false)
   const versionId = useQueryParam('versionId', false, Number)
   const workflow = useGetWorkflowVersion(
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     { persistentId: id!, versionId: versionId! },
     {
-      enabled:
-        id != null && versionId != null && auth.session?.accessToken != null,
+      enabled: id != null && versionId != null && auth.session?.accessToken != null,
       onError(error) {
         toast.error('Failed to fetch workflow version')
 
@@ -73,9 +71,7 @@ export default function WorkflowVersionEditScreen(): JSX.Element {
           id == null ||
           (isReview && diff.data == null && diff.error == null) ||
           // when there is no approved version yet, the diff endpoint will return 404
-          (isReview &&
-            diff.error instanceof HttpError &&
-            diff.error.statusCode !== 404) ? (
+          (isReview && diff.error instanceof HttpError && diff.error.statusCode !== 404) ? (
             <div className="flex flex-col items-center justify-center">
               <ProgressSpinner />
             </div>

@@ -13,7 +13,7 @@ export interface PopoverProps extends OverlayProps {
   isDismissable?: boolean
   shouldCloseOnBlur?: boolean
   /** @default "default" */
-  variant?: 'default' | 'listbox' | 'combobox'
+  variant?: 'combobox' | 'default' | 'listbox'
 }
 
 /**
@@ -22,12 +22,7 @@ export interface PopoverProps extends OverlayProps {
  * @private
  */
 export function Popover(props: PopoverProps): JSX.Element | null {
-  const {
-    onClose,
-    isOpen,
-    shouldCloseOnBlur = true,
-    isDismissable = true,
-  } = props
+  const { onClose, isOpen, shouldCloseOnBlur = true, isDismissable = true } = props
 
   const externalRef = props.popoverRef
   const internalRef = useRef<HTMLDivElement>(null)
@@ -47,11 +42,7 @@ export function Popover(props: PopoverProps): JSX.Element | null {
   const styles = {
     overlay: cx(
       'absolute z-20 top-full min-w-full',
-      variant === 'listbox'
-        ? 'mt-1'
-        : variant === 'combobox'
-        ? 'mt-1'
-        : 'right-0',
+      variant === 'listbox' ? 'mt-1' : variant === 'combobox' ? 'mt-1' : 'right-0',
     ),
   }
 

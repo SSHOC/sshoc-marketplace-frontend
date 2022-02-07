@@ -17,7 +17,9 @@ export function useDialogState(): {
       setIsOpen(false)
     },
     toggle() {
-      setIsOpen((isOpen) => !isOpen)
+      setIsOpen((isOpen) => {
+        return !isOpen
+      })
     },
   }
 }

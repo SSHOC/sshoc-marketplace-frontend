@@ -14,7 +14,7 @@ import { FormSection } from '@/modules/form/components/FormSection/FormSection'
 import { DiffControls } from '@/modules/form/diff/DiffControls'
 import { DiffField } from '@/modules/form/diff/DiffField'
 import { FormField } from '@/modules/form/FormField'
-import helpText from '@@/config/form-helptext.json'
+import helpText from '~/config/form-helptext.json'
 
 export interface ThumbnailFormSectionProps {
   initialValues?: any
@@ -25,9 +25,7 @@ export interface ThumbnailFormSectionProps {
 /**
  * Form section for choosing item thumbnail.
  */
-export function ThumbnailFormSection(
-  props: ThumbnailFormSectionProps,
-): JSX.Element {
+export function ThumbnailFormSection(props: ThumbnailFormSectionProps): JSX.Element {
   const prefix = props.prefix ?? ''
   const isDiffingEnabled = props.diff != null && props.diff.equal === false
   const diff = props.diff ?? {}
@@ -51,26 +49,14 @@ export function ThumbnailFormSection(
         suggestedValue={thumbnailField.suggestedValue}
         isEnabled={isDiffingEnabled}
       >
-        {({
-          name,
-          isReviewed,
-          status,
-          onApprove,
-          onReject,
-          approvedValue,
-          suggestedValue,
-        }) => {
+        {({ name, isReviewed, status, onApprove, onReject, approvedValue, suggestedValue }) => {
           const requiresReview = status !== 'unchanged' && !isReviewed
 
           return (
             <Fragment>
               {requiresReview ? (
                 <div className="py-2">
-                  <DiffControls
-                    status={status}
-                    onApprove={onApprove}
-                    onReject={onReject}
-                  />
+                  <DiffControls status={status} onApprove={onApprove} onReject={onReject} />
                   <Thumbnail
                     media={(suggestedValue as any)?.info}
                     caption={(suggestedValue as any)?.caption}
@@ -107,13 +93,8 @@ export function ThumbnailFormSection(
                             isOpen={addThumbnailDialog.isOpen}
                             onDismiss={addThumbnailDialog.close}
                             onSuccess={(info) => {
-                              if (
-                                info.category !== 'image' ||
-                                info.hasThumbnail !== true
-                              ) {
-                                throw new MediaError(
-                                  'A thumbnail must be an image.',
-                                )
+                              if (info.category !== 'image' || info.hasThumbnail !== true) {
+                                throw new MediaError('A thumbnail must be an image.')
                               }
                               input.onChange({ info })
                             }}
@@ -122,11 +103,11 @@ export function ThumbnailFormSection(
                           <FormField name={`${prefix}media`}>
                             {({ input: media }) => {
                               const images = Array.isArray(media.value)
-                                ? media.value.filter(
-                                    (m: { info?: MediaDetails }) =>
-                                      m.info?.category === 'image' &&
-                                      m.info.hasThumbnail === true,
-                                  )
+                                ? media.value.filter((m: { info?: MediaDetails }) => {
+                                    return (
+                                      m.info?.category === 'image' && m.info.hasThumbnail === true
+                                    )
+                                  })
                                 : []
                               return (
                                 <Fragment>
@@ -179,11 +160,7 @@ function AddThumbnailDialog(props: AddThumbnailDialogProps) {
       className="flex flex-col w-full max-w-screen-lg px-32 py-16 mx-auto bg-white rounded shadow-lg"
       style={{ width: '60vw', marginTop: '10vh', marginBottom: '10vh' }}
     >
-      <button
-        onClick={props.onDismiss}
-        className="self-end"
-        aria-label="Close dialog"
-      >
+      <button onClick={props.onDismiss} className="self-end" aria-label="Close dialog">
         <Icon icon={CloseIcon} className="" />
       </button>
       <section className="flex flex-col space-y-6">
@@ -251,7 +228,12 @@ function ChooseThumbnailForm(props: ChooseThumbnailFormProps) {
         {props.images.map((image) => {
           return (
             <li key={image.info.mediaId}>
-              <button type="button" onClick={() => onSubmit(image)}>
+              <button
+                type="button"
+                onClick={() => {
+                  return onSubmit(image)
+                }}
+              >
                 <Thumbnail media={image.info} caption={image.caption} />
               </button>
             </li>

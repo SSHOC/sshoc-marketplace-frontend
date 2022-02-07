@@ -53,11 +53,13 @@ import styles from '@/screens/item/ItemLayout.module.css'
 import { formatDate } from '@/utils/formatDate'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import type { RequiredFields } from '@/utils/ts/object'
-import { Svg as UrlIcon } from '@@/assets/icons/url.svg'
-import { Svg as OrcidIcon } from '@@/public/assets/images/orcid.svg'
+import { Svg as UrlIcon } from '~/assets/icons/url.svg'
+import { Svg as OrcidIcon } from '~/public/assets/images/orcid.svg'
 
 /** lazy load markdown processor */
-const Markdown = dynamic(() => import('@/modules/markdown/Markdown'))
+const Markdown = dynamic(() => {
+  return import('@/modules/markdown/Markdown')
+})
 
 type ItemCategory = Exclude<ItemCategoryWithStep, 'step'>
 type ItemProperties = Exclude<Item['properties'], undefined>
@@ -79,7 +81,7 @@ export default function ItemLayout({
   /** we can assume these fields to be present */
   const item = _item as RequiredFields<
     typeof _item,
-    'persistentId' | 'id' | 'label' | 'category' | 'accessibleAt'
+    'accessibleAt' | 'category' | 'id' | 'label' | 'persistentId'
   >
   const query: ItemSearchQuery = {
     categories: [item.category],
@@ -115,10 +117,7 @@ export default function ItemLayout({
         <VStack className={cx('space-y-12 px-6 py-6', styles.mainColumn)}>
           <HStack className="items-start justify-between space-x-4">
             <div className="flex items-center justify-between space-x-4">
-              <ItemThumbnail
-                category={item.category as ItemCategory}
-                thumbnail={item.thumbnail}
-              />
+              <ItemThumbnail category={item.category as ItemCategory} thumbnail={item.thumbnail} />
               <Title>{item.label}</Title>
             </div>
           </HStack>
@@ -201,13 +200,7 @@ function EditItemButton({
 
   if (status !== 'approved') return null
 
-  return (
-    <EditItemMenuButton
-      category={category}
-      persistentId={persistentId}
-      id={id}
-    />
-  )
+  return <EditItemMenuButton category={category} persistentId={persistentId} id={id} />
 }
 
 function getItem({ category }: { category: ItemCategory }) {
@@ -262,7 +255,7 @@ function EditItemMenuButton({
   ].filter(Boolean) as Array<{ label: string; pathname: string }>
 
   if (pathnames.length === 1) {
-    const { pathname } = pathnames[0]
+    const { pathname } = pathnames[0]!
     return (
       <Link href={{ pathname }}>
         <a className="w-full px-6 py-3 text-lg text-center text-white transition rounded bg-primary-750 hover:bg-secondary-600">
@@ -274,27 +267,31 @@ function EditItemMenuButton({
 
   return (
     <Menu>
-      {({ open }) => (
-        <div className="relative block w-full">
-          <Menu.Button className="inline-flex items-center justify-between w-full py-3 text-lg text-white transition-colors duration-150 rounded bg-primary-750 hover:bg-secondary-600">
-            <span className="px-8 text-left">Edit</span>
-            <span className="px-2 border-l border-primary-500">
-              <Triangle />
-            </span>
-          </Menu.Button>
-          <Menu.Items className="absolute z-10 w-full mt-1 overflow-hidden bg-white border rounded shadow-md">
-            {pathnames.map(({ pathname, label }) => (
-              <Menu.Item key={pathname} as={Fragment}>
-                <Link href={{ pathname }}>
-                  <a className="block px-6 py-6 truncate transition-colors duration-150 text-primary-500 hover:bg-gray-50">
-                    {label}
-                  </a>
-                </Link>
-              </Menu.Item>
-            ))}
-          </Menu.Items>
-        </div>
-      )}
+      {() => {
+        return (
+          <div className="relative block w-full">
+            <Menu.Button className="inline-flex items-center justify-between w-full py-3 text-lg text-white transition-colors duration-150 rounded bg-primary-750 hover:bg-secondary-600">
+              <span className="px-8 text-left">Edit</span>
+              <span className="px-2 border-l border-primary-500">
+                <Triangle />
+              </span>
+            </Menu.Button>
+            <Menu.Items className="absolute z-10 w-full mt-1 overflow-hidden bg-white border rounded shadow-md">
+              {pathnames.map(({ pathname, label }) => {
+                return (
+                  <Menu.Item key={pathname} as={Fragment}>
+                    <Link href={{ pathname }}>
+                      <a className="block px-6 py-6 truncate transition-colors duration-150 text-primary-500 hover:bg-gray-50">
+                        {label}
+                      </a>
+                    </Link>
+                  </Menu.Item>
+                )
+              })}
+            </Menu.Items>
+          </div>
+        )
+      }}
     </Menu>
   )
 }
@@ -305,7 +302,6 @@ function EditItemMenuButton({
 function ItemHistoryButton({
   category,
   persistentId,
-  id,
   approved,
 }: {
   category: ItemCategory
@@ -394,7 +390,7 @@ function DeleteItemButton({
 }
 
 function SideColumn({ children }: PropsWithChildren<unknown>) {
-  return <section className={styles.sideColumn}>{children}</section>
+  return <section className={styles['sideColumn']}>{children}</section>
 }
 
 /**
@@ -428,11 +424,7 @@ function ItemThumbnail({
 /**
  * Description
  */
-function ItemDescription({
-  description,
-}: {
-  description: Item['description']
-}) {
+function ItemDescription({ description }: { description: Item['description'] }) {
   if (description === undefined) return null
   return (
     <div className="leading-8">
@@ -461,32 +453,34 @@ function AccessibleAtLinks({
   if (accessibleAt.length > 1) {
     return (
       <Menu>
-        {({ open }) => (
-          <div className="relative inline-block w-full mb-16">
-            <Menu.Button
-              className={cx(buttonClassNames, 'inline-flex justify-between')}
-            >
-              <span className="px-4 text-left">Go to {label}</span>
-              <span className="pl-3 pr-1 border-l border-primary-500">
-                <Triangle />
-              </span>
-            </Menu.Button>
-            <Menu.Items className="absolute z-10 w-full mt-1 overflow-hidden bg-white border rounded shadow-md">
-              {accessibleAt.map((href) => (
-                <Menu.Item key={href} as={Fragment}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-8 py-6 truncate transition-colors duration-150 text-primary-500 hover:bg-gray-50"
-                  >
-                    {href}
-                  </a>
-                </Menu.Item>
-              ))}
-            </Menu.Items>
-          </div>
-        )}
+        {() => {
+          return (
+            <div className="relative inline-block w-full mb-16">
+              <Menu.Button className={cx(buttonClassNames, 'inline-flex justify-between')}>
+                <span className="px-4 text-left">Go to {label}</span>
+                <span className="pl-3 pr-1 border-l border-primary-500">
+                  <Triangle />
+                </span>
+              </Menu.Button>
+              <Menu.Items className="absolute z-10 w-full mt-1 overflow-hidden bg-white border rounded shadow-md">
+                {accessibleAt.map((href) => {
+                  return (
+                    <Menu.Item key={href} as={Fragment}>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-8 py-6 truncate transition-colors duration-150 text-primary-500 hover:bg-gray-50"
+                      >
+                        {href}
+                      </a>
+                    </Menu.Item>
+                  )
+                })}
+              </Menu.Items>
+            </div>
+          )
+        }}
       </Menu>
     )
   }
@@ -513,16 +507,13 @@ function ItemMedia({ media }: { media: Item['media'] }) {
 
   if (media === undefined || media.length === 0) return null
 
-  const current = media[index]
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const current = media[index]!
+
   const mediaId = current.info!.mediaId!
-  const currentMediaUrl =
-    current.info?.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
+  const currentMediaUrl = current.info?.location?.sourceUrl ?? getMediaFileUrl({ mediaId })
   const currentMediaCategory = current.info?.category
   const currentMediaCaption = current.caption
-  const currentMediaConcept = current.concept
-    ? `(${current.concept.label})`
-    : undefined
+  const currentMediaConcept = current.concept ? `(${current.concept.label})` : undefined
 
   return (
     <section>
@@ -541,10 +532,7 @@ function ItemMedia({ media }: { media: Item['media'] }) {
             />
           ) : currentMediaCategory === 'video' ? (
             // eslint-disable-next-line jsx-a11y/media-has-caption
-            <video
-              src={currentMediaUrl}
-              className="object-contain w-full h-full"
-            />
+            <video src={currentMediaUrl} className="object-contain w-full h-full" />
           ) : currentMediaCategory === 'embed' ? (
             <iframe
               src={currentMediaUrl}
@@ -556,19 +544,12 @@ function ItemMedia({ media }: { media: Item['media'] }) {
           ) : (
             <div className="grid place-items-center">
               <a href={currentMediaUrl} download rel="noopener noreferrer">
-                Download{' '}
-                {current.info?.filename ??
-                  current.info?.location?.sourceUrl ??
-                  'document'}
+                Download {current.info?.filename ?? current.info?.location?.sourceUrl ?? 'document'}
               </a>
             </div>
           )}
           <small className="mt-2.5">
-            <span>
-              {[currentMediaCaption, currentMediaConcept]
-                .filter(Boolean)
-                .join(' ')}
-            </span>
+            <span>{[currentMediaCaption, currentMediaConcept].filter(Boolean).join(' ')}</span>
             <span>&nbsp;</span>
           </small>
         </div>
@@ -578,27 +559,18 @@ function ItemMedia({ media }: { media: Item['media'] }) {
           aria-label="Previous image"
           className={cx(
             'inline-flex items-center justify-center px-6',
-            media.length === 1
-              ? 'text-gray-550 pointer-events-none'
-              : 'text-primary-800',
+            media.length === 1 ? 'text-gray-550 pointer-events-none' : 'text-primary-800',
           )}
           disabled={media.length === 1}
           onClick={() => {
-            setIndex((index) => (index > 0 ? index - 1 : media.length - 1))
+            setIndex((index) => {
+              return index > 0 ? index - 1 : media.length - 1
+            })
           }}
         >
-          <svg
-            aria-hidden
-            viewBox="0 0 7.599 14.043"
-            fill={'currentColor'}
-            height="0.8em"
-          >
+          <svg aria-hidden viewBox="0 0 7.599 14.043" fill={'currentColor'} height="0.8em">
             <g transform="translate(7.599) rotate(90)">
-              <path
-                className="a"
-                d="M14.043,0H0L6.931,7.6Z"
-                transform="translate(0 0)"
-              />
+              <path className="a" d="M14.043,0H0L6.931,7.6Z" transform="translate(0 0)" />
             </g>
           </svg>
         </button>
@@ -611,13 +583,13 @@ function ItemMedia({ media }: { media: Item['media'] }) {
 
             return (
               <li key={m.info?.mediaId}>
-                <button onClick={() => setIndex(index)}>
+                <button
+                  onClick={() => {
+                    return setIndex(index)
+                  }}
+                >
                   {hasThumbnail === true ? (
-                    <img
-                      src={getMediaThumbnailUrl({ mediaId })}
-                      alt=""
-                      className="h-24 py-2"
-                    />
+                    <img src={getMediaThumbnailUrl({ mediaId })} alt="" className="h-24 py-2" />
                   ) : (
                     <div className="grid w-16 h-24 py-2 place-items-center">
                       <img src={DocumentIcon} alt="" className="w-6 h-6" />
@@ -632,21 +604,16 @@ function ItemMedia({ media }: { media: Item['media'] }) {
           aria-label="Next image"
           className={cx(
             'inline-flex items-center justify-center px-6',
-            media.length === 1
-              ? 'text-gray-550 pointer-events-none'
-              : 'text-primary-800',
+            media.length === 1 ? 'text-gray-550 pointer-events-none' : 'text-primary-800',
           )}
           disabled={media.length === 1}
           onClick={() => {
-            setIndex((index) => (index >= media.length - 1 ? 0 : index + 1))
+            setIndex((index) => {
+              return index >= media.length - 1 ? 0 : index + 1
+            })
           }}
         >
-          <svg
-            aria-hidden
-            viewBox="0 0 7.599 14.043"
-            fill={'currentColor'}
-            height="0.8em"
-          >
+          <svg aria-hidden viewBox="0 0 7.599 14.043" fill={'currentColor'} height="0.8em">
             <g transform="translate(0 14.043) rotate(-90)">
               <path d="M14.043,0H0L6.931,7.6Z" transform="translate(0 0)" />
             </g>
@@ -699,9 +666,7 @@ function ItemPropertiesList({ item }: { item: Item }) {
       ) : null}
       <h2 className="text-xl font-medium">Details</h2>
       {metadata != null ? (
-        <div className="text-sm break-words divide-y">
-          {Object.values(metadata)}
-        </div>
+        <div className="text-sm break-words divide-y">{Object.values(metadata)}</div>
       ) : null}
     </aside>
   )
@@ -710,9 +675,7 @@ function ItemPropertiesList({ item }: { item: Item }) {
 function ItemPropertyValue({ property }: { property: ItemProperty }) {
   switch (property.type?.type) {
     case 'concept':
-      return (
-        <Anchor href={property.concept?.uri}>{property.concept?.label}</Anchor>
-      )
+      return <Anchor href={property.concept?.uri}>{property.concept?.label}</Anchor>
     case 'string':
       return <span>{property.value}</span>
     case 'url':
@@ -753,31 +716,28 @@ function useItemMetadata(
       // for non-authenticated users they should be hidden.
       if (!isAuthenticated && property.type?.hidden === true) return
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const type = property.type!
 
       const groupName = property.type?.groupName ?? 'Other'
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
       grouped[groupName] = grouped[groupName] ?? {}
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       const label = type.label!
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      grouped[groupName][label] = grouped[groupName][label] ?? []
-      grouped[groupName][label].push(property)
+
+      grouped[groupName]![label] = grouped[groupName]![label] ?? []
+      grouped[groupName]![label]!.push(property)
     })
 
     const sorted = Object.entries(grouped)
       .map(([key, values]) => {
-        const sortedValues = Object.entries(values).sort(([, [a]], [, [b]]) =>
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          a.type!.ord! > b.type!.ord! ? 1 : -1,
-        )
-        return [key, sortedValues] as [
-          string,
-          Array<[string, Array<PropertyDto>]>,
-        ]
+        const sortedValues = Object.entries(values).sort(([, [a]], [, [b]]) => {
+          return a!.type!.ord! > b!.type!.ord! ? 1 : -1
+        })
+        return [key, sortedValues] as [string, Array<[string, Array<PropertyDto>]>]
       })
-      .sort(([a], [b]) => (a > b ? 1 : -1))
+      .sort(([a], [b]) => {
+        return a > b ? 1 : -1
+      })
 
     metadata.properties =
       sorted.length === 0 ? null : (
@@ -821,13 +781,14 @@ function useItemMetadata(
     contributors.forEach((contributor) => {
       const role = contributor.role?.label
       if (role != null && contributor.actor != null) {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         grouped[role] = grouped[role] ?? []
-        grouped[role].push(contributor.actor)
+        grouped[role]!.push(contributor.actor)
       }
     })
 
-    const sorted = Object.entries(grouped).sort(([a], [b]) => (a > b ? 1 : -1))
+    const sorted = Object.entries(grouped).sort(([a], [b]) => {
+      return a > b ? 1 : -1
+    })
 
     metadata.contributors =
       sorted.length === 0 ? null : (
@@ -844,8 +805,7 @@ function useItemMetadata(
                       <li key={actor.id} className="flex flex-col">
                         <span className="flex flex-wrap items-center">
                           <span className="mr-1.5">{actor.name}</span>
-                          {Array.isArray(actor.affiliations) &&
-                          actor.affiliations.length > 0 ? (
+                          {Array.isArray(actor.affiliations) && actor.affiliations.length > 0 ? (
                             <span className="mr-1.5 text-gray-550">
                               {actor.affiliations
                                 .map((affiliation) => {
@@ -856,9 +816,7 @@ function useItemMetadata(
                           ) : null}
                         </span>
                         {actor.email != null ? (
-                          <Anchor href={'mailto:' + actor.email}>
-                            {actor.email}
-                          </Anchor>
+                          <Anchor href={'mailto:' + actor.email}>{actor.email}</Anchor>
                         ) : null}
                         {actor.website != null ? (
                           <Anchor href={actor.website}>Website</Anchor>
@@ -875,17 +833,13 @@ function useItemMetadata(
                               if (id.identifierService.urlTemplate == null) {
                                 return (
                                   <span key={id.identifierService.code}>
-                                    {id.identifierService.label}:{' '}
-                                    {id.identifier}
+                                    {id.identifierService.label}: {id.identifier}
                                   </span>
                                 )
                               }
 
                               // TODO: should icons be returned on externalIds?
-                              const icon =
-                                id.identifierService.code === 'ORCID'
-                                  ? OrcidIcon
-                                  : null
+                              const icon = id.identifierService.code === 'ORCID' ? OrcidIcon : null
 
                               return (
                                 <Anchor
@@ -919,9 +873,7 @@ function useItemMetadata(
         {dateCreated != null ? (
           <div className="flex">
             <dt>
-              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-                Created:
-              </span>
+              <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">Created:</span>
             </dt>
             <dd>
               <time dateTime={dateCreated}>{formatDate(dateCreated)}</time>
@@ -936,9 +888,7 @@ function useItemMetadata(
               </span>
             </dt>
             <dd>
-              <time dateTime={dateLastUpdated}>
-                {formatDate(dateLastUpdated)}
-              </time>
+              <time dateTime={dateLastUpdated}>{formatDate(dateLastUpdated)}</time>
             </dd>
           </div>
         ) : null}
@@ -952,16 +902,9 @@ function useItemMetadata(
     if (sourceItemId != null) {
       metadata.sourceItemId = (
         <div className="py-8" key="item-source">
-          <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">
-            Source:
-          </span>
+          <span className="mr-2 font-medium text-gray-550 whitespace-nowrap">Source:</span>
           {source.urlTemplate != null && source.urlTemplate.length > 0 ? (
-            <Anchor
-              href={source.urlTemplate.replace(
-                '{source-item-id}',
-                sourceItemId,
-              )}
-            >
+            <Anchor href={source.urlTemplate.replace('{source-item-id}', sourceItemId)}>
               {label}
             </Anchor>
           ) : (
@@ -976,10 +919,7 @@ function useItemMetadata(
     metadata.externalIds = (
       <ul className="py-8 space-y-6" key="item-externalids">
         {externalIds.map((id) => {
-          if (
-            id.identifierService == null ||
-            id.identifierService.code === 'SourceItemId'
-          ) {
+          if (id.identifierService == null || id.identifierService.code === 'SourceItemId') {
             return null
           }
 

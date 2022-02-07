@@ -11,9 +11,7 @@ import ItemLayout from '@/screens/item/ItemLayout'
 /**
  * Dataset screen.
  */
-export default function DatasetScreen({
-  dataset: initialData,
-}: PageProps): JSX.Element {
+export default function DatasetScreen({ dataset: initialData }: PageProps): JSX.Element {
   /** token is used to get hidden properties */
   const auth = useAuth()
 
@@ -46,18 +44,26 @@ export default function DatasetScreen({
             description: dataset.description,
             url: dataset.accessibleAt,
             about: dataset.properties
-              .filter((property) => property.type.code === 'keyword')
-              .map((property) => property.value),
+              .filter((property) => {
+                return property.type.code === 'keyword'
+              })
+              .map((property) => {
+                return property.value
+              }),
             license,
             version: dataset.version,
-            contributor: dataset.contributors.map(
-              (contributor) => contributor.actor.name,
-            ),
+            contributor: dataset.contributors.map((contributor) => {
+              return contributor.actor.name
+            }),
             dateCreated: dataset.dateCreated,
             dateModified: dataset.dateLastUpdated,
             inLanguage: dataset.properties
-              .filter((property) => property.type.code === 'language')
-              .map((property) => property.concept.label),
+              .filter((property) => {
+                return property.type.code === 'language'
+              })
+              .map((property) => {
+                return property.concept.label
+              }),
           }}
         />
       ) : null}

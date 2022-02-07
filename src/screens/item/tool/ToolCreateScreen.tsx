@@ -6,7 +6,7 @@ import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
-import forms from '@@/config/forms.json'
+import forms from '~/config/forms.json'
 
 /**
  * Create tool screen.

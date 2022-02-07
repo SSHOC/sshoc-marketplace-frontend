@@ -67,18 +67,15 @@ const fields = [
   },
 ]
 type UserRole = Exclude<UserDto['role'], undefined>
-type NonSystemUserRole = Exclude<
-  UserRole,
-  'system-contributor' | 'system-moderator'
->
+type NonSystemUserRole = Exclude<UserRole, 'system-contributor' | 'system-moderator'>
 
 const welcomeMessage: Record<NonSystemUserRole, ReactNode> = {
   contributor: (
     <Fragment>
-      Dear contributor to the SSH Open Marketplace, welcome to the curation
-      dashboard of the SSH Open Marketplace! You can find here the list of items
-      you have contributed to as well as the list of your draft items. Now that
-      you are logged in, you can create and edit items. Please consult the{' '}
+      Dear contributor to the SSH Open Marketplace, welcome to the curation dashboard of the SSH
+      Open Marketplace! You can find here the list of items you have contributed to as well as the
+      list of your draft items. Now that you are logged in, you can create and edit items. Please
+      consult the{' '}
       <Link href="/contribute">
         <a className="transition-colors text-primary-500 hover:text-primary-750">
           contributor guidelines
@@ -89,11 +86,10 @@ const welcomeMessage: Record<NonSystemUserRole, ReactNode> = {
   ),
   moderator: (
     <Fragment>
-      Dear moderator of the SSH Open Marketplace, welcome to the curation
-      dashboard! As any contributor, you can find here the list of items you
-      have contributed to as well as the list of your draft items. Because of
-      your moderator status, you can also access the list of items to moderate
-      and manage the actors referenced in the Marketplace. Please consult the{' '}
+      Dear moderator of the SSH Open Marketplace, welcome to the curation dashboard! As any
+      contributor, you can find here the list of items you have contributed to as well as the list
+      of your draft items. Because of your moderator status, you can also access the list of items
+      to moderate and manage the actors referenced in the Marketplace. Please consult the{' '}
       <Link href="/contribute">
         <a className="transition-colors text-primary-500 hover:text-primary-750">
           contribute pages
@@ -104,13 +100,11 @@ const welcomeMessage: Record<NonSystemUserRole, ReactNode> = {
   ),
   administrator: (
     <Fragment>
-      Dear administrator of the SSH Open Marketplace, welcome to the curation
-      dashboard! As any contributor, you can find here the list of items you
-      have contributed to as well as the list of your draft items. As any
-      moderator, you can also access the list of items to moderate and manage
-      the actors referenced in the Marketplace. And because of your
-      administrator status, you can also manage sources and users. Please
-      consult the{' '}
+      Dear administrator of the SSH Open Marketplace, welcome to the curation dashboard! As any
+      contributor, you can find here the list of items you have contributed to as well as the list
+      of your draft items. As any moderator, you can also access the list of items to moderate and
+      manage the actors referenced in the Marketplace. And because of your administrator status, you
+      can also manage sources and users. Please consult the{' '}
       <Link href="/contribute">
         <a className="transition-colors text-primary-500 hover:text-primary-750">
           contribute pages
@@ -134,10 +128,7 @@ export default function AccountScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="My account" />
       <GridLayout>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -152,11 +143,7 @@ export default function AccountScreen(): JSX.Element {
           </p>
           <ul className={styles.grid}>
             {fields.map((route, index) => {
-              if (
-                Array.isArray(route.roles) &&
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                !route.roles.includes(user.data.role!)
-              ) {
+              if (Array.isArray(route.roles) && !route.roles.includes(user.data.role!)) {
                 return null
               }
 
@@ -164,13 +151,8 @@ export default function AccountScreen(): JSX.Element {
                 <li key={index}>
                   <Link href={{ pathname: route.pathname, query: route.query }}>
                     <a className="flex flex-col items-center p-6 space-y-2 border rounded bg-highlight-50 border-highlight-75">
-                      <Icon
-                        icon={route.icon}
-                        className="w-12 h-12 my-2 text-highlight-300"
-                      />
-                      <h2 className="text-lg text-primary-700">
-                        {route.label}
-                      </h2>
+                      <Icon icon={route.icon} className="w-12 h-12 my-2 text-highlight-300" />
+                      <h2 className="text-lg text-primary-700">{route.label}</h2>
                     </a>
                   </Link>
                 </li>

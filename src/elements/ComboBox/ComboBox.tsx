@@ -45,19 +45,17 @@ export interface ComboBoxProps<T>
   showSelectedItemIndicator?: boolean
   hideButton?: boolean
   /** @default "text" */
-  type?: 'text' | 'search'
+  type?: 'search' | 'text'
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form' | 'form-diff'
+  variant?: 'default' | 'form-diff' | 'form' | 'search'
   style?: CSSProperties
 }
 
 /**
  * ComboBox.
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
-export function ComboBox<T extends object>(
-  props: ComboBoxProps<T>,
-): JSX.Element {
+
+export function ComboBox<T extends object>(props: ComboBoxProps<T>): JSX.Element {
   const { contains } = useFilter({ sensitivity: 'base' })
   const state = useComboBoxState<T>({ ...props, defaultFilter: contains })
 
@@ -104,10 +102,8 @@ export function ComboBox<T extends object>(
   const lastSelectedItem = useRef(selectedItem)
   useEffect(() => {
     if (
-      /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
       selectedItem != null &&
       inputValue === '' &&
-      /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
       lastSelectedItem.current?.key !== selectedItem.key
     ) {
       setInputValue(selectedItem.textValue)
@@ -120,19 +116,13 @@ export function ComboBox<T extends object>(
 
   const variants = {
     default: {
-      inputContainer: cx(
-        'hover:bg-gray-90',
-        state.isOpen ? 'bg-gray-90' : 'bg-white',
-      ),
+      inputContainer: cx('hover:bg-gray-90', state.isOpen ? 'bg-gray-90' : 'bg-white'),
       input: '',
       button: cx('border-gray-300', state.isOpen && 'bg-white'),
       icon: 'text-primary-750',
     },
     search: {
-      inputContainer: cx(
-        'hover:bg-gray-90',
-        state.isOpen ? 'bg-gray-90' : 'bg-white',
-      ),
+      inputContainer: cx('hover:bg-gray-90', state.isOpen ? 'bg-gray-90' : 'bg-white'),
       input: '',
       button: cx('border-gray-300', state.isOpen && 'bg-white'),
       icon: 'text-primary-750',
@@ -140,42 +130,31 @@ export function ComboBox<T extends object>(
     form: {
       inputContainer: cx(
         'hover:border-secondary-600 focus:bg-highlight-75 focus:border-secondary-600',
-        state.isOpen
-          ? 'bg-highlight-75 border-secondary-600'
-          : 'bg-gray-75 hover:bg-white',
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        state.isOpen ? 'bg-highlight-75 border-secondary-600' : 'bg-gray-75 hover:bg-white',
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'group',
       ),
       input: state.isOpen && 'placeholder-highlight-300',
       button: 'border-transparent',
-      icon: state.isOpen
-        ? 'text-primary-750'
-        : 'text-gray-800 hover:text-primary-750',
+      icon: state.isOpen ? 'text-primary-750' : 'text-gray-800 hover:text-primary-750',
     },
     'form-diff': {
       inputContainer: cx(
         'bg-[#EAFBFF] border border-[#92BFF5]',
         'hover:border-secondary-600 focus:bg-highlight-75 focus:border-secondary-600',
-        state.isOpen
-          ? 'bg-highlight-75 border-secondary-600'
-          : 'bg-gray-75 hover:bg-white',
-        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions */
+        state.isOpen ? 'bg-highlight-75 border-secondary-600' : 'bg-gray-75 hover:bg-white',
+        /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
         !state.selectedItem && 'group',
       ),
       input: state.isOpen && 'placeholder-highlight-300',
       button: 'border-transparent',
-      icon: state.isOpen
-        ? 'text-primary-750'
-        : 'text-gray-800 hover:text-primary-750',
+      icon: state.isOpen ? 'text-primary-750' : 'text-gray-800 hover:text-primary-750',
     },
   }
 
   const variant = variants[props.variant ?? 'default']
   const styles = {
-    container: cx(
-      'inline-flex relative',
-      props.isReadOnly === true && 'pointer-events-none',
-    ),
+    container: cx('inline-flex relative', props.isReadOnly === true && 'pointer-events-none'),
     inputContainer: cx(
       'w-64',
       'transition inline-flex min-w-0 items-center justify-between rounded border border-gray-300',
@@ -191,11 +170,7 @@ export function ComboBox<T extends object>(
       'cursor-default rounded-r flex-shrink-0 px-3.5 border-l transition self-stretch inline-flex justify-center items-center',
       variant.button,
     ),
-    icon: cx(
-      'transition transform h-2.5 w-2.5',
-      state.isOpen && 'rotate-180',
-      variant.icon,
-    ),
+    icon: cx('transition transform h-2.5 w-2.5', state.isOpen && 'rotate-180', variant.icon),
     spinnerContainer: 'inline-flex items-center justify-center mx-4',
     spinner: 'w-4 h-4 text-primary-750',
     check: 'w-3 h-3 text-success-600',
@@ -221,22 +196,16 @@ export function ComboBox<T extends object>(
             {...mergeProps(inputProps, fieldProps)}
             className={styles.input}
             ref={inputRef}
-            style={
-              props.variant === 'form-diff'
-                ? { textDecoration: 'inherit' }
-                : undefined
-            }
+            style={props.variant === 'form-diff' ? { textDecoration: 'inherit' } : undefined}
           />
           {isLoading ? (
             <span className={styles.spinnerContainer}>
               <ProgressSpinner className={styles.spinner} />
             </span>
           ) : null}
-          {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-          {((typeof state.selectedKey === 'string' &&
-            state.selectedKey.length > 0) ||
+          {}
+          {((typeof state.selectedKey === 'string' && state.selectedKey.length > 0) ||
             typeof state.selectedKey === 'number') &&
-          /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
           state.selectedItem?.textValue === state.inputValue && // only show indicator for selected item when it matches the current input. TODO: figure out how this should behave
           props.showSelectedItemIndicator === true ? (
             <span className={styles.spinnerContainer}>
@@ -267,9 +236,7 @@ export function ComboBox<T extends object>(
             placeholder={placeholder}
             shouldFocusWrap={props.shouldFocusWrap}
             variant={props.variant}
-            hideSelectionIcon={
-              props.hideSelectionIcon ?? props.allowsCustomValue
-            }
+            hideSelectionIcon={props.hideSelectionIcon ?? props.allowsCustomValue}
           />
         </Popover>
       </div>
@@ -287,7 +254,7 @@ interface ListBoxProps<T> {
   placeholder?: string
   shouldFocusWrap?: boolean
   /** @default "default" */
-  variant?: 'default' | 'search' | 'form' | 'form-diff'
+  variant?: 'default' | 'form-diff' | 'form' | 'search'
   hideSelectionIcon?: boolean
 }
 
@@ -296,7 +263,7 @@ interface ListBoxProps<T> {
  *
  * @private
  */
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+
 function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
   const { state, menuProps, shouldUseVirtualFocus } = props
 
@@ -305,7 +272,7 @@ function ListBox<T extends object>(props: ListBoxProps<T>): JSX.Element {
     {
       ...(menuProps as any),
       shouldFocusWrap: props.shouldFocusWrap,
-      /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */
+
       autoFocus: state.focusStrategy || true,
       disallowEmptySelection: true,
       /** Uses `aria-activedescendant` instead of actual focus. */

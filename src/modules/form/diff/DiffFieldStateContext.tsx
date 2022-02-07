@@ -20,9 +20,15 @@ export const DiffFieldStateContext = createContext<DiffFieldState>({
   name: '',
   status: 'unchanged',
   isReviewed: true,
-  onApprove: () => null,
-  onReject: () => null,
-  onRemove: () => null,
+  onApprove: () => {
+    return null
+  },
+  onReject: () => {
+    return null
+  },
+  onRemove: () => {
+    return null
+  },
   index: -1,
 })
 

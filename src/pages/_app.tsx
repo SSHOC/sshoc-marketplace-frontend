@@ -84,11 +84,10 @@ function createQueryClient() {
 /**
  * Providers.
  */
-function Providers({
-  children,
-  render,
-}: PropsWithChildren<{ render: () => void }>) {
-  const [queryClient] = useState(() => createQueryClient())
+function Providers({ children, render }: PropsWithChildren<{ render: () => void }>) {
+  const [queryClient] = useState(() => {
+    return createQueryClient()
+  })
 
   useInteractionModality()
 
@@ -117,12 +116,7 @@ function Providers({
 /**
  * App shell.
  */
-export default function App({
-  Component,
-  pageProps,
-  router,
-}: AppProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
   const [, forceRender] = useState<object>({})
 
   return (
@@ -131,7 +125,12 @@ export default function App({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <ErrorBoundary fallback={ClientError} resetOnChange={[router.asPath]}>
-        <Providers {...pageProps} render={() => forceRender({})}>
+        <Providers
+          {...pageProps}
+          render={() => {
+            return forceRender({})
+          }}
+        >
           <Layout {...pageProps} default={PageLayout}>
             <Component {...pageProps} />
           </Layout>

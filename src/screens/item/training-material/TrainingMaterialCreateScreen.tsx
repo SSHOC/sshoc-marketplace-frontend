@@ -6,7 +6,7 @@ import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Metadata from '@/modules/metadata/Metadata'
 import { Title } from '@/modules/ui/typography/Title'
-import forms from '@@/config/forms.json'
+import forms from '~/config/forms.json'
 
 /**
  * Create training material screen.
@@ -20,9 +20,7 @@ export default function TrainingMaterialCreateScreen(): JSX.Element {
           <Title>Create training material</Title>
           <ItemForm
             category="training-material"
-            initialValues={createInitialRecommendedFields(
-              forms.trainingMaterial,
-            )}
+            initialValues={createInitialRecommendedFields(forms.trainingMaterial)}
           />
         </ContentColumn>
       </GridLayout>

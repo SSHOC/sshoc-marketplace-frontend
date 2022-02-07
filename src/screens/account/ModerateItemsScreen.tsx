@@ -56,7 +56,7 @@ import { ensureArray } from '@/utils/ensureArray'
 import { ensureScalar } from '@/utils/ensureScalar'
 import { getSingularItemCategoryLabel } from '@/utils/getSingularItemCategoryLabel'
 import usePagination from '@/utils/usePagination'
-import { Svg as CloseIcon } from '@@/assets/icons/close.svg'
+import { Svg as CloseIcon } from '~/assets/icons/close.svg'
 
 const itemSortOrders = ['label', 'modified-on'] as const
 type ItemSortOrder = typeof itemSortOrders[number]
@@ -96,10 +96,7 @@ export default function ModerateItemsScreen(): JSX.Element {
     <Fragment>
       <Metadata noindex title="Items to moderate" />
       <GridLayout className={styles.layout}>
-        <Header
-          image={'/assets/images/search/clouds@2x.png'}
-          showSearchBar={false}
-        >
+        <Header image={'/assets/images/search/clouds@2x.png'} showSearchBar={false}>
           <Breadcrumbs
             links={[
               { pathname: '/', label: 'Home' },
@@ -120,19 +117,12 @@ export default function ModerateItemsScreen(): JSX.Element {
                   <Spinner className="w-6 h-6 text-secondary-600" />
                 </span>
               ) : Number(items.data?.hits) > 0 ? (
-                <span className="text-2xl font-normal">
-                  ({items.data?.hits})
-                </span>
+                <span className="text-2xl font-normal">({items.data?.hits})</span>
               ) : null}
             </Title>
           </div>
         </ContentColumn>
-        <section
-          className={cx(
-            'hidden lg:block px-6 pb-12 mr-6 space-y-8',
-            styles.facets,
-          )}
-        >
+        <section className={cx('hidden lg:block px-6 pb-12 mr-6 space-y-8', styles.facets)}>
           <SearchFacets filter={query} />
         </section>
         <section className={cx('block lg:hidden px-6 pb-6', styles.facets)}>
@@ -216,13 +206,7 @@ function CurationFlags(props: CurationFlagsProps) {
     router.push({ query })
   }
 
-  const allowedFlags = [
-    'description',
-    'url',
-    'coverage',
-    'relations',
-    'merged',
-  ] as const
+  const allowedFlags = ['description', 'url', 'coverage', 'relations', 'merged'] as const
 
   const defaultValue = [] as Array<string>
   allowedFlags.forEach((flag) => {
@@ -277,12 +261,7 @@ function StatusFacet(props: StatusFacetProps) {
     router.push({ query })
   }
 
-  const allowedStatus = [
-    'ingested',
-    'suggested',
-    'approved',
-    'deprecated',
-  ] as const
+  const allowedStatus = ['ingested', 'suggested', 'approved', 'deprecated'] as const
 
   const defaultValue = [] as Array<string>
   const current = filter['d.status']
@@ -343,8 +322,7 @@ function SourceFacet(props: SourceFacetProps) {
 
   const [searchTerm, setSearchTerm] = useState('')
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
-  const sourceQuery =
-    debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
+  const sourceQuery = debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
 
   const sources = useGetSources(
     {
@@ -454,8 +432,7 @@ function ContributorFacet(props: ContributorFacetProps) {
 
   const [searchTerm, setSearchTerm] = useState('')
   const debouncedSearchTerm = useDebouncedState(searchTerm, 150).trim()
-  const contributorQuery =
-    debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
+  const contributorQuery = debouncedSearchTerm.length > 0 ? debouncedSearchTerm : undefined
 
   const users = useGetUsers(
     {
@@ -689,13 +666,7 @@ function ContributedItem(props: ContributedItemProps) {
         <h2>
           <Link
             href={{
-              pathname: [
-                '',
-                category,
-                item.persistentId,
-                'version',
-                item.id,
-              ].join('/'),
+              pathname: ['', category, item.persistentId, 'version', item.id].join('/'),
               query: isReview ? { review: true } : {},
             }}
           >
@@ -750,22 +721,14 @@ function ContributedItem(props: ContributedItemProps) {
                   onClick={onApprove}
                   className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
                 >
-                  <Icon
-                    icon={CheckMarkIcon}
-                    aria-hidden
-                    className="flex-shrink-0 w-4 h-4"
-                  />
+                  <Icon icon={CheckMarkIcon} aria-hidden className="flex-shrink-0 w-4 h-4" />
                   <span>Approve</span>
                 </button>
                 <button
                   onClick={onReject}
                   className="flex items-center space-x-1 transition cursor-default text-ui-base text-primary-750 hover:text-secondary-600"
                 >
-                  <Icon
-                    icon={CrossIcon}
-                    aria-hidden
-                    className="flex-shrink-0 w-4 h-4"
-                  />
+                  <Icon icon={CrossIcon} aria-hidden className="flex-shrink-0 w-4 h-4" />
                   <span>Reject</span>
                 </button>
               </Fragment>
@@ -773,25 +736,14 @@ function ContributedItem(props: ContributedItemProps) {
             <Link
               passHref
               href={{
-                pathname: [
-                  '',
-                  category,
-                  item.persistentId,
-                  'version',
-                  item.id,
-                  'edit',
-                ].join('/'),
+                pathname: ['', category, item.persistentId, 'version', item.id, 'edit'].join('/'),
                 query: isReview ? { review: true } : {},
               }}
             >
               <Anchor className="flex items-center space-x-1 cursor-default text-ui-base">
                 {isReview ? (
                   <Fragment>
-                    <Icon
-                      icon={ReviewIcon}
-                      aria-hidden
-                      className="flex-shrink-0 w-4 h-4"
-                    />
+                    <Icon icon={ReviewIcon} aria-hidden className="flex-shrink-0 w-4 h-4" />
                     <span>Review</span>
                   </Fragment>
                 ) : (
@@ -838,9 +790,7 @@ function ItemSortOrder(props: ItemSortOrderProps) {
   const router = useRouter()
 
   const currentSortOrder =
-    filter.order === undefined
-      ? defaultItemSortOrder
-      : (filter.order[0] as ItemSortOrder)
+    filter.order === undefined ? defaultItemSortOrder : (filter.order[0] as ItemSortOrder)
 
   function onSubmit(order: Key) {
     const query = { ...filter }
@@ -859,7 +809,9 @@ function ItemSortOrder(props: ItemSortOrderProps) {
     'modified-on': 'last modification',
   }
 
-  const items = itemSortOrders.map((id) => ({ id, label: labels[id] }))
+  const items = itemSortOrders.map((id) => {
+    return { id, label: labels[id] }
+  })
 
   return (
     <Select
@@ -868,11 +820,13 @@ function ItemSortOrder(props: ItemSortOrderProps) {
       onSelectionChange={onSubmit}
       selectedKey={currentSortOrder}
     >
-      {(item) => (
-        <Select.Item key={item.id} textValue={item.label}>
-          Sort by {item.label}
-        </Select.Item>
-      )}
+      {(item) => {
+        return (
+          <Select.Item key={item.id} textValue={item.label}>
+            Sort by {item.label}
+          </Select.Item>
+        )
+      }}
     </Select>
   )
 }
@@ -945,11 +899,7 @@ function ItemPagination({
           </HStack>
         </li>
         <li className="flex items-center">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -1010,11 +960,7 @@ function ItemLongPagination({
           )
         })}
         <li className="flex items-center border-b border-transparent">
-          <NextPageLink
-            currentPage={currentPage}
-            pages={pages}
-            filter={filter}
-          />
+          <NextPageLink currentPage={currentPage} pages={pages} filter={filter} />
         </li>
       </HStack>
     </nav>
@@ -1041,11 +987,7 @@ function PreviousPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage - 1 } }} passHref>
@@ -1078,11 +1020,7 @@ function NextPageLink({
     </Fragment>
   )
   if (isDisabled) {
-    return (
-      <div className="inline-flex items-center text-gray-500 pointer-events-none">
-        {label}
-      </div>
-    )
+    return <div className="inline-flex items-center text-gray-500 pointer-events-none">{label}</div>
   }
   return (
     <Link href={{ query: { ...filter, page: currentPage + 1 } }} passHref>
@@ -1099,11 +1037,9 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
   const sanitized = []
 
   if (params.order !== undefined) {
-    const order = ensureArray(
-      params.order,
-    ).filter((sortOrder): sortOrder is ItemSortOrder =>
-      itemSortOrders.includes(sortOrder as ItemSortOrder),
-    )
+    const order = ensureArray(params.order).filter((sortOrder): sortOrder is ItemSortOrder => {
+      return itemSortOrders.includes(sortOrder as ItemSortOrder)
+    })
     sanitized.push(['order', order])
   }
 
@@ -1128,9 +1064,9 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
       'training-material',
       'workflow',
     ]
-    const categories = ensureArray(params.categories).filter((category) =>
-      (allowedCategories as Array<string>).includes(category),
-    )
+    const categories = ensureArray(params.categories).filter((category) => {
+      return (allowedCategories as Array<string>).includes(category)
+    })
     if (categories.length > 0) {
       sanitized.push(['categories', categories])
     }
@@ -1160,9 +1096,7 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
     }
   }
   if (params['d.curation-flag-description'] != null) {
-    const curationFlagDescription = ensureScalar(
-      params['d.curation-flag-description'],
-    )
+    const curationFlagDescription = ensureScalar(params['d.curation-flag-description'])
     if (curationFlagDescription.length > 0) {
       sanitized.push(['d.curation-flag-description', curationFlagDescription])
     }
@@ -1174,17 +1108,13 @@ function sanitizeQuery(params?: ParsedUrlQuery): ItemSearchQuery {
     }
   }
   if (params['d.curation-flag-relations'] != null) {
-    const curationFlagRelations = ensureScalar(
-      params['d.curation-flag-relations'],
-    )
+    const curationFlagRelations = ensureScalar(params['d.curation-flag-relations'])
     if (curationFlagRelations.length > 0) {
       sanitized.push(['d.curation-flag-relations', curationFlagRelations])
     }
   }
   if (params['d.curation-flag-coverage'] != null) {
-    const curationFlagCoverage = ensureScalar(
-      params['d.curation-flag-coverage'],
-    )
+    const curationFlagCoverage = ensureScalar(params['d.curation-flag-coverage'])
     if (curationFlagCoverage.length > 0) {
       sanitized.push(['d.curation-flag-coverage', curationFlagCoverage])
     }
@@ -1214,19 +1144,13 @@ function FacetsDialog({ filter }: { filter: ItemSearchQuery }) {
         leaveFrom="transform translate-x-0 opacity-100"
         leaveTo="transform translate-x-12 opacity-0"
       >
-        <Dialog
-          static
-          onClose={dialog.close}
-          className="fixed inset-0 z-10 overflow-y-auto"
-        >
+        <Dialog static onClose={dialog.close} className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex justify-end min-h-screen ">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             <div className="relative w-full max-w-xl bg-gray-100">
               <header className="flex items-center justify-between px-4 py-6 space-x-2 border-b border-gray-250 bg-[#ECEEEF]">
-                <Dialog.Title as={SubSectionTitle}>
-                  Refine your search
-                </Dialog.Title>
+                <Dialog.Title as={SubSectionTitle}>Refine your search</Dialog.Title>
                 <button onClick={dialog.close}>
                   <CloseIcon
                     aria-label="Close search filter dialog"
