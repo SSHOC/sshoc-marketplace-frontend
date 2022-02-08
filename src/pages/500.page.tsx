@@ -8,11 +8,10 @@ type InternalErrorPageProps = {
 
 /**
  * Unexpected error page.
- *
- * Renders without being wrapped in PageLayout, because ErrorBoundary
- * wraps PageLayout.
  */
-export default function InternalErrorPage({ statusCode }: InternalErrorPageProps): JSX.Element {
+export default function InternalErrorPage({
+  statusCode = 500,
+}: InternalErrorPageProps): JSX.Element {
   return (
     <ErrorScreen
       message="An unexpected error has occurred."
@@ -21,5 +20,3 @@ export default function InternalErrorPage({ statusCode }: InternalErrorPageProps
     />
   )
 }
-
-InternalErrorPage.getInitialProps = NextError.getInitialProps

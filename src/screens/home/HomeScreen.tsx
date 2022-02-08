@@ -7,6 +7,7 @@ import { Fragment } from 'react'
 
 import { useGetItemCategories, useSearchItems } from '@/api/sshoc'
 import type { ItemCategory, ItemSearchQuery, ItemSearchResults } from '@/api/sshoc/types'
+import Content, { metadata } from '@/components/home/home.mdx'
 import ItemCard from '@/modules/item/ItemCard'
 import FullWidth from '@/modules/layout/FullWidth'
 import GridLayout from '@/modules/layout/GridLayout'
@@ -25,7 +26,6 @@ import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/home/HomeScreen.module.css'
 import { Svg as PeopleImage } from '~/assets/images/home/people.svg'
-import Content, { metadata } from '~/content/pages/home.mdx'
 
 type ContentMetadata = {
   title: string

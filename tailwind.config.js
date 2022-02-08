@@ -8,7 +8,7 @@ function px(px) {
 }
 
 module.exports = {
-  content: ['src/**/*.tsx', 'content/**/*.mdx'],
+  content: ['src/**/*.tsx', 'src/**/*.mdx'],
   theme: {
     extend: {
       backgroundSize: {

@@ -1,7 +1,9 @@
 ---
 title: Technical aspects
-ord: 3
-menu: About the technical aspects
+toc: false
+navigationMenu:
+  title: About the technical aspects
+  position: 3
 ---
 
 ## Data model
@@ -25,14 +27,14 @@ used:
 - [Data Aggregation and proCessing Engine (DACE)](https://gitlab.pcss.pl/dl-team/aggregation/dace)
   developed by the Poznan Supercomputing and Networking Center (PSNC)
 
-![Data ingestion workflow](/assets/images/mp_ingest_workflow.png "Data ingestion workflow")
+![Data ingestion workflow](/assets/images/mp_ingest_workflow.png 'Data ingestion workflow')
 
 _Illustration: Overview on the different components of the ingestion workflow_
 
 ## Information about the development of the website
 
 The development of the SSH Open Marketplace is managed via GitLab. If you want to know more, pay a
-visit to our GitLab instance: <https://gitlab.gwdg.de/sshoc>
+visit to our GitLab instance: [https://gitlab.gwdg.de/sshoc](https://gitlab.gwdg.de/sshoc)
 
 ## API documentation
 
@@ -41,16 +43,19 @@ for anyone to use. Some of the functionalities are closed, but most are opened, 
 and retrieving detailed information on all items of the Marketplace.
 
 You can inspect the API Swagger documentation here:
-<https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs>
+[https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs](https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs)
 
-The endpoint of the SSH Open Marketplace API is: <https://marketplace-api.sshopencloud.eu/api/>
+The endpoint of the SSH Open Marketplace API is:
+[https://marketplace-api.sshopencloud.eu/api/](https://marketplace-api.sshopencloud.eu/api/)
 
 The API responses are in JSON and follow the data model that we have created for the Marketplace
 (see "Data model" section above).
 
 For example, you can request a description of all the "tools and services" that the SSH Open
-Marketplace provides at <https://marketplace-api.sshopencloud.eu/api/tools-services> and following
-pages <https://marketplace-api.sshopencloud.eu/api/tools-services?page=2>.
+Marketplace provides at
+[https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
+and following pages
+[https://marketplace-api.sshopencloud.eu/api/tools-services?page=2](https://marketplace-api.sshopencloud.eu/api/tools-services?page=2).
 
 The API also includes some endpoints that are only accessible to logged in users. To use them, you
 need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to

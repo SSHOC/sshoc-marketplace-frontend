@@ -6,7 +6,7 @@ const gitlabBaseUrl = process.env.GITLAB_BASE_URL ?? 'https://gitlab.com'
 const gitlabRepository = process.env.GITLAB_REPOSITORY
 const gitlabBranch = process.env.GITLAB_BRANCH ?? 'main'
 const gitlabAccesToken = process.env.GITLAB_ACCESS_TOKEN
-const pagesFolder = posix.join('content', 'pages')
+const pagesFolder = posix.join('src', 'pages')
 
 async function request(req: Request) {
   const response = await fetch(req)
@@ -55,20 +55,19 @@ export async function getCommitTimestamp(sha: string): Promise<string> {
   return commitTimestamp
 }
 
-export async function getLastUpdatedTimestamp(pageId: string): Promise<Date> {
-  if (gitlabBaseUrl === undefined) {
+export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
+  if (gitlabBaseUrl == null) {
     log.warn(
       'No GitLab url provided in GITLAB_BASE_URL environment variable. Falling back to current date for "last updated" timestamps.',
     )
     return new Date()
   }
-  if (gitlabRepository === undefined) {
+  if (gitlabRepository == null) {
     log.warn(
       'No GitLab repository name provided in GITLAB_REPOSITORY environment variable. Falling back to current date for "last updated" timestamps.',
     )
     return new Date()
   }
-  const filePath = posix.join(pagesFolder, pageId + '.mdx')
   const lastCommidId = await getLastCommitId(filePath)
   const commitTimestamp = await getCommitTimestamp(lastCommidId)
   return new Date(commitTimestamp)

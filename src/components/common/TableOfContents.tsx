@@ -1,6 +1,7 @@
 import type { Toc } from '@stefanprobst/remark-extract-toc'
 
-export function TableOfContents({ toc }: { toc: Toc }): JSX.Element | null {
+export function TableOfContents({ toc = [] }: { toc: Toc }): JSX.Element | null {
+  if (!Array.isArray(toc)) return null
   if (toc.length === 0) return null
 
   return (
@@ -20,7 +21,7 @@ function Level({ level }: { level?: Toc }) {
     <ol className="pl-2">
       {level.map((item) => {
         return (
-          <li key={item.depth}>
+          <li key={item.id}>
             <a
               className="transition-colors text-primary-750 hover:text-secondary-600 focus:text-secondary-600"
               href={`#${item.id}`}

@@ -1,25 +1,29 @@
-import type { PageProps } from '@/pages/contribute/[id]'
+import type { Toc } from '@stefanprobst/remark-extract-toc'
+import type { PropsWithChildren } from 'react'
+
+import type { ContributePage } from '@/pages/contribute/[id].page.template'
 import ContributeLayout from '@/screens/contribute/ContributeLayout'
+
+export type ContributeScreenProps = ContributePage.TemplateProps
 
 /**
  * Contribute screen.
  */
 export default function ContributeScreen({
-  lastUpdatedAt,
+  lastUpdatedTimestamp,
   metadata,
-  html,
-  id,
-  pages,
-}: PageProps): JSX.Element {
+  params,
+  children,
+  tableOfContents,
+}: ContributeScreenProps): JSX.Element {
   return (
     <ContributeLayout
-      breadcrumb={{ pathname: `/contribute/${id}`, label: metadata.title }}
+      breadcrumb={{ pathname: `/contribute/${params.id}`, label: metadata.title }}
       title={metadata.title}
-      lastUpdatedAt={lastUpdatedAt}
-      links={pages}
-      toc={metadata.toc}
+      toc={tableOfContents}
+      lastUpdatedTimestamp={lastUpdatedTimestamp}
     >
-      <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="prose max-w-none">{children}</div>
     </ContributeLayout>
   )
 }

@@ -55,7 +55,7 @@ import usePagination from '@/utils/usePagination'
 import { Svg as CloseIcon } from '~/assets/icons/close.svg'
 import { Svg as LinkIcon } from '~/assets/icons/link.svg'
 import { Svg as NoResultsIcon } from '~/assets/icons/no-results.svg'
-import siteMetadata from '~/config/metadata.json'
+import { siteMetadata } from '~/config/metadata.config'
 
 const MAX_DESCRIPTION_LENGTH = 280
 const MAX_METADATA_VALUES = 5

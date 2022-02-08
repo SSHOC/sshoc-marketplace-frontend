@@ -5,8 +5,9 @@ import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 
 import { TableOfContents } from '@/components/common/TableOfContents'
+import type { StaticResult as ContributePages } from '@/lib/core/navigation/contribute-pages.static'
+import _links from '@/lib/core/navigation/contribute-pages.static'
 import GridLayout from '@/modules/layout/GridLayout'
-// import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
 import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
@@ -17,22 +18,22 @@ import styles from '@/screens/contribute/ContributeLayout.module.css'
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 
+const links = _links as unknown as ContributePages
+
 /**
  * Shared contribute screen layout.
  */
 export default function ContributeLayout({
   breadcrumb,
   title,
-  lastUpdatedAt,
-  children,
-  links,
   toc,
+  children,
+  lastUpdatedTimestamp,
 }: PropsWithChildren<{
-  title: string
   breadcrumb: { pathname: string; label: string }
-  lastUpdatedAt: string
-  links: Array<{ label: string; pathname: string; menu: string }>
+  title: string
   toc: Toc
+  lastUpdatedTimestamp: string
 }>): JSX.Element {
   return (
     <Fragment>
@@ -48,10 +49,10 @@ export default function ContributeLayout({
         <SideColumn>
           <nav aria-label="Page navigation">
             <ul className="pl-6">
-              {links.map(({ menu, pathname }) => {
+              {links.map(({ label, href }) => {
                 return (
-                  <li key={pathname}>
-                    <NavLink href={{ pathname }}>{menu}</NavLink>
+                  <li key={label}>
+                    <NavLink href={href}>{label}</NavLink>
                   </li>
                 )
               })}
@@ -63,7 +64,7 @@ export default function ContributeLayout({
             <Title>{title}</Title>
             <TableOfContents toc={toc} />
             {children}
-            <LastUpdatedAt date={lastUpdatedAt} />
+            <LastUpdatedAt date={lastUpdatedTimestamp} />
           </div>
         </MainColumn>
       </GridLayout>

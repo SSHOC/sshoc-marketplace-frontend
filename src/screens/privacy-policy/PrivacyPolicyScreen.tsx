@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 
+import Content, { metadata } from '@/components/privacy-policy/privacy-policy.mdx'
 import ContentColumn from '@/modules/layout/ContentColumn'
 import GridLayout from '@/modules/layout/GridLayout'
 import Mdx from '@/modules/markdown/Mdx'
@@ -8,8 +9,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import LastUpdatedAt from '@/modules/ui/LastUpdatedAt'
 import { Title } from '@/modules/ui/typography/Title'
-import type { PageProps } from '@/pages/privacy-policy/index'
-import Content, { metadata } from '~/content/pages/privacy-policy.mdx'
+import type { PageProps } from '@/pages/privacy-policy/index.page'
 
 type ContentMetadata = {
   title: string

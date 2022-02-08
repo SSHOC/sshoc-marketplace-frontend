@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
+import Content, { metadata } from '@/components/contact/contact.mdx'
 import { Button } from '@/elements/Button/Button'
 import { toast } from '@/elements/Toast/useToast'
 import { useQueryParam } from '@/lib/hooks/useQueryParam'
@@ -20,7 +21,6 @@ import Header from '@/modules/ui/Header'
 import { SubSectionTitle } from '@/modules/ui/typography/SubSectionTitle'
 import { Title } from '@/modules/ui/typography/Title'
 import styles from '@/screens/contact/ContactScreen.module.css'
-import Content, { metadata } from '~/content/pages/contact.mdx'
 
 type ContentMetadata = {
   title: string

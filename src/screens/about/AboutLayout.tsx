@@ -5,6 +5,8 @@ import type { PropsWithChildren } from 'react'
 import { Fragment } from 'react'
 
 import { TableOfContents } from '@/components/common/TableOfContents'
+import type { StaticResult as AboutPages } from '@/lib/core/navigation/about-pages.static'
+import _links from '@/lib/core/navigation/about-pages.static'
 import GridLayout from '@/modules/layout/GridLayout'
 // import Mdx from '@/modules/markdown/Mdx'
 import Metadata from '@/modules/metadata/Metadata'
@@ -17,22 +19,22 @@ import styles from '@/screens/about/AboutLayout.module.css'
 import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 
+const links = _links as unknown as AboutPages
+
 /**
  * Shared about screen layout.
  */
 export default function AboutLayout({
   breadcrumb,
   title,
-  lastUpdatedAt,
-  children,
-  links,
   toc,
+  children,
+  lastUpdatedTimestamp,
 }: PropsWithChildren<{
-  title: string
   breadcrumb: { pathname: string; label: string }
-  lastUpdatedAt: string
-  links: Array<{ label: string; pathname: string; menu: string }>
+  title: string
   toc: Toc
+  lastUpdatedTimestamp: string
 }>): JSX.Element {
   return (
     <Fragment>
@@ -48,10 +50,10 @@ export default function AboutLayout({
         <SideColumn>
           <nav aria-label="Page navigation">
             <ul className="pl-6">
-              {links.map(({ menu, pathname }) => {
+              {links.map(({ label, href }) => {
                 return (
-                  <li key={pathname}>
-                    <NavLink href={{ pathname }}>{menu}</NavLink>
+                  <li key={label}>
+                    <NavLink href={href}>{label}</NavLink>
                   </li>
                 )
               })}
@@ -63,7 +65,7 @@ export default function AboutLayout({
             <Title>{title}</Title>
             <TableOfContents toc={toc} />
             {children}
-            <LastUpdatedAt date={lastUpdatedAt} />
+            <LastUpdatedAt date={lastUpdatedTimestamp} />
           </div>
         </MainColumn>
       </GridLayout>

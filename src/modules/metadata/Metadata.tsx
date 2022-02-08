@@ -2,15 +2,9 @@ import type { PageMetadataProps } from '@stefanprobst/next-page-metadata'
 import Meta from '@stefanprobst/next-page-metadata'
 
 import { useCanonicalUrl } from '@/modules/metadata/useCanonicalUrl'
-import metadata from '~/config/metadata.json'
+import { siteMetadata } from '~/config/metadata.config'
 
-const {
-  description: siteDescription,
-  openGraph,
-  title: siteTitle,
-  twitter,
-  url: siteUrl,
-} = metadata
+const { description: siteDescription, title: siteTitle, twitter, url: siteUrl } = siteMetadata
 
 export type { PageMetadata } from '@stefanprobst/next-page-metadata'
 
@@ -24,7 +18,6 @@ export default function Metadata(props: PageMetadataProps): JSX.Element {
       description={siteDescription}
       canonicalUrl={canonicalUrl}
       titleTemplate={titleTemplate}
-      openGraph={openGraph}
       twitter={twitter}
       {...props}
     />

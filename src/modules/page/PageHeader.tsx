@@ -15,6 +15,10 @@ import { Icon } from '@/elements/Icon/Icon'
 import { Svg as CloseIcon } from '@/elements/icons/small/cross.svg'
 import { Svg as MenuIcon } from '@/elements/icons/small/menu.svg'
 import { Svg as TriangleIcon } from '@/elements/icons/small/triangle.svg'
+import type { StaticResult as AboutPages } from '@/lib/core/navigation/about-pages.static'
+import _aboutLinks from '@/lib/core/navigation/about-pages.static'
+import type { StaticResult as ContributePages } from '@/lib/core/navigation/contribute-pages.static'
+import _contributeLinks from '@/lib/core/navigation/contribute-pages.static'
 import { useDialogState } from '@/lib/hooks/useDialogState'
 import { useDisclosure } from '@/modules/a11y/useDisclosure'
 import { useDisclosureState } from '@/modules/a11y/useDisclosureState'
@@ -25,8 +29,6 @@ import GridLayout from '@/modules/layout/GridLayout'
 import HStack from '@/modules/layout/HStack'
 import VStack from '@/modules/layout/VStack'
 import styles from '@/modules/page/PageHeader.module.css'
-import _aboutLinks from '@/utils/aboutPages.static'
-import _contributeLinks from '@/utils/contributePages.static'
 import { createUrlFromPath } from '@/utils/createUrlFromPath'
 import { getRedirectPath } from '@/utils/getRedirectPath'
 import { getScalarQueryParameter } from '@/utils/getScalarQueryParameter'
@@ -35,15 +37,8 @@ import type { UrlObject } from '@/utils/useActiveLink'
 import { useActiveLink } from '@/utils/useActiveLink'
 import { Svg as Logo } from '~/assets/images/logo-with-text.svg'
 
-type Pages = Array<{
-  pathname: string
-  label: string
-  menu: string
-  position: number
-}>
-
-const aboutLinks = _aboutLinks as unknown as Pages
-const contributeLinks = _contributeLinks as unknown as Pages
+const aboutLinks = _aboutLinks as unknown as AboutPages
+const contributeLinks = _contributeLinks as unknown as ContributePages
 
 /**
  * Page header.
@@ -153,13 +148,13 @@ function MainNavigation(): JSX.Element {
                           <MenuButton isOpen={open}>Contribute</MenuButton>
                           <FadeIn show={open}>
                             <MenuPopover static>
-                              {contributeLinks.map(({ menu, pathname }) => {
+                              {contributeLinks.map(({ label, href }) => {
                                 return (
-                                  <Menu.Item key={pathname}>
+                                  <Menu.Item key={label}>
                                     {({ active }) => {
                                       return (
-                                        <MenuLink href={{ pathname }} highlighted={active}>
-                                          {menu}
+                                        <MenuLink href={href} highlighted={active}>
+                                          {label}
                                         </MenuLink>
                                       )
                                     }}
@@ -184,13 +179,13 @@ function MainNavigation(): JSX.Element {
                       <MenuButton isOpen={open}>About</MenuButton>
                       <FadeIn show={open}>
                         <MenuPopover static>
-                          {aboutLinks.map(({ menu, pathname }) => {
+                          {aboutLinks.map(({ label, href }) => {
                             return (
-                              <Menu.Item key={pathname}>
+                              <Menu.Item key={label}>
                                 {({ active }) => {
                                   return (
-                                    <MenuLink href={{ pathname }} highlighted={active}>
-                                      {menu}
+                                    <MenuLink href={href} highlighted={active}>
+                                      {label}
                                     </MenuLink>
                                   )
                                 }}
@@ -651,11 +646,11 @@ function MobileNavigation(): JSX.Element {
                 <li className="grid">
                   <NavDisclosure label="Contribute">
                     <ul>
-                      {contributeLinks.map(({ menu, pathname }) => {
+                      {contributeLinks.map(({ label, href }) => {
                         return (
-                          <li key={pathname} className="grid">
-                            <NavLink variant="secondary" href={{ pathname }}>
-                              {menu}
+                          <li key={label} className="grid">
+                            <NavLink variant="secondary" href={href}>
+                              {label}
                             </NavLink>
                           </li>
                         )
@@ -666,11 +661,11 @@ function MobileNavigation(): JSX.Element {
                 <li className="grid">
                   <NavDisclosure label="About">
                     <ul>
-                      {aboutLinks.map(({ menu, pathname }) => {
+                      {aboutLinks.map(({ label, href }) => {
                         return (
-                          <li key={pathname} className="grid">
-                            <NavLink variant="secondary" href={{ pathname }}>
-                              {menu}
+                          <li key={label} className="grid">
+                            <NavLink variant="secondary" href={href}>
+                              {label}
                             </NavLink>
                           </li>
                         )

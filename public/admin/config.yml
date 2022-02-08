@@ -73,11 +73,6 @@ collections:
     fields:
       - name: title
         label: Title
-      - name: ord
-        label: Order
-        widget: number
-      - name: menu
-        label: Menu label
       - name: toc
         label: Table of contents
         widget: boolean
@@ -85,6 +80,15 @@ collections:
       - name: body
         label: Text
         widget: markdown
+      - name: navigationMenu
+        label: Navigation menu
+        widget: object
+        fields:
+          - name: title
+            label: Title
+          - name: position
+            label: Position
+            widget: number
   - name: contribute-pages
     label: Contribute pages
     label_singular: Contribute page
@@ -98,11 +102,6 @@ collections:
     fields:
       - name: title
         label: Title
-      - name: ord
-        label: Order
-        widget: number
-      - name: menu
-        label: Menu label
       - name: toc
         label: Table of contents
         widget: boolean
@@ -110,6 +109,15 @@ collections:
       - name: body
         label: Text
         widget: markdown
+      - name: navigationMenu
+        label: Navigation menu
+        widget: object
+        fields:
+          - name: title
+            label: Title
+          - name: position
+            label: Position
+            widget: number
   - name: settings
     label: Settings
     editor:

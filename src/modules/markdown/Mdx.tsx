@@ -1,7 +1,9 @@
 import type { MDXProps } from 'mdx/types'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import type { ComponentPropsWithoutRef, FC, PropsWithChildren } from 'react'
 
+import { Image } from '@/components/common/Image'
+import { Link } from '@/lib/core/navigation/Link'
 import { Anchor } from '@/modules/ui/Anchor'
 
 import { SectionTitle } from '../ui/typography/SectionTitle'
@@ -29,6 +31,8 @@ const defaultComponents = {
   h2: SectionTitle,
   h3: SubSectionTitle,
   wrapper: Prose,
+  Link,
+  Image,
 }
 
 function AbsoluteOrRelativeLink({ children, href, ...props }: ComponentPropsWithoutRef<'a'>) {
@@ -43,9 +47,9 @@ function AbsoluteOrRelativeLink({ children, href, ...props }: ComponentPropsWith
   }
 
   return (
-    <Link href={href} passHref>
+    <NextLink href={href} passHref>
       <Anchor {...props}>{children}</Anchor>
-    </Link>
+    </NextLink>
   )
 }
 
