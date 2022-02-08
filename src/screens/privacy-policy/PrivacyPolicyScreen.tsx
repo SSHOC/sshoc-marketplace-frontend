@@ -9,7 +9,7 @@ import Breadcrumbs from '@/modules/ui/Breadcrumbs'
 import Header from '@/modules/ui/Header'
 import LastUpdatedAt from '@/modules/ui/LastUpdatedAt'
 import { Title } from '@/modules/ui/typography/Title'
-import type { PageProps } from '@/pages/privacy-policy/index.page'
+import type { PrivacyPolicyPage } from '@/pages/privacy-policy/index.page'
 
 type ContentMetadata = {
   title: string
@@ -20,7 +20,9 @@ const meta = metadata as ContentMetadata
 /**
  * Privacy policy screen.
  */
-export default function ContactScreen({ lastUpdatedAt }: PageProps): JSX.Element {
+export default function ContactScreen({
+  lastUpdatedTimestamp,
+}: PrivacyPolicyPage.Props): JSX.Element {
   return (
     <Fragment>
       <Metadata title={meta.title} />
@@ -40,7 +42,7 @@ export default function ContactScreen({ lastUpdatedAt }: PageProps): JSX.Element
           <div className="px-6 pb-12 mx-auto space-y-6 max-w-80ch">
             <Title>{meta.title}</Title>
             <Mdx content={Content} />
-            <LastUpdatedAt date={lastUpdatedAt} />
+            <LastUpdatedAt date={lastUpdatedTimestamp} />
           </div>
         </ContentColumn>
       </GridLayout>
