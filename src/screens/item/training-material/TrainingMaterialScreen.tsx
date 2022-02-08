@@ -1,11 +1,11 @@
-import { JsonLd } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
 
 import type { TrainingMaterialDto } from '@/api/sshoc'
 import { useGetTrainingMaterial } from '@/api/sshoc'
 import { useAuth } from '@/modules/auth/AuthContext'
-import type { PageProps } from '@/pages/training-material/[id]/index'
+import type { PageProps } from '@/pages/training-material/[id]/index.page'
 import ItemLayout from '@/screens/item/ItemLayout'
 
 /**
@@ -37,7 +37,7 @@ export default function TrainingMaterialScreen({
   return (
     <Fragment>
       {trainingMaterial !== undefined ? (
-        <JsonLd
+        <SchemaOrg
           schema={{
             '@type': 'CreativeWork',
             headline: trainingMaterial.label,

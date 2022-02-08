@@ -1,11 +1,11 @@
-import { JsonLd } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
 
 import type { PublicationDto } from '@/api/sshoc'
 import { useGetPublication } from '@/api/sshoc'
 import { useAuth } from '@/modules/auth/AuthContext'
-import type { PageProps } from '@/pages/publication/[id]/index'
+import type { PageProps } from '@/pages/publication/[id]/index.page'
 import ItemLayout from '@/screens/item/ItemLayout'
 
 /**
@@ -35,7 +35,7 @@ export default function PublicationScreen({ publication: initialData }: PageProp
   return (
     <Fragment>
       {publication !== undefined ? (
-        <JsonLd
+        <SchemaOrg
           schema={{
             '@type': 'CreativeWork',
             headline: publication.label,

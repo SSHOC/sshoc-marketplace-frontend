@@ -2801,6 +2801,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stefanprobst/assert@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@stefanprobst/assert/-/assert-1.0.2.tgz#818d38d67a39617efb98d58f0adb30213de94dfe"
+  integrity sha512-QjI7gQDc3k7NKdCVXjX/ofQ8+2gX6vrCMcVeAuGdaQJ4zi1jlnWzph85ty4ghgdR6u4YDKfY1UddSlF5YftjyQ==
+
 "@stefanprobst/commitlint-config@^1.0.2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@stefanprobst/commitlint-config/-/commitlint-config-1.0.2.tgz#a6f0fe53351af9b0e61ec5ef7cfdb22ed7f40bb0"
@@ -2854,17 +2859,20 @@
   resolved "https://registry.npmjs.org/@stefanprobst/next-app-layout/-/next-app-layout-1.0.1.tgz#cb4cfa89045d8ee6f118981f127e377463417048"
   integrity sha512-hfnIsSd6VmkfbSYED58h0vR8LLdBhHCBzuFNIIxsaNk7bMu1eN40i05pRk7pXpKCbXzHso6RbU6am35sPBU/Fw==
 
-"@stefanprobst/next-error-boundary@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-1.0.7.tgz#e9ceb03963dee0fd787c345ed50cd1eee0560bd0"
-  integrity sha512-UAAAL+wNKWGRywmpAIYuGRaT2lh4GI1IIRFh1NG1gNAp4wALspESno9rVSU4Q8udnNvwye7MXirPL+zfrDAT1A==
-
-"@stefanprobst/next-page-metadata@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-page-metadata/-/next-page-metadata-1.0.7.tgz#663646d7b1b684af1e2def7167d78c6811f76448"
-  integrity sha512-4pfREvUOWP6kWd1yh71tYUGy8eRrxBfZxnLAI6yR5MSlf4Sy8GO3Ghl8wPN+4LPYvZYqmwQPhvLlufyf52fogA==
+"@stefanprobst/next-error-boundary@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-3.0.2.tgz#40f69f7a896a5babdd3ef71ebe62d041edc03d58"
+  integrity sha512-8IScHyhmvZgYBGHkE827f93dweG4p7ZR1L41QMWlo26DFrZfpHnkwY8HOX8QRmAf/DUJilCE3aSm5FGIQGmF8g==
   dependencies:
-    schema-dts "^0.7.1"
+    "@stefanprobst/assert" "^1.0.1"
+
+"@stefanprobst/next-page-metadata@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.npmjs.org/@stefanprobst/next-page-metadata/-/next-page-metadata-2.0.5.tgz#faab7808b739cb8543b919622af24b7a93d7e99f"
+  integrity sha512-34doPfaYucwo/PmWwgMUOHslaYPB017YCatT8QSs+LKYU4BeGbLlI8mDUD+68eIJCcM7AJeJtzTU0ZMyPz8cig==
+  dependencies:
+    react-schemaorg "^2.0.0"
+    schema-dts "^1.0.0"
 
 "@stefanprobst/next-route-manifest@^0.1.5":
   version "0.1.5"
@@ -10209,6 +10217,11 @@ react-remove-scroll@^2.4.3:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
+react-schemaorg@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/react-schemaorg/-/react-schemaorg-2.0.0.tgz#9d168816e3630382d366fbc5fc4c337617467dbb"
+  integrity sha512-UqciFKA203ewNjn0zC09uYKuJSvMD8L75L1s/cW4rc7cS64w8l7vaI3SYkuoI/nwCBkJRmOkSJedWDUZBlYZwg==
+
 react-style-singleton@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/react-style-singleton/-/react-style-singleton-2.1.0.tgz#7396885332e9729957f9df51f08cadbfc164e1c4"
@@ -10710,10 +10723,10 @@ scheduler@^0.20.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-schema-dts@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/schema-dts/-/schema-dts-0.7.1.tgz#9c7e978e958ce331e927b63030575c47b6a7d795"
-  integrity sha512-BCbdw1DtSJErERmKrTyu8K+nyuEwfKgRwSTctlklBqnAAkt9+w//Xg8vgRSzknGNBne+DUGLtL372KlLuI002w==
+schema-dts@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/schema-dts/-/schema-dts-1.0.0.tgz#60e8a0f2cef5e644c44c843b03d35b37a4423c01"
+  integrity sha512-9t8gnY3RW2CbpuvA0pIpcaHFXkJTeNnWR4uaWI+PiYSfpuEeMw+2Q0Gac6YTnQb1B8TR6/+G71gQWuSE7dq6Zw==
 
 schema-utils@^3.0.0:
   version "3.0.0"

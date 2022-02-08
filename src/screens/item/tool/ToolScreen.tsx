@@ -1,11 +1,11 @@
-import { JsonLd } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
 
 import type { ToolDto } from '@/api/sshoc'
 import { useGetTool } from '@/api/sshoc'
 import { useAuth } from '@/modules/auth/AuthContext'
-import type { PageProps } from '@/pages/tool-or-service/[id]/index'
+import type { PageProps } from '@/pages/tool-or-service/[id]/index.page'
 import ItemLayout from '@/screens/item/ItemLayout'
 
 /**
@@ -35,7 +35,7 @@ export default function ToolScreen({ tool: initialData }: PageProps): JSX.Elemen
   return (
     <Fragment>
       {tool !== undefined ? (
-        <JsonLd
+        <SchemaOrg
           schema={{
             '@type': 'SoftwareApplication',
             headline: tool.label,

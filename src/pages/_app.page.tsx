@@ -10,7 +10,7 @@ import { I18nProvider } from '@react-aria/i18n'
 import { useInteractionModality } from '@react-aria/interactions'
 import { SSRProvider } from '@react-aria/ssr'
 import Layout from '@stefanprobst/next-app-layout'
-import ErrorBoundary from '@stefanprobst/next-error-boundary'
+import { ErrorBoundary } from '@stefanprobst/next-error-boundary'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Router } from 'next/router'
@@ -124,7 +124,7 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <ErrorBoundary fallback={ClientError} resetOnChange={[router.asPath]}>
+      <ErrorBoundary fallback={ClientError}>
         <Providers
           {...pageProps}
           render={() => {

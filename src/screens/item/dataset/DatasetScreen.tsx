@@ -1,11 +1,11 @@
-import { JsonLd } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
 
 import type { DatasetDto } from '@/api/sshoc'
 import { useGetDataset } from '@/api/sshoc'
 import { useAuth } from '@/modules/auth/AuthContext'
-import type { PageProps } from '@/pages/dataset/[id]/index'
+import type { PageProps } from '@/pages/dataset/[id]/index.page'
 import ItemLayout from '@/screens/item/ItemLayout'
 
 /**
@@ -35,7 +35,7 @@ export default function DatasetScreen({ dataset: initialData }: PageProps): JSX.
   return (
     <Fragment>
       {dataset !== undefined ? (
-        <JsonLd
+        <SchemaOrg
           schema={{
             '@type': 'Dataset',
             headline: dataset.label,

@@ -1,11 +1,11 @@
-import { JsonLd } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from '@stefanprobst/next-page-metadata'
 import { Fragment } from 'react'
 import type { DeepRequired } from 'utility-types'
 
 import type { WorkflowDto } from '@/api/sshoc'
 import { useGetWorkflow } from '@/api/sshoc'
 import { useAuth } from '@/modules/auth/AuthContext'
-import type { PageProps } from '@/pages/workflow/[id]/index'
+import type { PageProps } from '@/pages/workflow/[id]/index.page'
 import ItemLayout from '@/screens/item/ItemLayout'
 import Steps from '@/screens/item/workflow/Steps'
 
@@ -36,7 +36,7 @@ export default function WorkflowScreen({ workflow: initialData }: PageProps): JS
   return (
     <Fragment>
       {workflow !== undefined ? (
-        <JsonLd
+        <SchemaOrg
           schema={{
             '@type': 'HowTo',
             headline: workflow.label,
