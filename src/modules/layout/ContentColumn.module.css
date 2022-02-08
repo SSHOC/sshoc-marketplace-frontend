@@ -1,6 +1,6 @@
 .layout {
-  grid-column: 2 / -2;
   position: relative;
+  grid-column: 2 / -2;
 }
 
 @media (min-width: 768px) {
