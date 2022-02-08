@@ -1,4 +1,4 @@
-import VisuallyHidden from '@reach/visually-hidden'
+import { VisuallyHidden } from '@react-aria/visually-hidden'
 import cx from 'clsx'
 import type { ChangeEvent, ComponentPropsWithoutRef, Ref } from 'react'
 import { forwardRef, useState } from 'react'
