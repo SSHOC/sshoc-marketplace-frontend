@@ -16,10 +16,13 @@ import withParsedFrontmatter from '@stefanprobst/remark-extract-yaml-frontmatter
 import withParsedFrontmatterExport from '@stefanprobst/remark-extract-yaml-frontmatter/mdx'
 import withPage from '@stefanprobst/remark-mdx-page'
 import withSmartQuotes from '@stefanprobst/remark-smart-quotes'
+import { createRequire } from 'module'
 import * as path from 'path'
 import withHeadingIds from 'rehype-slug'
 import withFrontmatter from 'remark-frontmatter'
 import withGfm from 'remark-gfm'
+
+const require = createRequire(import.meta.url)
 
 const isProductionDeploy =
   process.env['NEXT_PUBLIC_SSHOC_BASE_URL'] === 'https://marketplace.sshopencloud.eu'
@@ -95,13 +98,6 @@ const nextConfig = {
     config.infrastructureLogging = {
       ...config.infrastructureLogging,
       level: 'error',
-    }
-
-    config.resolve = config.resolve ?? {}
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
-      'react/jsx-runtime': 'react/jsx-runtime.js',
     }
 
     config.module?.rules?.push({

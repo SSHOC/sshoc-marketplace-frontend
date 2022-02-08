@@ -8,11 +8,16 @@ export function Image(props: ImageProps): JSX.Element {
     return <img src={props.src} alt={props.alt ?? ''} />
   }
 
+  const showPlaceholder =
+    typeof props.src === 'string'
+      ? props.blurDataURL != null
+      : (props.src as StaticImageData).blurDataURL != null
+
   return (
     <NextImage
       sizes="55rem"
       layout="responsive"
-      placeholder={props.blurDataURL != null ? 'blur' : undefined}
+      placeholder={showPlaceholder ? 'blur' : undefined}
       {...props}
     />
   )

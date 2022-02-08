@@ -2859,17 +2859,17 @@
   resolved "https://registry.npmjs.org/@stefanprobst/next-app-layout/-/next-app-layout-1.0.1.tgz#cb4cfa89045d8ee6f118981f127e377463417048"
   integrity sha512-hfnIsSd6VmkfbSYED58h0vR8LLdBhHCBzuFNIIxsaNk7bMu1eN40i05pRk7pXpKCbXzHso6RbU6am35sPBU/Fw==
 
-"@stefanprobst/next-error-boundary@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-3.0.2.tgz#40f69f7a896a5babdd3ef71ebe62d041edc03d58"
-  integrity sha512-8IScHyhmvZgYBGHkE827f93dweG4p7ZR1L41QMWlo26DFrZfpHnkwY8HOX8QRmAf/DUJilCE3aSm5FGIQGmF8g==
+"@stefanprobst/next-error-boundary@^3.0.2-legacy":
+  version "3.0.2-legacy"
+  resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-3.0.2-legacy.tgz#aadb52ef4a12db2d27a379ce8c9b6c73ac929691"
+  integrity sha512-HZ/zmBJm8JmfsN7TpTI3MyMDXqwCyUfV8NLRQxR4gsBGU3uwps/MuVd7SlXonwoPK4pHlUVONtiqevxBZla6cw==
   dependencies:
     "@stefanprobst/assert" "^1.0.1"
 
-"@stefanprobst/next-page-metadata@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-page-metadata/-/next-page-metadata-2.0.5.tgz#faab7808b739cb8543b919622af24b7a93d7e99f"
-  integrity sha512-34doPfaYucwo/PmWwgMUOHslaYPB017YCatT8QSs+LKYU4BeGbLlI8mDUD+68eIJCcM7AJeJtzTU0ZMyPz8cig==
+"@stefanprobst/next-page-metadata@^2.0.5-legacy":
+  version "2.0.5-legacy"
+  resolved "https://registry.npmjs.org/@stefanprobst/next-page-metadata/-/next-page-metadata-2.0.5-legacy.tgz#1eab9f10f8a76c8816fed8e539c642a44e0055d7"
+  integrity sha512-uUDct0y1A3fIYVh6jRtH43El6SnM39o+gVOqIZUYosEcojmLrv98bw/VY6WiOWm1oGBFN76Ii3aa2cdjkmM9jg==
   dependencies:
     react-schemaorg "^2.0.0"
     schema-dts "^1.0.0"
@@ -2939,13 +2939,14 @@
     unified "^10.1.1"
     unist-util-visit "^4.1.0"
 
-"@stefanprobst/rehype-next-links@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/@stefanprobst/rehype-next-links/-/rehype-next-links-2.0.1.tgz#c165188638f9969435c38dfd2bde01e72a9dd4a1"
-  integrity sha512-MGYMM/slgXiKmvu3j+wpvo/0zxg2JHveUO0rpRxFbaMHBqvwP0veM5mw5gduBeSSbmQgZ4wDrTE+jxbuLgGlbw==
+"@stefanprobst/rehype-next-links@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@stefanprobst/rehype-next-links/-/rehype-next-links-2.0.2.tgz#28937a3ccba73994c0208ffcefde9101170fa92b"
+  integrity sha512-tE9PjqVoUv35wbDOeNiciTUcsOJgcEj76ISOD/uiV5bYFFpQaa2l/n5T2cXMnQUnUn/Na1T3mBsQ2Pd8biLNAw==
   dependencies:
     "@stefanprobst/is-absolute-url" "^1.0.1"
     "@types/hast" "^2.3.4"
+    property-information "^6.1.1"
     unified "^10.1.1"
     unist-util-visit "^4.1.0"
 
@@ -10054,7 +10055,7 @@ prop-types@^15.6.2, prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-property-information@^6.0.0:
+property-information@^6.0.0, property-information@^6.1.1:
   version "6.1.1"
   resolved "https://registry.npmjs.org/property-information/-/property-information-6.1.1.tgz#5ca85510a3019726cb9afed4197b7b8ac5926a22"
   integrity sha512-hrzC564QIl0r0vy4l6MvRLhafmUowhO/O3KgVSoXIbbA2Sz4j8HGpJc6T2cubRVwMwpdiG/vKGfhT4IixmKN9w==
