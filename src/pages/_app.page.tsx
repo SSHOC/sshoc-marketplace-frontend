@@ -1,4 +1,4 @@
-// import 'focus-visible'
+import 'focus-visible'
 import '@/styles/global.css'
 import 'tailwindcss/tailwind.css'
 import '@/styles/nprogress.css'
@@ -17,7 +17,7 @@ import { Router } from 'next/router'
 import np from 'nprogress'
 import type { PropsWithChildren } from 'react'
 import { Fragment, useState } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { Slide, ToastContainer } from 'react-toastify'
 
@@ -132,7 +132,9 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
           }}
         >
           <Layout {...pageProps} default={PageLayout}>
-            <Component {...pageProps} />
+            <ErrorBoundary fallback={ClientError} onReset={useQueryErrorResetBoundary().reset}>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           </Layout>
           <ToastContainer
             transition={Slide}
