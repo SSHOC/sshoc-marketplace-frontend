@@ -1,5 +1,3 @@
-# syntax = docker/dockerfile:experimental
-
 # base
 FROM node:16-slim AS base
 
@@ -37,8 +35,6 @@ ARG NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH
 ARG NEXT_PUBLIC_GITLAB_APP_ID
 ARG NEXT_PUBLIC_MATOMO_BASE_URL
 ARG NEXT_PUBLIC_MATOMO_APP_ID
-
-RUN --mount=type=secret,id=auto-devops-build-secrets . /run/secrets/auto-devops-build-secrets && echo VARIABLES $NEXT_PUBLIC_BASE_URL $NEXT_PUBLIC_SSHOC_API_BASE_URL $NEXT_PUBLIC_GITLAB_BASE_URL
 
 RUN yarn build
 
