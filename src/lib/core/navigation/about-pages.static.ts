@@ -2,8 +2,8 @@ import type { ValLoaderResult } from '@stefanprobst/val-loader'
 import { promises as fs } from 'fs'
 import * as path from 'path'
 
-// import { collection } from '@/lib/cms/collections/about-pages'
-// import { routes } from '@/lib/core/navigation/routes'
+import { collection } from '@/lib/cms/collections/about-pages'
+import { routes } from '@/lib/core/navigation/routes'
 
 interface AboutPageMetadata {
   title: string
@@ -14,11 +14,6 @@ interface AboutPageMetadata {
 }
 
 export type StaticResult = Array<{ label: string; href: { pathname: string }; position: number }>
-
-const collection = {
-  folder: 'src/pages/about',
-  extension: 'page.mdx',
-}
 
 export default async function load(): Promise<ValLoaderResult> {
   /** `val-loader` currently does not support ESM. */
@@ -47,8 +42,7 @@ export default async function load(): Promise<ValLoaderResult> {
 
         return {
           label: navigationMenu.title,
-          // href: routes.AboutPage({ id }),
-          href: { pathname: `/about/${id}` },
+          href: routes.AboutPage({ id }),
           position: navigationMenu.position,
         }
       }),
@@ -58,5 +52,14 @@ export default async function load(): Promise<ValLoaderResult> {
     return a.position === b.position ? 0 : a.position > b.position ? 1 : -1
   })
 
-  return { cacheable: true, code: `export default ${JSON.stringify(pages)}` }
+  return {
+    cacheable: true,
+    code: `export default ${JSON.stringify(pages)}`,
+    contextDependencies: [folderPath],
+    /**
+     * Since `val-loader` will generate a bundle with `esbuild` we should manually
+     * add non-external imports here (although it does not matter much in this case).
+     */
+    dependencies: [path.join(process.cwd(), './src/lib/cms/collections/about-pages.ts')],
+  }
 }

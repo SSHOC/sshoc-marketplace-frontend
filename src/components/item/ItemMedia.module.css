@@ -1,0 +1,113 @@
+.container {
+  display: grid;
+}
+
+.carousel-container {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+}
+
+.media-container {
+  position: relative;
+  display: grid;
+  height: var(--size-64);
+  padding: var(--space-8) var(--space-10);
+  place-items: center;
+
+  @media (/* --screen-md */ min-width: 48rem) {
+    height: var(--size-96);
+  }
+
+  @media (/* --screen-lg */ min-width: 64rem) {
+    height: var(--size-128);
+  }
+
+  @media (/* --screen-2xl */ min-width: 96rem) {
+    height: var(--size-160);
+  }
+
+  & > * {
+    min-height: 0;
+    max-height: 100%;
+  }
+}
+
+.carousel-controls {
+  display: grid;
+  grid-template-rows: var(--space-20);
+  grid-template-columns: var(--space-10) auto var(--space-10);
+  border-top: 1px solid var(--color-border);
+  column-gap: var(--space-1);
+
+  & > li {
+    display: grid;
+    justify-items: center;
+
+    &[data-direction='next'] {
+      border-left: 1px solid var(--color-border);
+
+      & svg {
+        transform: rotate(-90deg);
+      }
+    }
+
+    &[data-direction='prev'] {
+      border-right: 1px solid var(--color-border);
+
+      & svg {
+        transform: rotate(90deg);
+      }
+    }
+
+    & > .button {
+      display: grid;
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--color-link-text);
+      place-items: center;
+
+      &:hover {
+        background-color: var(--color-background-muted);
+        color: var(--color-link-text-hover);
+      }
+
+      &:focus-visible {
+        background-color: var(--color-background-muted);
+        color: var(--color-link-text-hover);
+      }
+
+      & svg {
+        width: var(--size-2-5);
+        height: var(--size-2-5);
+      }
+    }
+
+    & .thumbnails {
+      display: flex;
+      overflow-x: auto;
+      min-height: 0;
+      column-gap: var(--space-1);
+
+      & > li {
+        display: flex;
+        flex: 0 0 var(--size-32);
+        justify-content: center;
+        border-inline: 1px solid var(--color-border);
+
+        & > .button {
+          display: grid;
+          padding: 0;
+          border: none;
+          background: none;
+          place-items: center;
+
+          & > * {
+            min-height: 0;
+            max-height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

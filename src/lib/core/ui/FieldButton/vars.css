@@ -1,0 +1,26 @@
+:root {
+  --field-button-width: initial;
+  --field-button-height: initial;
+  --field-button-padding-block: initial;
+  --field-button-padding-inline: initial;
+  --field-button-background-color: initial;
+  --field-button-background-color-focus: initial;
+  --field-button-background-color-hover: initial;
+  --field-button-background-color-active: initial;
+  --field-button-background-color-disabled: initial;
+  --field-button-border-color: initial;
+  --field-button-border-color-focus: initial;
+  --field-button-border-color-hover: initial;
+  --field-button-border-color-active: initial;
+  --field-button-border-color-disabled: initial;
+  --field-button-border-width: initial;
+  --field-button-border-radius: initial;
+  --field-button-color: initial;
+  --field-button-color-focus: initial;
+  --field-button-color-hover: initial;
+  --field-button-color-active: initial;
+  --field-button-color-disabled: initial;
+  --field-button-font-size: initial;
+  --field-button-font-weight: initial;
+  --field-button-line-height: initial;
+}

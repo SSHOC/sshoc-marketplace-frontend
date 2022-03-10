@@ -12,7 +12,14 @@
 
 <!--- If you are seeing an error, please include the full error message. -->
 
+## 🧭 How to reproduce
+
+<!--- Please provide directions how the issue can be reproduced. -->
+
+1.
+2.
+3.
+
 ---
 
-/label ~"status::needs-review"  
-/milestone %"Curation module implemented"
+/label ~"status::needs-review"

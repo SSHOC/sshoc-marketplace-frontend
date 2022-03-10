@@ -1,0 +1,54 @@
+.button {
+  display: grid;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: var(--close-button-color, inherit);
+  transition-timing-function: var(--transition-timing-function);
+  transition-duration: var(--transition-duration);
+  transition-property: var(--transition-property);
+  place-items: center;
+
+  &:hover,
+  &[data-hovered] {
+    color: var(--close-button-color-hover, var(--color-primary-600));
+  }
+
+  &:focus-visible,
+  &[data-focused] {
+    color: var(--close-button-color-focus, var(--color-primary-600));
+  }
+
+  &:active,
+  &[data-active] {
+    color: var(--close-button-color-active, var(--color-primary-600));
+  }
+
+  &:disabled,
+  &[aria-disabled] {
+    color: var(--close-button-color-disabled, var(--color-neutral-500));
+  }
+}
+
+.button[data-size='sm'] {
+  --icon-width: var(--size-2);
+  --icon-height: var(--size-2);
+}
+
+.button[data-size='md'] {
+  --icon-width: var(--size-3);
+  --icon-height: var(--size-3);
+}
+
+.button[data-size='lg'] {
+  --icon-width: var(--size-5);
+  --icon-height: var(--size-5);
+}
+
+/** Ensure tap area size. */
+.button::after {
+  content: '';
+  position: absolute;
+  width: var(--size-10);
+  height: var(--size-10);
+}

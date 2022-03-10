@@ -2,8 +2,8 @@ import type { ValLoaderResult } from '@stefanprobst/val-loader'
 import { promises as fs } from 'fs'
 import * as path from 'path'
 
-// import { collection } from '@/lib/cms/collections/contribute-pages'
-// import { routes } from '@/lib/core/navigation/routes'
+import { collection } from '@/lib/cms/collections/contribute-pages'
+import { routes } from '@/lib/core/navigation/routes'
 
 interface ContributePageMetadata {
   title: string
@@ -15,18 +15,15 @@ interface ContributePageMetadata {
 
 export type StaticResult = Array<{ label: string; href: { pathname: string }; position: number }>
 
-const collection = {
-  folder: 'src/pages/contribute',
-  extension: 'page.mdx',
-}
-
 export default async function load(): Promise<ValLoaderResult> {
   /** `val-loader` currently does not support ESM. */
   const { read } = await import('to-vfile')
   const { matter } = await import('vfile-matter')
 
   if (collection.folder == null || collection.extension == null) {
-    throw new Error('About pages collection config requires `folder` and `extension` to be set.')
+    throw new Error(
+      'Contribute pages collection config requires `folder` and `extension` to be set.',
+    )
   }
   const folderPath = path.join(process.cwd(), collection.folder)
   const fileExtension = '.' + collection.extension
@@ -47,8 +44,7 @@ export default async function load(): Promise<ValLoaderResult> {
 
         return {
           label: navigationMenu.title,
-          // href: routes.ContributePage({ id }),
-          href: { pathname: `/contribute/${id}` },
+          href: routes.ContributePage({ id }),
           position: navigationMenu.position,
         }
       }),
@@ -58,5 +54,14 @@ export default async function load(): Promise<ValLoaderResult> {
     return a.position === b.position ? 0 : a.position > b.position ? 1 : -1
   })
 
-  return { cacheable: true, code: `export default ${JSON.stringify(pages)}` }
+  return {
+    cacheable: true,
+    code: `export default ${JSON.stringify(pages)}`,
+    contextDependencies: [folderPath],
+    /**
+     * Since `val-loader` will generate a bundle with `esbuild` we should manually
+     * add non-external imports here (although it does not matter much in this case).
+     */
+    dependencies: [path.join(process.cwd(), './src/lib/cms/collections/contribute-pages.ts')],
+  }
 }

@@ -1,0 +1,8 @@
+.container {
+  grid-area: search-results;
+}
+
+.search-results {
+  display: grid;
+  gap: var(--space-4);
+}

@@ -1,0 +1,26 @@
+.container {
+  display: grid;
+  grid-area: recommended-items;
+  gap: var(--space-8);
+  align-content: start;
+  padding-block: var(--space-16);
+}
+
+.sections {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.section {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.items {
+  display: grid;
+  gap: var(--space-16);
+
+  @media (/* --screen-md */ min-width: 48rem) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

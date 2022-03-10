@@ -1,0 +1,70 @@
+.menu {
+  padding-block: var(--menu-padding-block, var(--space-4));
+  padding-inline: var(--menu-padding-inline);
+  border-width: var(--menu-border-width, 1px);
+  border-style: solid;
+  border-color: var(--menu-border-color, var(--color-neutral-200));
+  border-radius: var(--menu-border-radius, var(--border-radius-md));
+  background-color: var(--menu-background-color, var(--color-neutral-0));
+  color: var(--menu-color, var(--color-neutral-800));
+  box-shadow: var(--box-shadow);
+  font-weight: var(--menu-font-weight);
+  font-size: var(--menu-font-size, var(--font-size-3-75));
+  user-select: none;
+  transition-timing-function: var(--transition-timing-function);
+  transition-duration: var(--transition-duration);
+  transition-property: var(--transition-property);
+}
+
+.menu-section {
+  padding-block: var(--menu-section-padding-block, var(--space-1));
+  padding-inline: var(--menu-section-padding-inline, var(--space-4));
+  background-color: var(--menu-section-background-color);
+  color: var(--menu-section-color);
+  font-weight: var(--menu-section-font-weight);
+  font-size: var(--menu-section-font-size);
+  transition-timing-function: var(--transition-timing-function);
+  transition-duration: var(--transition-duration);
+  transition-property: var(--transition-property);
+}
+
+.menu-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--menu-item-padding-block, var(--space-1-5));
+  padding-inline: var(--menu-item-padding-inline, var(--space-4));
+  background-color: var(--menu-item-background-color);
+  color: var(--menu-item-color);
+  font-weight: var(--menu-item-font-weight);
+  font-size: var(--menu-item-font-size);
+  transition-timing-function: var(--transition-timing-function);
+  transition-duration: var(--transition-duration);
+  transition-property: var(--transition-property);
+
+  &:hover,
+  &[data-hovered] {
+    background-color: var(--menu-item-background-color-hover, var(--color-neutral-50));
+    color: var(--menu-item-color-hover);
+  }
+
+  &:focus-visible,
+  &[data-focused] {
+    background-color: var(--menu-item-background-color-focus, var(--color-neutral-50));
+    color: var(--menu-item-color-focus);
+
+    /* TODO: Hide outline when interaction modality is pointer device? */
+    outline-offset: -2px;
+  }
+
+  &[aria-selected='true'] {
+    background-color: var(--menu-item-background-color-selected);
+    color: var(--menu-item-color-selected);
+  }
+
+  &[aria-disabled='true'] {
+    background-color: var(--menu-item-background-color-disabled);
+    color: var(--menu-item-color-disabled);
+  }
+}

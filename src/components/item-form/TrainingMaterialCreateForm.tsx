@@ -1,0 +1,80 @@
+import type { FormApi, SubmissionErrors } from 'final-form'
+import { FORM_ERROR } from 'final-form'
+import { useRouter } from 'next/router'
+
+import type { ItemFormValues } from '@/components/item-form/ItemForm'
+import { ItemForm } from '@/components/item-form/ItemForm'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
+import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
+import { useCreateOrUpdateTrainingMaterial } from '@/components/item-form/useCreateOrUpdateTrainingMaterial'
+import { useTrainingMaterialFormFields } from '@/components/item-form/useTrainingMaterialFormFields'
+import { useTrainingMaterialFormRecommendedFields } from '@/components/item-form/useTrainingMaterialFormRecommendedFields'
+import { useTrainingMaterialValidationSchema } from '@/components/item-form/useTrainingMaterialValidationSchema'
+import type { TrainingMaterialInput } from '@/data/sshoc/api/training-material'
+import { routes } from '@/lib/core/navigation/routes'
+
+export type CreateTrainingMaterialFormValues = ItemFormValues<TrainingMaterialInput>
+
+export function TrainingMaterialCreateForm(): JSX.Element {
+  const category = 'training-material'
+
+  const router = useRouter()
+  const formFields = useTrainingMaterialFormFields()
+  const recommendedFields = useTrainingMaterialFormRecommendedFields()
+  const validate = useTrainingMaterialValidationSchema(removeEmptyItemFieldsOnSubmit)
+  const meta = useCreateItemMeta({ category })
+  const createOrUpdateTrainingMaterial = useCreateOrUpdateTrainingMaterial(undefined, { meta })
+
+  function onSubmit(
+    values: CreateTrainingMaterialFormValues,
+    form: FormApi<CreateTrainingMaterialFormValues>,
+    done?: (errors?: SubmissionErrors) => void,
+  ) {
+    const shouldSaveAsDraft = values['__draft__'] === true
+    delete values['__draft__']
+
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
+    createOrUpdateTrainingMaterial.mutate(
+      { data, draft: shouldSaveAsDraft },
+      {
+        onSuccess(trainingMaterial) {
+          if (trainingMaterial.status === 'draft') {
+            // FIXME: Probably better to keep this state in useCreateOrUpdateTrainingMaterial.
+            form.batch(() => {
+              form.change('persistentId', trainingMaterial.persistentId)
+              form.change('status', trainingMaterial.status)
+            })
+            window.scrollTo(0, 0)
+          } else if (trainingMaterial.status === 'approved') {
+            router.push(
+              routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),
+            )
+          } else {
+            router.push(routes.SuccessPage())
+          }
+          done?.()
+        },
+        onError(error) {
+          done?.({ [FORM_ERROR]: String(error) })
+        },
+      },
+    )
+  }
+
+  function onCancel() {
+    router.push(routes.AccountPage())
+  }
+
+  return (
+    <ItemForm<CreateTrainingMaterialFormValues>
+      formFields={formFields}
+      name="create-item"
+      initialValues={recommendedFields}
+      onCancel={onCancel}
+      onSubmit={onSubmit}
+      validate={validate}
+    />
+  )
+}

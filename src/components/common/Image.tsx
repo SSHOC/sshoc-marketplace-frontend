@@ -4,10 +4,6 @@ import NextImage from 'next/image'
 export type ImageProps = NextImageProps
 
 export function Image(props: ImageProps): JSX.Element {
-  if (typeof props.src === 'string' && (props.width == null || props.height == null)) {
-    return <img src={props.src} alt={props.alt ?? ''} />
-  }
-
   const showPlaceholder =
     typeof props.src === 'string'
       ? props.blurDataURL != null

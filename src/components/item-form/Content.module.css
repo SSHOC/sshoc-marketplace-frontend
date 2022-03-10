@@ -1,0 +1,4 @@
+.content {
+  grid-area: content;
+  padding-block-end: var(--space-12);
+}

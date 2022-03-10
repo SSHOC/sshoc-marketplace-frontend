@@ -1,0 +1,27 @@
+.backdrop {
+  position: fixed;
+  z-index: var(--z-index-dialog);
+  display: flex;
+  justify-content: flex-end;
+  inset: 0;
+}
+
+.container {
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+  width: min(var(--size-128), 100%);
+  background-color: var(--color-background-muted);
+  box-shadow: var(--box-shadow);
+  animation: slide-in forwards var(--animation-duration);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

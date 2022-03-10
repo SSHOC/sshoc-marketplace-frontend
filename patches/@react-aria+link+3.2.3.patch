@@ -1,0 +1,45 @@
+diff --git a/node_modules/@react-aria/link/dist/main.js b/node_modules/@react-aria/link/dist/main.js
+index 06bb62c..ab7b61b 100644
+--- a/node_modules/@react-aria/link/dist/main.js
++++ b/node_modules/@react-aria/link/dist/main.js
+@@ -57,7 +57,9 @@ function $fbe6b19572273b2f$export$dcf14c9974fe2767(props, ref) {
+                 pressProps.onClick(e);
+                 if (deprecatedOnClick) {
+                     deprecatedOnClick(e);
+-                    console.warn('onClick is deprecated, please use onPress');
++                    if (process.env['NODE_ENV'] !== 'production') {
++                      console.warn('onClick is deprecated, please use onPress');
++                    }
+                 }
+             }
+         })
+diff --git a/node_modules/@react-aria/link/dist/module.js b/node_modules/@react-aria/link/dist/module.js
+index 6e3a955..b1012fd 100644
+--- a/node_modules/@react-aria/link/dist/module.js
++++ b/node_modules/@react-aria/link/dist/module.js
+@@ -41,7 +41,9 @@ function $298d61e98472621b$export$dcf14c9974fe2767(props, ref) {
+                 pressProps.onClick(e);
+                 if (deprecatedOnClick) {
+                     deprecatedOnClick(e);
+-                    console.warn('onClick is deprecated, please use onPress');
++                    if (process.env['NODE_ENV'] !== 'production') {
++                      console.warn('onClick is deprecated, please use onPress');
++                    }
+                 }
+             }
+         })
+diff --git a/node_modules/@react-aria/link/src/useLink.ts b/node_modules/@react-aria/link/src/useLink.ts
+index cd8fbfb..c14243b 100644
+--- a/node_modules/@react-aria/link/src/useLink.ts
++++ b/node_modules/@react-aria/link/src/useLink.ts
+@@ -72,7 +72,9 @@ export function useLink(props: AriaLinkOptions, ref: RefObject<HTMLElement>): Li
+         pressProps.onClick(e);
+         if (deprecatedOnClick) {
+           deprecatedOnClick(e);
+-          console.warn('onClick is deprecated, please use onPress');
++          if (process.env['NODE_ENV'] !== 'production') {
++            console.warn('onClick is deprecated, please use onPress');
++          }
+         }
+       }
+     })

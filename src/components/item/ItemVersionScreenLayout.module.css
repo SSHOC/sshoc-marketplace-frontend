@@ -1,0 +1,51 @@
+.layout {
+  --column-count: 12;
+  --column-gap: var(--size-6);
+  --max-width: var(--size-max-content-width);
+  --max-column-width: calc(
+    (var(--max-width) - (var(--column-count) - 1) * var(--column-gap)) / var(--column-count)
+  );
+
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    '. alert alert alert alert alert alert alert alert alert alert alert alert .'
+    '. header header header header header header header header header header header header .'
+    '. item-header item-header item-header item-header item-header item-header item-header item-header item-header item-header item-header item-header .'
+    '. item-info item-info item-info item-info item-info item-info item-info item-info item-info item-info item-info item-info .'
+    '. item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details .'
+    '. item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments .'
+    '. funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice .';
+  grid-template-rows: auto auto auto auto auto 1fr auto;
+  grid-template-columns:
+    minmax(0, 1fr)
+    repeat(var(--column-count), minmax(0, var(--max-column-width)))
+    minmax(0, 1fr);
+  align-items: start;
+  min-height: 100%;
+  column-gap: var(--column-gap);
+
+  @media (/* --screen-xs */ min-width: 30rem) {
+    --column-gap: var(--size-8);
+
+    grid-template-areas:
+      '. . alert alert alert alert alert alert alert alert alert alert . .'
+      '. . header header header header header header header header header header . .'
+      '. . item-header item-header item-header item-header item-header item-header item-header item-header item-header item-header . .'
+      '. . item-info item-info item-info item-info item-info item-info item-info item-info item-info item-info . .'
+      '. . item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details . .'
+      '. . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments . .'
+      '. . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .';
+  }
+
+  @media (/* --screen-lg */ min-width: 64rem) {
+    grid-template-areas:
+      '. . alert alert alert alert alert alert alert alert alert alert . .'
+      '. . header header header header header header header header header header . .'
+      '. . item-header item-header item-header item-header item-header item-header item-header item-info item-info item-info . .'
+      '. . item-details item-details item-details item-details item-details item-details item-details item-info item-info item-info . .'
+      '. . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-info item-info item-info . .'
+      '. . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .';
+    grid-template-rows: auto auto auto auto 1fr auto;
+  }
+}
