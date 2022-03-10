@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-area: search-results-header;
+  gap: var(--space-8);
+  align-items: center;
+  min-height: var(--section-header-height);
+  padding-block: var(--space-8);
+
+  @media (/* --screen-md */ min-width: 48rem) {
+    grid-template-columns: minmax(var(--size-64), auto) 1fr;
+    grid-auto-flow: columns;
+    justify-content: space-between;
+    padding-block: 0;
+  }
+}

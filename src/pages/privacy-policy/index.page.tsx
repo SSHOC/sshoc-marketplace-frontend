@@ -1,31 +1,93 @@
-import type { GetStaticPropsResult } from 'next'
+import type { StringParams } from '@stefanprobst/next-route-manifest'
+import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import * as path from 'path'
+import { Fragment } from 'react'
 import { fileURLToPath } from 'url'
 
-import { getLastUpdatedTimestamp } from '@/api/git'
+import { FundingNotice } from '@/components/common/FundingNotice'
+import { Image } from '@/components/common/Image'
+import { ItemSearchBar } from '@/components/common/ItemSearchBar'
+import { LastUpdatedTimestamp } from '@/components/common/LastUpdatedTimestamp'
+import { Link } from '@/components/common/Link'
+import { Prose } from '@/components/common/Prose'
+import { ScreenHeader } from '@/components/common/ScreenHeader'
+import { ScreenTitle } from '@/components/common/ScreenTitle'
+import { BackgroundImage } from '@/components/privacy-policy/BackgroundImage'
+import { Content } from '@/components/privacy-policy/Content'
+import PrivacyPolicy, { metadata } from '@/components/privacy-policy/PrivacyPolicy.mdx'
+import { PrivacyPolicyScreenLayout } from '@/components/privacy-policy/PrivacyPolicyScreenLayout'
+import { getLastUpdatedTimestamp } from '@/data/git/get-last-updated-timestamp'
+import type { PageComponent } from '@/lib/core/app/types'
+import { getLocale } from '@/lib/core/i18n/getLocale'
+import { load } from '@/lib/core/i18n/load'
+import type { WithDictionaries } from '@/lib/core/i18n/types'
+import { useI18n } from '@/lib/core/i18n/useI18n'
+import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
+import { routes } from '@/lib/core/navigation/routes'
+import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
-import PrivacyPolicyScreen from '@/screens/privacy-policy/PrivacyPolicyScreen'
+import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 
 export namespace PrivacyPolicyPage {
-  export type Props = {
+  export type PathParamsInput = Record<string, never>
+  export type PathParams = StringParams<PathParamsInput>
+  export type SearchParamsInput = Record<string, never>
+  export interface Props extends WithDictionaries<'common'> {
     lastUpdatedTimestamp: IsoDateString
   }
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<PrivacyPolicyPage.Props>> {
+export async function getStaticProps(
+  context: GetStaticPropsContext<PrivacyPolicyPage.PathParams>,
+): Promise<GetStaticPropsResult<PrivacyPolicyPage.Props>> {
+  const locale = getLocale(context)
+  const dictionaries = await load(locale, ['common'])
+
   const filePath = path.relative(process.cwd(), fileURLToPath(import.meta.url))
   const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString()
 
   return {
     props: {
+      dictionaries,
       lastUpdatedTimestamp,
     },
   }
 }
 
-/**
- * Privacy policy page.
- */
 export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): JSX.Element {
-  return <PrivacyPolicyScreen lastUpdatedTimestamp={props.lastUpdatedTimestamp} />
+  const { t } = useI18n<'common'>()
+
+  const title = t(['common', 'pages', 'privacy-policy'])
+
+  const breadcrumbs = [
+    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: routes.PrivacyPolicyPage(), label: t(['common', 'pages', 'privacy-policy']) },
+  ]
+
+  return (
+    <Fragment>
+      <PageMetadata nofollow noindex title={title} />
+      <PageMainContent>
+        <PrivacyPolicyScreenLayout>
+          <BackgroundImage />
+          <ScreenHeader>
+            <ItemSearchBar />
+            <Breadcrumbs links={breadcrumbs} />
+            <ScreenTitle>{metadata.title}</ScreenTitle>
+          </ScreenHeader>
+          <Content>
+            <Prose>
+              <PrivacyPolicy components={{ Image, Link }} />
+            </Prose>
+            <LastUpdatedTimestamp dateTime={props.lastUpdatedTimestamp} />
+          </Content>
+          <FundingNotice />
+        </PrivacyPolicyScreenLayout>
+      </PageMainContent>
+    </Fragment>
+  )
 }
+
+const Page: PageComponent<PrivacyPolicyPage.Props> = PrivacyPolicyPage
+
+Page.getLayout = undefined

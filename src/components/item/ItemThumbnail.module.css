@@ -1,0 +1,5 @@
+.thumbnail {
+  object-fit: contain;
+  width: var(--size-20);
+  height: var(--size-20);
+}

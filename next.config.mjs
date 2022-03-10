@@ -1,37 +1,51 @@
 /* @ts-expect-error Missing module declaration. */
-import createBundleAnalyzerPlugin from '@next/bundle-analyzer'
+import createBundleAnalyzer from '@next/bundle-analyzer'
 import { log } from '@stefanprobst/log'
 import { RouteManifestPlugin } from '@stefanprobst/next-route-manifest'
-/* @ts-expect-error Missing module declaration. */
 import createSvgPlugin from '@stefanprobst/next-svg'
 import prettierOptions from '@stefanprobst/prettier-config'
 import withToc from '@stefanprobst/rehype-extract-toc'
 import withTocExport from '@stefanprobst/rehype-extract-toc/mdx'
+import withHeadingFragmentLinks from '@stefanprobst/rehype-fragment-links'
 import withImageCaptions from '@stefanprobst/rehype-image-captions'
 import withListsWithAriaRole from '@stefanprobst/rehype-lists-with-aria-role'
 import withNextImage from '@stefanprobst/rehype-next-image'
 import withNextLinks from '@stefanprobst/rehype-next-links'
 import withNoReferrerLinks from '@stefanprobst/rehype-noreferrer-links'
+import withSyntaxHighlighting from '@stefanprobst/rehype-shiki'
 import withParsedFrontmatter from '@stefanprobst/remark-extract-yaml-frontmatter'
 import withParsedFrontmatterExport from '@stefanprobst/remark-extract-yaml-frontmatter/mdx'
 import withPage from '@stefanprobst/remark-mdx-page'
 import withSmartQuotes from '@stefanprobst/remark-smart-quotes'
-import { createRequire } from 'module'
+import { headingRank } from 'hast-util-heading-rank'
+import { h } from 'hastscript'
 import * as path from 'path'
 import withHeadingIds from 'rehype-slug'
 import withFrontmatter from 'remark-frontmatter'
 import withGfm from 'remark-gfm'
+import { getHighlighter } from 'shiki'
 
-const require = createRequire(import.meta.url)
+import { syntaxHighlightingTheme } from './config/docs.config.mjs'
+import { defaultLocale, locales } from './config/i18n.config.mjs'
 
 const isProductionDeploy =
   process.env['NEXT_PUBLIC_SSHOC_BASE_URL'] === 'https://marketplace.sshopencloud.eu'
 
-/** @typedef {import('next').NextConfig} NextConfig */
+/** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
+/** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 /** @typedef {import('@mdx-js/loader').Options} MdxOptions */
 /** @typedef {import('@stefanprobst/remark-mdx-page').Options} MdxPageOptions */
+/** @typedef {import('hast').Element} HastElement */
 /** @typedef {import('@stefanprobst/next-route-manifest').Options} RouteManifestConfig */
+
+// TODO:
+const ContentSecurityPolicy = `
+  default-src 'self';
+  img-src *;
+  media-src *;
+  script-src 'self' matomo.acdh.oeaw.ac.at;
+`
 
 /** @type {RouteManifestConfig} */
 export const routeManifestConfig = {
@@ -42,13 +56,29 @@ export const routeManifestConfig = {
 }
 
 /** @type {NextConfig} */
-const nextConfig = {
+const config = {
   eslint: {
     dirs: ['.'],
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    outputStandalone: true,
+  },
   async headers() {
     const headers = [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+          // },
+        ],
+      },
       {
         source: '/assets/fonts/:path*',
         headers: [
@@ -76,9 +106,26 @@ const nextConfig = {
 
     return headers
   },
+  i18n: {
+    locales,
+    defaultLocale,
+  },
+  images: {
+    // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // dangerouslyAllowSVG: true,
+    domains:
+      process.env['NEXT_PUBLIC_SSHOC_API_BASE_URL'] != null
+        ? [process.env['NEXT_PUBLIC_SSHOC_API_BASE_URL']]
+        : undefined,
+  },
   pageExtensions: ['page.tsx', 'page.mdx', 'api.ts'],
   poweredByHeader: false,
-  reactStrictMode: true,
+  /**
+   * React Spectrum currently has issues with `StrictMode`.
+   *
+   * @see e.g. https://github.com/adobe/react-spectrum/issues/977
+   */
+  reactStrictMode: false,
   async rewrites() {
     return [
       {
@@ -95,11 +142,14 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   webpack(/** @type {WebpackConfig} */ config, context) {
-    config.infrastructureLogging = {
-      ...config.infrastructureLogging,
-      level: 'error',
-    }
+    /**
+     * @see https://github.com/vercel/next.js/discussions/30870
+     */
+    config.infrastructureLogging = { ...config.infrastructureLogging, level: 'error' }
 
+    /**
+     * @see https://github.com/vercel/next.js/issues/17806
+     */
     config.module?.rules?.push({
       test: /\.mjs$/,
       type: 'javascript/auto',
@@ -108,19 +158,37 @@ const nextConfig = {
       },
     })
 
+    /** Evaluate modules at build-time. */
     config.module?.rules?.push({
       test: /\.static\.ts$/,
       use: [{ loader: '@stefanprobst/val-loader' }],
       exclude: /node_modules/,
     })
 
-    // FIXME: enable once page components export types
-    // if (!context.isServer) {
-    //   config.plugins?.push(new RouteManifestPlugin(routeManifestConfig))
-    // }
+    /** Auto-generate route manifest. */
+    if (!context.isServer) {
+      config.plugins?.push(new RouteManifestPlugin(routeManifestConfig))
+    }
 
+    /** @type {(heading: HastElement, id: string) => Array<HastElement>} */
+    function createPermalink(headingElement, id) {
+      const permaLinkId = ['permalink', id].join('-')
+      const ariaLabelledBy = [permaLinkId, id].join(' ')
+
+      return [
+        h('div', { dataPermalink: true, dataRank: headingRank(headingElement) }, [
+          h('a', { ariaLabelledBy, href: '#' + id }, [
+            h('span', { id: permaLinkId, hidden: true }, 'Permalink to'),
+            h('span', '#'),
+          ]),
+          headingElement,
+        ]),
+      ]
+    }
+
+    /** Page sections. */
     config.module?.rules?.push({
-      test: /\.mdx?$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), 'src', 'components'),
       use: [
         context.defaultLoaders.babel,
@@ -143,12 +211,14 @@ const nextConfig = {
               withNextImage,
               withListsWithAriaRole,
               withHeadingIds,
+              [withHeadingFragmentLinks, { generate: createPermalink }],
             ],
           },
         },
       ],
     })
 
+    /** About pages. */
     const aboutPageTemplate = path.join(
       process.cwd(),
       'src',
@@ -184,8 +254,16 @@ const nextConfig = {
               withNextImage,
               withListsWithAriaRole,
               withHeadingIds,
+              [withHeadingFragmentLinks, { generate: createPermalink }],
               withToc,
               withTocExport,
+              () => {
+                return async (tree, file) => {
+                  const highlighter = await getHighlighter({ theme: syntaxHighlightingTheme })
+                  /* @ts-expect-error Attacher always returns a transformer. */
+                  return withSyntaxHighlighting({ highlighter })(tree, file)
+                }
+              },
             ],
             recmaPlugins: [
               [
@@ -195,7 +273,7 @@ const nextConfig = {
                   template: aboutPageTemplate,
                   imports: [
                     'import { Image } from "@/components/common/Image"',
-                    'import { Link } from "@/lib/core/navigation/Link"',
+                    'import { Link } from "@/components/common/Link"',
                   ],
                   props: '{ components: { Image, Link }, metadata, tableOfContents }',
                 }),
@@ -206,6 +284,7 @@ const nextConfig = {
       ],
     })
 
+    /** Contribute pages. */
     const contributePageTemplate = path.join(
       process.cwd(),
       'src',
@@ -241,8 +320,16 @@ const nextConfig = {
               withNextImage,
               withListsWithAriaRole,
               withHeadingIds,
+              [withHeadingFragmentLinks, { generate: createPermalink }],
               withToc,
               withTocExport,
+              () => {
+                return async (tree, file) => {
+                  const highlighter = await getHighlighter({ theme: syntaxHighlightingTheme })
+                  /* @ts-expect-error Attacher always returns a transformer. */
+                  return withSyntaxHighlighting({ highlighter })(tree, file)
+                }
+              },
             ],
             recmaPlugins: [
               [
@@ -252,7 +339,7 @@ const nextConfig = {
                   template: contributePageTemplate,
                   imports: [
                     'import { Image } from "@/components/common/Image"',
-                    'import { Link } from "@/lib/core/navigation/Link"',
+                    'import { Link } from "@/components/common/Link"',
                   ],
                   props: '{ components: { Image, Link }, metadata, tableOfContents }',
                 }),
@@ -269,19 +356,10 @@ const nextConfig = {
 
 /** @type {Array<(config: NextConfig) => NextConfig>} */
 const plugins = [
-  createBundleAnalyzerPlugin({
-    enabled: process.env['BUNDLE_ANALYZER'] === 'enabled',
-  }),
-  createSvgPlugin({
-    svgo: {
-      plugins: [{ prefixIds: true }, { removeDimensions: true }, { removeViewBox: false }],
-    },
-    svgr: {
-      titleProp: true,
-    },
-  }),
+  createSvgPlugin(),
+  createBundleAnalyzer({ enabled: process.env['BUNDLE_ANALYZER'] === 'enabled' }),
 ]
 
 export default plugins.reduce((config, plugin) => {
   return plugin(config)
-}, nextConfig)
+}, config)

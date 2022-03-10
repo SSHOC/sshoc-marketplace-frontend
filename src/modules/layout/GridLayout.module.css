@@ -1,9 +1,0 @@
-.layout {
-  position: relative;
-  display: grid;
-  grid-template-columns:
-    1fr
-    repeat(12, minmax(0, calc(var(--screen, var(--screen-3xl)) / 12)))
-    1fr;
-  align-content: start;
-}

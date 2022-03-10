@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  grid-area: main-nav;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: flex-end;
+  margin-block: var(--space-2);
+
+  @media (/* --page-navigation-bar */ min-width: 86.625rem) {
+    display: none;
+  }
+}
+
+.header {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-4) var(--space-8);
+  background-color: var(--color-mobile-nav-header);
+  color: var(--color-link-text);
+
+  & > button:hover {
+    color: var(--color-link-text-hover);
+  }
+
+  & > button:focus-visible {
+    color: var(--color-link-text-hover);
+  }
+}
+
+.home-link {
+  display: flex;
+  max-width: var(--size-64);
+  line-height: var(--line-height-none);
+}
+
+.content {
+  display: grid;
+  overflow: auto;
+  font-size: var(--font-size-ui-base);
+}
+
+.main-nav {
+  padding-block: var(--space-0-5);
+}
+
+.nav-items {
+  display: grid;
+  row-gap: var(--space-1);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-separator {
+  height: 1px;
+  background-color: var(--color-separator);
+}
+
+.nav-link-disclosure-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-6);
+  padding-inline: var(--space-8);
+  border: none;
+  border-left: var(--size-1) solid var(--color-border);
+  background: none;
+  color: var(--color-link-text);
+  outline-offset: 0;
+
+  &:hover {
+    border-left-color: var(--color-primary-600);
+    background-color: var(--color-neutral-50);
+    color: var(--color-link-text-hover);
+  }
+
+  &:focus-visible {
+    border-left-color: var(--color-primary-600);
+    background-color: var(--color-neutral-50);
+    color: var(--color-link-text-hover);
+  }
+
+  & > svg {
+    width: var(--size-2-5);
+    height: var(--size-2-5);
+  }
+
+  &[data-state='expanded'] {
+    border-left-color: var(--color-primary-750);
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-0);
+  }
+
+  &[data-state='expanded'] > svg {
+    transform: rotate(180deg);
+  }
+}

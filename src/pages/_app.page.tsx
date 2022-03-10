@@ -1,158 +1,90 @@
-import 'focus-visible'
-import '@/styles/global.css'
-import 'tailwindcss/tailwind.css'
-import '@/styles/nprogress.css'
-/** should use ReactToastify.minimal.css */
+/** Needs to be imported before `src/styles/index.css` so we can overwrite custom properties. */
 import 'react-toastify/dist/ReactToastify.css'
-import '@/styles/dialog.css'
+import '@/styles/index.css'
 
-import { I18nProvider } from '@react-aria/i18n'
-import { useInteractionModality } from '@react-aria/interactions'
-import { SSRProvider } from '@react-aria/ssr'
-import Layout from '@stefanprobst/next-app-layout'
-import { ErrorBoundary } from '@stefanprobst/next-error-boundary'
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import { Router } from 'next/router'
-import np from 'nprogress'
-import type { PropsWithChildren } from 'react'
-import { Fragment, useState } from 'react'
-import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from 'react-query'
+import { ErrorBoundary, useError } from '@stefanprobst/next-error-boundary'
+import type { NextWebVitalsMetric } from 'next/app'
+import { Fragment } from 'react'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { Slide, ToastContainer } from 'react-toastify'
 
-import AuthProvider from '@/modules/auth/AuthContext'
-import ClientError from '@/modules/error/ClientError'
-import PageLayout from '@/modules/page/PageLayout'
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { reportPageView } from '@/lib/core/analytics/analytics-service'
+import { AnalyticsScript } from '@/lib/core/analytics/AnalyticsScript'
+import { ContextProviders } from '@/lib/core/app/Providers'
+import type { AppProps, GetLayout } from '@/lib/core/app/types'
+import { RootErrorBoundary } from '@/lib/core/error/RootErrorBoundary'
+import { PageLayout } from '@/lib/core/layouts/PageLayout'
+import { SiteMetadata } from '@/lib/core/metadata/SiteMetadata'
+import { Centered } from '@/lib/core/ui/Centered/Centered'
+import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
-/**
- * Report page transitions to Matomo analytics.
- */
-Router.events.on('routeChangeComplete', (url) => {
-  if (typeof window !== 'undefined') {
-    const w = window as typeof window & { _paq?: Array<unknown> }
-    if (w._paq !== undefined) {
-      w._paq.push(['setCustomUrl', url])
-      w._paq.push(['setDocumentTitle', document.title])
-      w._paq.push(['trackPageView'])
-    }
-  }
-})
-
-/**
- * Progress bar for client-side page transitions.
- */
-np.configure({ showSpinner: false })
-/** show progress indicator only if transition takes longer than `delay` */
-const delay = 250
-let timeout: number
-function startProgressIndicator() {
-  timeout = window.setTimeout(np.start, delay)
-}
-function stopProgressIndicator() {
-  window.clearTimeout(timeout)
-  np.done()
-}
-Router.events.on('routeChangeStart', startProgressIndicator)
-Router.events.on('routeChangeComplete', stopProgressIndicator)
-Router.events.on('routeChangeError', stopProgressIndicator)
-
-/**
- * Create client side cache for server data.
- */
-function createQueryClient() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        // cacheTime: Infinity,
-        /**
-         * stale time must not be set to infinite, because this will interfere
-         * with refetching after clearing the query cache when a user signs in/out.
-         *
-         * TODO: is this because the cache gets reset to its initialData (which is
-         * unauthenticated data fetched server-side)?
-         */
-        // staleTime: Infinity,
-        structuralSharing: false,
-      },
-    },
+if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
+  import('@/lib/core/app/msw').then(({ start }) => {
+    start()
   })
-
-  return queryClient
 }
 
-/**
- * Providers.
- */
-function Providers({ children, render }: PropsWithChildren<{ render: () => void }>) {
-  const [queryClient] = useState(() => {
-    return createQueryClient()
-  })
+export default function App(props: AppProps): JSX.Element {
+  const { Component, pageProps } = props
 
-  useInteractionModality()
-
-  const [clearQueryCache] = useState(() => {
-    return () => {
-      queryClient.clear()
-      /**
-       * Clearing the query cache means removing all query subscribers.
-       * Rerendering the tree registers them again.
-       */
-      render()
-    }
-  })
-
-  return (
-    <SSRProvider>
-      <I18nProvider locale="en">
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider onChange={clearQueryCache}>{children}</AuthProvider>
-        </QueryClientProvider>
-      </I18nProvider>
-    </SSRProvider>
-  )
-}
-
-/**
- * App shell.
- */
-export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
-  const [, forceRender] = useState<object>({})
+  const getLayout = Component.getLayout ?? getDefaultLayout
 
   return (
     <Fragment>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <ErrorBoundary fallback={ClientError}>
-        <Providers
-          {...pageProps}
-          render={() => {
-            return forceRender({})
-          }}
-        >
-          <Layout {...pageProps} default={PageLayout}>
-            <ErrorBoundary fallback={ClientError} onReset={useQueryErrorResetBoundary().reset}>
-              <Component {...pageProps} />
-            </ErrorBoundary>
-          </Layout>
-          <ToastContainer
-            transition={Slide}
-            toastClassName={({ type } = {}) => {
-              const shared =
-                'relative mb-4 p-4 rounded shadow-md flex justify-between overflow-hidden cursor-pointer'
-              switch (type) {
-                case 'error':
-                  return [shared, 'bg-error-600 text-white'].join(' ')
-                default:
-                  return [shared, 'bg-secondary-600 text-white'].join(' ')
-              }
-            }}
-            bodyClassName="text-sm font-medium p-2 flex-1 mx-auto"
-          />
+      <AnalyticsScript />
+      <SiteMetadata />
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <ContextProviders pageProps={pageProps} isPageAccessible={Component.isPageAccessible}>
+          <RootErrorBoundary>
+            {/* <Suspense fallback={<RootSuspenseFallback />}> */}
+            {getLayout(<Component {...pageProps} />, pageProps)}
+            {/* </Suspense> */}
+          </RootErrorBoundary>
           <ReactQueryDevtools />
-        </Providers>
+        </ContextProviders>
       </ErrorBoundary>
     </Fragment>
   )
+}
+
+function ErrorFallback() {
+  const { error } = useError()
+
+  return (
+    <FullPage>
+      <Centered>
+        <div role="alert">
+          <p>{error.message || 'Something went wrong.'}</p>
+        </div>
+      </Centered>
+    </FullPage>
+  )
+}
+
+// function RootSuspenseFallback() {
+//   return (
+//     <FullPage>
+//       <Centered>
+//         <ProgressSpinner />
+//       </Centered>
+//     </FullPage>
+//   )
+// }
+
+export const getDefaultLayout: GetLayout = function getDefaultLayout(page, pageProps) {
+  return <PageLayout pageProps={pageProps}>{page}</PageLayout>
+}
+
+export function reportWebVitals(metric: NextWebVitalsMetric): void {
+  switch (metric.name) {
+    case 'Next.js-hydration':
+      /** Register right after hydration. */
+      break
+    case 'Next.js-route-change-to-render':
+      /** Register page views after client-side transitions. */
+      reportPageView()
+      break
+    default:
+      break
+  }
 }

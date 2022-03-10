@@ -1,0 +1,43 @@
+.groups {
+  column-count: 1;
+
+  @media (/* --screen-md */ min-width: 48rem) and (min-height: 40rem) {
+    column-count: 2;
+    column-gap: var(--space-16);
+  }
+
+  & > :not(:first-child) {
+    margin-top: var(--space-8);
+  }
+}
+
+.group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.group-header {
+  display: flex;
+  gap: var(--space-4);
+  align-items: baseline;
+
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--color-separator);
+  }
+
+  & > h2 {
+    color: var(--color-text-muted);
+  }
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.list-item a {
+  display: flex;
+  justify-content: space-between;
+}

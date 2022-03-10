@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-template-areas: 'header' 'content' 'footer';
+  gap: var(--space-6);
+
+  @media (/* --screen-sm */ min-width: 40rem) {
+    max-width: var(--size-160);
+    margin-block: var(--space-16);
+    padding-block: var(--space-16);
+    padding-inline: var(--space-16);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background);
+    box-shadow: var(--box-shadow);
+  }
+}

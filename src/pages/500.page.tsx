@@ -1,22 +1,71 @@
-import NextError from 'next/error'
+import type { StringParams } from '@stefanprobst/next-route-manifest'
+import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import { Fragment } from 'react'
 
-import ErrorScreen from '@/screens/error/ErrorScreen'
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { FundingNotice } from '@/components/common/FundingNotice'
+import { LinkButton } from '@/components/common/LinkButton'
+import { ScreenTitle } from '@/components/common/ScreenTitle'
+import { BackgroundImage } from '@/components/error/BackgroundImage'
+import { Content } from '@/components/error/Content'
+import { ErrorScreenLayout } from '@/components/error/ErrorScreenLayout'
+import type { PageComponent } from '@/lib/core/app/types'
+import { getLocale } from '@/lib/core/i18n/getLocale'
+import { load } from '@/lib/core/i18n/load'
+import type { WithDictionaries } from '@/lib/core/i18n/types'
+import { useI18n } from '@/lib/core/i18n/useI18n'
+import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
+import { routes } from '@/lib/core/navigation/routes'
+import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
-type InternalErrorPageProps = {
-  statusCode: number
+export namespace NotFoundPage {
+  export type PathParamsInput = Record<string, never>
+  export type PathParams = StringParams<PathParamsInput>
+  export type SearchParamsInput = Record<string, never>
+  export type Props = WithDictionaries<'common'>
 }
 
-/**
- * Unexpected error page.
- */
-export default function InternalErrorPage({
-  statusCode = 500,
-}: InternalErrorPageProps): JSX.Element {
+export async function getStaticProps(
+  context: GetStaticPropsContext<NotFoundPage.PathParams>,
+): Promise<GetStaticPropsResult<NotFoundPage.Props>> {
+  const locale = getLocale(context)
+  const dictionaries = await load(locale, ['common'])
+
+  return {
+    props: {
+      dictionaries,
+    },
+  }
+}
+
+export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
+  const { t } = useI18n<'common'>()
+
+  const title = t(['common', 'pages', 'internal-server-error'])
+  const message = t(['common', 'internal-server-error-message'])
+
   return (
-    <ErrorScreen
-      message="An unexpected error has occurred."
-      statusCode={statusCode}
-      className="min-h-screen"
-    />
+    <Fragment>
+      <PageMetadata nofollow noindex title={title} />
+      <PageMainContent>
+        <ErrorScreenLayout>
+          <BackgroundImage />
+          <Content>
+            <ScreenTitle>{title}</ScreenTitle>
+            <ErrorMessage message={message} statusCode={500} />
+            <div>
+              <LinkButton href={routes.HomePage()} color="secondary">
+                {t(['common', 'go-to-main-page'])}
+              </LinkButton>
+            </div>
+          </Content>
+          <FundingNotice />
+        </ErrorScreenLayout>
+      </PageMainContent>
+    </Fragment>
   )
 }
+
+const Page: PageComponent<NotFoundPage.Props> = NotFoundPage
+
+Page.getLayout = undefined

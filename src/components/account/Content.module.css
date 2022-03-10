@@ -1,0 +1,6 @@
+.content {
+  display: grid;
+  grid-area: content;
+  row-gap: var(--space-12);
+  padding-block-end: var(--space-12);
+}

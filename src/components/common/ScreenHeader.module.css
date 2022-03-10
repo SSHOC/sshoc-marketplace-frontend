@@ -1,0 +1,15 @@
+.container {
+  display: grid;
+  grid-area: header;
+  row-gap: var(--space-8);
+  padding-block: var(--space-8);
+
+  @media (/* --screen-sm */ min-width: 40rem) {
+    row-gap: var(--space-12);
+    padding-block: var(--space-8) var(--space-12);
+  }
+
+  @media (/* --screen-md */ min-width: 48rem) {
+    padding-block: var(--space-8) var(--space-16);
+  }
+}

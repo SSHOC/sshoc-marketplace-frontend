@@ -1,0 +1,49 @@
+.container {
+  display: grid;
+  row-gap: var(--space-8);
+}
+
+.form-fields {
+  display: grid;
+  gap: var(--space-6);
+  max-width: var(--size-128);
+  margin-block-end: var(--space-12);
+
+  & a {
+    &:hover {
+      color: var(--color-link-text);
+    }
+
+    &:focus-visible {
+      color: var(--color-link-text);
+    }
+  }
+}
+
+.controls {
+  justify-self: end;
+  padding-block: var(--space-2);
+}
+
+.footer {
+  display: grid;
+  gap: var(--space-8);
+
+  & .helptext {
+    font-size: var(--font-size-ui-sm);
+
+    & > a {
+      &:hover {
+        color: var(--color-link-text);
+      }
+
+      &:focus-visible {
+        color: var(--color-link-text);
+      }
+    }
+  }
+}
+
+.line {
+  border-bottom: 1px solid var(--color-separator);
+}

@@ -13,7 +13,7 @@ and assurance of data quality** for already-existing items in the Marketplace.
 Once logged in to the SSH Open Marketplace, moderators can perform their editorial tasks via the "My
 account" dashboard, and especially via the “My items to moderate” section.
 
-![My moderator account - screenshot](/assets/images/screenshot-2022-01-13-at-17.20.10.png)
+![My moderator account - screenshot](/assets/cms/images/moderator-account.png)
 
 ## Moderating suggested items
 
@@ -29,19 +29,20 @@ as possible, especially those that are recommended. See
 
 ### Suggested items by contributors
 
-1. By selecting the "suggested" status only in the list of items to moderate, moderators can see the
-   list of items waiting for approval/rejection.
+1.  By selecting the "suggested" status only in the list of items to moderate, moderators can see
+    the list of items waiting for approval/rejection.
 
-   ![Items to moderate - screenshot](/assets/images/moder_item.png)
+    ![Items to moderate - screenshot](/assets/cms/images/items-to-moderate.png)
 
-2. By clicking on the "Edit" button, a moderator can access the edit form of a suggested item and
-   check the metadata
-3. Approve or reject a suggested version of an item.
+2.  By clicking on the "Edit" button, a moderator can access the edit form of a suggested item and
+    check the metadata
 
-   - Approving: makes the suggested version "approved",
-   - Rejecting: makes the suggested version rejected and the last approved version remains
-     "approved". (If this was a newly suggested item, it will become deprecated and won't be visible
-     to normal users at all).
+3.  Approve or reject a suggested version of an item.
+
+    - Approving: makes the suggested version "approved",
+    - Rejecting: makes the suggested version rejected and the last approved version remains
+      "approved". (If this was a newly suggested item, it will become deprecated and won't be
+      visible to normal users at all).
 
 ### Suggested items by system importer (= via the ingest pipeline)
 
@@ -60,14 +61,14 @@ are recommended. Moderators complete these tasks with both automatic and manual 
 
 **Quality criteria for SSH Open Marketplace items**
 
-1. **General Entry Requirements**: research requirements, technical aspects, contextualisation and
-   legal/ethical requirements are considered here.
-2. **Non-redundancy**: the same entity should only be referenced once in the SSH Open Marketplace.
-   Duplicate items are merged to ensure the coherence of the items showcased in the portal.
-3. **Completeness of item description**. This criterion concerns the number of metadata filled out
-   to describe an item and answer to the question of how an entity is described comprehensively.
-4. **Verification of conformity and relevance** of metadata. Information value checks depend on the
-   type of content expected.
+1.  **General Entry Requirements**: research requirements, technical aspects, contextualisation and
+    legal/ethical requirements are considered here.
+2.  **Non-redundancy**: the same entity should only be referenced once in the SSH Open Marketplace.
+    Duplicate items are merged to ensure the coherence of the items showcased in the portal.
+3.  **Completeness of item description**. This criterion concerns the number of metadata filled out
+    to describe an item and answer to the question of how an entity is described comprehensively.
+4.  **Verification of conformity and relevance** of metadata. Information value checks depend on the
+    type of content expected.
 
 - if a verbose description is expected, quality criteria revolves around correctness,
   understandability and concision (i.e. length),
@@ -77,11 +78,11 @@ are recommended. Moderators complete these tasks with both automatic and manual 
   the Marketplace.
 - Quality of the media objects is yet another dimension, e.g. ensuring a good picture quality.
 
-5. **Interlinking**. To ensure serendipity and reinforce the browsing experience of the Marketplace,
-   the quality of the links between items is an important criterion. The number of related items for
-   a given entry, and the pertinence of the links are some of the checks performed to ensure that
-   this criterion is met (e.g. whether the link goes to a resource internal or external to the
-   Marketplace).
+5.  **Interlinking**. To ensure serendipity and reinforce the browsing experience of the
+    Marketplace, the quality of the links between items is an important criterion. The number of
+    related items for a given entry, and the pertinence of the links are some of the checks
+    performed to ensure that this criterion is met (e.g. whether the link goes to a resource
+    internal or external to the Marketplace).
 
 Based on the quality criteria defined above, some quality metrics have been established (e.g. media
 quality for images or number of characters in a description) and are automatically checked. These
@@ -121,18 +122,18 @@ cases, to write back to the system to flag some items for curation in the editor
 A dedicated Python library and a set of notebooks are available. For some of the notebooks, specific
 authorisations (=credentials) are needed.
 
-1. Ingest review notebook (to be developed)
-2. Data analysis notebook including some Items provenance analysis, providing a non-redundancy
-   overview, performing some completeness checks (overview of null values; description length), and
-   checking the detailed coverage of given fields.
-3. Automatic checks notebooks = curation-flags.
+1.  Ingest review notebook (to be developed)
+2.  Data analysis notebook including some Items provenance analysis, providing a non-redundancy
+    overview, performing some completeness checks (overview of null values; description length), and
+    checking the detailed coverage of given fields.
+3.  Automatic checks notebooks = curation-flags.
 
 - 3.1 curation-flag-URL
 - 3.2 curation-flag-description
 - 3.3 Curation-flag-relations (to be completed)
 - 3.4 curation-flag-coverage
 
-4. Mass analysis and/or corrections notebooks
+4.  Mass analysis and/or corrections notebooks
 
 - 4.1 Duplicates & merging
 - 4.2 Actors curation

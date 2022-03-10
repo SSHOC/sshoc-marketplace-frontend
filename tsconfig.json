@@ -1,22 +1,24 @@
 {
   "extends": "@stefanprobst/tsconfig",
   "compilerOptions": {
-    "noUncheckedIndexedAccess": false,
-    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": true,
+    // "exactOptionalPropertyTypes": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    }
+    },
+    "types": ["react/next", "@jest/types"]
   },
   "include": [
     "next-env.d.ts",
     "app.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "*.js",
-    "*.config.mjs",
-    "test/stub.js"
+    "**/*.config.mjs",
+    "**/*.config.js",
+    "scripts/*.loader.cjs",
+    "stories/main.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".next", "out", "public", "cypress"]
 }

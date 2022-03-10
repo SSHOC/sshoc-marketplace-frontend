@@ -1,0 +1,25 @@
+:root {
+  --button-color: initial;
+  --button-color-focus: initial;
+  --button-color-hover: initial;
+  --button-color-active: initial;
+  --button-color-disabled: initial;
+  --button-background-color: initial;
+  --button-background-color-focus: initial;
+  --button-background-color-hover: initial;
+  --button-background-color-active: initial;
+  --button-background-color-disabled: initial;
+  --button-border-radius: initial;
+  --button-border-color: initial;
+  --button-border-color-focus: initial;
+  --button-border-color-hover: initial;
+  --button-border-color-active: initial;
+  --button-border-color-disabled: initial;
+  --button-border-width: initial;
+  --button-font-size: initial;
+  --button-font-weight: initial;
+  --button-line-height: initial;
+  --button-padding-inline: initial;
+  --button-padding-block: initial;
+  --button-cursor: initial;
+}

@@ -1,0 +1,9 @@
+.underlay {
+  position: fixed;
+  z-index: var(--z-index-underlay);
+  background-color: var(--color-backdrop-muted);
+  inset: 0;
+}
+
+.underlay[data-open='true'] {
+}

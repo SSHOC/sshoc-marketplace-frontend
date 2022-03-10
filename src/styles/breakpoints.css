@@ -1,0 +1,13 @@
+/*
+ * These are not replaced correctly in css modules.
+ *
+ * @see https://github.com/vercel/next.js/issues/35080#issuecomment-1063006206
+ */
+@custom-media --screen-xs (min-width: 30rem); /* 480px */
+@custom-media --screen-sm (min-width: 40rem); /* 640px */
+@custom-media --screen-md (min-width: 48rem); /* 768px */
+@custom-media --screen-lg (min-width: 64rem); /* 1024px */
+@custom-media --screen-xl (min-width: 80rem); /* 1280px */
+@custom-media --screen-2xl (min-width: 96rem); /* 1536px */
+@custom-media --page-navigation-bar (min-width: 86.625rem);
+@custom-media --page-navigation-font-size (min-width: 98rem);
