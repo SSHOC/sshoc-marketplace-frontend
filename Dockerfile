@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:experimental
+
 # base
 FROM node:16-slim AS base
 
