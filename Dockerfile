@@ -11,6 +11,8 @@ COPY --chown=node:node package.json yarn.lock ./
 # cannot use `--ignore-scripts` for `sharp` to compile
 RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
 
+RUN echo VARIABLES $NEXT_PUBLIC_BASE_URL $NEXT_PUBLIC_SSHOC_API_BASE_URL $NEXT_PUBLIC_GITLAB_BASE_URL
+
 # build
 FROM base AS build
 
@@ -35,6 +37,8 @@ ARG NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH
 ARG NEXT_PUBLIC_GITLAB_APP_ID
 ARG NEXT_PUBLIC_MATOMO_BASE_URL
 ARG NEXT_PUBLIC_MATOMO_APP_ID
+
+RUN echo VARIABLES2 $NEXT_PUBLIC_BASE_URL $NEXT_PUBLIC_SSHOC_API_BASE_URL $NEXT_PUBLIC_GITLAB_BASE_URL
 
 RUN yarn build
 
