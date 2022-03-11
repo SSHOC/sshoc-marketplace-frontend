@@ -23,6 +23,7 @@ workflow:
         NEXT_PUBLIC_BASE_URL: https://marketplace.sshopencloud.eu
         NEXT_PUBLIC_SSHOC_API_BASE_URL: https://marketplace-api.sshopencloud.eu
         NEXT_PUBLIC_MATOMO_APP_ID: 179
+    - when: always
 
 include:
   - template: Auto-DevOps.gitlab-ci.yml
