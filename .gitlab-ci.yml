@@ -1,15 +1,18 @@
-variables:
-  NEXT_PUBLIC_BASE_URL: https://sshoc-marketplace.acdh-dev.oeaw.ac.at
-  NEXT_PUBLIC_SSHOC_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
-  GITLAB_ACCESS_TOKEN: $GITLAB_ACCESS_TOKEN
-  NEXT_PUBLIC_GITLAB_BASE_URL: $NEXT_PUBLIC_GITLAB_BASE_URL
-  NEXT_PUBLIC_GITLAB_REPOSITORY: $NEXT_PUBLIC_GITLAB_REPOSITORY
-  NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH: $NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH
-  NEXT_PUBLIC_GITLAB_APP_ID: $NEXT_PUBLIC_GITLAB_APP_ID
-  NEXT_PUBLIC_MATOMO_BASE_URL: $NEXT_PUBLIC_MATOMO_BASE_URL
-  NEXT_PUBLIC_MATOMO_APP_ID: 190
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
 
-workflow:
+build:
+  stage: build
+  variables:
+    NEXT_PUBLIC_BASE_URL: https://sshoc-marketplace.acdh-dev.oeaw.ac.at
+    NEXT_PUBLIC_SSHOC_API_BASE_URL: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+    GITLAB_ACCESS_TOKEN: $GITLAB_ACCESS_TOKEN
+    NEXT_PUBLIC_GITLAB_BASE_URL: $NEXT_PUBLIC_GITLAB_BASE_URL
+    NEXT_PUBLIC_GITLAB_REPOSITORY: $NEXT_PUBLIC_GITLAB_REPOSITORY
+    NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH: $NEXT_PUBLIC_GITLAB_REPOSITORY_BRANCH
+    NEXT_PUBLIC_GITLAB_APP_ID: $NEXT_PUBLIC_GITLAB_APP_ID
+    NEXT_PUBLIC_MATOMO_BASE_URL: $NEXT_PUBLIC_MATOMO_BASE_URL
+    NEXT_PUBLIC_MATOMO_APP_ID: 190
   rules:
     - if: $CI_COMMIT_REF_NAME == "main"
       variables:
@@ -21,6 +24,3 @@ workflow:
         NEXT_PUBLIC_BASE_URL: https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
         NEXT_PUBLIC_SSHOC_API_BASE_URL: https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
         NEXT_PUBLIC_MATOMO_APP_ID: 198
-
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
