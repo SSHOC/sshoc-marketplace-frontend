@@ -13,7 +13,7 @@ const gitlabAccesToken = process.env['GITLAB_ACCESS_TOKEN']
 function createGitlabApiRequest(pathname: string, searchParams?: UrlSearchParamsInit) {
   const url = createUrl({
     baseUrl: gitlabBaseUrl,
-    pathname: posix.join('/api/v4/projects/', gitlabprojectId, encodeURIComponent(pathname)),
+    pathname: posix.join('/api/v4/projects/', gitlabprojectId, pathname),
     searchParams: searchParams ?? {},
   })
 
@@ -26,8 +26,8 @@ function createGitlabApiRequest(pathname: string, searchParams?: UrlSearchParams
   return request
 }
 
-async function getLastCommitId(fileName: string): Promise<string> {
-  const req = createGitlabApiRequest('repository/files/' + fileName, {
+async function getLastCommitId(filePath: string): Promise<string> {
+  const req = createGitlabApiRequest('repository/files/' + encodeURIComponent(filePath), {
     ref: gitlabBranch,
   })
   const { last_commit_id: lastCommitId } = await request(req, { responseType: 'json' })
