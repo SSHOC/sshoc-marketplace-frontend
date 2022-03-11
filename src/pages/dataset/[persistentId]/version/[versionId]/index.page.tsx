@@ -107,7 +107,8 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): JSX
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = dataset?.category ?? 'dataset'
-  const label = dataset?.label ?? t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const label = dataset?.label ?? categoryLabel
 
   if (router.isFallback || dataset == null) {
     return (
@@ -145,7 +146,10 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): JSX
           <BackgroundImage />
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
-              values: { category: label, status: t(['common', 'item-status', dataset.status]) },
+              values: {
+                category: categoryLabel,
+                status: t(['common', 'item-status', dataset.status]),
+              },
             })}
           </Alert>
           <ScreenHeader>

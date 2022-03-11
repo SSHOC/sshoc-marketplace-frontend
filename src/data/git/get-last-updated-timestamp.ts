@@ -6,14 +6,14 @@ import { log } from '@/lib/utils'
 import { backend } from '~/config/cms.config'
 
 const gitlabBaseUrl = backend.auth.apiBaseUrl
-const gitlabRepository = backend.repo
-const gitlabBranch = backend.branch
+const gitlabprojectId = backend.projectId
+const gitlabBranch = process.env['NEXT_PUBLIC_GITLAB_REPOSITORY_CURRENT_BRANCH'] ?? backend.branch
 const gitlabAccesToken = process.env['GITLAB_ACCESS_TOKEN']
 
 function createGitlabApiRequest(pathname: string, searchParams?: UrlSearchParamsInit) {
   const url = createUrl({
     baseUrl: gitlabBaseUrl,
-    pathname: posix.join('/api/v4/projects/', gitlabRepository, pathname),
+    pathname: posix.join('/api/v4/projects/', gitlabprojectId, encodeURIComponent(pathname)),
     searchParams: searchParams ?? {},
   })
 

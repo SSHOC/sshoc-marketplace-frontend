@@ -20,6 +20,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
+import { isNonEmptyString } from '@/lib/utils'
 
 export interface ItemHistorySearchResultProps {
   item: ItemHistoryEntry & { category: ItemCategory }
@@ -40,7 +41,7 @@ export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JS
           versionId={item.id}
         >
           {item.label}
-          {item.version != null ? <span>({item.version})</span> : null}
+          {isNonEmptyString(item.version) ? <span>({item.version})</span> : null}
         </ItemLink>
       </SearchResultTitle>
       <SearchResultMeta>

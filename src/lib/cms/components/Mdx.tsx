@@ -8,7 +8,7 @@ export interface MdxProps {
 export function Mdx(props: MdxProps): JSX.Element {
   const { mdx } = props
 
-  const [vdom, setVdom] = useState<ReactNode>(null)
+  const [element, setElement] = useState<ReactNode>(null)
 
   useEffect(() => {
     let isCanceled = false
@@ -20,7 +20,7 @@ export function Mdx(props: MdxProps): JSX.Element {
       const vfile = await processor.process(mdx)
 
       if (!isCanceled) {
-        setVdom(vfile.result)
+        setElement(vfile.result)
       }
     }
 
@@ -31,5 +31,5 @@ export function Mdx(props: MdxProps): JSX.Element {
     }
   }, [mdx])
 
-  return <Fragment>{vdom}</Fragment>
+  return <Fragment>{element}</Fragment>
 }

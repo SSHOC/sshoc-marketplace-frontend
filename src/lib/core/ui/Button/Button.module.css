@@ -182,13 +182,14 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-block: var(--space-7);
+  padding-block: var(--space-6);
   padding-inline: var(--space-8);
   border: none;
   border-left: var(--size-1) solid var(--color-border);
   color: var(--color-link-text);
   outline-offset: 0;
   font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-5-5);
   text-decoration: none;
 
   &[data-variant='secondary'] {

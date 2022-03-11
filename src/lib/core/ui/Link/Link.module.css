@@ -147,6 +147,7 @@
   border-left: var(--size-1) solid var(--color-border);
   color: var(--color-link-text);
   outline-offset: 0;
+  line-height: var(--line-height-5-5);
   text-decoration: none;
 
   &[data-variant='secondary'] {

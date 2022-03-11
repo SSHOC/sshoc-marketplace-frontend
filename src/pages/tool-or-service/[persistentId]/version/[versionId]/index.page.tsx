@@ -109,7 +109,8 @@ export default function ToolOrServiceVersionPage(
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = toolOrService?.category ?? 'tool-or-service'
-  const label = toolOrService?.label ?? t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const label = toolOrService?.label ?? categoryLabel
 
   if (router.isFallback || toolOrService == null) {
     return (
@@ -148,7 +149,7 @@ export default function ToolOrServiceVersionPage(
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
               values: {
-                category: label,
+                category: categoryLabel,
                 status: t(['common', 'item-status', toolOrService.status]),
               },
             })}

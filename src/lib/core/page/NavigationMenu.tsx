@@ -53,7 +53,7 @@ export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>):
             <Menu
               {...props}
               menuProps={menuProps}
-              aria-label={props.menuLabel}
+              aria-label={props.menuLabel ?? props.label}
               autoFocus={state.focusStrategy}
               onClose={state.close}
             />
@@ -124,6 +124,7 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
         {...menuItemProps}
         href={item.props.href}
         variant="nav-menu-link"
+        // FIXME: missing tabindex, role
       >
         {item.rendered}
       </NavLink>

@@ -50,9 +50,21 @@ export function usePlaintext(args: UsePlaintextArgs): string {
   const [plaintext, setPlaintext] = useState('')
 
   useEffect(() => {
-    processor.process(markdown).then((file) => {
-      return setPlaintext(String(file).replace(/\n+/g, ' ').trim())
-    })
+    let isCanceled = false
+
+    async function run() {
+      const vfile = await processor.process(markdown)
+
+      if (!isCanceled) {
+        setPlaintext(String(vfile).replace(/\n+/g, ' ').trim())
+      }
+    }
+
+    run()
+
+    return () => {
+      isCanceled = true
+    }
   }, [markdown])
 
   return plaintext

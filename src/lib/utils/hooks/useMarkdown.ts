@@ -33,9 +33,21 @@ export function useMarkdown(args: UseMarkdownArgs): ReactNode {
   const [element, setElement] = useState<ReactNode>(null)
 
   useEffect(() => {
-    processor.process(markdown).then((file) => {
-      return setElement(file.result)
-    })
+    let isCanceled = false
+
+    async function run() {
+      const vfile = await processor.process(markdown)
+
+      if (!isCanceled) {
+        setElement(vfile.result)
+      }
+    }
+
+    run()
+
+    return () => {
+      isCanceled = true
+    }
   }, [markdown])
 
   return element

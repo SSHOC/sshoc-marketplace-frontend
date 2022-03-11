@@ -107,7 +107,8 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = publication?.category ?? 'publication'
-  const label = publication?.label ?? t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const label = publication?.label ?? categoryLabel
 
   if (router.isFallback || publication == null) {
     return (
@@ -145,7 +146,10 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
           <BackgroundImage />
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
-              values: { category: label, status: t(['common', 'item-status', publication.status]) },
+              values: {
+                category: categoryLabel,
+                status: t(['common', 'item-status', publication.status]),
+              },
             })}
           </Alert>
           <ScreenHeader>

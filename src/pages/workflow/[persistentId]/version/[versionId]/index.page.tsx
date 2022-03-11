@@ -107,7 +107,8 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = workflow?.category ?? 'workflow'
-  const label = workflow?.label ?? t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const label = workflow?.label ?? categoryLabel
 
   if (router.isFallback || workflow == null) {
     return (
@@ -145,7 +146,10 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
           <BackgroundImage />
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
-              values: { category: label, status: t(['common', 'item-status', workflow.status]) },
+              values: {
+                category: categoryLabel,
+                status: t(['common', 'item-status', workflow.status]),
+              },
             })}
           </Alert>
           <ScreenHeader>

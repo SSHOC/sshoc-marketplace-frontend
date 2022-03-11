@@ -109,7 +109,8 @@ export default function TrainingMaterialVersionPage(
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = trainingMaterial?.category ?? 'training-material'
-  const label = trainingMaterial?.label ?? t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const label = trainingMaterial?.label ?? categoryLabel
 
   if (router.isFallback || trainingMaterial == null) {
     return (
@@ -148,7 +149,7 @@ export default function TrainingMaterialVersionPage(
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
               values: {
-                category: label,
+                category: categoryLabel,
                 status: t(['common', 'item-status', trainingMaterial.status]),
               },
             })}

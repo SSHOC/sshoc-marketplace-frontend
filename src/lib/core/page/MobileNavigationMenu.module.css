@@ -72,6 +72,7 @@
   background: none;
   color: var(--color-link-text);
   outline-offset: 0;
+  line-height: var(--line-height-5-5);
 
   &:hover {
     border-left-color: var(--color-primary-600);

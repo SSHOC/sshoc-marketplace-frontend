@@ -9,10 +9,12 @@ const apiRoot = String(new URL('/api/v4', apiBaseUrl))
 const appId =
   process.env['NEXT_PUBLIC_GITLAB_APP_ID'] ??
   '715dbe5a99099c436330e3fe439ac38e2c746fbdefc4446558fe6f99c517b8d7'
+const projectId = process.env['NEXT_PUBLIC_GITLAB_PROJECT_ID'] ?? '7841'
 
 export const backend = {
   provider: 'gitlab' as const,
   repo,
+  projectId,
   branch,
   isPublic: true,
   auth: {
