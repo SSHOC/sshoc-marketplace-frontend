@@ -1,0 +1,60 @@
+.container {
+  border: 1px solid var(--color-neutral-200);
+}
+
+.title {
+  display: flex;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-4);
+  border-bottom: 1px solid var(--color-neutral-200);
+  background-color: var(--color-neutral-75);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-ui-base);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--size-12);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  background-color: var(--color-neutral-50);
+
+  & svg {
+    /** Unset prose styles, so they don't affect select chevron icon. */
+    margin: 0;
+  }
+}
+
+.controls-left {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.controls-right {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.url {
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  border-top: 1px solid var(--color-neutral-200);
+  background-color: var(--color-neutral-50);
+
+  & > pre {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+    font-size: var(--font-size-3-5);
+  }
+}
+
+.result {
+  overflow-y: auto;
+  max-height: var(--size-160);
+}

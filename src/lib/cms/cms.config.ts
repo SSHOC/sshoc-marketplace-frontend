@@ -2,6 +2,7 @@ import type { CmsConfig } from 'netlify-cms-core'
 
 import { collection as aboutPages } from '@/lib/cms/collections/about-pages'
 import { collection as contributePages } from '@/lib/cms/collections/contribute-pages'
+import { collection as documentationPages } from '@/lib/cms/collections/documentation-pages'
 import { collection as pageSections } from '@/lib/cms/collections/page-sections'
 import { backend, logo, siteUrl, useLocalBackend } from '~/config/cms.config'
 
@@ -41,5 +42,5 @@ export const config: CmsConfig = {
   editor: {
     preview: false,
   },
-  collections: [aboutPages, contributePages, pageSections],
+  collections: [aboutPages, contributePages, documentationPages, pageSections],
 }
