@@ -75,6 +75,7 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Elemen
       {...field}
       inputValue={itemSearchTerm}
       items={items}
+      layout={layout}
       loadingState={loadingState}
       onInputChange={setItemSearchTerm}
       onLoadMore={
@@ -94,4 +95,8 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Elemen
       }}
     </FormComboBox>
   )
+}
+
+const layout = {
+  estimatedRowHeight: 60,
 }

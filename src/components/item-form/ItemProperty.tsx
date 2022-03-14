@@ -1,5 +1,5 @@
 import type { Key } from 'react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-final-form'
 import type { UseQueryResult } from 'react-query'
 
@@ -7,6 +7,7 @@ import { ConceptComboBox } from '@/components/item-form/ConceptComboBox'
 import { PropertyTypeSelect } from '@/components/item-form/PropertyTypeSelect'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { GetPropertyTypes, PropertyConcept, PropertyType } from '@/data/sshoc/api/property'
+import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useFieldState } from '@/lib/core/form/useFieldState'
 
@@ -21,7 +22,17 @@ export function ItemProperty(props: ItemPropertyProps): JSX.Element {
 
   const form = useForm()
 
-  const items = propertyTypes.data?.propertyTypes ?? []
+  const hasPublishPermission = usePublishPermission()
+  const items = useMemo(() => {
+    if (propertyTypes.data?.propertyTypes == null) return []
+
+    if (hasPublishPermission) return propertyTypes.data.propertyTypes
+
+    return propertyTypes.data.propertyTypes.filter((propertyType) => {
+      return propertyType.hidden !== true
+    })
+  }, [propertyTypes.data, hasPublishPermission])
+
   const selectedPropertyTypeId = useFieldState<PropertyType['code'] | undefined>(
     fieldGroup.type.name,
   ).input.value
@@ -57,7 +68,7 @@ export function ItemProperty(props: ItemPropertyProps): JSX.Element {
       <PropertyTypeSelect
         field={fieldGroup.type}
         items={items}
-        isLoading={propertyTypes.isLoading}
+        loadingState={propertyTypes.isLoading ? 'loading' : 'idle'}
         onSelectionChange={onSelectionChange}
       />
       {selectedPropertyType == null ? null : selectedPropertyType.type === 'concept' ? (

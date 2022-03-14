@@ -11,8 +11,12 @@ const meta: Meta<ItemSearchBarProps> = {
   title: 'Components/Common/ItemSearchBar',
   component: ItemSearchBar,
   decorators: [
-    function Wrapper(story): JSX.Element {
-      return <ContextProviders pageProps={{}}>{story()}</ContextProviders>
+    function Wrapper(Story): JSX.Element {
+      return (
+        <ContextProviders pageProps={{}}>
+          <Story />
+        </ContextProviders>
+      )
     },
   ],
   loaders: [

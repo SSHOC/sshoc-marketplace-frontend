@@ -103,6 +103,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
       description={description}
       inputValue={conceptSearchTerm}
       items={items}
+      layout={layout}
       loadingState={loadingState}
       onInputChange={setConceptSearchTerm}
       onLoadMore={
@@ -122,4 +123,8 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
       }}
     </FormComboBox>
   )
+}
+
+const layout = {
+  estimatedRowHeight: 60,
 }

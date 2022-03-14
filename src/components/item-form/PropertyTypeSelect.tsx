@@ -5,17 +5,17 @@ import { FormSelect } from '@/lib/core/form/FormSelect'
 import { Item } from '@/lib/core/ui/Collection/Item'
 
 export interface PropertyTypeSelectProps
-  extends Pick<FormSelectProps<PropertyType>, 'isLoading' | 'items' | 'onSelectionChange'> {
+  extends Pick<FormSelectProps<PropertyType>, 'items' | 'loadingState' | 'onSelectionChange'> {
   field: ItemFormFields['fields']['properties']['fields']['type']
 }
 
 export function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
-  const { field, items, isLoading, onSelectionChange } = props
+  const { field, items, loadingState, onSelectionChange } = props
 
   return (
     <FormSelect
       {...field}
-      isLoading={isLoading}
+      loadingState={loadingState}
       items={items}
       onSelectionChange={onSelectionChange}
     >

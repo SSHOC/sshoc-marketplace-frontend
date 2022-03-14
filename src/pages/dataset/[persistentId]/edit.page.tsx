@@ -110,7 +110,8 @@ export default function EditDatasetPage(props: EditDatasetPage.Props): JSX.Eleme
     form: FormApi<UpdateDatasetFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
+    delete values['__submitting__']
+
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 

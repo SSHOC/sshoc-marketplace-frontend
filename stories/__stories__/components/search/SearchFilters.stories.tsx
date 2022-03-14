@@ -11,8 +11,12 @@ const meta: Meta<SearchFiltersProps> = {
   title: 'Components/Search/SearchFilters',
   component: SearchFilters,
   decorators: [
-    function Wrapper(story): JSX.Element {
-      return <ContextProviders pageProps={{}}>{story()}</ContextProviders>
+    function Wrapper(Story): JSX.Element {
+      return (
+        <ContextProviders pageProps={{}}>
+          <Story />
+        </ContextProviders>
+      )
     },
   ],
   loaders: [

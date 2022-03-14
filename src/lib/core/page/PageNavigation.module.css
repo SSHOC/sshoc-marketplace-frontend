@@ -13,7 +13,7 @@
   font-size: var(--font-size-ui-sm);
   text-align: center;
 
-  @media (/* --page-navigation-font-size */ min-width: 98rem) {
+  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
     font-size: var(--font-size-ui-base);
   }
 }
@@ -29,7 +29,7 @@
   margin-inline: var(--space-2);
   background-color: var(--color-separator);
 
-  @media (/* --page-navigation-font-size */ min-width: 98rem) {
+  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
     margin-inline: var(--space-3);
   }
 }
@@ -47,7 +47,7 @@
   background-color: transparent;
   color: var(--color-link-text);
 
-  @media (/* --page-navigation-font-size */ min-width: 98rem) {
+  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
     padding-inline: var(--space-7);
   }
 

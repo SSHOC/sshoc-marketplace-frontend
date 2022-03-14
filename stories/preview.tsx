@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css'
 import '@/styles/index.css'
 import '~/stories/styles/preview.css'
 

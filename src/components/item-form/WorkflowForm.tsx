@@ -35,6 +35,7 @@ export type WorkflowFormValues = WorkflowInput & {
   persistentId?: Workflow['persistentId']
   status?: Workflow['status']
   __draft__?: boolean
+  __submitting__?: boolean
   composedOf?: Array<WorkflowStepInput & { persistentId?: WorkflowStep['persistentId'] }>
 }
 
@@ -50,11 +51,17 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
   const { formFields, initialValues, name, onCancel, onSubmit, validate, page, setPage } = props
 
   function onBeforeSaveAsDraft(form: FormApi<WorkflowFormValues>) {
-    form.change('__draft__', true)
+    form.batch(() => {
+      form.change('__draft__', true)
+      form.change('__submitting__', true)
+    })
   }
 
   function onBeforeSubmit(form: FormApi<WorkflowFormValues>) {
-    form.change('__draft__', false)
+    form.batch(() => {
+      form.change('__draft__', false)
+      form.change('__submitting__', true)
+    })
   }
 
   function onSubmitPage(

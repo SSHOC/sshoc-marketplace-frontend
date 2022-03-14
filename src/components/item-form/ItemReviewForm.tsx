@@ -1,3 +1,5 @@
+import type { FormApi } from 'final-form'
+
 import { FormSections } from '@/components/common/FormSections'
 import { ActorReviewFormSection } from '@/components/item-form/ActorReviewFormSection'
 import { DateReviewFormSection } from '@/components/item-form/DateReviewFormSection'
@@ -18,6 +20,7 @@ import { Form } from '@/lib/core/form/Form'
 export type ItemReviewFormValues<T extends ItemInput> = T & {
   persistentId?: Item['persistentId']
   status?: Item['status']
+  __submitting__?: boolean
 }
 
 export interface ItemReviewFormProps<T extends ItemInput> extends FormProps<T> {
@@ -35,6 +38,10 @@ export function ItemReviewForm<T extends ItemReviewFormValues<ItemInput>>(
 
   // FIXME: Make ItemsDiff generic, fix initialValues type
   const initialValuesWithDeletedFields = useItemDiffFormInitialValues({ diff, item: initialValues })
+
+  function onBeforeSubmit(form: FormApi<T>) {
+    form.change('__submitting__', true)
+  }
 
   return (
     <Form
@@ -55,7 +62,11 @@ export function ItemReviewForm<T extends ItemReviewFormValues<ItemInput>>(
 
           <OtherSuggestedItemVersionsFormSection />
 
-          <ItemReviewFormControls<T> onReject={onReject} onCancel={onCancel} />
+          <ItemReviewFormControls<T>
+            onReject={onReject}
+            onCancel={onCancel}
+            onBeforeSubmit={onBeforeSubmit}
+          />
         </FormSections>
       </ReviewFormMetadata>
     </Form>

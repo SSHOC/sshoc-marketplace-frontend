@@ -7,7 +7,6 @@ import type { NextWebVitalsMetric } from 'next/app'
 import { Fragment } from 'react'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { reportPageView } from '@/lib/core/analytics/analytics-service'
 import { AnalyticsScript } from '@/lib/core/analytics/AnalyticsScript'
 import { ContextProviders } from '@/lib/core/app/Providers'

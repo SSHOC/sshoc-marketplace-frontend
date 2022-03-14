@@ -13,9 +13,11 @@ import { Content } from '@/components/item-form/Content'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemForm } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
 import { useCreateOrUpdatePublication } from '@/components/item-form/useCreateOrUpdatePublication'
 import { usePublicationFormFields } from '@/components/item-form/usePublicationFormFields'
+import { usePublicationFormRecommendedFields } from '@/components/item-form/usePublicationFormRecommendedFields'
 import { usePublicationValidationSchema } from '@/components/item-form/usePublicationValidationSchema'
 import type { PublicationInput } from '@/data/sshoc/api/publication'
 import type { PageComponent } from '@/lib/core/app/types'
@@ -58,14 +60,8 @@ export default function CreatePublicationPage(_props: CreatePublicationPage.Prop
   const title = t(['authenticated', 'forms', 'create-item'], { values: { item: label } })
 
   const formFields = usePublicationFormFields()
-  /**
-   * FIXME: esm in webpack loaders is seriously broken currently.
-   * Should be fixed by https://github.com/webpack/webpack/pull/15198,
-   * which is blocked on missing esm support in jest v27, *sigh*.
-   */
-  // const recommendedFields = usePublicationFormRecommendedFields()
-  const recommendedFields = {}
-  const validate = usePublicationValidationSchema()
+  const recommendedFields = usePublicationFormRecommendedFields()
+  const validate = usePublicationValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdatePublication = useCreateOrUpdatePublication(undefined, { meta })
 
@@ -74,12 +70,14 @@ export default function CreatePublicationPage(_props: CreatePublicationPage.Prop
     form: FormApi<CreatePublicationFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
     createOrUpdatePublication.mutate(
-      { data: values, draft: shouldSaveAsDraft },
+      { data, draft: shouldSaveAsDraft },
       {
         onSuccess(publication) {
           if (publication.status === 'draft') {

@@ -74,7 +74,7 @@
   border-top-right-radius: var(--border-radius-md);
   color: var(--color-link-text);
 
-  @media (/* --page-navigation-font-size */ min-width: 98rem) {
+  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
     padding-inline: var(--space-7);
   }
 

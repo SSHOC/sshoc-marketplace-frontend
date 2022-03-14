@@ -20,10 +20,6 @@
   }
 }
 
-.select-input-group[data-size='sm'] .select-value {
-  padding-block: var(--space-2);
-}
-
 .validation-icon {
   --icon-width: var(--size-4);
   --icon-height: var(--size-4);
@@ -48,4 +44,25 @@
 
 .select-input-group[data-loading-state='loading'] {
   --select-validation-icon-color: var(--color-primary-600);
+}
+
+.select-input-group[data-size='sm'] .select-value {
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  font-size: var(--font-size-3-5);
+  line-height: var(--line-height-5);
+}
+
+.select-input-group[data-size='md'] .select-value {
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  font-size: var(--font-size-3-75);
+  line-height: var(--line-height-5-5);
+}
+
+.select-input-group[data-size='lg'] .select-value {
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  font-size: var(--font-size-4-25);
+  line-height: var(--line-height-6);
 }

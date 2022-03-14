@@ -9,17 +9,18 @@ import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from '@re
 import type { AriaButtonProps } from '@react-types/button'
 import type { Placement } from '@react-types/overlays'
 import type { LoadingState } from '@react-types/shared'
-import type { CSSProperties, ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
+import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { ClearButton } from '@/lib/core/ui/ClearButton/ClearButton'
 import { Field } from '@/lib/core/ui/Field/Field'
-import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
+// import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import MagnifierIcon from '@/lib/core/ui/icons/magnifier.svg?symbol-icon'
 import { ListBoxBase } from '@/lib/core/ui/ListBox/ListBoxBase'
+import type { ListBoxHeights } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { useListBoxLayout } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { Popover } from '@/lib/core/ui/Popover/Popover'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
@@ -29,6 +30,7 @@ import { TextFieldBase } from '@/lib/core/ui/TextField/TextFieldBase'
 export interface SearchAutocompleteProps<T extends object> extends AriaSearchAutocompleteProps<T> {
   /** @default 'bottom' */
   direction?: 'bottom' | 'top'
+  layout?: ListBoxHeights<T>
   loadingState?: LoadingState
   maxHeight?: number
   name?: string
@@ -62,6 +64,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 ): JSX.Element {
   const {
     direction = 'bottom',
+    layout: _layout,
     loadingState,
     maxHeight,
     menuTrigger = 'input',
@@ -93,7 +96,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     },
     selectedKey: undefined,
   })
-  const layout = useListBoxLayout<T>(state)
+  const layout = useListBoxLayout<T>(state, _layout)
 
   const { inputProps, listBoxProps, labelProps, clearButtonProps } = useSearchAutocomplete<T>(
     {

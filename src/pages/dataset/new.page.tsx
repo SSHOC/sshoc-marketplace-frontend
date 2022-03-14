@@ -13,9 +13,11 @@ import { Content } from '@/components/item-form/Content'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemForm } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
 import { useCreateOrUpdateDataset } from '@/components/item-form/useCreateOrUpdateDataset'
 import { useDatasetFormFields } from '@/components/item-form/useDatasetFormFields'
+import { useDatasetFormRecommendedFields } from '@/components/item-form/useDatasetFormRecommendedFields'
 import { useDatasetValidationSchema } from '@/components/item-form/useDatasetValidationSchema'
 import type { DatasetInput } from '@/data/sshoc/api/dataset'
 import type { PageComponent } from '@/lib/core/app/types'
@@ -58,14 +60,8 @@ export default function CreateDatasetPage(_props: CreateDatasetPage.Props): JSX.
   const title = t(['authenticated', 'forms', 'create-item'], { values: { item: label } })
 
   const formFields = useDatasetFormFields()
-  /**
-   * FIXME: esm in webpack loaders is seriously broken currently.
-   * Should be fixed by https://github.com/webpack/webpack/pull/15198,
-   * which is blocked on missing esm support in jest v27, *sigh*.
-   */
-  // const recommendedFields = useDatasetFormRecommendedFields()
-  const recommendedFields = {}
-  const validate = useDatasetValidationSchema()
+  const recommendedFields = useDatasetFormRecommendedFields()
+  const validate = useDatasetValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdateDataset = useCreateOrUpdateDataset(undefined, { meta })
 
@@ -74,12 +70,14 @@ export default function CreateDatasetPage(_props: CreateDatasetPage.Props): JSX.
     form: FormApi<CreateDatasetFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
     createOrUpdateDataset.mutate(
-      { data: values, draft: shouldSaveAsDraft },
+      { data, draft: shouldSaveAsDraft },
       {
         onSuccess(dataset) {
           if (dataset.status === 'draft') {

@@ -31,9 +31,13 @@
   align-items: center;
   justify-content: flex-end;
   margin-top: -1px;
-  font-size: var(--font-size-ui-base);
+  font-size: var(--font-size-ui-sm);
   line-height: var(--line-height-tight);
   border-block: 1px solid var(--color-primary-100);
+
+  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
+    font-size: var(--font-size-ui-base);
+  }
 }
 
 .link {

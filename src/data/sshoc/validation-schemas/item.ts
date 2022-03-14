@@ -36,9 +36,9 @@ export const itemMediaInputSchema = z.object({
 })
 
 export const itemBaseInputSchema = z.object({
-  label: z.string(),
+  label: z.string().min(1),
   version: z.string().optional(),
-  description: z.string(),
+  description: z.string().min(1),
   contributors: z.array(itemContributorRefSchema).optional(),
   properties: z.array(propertyInputSchema).optional(),
   externalIds: z.array(itemExternalIdInputSchema).optional(),

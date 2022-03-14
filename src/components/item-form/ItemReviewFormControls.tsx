@@ -8,6 +8,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ItemReviewFormControlsProps<T> {
   form?: string
+  onBeforeSubmit?: (form: FormApi<T>) => void
   onCancel: (form: FormApi<T>) => void
   onReject: (form: FormApi<T>) => void
 }
@@ -15,6 +16,10 @@ export interface ItemReviewFormControlsProps<T> {
 export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>): JSX.Element {
   const { t } = useI18n<'authenticated' | 'common'>()
   const form = useForm<T>()
+
+  function onBeforeSubmit() {
+    props.onBeforeSubmit?.(form)
+  }
 
   function onReject() {
     props.onReject(form)
@@ -32,7 +37,7 @@ export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>)
       <FormButtonLink onPress={onReject}>
         {t(['authenticated', 'controls', 'reject'])}
       </FormButtonLink>
-      <FormButton form={props.form} type="submit">
+      <FormButton form={props.form} onPress={onBeforeSubmit} type="submit">
         {t(['authenticated', 'controls', 'approve'])}
       </FormButton>
     </FormControls>

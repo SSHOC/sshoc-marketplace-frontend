@@ -13,9 +13,11 @@ import { Content } from '@/components/item-form/Content'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemForm } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
 import { useCreateOrUpdateTrainingMaterial } from '@/components/item-form/useCreateOrUpdateTrainingMaterial'
 import { useTrainingMaterialFormFields } from '@/components/item-form/useTrainingMaterialFormFields'
+import { useTrainingMaterialFormRecommendedFields } from '@/components/item-form/useTrainingMaterialFormRecommendedFields'
 import { useTrainingMaterialValidationSchema } from '@/components/item-form/useTrainingMaterialValidationSchema'
 import type { TrainingMaterialInput } from '@/data/sshoc/api/training-material'
 import type { PageComponent } from '@/lib/core/app/types'
@@ -60,14 +62,8 @@ export default function CreateTrainingMaterialPage(
   const title = t(['authenticated', 'forms', 'create-item'], { values: { item: label } })
 
   const formFields = useTrainingMaterialFormFields()
-  /**
-   * FIXME: esm in webpack loaders is seriously broken currently.
-   * Should be fixed by https://github.com/webpack/webpack/pull/15198,
-   * which is blocked on missing esm support in jest v27, *sigh*.
-   */
-  // const recommendedFields = useTrainingMaterialFormRecommendedFields()
-  const recommendedFields = {}
-  const validate = useTrainingMaterialValidationSchema()
+  const recommendedFields = useTrainingMaterialFormRecommendedFields()
+  const validate = useTrainingMaterialValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdateTrainingMaterial = useCreateOrUpdateTrainingMaterial(undefined, { meta })
 
@@ -76,12 +72,14 @@ export default function CreateTrainingMaterialPage(
     form: FormApi<CreateTrainingMaterialFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
     createOrUpdateTrainingMaterial.mutate(
-      { data: values, draft: shouldSaveAsDraft },
+      { data, draft: shouldSaveAsDraft },
       {
         onSuccess(trainingMaterial) {
           if (trainingMaterial.status === 'draft') {

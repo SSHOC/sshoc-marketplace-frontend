@@ -1,4 +1,3 @@
-import { useButton } from '@react-aria/button'
 import { OverlayContainer } from '@react-aria/overlays'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -228,22 +227,24 @@ function ContributeNavLinks(): JSX.Element {
   const items = useContributeNavItems()
 
   return (
-    <Disclosure
-      label={t(['common', 'pages', 'contribute'])}
-      className={css['nav-link-disclosure-button']}
-    >
-      <ul role="list">
-        {items.map((item) => {
-          return (
-            <li className={css['nav-item']} key={item.id}>
-              <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
-                {item.label}
-              </NavLink>
-            </li>
-          )
-        })}
-      </ul>
-    </Disclosure>
+    <li className={css['nav-item']}>
+      <Disclosure
+        label={t(['common', 'pages', 'contribute'])}
+        className={css['nav-link-disclosure-button']}
+      >
+        <ul role="list">
+          {items.map((item) => {
+            return (
+              <li className={css['nav-item']} key={item.id}>
+                <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
+                  {item.label}
+                </NavLink>
+              </li>
+            )
+          })}
+        </ul>
+      </Disclosure>
+    </li>
   )
 }
 
@@ -252,22 +253,24 @@ function AboutNavLinks(): JSX.Element {
   const items = useAboutNavItems()
 
   return (
-    <Disclosure
-      label={t(['common', 'pages', 'about'])}
-      className={css['nav-link-disclosure-button']}
-    >
-      <ul role="list">
-        {items.map((item) => {
-          return (
-            <li className={css['nav-item']} key={item.id}>
-              <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
-                {item.label}
-              </NavLink>
-            </li>
-          )
-        })}
-      </ul>
-    </Disclosure>
+    <li className={css['nav-item']}>
+      <Disclosure
+        label={t(['common', 'pages', 'about'])}
+        className={css['nav-link-disclosure-button']}
+      >
+        <ul role="list">
+          {items.map((item) => {
+            return (
+              <li className={css['nav-item']} key={item.id}>
+                <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
+                  {item.label}
+                </NavLink>
+              </li>
+            )
+          })}
+        </ul>
+      </Disclosure>
+    </li>
   )
 }
 
@@ -280,22 +283,24 @@ function CreateItemLinks(): JSX.Element {
   }
 
   return (
-    <Disclosure
-      label={t(['common', 'create-new-items'])}
-      className={css['nav-link-disclosure-button']}
-    >
-      <ul role="list">
-        {items.map((item) => {
-          return (
-            <li className={css['nav-item']} key={item.id}>
-              <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
-                {item.label}
-              </NavLink>
-            </li>
-          )
-        })}
-      </ul>
-    </Disclosure>
+    <li className={css['nav-item']}>
+      <Disclosure
+        label={t(['common', 'create-new-items'])}
+        className={css['nav-link-disclosure-button']}
+      >
+        <ul role="list">
+          {items.map((item) => {
+            return (
+              <li className={css['nav-item']} key={item.id}>
+                <NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
+                  {item.label}
+                </NavLink>
+              </li>
+            )
+          })}
+        </ul>
+      </Disclosure>
+    </li>
   )
 }
 

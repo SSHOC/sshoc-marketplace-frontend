@@ -62,9 +62,11 @@ interface UseGroupedActorsArgs {
 function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[string, Actor]>]> {
   const { actors } = args
 
-  const { sort } = useI18n<'common'>()
+  const { createCollator } = useI18n<'common'>()
 
   const roles = useMemo(() => {
+    const compare = createCollator()
+
     const roles = new Map<string, Map<string, any>>()
 
     actors.forEach((actor) => {
@@ -83,7 +85,7 @@ function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[str
     })
 
     const sortedRoles = Array.from(roles).sort(([roleLabel], [otherRoleLabel]) => {
-      return roleLabel.localeCompare(otherRoleLabel)
+      return compare(roleLabel, otherRoleLabel)
     })
 
     const sorted = sortedRoles.map(([roleLabel, actors]) => {
@@ -94,13 +96,13 @@ function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[str
          * Actors are intentionally not sorted alphabetically but keep database sort order.
          */
         // .sort(([name], [otherName]) => {
-        //   return name.localeCompare(otherName)
+        //   return compare(name, otherName)
         // }),
       ]
     })
 
     return sorted
-  }, [actors, sort])
+  }, [actors, createCollator])
 
   return roles as Array<[string, Array<[string, Actor]>]>
 }

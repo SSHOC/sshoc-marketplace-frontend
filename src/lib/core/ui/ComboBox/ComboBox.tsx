@@ -29,6 +29,7 @@ import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import ChevronIcon from '@/lib/core/ui/icons/chevron.svg?symbol-icon'
 import { ListBoxBase } from '@/lib/core/ui/ListBox/ListBoxBase'
+import type { ListBoxHeights } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { useListBoxLayout } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { Popover } from '@/lib/core/ui/Popover/Popover'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
@@ -49,6 +50,7 @@ export interface ComboBoxProps<T extends object>
   /** @default 'start' */
   labelAlign?: Alignment
   labelPosition?: LabelPosition
+  layout?: ListBoxHeights<T>
   loadingState?: LoadingState
   /** @default 'icon' */
   necessityIndicator?: NecessityIndicator
@@ -81,6 +83,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
   const {
     color = 'primary',
     direction = 'bottom',
+    layout: _layout,
     loadingState,
     maxHeight,
     menuTrigger = 'input',
@@ -103,7 +106,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
     allowsEmptyCollection: isAsync,
     defaultFilter: contains,
   })
-  const layout = useListBoxLayout<T>(state)
+  const layout = useListBoxLayout<T>(state, _layout)
 
   const { buttonProps, inputProps, listBoxProps, labelProps, descriptionProps, errorMessageProps } =
     useComboBox<T>(

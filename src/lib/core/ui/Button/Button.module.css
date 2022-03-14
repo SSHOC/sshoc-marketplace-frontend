@@ -186,6 +186,7 @@
   padding-inline: var(--space-8);
   border: none;
   border-left: var(--size-1) solid var(--color-border);
+  border-radius: 0;
   color: var(--color-link-text);
   outline-offset: 0;
   font-weight: var(--font-weight-regular);

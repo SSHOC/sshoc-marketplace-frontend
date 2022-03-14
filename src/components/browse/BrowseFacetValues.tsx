@@ -88,8 +88,10 @@ function useGroupedFacetValues(
 ): Array<[string, Array<[string, number]>]> {
   const { values } = args
 
-  const { sort } = useI18n<'common'>()
+  const { createCollator } = useI18n<'common'>()
   const grouped = useMemo(() => {
+    const compare = createCollator()
+
     const grouped = new Map<string, Map<string, number>>()
 
     Object.entries(values).forEach(([value, { count }]) => {
@@ -105,20 +107,20 @@ function useGroupedFacetValues(
     })
 
     const sortedGroups = Array.from(grouped).sort(([firstCharacter], [otherFirstCharacter]) => {
-      return firstCharacter.localeCompare(otherFirstCharacter)
+      return compare(firstCharacter, otherFirstCharacter)
     })
 
     const sorted = sortedGroups.map(([firstCharacter, values]) => {
       return [
         firstCharacter,
         Array.from(values).sort(([value], [otherValue]) => {
-          return value.localeCompare(otherValue)
+          return compare(value, otherValue)
         }),
       ]
     })
 
     return sorted as Array<[string, Array<[string, number]>]>
-  }, [values, sort])
+  }, [values, createCollator])
 
   return grouped
 }

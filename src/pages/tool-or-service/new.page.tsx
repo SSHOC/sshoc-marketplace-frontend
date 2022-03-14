@@ -13,9 +13,11 @@ import { Content } from '@/components/item-form/Content'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemForm } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
 import { useCreateOrUpdateTool } from '@/components/item-form/useCreateOrUpdateTool'
 import { useToolFormFields } from '@/components/item-form/useToolFormFields'
+import { useToolFormRecommendedFields } from '@/components/item-form/useToolFormRecommendedFields'
 import { useToolValidationSchema } from '@/components/item-form/useToolValidationSchema'
 import type { ToolInput } from '@/data/sshoc/api/tool-or-service'
 import type { PageComponent } from '@/lib/core/app/types'
@@ -60,14 +62,8 @@ export default function CreateToolOrServicePage(
   const title = t(['authenticated', 'forms', 'create-item'], { values: { item: label } })
 
   const formFields = useToolFormFields()
-  /**
-   * FIXME: esm in webpack loaders is seriously broken currently.
-   * Should be fixed by https://github.com/webpack/webpack/pull/15198,
-   * which is blocked on missing esm support in jest v27, *sigh*.
-   */
-  // const recommendedFields = useToolFormRecommendedFields()
-  const recommendedFields = {}
-  const validate = useToolValidationSchema()
+  const recommendedFields = useToolFormRecommendedFields()
+  const validate = useToolValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdateTool = useCreateOrUpdateTool(undefined, { meta })
 
@@ -76,12 +72,14 @@ export default function CreateToolOrServicePage(
     form: FormApi<CreateToolFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
     createOrUpdateTool.mutate(
-      { data: values, draft: shouldSaveAsDraft },
+      { data, draft: shouldSaveAsDraft },
       {
         onSuccess(tool) {
           if (tool.status === 'draft') {

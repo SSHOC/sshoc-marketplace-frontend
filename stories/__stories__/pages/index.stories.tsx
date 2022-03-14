@@ -9,8 +9,12 @@ const meta: Meta<HomePage.Props> = {
   title: 'Pages/Home',
   component: HomePageComponent,
   decorators: [
-    function Wrapper(story, { loaded: pageProps }): JSX.Element {
-      return <ContextProviders pageProps={pageProps}>{story()}</ContextProviders>
+    function Wrapper(Story, { loaded: pageProps }): JSX.Element {
+      return (
+        <ContextProviders pageProps={pageProps}>
+          <Story />
+        </ContextProviders>
+      )
     },
   ],
   loaders: [

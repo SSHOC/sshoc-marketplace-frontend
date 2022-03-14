@@ -20,6 +20,7 @@ import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
 import CheckmarkIcon from '@/lib/core/ui/icons/checkmark.svg?symbol-icon'
 import ChevronIcon from '@/lib/core/ui/icons/chevron.svg?symbol-icon'
 import { ListBoxBase } from '@/lib/core/ui/ListBox/ListBoxBase'
+import type { ListBoxHeights } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { useListBoxLayout } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { Popover } from '@/lib/core/ui/Popover/Popover'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
@@ -41,6 +42,7 @@ export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 
    * (button with `aria-haspopup="listbox"`).
    */
   isReadOnly?: never
+  layout?: ListBoxHeights<T>
   loadingState?: LoadingState
   maxHeight?: number
   /** @default 'md' */
@@ -77,6 +79,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     isDisabled,
     label,
     labelPosition = 'top' as LabelPosition,
+    layout: _layout,
     loadingState,
     maxHeight,
     // menuWidth,
@@ -95,7 +98,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
   const fieldRef = useRef<HTMLDivElement>(null)
   const ref = useComposedRef(fieldRef, forwardedRef)
 
-  const layout = useListBoxLayout<T>(state)
+  const layout = useListBoxLayout<T>(state, _layout)
   const { labelProps, triggerProps, valueProps, menuProps, descriptionProps, errorMessageProps } =
     useSelect<T>(
       {

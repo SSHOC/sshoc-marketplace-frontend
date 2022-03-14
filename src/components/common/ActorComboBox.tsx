@@ -79,6 +79,7 @@ export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       {...field}
       inputValue={actorSearchTerm}
       items={items}
+      layout={layout}
       loadingState={loadingState}
       onInputChange={setActorSearchTerm}
       onLoadMore={
@@ -102,4 +103,8 @@ export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
       }}
     </FormComboBox>
   )
+}
+
+const layout = {
+  estimatedRowHeight: 60,
 }

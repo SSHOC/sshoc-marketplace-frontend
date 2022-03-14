@@ -18,6 +18,7 @@ export type ItemFormValues<T extends ItemInput> = T & {
   persistentId?: Item['persistentId']
   status?: Item['status']
   __draft__?: boolean
+  __submitting__?: boolean
 }
 
 export interface ItemFormProps<T extends ItemInput> extends FormProps<T> {
@@ -32,11 +33,17 @@ export function ItemForm<T extends ItemFormValues<ItemInput>>(
   const { formFields, initialValues, name, onCancel, onSubmit, validate } = props
 
   function onBeforeSaveAsDraft(form: FormApi<T>) {
-    form.change('__draft__', true)
+    form.batch(() => {
+      form.change('__draft__', true)
+      form.change('__submitting__', true)
+    })
   }
 
   function onBeforeSubmit(form: FormApi<T>) {
-    form.change('__draft__', false)
+    form.batch(() => {
+      form.change('__draft__', false)
+      form.change('__submitting__', true)
+    })
   }
 
   return (

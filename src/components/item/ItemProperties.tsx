@@ -7,6 +7,7 @@ import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
 import type { Property } from '@/data/sshoc/api/property'
 import { isPropertyConcept } from '@/data/sshoc/api/property'
+import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ItemPropertiesProps {
@@ -70,12 +71,18 @@ function useGroupedPropertyValues(
 ): Array<[string, Array<[string, Array<ReactNode>]>]> {
   const { properties } = args
 
-  const { sort } = useI18n<'common'>()
+  const { createCollator } = useI18n<'common'>()
+  const hasPermission = usePublishPermission()
 
   const groups = useMemo(() => {
+    const compare = createCollator()
+
     const groups = new Map<string, Map<string, Array<Property>>>()
 
     properties.forEach((property) => {
+      /** Hidden properties should only be visible for admins and moderators. */
+      if (property.type.hidden && !hasPermission) return
+
       /** Not translated since property labels returned from backend are not translated either. */
       const groupName = property.type.groupName ?? 'Other'
       const label = property.type.label
@@ -96,7 +103,7 @@ function useGroupedPropertyValues(
     })
 
     const sortedGroups = Array.from(groups).sort(([groupName], [otherGroupName]) => {
-      return groupName.localeCompare(otherGroupName)
+      return compare(groupName, otherGroupName)
     })
 
     const sorted = sortedGroups.map(([groupName, group]) => {
@@ -119,7 +126,7 @@ function useGroupedPropertyValues(
     })
 
     return sorted
-  }, [properties, sort])
+  }, [properties, createCollator, hasPermission])
 
   return groups as Array<[string, Array<[string, Array<ReactNode>]>]>
 }

@@ -1,11 +1,20 @@
 import { z } from 'zod'
 
+import { identity } from '@/lib/utils'
+
+export type Preprocessor<I, O> = (values: I) => O
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function validateSchema<T extends z.ZodType<any, any>>(schema: T, errorMap?: z.ZodErrorMap) {
+export function validateSchema<T extends z.ZodType<any, any>>(
+  schema: T,
+  errorMap?: z.ZodErrorMap,
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  preprocess: Preprocessor<any, any> = identity,
+) {
   /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
   return async function validate(values: unknown) {
     try {
-      await schema.parseAsync(values, { errorMap })
+      await schema.parseAsync(preprocess(values), { errorMap })
       return {}
     } catch (error) {
       if (error instanceof z.ZodError) {

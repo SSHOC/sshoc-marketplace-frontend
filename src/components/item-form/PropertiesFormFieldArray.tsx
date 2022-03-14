@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import type { ReactNode } from 'react'
+import { Fragment, useMemo } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { FormFieldArray } from '@/components/common/FormFieldArray'
@@ -14,6 +15,8 @@ import { ItemProperty } from '@/components/item-form/ItemProperty'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { PropertyInput, PropertyType } from '@/data/sshoc/api/property'
 import { usePropertyTypes } from '@/data/sshoc/hooks/property'
+import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
+import { useFieldState } from '@/lib/core/form/useFieldState'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { mapBy } from '@/lib/utils'
 
@@ -24,7 +27,8 @@ export interface PropertiesFormFieldArrayProps {
 export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): JSX.Element {
   const { field } = props
 
-  const { t, sort } = useI18n<'authenticated' | 'common'>()
+  const { t, createCollator } = useI18n<'authenticated' | 'common'>()
+  const compare = createCollator()
   const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name)
 
   function onAdd() {
@@ -36,11 +40,13 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
   }
 
   const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
-    // TODO:
-    // select(data) {
-    //   data.propertyTypes.sort()
-    //   return data
-    // },
+    select(data) {
+      data.propertyTypes.sort((a, b) => {
+        return compare(a.label, b.label)
+      })
+
+      return data
+    },
   })
   const propertyTypesMap = useMemo(() => {
     if (propertyTypes.data == null) return new Map<PropertyType['code'], PropertyType>()
@@ -73,26 +79,35 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
           }
 
           return (
-            <FormFieldListItem key={name}>
-              <FormFieldGroup>
-                <ItemProperty
-                  fieldGroup={fieldGroup}
-                  propertyTypes={propertyTypes}
-                  propertyTypesMap={propertyTypesMap}
-                />
-              </FormFieldGroup>
-              <FormFieldListItemControls>
-                <CreateConceptButton fieldGroup={fieldGroup} propertyTypesMap={propertyTypesMap} />
-                <FormRecordRemoveButton
-                  aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                    values: { field: field.itemLabel },
-                  })}
-                  onPress={onRemove}
-                >
-                  {t(['authenticated', 'controls', 'delete'])}
-                </FormRecordRemoveButton>
-              </FormFieldListItemControls>
-            </FormFieldListItem>
+            <ItemPropertyAccessControl
+              key={name}
+              name={fieldGroup.type.name}
+              propertyTypesMap={propertyTypesMap}
+            >
+              <FormFieldListItem>
+                <FormFieldGroup>
+                  <ItemProperty
+                    fieldGroup={fieldGroup}
+                    propertyTypes={propertyTypes}
+                    propertyTypesMap={propertyTypesMap}
+                  />
+                </FormFieldGroup>
+                <FormFieldListItemControls>
+                  <CreateConceptButton
+                    fieldGroup={fieldGroup}
+                    propertyTypesMap={propertyTypesMap}
+                  />
+                  <FormRecordRemoveButton
+                    aria-label={t(['authenticated', 'forms', 'remove-field'], {
+                      values: { field: field.itemLabel },
+                    })}
+                    onPress={onRemove}
+                  >
+                    {t(['authenticated', 'controls', 'delete'])}
+                  </FormRecordRemoveButton>
+                </FormFieldListItemControls>
+              </FormFieldListItem>
+            </ItemPropertyAccessControl>
           )
         })}
       </FormFieldList>
@@ -105,4 +120,26 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
       </FormFieldArrayControls>
     </FormFieldArray>
   )
+}
+
+interface ItemPropertyAccessControlProps {
+  children?: ReactNode
+  name: string
+  propertyTypesMap: Map<PropertyType['code'], PropertyType>
+}
+
+function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): JSX.Element {
+  const { children, name, propertyTypesMap } = props
+
+  const hasPublishPermission = usePublishPermission()
+
+  const propertyTypeId = useFieldState<PropertyType['code'] | undefined>(name).input.value
+  const propertyType = propertyTypeId != null ? propertyTypesMap.get(propertyTypeId) : null
+  const isHidden = propertyType?.hidden === true
+
+  if (isHidden && !hasPublishPermission) {
+    return <Fragment />
+  }
+
+  return <Fragment>{children}</Fragment>
 }

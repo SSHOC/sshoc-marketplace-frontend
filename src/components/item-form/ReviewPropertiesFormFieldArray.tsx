@@ -30,7 +30,8 @@ export function ReviewPropertiesFormFieldArray(
 ): JSX.Element {
   const { field } = props
 
-  const { t, sort } = useI18n<'authenticated' | 'common'>()
+  const { t, createCollator } = useI18n<'authenticated' | 'common'>()
+  const compare = createCollator()
   const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name)
 
   function onAdd() {
@@ -42,11 +43,13 @@ export function ReviewPropertiesFormFieldArray(
   }
 
   const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
-    // TODO:
-    // select(data) {
-    //   data.propertyTypes.sort()
-    //   return data
-    // },
+    select(data) {
+      data.propertyTypes.sort((a, b) => {
+        return compare(a.label, b.label)
+      })
+
+      return data
+    },
   })
   const propertyTypesMap = useMemo(() => {
     if (propertyTypes.data == null) return new Map<PropertyType['code'], PropertyType>()

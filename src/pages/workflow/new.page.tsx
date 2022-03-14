@@ -12,10 +12,12 @@ import { BackgroundImage } from '@/components/item-form/BackgroundImage'
 import { Content } from '@/components/item-form/Content'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
+import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
 import { useCreateOrUpdateWorkflow } from '@/components/item-form/useCreateOrUpdateWorkflow'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import { useWorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
+import { useWorkflowFormRecommendedFields } from '@/components/item-form/useWorkflowFormRecommendedFields'
 import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
 import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { WorkflowInput } from '@/data/sshoc/api/workflow'
@@ -73,14 +75,8 @@ export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JS
   })
 
   const formFields = useWorkflowFormFields()
-  /**
-   * FIXME: esm in webpack loaders is seriously broken currently.
-   * Should be fixed by https://github.com/webpack/webpack/pull/15198,
-   * which is blocked on missing esm support in jest v27, *sigh*.
-   */
-  // const recommendedFields = useWorkflowFormRecommendedFields()
-  const recommendedFields = {}
-  const validate = useWorkflowValidationSchema()
+  const recommendedFields = useWorkflowFormRecommendedFields()
+  const validate = useWorkflowValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdateWorkflow = useCreateOrUpdateWorkflow(undefined, { meta })
 
@@ -89,12 +85,14 @@ export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JS
     form: FormApi<CreateWorkflowFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 
+    const data = removeEmptyItemFieldsOnSubmit(values)
+    delete values['__submitting__']
+
     createOrUpdateWorkflow.mutate(
-      { data: values, draft: shouldSaveAsDraft },
+      { data, draft: shouldSaveAsDraft },
       {
         onSuccess(workflow) {
           if (workflow.status === 'draft') {

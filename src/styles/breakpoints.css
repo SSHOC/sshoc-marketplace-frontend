@@ -10,4 +10,4 @@
 @custom-media --screen-xl (min-width: 80rem); /* 1280px */
 @custom-media --screen-2xl (min-width: 96rem); /* 1536px */
 @custom-media --page-navigation-bar (min-width: 86.625rem);
-@custom-media --page-navigation-font-size (min-width: 98rem);
+@custom-media --page-navigation-font-size (min-width: 98.25rem);

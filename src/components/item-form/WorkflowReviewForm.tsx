@@ -38,6 +38,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 export type WorkflowFormValues = WorkflowInput & {
   persistentId?: Workflow['persistentId']
   status?: Workflow['status']
+  __submitting__?: boolean
   composedOf?: Array<WorkflowStepInput & { persistentId?: WorkflowStep['persistentId'] }>
 }
 
@@ -64,6 +65,10 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
     page,
     setPage,
   } = props
+
+  function onBeforeSubmit(form: FormApi<WorkflowFormValues>) {
+    form.change('__submitting__', true)
+  }
 
   function onSubmitPage(
     values: WorkflowFormValues,
@@ -112,7 +117,11 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
           <FormSections>
             <WorkflowStepsFormSection setPage={setPage} />
 
-            <ItemReviewFormControls<WorkflowFormValues> onReject={onReject} onCancel={onCancel} />
+            <ItemReviewFormControls<WorkflowFormValues>
+              onBeforeSubmit={onBeforeSubmit}
+              onReject={onReject}
+              onCancel={onCancel}
+            />
           </FormSections>
         ) : null}
         {page.type === 'step' ? (

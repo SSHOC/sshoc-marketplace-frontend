@@ -1,8 +1,8 @@
 import type { WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
 
 const recommendedFields = {
-  label: '',
-  description: '',
+  // label: '',
+  // description: '',
   relatedItems: [undefined],
 }
 

@@ -49,11 +49,11 @@ export function isPropertyScalar(property: Property): property is PropertyScalar
   return property.type.type !== 'concept'
 }
 
-interface PropertyTypeScalarRef extends PropertyTypeRef {
+export interface PropertyTypeScalarRef extends PropertyTypeRef {
   type: Exclude<PropertyTypeType, 'concept'>
 }
 
-interface PropertyTypeConceptRef extends PropertyTypeRef {
+export interface PropertyTypeConceptRef extends PropertyTypeRef {
   type: 'concept'
 }
 

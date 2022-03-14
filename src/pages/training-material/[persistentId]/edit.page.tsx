@@ -112,7 +112,8 @@ export default function EditTrainingMaterialPage(
     form: FormApi<UpdateTrainingMaterialFormValues>,
     done?: (errors?: SubmissionErrors) => void,
   ) {
-    // UPSTREAM: Add `setFormData` to `final-form` to store form-wide metadata instead of passing via form values.
+    delete values['__submitting__']
+
     const shouldSaveAsDraft = values['__draft__'] === true
     delete values['__draft__']
 

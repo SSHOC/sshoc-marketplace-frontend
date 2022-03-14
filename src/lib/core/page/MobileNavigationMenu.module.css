@@ -54,6 +54,7 @@
 .nav-item {
   display: flex;
   flex-direction: column;
+  gap: var(--space-1);
 }
 
 .nav-separator {
@@ -69,6 +70,7 @@
   padding-inline: var(--space-8);
   border: none;
   border-left: var(--size-1) solid var(--color-border);
+  border-radius: 0;
   background: none;
   color: var(--color-link-text);
   outline-offset: 0;
