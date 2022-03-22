@@ -27,6 +27,7 @@
   --field-button-border-color-active: var(--color-primary-600);
 
   outline: 2px solid var(--color-primary-600);
+  outline-offset: 0;
 }
 
 .combobox-input-group[data-hovered][data-color='form'] > button {

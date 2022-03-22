@@ -19,7 +19,7 @@ export function SiteMetadata(): JSX.Element {
     <Fragment>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="color-scheme" content="light dark" />
+        {/* <meta name="color-scheme" content="light dark" /> */}
         <link rel="icon" href={String(createFaviconLink(locale, '/favicon.ico'))} sizes="any" />
         <link
           rel="icon"

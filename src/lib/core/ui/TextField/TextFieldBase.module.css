@@ -55,6 +55,10 @@
     }
   }
 
+  &:focus ~ * {
+    z-index: var(--z-index-focus-ring);
+  }
+
   &:disabled {
     border-color: var(--textfield-input-border-color-disabled, var(--color-neutral-100));
     background-color: var(--textfield-input-background-color-disabled);
