@@ -42,7 +42,7 @@ export const ListBoxOption = forwardRef(function ListBoxOption<T extends object>
       state,
       ref,
     )
-  // const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  // const { focusProps, isFocusVisible } = useFocusRing(props)
   const { hoverProps, isHovered } = useHover({ ...props, isDisabled })
   const isKeyboardModality = isFocusVisible()
 

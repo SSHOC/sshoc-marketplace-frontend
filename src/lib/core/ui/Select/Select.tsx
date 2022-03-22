@@ -123,7 +123,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
   })
 
   const { hoverProps, isHovered } = useHover(props)
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  const { focusProps, isFocusVisible } = useFocusRing(props)
 
   const placeholder = props.placeholder ?? t(['common', 'ui', 'select', 'placeholder'])
 

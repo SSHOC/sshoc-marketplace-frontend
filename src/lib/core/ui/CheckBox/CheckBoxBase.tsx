@@ -1,7 +1,10 @@
-import { useObjectRef } from '@react-aria/utils'
+import { useFocusRing } from '@react-aria/focus'
+import { useHover } from '@react-aria/interactions'
+import { mergeProps } from '@react-aria/utils'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
-import { forwardRef } from 'react'
+import { forwardRef, useRef } from 'react'
+import useComposedRef from 'use-composed-ref'
 
 import type { CheckBoxProps } from '@/lib/core/ui/CheckBox/CheckBox'
 import css from '@/lib/core/ui/CheckBox/CheckBoxBase.module.css'
@@ -24,26 +27,37 @@ export const CheckBoxBase = forwardRef(function CheckBoxBase(
   props: CheckBoxBaseProps,
   forwardedRef: ForwardedRef<HTMLInputElement>,
 ): JSX.Element {
-  const ref = useObjectRef(forwardedRef)
+  const {
+    inputProps,
+    isDisabled = false,
+    isSelected = false,
+    isIndeterminate = false,
+    variant = 'primary',
+  } = props
 
-  const inputProps = props.inputProps
-  const isDisabled = props.isDisabled === true
-  const isSelected = props.isSelected === true
-  const isIndeterminate = props.isIndeterminate === true
+  const inputRef = useRef<HTMLInputElement>(null)
+  const ref = useComposedRef(inputRef, forwardedRef)
 
-  const variant = props.variant ?? 'primary'
+  const { hoverProps, isHovered } = useHover(props)
+  const { focusProps, isFocusVisible } = useFocusRing({ ...props, within: true })
 
   return (
     <Field {...props}>
-      <label className={css['container']} data-variant={variant}>
+      <label
+        {...mergeProps(focusProps, hoverProps)}
+        className={css['container']}
+        data-hovered={isHovered ? '' : undefined}
+        data-focused={isFocusVisible ? '' : undefined}
+        data-variant={variant}
+      >
         <span
           className={css['check-box']}
           data-state={isDisabled ? 'disabled' : isSelected ? 'selected' : undefined}
         >
           {isIndeterminate ? (
-            <Icon icon={DashIcon} className="icon" />
+            <Icon icon={DashIcon} />
           ) : isSelected ? (
-            <Icon icon={CheckMarkIcon} className="icon" />
+            <Icon icon={CheckMarkIcon} />
           ) : null}
         </span>
         {props.children != null ? (
@@ -56,7 +70,7 @@ export const CheckBoxBase = forwardRef(function CheckBoxBase(
           </span>
         ) : null}
         <VisuallyHidden>
-          <input {...inputProps} ref={ref} />
+          <input ref={ref} {...inputProps} />
         </VisuallyHidden>
       </label>
     </Field>

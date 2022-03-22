@@ -10,12 +10,10 @@
   transition-duration: var(--transition-duration);
   transition-property: var(--transition-property);
 
-  &:hover,
   &[data-hovered] {
     color: var(--link-color-hover, var(--color-primary-600));
   }
 
-  &:focus-visible,
   &[data-focused] {
     color: var(--link-color-focus, var(--color-primary-600));
     outline: 2px solid
@@ -23,7 +21,6 @@
     outline-offset: 2px;
   }
 
-  &:active,
   &[data-active] {
     color: var(--link-color-active, var(--color-primary-500));
   }
@@ -78,12 +75,12 @@
     padding-inline: var(--space-7);
   }
 
-  &:hover {
+  &[data-hovered] {
     background-color: var(--color-background-muted);
     color: var(--color-link-text-hover);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     background-color: var(--color-background-muted);
     color: var(--color-link-text-hover);
   }
@@ -100,11 +97,11 @@
   padding-inline: var(--space-6);
   color: var(--color-text);
 
-  &:hover {
+  &[data-hovered] {
     background-color: var(--color-neutral-50);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     background-color: var(--color-neutral-50);
   }
 }
@@ -121,13 +118,13 @@
     /* Current page. */
   }
 
-  &:hover {
+  &[data-hovered] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);
@@ -158,13 +155,13 @@
     /* Current page. */
   }
 
-  &:hover {
+  &[data-hovered] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);
@@ -190,11 +187,11 @@
   color: var(--color-link-text);
   text-decoration: none;
 
-  &:hover {
+  &[data-hovered] {
     color: var(--color-link-text-hover);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     color: var(--color-link-text-hover);
   }
 

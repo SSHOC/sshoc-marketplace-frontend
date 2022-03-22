@@ -29,7 +29,6 @@
     opacity: 100%;
   }
 
-  &:hover,
   &[data-hovered] {
     border-color: var(--textfield-input-border-color-hover, var(--color-neutral-700));
     background-color: var(--textfield-input-background-color-hover);
@@ -40,7 +39,6 @@
     }
   }
 
-  &:focus-visible,
   &[data-focused] {
     border-color: var(--textfield-input-border-color-focus, var(--color-primary-600));
     background-color: var(--textfield-input-background-color-focus);
@@ -55,9 +53,6 @@
     & ~ * {
       z-index: var(--z-index-focus-ring);
     }
-  }
-
-  &:read-only {
   }
 
   &:disabled {

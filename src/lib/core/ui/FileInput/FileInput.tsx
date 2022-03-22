@@ -75,7 +75,7 @@ export const FileInput = forwardRef(function FileInput(
     inputRef,
   )
 
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing({ ...props, isTextInput: true })
+  const { focusProps, isFocusVisible } = useFocusRing({ ...props, isTextInput: true })
   const { hoverProps, isHovered } = useHover(props)
 
   const labelButton = (

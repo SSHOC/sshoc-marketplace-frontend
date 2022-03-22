@@ -115,7 +115,7 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
   const fieldRef = useObjectRef(forwardedRef)
   const textFieldRef = useObjectRef(inputRef)
 
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing({ ...props, isTextInput: true })
+  const { focusProps, isFocusVisible } = useFocusRing({ ...props, isTextInput: true })
   const { hoverProps, isHovered } = useHover(props)
 
   const isInvalid = validationState === 'invalid'
@@ -146,11 +146,14 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
         style={style as CSSProperties}
       >
         <ElementType
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ref={textFieldRef as any}
           {...mergeProps(focusProps, hoverProps, inputProps)}
           className={css['textfield-input']}
           rows={ElementType === 'textarea' ? rows : undefined}
           type={ElementType === 'textarea' ? undefined : type}
+          data-focused={isFocusVisible ? '' : undefined}
+          data-hovered={isHovered ? '' : undefined}
         />
         {icon != null ? <div className={css['icon-left']}>{icon}</div> : null}
         {isLoading === true ? (

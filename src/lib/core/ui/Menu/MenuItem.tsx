@@ -52,7 +52,7 @@ export const MenuItem = forwardRef(function MenuItem<T extends object>(
     menuItemRef,
   )
 
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing({})
+  const { focusProps, isFocusVisible } = useFocusRing({})
   const { hoverProps, isHovered } = useHover({ isDisabled })
 
   const contents = <span>{rendered}</span>

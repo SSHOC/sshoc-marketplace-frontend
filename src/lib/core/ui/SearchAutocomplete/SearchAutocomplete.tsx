@@ -228,7 +228,7 @@ const SearchAutocompleteInput = forwardRef(function SearchAutocompleteInput<T ex
     validationState,
   } = props
 
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing({
+  const { focusProps, isFocusVisible } = useFocusRing({
     ...props,
     isTextInput: true,
     within: true,

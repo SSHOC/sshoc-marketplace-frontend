@@ -1,5 +1,6 @@
 import { useButton } from '@react-aria/button'
-import { FocusScope } from '@react-aria/focus'
+import { FocusScope, useFocusRing } from '@react-aria/focus'
+import { useHover } from '@react-aria/interactions'
 import { useMenu, useMenuItem, useMenuTrigger } from '@react-aria/menu'
 import { DismissButton } from '@react-aria/overlays'
 import { mergeProps } from '@react-aria/utils'
@@ -34,6 +35,9 @@ export function AccountMenu(): JSX.Element {
   const { menuProps, menuTriggerProps } = useMenuTrigger({ type: 'menu' }, state, buttonRef)
   const { buttonProps } = useButton(menuTriggerProps, buttonRef)
 
+  const { hoverProps, isHovered } = useHover({})
+  const { focusProps, isFocusVisible } = useFocusRing()
+
   const items = useAccountMenuItems()
 
   function onAction(key: Key) {
@@ -57,7 +61,9 @@ export function AccountMenu(): JSX.Element {
   return (
     <div className={css['container']}>
       <button
-        {...buttonProps}
+        {...mergeProps(focusProps, hoverProps, buttonProps)}
+        data-hovered={isHovered ? '' : undefined}
+        data-focused={isFocusVisible ? '' : undefined}
         data-state={state.isOpen ? 'expanded' : 'collapsed'}
         className={css['menu-button']}
         ref={buttonRef}

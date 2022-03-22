@@ -45,7 +45,7 @@ export const ClearButton = forwardRef(function ClearButton<T extends ElementType
     { ...props, 'aria-label': ariaLabel, elementType: ElementType },
     buttonRef,
   )
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  const { focusProps, isFocusVisible } = useFocusRing(props)
   const { hoverProps, isHovered } = useHover(props)
 
   if (preventFocus) {

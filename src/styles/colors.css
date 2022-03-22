@@ -81,51 +81,9 @@
   --color-mobile-nav-header: var(--color-neutral-100);
   --color-backdrop-muted: hsl(0deg 0% 35% / 25%);
 
-  /** buttons */
-  --color-button-primary-background: var(--color-primary-750);
-  --color-button-primary-background-hover: var(--color-primary-600);
-  --color-button-primary-background-focus: var(--color-primary-600);
-  --color-button-primary-background-disabled: var(--color-neutral-100);
-  --color-button-primary-text: var(--color-neutral-50);
-  --color-button-primary-text-disabled: var(--color-neutral-500);
-  --color-button-secondary-background: var(--color-primary-600);
-  --color-button-secondary-background-hover: var(--color-primary-500);
-  --color-button-secondary-background-focus: var(--color-primary-600);
-  --color-button-secondary-background-disabled: var(--color-neutral-100);
-  --color-button-secondary-text: var(--color-neutral-50);
-  --color-button-secondary-text-disabled: var(--color-neutral-500);
-
-  /** forms */
-  --color-formfield-text: var(--color-neutral-800);
-  --color-formfield-text-selected: var(--color-primary-700);
-  --color-formfield-text-disabled: var(--color-neutral-400);
-  --color-formfield-placeholder: var(--color-neutral-400);
-  --color-formfield-border: var(--color-neutral-250);
-  --color-formfield-border-focus: var(--color-primary-600);
-  --color-formfield-invalid-border: var(--color-negative-600);
-  --color-formfield-invalid-text: var(--color-negative-600);
-  --color-formfield-valid-border: var(--color-positive-600);
-  --color-formfield-valid-text: var(--color-positive-600);
-  --color-formfield-background: var(--color-neutral-0);
-  --color-formfield-background-hover: var(--color-neutral-50);
-  --color-form-action-button-text: var(--color-primary-700);
-  --color-form-action-button-text-hover: var(--color-primary-600);
-  --color-form-action-button-text-focus: var(--color-neutral-800);
-
-  /** forms variant 'form' */
-  --color-formfield-form-border: var(--color-neutral-250);
-  --color-formfield-form-border-hover: var(--color-primary-600);
-  --color-formfield-form-background: var(--color-neutral-50);
-  --color-formfield-form-background-hover: var(--color-neutral-0);
-  --color-formfield-form-background-focus: var(--color-primary-50);
-
   color-scheme: light;
 }
 
 :root[data-color-scheme='dark'] {
-  /* --color-text: var(--color-neutral-150); */
-
-  /* --color-background: var(--color-neutral-800); */
-
   color-scheme: dark;
 }

@@ -50,7 +50,7 @@ export const LinkButton = forwardRef(function LinkButton(
   const linkRef = useRef<HTMLAnchorElement>(null)
   const ref = useComposedRef(linkRef, forwardedRef)
   const { linkProps, isPressed } = useLink(props, linkRef)
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  const { focusProps, isFocusVisible } = useFocusRing(props)
   const { hoverProps, isHovered } = useHover(props)
 
   return (

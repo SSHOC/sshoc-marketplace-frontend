@@ -27,7 +27,7 @@ export const ButtonLink = forwardRef(function ButtonLink(
 
   const buttonRef = useRef<HTMLButtonElement>(null)
   const { buttonProps, isPressed: isActive } = useButton(props, buttonRef)
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  const { focusProps, isFocusVisible } = useFocusRing(props)
   const { hoverProps, isHovered } = useHover(props)
 
   const ref = useComposedRef(buttonRef, forwardedRef)

@@ -54,7 +54,7 @@ export const FieldButton = forwardRef(function FieldButton(
   const ref = useObjectRef(forwardedRef)
   const { buttonProps, isPressed } = useButton(props, ref)
   const { hoverProps, isHovered } = useHover(props)
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing(props)
+  const { focusProps, isFocusVisible } = useFocusRing(props)
 
   return (
     <button

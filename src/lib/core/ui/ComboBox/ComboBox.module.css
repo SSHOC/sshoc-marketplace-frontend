@@ -14,14 +14,6 @@
   grid-template-columns: 1fr var(--combobox-button-width, var(--size-12));
   width: 100%;
   min-width: var(--size-36);
-
-  &:hover,
-  &[data-hovered] {
-  }
-
-  &:focus-within,
-  &[data-focused] {
-  }
 }
 
 .combobox-input-group[data-open='true'] button {

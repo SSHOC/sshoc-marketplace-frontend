@@ -26,14 +26,12 @@
   transition-duration: var(--transition-duration);
   transition-property: var(--transition-property);
 
-  &:hover,
   &[data-hovered] {
     border-color: var(--button-border-color-hover, transparent);
     background-color: var(--button-background-color-hover);
     color: var(--button-color-hover);
   }
 
-  &:focus-visible,
   &[data-focused] {
     border-color: var(--button-border-color-focus, transparent);
     background-color: var(--button-background-color-focus);
@@ -42,7 +40,6 @@
     outline-offset: 2px;
   }
 
-  &:active,
   &[data-active] {
     border-color: var(--button-border-color-active, transparent);
     background-color: var(--button-background-color-active);
@@ -125,11 +122,8 @@
   background-size: 125%;
   transition-property: var(--transition-property), background-position;
 
-  &:hover,
   &[data-hovered],
-  &:focus-visible,
   &[data-focused],
-  &:active,
   &[data-active] {
     background-position: right;
   }
@@ -201,13 +195,13 @@
     /* Current page. */
   }
 
-  &:hover {
+  &[data-hovered] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);
   }
 
-  &:focus-visible {
+  &[data-focused] {
     border-left-color: var(--color-primary-600);
     background-color: var(--color-neutral-50);
     color: var(--color-link-text-hover);

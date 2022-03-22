@@ -266,7 +266,7 @@ const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(
     validationState,
   } = props
   const { hoverProps, isHovered } = useHover(props)
-  const { focusProps, isFocused, isFocusVisible } = useFocusRing({
+  const { focusProps, isFocusVisible } = useFocusRing({
     ...props,
     isTextInput: true,
     within: true,
