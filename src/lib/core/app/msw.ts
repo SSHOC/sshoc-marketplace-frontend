@@ -9,11 +9,11 @@ export async function start(): Promise<void> {
 
   if (typeof window === 'undefined') {
     await import('@/data/sshoc/mocks/server').then(({ server }) => {
-      server.listen()
+      server.listen({ onUnhandledRequest: 'bypass' })
     })
   } else {
     await import('@/data/sshoc/mocks/browser').then(({ worker }) => {
-      worker.start()
+      worker.start({ onUnhandledRequest: 'bypass' })
     })
   }
 }

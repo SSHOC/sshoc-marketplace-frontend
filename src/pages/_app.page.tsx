@@ -18,8 +18,7 @@ import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
 if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
-  // TODO: enable top level await, and set typescript target to es2017. or just use `require` for now.
-  import('@/lib/core/app/msw').then(({ start }) => {
+  await import('@/lib/core/app/msw').then(({ start }) => {
     start()
   })
 }

@@ -36,17 +36,18 @@ export function DatasetCreateForm(): JSX.Element {
     const data = removeEmptyItemFieldsOnSubmit(values)
     delete values['__submitting__']
 
+    form.pauseValidation()
     createOrUpdateDataset.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(dataset) {
           if (dataset.status === 'draft') {
-            // FIXME: Probably better to keep this state in useCreateOrUpdateDataset.
             form.batch(() => {
               form.change('persistentId', dataset.persistentId)
               form.change('status', dataset.status)
             })
             window.scrollTo(0, 0)
+            form.resumeValidation()
           } else if (dataset.status === 'approved') {
             router.push(routes.DatasetPage({ persistentId: dataset.persistentId }))
           } else {

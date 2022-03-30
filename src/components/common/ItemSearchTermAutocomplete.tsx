@@ -26,7 +26,6 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
 
   const { t } = useI18n<'common'>()
   const { searchItems } = useSearchItems()
-  // TOOD: use `useDeferredValue` (React 18).
   const debouncedItemSearchTerm = useDebouncedState({
     value: itemSearchTerm,
     delay: debounceDelay,
@@ -46,7 +45,8 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
   function onSelectSuggestion(value: string, key: Key | null) {
     const item = itemsById.get(key as string)
     const q = item?.phrase ?? value
-    searchItems({ q })
+    const categories = itemCategory != null ? [itemCategory] : undefined
+    searchItems({ q, categories })
     onSubmit?.()
   }
 

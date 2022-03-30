@@ -36,17 +36,18 @@ export function ToolOrServiceCreateForm(): JSX.Element {
     const data = removeEmptyItemFieldsOnSubmit(values)
     delete values['__submitting__']
 
+    form.pauseValidation()
     createOrUpdateTool.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(tool) {
           if (tool.status === 'draft') {
-            // FIXME: Probably better to keep this state in useCreateOrUpdateTool.
             form.batch(() => {
               form.change('persistentId', tool.persistentId)
               form.change('status', tool.status)
             })
             window.scrollTo(0, 0)
+            form.resumeValidation()
           } else if (tool.status === 'approved') {
             router.push(routes.ToolOrServicePage({ persistentId: tool.persistentId }))
           } else {

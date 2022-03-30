@@ -10,6 +10,7 @@ import type {
 } from '@/lib/core/query/types'
 import { toast } from '@/lib/core/toast/toast'
 import { includes, isNonEmptyString } from '@/lib/utils'
+// import { toastAutoCloseDelay } from '~/config/site.config'
 
 export type { QueryClient }
 
@@ -86,6 +87,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             closeButton: null,
             closeOnClick: null,
             draggable: null,
+            delay: 100, // Work around one of the race conditions in `react-toastify`.
           })
         }
       },
@@ -115,6 +117,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             closeButton: null,
             closeOnClick: null,
             draggable: null,
+            delay: 100, // Work around one of the race conditions in `react-toastify`.
           })
         }
 

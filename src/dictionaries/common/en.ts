@@ -21,8 +21,11 @@ export const dictionary: Dictionary = {
   'report-issue': 'Report an issue',
   'report-issue-message': 'I have found an issue on page {{pathname}}.\n\nPlease describe:\n\n',
   'funding-notice':
-    'The SSH Open Marketplace is developed as part of the "Social Sciences and Humanities Open Cloud" SSHOC project, European Union\'s Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.',
+    'The SSH Open Marketplace is maintained and will be further developed by three European Research Infrastructures - DARIAH, CLARIN and CESSDA - and their national partners. It was developed as part of the "Social Sciences and Humanities Open Cloud" SSHOC project, European Union\'s Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.',
   'eu-flag': 'European Union flag',
+  cessda: 'CESSDA',
+  clarin: 'CLARIN',
+  'dariah-eu': 'DARIAH-EU',
   'footer-navigation': 'Secondary navigation',
   'create-new-items': 'Create new items',
   'create-new-item': 'Create {{item}}',

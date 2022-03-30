@@ -36,17 +36,18 @@ export function PublicationCreateForm(): JSX.Element {
     const data = removeEmptyItemFieldsOnSubmit(values)
     delete values['__submitting__']
 
+    form.pauseValidation()
     createOrUpdatePublication.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(publication) {
           if (publication.status === 'draft') {
-            // FIXME: Probably better to keep this state in useCreateOrUpdatePublication.
             form.batch(() => {
               form.change('persistentId', publication.persistentId)
               form.change('status', publication.status)
             })
             window.scrollTo(0, 0)
+            form.resumeValidation()
           } else if (publication.status === 'approved') {
             router.push(routes.PublicationPage({ persistentId: publication.persistentId }))
           } else {

@@ -227,9 +227,15 @@ function ItemStatusFacets(): JSX.Element {
   const name = 'd.status'
   const label = t(['common', 'item', 'status'])
   const selectedKeys = filters[name]
-  const items = itemStatus.map((status) => {
-    return { id: status, label: t(['common', 'item-status', status]) }
-  })
+  const items = itemStatus
+    .filter((status) => {
+      /** Item with these status are not indexed in solr and can therefore not be queried with `d.status` parameter. */
+      const nonIndexedStatus: Array<ItemStatus> = ['draft', 'deprecated', 'disapproved']
+      return !nonIndexedStatus.includes(status)
+    })
+    .map((status) => {
+      return { id: status, label: t(['common', 'item-status', status]) }
+    })
 
   function onChange(keys: Array<string>) {
     searchContributedItems({ ...filters, page: 1, [name]: keys as Array<ItemStatus> })

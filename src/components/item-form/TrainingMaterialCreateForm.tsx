@@ -36,17 +36,18 @@ export function TrainingMaterialCreateForm(): JSX.Element {
     const data = removeEmptyItemFieldsOnSubmit(values)
     delete values['__submitting__']
 
+    form.pauseValidation()
     createOrUpdateTrainingMaterial.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(trainingMaterial) {
           if (trainingMaterial.status === 'draft') {
-            // FIXME: Probably better to keep this state in useCreateOrUpdateTrainingMaterial.
             form.batch(() => {
               form.change('persistentId', trainingMaterial.persistentId)
               form.change('status', trainingMaterial.status)
             })
             window.scrollTo(0, 0)
+            form.resumeValidation()
           } else if (trainingMaterial.status === 'approved') {
             router.push(
               routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),

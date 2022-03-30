@@ -8,7 +8,7 @@
 
   @media (/* --screen-md */ min-width: 48rem) {
     grid-template-columns: minmax(var(--size-64), auto);
-    grid-auto-flow: columns;
+    grid-auto-flow: column;
     justify-content: space-between;
     padding-block: 0;
   }

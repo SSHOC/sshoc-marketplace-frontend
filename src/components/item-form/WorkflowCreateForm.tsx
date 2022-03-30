@@ -47,12 +47,12 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
     const data = removeEmptyItemFieldsOnSubmit(values)
     delete values['__submitting__']
 
+    form.pauseValidation()
     createOrUpdateWorkflow.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(workflow) {
           if (workflow.status === 'draft') {
-            // FIXME: Probably better to keep this state in useCreateOrUpdateWorkflow.
             form.batch(() => {
               form.change('persistentId', workflow.persistentId)
               form.change('status', workflow.status)
@@ -60,8 +60,9 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
                 form.change(`composedOf[${index}].persistentId`, step.persistentId)
                 form.change(`composedOf[${index}].status`, step.status)
               })
-              window.scrollTo(0, 0)
             })
+            window.scrollTo(0, 0)
+            form.resumeValidation()
           } else if (workflow.status === 'approved') {
             router.push(routes.WorkflowPage({ persistentId: workflow.persistentId }))
           } else {

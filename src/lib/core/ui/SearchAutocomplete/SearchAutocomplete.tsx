@@ -90,7 +90,9 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     defaultFilter: contains,
     defaultSelectedKey: undefined,
     onSelectionChange(key) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (key != null) {
+        // @ts-expect-error Error in upstream type definitions.
         onSubmit?.(null, key)
       }
     },
@@ -180,7 +182,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
           autoFocus={state.focusStrategy}
           disallowEmptySelection
           focusOnPointerEnter
-          isLoading={loadingState === 'loadingMore'}
+          isLoading={loadingState === 'loading' || loadingState === 'loadingMore'}
           layout={layout}
           onLoadMore={onLoadMore}
           renderEmptyState={() => {

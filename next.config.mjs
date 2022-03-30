@@ -40,7 +40,7 @@ const isProductionDeploy =
 /** @typedef {import('@stefanprobst/next-route-manifest').Options} RouteManifestConfig */
 
 // TODO:
-const ContentSecurityPolicy = `
+const _ContentSecurityPolicy = `
   default-src 'self';
   img-src *;
   media-src *;
@@ -146,6 +146,10 @@ const config = {
      * @see https://github.com/vercel/next.js/discussions/30870
      */
     config.infrastructureLogging = { ...config.infrastructureLogging, level: 'error' }
+
+    /** Enable top-level await. */
+    config.experiments = config.experiments ?? {}
+    config.experiments.topLevelAwait = true
 
     /**
      * @see https://github.com/vercel/next.js/issues/17806

@@ -1,3 +1,7 @@
+/**
+ * Jest config with SWC not yet working with `.mjs` imports.
+ */
+
 import createConfigFactory from 'next/jest.js'
 
 /** @type {import('@jest/types').Config.InitialOptions} */

@@ -1,9 +1,9 @@
 .container {
   display: grid;
   grid-area: funding-notice;
-  grid-template-columns: 40px auto;
+  grid-template-columns: 40px auto auto;
   gap: var(--space-6);
-  max-width: var(--size-192);
+  max-width: var(--size-256);
   padding-block: var(--space-24);
   color: var(--color-text-muted);
   font-size: var(--font-size-ui-xs);
@@ -18,4 +18,11 @@
   left: 0;
   grid-row: funding-notice;
   border-top: 1px solid var(--color-separator);
+}
+
+.logos {
+  display: grid;
+  grid-auto-columns: 80px;
+  grid-auto-flow: column;
+  gap: var(--space-2);
 }

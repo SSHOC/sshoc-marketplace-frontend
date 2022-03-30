@@ -23,6 +23,9 @@ export interface Dictionary {
   'report-issue-message': string
   'funding-notice': string
   'eu-flag': string
+  cessda: string
+  clarin: string
+  'dariah-eu': string
   'footer-navigation': string
   'create-new-items': string
   'create-new-item': string
