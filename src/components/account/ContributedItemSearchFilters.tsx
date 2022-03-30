@@ -11,7 +11,6 @@ import { useContributedItemsSearchFilters } from '@/components/account/useContri
 import { Link } from '@/components/common/Link'
 import { ModalDialog } from '@/components/search/ModalDialog'
 import type { ItemStatus } from '@/data/sshoc/api/item'
-import { itemStatus } from '@/data/sshoc/api/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
@@ -21,6 +20,7 @@ import { Icon } from '@/lib/core/ui/Icon/Icon'
 import CrossIcon from '@/lib/core/ui/icons/cross.svg?symbol-icon'
 import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDialogState'
 import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogTrigger'
+import { queryableItemStatus } from '~/config/sshoc.config'
 
 export function ContributedItemSearchFilters(): JSX.Element {
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -227,15 +227,9 @@ function ItemStatusFacets(): JSX.Element {
   const name = 'd.status'
   const label = t(['common', 'item', 'status'])
   const selectedKeys = filters[name]
-  const items = itemStatus
-    .filter((status) => {
-      /** Item with these status are not indexed in solr and can therefore not be queried with `d.status` parameter. */
-      const nonIndexedStatus: Array<ItemStatus> = ['draft', 'deprecated', 'disapproved']
-      return !nonIndexedStatus.includes(status)
-    })
-    .map((status) => {
-      return { id: status, label: t(['common', 'item-status', status]) }
-    })
+  const items = queryableItemStatus.map((status) => {
+    return { id: status, label: t(['common', 'item-status', status]) }
+  })
 
   function onChange(keys: Array<string>) {
     searchContributedItems({ ...filters, page: 1, [name]: keys as Array<ItemStatus> })

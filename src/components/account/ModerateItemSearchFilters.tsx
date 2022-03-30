@@ -14,7 +14,6 @@ import { Link } from '@/components/common/Link'
 import { SearchFacetsOverlay } from '@/components/common/SearchFacetsOverlay'
 import { ModalDialog } from '@/components/search/ModalDialog'
 import type { ItemCategory, ItemStatus } from '@/data/sshoc/api/item'
-import { itemStatus } from '@/data/sshoc/api/item'
 import type { User } from '@/data/sshoc/api/user'
 import { useUsersInfinite } from '@/data/sshoc/hooks/user'
 import type { CurationFlag } from '@/data/sshoc/utils/curation'
@@ -38,7 +37,7 @@ import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicato
 import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDialogState'
 import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogTrigger'
 import { entries, length, mapBy } from '@/lib/utils'
-import { maxItemSearchFacetValues } from '~/config/sshoc.config'
+import { maxItemSearchFacetValues, queryableItemStatus } from '~/config/sshoc.config'
 
 export function ModerateItemSearchFilters(): JSX.Element {
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -522,7 +521,7 @@ function ItemStatusFacets(): JSX.Element {
   const label = t(['common', 'item', 'status'])
   const selectedKeys = searchFilters[name]
 
-  const items = itemStatus.map((status) => {
+  const items = queryableItemStatus.map((status) => {
     return { id: status, label: t(['common', 'item-status', status]) }
   })
 
@@ -794,13 +793,15 @@ function InformationContributorFacets(): JSX.Element {
           </CheckBoxGroup>
           {/* FIXME: CheckBoxGroup should be virtualized list, also: make it a react-stately collection component. */}
           {users.hasNextPage === true ? (
-            <ButtonLink
-              onPress={() => {
-                return users.fetchNextPage()
-              }}
-            >
-              {t(['common', 'search', 'show-more'])}
-            </ButtonLink>
+            <div className={css['search-facets-overlay-controls']}>
+              <ButtonLink
+                onPress={() => {
+                  return users.fetchNextPage()
+                }}
+              >
+                {t(['common', 'search', 'show-more'])}
+              </ButtonLink>
+            </div>
           ) : null}
         </SearchFacetsOverlay>
       </div>

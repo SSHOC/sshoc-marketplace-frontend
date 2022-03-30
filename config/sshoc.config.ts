@@ -1,5 +1,5 @@
-import type { ItemDraftSortOrder, ItemSortOrder } from '@/data/sshoc/api/item'
-import { itemSortOrders } from '@/data/sshoc/api/item'
+import type { ItemDraftSortOrder, ItemSortOrder, ItemStatus } from '@/data/sshoc/api/item'
+import { itemSortOrders, itemStatus } from '@/data/sshoc/api/item'
 import type { SourceSortOrder } from '@/data/sshoc/api/source'
 import type { UserSortOrder } from '@/data/sshoc/api/user'
 
@@ -53,6 +53,14 @@ export const defaultSourceSortOrder: SourceSortOrder = 'name'
 export const defaultUserSortOrder: UserSortOrder = 'username'
 
 export const defaultDraftItemSortOrder: ItemDraftSortOrder = 'modified-on'
+
+function isSupportedItemStatusQuery(status: ItemStatus): status is ItemStatus {
+  /** Item with these status are not indexed in solr and can therefore not be queried with `d.status` parameter. */
+  const nonIndexedStatus: Array<ItemStatus> = ['draft', 'deprecated', 'disapproved']
+  return !nonIndexedStatus.includes(status)
+}
+
+export const queryableItemStatus: Array<ItemStatus> = itemStatus.filter(isSupportedItemStatusQuery)
 
 export const maxItemSearchFacetValues = 10
 
