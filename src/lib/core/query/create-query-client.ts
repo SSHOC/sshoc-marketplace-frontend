@@ -10,7 +10,7 @@ import type {
 } from '@/lib/core/query/types'
 import { toast } from '@/lib/core/toast/toast'
 import { includes, isNonEmptyString } from '@/lib/utils'
-// import { toastAutoCloseDelay } from '~/config/site.config'
+import { toastAutoCloseDelay } from '~/config/site.config'
 
 export type { QueryClient }
 
@@ -83,7 +83,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             render: message,
             type: 'success',
             isLoading: null,
-            autoClose: null,
+            autoClose: toastAutoCloseDelay,
             closeButton: null,
             closeOnClick: null,
             draggable: null,
@@ -113,7 +113,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             render: message,
             type: 'error',
             isLoading: null,
-            autoClose: null,
+            autoClose: toastAutoCloseDelay,
             closeButton: null,
             closeOnClick: null,
             draggable: null,

@@ -12,7 +12,7 @@ import type { AriaMenuProps } from '@react-types/menu'
 import type { Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
 import type { HTMLAttributes, Key, RefObject } from 'react'
-import { Fragment, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
@@ -28,7 +28,6 @@ export function AccountMenu(): JSX.Element {
   const { t } = useI18n<'common'>()
   const { isSignedIn } = useAuth()
   const currentUser = useCurrentUser()
-  const router = useRouter()
 
   const state = useMenuTriggerState({})
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -39,6 +38,16 @@ export function AccountMenu(): JSX.Element {
   const { focusProps, isFocusVisible } = useFocusRing()
 
   const items = useAccountMenuItems()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', state.close)
+
+    return () => {
+      router.events.off('routeChangeStart', state.close)
+    }
+  }, [router, state.close])
 
   function onAction(key: Key) {
     const item = items.find((item) => {
