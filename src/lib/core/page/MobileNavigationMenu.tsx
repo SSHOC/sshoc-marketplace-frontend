@@ -60,6 +60,7 @@ function NavigationMenu(): JSX.Element {
       <Button
         ref={triggerRef}
         {...triggerProps}
+        aria-label={t(['common', 'navigation-menu'])}
         color="gradient"
         onPress={state.toggle}
         style={{
@@ -67,7 +68,7 @@ function NavigationMenu(): JSX.Element {
           '--button-padding-block': 'var(--space-2-5)',
         }}
       >
-        <Icon icon={MenuIcon} aria-label={t(['common', 'navigation-menu'])} />
+        <Icon icon={MenuIcon} />
       </Button>
       {state.isOpen ? (
         <OverlayContainer>

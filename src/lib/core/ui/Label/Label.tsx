@@ -38,6 +38,7 @@ export const Label = forwardRef(function Label(
       ref={forwardedRef}
       className={css['label']}
       htmlFor={ElementType === 'label' ? htmlFor : undefined}
+      id={props.id}
       onClick={onClick}
     >
       {children}

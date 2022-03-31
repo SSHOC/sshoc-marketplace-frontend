@@ -8,7 +8,7 @@ export interface FormSectionTitleProps {
   headingLevel?: 3 | 4 | 5
 }
 export function FormSectionTitle(props: FormSectionTitleProps): JSX.Element {
-  const { children, headingLevel = 3 } = props
+  const { children, headingLevel = 2 } = props
 
   const ElementType = `h${headingLevel}` as const
 

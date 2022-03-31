@@ -49,3 +49,8 @@ src/lib/core/navigation/routes.ts
 
 # storybook
 storybook-static/
+
+# cypress
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/

@@ -36,7 +36,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
     name,
     onSubmit,
     validate,
-    validateOnBlur = false,
+    validateOnBlur = true,
   } = props
 
   return (
