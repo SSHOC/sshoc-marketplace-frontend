@@ -147,7 +147,7 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
    *
    * @see https://github.com/final-form/final-form/issues/411
    */
-  useFieldArray<WorkflowStepInput | undefined>('composedOf')
+  useFieldArray<WorkflowStepInput | undefined>('composedOf', { subscription: {} })
 
   function onBeforeSubmit() {
     props.onBeforeSubmit?.(form)
@@ -185,6 +185,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<UndefinedLeaves<WorkflowStepInput> | WorkflowStepInput>(
     'composedOf',
+    { subscription: {} },
   )
 
   function onAdd() {

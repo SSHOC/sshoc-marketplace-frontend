@@ -23,7 +23,7 @@ export const relatedConceptInputSchema = z.object({
 })
 
 export const conceptInputSchema = z.object({
-  label: z.string(),
+  label: z.string().min(1),
   notation: z.string().optional(),
   definition: z.string().optional(),
   uri: z.string().url().optional(),

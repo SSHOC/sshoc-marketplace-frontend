@@ -24,7 +24,7 @@ export const propertyInputScalarSchema = z
       ),
     }),
     // concept: z.never(),
-    value: z.string(),
+    value: z.string().min(1),
   })
   // TODO: Use `superRefine` to add custom errors.
   // TODO: could also add more types to discriminated union which can be checked individually,
@@ -58,7 +58,7 @@ export const propertyInputSchema = propertyInputConceptSchema.or(propertyInputSc
 // z.discriminatedUnion('type.type', [propertyInputConceptSchema, propertyInputScalarSchema])
 
 export const propertyTypeInputSchema = z.object({
-  label: z.string(),
+  label: z.string().min(1),
   type: z.enum(['concept', 'string', 'url', 'int', 'float', 'date', 'boolean']),
   groupName: z.string().optional(),
   hidden: z.boolean().optional(),

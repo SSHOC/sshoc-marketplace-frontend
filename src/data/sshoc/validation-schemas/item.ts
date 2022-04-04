@@ -16,7 +16,7 @@ export const itemSourceRefSchema = z.object({
 })
 
 export const itemExternalIdInputSchema = z.object({
-  identifier: z.string(),
+  identifier: z.string().min(1),
   identifierService: itemSourceRefSchema,
 })
 
@@ -61,7 +61,7 @@ export const itemBaseInputSchema = z.object({
 
 export const itemSourceInputSchema = z
   .object({
-    label: z.string(),
+    label: z.string().min(1),
     ord: z.number().optional(),
     urlTemplate: z.string().url().optional(),
   })
@@ -80,11 +80,11 @@ export const itemSourceInputSchema = z
   )
 
 export const itemCommentInputSchema = z.object({
-  body: z.string(),
+  body: z.string().min(1),
 })
 
 export const itemRelationKindInputSchema = z.object({
-  label: z.string(),
+  label: z.string().min(1),
   inverseOf: z.string().optional(),
   ord: z.number().optional(),
 })

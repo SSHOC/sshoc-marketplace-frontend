@@ -8,10 +8,10 @@ const propertyTypes = _propertyTypes as unknown as PropertyTypes
 const recommendedFields = {
   // label: '',
   // description: '',
-  contributors: [undefined],
+  contributors: [{ role: { code: undefined }, actor: { id: undefined } }],
   accessibleAt: [undefined],
-  externalIds: [undefined],
-  relatedItems: [undefined],
+  externalIds: [{ identifier: undefined, identifierService: { code: undefined } }],
+  relatedItems: [{ relation: { code: undefined }, persistentId: undefined }],
 }
 
 const recommendedProperties = [

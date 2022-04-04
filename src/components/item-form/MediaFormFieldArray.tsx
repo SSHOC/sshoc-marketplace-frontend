@@ -26,7 +26,9 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): JSX.Elemen
   const { field } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
-  const fieldArray = useFieldArray<ItemMediaInput | UndefinedLeaves<ItemMediaInput>>(field.name)
+  const fieldArray = useFieldArray<ItemMediaInput | UndefinedLeaves<ItemMediaInput>>(field.name, {
+    subscription: {},
+  })
   const dialog = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -64,7 +66,7 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): JSX.Elemen
             fieldArray.fields.remove(index)
           }
 
-          const fieldGroup = {
+          const _fieldGroup = {
             info: {
               ...field.fields.info,
               name: [name, field.fields.info.name].join('.'),

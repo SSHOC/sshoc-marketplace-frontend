@@ -24,6 +24,7 @@ export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps)
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<ItemExternalIdInput | UndefinedLeaves<ItemExternalIdInput>>(
     field.name,
+    { subscription: {} },
   )
 
   function onAdd() {

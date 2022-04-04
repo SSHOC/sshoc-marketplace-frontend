@@ -25,6 +25,7 @@ export function ActorsFormFieldArray(props: ActorsFormFieldArrayProps): JSX.Elem
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<ItemContributorRef | UndefinedLeaves<ItemContributorRef>>(
     field.name,
+    { subscription: {} },
   )
 
   function onAdd() {

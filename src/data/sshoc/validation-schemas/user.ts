@@ -13,8 +13,8 @@ const userRoles = [
 ] as const
 
 export const userInputSchema = z.object({
-  username: z.string(),
-  displayName: z.string(),
+  username: z.string().min(1),
+  displayName: z.string().min(1),
   password: z.string(),
   role: z.enum(userRoles).optional(),
   email: z.string().email(),

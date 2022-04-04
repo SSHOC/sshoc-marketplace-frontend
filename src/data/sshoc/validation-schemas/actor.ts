@@ -14,11 +14,11 @@ export const actorRoleRefSchema = z.object({
 
 export const actorExternalIdInputSchema = z.object({
   identifierService: actorSourceRefSchema,
-  identifier: z.string(),
+  identifier: z.string().min(1),
 })
 
 export const actorInputSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1),
   externalIds: z.array(actorExternalIdInputSchema).optional(),
   website: z.string().url().optional(),
   email: z.string().email().optional(),
@@ -27,7 +27,7 @@ export const actorInputSchema = z.object({
 
 export const actorSourceInputSchema = z
   .object({
-    label: z.string(),
+    label: z.string().min(1),
     ord: z.number().optional(),
     urlTemplate: z.string().url().optional(),
   })
@@ -46,6 +46,6 @@ export const actorSourceInputSchema = z
   )
 
 export const actorRoleInputSchema = z.object({
-  label: z.string(),
+  label: z.string().min(1),
   ord: z.number().optional(),
 })

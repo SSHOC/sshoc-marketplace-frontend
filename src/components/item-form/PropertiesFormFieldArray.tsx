@@ -29,7 +29,9 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 
   const { t, createCollator } = useI18n<'authenticated' | 'common'>()
   const compare = createCollator()
-  const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name)
+  const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
+    subscription: {},
+  })
 
   function onAdd() {
     fieldArray.fields.push({

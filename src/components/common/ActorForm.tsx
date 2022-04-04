@@ -61,6 +61,7 @@ export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProp
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<ActorExternalIdInput | UndefinedLeaves<ActorExternalIdInput>>(
     field.name,
+    { subscription: {} },
   )
 
   function onAdd() {

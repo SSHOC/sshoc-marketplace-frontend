@@ -19,7 +19,7 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
   const { field } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
-  const fieldArray = useFieldArray<string | undefined>(field.name)
+  const fieldArray = useFieldArray<string | undefined>(field.name, { subscription: {} })
 
   function onAdd() {
     fieldArray.fields.push(undefined)

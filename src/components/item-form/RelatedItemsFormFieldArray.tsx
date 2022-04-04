@@ -22,7 +22,10 @@ export function RelatedItemsFormFieldArray(props: RelatedItemsFormFieldArrayProp
   const { field } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
-  const fieldArray = useFieldArray<RelatedItemInput | UndefinedLeaves<RelatedItemInput>>(field.name)
+  const fieldArray = useFieldArray<RelatedItemInput | UndefinedLeaves<RelatedItemInput>>(
+    field.name,
+    { subscription: {} },
+  )
 
   function onAdd() {
     fieldArray.fields.push({ relation: { code: undefined }, persistentId: undefined })

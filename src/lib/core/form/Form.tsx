@@ -36,7 +36,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
     method,
     name,
     onSubmit,
-    subscription,
+    subscription = {},
     validate,
     validateOnBlur = false,
   } = props

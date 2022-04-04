@@ -6,7 +6,7 @@ export const sourceRefSchema = z.object({
 
 export const sourceInputSchema = z
   .object({
-    label: z.string(),
+    label: z.string().min(1),
     url: z.string().url(),
     urlTemplate: z.string().url(),
   })

@@ -24,11 +24,51 @@ export function useItemDiffFormInitialValues<T extends Item>(
     Object.entries(diff.item).forEach(([key, value]) => {
       /* @ts-expect-error Not worth fixing types here. */
       if (Array.isArray(value) && value.length > initialValues[key].length) {
-        /* @ts-expect-error Not worth fixing types here. */
-        initialValues[key] = initialValues[key].concat(
-          /* @ts-expect-error Not worth fixing types here. */
-          Array(value.length - initialValues[key].length).fill(undefined),
-        )
+        switch (key) {
+          case 'accessibleAt':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill(undefined),
+            )
+            break
+          case 'externalIds':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill({
+                identifier: undefined,
+                identifierService: { code: undefined },
+              }),
+            )
+            break
+          case 'contributors':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill({
+                role: { code: undefined },
+                actor: { id: undefined },
+              }),
+            )
+            break
+          case 'properties':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill({
+                type: { code: undefined, type: undefined },
+                // value: undefined,
+                concept: { uri: undefined },
+              }),
+            )
+            break
+          case 'relatedItems':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill({
+                relation: { code: undefined },
+                persistentId: undefined,
+              }),
+            )
+            break
+          case 'media':
+            initialValues[key] = initialValues[key].concat(
+              Array(value.length - initialValues[key].length).fill(undefined),
+            )
+            break
+        }
       }
     })
 
