@@ -40,6 +40,7 @@ export const dictionary: Dictionary = {
   'read-more': 'Read more',
   'read-more-about-item': 'Read more about {{item}}',
   'see-all': 'See all',
+  'see-all-facets': 'See all {{facet}}',
   'see-more': 'See more',
   'select-file': 'Select file',
   ui: {
@@ -157,6 +158,7 @@ export const dictionary: Dictionary = {
     'refine-search': 'Refine your search',
     'show-more': 'More...',
     'show-less': 'Less...',
+    'search-filters': 'Search filters',
     'clear-filters': 'Clear filters',
     'sort-order': 'Sort order',
     'sort-by': 'Sort by {{order}}',

@@ -36,7 +36,7 @@ export function SearchFilters(): JSX.Element {
   const { t } = useI18n<'common'>()
 
   return (
-    <aside className={css['container']}>
+    <aside className={css['container']} aria-label={t(['common', 'search', 'search-filters'])}>
       <header className={css['section-header']}>
         <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
         <div className={css['clear-link']}>

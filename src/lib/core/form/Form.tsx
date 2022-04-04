@@ -19,6 +19,7 @@ export interface FormProps<T>
       | 'initialValuesEqual'
       | 'keepDirtyOnReinitialize'
       | 'onSubmit'
+      | 'subscription'
       | 'validate'
       | 'validateOnBlur'
     > {
@@ -35,8 +36,9 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
     method,
     name,
     onSubmit,
+    subscription,
     validate,
-    validateOnBlur = true,
+    validateOnBlur = false,
   } = props
 
   return (
@@ -47,6 +49,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
       keepDirtyOnReinitialize={keepDirtyOnReinitialize}
       mutators={mutators as any}
       onSubmit={onSubmit}
+      subscription={subscription}
       validate={validate}
       validateOnBlur={validateOnBlur}
     >

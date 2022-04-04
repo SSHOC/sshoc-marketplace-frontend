@@ -14,11 +14,11 @@ export interface ItemPreviewProps {
   controls?: ReactNode
   item: ItemSearchResult | RelatedItem
   /** @default 3 */
-  headingLevel?: 3 | 4 | 5
+  headingLevel?: 2 | 3 | 4 | 5
 }
 
 export function ItemPreview(props: ItemPreviewProps): JSX.Element {
-  const { controls = null, item, headingLevel = 3 } = props
+  const { controls = null, item, headingLevel = 2 } = props
 
   const { t } = useI18n<'common'>()
 

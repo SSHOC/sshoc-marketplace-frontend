@@ -33,6 +33,7 @@ export interface Dictionary {
   'read-more': string
   'read-more-about-item': string
   'see-all': string
+  'see-all-facets': string
   'see-more': string
   'select-file': string
   ui: {
@@ -144,6 +145,7 @@ export interface Dictionary {
     'refine-search': string
     'show-more': string
     'show-less': string
+    'search-filters': string
     'clear-filters': string
     'sort-order': string
     'sort-by': string
