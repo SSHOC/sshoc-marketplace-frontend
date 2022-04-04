@@ -2,6 +2,6 @@
   position: absolute;
   z-index: var(--z-index-background-color);
   background: linear-gradient(360deg, hsl(223deg 93% 89%) 0%, hsl(0deg 0% 100%) 100%),
-    linear-gradient(41deg, hsl(205deg 100% 95%) 0%, hsl(0deg 0% 100% / 0%) 100%);
+    linear-gradient(41deg, hsl(205deg 100% 95%) 0%, hsl(0deg 0% 100%) 100%);
   inset: 0;
 }
