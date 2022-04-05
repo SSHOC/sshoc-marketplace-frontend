@@ -72,10 +72,13 @@ function BrowseLinks(props: BrowseLinksProps): JSX.Element {
     <section className={css['section']}>
       <SubSectionHeader>
         <SubSectionTitle>{title}</SubSectionTitle>
-        <SubSectionHeaderLink href={routes.BrowsePage({ id: facet })}>
-          {t(['common', 'see-all-facets'], {
+        <SubSectionHeaderLink
+          aria-label={t(['common', 'see-all-facets'], {
             values: { facet: t(['common', 'facets', facet, 'other']) },
           })}
+          href={routes.BrowsePage({ id: facet })}
+        >
+          {t(['common', 'see-all'])}
         </SubSectionHeaderLink>
       </SubSectionHeader>
       <ul role="list" className={css['items']}>

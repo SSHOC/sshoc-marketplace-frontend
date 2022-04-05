@@ -6,9 +6,9 @@ import type { UseQueryResult } from 'react-query'
 import { ConceptComboBox } from '@/components/item-form/ConceptComboBox'
 import { PropertyTypeSelect } from '@/components/item-form/PropertyTypeSelect'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
+import { ValueTextField } from '@/components/item-form/ValueTextField'
 import type { GetPropertyTypes, PropertyConcept, PropertyType } from '@/data/sshoc/api/property'
 import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
-import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useFieldState } from '@/lib/core/form/useFieldState'
 
 export interface ItemPropertyProps {
@@ -80,7 +80,7 @@ export function ItemProperty(props: ItemPropertyProps): JSX.Element {
           allowedVocabularies={selectedPropertyType.allowedVocabularies}
         />
       ) : (
-        <FormTextField {...fieldGroup.value} />
+        <ValueTextField field={fieldGroup.value} propertyTypeId={selectedPropertyType.code} />
       )}
     </Fragment>
   )

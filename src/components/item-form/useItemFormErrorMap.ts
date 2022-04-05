@@ -44,6 +44,15 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
         }
 
         case z.ZodIssueCode.custom: {
+          if (issue.params?.['invalidValue'] === true) {
+            return {
+              message: t(['authenticated', 'validation', 'invalid-value-type'], {
+                values: {
+                  type: t(['authenticated', 'validation', 'data-types', issue.params['type']]),
+                },
+              }),
+            }
+          }
           break
         }
 

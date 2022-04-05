@@ -164,6 +164,15 @@ export interface Dictionary {
     'empty-field': string
     'invalid-email': string
     'invalid-url': string
+    'invalid-value-type': string
+    'data-types': {
+      boolean: string
+      date: string
+      float: string
+      int: string
+      string: string
+      url: string
+    }
   }
   controls: {
     add: string

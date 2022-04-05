@@ -1,7 +1,12 @@
 import { z } from 'zod'
 
 import { propertyTypeType } from '@/data/sshoc/api/property'
-import { isoDateString } from '@/data/sshoc/validation-schemas/common'
+import {
+  booleanString,
+  integerString,
+  isoDateString,
+  numberString,
+} from '@/data/sshoc/validation-schemas/common'
 import { conceptRefSchema } from '@/data/sshoc/validation-schemas/vocabulary'
 
 export const propertyInputConceptSchema = z.object({
@@ -26,20 +31,20 @@ export const propertyInputScalarSchema = z
     // concept: z.never(),
     value: z.string().min(1),
   })
-  // TODO: Use `superRefine` to add custom errors.
+  // TODO: Use `superRefine` to add custom error type.
   // TODO: could also add more types to discriminated union which can be checked individually,
   // e.g. { type: { type: z.literal('url') }, value: z.string().url() }
   .refine(
     (data) => {
       switch (data.type.type) {
         case 'boolean':
-          return z.boolean().safeParse(data.value).success
+          return booleanString.safeParse(data.value).success
         case 'date':
           return isoDateString.safeParse(data.value).success
         case 'float':
-          return z.number().safeParse(data.value).success
+          return numberString.safeParse(data.value).success
         case 'int':
-          return z.number().int().safeParse(data.value).success
+          return integerString.safeParse(data.value).success
         case 'string':
           return z.string().safeParse(data.value).success
         case 'url':
@@ -48,8 +53,12 @@ export const propertyInputScalarSchema = z
           return true
       }
     },
-    // FIXME: i18n (solved by using superrefine and a custom error type, i18n should be done in errormap)
-    { message: 'Invalid value', path: ['value'], params: { invalidValue: true } },
+    (data) => {
+      return {
+        path: ['value'],
+        params: { invalidValue: true, type: data.type.type },
+      }
+    },
   )
 
 export const propertyInputSchema = propertyInputConceptSchema.or(propertyInputScalarSchema)

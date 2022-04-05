@@ -214,6 +214,15 @@ export const dictionary: Dictionary = {
     'empty-field': 'Field must not be empty.',
     'invalid-email': 'Please provide a valid email address.',
     'invalid-url': 'Please provide a valid URL.',
+    'invalid-value-type': 'Invalid value. Expected: {{type}}.',
+    'data-types': {
+      boolean: 'true or false',
+      date: 'Date',
+      float: 'Number',
+      int: 'Number',
+      string: 'String',
+      url: 'URL',
+    },
   },
   controls: {
     add: 'Add',
