@@ -39,7 +39,8 @@
     }
   }
 
-  &[data-focused] {
+  &[data-focused],
+  &:focus-visible {
     border-color: var(--textfield-input-border-color-focus, var(--color-primary-600));
     background-color: var(--textfield-input-background-color-focus);
     color: var(--textfield-input-color-focus);

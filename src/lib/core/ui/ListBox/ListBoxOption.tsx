@@ -46,7 +46,7 @@ export const ListBoxOption = forwardRef(function ListBoxOption<T extends object>
   const { hoverProps, isHovered } = useHover({ ...props, isDisabled })
   const isKeyboardModality = isFocusVisible()
 
-  const isOptionFocused = shouldUseVirtualFocus === true && isFocused && isKeyboardModality
+  const isOptionFocused = isFocused && isKeyboardModality
   const isOptionSelectable = state.selectionManager.selectionMode !== 'none'
   const isOptionHovered =
     (isHovered && shouldFocusOnHover !== true) || (isFocused && !isKeyboardModality)

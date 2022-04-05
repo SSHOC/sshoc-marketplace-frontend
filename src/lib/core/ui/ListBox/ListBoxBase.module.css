@@ -8,6 +8,8 @@
   background-color: var(--listbox-background-color, var(--color-neutral-0));
   color: var(--listbox-color, var(--color-neutral-800));
   box-shadow: var(--box-shadow);
+  outline: 2px solid transparent;
+  outline-offset: 0;
   font-weight: var(--listbox-font-weight);
   font-size: var(--listbox-font-size, var(--font-size-3-75));
   user-select: none;
@@ -53,8 +55,14 @@
   &[data-focused] {
     background-color: var(--listbox-option-background-color-focus);
     color: var(--listbox-option-color-focus);
+  }
 
-    /* TODO: Hide outline when interaction modality is pointer device? */
+  &:focus-visible {
+    outline: 2px solid transparent;
+  }
+
+  &[data-focused] {
+    outline: 2px solid var(--color-primary-600);
     outline-offset: -2px;
   }
 

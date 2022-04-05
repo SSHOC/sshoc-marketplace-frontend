@@ -97,7 +97,7 @@ describe('Create dataset page', () => {
       )
     })
 
-    it.only('should dispatch filled out form as payload on submit', () => {
+    it('should dispatch filled out form as payload on submit', () => {
       cy.get('input[name="label"]').type('The label')
       cy.get('input[name="version"]').type('2.0')
       cy.get('textarea[name="description"]').type('The description')
@@ -133,9 +133,76 @@ describe('Create dataset page', () => {
       cy.get('input[name="properties[1].value"]').type('123')
       cy.get('input[name="properties[2].concept.uri"]').type('{downarrow}{downarrow}{enter}')
       cy.get('input[name="properties[3].concept.uri"]').type('{downarrow}{downarrow}{enter}')
-      cy.get('input[name="properties[4].value"]').type('456')
+      cy.get('input[name="properties[4].value"]').type('http://see-also.com')
       cy.get('input[name="properties[5].concept.uri"]').type('{downarrow}{downarrow}{enter}')
       cy.get('input[name="properties[6].value"]').type('2022')
+
+      cy.intercept({ url: 'http://localhost:8080/api/datasets', method: 'POST' }).as(
+        'create-dataset',
+      )
+
+      cy.findByRole('button', { name: 'Submit' }).realClick()
+      cy.findByRole('status').contains('Successfully suggested new Dataset.')
+      cy.location('pathname').should('equal', '/success')
+
+      cy.wait('@create-dataset').then((interception) => {
+        assert.deepEqual(interception.request.body, {
+          label: 'The label',
+          version: '2.0',
+          description: 'The description',
+          accessibleAt: ['https://first.com', 'https://second.com'],
+          contributors: [
+            { actor: { id: 1 }, role: { code: 'contributor' } },
+            { actor: { id: 2 }, role: { code: 'contact' } },
+          ],
+          properties: [
+            {
+              type: { code: 'activity', type: 'concept' },
+              concept: {
+                uri: 'http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting',
+              },
+            },
+            {
+              type: { code: 'keyword', type: 'string' },
+              value: '123',
+            },
+            {
+              type: { code: 'language', type: 'concept' },
+              concept: { uri: 'http://iso639-3.sil.org/code/eng' },
+            },
+            {
+              type: { code: 'object-format', type: 'concept' },
+              concept: { uri: 'http://www.iana.org/assignments/media-types/image/tiff' },
+            },
+            {
+              type: { code: 'see-also', type: 'url' },
+              value: 'http://see-also.com',
+            },
+            {
+              type: { code: 'license', type: 'concept' },
+              concept: { uri: 'http://spdx.org/licenses/Entessa' },
+            },
+            {
+              type: { code: 'year', type: 'int' },
+              value: '2022',
+            },
+          ],
+          externalIds: [
+            { identifier: 'abcdef', identifierService: { code: 'Wikidata' } },
+            { identifier: '123', identifierService: { code: 'GitHub' } },
+          ],
+          relatedItems: [],
+        })
+      })
+    })
+
+    it.only('should display field error message when property value has invalid type', () => {
+      cy.findByRole('button', { name: 'Add Property' }).click()
+      // "processed-at" date
+      // "deprecated-at-source" boolean
+      // "see-also" url
+      // "year" int
+      // "model-version" float
     })
   })
 })

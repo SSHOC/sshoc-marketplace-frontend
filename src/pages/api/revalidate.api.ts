@@ -43,7 +43,6 @@ export default async function handler(
     response.status(200).end()
     return
   } catch (error) {
-    console.error(error)
     response.status(500).end()
     return
   }
