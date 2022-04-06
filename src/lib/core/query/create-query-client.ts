@@ -60,7 +60,8 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             ? meta.messages.mutate(variables, mutation)
             : undefined
         const message = customMessage != null ? customMessage : defaultErrorMessages.mutation.mutate
-        console.log('Mutation notification', message, mutation.mutationId)
+
+        console.info('Mutate notification', message, '"' + String(mutation.mutationId) + '"')
         /** Global loading toast can be prevented when `meta.messages.mutate` returns `false`. */
         if (message !== false) {
           const toastId = String(mutation.mutationId)
@@ -75,7 +76,8 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             : undefined
         const message =
           customMessage != null ? customMessage : defaultErrorMessages.mutation.success
-        console.log('Success notification', message, mutation.mutationId)
+
+        console.info('Success notification', message, '"' + String(mutation.mutationId) + '"')
         /** Global loading toast can be prevented when `meta.messages.mutate` returns `false`. */
         if (message !== false) {
           const toastId = String(mutation.mutationId)
@@ -87,7 +89,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             closeButton: null,
             closeOnClick: null,
             draggable: null,
-            delay: 100, // Work around one of the race conditions in `react-toastify`.
+            delay: 150, // Work around one of the race conditions in `react-toastify`.
           })
         }
       },
