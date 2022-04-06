@@ -208,10 +208,12 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     messages: {
       mutate() {
         // return t(['common', 'auth', 'signing-in'])
-        // FIXME: race condition in react-toastify
+        // FIXME: never gets updated with success message, not sure why
+        console.info('Signing in...')
         return false
       },
       success() {
+        console.info('Signed in.')
         return t(['common', 'auth', 'sign-in-success'])
       },
       error() {

@@ -65,6 +65,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
         if (message !== false) {
           const toastId = String(mutation.mutationId)
           toast.loading(message, { toastId, role: 'status' })
+          console.info('Mutate notification', message, toastId)
         }
       },
       onSuccess(data, variables, context, mutation) {
@@ -89,6 +90,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             draggable: null,
             delay: 100, // Work around one of the race conditions in `react-toastify`.
           })
+          console.info('Success notification', message, toastId)
         }
       },
       onError(error, variables, context, mutation) {
