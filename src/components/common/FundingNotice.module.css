@@ -1,13 +1,17 @@
 .container {
   display: grid;
   grid-area: funding-notice;
-  grid-template-columns: 40px auto auto;
+  grid-template-columns: 40px auto;
   gap: var(--space-6);
   max-width: var(--size-256);
   padding-block: var(--space-24);
   color: var(--color-text-muted);
   font-size: var(--font-size-ui-xs);
   line-height: var(--line-height-relaxed);
+
+  @media (/* --screen-lg */ min-width: 64rem) {
+    grid-template-columns: 40px auto auto auto;
+  }
 }
 
 .container::before {
@@ -22,6 +26,7 @@
 
 .logos {
   display: grid;
+  grid-column: span 2;
   grid-auto-columns: 80px;
   grid-auto-flow: column;
   gap: var(--space-2);

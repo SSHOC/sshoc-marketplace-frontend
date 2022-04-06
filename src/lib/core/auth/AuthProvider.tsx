@@ -209,11 +209,9 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       mutate() {
         // return t(['common', 'auth', 'signing-in'])
         // FIXME: never gets updated with success message, not sure why
-        console.info('Signing in...')
         return false
       },
       success() {
-        console.info('Signed in.')
         return t(['common', 'auth', 'sign-in-success'])
       },
       error() {
