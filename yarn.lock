@@ -2091,84 +2091,84 @@
     outvariant "^1.2.1"
     strict-event-emitter "^0.2.0"
 
-"@next/bundle-analyzer@^12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/bundle-analyzer/-/bundle-analyzer-12.1.2.tgz#53e9f3595bd25404479b7a40a85a846b328af12b"
-  integrity sha512-JRDgfEERWXFtwCjiue/SgI/33Z/Dpmt3tKazbf2BIi+uEmxOjuwaN9+TGPEX/P0QWyuhu8DYAex92+B/yB+93Q==
+"@next/bundle-analyzer@^12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/bundle-analyzer/-/bundle-analyzer-12.1.5-canary.2.tgz#0862cde56de524a6d3ab48458c544939e96fd7e3"
+  integrity sha512-phpXYWIgEgApmlO2wbC0z3W12lM3xbQ3WgzSJbCI6L0MJ7OtB4NO1jORlLXKwrUNqkLYQl7X1zQaStDWZjEuWA==
   dependencies:
     webpack-bundle-analyzer "4.3.0"
 
-"@next/env@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/env/-/env-12.1.2.tgz#4b0f5fd448ac60b821d2486d2987948e3a099f03"
-  integrity sha512-A/P4ysmFScBFyu1ZV0Mr1Y89snyQhqGwsCrkEpK+itMF+y+pMqBoPVIyakUf4LXqGWJGiGFuIerihvSG70Ad8Q==
+"@next/env@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/env/-/env-12.1.5-canary.2.tgz#574f337cad8236e49661d2dc798c8d27d3ad90fb"
+  integrity sha512-Vnup5ewYgpuUmOjVz8gTQeBF9YYZ2ikVNHOGP6n3YqOYTnqTMKAFvCa7uqkFXraw/PtIbpb9ZMwtXd7T6HWx5Q==
 
-"@next/eslint-plugin-next@^12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/eslint-plugin-next/-/eslint-plugin-next-12.1.2.tgz#5757064bbfaba467c1a5647f0ef25793514f4016"
-  integrity sha512-XqYRh6d98dpv2ynoOEC3VeNv99hxRGBuanRDKASfntdAZD9Zp4n+AugmNF0qwOQEHYgG1uvZW3A4Fi6Y/+kCQw==
+"@next/eslint-plugin-next@^12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/eslint-plugin-next/-/eslint-plugin-next-12.1.5-canary.2.tgz#15f2588682379c92dcc099ceedf1770435ff5c46"
+  integrity sha512-tYFFv4BgvzoRd4U4T9COhVnaznaK6B4GG9xj2W0396EKakczqo0p+1OCYgoBbhqtkOp/nB3ytvncuN2b8VNS6g==
   dependencies:
     glob "7.1.7"
 
-"@next/swc-android-arm-eabi@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-12.1.2.tgz#675e952d9032ac7bec02f3f413c17d33bbd90857"
-  integrity sha512-iwalfLBhYmCIlj09czFbovj1SmTycf0AGR8CB357wgmEN8xIuznIwSsCH87AhwQ9apfNtdeDhxvuKmhS9T3FqQ==
+"@next/swc-android-arm-eabi@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-12.1.5-canary.2.tgz#3877f2cb7885047dc59137fd71a7a605927c1b51"
+  integrity sha512-EOeu/MWbTTq1V8I6Ehx1x0AwbGNaPPuWBjT9vB+V0alGA7vsFPyF3AnT81wRUkOCfOkP6MNtYvpr3sjnqxLLOw==
 
-"@next/swc-android-arm64@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-android-arm64/-/swc-android-arm64-12.1.2.tgz#d9710c50853235f258726b19a649df9c29a49682"
-  integrity sha512-ZoR0Vx7czJhTgRAcFbzTKQc2n2ChC036/uc6PbgYiI/LreEnfmsV/CiREP0pUVs5ndntOX8kBA3BSbh4zCO5tQ==
+"@next/swc-android-arm64@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-android-arm64/-/swc-android-arm64-12.1.5-canary.2.tgz#acf7a65766f21951cf3b938d119a903c6895a904"
+  integrity sha512-8xSPGDnekQTH6aulQ1fr0yy2zZ+DbuVkvui/D7WtQmfGFVnm1wsxifZDh1HWrrJcxDbdGSF8S/22iUmxMVhKQw==
 
-"@next/swc-darwin-arm64@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.1.2.tgz#aadd21b711c82b3efa9b4ecf7665841259e1fa7e"
-  integrity sha512-VXv7lpqFjHwkK65CZHkjvBxlSBTG+l3O0Zl2zHniHj0xHzxJZvR8VFjV2zIMZCYSfVqeQ5yt2rjwuQ9zbpGtXQ==
+"@next/swc-darwin-arm64@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.1.5-canary.2.tgz#c27ab156d62b342b258f05e348bde0a7f64dce03"
+  integrity sha512-WgWpb9tkTPBvAJHdLLnwdxlPx2z7bftcD5Z8EARBkJE6Y0eW2J3HG9fVov3SinS074f8PtEiE0xzwnbdtZBLbQ==
 
-"@next/swc-darwin-x64@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-12.1.2.tgz#3b1a389828f5c88ecb828a6394692fdeaf175081"
-  integrity sha512-evXxJQnXEnU+heWyun7d0UV6bhBcmoiyFGR3O3v9qdhGbeXh+SXYVxRO69juuh6V7RWRdlb1KQ0rGUNa1k0XSw==
+"@next/swc-darwin-x64@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-12.1.5-canary.2.tgz#8d6c128dbbb62f2aac3af5366bc4c0531857d375"
+  integrity sha512-uE5nKW5N6Til+i8w07SkGy+f6shwxdLCgrghsf3Aoa6PlrRubTTB7TXkeeZDaiuhxgt2891GvR0LzTwa+peH9w==
 
-"@next/swc-linux-arm-gnueabihf@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-12.1.2.tgz#db4371ca716bf94c94d4f6b001ac3c9d08d97d79"
-  integrity sha512-LJV/wo6R0Ot7Y/20bZs00aBG4J333RT6H/5Q2AROE4Hnx7cenSktSnfU6WCnJgzYLSIHdbLs549LcZMULuVquw==
+"@next/swc-linux-arm-gnueabihf@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-12.1.5-canary.2.tgz#c0c09a47599e05a945409a69efed9c065895a00a"
+  integrity sha512-Vfh4Orqzgtud/5UU2c7FfzmbOylWQYk5xQRN4XfnzHQSVkKwPVEnQnSKFHaon4Amhy5gdbxINFc1vi6lv3bZIA==
 
-"@next/swc-linux-arm64-gnu@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-12.1.2.tgz#0e71db03b8b12ed315c8be7d15392ecefe562b7c"
-  integrity sha512-fjlYU1Y8kVjjRKyuyQBYLHPxjGOS2ox7U8TqAvtgKvd2PxqdsgW4sP+VDovRVPrZlGXNllKoJiqMO1OoR9fB6w==
+"@next/swc-linux-arm64-gnu@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-12.1.5-canary.2.tgz#9e772be26fe7d3e5c50ead44808cbd17c37c0cc7"
+  integrity sha512-EzQOUFDruVVAXNnk8LPd0zEeZdegS70+pDnmheC/Ui4PCAOLpiWlxSzthOqq3NAHcNw+ThmQRZo8KcOg/mWuww==
 
-"@next/swc-linux-arm64-musl@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-12.1.2.tgz#f1b055793da1c12167ed3b6e32aef8289721a1fb"
-  integrity sha512-Y1JRDMHqSjLObjyrD1hf6ePrJcOF/mkw+LbAzoNgrHL1dSuIAqcz3jYunJt8T7Yw48xSJy6LPSL9BclAHwEwOA==
+"@next/swc-linux-arm64-musl@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-12.1.5-canary.2.tgz#11f7170cf0dacec683d09c297e51aa401677ce57"
+  integrity sha512-k6LYVBcpV86erVA+eIgm+rn/PyGXh0d3VEnAnLPheedjlFVbB5qAp2SSxo4zWrgmrGwfyRNLxcDniZiBagI8bA==
 
-"@next/swc-linux-x64-gnu@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.1.2.tgz#69764ffaacb3b9b373897fff15d7dd871455efe2"
-  integrity sha512-5N4QSRT60ikQqCU8iHfYZzlhg6MFTLsKhMTARmhn8wLtZfN9VVyTFwZrJQWjV64dZc4JFeXDANGao8fm55y6bw==
+"@next/swc-linux-x64-gnu@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.1.5-canary.2.tgz#b5ce502a7280e1eedd6b838fa0d3c059773c053c"
+  integrity sha512-HTX0gIxbBsqA4mGNszbQxhm4T73Z7QkRPqcRPy1gLIm5nspRiTDuv1p1JiewxsbIKsgl+z0u/y0CTM8kFnrqOg==
 
-"@next/swc-linux-x64-musl@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.1.2.tgz#0ddaedb5ec578c01771f83be2046dafb2f70df91"
-  integrity sha512-b32F/xAgdYG4Pt0foFzhF+2uhvNxnEj7aJNp1R4EhZotdej2PzvFWcP/dGkc7MJl205pBz5oC3gHyILIIlW6XA==
+"@next/swc-linux-x64-musl@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.1.5-canary.2.tgz#d797075956e2ef593bdc767cfd5a9c3f30339fd0"
+  integrity sha512-FuLRotgnYdix+lhFB89RU9C/RFOSpsdZa9h17eMKj+FKFQ44JfGGI14wbbxuJe+F6/52CGvOybpdIfYVkQYBcA==
 
-"@next/swc-win32-arm64-msvc@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-12.1.2.tgz#9e17ed56d5621f8c6961193da3a0b155cea511c9"
-  integrity sha512-hVOcGmWDeVwO00Aclopsj6MoYhfJl5zA4vjAai9KjgclQTFZa/DC0vQjgKAHHKGT5oMHgjiq/G7L6P1/UfwYnw==
+"@next/swc-win32-arm64-msvc@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-12.1.5-canary.2.tgz#82ca30d0e3d10c676e4d57ca8b1b75d22b0ce463"
+  integrity sha512-L9RkZqRweu16jWpJEYLi0yJAe3A+O5qMFv727cLhr6UpEgCl35YTTUm72k47IMr4N3i98Z31JihpaR1nc7TIIA==
 
-"@next/swc-win32-ia32-msvc@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-12.1.2.tgz#ddd260cbe8bc4002fb54415b80baccf37f8db783"
-  integrity sha512-wnVDGIVz2pR3vIkyN6IE+1NvMSBrBj1jba11iR16m8TAPzZH/PrNsxr0a9N5VavEXXLcQpoUVvT+N7nflbRAHg==
+"@next/swc-win32-ia32-msvc@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-12.1.5-canary.2.tgz#d094c84b21165d1bd38c4780544b8a71c138d725"
+  integrity sha512-uQdlN069FoKJbq9vupD4QklLhORJfRUU7UJV7W71JN9nkJJ84ky02FGLS8XNDz70LB2dHIfJyaC7jdikF38Yzw==
 
-"@next/swc-win32-x64-msvc@12.1.2":
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.1.2.tgz#37412a314bcf4c6006a74e1ef9764048344f3848"
-  integrity sha512-MLNcurEpQp0+7OU9261f7PkN52xTGkfrt4IYTIXau7DO/aHj927oK6piIJdl9EOHdX/KN5W6qlyErj170PSHtw==
+"@next/swc-win32-x64-msvc@12.1.5-canary.2":
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.1.5-canary.2.tgz#1a90400e6cd9ff3f2cf87fc4f7243756cc57187e"
+  integrity sha512-4CcjiIgHjYT6otzt5VflWyqmoVKp1HljOxELoBhTROKQ87c6ytqndkQQx4wP2nvWux+biyukUqBGsV0BFOjwaQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -13888,29 +13888,28 @@ next-theme@^0.1.5:
   resolved "https://registry.npmjs.org/next-theme/-/next-theme-0.1.5.tgz#aa6655c516892925e577349d7715a8ed54bad727"
   integrity sha512-WR8UCLEFjWvRl+UO2lTM4pGo7R4jzGZqQ6YL3hiL1Ns587Qb91GhJZLPu/Aa4ExtGQ/5wlcDX8zDYZoCN9oDPw==
 
-next@^12.1.2:
-  version "12.1.2"
-  resolved "https://registry.npmjs.org/next/-/next-12.1.2.tgz#c5376a8ae17d3e404a2b691c01f94c8943306f29"
-  integrity sha512-JHPCsnFTBO0Z4SQxSYc611UA1WA+r/3y3Neg66AH5/gSO/oksfRnFw/zGX/FZ9+oOUHS9y3wJFawNpVYR2gJSQ==
+next@^12.1.5-canary.2:
+  version "12.1.5-canary.2"
+  resolved "https://registry.npmjs.org/next/-/next-12.1.5-canary.2.tgz#af99fe07100f370c5dc7bb3c4b01b562acb48be7"
+  integrity sha512-ZXsjpFqmdXon8kaK0XsGdctJhuf+ggHNdVjpNN4N5HlT8Rjx4llGqU0hrg+FakjDj3ODEFQASvYcEYQIieFRyA==
   dependencies:
-    "@next/env" "12.1.2"
+    "@next/env" "12.1.5-canary.2"
     caniuse-lite "^1.0.30001283"
     postcss "8.4.5"
     styled-jsx "5.0.1"
-    use-subscription "1.5.1"
   optionalDependencies:
-    "@next/swc-android-arm-eabi" "12.1.2"
-    "@next/swc-android-arm64" "12.1.2"
-    "@next/swc-darwin-arm64" "12.1.2"
-    "@next/swc-darwin-x64" "12.1.2"
-    "@next/swc-linux-arm-gnueabihf" "12.1.2"
-    "@next/swc-linux-arm64-gnu" "12.1.2"
-    "@next/swc-linux-arm64-musl" "12.1.2"
-    "@next/swc-linux-x64-gnu" "12.1.2"
-    "@next/swc-linux-x64-musl" "12.1.2"
-    "@next/swc-win32-arm64-msvc" "12.1.2"
-    "@next/swc-win32-ia32-msvc" "12.1.2"
-    "@next/swc-win32-x64-msvc" "12.1.2"
+    "@next/swc-android-arm-eabi" "12.1.5-canary.2"
+    "@next/swc-android-arm64" "12.1.5-canary.2"
+    "@next/swc-darwin-arm64" "12.1.5-canary.2"
+    "@next/swc-darwin-x64" "12.1.5-canary.2"
+    "@next/swc-linux-arm-gnueabihf" "12.1.5-canary.2"
+    "@next/swc-linux-arm64-gnu" "12.1.5-canary.2"
+    "@next/swc-linux-arm64-musl" "12.1.5-canary.2"
+    "@next/swc-linux-x64-gnu" "12.1.5-canary.2"
+    "@next/swc-linux-x64-musl" "12.1.5-canary.2"
+    "@next/swc-win32-arm64-msvc" "12.1.5-canary.2"
+    "@next/swc-win32-ia32-msvc" "12.1.5-canary.2"
+    "@next/swc-win32-x64-msvc" "12.1.5-canary.2"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -18768,13 +18767,6 @@ use-latest@^1.0.0:
   integrity sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==
   dependencies:
     use-isomorphic-layout-effect "^1.0.0"
-
-use-subscription@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.npmjs.org/use-subscription/-/use-subscription-1.5.1.tgz#73501107f02fad84c6dd57965beb0b75c68c42d1"
-  integrity sha512-Xv2a1P/yReAjAbhylMfFplFKj9GssgTwN7RlcTxBujFQcloStWNDQdc4g4NRWH9xS4i/FDk04vQBptAXoF3VcA==
-  dependencies:
-    object-assign "^4.1.1"
 
 use@^3.1.0:
   version "3.1.1"

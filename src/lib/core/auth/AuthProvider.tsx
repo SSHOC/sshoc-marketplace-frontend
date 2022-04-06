@@ -207,7 +207,9 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const validateIdTokenMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'auth', 'signing-in'])
+        // return t(['common', 'auth', 'signing-in'])
+        // FIXME: race condition in react-toastify
+        return false
       },
       success() {
         return t(['common', 'auth', 'sign-in-success'])
