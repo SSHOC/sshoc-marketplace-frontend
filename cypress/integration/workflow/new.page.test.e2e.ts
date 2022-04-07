@@ -1,9 +1,9 @@
 export {}
 
-describe('Create dataset page', () => {
+describe('Create workflow page', () => {
   describe('when unauthenticated', () => {
     beforeEach(() => {
-      cy.visit('/dataset/new')
+      cy.visit('/workflow/new')
     })
 
     it('should redirect to home page', () => {
@@ -24,15 +24,15 @@ describe('Create dataset page', () => {
           }
         })
       })
-      cy.visit('/dataset/new')
+      cy.visit('/workflow/new')
     })
 
     it('should set document title', () => {
-      cy.title().should('contain', 'Create Dataset')
+      cy.title().should('contain', 'Create Workflow')
     })
 
     it('should display page title', () => {
-      cy.get('h1').contains('Create Dataset')
+      cy.get('h1').contains('Create Workflow')
     })
 
     it('should redirect to accoun screen on cancel', () => {
@@ -40,17 +40,117 @@ describe('Create dataset page', () => {
       cy.location('pathname').should('equal', '/account')
     })
 
-    it('should not submit form when required fields are empty on submit', () => {
-      cy.findByRole('button', { name: 'Submit' }).realClick()
+    it('should not allow going to next page (steps) when workflow has empty required fields', () => {
+      cy.findByRole('button', { name: 'Next' }).realClick()
       cy.findAllByText('Field must not be empty.').should('have.length', 2)
       cy.get('input[name="label"]').should('have.attr', 'aria-invalid', 'true').focused()
+    })
+
+    it('should go to next page (steps) when workflow has values in required fields', () => {
+      cy.get('input[name="label"]').type('The workflow')
+      cy.get('textarea[name="description"]').type('The description')
+      cy.findByRole('button', { name: 'Next' }).realClick()
+      cy.get('h1').contains('Create Workflow steps')
+    })
+
+    it.only('should submit workflow with recommended fields and added steps', () => {
+      cy.get('input[name="label"]').type('The workflow')
+      cy.get('input[name="version"]').type('2.0')
+      cy.get('textarea[name="description"]').type('The description')
+      cy.get('input[name="accessibleAt[0]"]').type('https://first.com')
+      cy.findByRole('button', { name: 'Add Accessible at URL' }).click()
+      cy.get('input[name="accessibleAt[1]"]').type('https://second.com')
+      cy.findByRole('button', { name: 'ID Service Please select an option' }).click()
+      cy.findByRole('option', { name: 'Wikidata' }).click({ force: true })
+      cy.get('input[name="externalIds[0].identifier"]').type('abcdef')
+      cy.findByRole('button', { name: 'Add External ID' }).click()
+      cy.findByRole('button', { name: 'ID Service Please select an option' }).click()
+      cy.findByRole('option', { name: 'GitHub' }).click({ force: true })
+      cy.get('input[name="externalIds[1].identifier"]').type('123')
+      cy.findByRole('button', { name: 'Role Please select an option' }).click()
+      cy.findByRole('option', { name: 'Contributor' }).click({ force: true })
+      cy.findByRole('combobox', { name: 'Name' }).type('{downarrow}{downarrow}{enter}')
+      cy.findByRole('button', { name: 'Add Actor' }).click()
+      cy.findByRole('button', { name: 'Role Please select an option' }).click()
+      cy.findByRole('option', { name: 'Contact' }).click({ force: true })
+      cy.findAllByRole('combobox', { name: 'Name' })
+        .last()
+        .type('{downarrow}{downarrow}{downarrow}{enter}')
+      cy.get('input[name="properties[0].concept.uri"]').type('{downarrow}{downarrow}{enter}')
+      cy.get('input[name="properties[1].value"]').type('some keyword')
+      cy.get('input[name="properties[2].concept.uri"]').type('{downarrow}{downarrow}{enter}')
+      cy.get('input[name="properties[3].value"]').type('http://see-also.com')
+      cy.get('input[name="properties[4].concept.uri"]').type('{downarrow}{downarrow}{enter}')
+      cy.findByRole('button', { name: 'Relation type Please select an option' }).click()
+      cy.findByRole('option', { name: 'Relates to' }).click({ force: true })
+      cy.findByRole('combobox', { name: 'Related item' }).type('{downarrow}{downarrow}{enter}')
+      cy.findByRole('button', { name: 'Add Related item' }).click()
+      cy.findByRole('button', { name: 'Relation type Please select an option' }).click()
+      cy.findByRole('option', { name: 'Relates to' }).click({ force: true })
+      cy.findAllByRole('combobox', { name: 'Related item' })
+        .last()
+        .type('{downarrow}{downarrow}{downarrow}{enter}')
+
+      cy.findByRole('button', { name: 'Next' }).realClick()
+      cy.findByRole('button', { name: 'Add step' }).realClick()
+
+      cy.get('input[name="composedOf[0]label"]').type('The first step')
+      cy.get('textarea[name="composedOf[0]description"]').type('The description')
+      cy.findByRole('button', { name: 'Save' }).realClick()
+
+      cy.intercept({ method: 'POST', pathname: '/api/workflows' }).as('create-workflow')
+      cy.findByRole('button', { name: 'Submit' }).realClick()
+      cy.wait('@create-workflow').then((interception) => {
+        assert.deepEqual(interception.request.body, {
+          label: 'The workflow',
+          version: '2.0',
+          description: 'The description',
+          accessibleAt: ['https://first.com', 'https://second.com'],
+          contributors: [
+            { actor: { id: 1 }, role: { code: 'contributor' } },
+            { actor: { id: 2 }, role: { code: 'contact' } },
+          ],
+          properties: [
+            {
+              type: { code: 'activity', type: 'concept' },
+              concept: {
+                uri: 'http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting',
+              },
+            },
+            {
+              type: { code: 'keyword', type: 'string' },
+              value: 'some keyword',
+            },
+            {
+              type: { code: 'language', type: 'concept' },
+              concept: { uri: 'http://iso639-3.sil.org/code/eng' },
+            },
+            {
+              type: { code: 'see-also', type: 'url' },
+              value: 'http://see-also.com',
+            },
+            {
+              type: { code: 'license', type: 'concept' },
+              concept: { uri: 'http://spdx.org/licenses/Entessa' },
+            },
+          ],
+          externalIds: [
+            { identifier: 'abcdef', identifierService: { code: 'Wikidata' } },
+            { identifier: '123', identifierService: { code: 'GitHub' } },
+          ],
+          relatedItems: [
+            { persistentId: 'FPwtaA', relation: { code: 'relates-to' } },
+            { persistentId: 'ArOAJD', relation: { code: 'relates-to' } },
+          ],
+        })
+      })
     })
 
     it('should submit form when required fields are not empty on submit, and redirect to success page', () => {
       cy.get('input[name="label"').focus().type('The label').blur()
       cy.get('textarea[name="description"]').focus().type('The description').blur()
       cy.findByRole('button', { name: 'Submit' }).realClick()
-      cy.findByRole('status').contains('Successfully suggested new Dataset.')
+      cy.findByRole('status').contains('Successfully suggested new Workflow.')
       cy.location('pathname').should('equal', '/success')
     })
 
@@ -68,8 +168,6 @@ describe('Create dataset page', () => {
       cy.findByRole('button', { name: 'ID Service Please select an option' }).click()
       cy.findByRole('option', { name: 'GitHub' }).click({ force: true })
       cy.get('input[name="externalIds[1].identifier"]').type('123')
-      cy.get('input[name="dateCreated"]').type('2022-01-01')
-      cy.get('input[name="dateLastUpdated"]').type('2022-02-02')
       cy.findByRole('button', { name: 'Role Please select an option' }).click()
       cy.findByRole('option', { name: 'Contributor' }).click({ force: true })
       cy.findByRole('combobox', { name: 'Name' }).type('{downarrow}{downarrow}{enter}')
@@ -90,13 +188,13 @@ describe('Create dataset page', () => {
       cy.get('input[name="properties[5].concept.uri"]').type('{downarrow}{downarrow}{enter}')
       cy.get('input[name="properties[6].value"]').type('2022')
 
-      cy.intercept({ pathname: '/api/datasets', method: 'POST' }).as('create-dataset')
+      cy.intercept({ pathname: '/api/workflows', method: 'POST' }).as('create-workflow')
 
       cy.findByRole('button', { name: 'Submit' }).realClick()
-      cy.findByRole('status').contains('Successfully suggested new Dataset.')
+      cy.findByRole('status').contains('Successfully suggested new Workflow.')
       cy.location('pathname').should('equal', '/success')
 
-      cy.wait('@create-dataset').then((interception) => {
+      cy.wait('@create-workflow').then((interception) => {
         assert.deepEqual(interception.request.body, {
           label: 'The label',
           version: '2.0',
@@ -143,8 +241,6 @@ describe('Create dataset page', () => {
             { identifier: '123', identifierService: { code: 'GitHub' } },
           ],
           relatedItems: [],
-          dateCreated: '2022-01-01T00:00:00.000Z',
-          dateLastUpdated: '2022-02-02T00:00:00.000Z',
         })
       })
     })
@@ -165,8 +261,6 @@ describe('Create dataset page', () => {
       // cy.findByRole('button', { name: 'ID Service Please select an option' }).click()
       // cy.findByRole('option', { name: 'GitHub' }).click({ force: true })
       // cy.get('input[name="externalIds[1].identifier"]').type('123')
-      cy.get('input[name="dateCreated"]').type('2022-01-01')
-      cy.get('input[name="dateLastUpdated"]').type('2022-02-02')
       cy.findByRole('button', { name: 'Role Please select an option' }).click()
       cy.findByRole('option', { name: 'Contributor' }).click({ force: true })
       cy.findByRole('combobox', { name: 'Name' }).type('{downarrow}{downarrow}{enter}')
@@ -187,15 +281,15 @@ describe('Create dataset page', () => {
       cy.get('input[name="properties[5].concept.uri"]').type('{downarrow}{downarrow}{enter}')
       cy.get('input[name="properties[6].value"]').type('2022')
 
-      cy.intercept({ pathname: '/api/datasets', query: { draft: 'true' }, method: 'POST' }).as(
-        'create-draft-dataset',
+      cy.intercept({ pathname: '/api/workflows', query: { draft: 'true' }, method: 'POST' }).as(
+        'create-draft-workflow',
       )
 
       cy.findByRole('button', { name: 'Save as draft' }).realClick()
-      cy.findByRole('status').contains('Successfully saved Dataset draft.')
-      cy.location('pathname').should('equal', '/dataset/new')
+      cy.findByRole('status').contains('Successfully saved Workflow draft.')
+      cy.location('pathname').should('equal', '/workflow/new')
 
-      cy.wait('@create-draft-dataset').then((interception) => {
+      cy.wait('@create-draft-workflow').then((interception) => {
         assert.deepEqual(interception.request.body, {
           label: 'The label',
           version: '2.0',
@@ -245,38 +339,32 @@ describe('Create dataset page', () => {
           //   { identifier: '123', identifierService: { code: 'GitHub' } },
           // ],
           relatedItems: [],
-          dateCreated: '2022-01-01T00:00:00.000Z',
-          dateLastUpdated: '2022-02-02T00:00:00.000Z',
         })
       })
 
-      cy.intercept({ pathname: '/api/datasets/*', query: { draft: 'true' }, method: 'PUT' }).as(
-        'update-draft-dataset',
+      cy.intercept({ pathname: '/api/workflows/*', query: { draft: 'true' }, method: 'PUT' }).as(
+        'update-draft-workflow',
       )
 
       cy.get('input[name="label"]').clear().type('The updated label')
       cy.findByRole('button', { name: 'Save as draft' }).realClick()
-      cy.findAllByRole('status').last().contains('Successfully saved Dataset draft.')
-      cy.location('pathname').should('equal', '/dataset/new')
-      cy.wait('@update-draft-dataset').then((interception) => {
+      cy.findAllByRole('status').last().contains('Successfully saved Workflow draft.')
+      cy.location('pathname').should('equal', '/workflow/new')
+      cy.wait('@update-draft-workflow').then((interception) => {
         assert.equal(interception.request.body.label, 'The updated label')
       })
 
       cy.findAllByRole('button', { name: 'Remove Property' }).first().realClick()
-      cy.findAllByRole('button', { name: 'Add Property' }).realClick()
-      cy.findByRole('button', { name: 'Property type Please select an option' }).click()
-      cy.findByRole('option', { name: 'Activity' }).click({ force: true })
-      cy.get('input[name="properties[6].concept.uri"]').type('{downarrow}{downarrow}{enter}')
 
-      cy.intercept({ pathname: '/api/datasets/*/commit', method: 'POST' }).as(
-        'commit-draft-dataset',
+      cy.intercept({ pathname: '/api/workflows/*/commit', method: 'POST' }).as(
+        'commit-draft-workflow',
       )
 
       cy.findByRole('button', { name: 'Submit' }).realClick()
-      cy.findAllByRole('status').last().contains('Successfully suggested new Dataset.')
+      cy.findAllByRole('status').last().contains('Successfully suggested new Workflow.')
       cy.location('pathname').should('equal', '/success')
 
-      cy.wait('@update-draft-dataset').then((interception) => {
+      cy.wait('@update-draft-workflow').then((interception) => {
         assert.deepEqual(interception.request.body, {
           label: 'The updated label',
           version: '2.0',
@@ -311,12 +399,6 @@ describe('Create dataset page', () => {
               type: { code: 'year', type: 'int' },
               value: '2022',
             },
-            {
-              type: { code: 'activity', type: 'concept' },
-              concept: {
-                uri: 'http://dcu.gr/ontologies/scholarlyontology/instances/ActivityType-Collecting',
-              },
-            },
           ],
           // FIXME: backend throws 500 when updating external ids:
           // @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/166
@@ -326,11 +408,9 @@ describe('Create dataset page', () => {
           //   { identifier: '123', identifierService: { code: 'GitHub' } },
           // ],
           relatedItems: [],
-          dateCreated: '2022-01-01T00:00:00.000Z',
-          dateLastUpdated: '2022-02-02T00:00:00.000Z',
         })
       })
-      cy.wait('@commit-draft-dataset')
+      cy.wait('@commit-draft-workflow')
     })
   })
 
@@ -347,15 +427,15 @@ describe('Create dataset page', () => {
           }
         })
       })
-      cy.visit('/dataset/new')
+      cy.visit('/workflow/new')
     })
 
     it('should submit form when required fields are not empty on submit, and redirect to item detail page', () => {
       cy.get('input[name="label"').focus().type('The label').blur()
       cy.get('textarea[name="description"]').focus().type('The description').blur()
       cy.findByRole('button', { name: 'Publish' }).realClick()
-      cy.findByRole('status').contains('Successfully created new Dataset.')
-      cy.location('pathname').should('have.string', '/dataset')
+      cy.findByRole('status').contains('Successfully created new Workflow.')
+      cy.location('pathname').should('have.string', '/workflow')
     })
   })
 })

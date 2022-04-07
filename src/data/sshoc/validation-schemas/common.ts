@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
+const dateFormat = /\d{4}-\d{2}-\d{2}/
 export const isoDateString = z.preprocess((arg: unknown) => {
-  return typeof arg === 'string' ? new Date(arg) : undefined
+  return typeof arg === 'string' && dateFormat.test(arg) ? new Date(arg) : undefined
 }, z.date())
 
 export const numberString = z.preprocess((arg: unknown) => {
@@ -14,9 +15,9 @@ export const integerString = z.preprocess((arg: unknown) => {
 
 export const booleanString = z.preprocess((arg: unknown) => {
   return typeof arg === 'string'
-    ? arg.toLowerCase() === 'true'
+    ? arg === 'TRUE'
       ? true
-      : arg.toLowerCase() === 'false'
+      : arg === 'FALSE'
       ? false
       : undefined
     : undefined

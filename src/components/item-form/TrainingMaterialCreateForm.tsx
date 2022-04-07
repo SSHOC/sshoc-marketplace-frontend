@@ -11,6 +11,7 @@ import { useTrainingMaterialFormFields } from '@/components/item-form/useTrainin
 import { useTrainingMaterialFormRecommendedFields } from '@/components/item-form/useTrainingMaterialFormRecommendedFields'
 import { useTrainingMaterialValidationSchema } from '@/components/item-form/useTrainingMaterialValidationSchema'
 import type { TrainingMaterialInput } from '@/data/sshoc/api/training-material'
+import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
 import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateTrainingMaterialFormValues = ItemFormValues<TrainingMaterialInput>
@@ -58,7 +59,10 @@ export function TrainingMaterialCreateForm(): JSX.Element {
           done?.()
         },
         onError(error) {
-          done?.({ [FORM_ERROR]: String(error) })
+          form.resumeValidation()
+          getApiErrorMessage(error).then((message) => {
+            done?.({ [FORM_ERROR]: message })
+          })
         },
       },
     )

@@ -3,6 +3,7 @@ import type { FormApi } from 'final-form'
 import { FormSections } from '@/components/common/FormSections'
 import { ActorFormSection } from '@/components/item-form/ActorFormSection'
 import { DateFormSection } from '@/components/item-form/DateFormSection'
+import { FormSubmitErrorMessage } from '@/components/item-form/FormSubmitErrorMessage'
 import { ItemFormControls } from '@/components/item-form/ItemFormControls'
 import { MainFormSection } from '@/components/item-form/MainFormSection'
 import { MediaFormSection } from '@/components/item-form/MediaFormSection'
@@ -62,6 +63,7 @@ export function ItemForm<T extends ItemFormValues<ItemInput>>(
           onBeforeSubmit={onBeforeSubmit}
           onCancel={onCancel}
         />
+        <FormSubmitErrorMessage />
       </FormSections>
     </Form>
   )

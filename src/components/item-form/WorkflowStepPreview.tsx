@@ -25,8 +25,7 @@ export function WorkflowStepPreview(props: WorkflowStepPreviewProps): JSX.Elemen
   const { name, index, onEdit, onRemove, onMoveUp, onMoveDown, isFirst, isLast } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
-  const field = useFieldState<WorkflowStepInput>(name)
-  const step = field.input.value
+  const step = useFieldState<WorkflowStepInput>(name).input.value
   const position = String(index + 1)
 
   return (

@@ -11,6 +11,7 @@ import { usePublicationFormFields } from '@/components/item-form/usePublicationF
 import { usePublicationFormRecommendedFields } from '@/components/item-form/usePublicationFormRecommendedFields'
 import { usePublicationValidationSchema } from '@/components/item-form/usePublicationValidationSchema'
 import type { PublicationInput } from '@/data/sshoc/api/publication'
+import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
 import { routes } from '@/lib/core/navigation/routes'
 
 export type CreatePublicationFormValues = ItemFormValues<PublicationInput>
@@ -56,7 +57,10 @@ export function PublicationCreateForm(): JSX.Element {
           done?.()
         },
         onError(error) {
-          done?.({ [FORM_ERROR]: String(error) })
+          form.resumeValidation()
+          getApiErrorMessage(error).then((message) => {
+            done?.({ [FORM_ERROR]: message })
+          })
         },
       },
     )

@@ -13,6 +13,7 @@ import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowV
 import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { WorkflowInput } from '@/data/sshoc/api/workflow'
 import type { WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
+import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
 import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateWorkflowFormValues = ItemFormValues<
@@ -71,7 +72,10 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
           done?.()
         },
         onError(error) {
-          done?.({ [FORM_ERROR]: error })
+          form.resumeValidation()
+          getApiErrorMessage(error).then((message) => {
+            done?.({ [FORM_ERROR]: message })
+          })
         },
       },
     )

@@ -14,7 +14,7 @@ export function useReviewFieldMetadata<T>(args: UseReviewFieldMetadataArgs) {
   const form = useForm()
   /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
   const setFieldData = form.mutators['setFieldData']!
-  const fieldState = useFieldState(name)
+  const fieldState = useFieldState(name, { data: true })
   const data = fieldState.meta.data as DiffFieldMetadata<T> | undefined
   const metadata = data?.diff
 

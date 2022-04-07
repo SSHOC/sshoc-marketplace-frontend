@@ -11,6 +11,7 @@ import { useToolFormFields } from '@/components/item-form/useToolFormFields'
 import { useToolFormRecommendedFields } from '@/components/item-form/useToolFormRecommendedFields'
 import { useToolValidationSchema } from '@/components/item-form/useToolValidationSchema'
 import type { ToolInput } from '@/data/sshoc/api/tool-or-service'
+import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
 import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateToolFormValues = ItemFormValues<ToolInput>
@@ -56,7 +57,10 @@ export function ToolOrServiceCreateForm(): JSX.Element {
           done?.()
         },
         onError(error) {
-          done?.({ [FORM_ERROR]: String(error) })
+          form.resumeValidation()
+          getApiErrorMessage(error).then((message) => {
+            done?.({ [FORM_ERROR]: message })
+          })
         },
       },
     )

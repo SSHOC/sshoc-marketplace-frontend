@@ -223,13 +223,14 @@ export const dictionary: Dictionary = {
     'invalid-url': 'Please provide a valid URL.',
     'invalid-value-type': 'Invalid value. Expected: {{type}}.',
     'data-types': {
-      boolean: 'true or false',
-      date: 'Date',
+      boolean: 'TRUE or FALSE',
+      date: 'Date in YYYY-MM-DD format',
       float: 'Number',
       int: 'Number',
       string: 'String',
       url: 'URL',
     },
+    'last-submission-failed': 'Last submission failed',
   },
   controls: {
     add: 'Add',

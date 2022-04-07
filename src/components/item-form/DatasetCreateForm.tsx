@@ -11,6 +11,7 @@ import { useDatasetFormFields } from '@/components/item-form/useDatasetFormField
 import { useDatasetFormRecommendedFields } from '@/components/item-form/useDatasetFormRecommendedFields'
 import { useDatasetValidationSchema } from '@/components/item-form/useDatasetValidationSchema'
 import type { DatasetInput } from '@/data/sshoc/api/dataset'
+import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
 import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateDatasetFormValues = ItemFormValues<DatasetInput>
@@ -56,7 +57,10 @@ export function DatasetCreateForm(): JSX.Element {
           done?.()
         },
         onError(error) {
-          done?.({ [FORM_ERROR]: String(error) })
+          form.resumeValidation()
+          getApiErrorMessage(error).then((message) => {
+            done?.({ [FORM_ERROR]: message })
+          })
         },
       },
     )

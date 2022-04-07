@@ -173,6 +173,7 @@ export interface Dictionary {
       string: string
       url: string
     }
+    'last-submission-failed': string
   }
   controls: {
     add: string
