@@ -108,7 +108,7 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
   return (
     <Form initialValues={initialValues} name={name} onSubmit={onSubmitPage} validate={_validate}>
       {page.type === 'workflow' ? (
-        <WorkflowFormSections onCancel={onCancel} onBeforeSubmit={onBeforeSubmit} />
+        <WorkflowFormSections onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
       ) : null}
       {page.type === 'steps' ? (
         <FormSections>
@@ -122,15 +122,19 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
         </FormSections>
       ) : null}
       {page.type === 'step' ? (
-        <WorkflowStepFormSections index={page.index} onCancel={onCancelStep} />
+        <WorkflowStepFormSections
+          index={page.index}
+          onBeforeSubmit={onBeforeSubmit}
+          onCancel={onCancelStep}
+        />
       ) : null}
     </Form>
   )
 }
 
 interface WorkflowFormSectionsProps {
-  onCancel: () => void
   onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
+  onCancel: () => void
 }
 
 function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
@@ -206,6 +210,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
       <FormFieldList>
         {fieldArray.fields.map((name, index) => {
           function onEdit() {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const value = fieldArray.fields.value[index]!
             setPage({
               type: 'step',
@@ -262,6 +267,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
 
 interface WorkflowStepFormSectionsProps {
   index: number
+  onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
   onCancel: () => void
 }
 
@@ -270,7 +276,12 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const name = `composedOf[${index}]`
+  const form = useForm<WorkflowFormValues>()
   const formFields = useWorkflowStepFormFields(name)
+
+  function onBeforeSubmit() {
+    props.onBeforeSubmit?.(form)
+  }
 
   return (
     <FormSections>
@@ -283,7 +294,9 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
         <FormButtonLink onPress={onCancel}>
           {t(['authenticated', 'controls', 'cancel'])}
         </FormButtonLink>
-        <FormButton type="submit">{t(['authenticated', 'controls', 'save'])}</FormButton>
+        <FormButton onPress={onBeforeSubmit} type="submit">
+          {t(['authenticated', 'controls', 'save'])}
+        </FormButton>
       </FormControls>
     </FormSections>
   )
