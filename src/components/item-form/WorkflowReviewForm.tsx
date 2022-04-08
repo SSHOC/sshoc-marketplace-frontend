@@ -24,6 +24,7 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowStepFormFields } from '@/components/item-form/useWorkflowStepFormFields'
+import { WorkflowFormNavigation } from '@/components/item-form/WorkflowFormNavigation'
 import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { ItemsDiff } from '@/data/sshoc/api/item'
@@ -117,8 +118,9 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
       validate={_validate}
     >
       <ReviewFormMetadata diff={diff}>
+        <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
         {page.type === 'workflow' ? (
-          <WorkflowFormSections onCancel={onCancel} onBeforeSubmit={onBeforeSubmit} />
+          <WorkflowFormSections onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
         ) : null}
         {page.type === 'steps' ? (
           <FormSections>
@@ -132,7 +134,11 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
           </FormSections>
         ) : null}
         {page.type === 'step' ? (
-          <WorkflowStepFormSections index={page.index} onCancel={onCancelStep} />
+          <WorkflowStepFormSections
+            index={page.index}
+            onBeforeSubmit={onBeforeSubmit}
+            onCancel={onCancelStep}
+          />
         ) : null}
       </ReviewFormMetadata>
     </Form>
@@ -140,8 +146,8 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
 }
 
 interface WorkflowFormSectionsProps {
-  onCancel: () => void
   onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
+  onCancel: () => void
 }
 
 function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
@@ -275,6 +281,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
 
 interface WorkflowStepFormSectionsProps {
   index: number
+  onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
   onCancel: () => void
 }
 
@@ -282,8 +289,13 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
   const { index, onCancel } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
+  const form = useForm<WorkflowFormValues>()
   const name = `composedOf[${index}]`
-  const formFields = useWorkflowStepFormFields(name)
+  const formFields = useWorkflowStepFormFields(name + '.')
+
+  function onBeforeSubmit() {
+    props.onBeforeSubmit?.(form)
+  }
 
   return (
     <FormSections>
@@ -296,7 +308,9 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
         <FormButtonLink onPress={onCancel}>
           {t(['authenticated', 'controls', 'cancel'])}
         </FormButtonLink>
-        <FormButton type="submit">{t(['authenticated', 'controls', 'save'])}</FormButton>
+        <FormButton onPress={onBeforeSubmit} type="submit">
+          {t(['authenticated', 'controls', 'save'])}
+        </FormButton>
       </FormControls>
     </FormSections>
   )

@@ -82,6 +82,7 @@ export interface Dictionary {
     'add-workflow-step': string
     'edit-workflow-step': string
     'remove-workflow-step': string
+    'workflow-form-page-navigation': string
   }
   fields: {
     label: Field

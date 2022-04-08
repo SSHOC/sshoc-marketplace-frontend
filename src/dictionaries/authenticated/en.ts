@@ -65,6 +65,7 @@ export const dictionary: Dictionary = {
     'add-workflow-step': 'Add step',
     'edit-workflow-step': 'Edit step {{position}}',
     'remove-workflow-step': 'Remove step {{position}}',
+    'workflow-form-page-navigation': 'Navigate between workflow details and workflow steps',
   },
   fields: {
     label: {

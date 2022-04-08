@@ -22,6 +22,7 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowStepFormFields } from '@/components/item-form/useWorkflowStepFormFields'
+import { WorkflowFormNavigation } from '@/components/item-form/WorkflowFormNavigation'
 import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
@@ -74,6 +75,7 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
   ) {
     switch (page.type) {
       case 'workflow':
+        delete values['__draft__']
         delete values['__submitting__']
         done?.()
         setPage({ type: 'steps' })
@@ -82,6 +84,7 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
         onSubmit(values, form, done)
         break
       case 'step':
+        delete values['__draft__']
         delete values['__submitting__']
         done?.()
         setPage({ type: 'steps' })
@@ -107,6 +110,7 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
 
   return (
     <Form initialValues={initialValues} name={name} onSubmit={onSubmitPage} validate={_validate}>
+      <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
       {page.type === 'workflow' ? (
         <WorkflowFormSections onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
       ) : null}
@@ -275,9 +279,9 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
   const { index, onCancel } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
-  const name = `composedOf[${index}]`
   const form = useForm<WorkflowFormValues>()
-  const formFields = useWorkflowStepFormFields(name)
+  const name = `composedOf[${index}]`
+  const formFields = useWorkflowStepFormFields(name + '.')
 
   function onBeforeSubmit() {
     props.onBeforeSubmit?.(form)
