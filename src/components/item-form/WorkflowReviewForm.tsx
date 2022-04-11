@@ -24,6 +24,7 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowStepFormFields } from '@/components/item-form/useWorkflowStepFormFields'
+import { useWorkflowStepFormRecommendedFields } from '@/components/item-form/useWorkflowStepFormRecommendedFields'
 import { WorkflowFormNavigation } from '@/components/item-form/WorkflowFormNavigation'
 import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
@@ -204,8 +205,10 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<UndefinedLeaves<WorkflowStepInput> | WorkflowStepInput>(
     'composedOf',
-    { subscription: {} },
+    { subscription: { value: true } },
   )
+  const recommendedFields =
+    useWorkflowStepFormRecommendedFields() as UndefinedLeaves<WorkflowStepInput>
 
   function onAdd() {
     const index = fieldArray.fields.length ?? 0
@@ -216,7 +219,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         fieldArray.fields.remove(index)
       },
     })
-    fieldArray.fields.push({ label: undefined, description: undefined })
+    fieldArray.fields.push({ ...recommendedFields, label: undefined, description: undefined })
   }
 
   return (
@@ -225,6 +228,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
       <FormFieldList>
         {fieldArray.fields.map((name, index) => {
           function onEdit() {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const value = fieldArray.fields.value[index]!
             setPage({
               type: 'step',

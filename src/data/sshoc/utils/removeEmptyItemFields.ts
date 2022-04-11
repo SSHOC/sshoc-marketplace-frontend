@@ -74,6 +74,13 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
         break
       }
 
+      case 'composedOf': {
+        if (Array.isArray(value)) {
+          item[key] = value.map(removeEmptyItemFields)
+        }
+        break
+      }
+
       default: {
         item[key] = value
         break
