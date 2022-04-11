@@ -181,7 +181,7 @@ function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
   }
 
   return (
-    <div>
+    <div className={css['values']}>
       {externalIds.map((id) => {
         if (internalExternalIds.includes(id.identifierService.code)) return null
 
