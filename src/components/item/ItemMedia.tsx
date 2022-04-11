@@ -166,7 +166,7 @@ function MediaCaption(props: MediaCaptionProps): JSX.Element {
   }
 
   return (
-    <figcaption>
+    <figcaption className={css['caption']}>
       {caption}
       {license != null ? <span>({license})</span> : null}
     </figcaption>
