@@ -15,6 +15,13 @@ export default function Document(): JSX.Element {
         /> */}
         <PreloadData />
         <InitialThemeScript />
+        {typeof process.env['NEXT_PUBLIC_GOOGLE_SITE_ID'] === 'string' &&
+        process.env['NEXT_PUBLIC_GOOGLE_SITE_ID'].length > 0 ? (
+          <meta
+            name="google-site-verification"
+            content={process.env['NEXT_PUBLIC_GOOGLE_SITE_ID']}
+          />
+        ) : null}
       </Head>
       <body>
         <Main />

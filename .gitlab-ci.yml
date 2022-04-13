@@ -34,4 +34,5 @@ build:
         NEXT_PUBLIC_BASE_URL: 'https://marketplace.sshopencloud.eu'
         NEXT_PUBLIC_SSHOC_API_BASE_URL: 'https://marketplace-api.sshopencloud.eu'
         NEXT_PUBLIC_MATOMO_APP_ID: '179'
+        NEXT_PUBLIC_GOOGLE_SITE_ID: 'nGy-4NymUoG2gvqsocWhF8A7TY9wVh5bAVIrPMNeC8M'
     - when: on_success
