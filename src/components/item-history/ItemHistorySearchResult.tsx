@@ -41,7 +41,7 @@ export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JS
           versionId={item.id}
         >
           {item.label}
-          {isNonEmptyString(item.version) ? <span>({item.version})</span> : null}
+          {isNonEmptyString(item.version) ? <span> ({item.version})</span> : null}
         </ItemLink>
       </SearchResultTitle>
       <SearchResultMeta>

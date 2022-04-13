@@ -19,11 +19,11 @@ export function ItemDateCreated(props: ItemDateCreatedProps): JSX.Element {
   }
 
   return (
-    <Fragment>
-      <dt>{t(['common', 'item', 'date-created'])}</dt>
+    <div>
+      <dt className={css['group-label']}>{t(['common', 'item', 'date-created'])}</dt>
       <dd>
         <Timestamp dateTime={dateTime} />
       </dd>
-    </Fragment>
+    </div>
   )
 }

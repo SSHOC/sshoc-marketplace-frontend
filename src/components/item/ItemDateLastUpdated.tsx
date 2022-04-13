@@ -19,11 +19,11 @@ export function ItemDateLastUpdated(props: ItemDateLastUpdatedProps): JSX.Elemen
   }
 
   return (
-    <Fragment>
-      <dt>{t(['common', 'item', 'date-last-modified'])}</dt>
+    <div>
+      <dt className={css['group-label']}>{t(['common', 'item', 'date-last-modified'])}</dt>
       <dd>
         <Timestamp dateTime={dateTime} />
       </dd>
-    </Fragment>
+    </div>
   )
 }

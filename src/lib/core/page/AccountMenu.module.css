@@ -9,7 +9,11 @@
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
   background-color: var(--color-primary-750);
   color: var(--color-neutral-50);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-ui-sm);
+  transition-timing-function: var(--transition-timing-function);
+  transition-duration: var(--transition-duration);
+  transition-property: var(--transition-property);
 
   &[data-hovered] {
     background-color: var(--color-primary-600);

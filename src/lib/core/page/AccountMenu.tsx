@@ -70,12 +70,12 @@ export function AccountMenu(): JSX.Element {
   return (
     <div className={css['container']}>
       <button
-        {...mergeProps(focusProps, hoverProps, buttonProps)}
-        data-hovered={isHovered ? '' : undefined}
-        data-focused={isFocusVisible ? '' : undefined}
-        data-state={state.isOpen ? 'expanded' : 'collapsed'}
-        className={css['menu-button']}
         ref={buttonRef}
+        {...mergeProps(focusProps, hoverProps, buttonProps)}
+        className={css['menu-button']}
+        data-focused={isFocusVisible ? '' : undefined}
+        data-hovered={isHovered ? '' : undefined}
+        data-state={state.isOpen ? 'expanded' : 'collapsed'}
       >
         {t(['common', 'auth', 'account-menu-message'], {
           values: { username: currentUser.data.displayName },
@@ -86,12 +86,12 @@ export function AccountMenu(): JSX.Element {
           <Popover isDismissable isOpen={state.isOpen} onClose={state.close} shouldCloseOnBlur>
             <DismissButton onDismiss={state.close} />
             <Menu
-              menuProps={menuProps}
               aria-label={t(['common', 'auth', 'account-menu'])}
               autoFocus={state.focusStrategy}
-              onClose={state.close}
-              onAction={onAction}
               items={items}
+              menuProps={menuProps}
+              onAction={onAction}
+              onClose={state.close}
             >
               {(item) => {
                 const props = { type: item.type, href: item.href }
@@ -162,9 +162,9 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
   if (item.props.type === 'button') {
     return (
       <li
+        ref={ref as RefObject<HTMLLIElement>}
         {...menuItemProps}
         className={menuStyles['nav-menu-item']}
-        ref={ref as RefObject<HTMLLIElement>}
       >
         <Button variant="nav-menu-link">{item.rendered}</Button>
       </li>
@@ -175,12 +175,12 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
     return (
       <li role="none" className={menuStyles['nav-menu-item']}>
         <a
+          ref={ref as RefObject<HTMLAnchorElement>}
           {...menuItemProps}
           className={menuStyles['nav-menu-link']}
           href={item.props.href}
           target="_blank"
           rel="noreferrer"
-          ref={ref as RefObject<HTMLAnchorElement>}
         >
           {item.rendered}
         </a>
