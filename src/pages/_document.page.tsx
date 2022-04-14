@@ -2,6 +2,9 @@ import { InitialThemeScript } from '@stefanprobst/next-theme'
 import { Head, Html, Main, NextScript } from 'next/document'
 
 import { PreloadData } from '@/lib/core/app/PreloadData'
+import { isNonEmptyString } from '@/lib/utils'
+
+const googleSiteId = process.env['NEXT_PUBLIC_GOOGLE_SITE_ID']
 
 export default function Document(): JSX.Element {
   return (
@@ -15,8 +18,7 @@ export default function Document(): JSX.Element {
         /> */}
         <PreloadData />
         <InitialThemeScript />
-        {typeof process.env['NEXT_PUBLIC_GOOGLE_SITE_ID'] === 'string' &&
-        process.env['NEXT_PUBLIC_GOOGLE_SITE_ID'].length > 0 ? (
+        {isNonEmptyString(googleSiteId) ? (
           <meta
             name="google-site-verification"
             content={process.env['NEXT_PUBLIC_GOOGLE_SITE_ID']}

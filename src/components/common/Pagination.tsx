@@ -126,12 +126,12 @@ function PageInput<TResults, TFilters extends { page: number }>(
         <VisuallyHidden>{t(['common', 'pagination', 'go-to-page'])}</VisuallyHidden>
         {/* TODO: @react-aria/number-field */}
         <input
-          type="text"
-          name="page"
-          min={1}
-          max={pages}
-          inputMode="numeric"
           defaultValue={page}
+          inputMode="numeric"
+          max={pages}
+          min={1}
+          name="page"
+          type="text"
         />
         <span aria-hidden>
           {t(['common', 'pagination', 'of-pages'], { values: { pages: String(pages) } })}
