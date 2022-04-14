@@ -6,4 +6,15 @@
 }
 
 .underlay[data-open='true'] {
+  animation: fade-in forwards var(--animation-duration);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
 }
