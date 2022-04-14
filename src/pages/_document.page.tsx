@@ -19,9 +19,7 @@ export default function Document(): JSX.Element {
         <InitialThemeScript />
         {isNonEmptyString(googleSiteId) ? (
           <meta name="google-site-verification" content={googleSiteId} />
-        ) : (
-          <meta name="google-site-verification" content={googleSiteId} />
-        )}
+        ) : null}
       </Head>
       <body>
         <Main />
