@@ -5,7 +5,18 @@
   align-items: start;
   justify-items: center;
   background-color: var(--color-backdrop-muted);
+  animation: fade-in forwards var(--animation-duration);
   inset: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
 }
 
 .container {

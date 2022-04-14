@@ -3,7 +3,18 @@
   z-index: var(--z-index-dialog);
   display: flex;
   justify-content: flex-end;
+  animation: fade-in forwards var(--animation-duration);
   inset: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
 }
 
 .container {
