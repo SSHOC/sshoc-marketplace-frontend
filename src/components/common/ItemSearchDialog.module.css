@@ -16,5 +16,4 @@
 .form-container {
   display: grid;
   gap: var(--space-6);
-  padding-block-end: var(--space-24);
 }
