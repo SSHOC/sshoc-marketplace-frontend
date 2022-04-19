@@ -90,10 +90,13 @@ export function DraftItemSearchResult(props: DraftItemSearchResultProps): JSX.El
             {t(['authenticated', 'controls', 'delete'])}
           </ButtonLink>
           <Link
-            href={itemRoutes.ItemEditVersionPage(item.category)({
-              persistentId: item.persistentId,
-              versionId: item.id,
-            })}
+            href={itemRoutes.ItemEditVersionPage(item.category)(
+              {
+                persistentId: item.persistentId,
+                versionId: item.id,
+              },
+              { draft: true },
+            )}
             aria-label={t(['authenticated', 'draft-items', 'edit-item'], {
               values: { label: item.label },
             })}

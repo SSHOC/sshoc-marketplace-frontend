@@ -33,7 +33,7 @@ import { ItemVersionScreenLayout } from '@/components/item/ItemVersionScreenLayo
 import { ToolOrServiceContentContributors } from '@/components/item/ToolOrServiceContentContributors'
 import { ToolOrServiceVersionControls } from '@/components/item/ToolOrServiceVersionControls'
 import type { Tool } from '@/data/sshoc/api/tool-or-service'
-import { useToolVersion } from '@/data/sshoc/hooks/tool-or-service'
+import { useTool, useToolVersion } from '@/data/sshoc/hooks/tool-or-service'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -42,6 +42,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -100,12 +101,18 @@ export async function getStaticProps(
 export default function ToolOrServiceVersionPage(
   props: ToolOrServiceVersionPage.Props,
 ): JSX.Element {
+  const router = useRouter()
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _toolOrService = useToolVersion({ persistentId, versionId })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _toolOrService = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useToolVersion({ persistentId, versionId }, undefined, { enabled: router.isReady })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useTool({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const toolOrService = _toolOrService.data
 
-  const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = toolOrService?.category ?? 'tool-or-service'

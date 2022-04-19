@@ -33,7 +33,10 @@ import { ItemVersionScreenLayout } from '@/components/item/ItemVersionScreenLayo
 import { TrainingMaterialContentContributors } from '@/components/item/TrainingMaterialContentContributors'
 import { TrainingMaterialVersionControls } from '@/components/item/TrainingMaterialVersionControls'
 import type { TrainingMaterial } from '@/data/sshoc/api/training-material'
-import { useTrainingMaterialVersion } from '@/data/sshoc/hooks/training-material'
+import {
+  useTrainingMaterial,
+  useTrainingMaterialVersion,
+} from '@/data/sshoc/hooks/training-material'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -42,6 +45,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -100,12 +104,20 @@ export async function getStaticProps(
 export default function TrainingMaterialVersionPage(
   props: TrainingMaterialVersionPage.Props,
 ): JSX.Element {
+  const router = useRouter()
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _trainingMaterial = useTrainingMaterialVersion({ persistentId, versionId })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _trainingMaterial = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useTrainingMaterialVersion({ persistentId, versionId }, undefined, {
+        enabled: router.isReady,
+      })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useTrainingMaterial({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const trainingMaterial = _trainingMaterial.data
 
-  const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = trainingMaterial?.category ?? 'training-material'

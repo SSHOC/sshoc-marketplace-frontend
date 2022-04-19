@@ -33,7 +33,7 @@ import { ItemSource } from '@/components/item/ItemSource'
 import { ItemTitle } from '@/components/item/ItemTitle'
 import { ItemVersionScreenLayout } from '@/components/item/ItemVersionScreenLayout'
 import type { Dataset } from '@/data/sshoc/api/dataset'
-import { useDatasetVersion } from '@/data/sshoc/hooks/dataset'
+import { useDataset, useDatasetVersion } from '@/data/sshoc/hooks/dataset'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -42,6 +42,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -55,7 +56,9 @@ export namespace DatasetVersionPage {
     versionId: Dataset['id']
   }
   export type PathParams = StringParams<PathParamsInput>
-  export type SearchParamsInput = Record<string, never>
+  export interface SearchParamsInput {
+    draft?: boolean
+  }
   export interface Props extends WithDictionaries<'authenticated' | 'common'> {
     params: PathParams
   }
@@ -98,12 +101,18 @@ export async function getStaticProps(
 }
 
 export default function DatasetVersionPage(props: DatasetVersionPage.Props): JSX.Element {
+  const router = useRouter()
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _dataset = useDatasetVersion({ persistentId, versionId })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _dataset = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDatasetVersion({ persistentId, versionId }, undefined, { enabled: router.isReady })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDataset({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const dataset = _dataset.data
 
-  const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = dataset?.category ?? 'dataset'

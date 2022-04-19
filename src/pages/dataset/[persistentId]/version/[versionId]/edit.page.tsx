@@ -22,7 +22,7 @@ import { useDatasetFormFields } from '@/components/item-form/useDatasetFormField
 import { useDatasetValidationSchema } from '@/components/item-form/useDatasetValidationSchema'
 import { useUpdateItemMeta } from '@/components/item-form/useUpdateItemMeta'
 import type { Dataset, DatasetInput } from '@/data/sshoc/api/dataset'
-import { useDatasetVersion } from '@/data/sshoc/hooks/dataset'
+import { useDataset, useDatasetVersion } from '@/data/sshoc/hooks/dataset'
 import type { PageComponent } from '@/lib/core/app/types'
 import { FORM_ERROR } from '@/lib/core/form/Form'
 import { getLocale } from '@/lib/core/i18n/getLocale'
@@ -32,6 +32,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -46,7 +47,9 @@ export namespace EditDatasetVersionPage {
     versionId: Dataset['id']
   }
   export type PathParams = StringParams<PathParamsInput>
-  export type SearchParamsInput = Record<string, never>
+  export interface SearchParamsInput {
+    draft?: boolean
+  }
   export interface Props extends WithDictionaries<'authenticated' | 'common'> {
     params: PathParams
   }
@@ -94,11 +97,23 @@ export default function EditDatasetVersionPage(props: EditDatasetVersionPage.Pro
 
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _dataset = useDatasetVersion({ persistentId, versionId }, undefined, {
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _dataset = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDatasetVersion({ persistentId, versionId }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useDataset({ persistentId, draft: true }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
   const dataset = _dataset.data
 
   const category = dataset?.category ?? 'dataset'

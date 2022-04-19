@@ -18,7 +18,15 @@ export function ItemLink(props: ItemLinkProps): JSX.Element {
   const href =
     status === 'approved'
       ? itemRoutes.ItemPage(category)({ persistentId })
-      : itemRoutes.ItemVersionPage(category)({ persistentId, versionId })
+      : itemRoutes.ItemVersionPage(category)(
+          {
+            persistentId,
+            versionId,
+          },
+          {
+            draft: status === 'draft' ? true : undefined,
+          },
+        )
 
   return <Link href={href}>{children}</Link>
 }

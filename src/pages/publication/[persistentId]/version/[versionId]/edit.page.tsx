@@ -22,7 +22,7 @@ import { usePublicationFormFields } from '@/components/item-form/usePublicationF
 import { usePublicationValidationSchema } from '@/components/item-form/usePublicationValidationSchema'
 import { useUpdateItemMeta } from '@/components/item-form/useUpdateItemMeta'
 import type { Publication, PublicationInput } from '@/data/sshoc/api/publication'
-import { usePublicationVersion } from '@/data/sshoc/hooks/publication'
+import { usePublication, usePublicationVersion } from '@/data/sshoc/hooks/publication'
 import type { PageComponent } from '@/lib/core/app/types'
 import { FORM_ERROR } from '@/lib/core/form/Form'
 import { getLocale } from '@/lib/core/i18n/getLocale'
@@ -32,6 +32,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -96,11 +97,23 @@ export default function EditPublicationVersionPage(
 
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _publication = usePublicationVersion({ persistentId, versionId }, undefined, {
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _publication = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      usePublicationVersion({ persistentId, versionId }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      usePublication({ persistentId, draft: true }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
   const publication = _publication.data
 
   const category = publication?.category ?? 'publication'

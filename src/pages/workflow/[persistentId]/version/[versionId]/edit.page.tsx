@@ -23,7 +23,7 @@ import { useWorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
 import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
-import { useWorkflowVersion } from '@/data/sshoc/hooks/workflow'
+import { useWorkflow, useWorkflowVersion } from '@/data/sshoc/hooks/workflow'
 import type { PageComponent } from '@/lib/core/app/types'
 import { FORM_ERROR } from '@/lib/core/form/Form'
 import { getLocale } from '@/lib/core/i18n/getLocale'
@@ -33,6 +33,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -95,12 +96,24 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
 
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _workflow = useWorkflowVersion({ persistentId, versionId }, undefined, {
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-  })
-  const workflow = _workflow.data
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _dataset = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useWorkflowVersion({ persistentId, versionId }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useWorkflow({ persistentId, draft: true }, undefined, {
+        enabled: router.isReady,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+      })
+  const workflow = _dataset.data
 
   const { page, setPage } = useWorkflowFormPage()
 

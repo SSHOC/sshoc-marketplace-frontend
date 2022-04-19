@@ -33,7 +33,7 @@ import { ItemVersionScreenLayout } from '@/components/item/ItemVersionScreenLayo
 import { PublicationContentContributors } from '@/components/item/PublicationContentContributors'
 import { PublicationVersionControls } from '@/components/item/PublicationVersionControls'
 import type { Publication } from '@/data/sshoc/api/publication'
-import { usePublicationVersion } from '@/data/sshoc/hooks/publication'
+import { usePublication, usePublicationVersion } from '@/data/sshoc/hooks/publication'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -42,6 +42,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
+import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -98,12 +99,18 @@ export async function getStaticProps(
 }
 
 export default function PublicationVersionPage(props: PublicationVersionPage.Props): JSX.Element {
+  const router = useRouter()
   const { persistentId, versionId: _versionId } = props.params
   const versionId = Number(_versionId)
-  const _publication = usePublicationVersion({ persistentId, versionId })
+  const searchParams = useSearchParams()
+  const isDraftVersion = searchParams != null && searchParams.get('draft') != null
+  const _publication = !isDraftVersion
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      usePublicationVersion({ persistentId, versionId }, undefined, { enabled: router.isReady })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      usePublication({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const publication = _publication.data
 
-  const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
 
   const category = publication?.category ?? 'publication'
