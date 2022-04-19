@@ -87,6 +87,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             closeButton: null,
             closeOnClick: null,
             draggable: null,
+            delay: 100, // Work around one of the race conditions in `react-toastify`.
           })
         }
       },
@@ -116,6 +117,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             closeButton: null,
             closeOnClick: null,
             draggable: null,
+            delay: 100, // Work around one of the race conditions in `react-toastify`.
           })
         }
 
