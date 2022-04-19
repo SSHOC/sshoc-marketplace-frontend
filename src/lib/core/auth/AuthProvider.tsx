@@ -207,10 +207,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const validateIdTokenMeta: MutationMetadata = {
     messages: {
       mutate() {
-        // return t(['common', 'auth', 'signing-in'])
-        // FIXME: never gets updated with success message (at least in firefox), although
-        // toast.update is called with the correct toast id.
-        return false
+        return t(['common', 'auth', 'signing-in'])
       },
       success() {
         return t(['common', 'auth', 'sign-in-success'])
