@@ -1,3 +1,4 @@
+import { HttpError } from '@stefanprobst/request'
 import type { UseQueryResult } from 'react-query'
 
 import { NoSearchResultsFound } from '@/components/common/NoSearchResultsFound'
@@ -13,6 +14,14 @@ export interface ItemHistorySearchResultsProps {
 
 export function ItemHistorySearchResults(props: ItemHistorySearchResultsProps): JSX.Element {
   const { items } = props
+
+  if (items.isError && items.error instanceof HttpError && items.error.response.status === 404) {
+    return (
+      <section className={css['container']} data-state="empty">
+        <NoSearchResultsFound />
+      </section>
+    )
+  }
 
   if (items.data == null) {
     return (

@@ -18,6 +18,7 @@ import { ItemHistoryScreenLayout } from '@/components/item-history/ItemHistorySc
 import { WorkflowHistorySearchResults } from '@/components/item-history/WorkflowHistorySearchResults'
 import type { Workflow } from '@/data/sshoc/api/workflow'
 import { useWorkflowHistory } from '@/data/sshoc/hooks/workflow'
+import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -27,6 +28,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
+import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -79,7 +81,16 @@ export async function getStaticProps(
 
 export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): JSX.Element {
   const { persistentId } = props.params
-  const workflowHistory = useWorkflowHistory({ persistentId })
+
+  const meta: QueryMetadata = {
+    messages: {
+      error(error) {
+        if (isNotFoundError(error)) return false
+        return undefined
+      },
+    },
+  }
+  const workflowHistory = useWorkflowHistory({ persistentId }, undefined, { meta })
 
   const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -91,7 +102,7 @@ export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): J
   const label = workflow?.label ?? t(['common', 'item-categories', category, 'one'])
   const title = t(['authenticated', 'item-history', 'item-history'], { values: { item: label } })
 
-  if (router.isFallback || workflowHistory.data == null) {
+  if (router.isFallback) {
     return (
       <Fragment>
         <PageMetadata title={title} />

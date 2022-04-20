@@ -18,6 +18,7 @@ import { ItemHistoryScreenLayout } from '@/components/item-history/ItemHistorySc
 import { PublicationHistorySearchResults } from '@/components/item-history/PublicationHistorySearchResults'
 import type { Publication } from '@/data/sshoc/api/publication'
 import { usePublicationHistory } from '@/data/sshoc/hooks/publication'
+import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -27,6 +28,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
+import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -79,7 +81,16 @@ export async function getStaticProps(
 
 export default function PublicationHistoryPage(props: PublicationHistoryPage.Props): JSX.Element {
   const { persistentId } = props.params
-  const publicationHistory = usePublicationHistory({ persistentId })
+
+  const meta: QueryMetadata = {
+    messages: {
+      error(error) {
+        if (isNotFoundError(error)) return false
+        return undefined
+      },
+    },
+  }
+  const publicationHistory = usePublicationHistory({ persistentId }, undefined, { meta })
 
   const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -91,7 +102,7 @@ export default function PublicationHistoryPage(props: PublicationHistoryPage.Pro
   const label = publication?.label ?? t(['common', 'item-categories', category, 'one'])
   const title = t(['authenticated', 'item-history', 'item-history'], { values: { item: label } })
 
-  if (router.isFallback || publicationHistory.data == null) {
+  if (router.isFallback) {
     return (
       <Fragment>
         <PageMetadata title={title} />

@@ -18,6 +18,7 @@ import { ItemHistoryScreenLayout } from '@/components/item-history/ItemHistorySc
 import { ToolHistorySearchResults } from '@/components/item-history/ToolHistorySearchResults'
 import type { Tool } from '@/data/sshoc/api/tool-or-service'
 import { useToolHistory } from '@/data/sshoc/hooks/tool-or-service'
+import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -27,6 +28,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
+import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -81,7 +83,16 @@ export default function ToolOrServiceHistoryPage(
   props: ToolOrServiceHistoryPage.Props,
 ): JSX.Element {
   const { persistentId } = props.params
-  const toolHistory = useToolHistory({ persistentId })
+
+  const meta: QueryMetadata = {
+    messages: {
+      error(error) {
+        if (isNotFoundError(error)) return false
+        return undefined
+      },
+    },
+  }
+  const toolHistory = useToolHistory({ persistentId }, undefined, { meta })
 
   const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -93,7 +104,7 @@ export default function ToolOrServiceHistoryPage(
   const label = tool?.label ?? t(['common', 'item-categories', category, 'one'])
   const title = t(['authenticated', 'item-history', 'item-history'], { values: { item: label } })
 
-  if (router.isFallback || toolHistory.data == null) {
+  if (router.isFallback) {
     return (
       <Fragment>
         <PageMetadata title={title} />

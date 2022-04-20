@@ -18,6 +18,7 @@ import { DatasetHistorySearchResults } from '@/components/item-history/DatasetHi
 import { ItemHistoryScreenLayout } from '@/components/item-history/ItemHistoryScreenLayout'
 import type { Dataset } from '@/data/sshoc/api/dataset'
 import { useDatasetHistory } from '@/data/sshoc/hooks/dataset'
+import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
@@ -27,6 +28,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
+import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
@@ -79,7 +81,16 @@ export async function getStaticProps(
 
 export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX.Element {
   const { persistentId } = props.params
-  const datasetHistory = useDatasetHistory({ persistentId })
+
+  const meta: QueryMetadata = {
+    messages: {
+      error(error) {
+        if (isNotFoundError(error)) return false
+        return undefined
+      },
+    },
+  }
+  const datasetHistory = useDatasetHistory({ persistentId }, undefined, { meta })
 
   const router = useRouter()
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -91,7 +102,7 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX
   const label = dataset?.label ?? t(['common', 'item-categories', category, 'one'])
   const title = t(['authenticated', 'item-history', 'item-history'], { values: { item: label } })
 
-  if (router.isFallback || datasetHistory.data == null) {
+  if (router.isFallback) {
     return (
       <Fragment>
         <PageMetadata title={title} />
