@@ -225,6 +225,7 @@ export interface Dictionary {
   controls: {
     history: string
     edit: string
+    'edit-version': string
     'edit-latest-draft': string
     'edit-latest-suggestion': string
     delete: string

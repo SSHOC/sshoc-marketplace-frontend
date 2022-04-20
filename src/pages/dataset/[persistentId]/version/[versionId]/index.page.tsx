@@ -169,7 +169,11 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): JSX
             </ItemTitle>
           </ScreenHeader>
           <ItemHeader>
-            <DatasetVersionControls persistentId={dataset.persistentId} versionId={dataset.id} />
+            <DatasetVersionControls
+              persistentId={dataset.persistentId}
+              status={dataset.status}
+              versionId={dataset.id}
+            />
             <ItemDescription description={dataset.description} />
           </ItemHeader>
           <ItemInfo>

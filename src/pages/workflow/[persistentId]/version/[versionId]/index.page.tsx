@@ -167,7 +167,11 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
             </ItemTitle>
           </ScreenHeader>
           <ItemHeader>
-            <WorkflowVersionControls persistentId={workflow.persistentId} versionId={workflow.id} />
+            <WorkflowVersionControls
+              persistentId={workflow.persistentId}
+              status={workflow.status}
+              versionId={workflow.id}
+            />
             <ItemDescription description={workflow.description} />
           </ItemHeader>
           <ItemInfo>

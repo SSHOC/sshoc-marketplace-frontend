@@ -171,6 +171,7 @@ export default function ToolOrServiceVersionPage(
           <ItemHeader>
             <ToolOrServiceVersionControls
               persistentId={toolOrService.persistentId}
+              status={toolOrService.status}
               versionId={toolOrService.id}
             />
             <ItemDescription description={toolOrService.description} />

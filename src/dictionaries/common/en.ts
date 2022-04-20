@@ -246,6 +246,7 @@ export const dictionary: Dictionary = {
   controls: {
     history: 'History',
     edit: 'Edit',
+    'edit-version': 'Edit this version',
     'edit-latest-draft': 'Edit latest draft',
     'edit-latest-suggestion': 'Edit latest suggestion',
     delete: 'Delete',

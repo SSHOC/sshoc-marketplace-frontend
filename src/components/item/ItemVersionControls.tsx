@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 
 import { LinkButton } from '@/components/common/LinkButton'
 import css from '@/components/item/ItemVersionControls.module.css'
-import type { Item, ItemCategory } from '@/data/sshoc/api/item'
+import type { Item, ItemCategory, ItemStatus } from '@/data/sshoc/api/item'
 import { useDeleteDatasetVersion } from '@/data/sshoc/hooks/dataset'
 import { useDeletePublicationVersion } from '@/data/sshoc/hooks/publication'
 import { useDeleteToolVersion } from '@/data/sshoc/hooks/tool-or-service'
@@ -18,11 +18,12 @@ import { Button } from '@/lib/core/ui/Button/Button'
 export interface ItemVersionControlsProps {
   category: ItemCategory
   persistentId: Item['persistentId']
+  status: ItemStatus
   versionId: Item['id']
 }
 
 export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Element {
-  const { category, persistentId, versionId } = props
+  const { category, persistentId, status, versionId } = props
 
   const { t } = useI18n<'common'>()
 
@@ -30,11 +31,14 @@ export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Elemen
     <AccessControl>
       <div className={css['container']}>
         <LinkButton
-          href={itemRoutes.ItemEditVersionPage(category)({ persistentId, versionId })}
+          href={itemRoutes.ItemEditVersionPage(category)(
+            { persistentId, versionId },
+            { draft: status === 'draft' ? true : undefined },
+          )}
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'edit'])}
+          {t(['common', 'controls', 'edit-version'])}
         </LinkButton>
 
         <LinkButton

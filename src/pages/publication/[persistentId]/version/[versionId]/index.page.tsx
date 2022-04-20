@@ -169,6 +169,7 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
           <ItemHeader>
             <PublicationVersionControls
               persistentId={publication.persistentId}
+              status={publication.status}
               versionId={publication.id}
             />
             <ItemDescription description={publication.description} />

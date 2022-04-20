@@ -176,6 +176,7 @@ export default function TrainingMaterialVersionPage(
           <ItemHeader>
             <TrainingMaterialVersionControls
               persistentId={trainingMaterial.persistentId}
+              status={trainingMaterial.status}
               versionId={trainingMaterial.id}
             />
             <ItemDescription description={trainingMaterial.description} />

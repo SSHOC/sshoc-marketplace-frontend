@@ -93,10 +93,13 @@ function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
       ) : null}
       {draft.data != null && draft.data.status === 'draft' ? (
         <LinkButton
-          href={itemRoutes.ItemEditVersionPage(category)({
-            persistentId,
-            versionId: draft.data.id,
-          })}
+          href={itemRoutes.ItemEditVersionPage(category)(
+            {
+              persistentId,
+              versionId: draft.data.id,
+            },
+            { draft: true },
+          )}
           color="secondary"
           size="xs"
         >
