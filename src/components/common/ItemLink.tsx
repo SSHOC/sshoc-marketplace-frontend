@@ -23,9 +23,7 @@ export function ItemLink(props: ItemLinkProps): JSX.Element {
             persistentId,
             versionId,
           },
-          {
-            draft: status === 'draft' ? true : undefined,
-          },
+          status === 'draft' ? ({ draft: true } as any) : undefined,
         )
 
   return <Link href={href}>{children}</Link>

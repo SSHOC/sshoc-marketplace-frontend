@@ -33,7 +33,7 @@ export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Elemen
         <LinkButton
           href={itemRoutes.ItemEditVersionPage(category)(
             { persistentId, versionId },
-            { draft: status === 'draft' ? true : undefined },
+            status === 'draft' ? ({ draft: true } as any) : undefined,
           )}
           color="secondary"
           size="xs"
