@@ -14,7 +14,6 @@ import useComposedRef from 'use-composed-ref'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Field } from '@/lib/core/ui/Field/Field'
 import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
-import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
 import CheckmarkIcon from '@/lib/core/ui/icons/checkmark.svg?symbol-icon'
@@ -25,7 +24,6 @@ import { useListBoxLayout } from '@/lib/core/ui/ListBox/useListBoxLayout'
 import { Popover } from '@/lib/core/ui/Popover/Popover'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 import css from '@/lib/core/ui/Select/Select.module.css'
-import { Tray } from '@/lib/core/ui/Tray/Tray'
 
 export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 'isLoading'> {
   /** @default 'start' */
@@ -109,10 +107,8 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       triggerRef,
     )
 
-  const isMobile = useIsMobileDevice()
-
   const { overlayProps, placement, updatePosition } = useOverlayPosition({
-    isOpen: state.isOpen && !isMobile,
+    isOpen: state.isOpen,
     maxHeight,
     onClose: state.close,
     overlayRef: popoverRef,
@@ -129,17 +125,8 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 
   const isInvalid = validationState === 'invalid'
 
-  // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-  useLayoutEffect(() => {
-    if (state.isOpen) {
-      requestAnimationFrame(() => {
-        updatePosition()
-      })
-    }
-  }, [state.isOpen, updatePosition])
-
   const listbox = (
-    <FocusScope contain={isMobile} restoreFocus>
+    <FocusScope contain restoreFocus>
       <DismissButton
         onDismiss={() => {
           return state.close()
@@ -148,6 +135,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       <ListBoxBase<T>
         ref={listboxRef}
         {...menuProps}
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         autoFocus={state.focusStrategy || true}
         color={color}
         disallowEmptySelection
@@ -157,9 +145,6 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
         onLoadMore={props.onLoadMore}
         shouldSelectOnPressUp
         state={state}
-        // TODO: Set max height: inherit so Tray scrolling works
-        style={{ maxHeight: 'inherit' }}
-        width={isMobile ? '100%' : undefined}
       />
       <DismissButton
         onDismiss={() => {
@@ -172,45 +157,25 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
   const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined)
 
   const onResize = useCallback(() => {
-    if (!isMobile && triggerRef.current) {
+    if (triggerRef.current) {
       const width = triggerRef.current.offsetWidth
       setButtonWidth(width)
     }
-  }, [triggerRef, setButtonWidth, isMobile])
+  }, [triggerRef, setButtonWidth])
 
   useResizeObserver({ onResize, ref: triggerRef })
 
   useLayoutEffect(onResize, [state.selectedKey, onResize])
 
-  // let overlay
-  // if (isMobile) {
-  //   overlay = (
-  //     <Tray isOpen={state.isOpen} onClose={state.close}>
-  //       {listbox}
-  //     </Tray>
-  //   )
-  // } else {
-  //   const style = {
-  //     ...overlayProps.style,
-  //     minWidth: buttonWidth,
-  //     width: buttonWidth,
-  //     // width: menuWidth ?? buttonWidth,
-  //   }
+  // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
+  useLayoutEffect(() => {
+    if (state.isOpen) {
+      requestAnimationFrame(() => {
+        updatePosition()
+      })
+    }
+  }, [state.isOpen, updatePosition])
 
-  //   overlay = (
-  //     <Popover
-  //       ref={popoverRef}
-  //       hideArrow
-  //       isOpen={state.isOpen}
-  //       onClose={state.close}
-  //       placement={placement}
-  //       shouldCloseOnBlur
-  //       style={style}
-  //     >
-  //       {listbox}
-  //     </Popover>
-  //   )
-  // }
   const style = {
     ...overlayProps.style,
     minWidth: buttonWidth,
@@ -236,8 +201,10 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     <span
       {...valueProps}
       className={css['select-value']}
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       data-placeholder={state.selectedItem == null ? '' : undefined}
     >
+      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
       {state.selectedItem != null ? state.selectedItem.rendered : placeholder}
     </span>
   )

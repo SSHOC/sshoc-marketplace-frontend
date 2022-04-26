@@ -13444,10 +13444,10 @@ ms@2.1.3, ms@^2.1.1:
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-msw-storybook-addon@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.npmjs.org/msw-storybook-addon/-/msw-storybook-addon-1.6.2.tgz#c34361869ca1eb8f5315b554589784e3cd1f6a70"
-  integrity sha512-N0eaHY/T2aUGlG8QtX6wSxHXqGS3zum98R1m+AwrCigOxjOWSfGunwGIGVZJCrAWDrS8iIGmfd+ZGyfXuJXy0g==
+msw-storybook-addon@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.npmjs.org/msw-storybook-addon/-/msw-storybook-addon-1.6.3.tgz#964df555efa67a07fddccd5966d6794a070e4b89"
+  integrity sha512-Ps80WdRmXsmenoTwfrgKMNpQD8INUUFyUFyZOecx8QjuqSlL++UYrLaGyACXN2goOn+/VS6rb0ZapbjrasPClg==
   dependencies:
     "@storybook/addons" "^6.0.0"
     is-node-process "^1.0.1"
@@ -13882,11 +13882,6 @@ netlify-cms-widget-text@^2.4.1:
   integrity sha512-fFuHtID0GfjFwugEyQmHld2nKFe8p42NnvXsayneldcl1YL2jIOk1oastJV1sRx1FB7BIyj1WzJWoaWXNMWwng==
   dependencies:
     react-textarea-autosize "^8.0.0"
-
-next-theme@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.npmjs.org/next-theme/-/next-theme-0.1.5.tgz#aa6655c516892925e577349d7715a8ed54bad727"
-  integrity sha512-WR8UCLEFjWvRl+UO2lTM4pGo7R4jzGZqQ6YL3hiL1Ns587Qb91GhJZLPu/Aa4ExtGQ/5wlcDX8zDYZoCN9oDPw==
 
 next@^12.1.5-canary.2:
   version "12.1.5-canary.2"
