@@ -15,6 +15,7 @@ import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { BackgroundImage } from '@/components/item/BackgroundImage'
 import { ItemAccessibleAtLinks } from '@/components/item/ItemAccessibleAtLinks'
 import { ItemActors } from '@/components/item/ItemActors'
+import { ItemCitation } from '@/components/item/ItemCitation'
 import { ItemComments } from '@/components/item/ItemComments'
 import { ItemDateCreated } from '@/components/item/ItemDateCreated'
 import { ItemDateLastUpdated } from '@/components/item/ItemDateLastUpdated'
@@ -49,7 +50,6 @@ import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 
 export namespace PublicationPage {
@@ -192,6 +192,7 @@ export default function PublicationPage(props: PublicationPage.Props): JSX.Eleme
                 versionId={publication.id}
               />
               {/* </Suspense> */}
+              <ItemCitation item={publication} />
             </ItemMetadata>
           </ItemInfo>
           <ItemDetails>
