@@ -19,7 +19,6 @@ import { RelatedReviewItemFormSection } from '@/components/item-form/RelatedRevi
 import { ReviewFormMetadata } from '@/components/item-form/ReviewFormMetadata'
 import { ThumbnailReviewFormSection } from '@/components/item-form/ThumbnailReviewFormSection'
 import { useItemDiffFormInitialValues } from '@/components/item-form/useItemDiffFormInitialValues'
-import { useItemFormErrorMap } from '@/components/item-form/useItemFormErrorMap'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
@@ -31,12 +30,10 @@ import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { ItemsDiff } from '@/data/sshoc/api/item'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
 import type { WorkflowStep, WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
-import { workflowWithStepsInputSchema } from '@/data/sshoc/validation-schemas/workflow'
 import type { FormProps } from '@/lib/core/form/Form'
 import { Form } from '@/lib/core/form/Form'
 import { FormButton } from '@/lib/core/form/FormButton'
 import { FormButtonLink } from '@/lib/core/form/FormButtonLink'
-import { validateSchema } from '@/lib/core/form/validateSchema'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type WorkflowFormValues = WorkflowInput & {
@@ -107,16 +104,12 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
     // FIXME: Make ItemsDiff generic, fix initialValues type
     useItemDiffFormInitialValues({ diff, item: initialValues }) ?? undefined
 
-  // TODO: Avoid validating whole form for single step
-  const errorMap = useItemFormErrorMap()
-  const _validate = validateSchema(workflowWithStepsInputSchema, errorMap)
-
   return (
     <Form
       initialValues={initialValuesWithDeletedFields}
       name={name}
       onSubmit={onSubmitPage}
-      validate={_validate}
+      validate={validate}
     >
       <ReviewFormMetadata diff={diff}>
         <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
@@ -219,7 +212,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         fieldArray.fields.remove(index)
       },
     })
-    fieldArray.fields.push({ label: undefined, description: undefined })
+    fieldArray.fields.push({ ...recommendedFields, label: undefined, description: undefined })
   }
 
   return (

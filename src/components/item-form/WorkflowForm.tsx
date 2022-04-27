@@ -15,9 +15,7 @@ import { MainFormSection } from '@/components/item-form/MainFormSection'
 import { MediaFormSection } from '@/components/item-form/MediaFormSection'
 import { PropertyFormSection } from '@/components/item-form/PropertyFormSection'
 import { RelatedItemFormSection } from '@/components/item-form/RelatedItemFormSection'
-import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
 import { ThumbnailFormSection } from '@/components/item-form/ThumbnailFormSection'
-import { useItemFormErrorMap } from '@/components/item-form/useItemFormErrorMap'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
@@ -28,12 +26,10 @@ import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
 import type { WorkflowStep, WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
-import { workflowWithStepsInputSchema } from '@/data/sshoc/validation-schemas/workflow'
 import type { FormProps } from '@/lib/core/form/Form'
 import { Form } from '@/lib/core/form/Form'
 import { FormButton } from '@/lib/core/form/FormButton'
 import { FormButtonLink } from '@/lib/core/form/FormButtonLink'
-import { validateSchema } from '@/lib/core/form/validateSchema'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type WorkflowFormValues = WorkflowInput & {
@@ -100,17 +96,8 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
     setPage({ type: 'steps' })
   }
 
-  // TODO: Avoid validating whole form for single step
-  // TODO: preprocess with removeEmptyFields only when creating new workflow
-  const errorMap = useItemFormErrorMap()
-  const _validate = validateSchema(
-    workflowWithStepsInputSchema,
-    errorMap,
-    removeEmptyItemFieldsOnSubmit,
-  )
-
   return (
-    <Form initialValues={initialValues} name={name} onSubmit={onSubmitPage} validate={_validate}>
+    <Form initialValues={initialValues} name={name} onSubmit={onSubmitPage} validate={validate}>
       <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
       {page.type === 'workflow' ? (
         <WorkflowFormSections onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
@@ -208,7 +195,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         fieldArray.fields.remove(index)
       },
     })
-    fieldArray.fields.push({ label: undefined, description: undefined })
+    fieldArray.fields.push({ ...recommendedFields, label: undefined, description: undefined })
   }
 
   return (

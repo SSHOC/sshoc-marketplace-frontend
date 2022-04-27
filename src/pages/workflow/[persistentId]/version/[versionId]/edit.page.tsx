@@ -20,7 +20,7 @@ import { useCreateOrUpdateWorkflow } from '@/components/item-form/useCreateOrUpd
 import { useUpdateItemMeta } from '@/components/item-form/useUpdateItemMeta'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import { useWorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
-import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
+import { useWorkflowWithStepsValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
 import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
 import { useWorkflow, useWorkflowVersion } from '@/data/sshoc/hooks/workflow'
@@ -37,7 +37,6 @@ import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 
 export type UpdateWorkflowFormValues = ItemFormValues<WorkflowInput>
@@ -131,7 +130,7 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
   })
 
   const formFields = useWorkflowFormFields()
-  const validate = useWorkflowValidationSchema()
+  const validate = useWorkflowWithStepsValidationSchema()
   const meta = useUpdateItemMeta({ category })
   const createOrUpdateWorkflow = useCreateOrUpdateWorkflow(undefined, { meta })
 

@@ -9,7 +9,7 @@ import { useCreateOrUpdateWorkflow } from '@/components/item-form/useCreateOrUpd
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowFormRecommendedFields } from '@/components/item-form/useWorkflowFormRecommendedFields'
-import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
+import { useWorkflowWithStepsValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
 import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { WorkflowInput } from '@/data/sshoc/api/workflow'
 import type { WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
@@ -33,7 +33,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
   const router = useRouter()
   const formFields = useWorkflowFormFields()
   const recommendedFields = useWorkflowFormRecommendedFields()
-  const validate = useWorkflowValidationSchema(removeEmptyItemFieldsOnSubmit)
+  const validate = useWorkflowWithStepsValidationSchema(removeEmptyItemFieldsOnSubmit)
   const meta = useCreateItemMeta({ category })
   const createOrUpdateWorkflow = useCreateOrUpdateWorkflow(undefined, { meta })
 

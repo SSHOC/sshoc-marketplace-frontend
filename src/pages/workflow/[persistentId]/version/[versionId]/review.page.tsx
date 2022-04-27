@@ -20,7 +20,7 @@ import { useCreateOrUpdateWorkflow } from '@/components/item-form/useCreateOrUpd
 import { useReviewItemMeta } from '@/components/item-form/useReviewItemMeta'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import { useWorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
-import { useWorkflowValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
+import { useWorkflowWithStepsValidationSchema } from '@/components/item-form/useWorkflowValidationSchema'
 import { WorkflowReviewForm } from '@/components/item-form/WorkflowReviewForm'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
 import {
@@ -144,7 +144,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
   })
 
   const formFields = useWorkflowFormFields()
-  const validate = useWorkflowValidationSchema()
+  const validate = useWorkflowWithStepsValidationSchema()
   const meta = useReviewItemMeta({ category })
   const createOrUpdateWorkflow = useCreateOrUpdateWorkflow(undefined, { meta: meta.approve })
   const rejectWorkflowVersion = useRejectWorkflowVersion({ persistentId, versionId }, undefined, {
