@@ -79,6 +79,7 @@
       display: inline-flex;
       flex: 1;
       gap: var(--space-1);
+      align-items: center;
       justify-content: space-between;
     }
   }
