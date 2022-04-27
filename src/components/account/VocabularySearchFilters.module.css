@@ -94,6 +94,7 @@
 }
 
 .secondary {
+  flex-shrink: 0;
   color: var(--color-text-muted);
   overflow-wrap: initial;
 }
