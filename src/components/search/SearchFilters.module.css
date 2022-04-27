@@ -96,6 +96,7 @@
 
 .secondary {
   color: var(--color-text-muted);
+  overflow-wrap: initial;
 }
 
 .active-facets {
