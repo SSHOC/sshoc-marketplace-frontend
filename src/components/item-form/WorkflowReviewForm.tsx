@@ -219,7 +219,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         fieldArray.fields.remove(index)
       },
     })
-    fieldArray.fields.push({ ...recommendedFields, label: undefined, description: undefined })
+    fieldArray.fields.push({ label: undefined, description: undefined })
   }
 
   return (

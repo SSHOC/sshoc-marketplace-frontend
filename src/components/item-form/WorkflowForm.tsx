@@ -101,7 +101,7 @@ export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
   }
 
   // TODO: Avoid validating whole form for single step
-  // TODO: preprocess with removeEmptyFields only when creatring new workflow
+  // TODO: preprocess with removeEmptyFields only when creating new workflow
   const errorMap = useItemFormErrorMap()
   const _validate = validateSchema(
     workflowWithStepsInputSchema,
@@ -208,7 +208,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         fieldArray.fields.remove(index)
       },
     })
-    fieldArray.fields.push({ ...recommendedFields, label: undefined, description: undefined })
+    fieldArray.fields.push({ label: undefined, description: undefined })
   }
 
   return (
