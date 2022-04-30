@@ -185,7 +185,7 @@ export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): JSX.E
   if (router.isFallback || dataset == null || (diff == null && !diffNotFound)) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -199,7 +199,7 @@ export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): JSX.E
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

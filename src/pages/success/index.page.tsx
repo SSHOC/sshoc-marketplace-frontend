@@ -46,7 +46,7 @@ export default function SuccessPage(_props: SuccessPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <SuccessScreenLayout>
           <BackgroundGradient />

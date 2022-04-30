@@ -158,7 +158,7 @@ export default function EditWorkflowPage(props: EditWorkflowPage.Props): JSX.Ele
   if (router.isFallback || workflow == null) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -172,7 +172,7 @@ export default function EditWorkflowPage(props: EditWorkflowPage.Props): JSX.Ele
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

@@ -49,7 +49,7 @@ export default function HomePage(_props: HomePage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata title={title} />
+      <PageMetadata title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <HomeScreenLayout>
           <BackgroundImage />

@@ -131,7 +131,7 @@ export default function PublicationPage(props: PublicationPage.Props): JSX.Eleme
   if (router.isFallback || publication == null) {
     return (
       <Fragment>
-        <PageMetadata title={label} />
+        <PageMetadata title={label} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -158,7 +158,12 @@ export default function PublicationPage(props: PublicationPage.Props): JSX.Eleme
   return (
     <Fragment>
       {/* TODO: strip markdown from description (synchronously) */}
-      <PageMetadata title={publication.label} description={publication.description} />
+      <PageMetadata
+        title={publication.label}
+        description={publication.description}
+        openGraph={{}}
+        twitter={{}}
+      />
       <PublicationSchemaOrgMetadata publication={publication} />
       <PageMainContent>
         <ItemScreenLayout>

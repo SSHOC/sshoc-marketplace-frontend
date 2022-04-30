@@ -193,7 +193,7 @@ export default function ReviewTrainingMaterialPage(
   if (router.isFallback || trainingMaterial == null || (diff == null && !diffNotFound)) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -207,7 +207,7 @@ export default function ReviewTrainingMaterialPage(
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

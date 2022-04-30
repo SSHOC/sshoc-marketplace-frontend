@@ -87,7 +87,7 @@ export default function ContributePage(props: ContributePage.TemplateProps): JSX
 
   return (
     <Fragment>
-      <PageMetadata title={props.metadata.title} />
+      <PageMetadata title={props.metadata.title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ContributeScreenLayout>
           <BackgroundImage />

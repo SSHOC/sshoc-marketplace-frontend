@@ -47,7 +47,7 @@ export default function SignInPage(_props: SignInPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <SignInScreenLayout>
           <BackgroundGradient />

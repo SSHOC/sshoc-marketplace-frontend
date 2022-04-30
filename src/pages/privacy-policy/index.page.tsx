@@ -66,7 +66,7 @@ export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): JSX.E
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <PrivacyPolicyScreenLayout>
           <BackgroundImage />

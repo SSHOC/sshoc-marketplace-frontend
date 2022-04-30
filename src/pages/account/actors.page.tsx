@@ -63,7 +63,7 @@ export default function ActorsPage(_props: ActorsPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AccountScreenWithoutFiltersLayout>
           <BackgroundImage />

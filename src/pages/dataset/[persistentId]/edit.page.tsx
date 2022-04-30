@@ -35,7 +35,6 @@ import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 
 export type UpdateDatasetFormValues = ItemFormValues<DatasetInput>
@@ -147,7 +146,7 @@ export default function EditDatasetPage(props: EditDatasetPage.Props): JSX.Eleme
   if (router.isFallback || dataset == null) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -161,7 +160,7 @@ export default function EditDatasetPage(props: EditDatasetPage.Props): JSX.Eleme
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

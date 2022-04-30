@@ -63,7 +63,7 @@ export default function DraftItemsPage(_props: DraftItemsPage.Props): JSX.Elemen
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AccountScreenWithoutFiltersLayout>
           <BackgroundImage />

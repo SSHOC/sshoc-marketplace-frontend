@@ -46,7 +46,7 @@ export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ErrorScreenLayout>
           <BackgroundImage />

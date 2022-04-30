@@ -133,7 +133,7 @@ export default function WorkflowPage(props: WorkflowPage.Props): JSX.Element {
   if (router.isFallback || workflow == null) {
     return (
       <Fragment>
-        <PageMetadata title={label} />
+        <PageMetadata title={label} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -160,7 +160,12 @@ export default function WorkflowPage(props: WorkflowPage.Props): JSX.Element {
   return (
     <Fragment>
       {/* TODO: strip markdown from description (synchronously) */}
-      <PageMetadata title={workflow.label} description={workflow.description} />
+      <PageMetadata
+        title={workflow.label}
+        description={workflow.description}
+        openGraph={{}}
+        twitter={{}}
+      />
       <WorkflowSchemaOrgMetadata workflow={workflow} />
       <PageMainContent>
         <WorkflowScreenLayout>

@@ -129,7 +129,7 @@ export default function ToolOrServicePage(props: ToolOrServicePage.Props): JSX.E
   if (router.isFallback || toolOrService == null) {
     return (
       <Fragment>
-        <PageMetadata title={label} />
+        <PageMetadata title={label} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -156,7 +156,12 @@ export default function ToolOrServicePage(props: ToolOrServicePage.Props): JSX.E
   return (
     <Fragment>
       {/* TODO: strip markdown from description (synchronously) */}
-      <PageMetadata title={toolOrService.label} description={toolOrService.description} />
+      <PageMetadata
+        title={toolOrService.label}
+        description={toolOrService.description}
+        openGraph={{}}
+        twitter={{}}
+      />
       <ToolOrServiceSchemaOrgMetadata toolOrService={toolOrService} />
       <PageMainContent>
         <ItemScreenLayout>

@@ -15,7 +15,6 @@ import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { BackgroundImage } from '@/components/item/BackgroundImage'
 import { ItemAccessibleAtLinks } from '@/components/item/ItemAccessibleAtLinks'
 import { ItemActors } from '@/components/item/ItemActors'
-import { ItemComments } from '@/components/item/ItemComments'
 import { ItemDateCreated } from '@/components/item/ItemDateCreated'
 import { ItemDateLastUpdated } from '@/components/item/ItemDateLastUpdated'
 import { ItemDescription } from '@/components/item/ItemDescription'
@@ -47,7 +46,6 @@ import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 
 export namespace PublicationVersionPage {
@@ -120,7 +118,7 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
   if (router.isFallback || publication == null) {
     return (
       <Fragment>
-        <PageMetadata title={label} />
+        <PageMetadata title={label} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -147,7 +145,12 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
   return (
     <Fragment>
       {/* TODO: strip markdown from description (synchronously) */}
-      <PageMetadata title={publication.label} description={publication.description} />
+      <PageMetadata
+        title={publication.label}
+        description={publication.description}
+        openGraph={{}}
+        twitter={{}}
+      />
       <PageMainContent>
         <ItemVersionScreenLayout>
           <BackgroundImage />

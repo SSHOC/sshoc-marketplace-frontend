@@ -57,7 +57,7 @@ export default function ContactPage(_props: ContactPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ContactScreenLayout>
           <BackgroundImage />

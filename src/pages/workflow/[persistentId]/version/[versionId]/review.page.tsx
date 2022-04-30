@@ -197,7 +197,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
   if (router.isFallback || workflow == null || (diff == null && !diffNotFound)) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -211,7 +211,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

@@ -64,7 +64,7 @@ export default function ContributedItemsPage(_props: ContributedItemsPage.Props)
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AccountScreenWithFiltersLayout>
           <BackgroundImage />

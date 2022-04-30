@@ -87,7 +87,7 @@ export default function AboutPage(props: AboutPage.TemplateProps): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata title={props.metadata.title} />
+      <PageMetadata title={props.metadata.title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AboutScreenLayout>
           <BackgroundImage />

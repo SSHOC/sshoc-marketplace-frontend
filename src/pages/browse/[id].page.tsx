@@ -89,7 +89,7 @@ export default function BrowsePage(props: BrowsePage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata title={title} />
+      <PageMetadata title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <BrowseScreenLayout>
           <BackgroundImage />

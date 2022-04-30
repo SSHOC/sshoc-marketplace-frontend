@@ -187,7 +187,7 @@ export default function ReviewPublicationPage(props: ReviewPublicationPage.Props
   if (router.isFallback || publication == null || (diff == null && !diffNotFound)) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -201,7 +201,7 @@ export default function ReviewPublicationPage(props: ReviewPublicationPage.Props
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

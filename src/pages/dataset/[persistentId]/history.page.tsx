@@ -32,7 +32,6 @@ import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 
 export namespace DatasetHistoryPage {
@@ -105,7 +104,7 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX
   if (router.isFallback) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -135,7 +134,7 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX
 
   return (
     <Fragment>
-      <PageMetadata title={title} />
+      <PageMetadata title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemHistoryScreenLayout>
           <BackgroundImage />

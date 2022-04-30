@@ -64,7 +64,7 @@ export default function ModerateItemsPage(_props: ModerateItemsPage.Props): JSX.
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AccountScreenWithFiltersLayout>
           <BackgroundImage />

@@ -63,7 +63,7 @@ export namespace AdminPage {
 export default function AdminPage(_props: AdminPage.Props): JSX.Element {
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title="CMS" />
+      <PageMetadata nofollow noindex title="CMS" openGraph={{}} twitter={{}} />
       <div id="nc-root" />
       <Cms />
     </Fragment>

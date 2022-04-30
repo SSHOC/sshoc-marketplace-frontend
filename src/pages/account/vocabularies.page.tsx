@@ -64,7 +64,7 @@ export default function VocabulariesPage(_props: VocabulariesPage.Props): JSX.El
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <AccountScreenWithFiltersLayout>
           <BackgroundImage />

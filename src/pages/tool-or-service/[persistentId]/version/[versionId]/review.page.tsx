@@ -187,7 +187,7 @@ export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.P
   if (router.isFallback || tool == null || (diff == null && !diffNotFound)) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -201,7 +201,7 @@ export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.P
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

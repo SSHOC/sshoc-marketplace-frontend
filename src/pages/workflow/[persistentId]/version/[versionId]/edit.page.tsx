@@ -176,7 +176,7 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
   if (router.isFallback || workflow == null) {
     return (
       <Fragment>
-        <PageMetadata title={title} />
+        <PageMetadata title={title} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -190,7 +190,7 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
 
   return (
     <Fragment>
-      <PageMetadata nofollow noindex title={title} />
+      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <ItemFormScreenLayout>
           <BackgroundImage />

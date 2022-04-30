@@ -131,7 +131,7 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
   if (router.isFallback || trainingMaterial == null) {
     return (
       <Fragment>
-        <PageMetadata title={label} />
+        <PageMetadata title={label} openGraph={{}} twitter={{}} />
         <PageMainContent>
           <FullPage>
             <Centered>
@@ -158,7 +158,12 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
   return (
     <Fragment>
       {/* TODO: strip markdown from description (synchronously) */}
-      <PageMetadata title={trainingMaterial.label} description={trainingMaterial.description} />
+      <PageMetadata
+        title={trainingMaterial.label}
+        description={trainingMaterial.description}
+        openGraph={{}}
+        twitter={{}}
+      />
       <TrainingMaterialSchemaOrgMetadata trainingMaterial={trainingMaterial} />
       <PageMainContent>
         <ItemScreenLayout>

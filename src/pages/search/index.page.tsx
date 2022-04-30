@@ -58,7 +58,7 @@ export default function SearchPage(_props: SearchPage.Props): JSX.Element {
 
   return (
     <Fragment>
-      <PageMetadata title={title} />
+      <PageMetadata title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
         <SearchScreenLayout>
           <BackgroundImage />
