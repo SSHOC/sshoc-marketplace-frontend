@@ -39,7 +39,7 @@ export default async function handler(
   }
 
   try {
-    await response.unstable_revalidate(pathname)
+    await response.unstable_revalidate(pathname, { unstable_onlyGenerated: true })
     response.status(200).end()
     return
   } catch (error) {
