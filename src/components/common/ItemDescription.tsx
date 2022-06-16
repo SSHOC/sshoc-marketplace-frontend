@@ -7,7 +7,7 @@ export interface ItemDescriptionProps {
 }
 
 export function ItemDescription(props: ItemDescriptionProps): JSX.Element {
-  const plaintext = usePlaintext({ markdown: props.text.slice(0, maxPreviewDescriptionLength) })
+  const plaintext = usePlaintext({ markdown: props.text }).slice(0, maxPreviewDescriptionLength)
 
   return <p className={css['text']}>{plaintext}</p>
 }
