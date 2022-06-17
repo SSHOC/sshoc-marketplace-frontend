@@ -64,36 +64,12 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
                 </Button>
               </li>
               <li>
-                <ol role="list" className={css['thumbnails']}>
-                  {media.map((m, index) => {
-                    const hasThumbnail = m.info.hasThumbnail
-
-                    return (
-                      <li key={m.info.mediaId}>
-                        <Button
-                          onPress={() => {
-                            setCurrentMediaIndex(index)
-                          }}
-                          // TODO: should label use caption?
-                          aria-label={t(['common', 'item', 'go-to-media'], {
-                            values: { media: String(index) },
-                          })}
-                        >
-                          {hasThumbnail ? (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img
-                              loading="lazy"
-                              src={String(getMediaThumbnailUrl({ mediaId: m.info.mediaId }))}
-                              alt=""
-                            />
-                          ) : (
-                            <Icon icon={DocumentIcon} />
-                          )}
-                        </Button>
-                      </li>
-                    )
-                  })}
-                </ol>
+                <ItemMediaPreviews
+                  media={media}
+                  onSelect={(index) => {
+                    setCurrentMediaIndex(index)
+                  }}
+                />
               </li>
               <li data-direction="next">
                 <Button onPress={onNextMedia} isDisabled={!hasNext}>
@@ -105,6 +81,50 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
         ) : null}
       </div>
     </section>
+  )
+}
+
+interface ItemMediaPreviewsProps {
+  media: Item['media']
+  onSelect: (index: number) => void
+}
+
+function ItemMediaPreviews(props: ItemMediaPreviewsProps): JSX.Element {
+  const { media, onSelect } = props
+
+  const { t } = useI18n<'common'>()
+
+  return (
+    <ol role="list" className={css['thumbnails']}>
+      {media.map((m, index) => {
+        const hasThumbnail = m.info.hasThumbnail
+
+        return (
+          <li key={m.info.mediaId}>
+            <Button
+              onPress={() => {
+                onSelect(index)
+              }}
+              // TODO: should label use caption?
+              aria-label={t(['common', 'item', 'go-to-media'], {
+                values: { media: String(index) },
+              })}
+            >
+              {hasThumbnail ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  loading="lazy"
+                  src={String(getMediaThumbnailUrl({ mediaId: m.info.mediaId }))}
+                  alt=""
+                />
+              ) : (
+                <Icon icon={DocumentIcon} />
+              )}
+            </Button>
+          </li>
+        )
+      })}
+    </ol>
   )
 }
 
@@ -126,7 +146,8 @@ function Media(props: MediaProps): JSX.Element {
       return (
         <iframe
           src={url}
-          sandbox=""
+          // TODO:
+          // sandbox="allow-popups; allow-same-origin; allow-scripts"
           loading="lazy"
           title={caption ?? t(['common', 'item', 'embedded-content'])}
           allow="fullscreen; picture-in-picture"
