@@ -127,10 +127,10 @@ export interface Dictionary {
     // 'curation-flag-url': Description
     // 'deprecated-at-source': Description
     discipline: Description
-    // extent: Description
+    extent: Description
     'geographical-availability': Description
     'helpdesk-url': Description
-    // "intended-audience": Description
+    'intended-audience': Description
     issue: Description
     journal: Description
     keyword: Description
@@ -146,12 +146,12 @@ export interface Dictionary {
     'publication-type': Description
     'publication-place': Description
     publisher: Description
-    // 'resource-category': Description
+    'resource-category': Description
     'see-also': Description
     'service-level-url': Description
     // 'service-type': Description
     // 'source-last-update': Description
-    // standard: Description
+    standard: Description
     'technical-readiness-level': Description
     'terms-of-use': Description
     'terms-of-use-url': Description
