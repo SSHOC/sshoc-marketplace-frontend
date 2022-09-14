@@ -11,10 +11,9 @@ import useComposedRef from 'use-composed-ref'
 
 import type { ButtonProps } from '@/lib/core/ui/Button/Button'
 import { Button } from '@/lib/core/ui/Button/Button'
-import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
+// import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
 import { MenuContext } from '@/lib/core/ui/Menu/MenuContext'
 import { Popover } from '@/lib/core/ui/Popover/Popover'
-import { Tray } from '@/lib/core/ui/Tray/Tray'
 
 export interface MenuTriggerProps
   extends AriaMenuTriggerProps,
@@ -63,7 +62,7 @@ export const MenuTrigger = forwardRef(function MenuTrigger(
       initialPlacement = `${direction} ${align}` as Placement
   }
 
-  const isMobile = useIsMobileDevice()
+  // const isMobile = useIsMobileDevice()
 
   const { overlayProps, placement, updatePosition } = useOverlayPosition({
     targetRef: triggerRef,
@@ -71,7 +70,7 @@ export const MenuTrigger = forwardRef(function MenuTrigger(
     scrollRef: menuRef,
     placement: initialPlacement,
     shouldFlip: shouldFlip,
-    isOpen: state.isOpen && !isMobile,
+    isOpen: state.isOpen,
     onClose: state.close,
   })
 
@@ -114,7 +113,7 @@ export const MenuTrigger = forwardRef(function MenuTrigger(
   }
 
   const contents = (
-    <FocusScope restoreFocus contain={isMobile}>
+    <FocusScope restoreFocus>
       <DismissButton onDismiss={state.close} />
       {children}
       <DismissButton onDismiss={state.close} />
@@ -135,23 +134,17 @@ export const MenuTrigger = forwardRef(function MenuTrigger(
         {label}
       </Button>
       <MenuContext.Provider value={menuContext}>
-        {isMobile ? (
-          <Tray isOpen={state.isOpen} onClose={state.close}>
-            {contents}
-          </Tray>
-        ) : (
-          <Popover
-            ref={menuPopoverRef}
-            isOpen={state.isOpen}
-            style={style}
-            placement={placement}
-            hideArrow
-            onClose={state.close}
-            shouldCloseOnBlur
-          >
-            {contents}
-          </Popover>
-        )}
+        <Popover
+          ref={menuPopoverRef}
+          isOpen={state.isOpen}
+          style={style}
+          placement={placement}
+          hideArrow
+          onClose={state.close}
+          shouldCloseOnBlur
+        >
+          {contents}
+        </Popover>
       </MenuContext.Provider>
     </Fragment>
   )

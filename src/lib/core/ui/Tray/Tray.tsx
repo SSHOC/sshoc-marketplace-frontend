@@ -23,7 +23,10 @@ export const Tray = forwardRef(function Tray(
 ) {
   const { children, isFixedHeight, isNonModal, onClose, ...otherProps } = props
 
-  const { overlayProps, underlayProps } = useOverlay({ ...props, isDismissable: true }, ref)
+  const { overlayProps, underlayProps } = useOverlay(
+    { ...props, isDismissable: true },
+    forwardedRef,
+  )
 
   return (
     <Overlay {...otherProps} nodeRef={forwardedRef}>
