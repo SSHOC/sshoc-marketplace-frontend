@@ -11,7 +11,7 @@ import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { toPositiveInteger } from '@/lib/utils'
 import { defaultModerateItemsSortOrder, isModerateItemSortOrder } from '~/config/sshoc.config'
 
-const defaultItemStatus: Array<ItemStatus> = ['suggested', 'ingested']
+const defaultItemStatus: Array<ItemStatus> = ['suggested']
 
 export type SearchFilters = Pick<
   ItemSearch.SearchParams,
