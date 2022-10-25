@@ -90,7 +90,7 @@ export const dictionary: Dictionary = {
     },
     'externalIds.identifier': {
       label: 'Identifier',
-      description: '',
+      description: 'Other URLs relevant to the resource, e.g. code, DOI, etc.',
     },
     'externalIds.identifierService': {
       label: 'ID Service',
