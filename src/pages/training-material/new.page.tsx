@@ -7,6 +7,7 @@ import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { ScreenTitle } from '@/components/common/ScreenTitle'
 import { BackgroundImage } from '@/components/item-form/BackgroundImage'
 import { Content } from '@/components/item-form/Content'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 import type { ItemFormValues } from '@/components/item-form/ItemForm'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
 import { TrainingMaterialCreateForm } from '@/components/item-form/TrainingMaterialCreateForm'
@@ -60,6 +61,7 @@ export default function CreateTrainingMaterialPage(
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <TrainingMaterialCreateForm />
           </Content>
           <FundingNotice />

@@ -8,6 +8,7 @@ import { ScreenTitle } from '@/components/common/ScreenTitle'
 import { BackgroundImage } from '@/components/item-form/BackgroundImage'
 import { Content } from '@/components/item-form/Content'
 import { DatasetCreateForm } from '@/components/item-form/DatasetCreateForm'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
@@ -54,6 +55,7 @@ export default function CreateDatasetPage(_props: CreateDatasetPage.Props): JSX.
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <DatasetCreateForm />
           </Content>
           <FundingNotice />

@@ -7,6 +7,7 @@ import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { ScreenTitle } from '@/components/common/ScreenTitle'
 import { BackgroundImage } from '@/components/item-form/BackgroundImage'
 import { Content } from '@/components/item-form/Content'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 import { ItemFormScreenLayout } from '@/components/item-form/ItemFormScreenLayout'
 import { useWorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { WorkflowCreateForm } from '@/components/item-form/WorkflowCreateForm'
@@ -66,6 +67,7 @@ export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JS
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <WorkflowCreateForm page={page} setPage={setPage} />
           </Content>
           <FundingNotice />
