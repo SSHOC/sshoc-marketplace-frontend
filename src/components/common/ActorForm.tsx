@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { ActorComboBox } from '@/components/common/ActorComboBox'
@@ -13,6 +14,7 @@ import { actorInputSchema } from '@/data/sshoc/validation-schemas/actor'
 import { Form } from '@/lib/core/form/Form'
 import { FormSelect } from '@/lib/core/form/FormSelect'
 import { FormTextField } from '@/lib/core/form/FormTextField'
+import { useFieldState } from '@/lib/core/form/useFieldState'
 import { validateSchema } from '@/lib/core/form/validateSchema'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Item } from '@/lib/core/ui/Collection/Item'
@@ -92,7 +94,10 @@ export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProp
             <div key={name}>
               <div role="group">
                 <ActorIdentifierServiceSelect field={fieldGroup.identifierService} />
-                <FormTextField {...fieldGroup.identifier} />
+                <ActorIdentifierField
+                  field={fieldGroup.identifier}
+                  identifierServiceFieldName={fieldGroup.identifierService.name}
+                />
               </div>
               <div>
                 <FormRecordRemoveButton
@@ -196,4 +201,39 @@ export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayPr
       </div>
     </div>
   )
+}
+
+export interface ActorIdentifierFieldProps {
+  field: ActorFormFields['externalIds']['fields']['identifier']
+  identifierServiceFieldName: string
+}
+
+export function ActorIdentifierField(props: ActorIdentifierFieldProps): JSX.Element {
+  const { field, identifierServiceFieldName } = props
+
+  const { t } = useI18n<'authenticated' | 'common'>()
+  const service = useFieldState<string | null>(identifierServiceFieldName).input.value
+  const value = useFieldState<string | null>(field.name).input.value
+  const actorSources = useActorSources(undefined, {
+    enabled: service != null && service.length > 0,
+  })
+  const sources = actorSources.data ?? []
+  const source = sources.find((source) => {
+    return source.code === service
+  })
+  const template = source?.urlTemplate?.replace(/{source-actor-id}/, value ?? '')
+
+  const description = (
+    <Fragment>
+      <span>{field.description}</span>
+      {template != null ? (
+        <span>
+          {' '}
+          {t(['authenticated', 'actorExternalId', 'description'], { values: { template } })}
+        </span>
+      ) : null}
+    </Fragment>
+  )
+
+  return <FormTextField {...field} description={description} />
 }

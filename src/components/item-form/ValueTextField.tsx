@@ -19,7 +19,7 @@ export function ValueTextField(props: ValueTextFieldProps): JSX.Element {
     <Fragment>
       <span>{field.description}</span>
       {/* @ts-expect-error Assume all possible property types have translation. */}
-      <span>{t(['authenticated', 'properties', propertyTypeId, 'description'])} </span>
+      <span>{t(['authenticated', 'properties', propertyTypeId, 'description'])}</span>
     </Fragment>
   )
 

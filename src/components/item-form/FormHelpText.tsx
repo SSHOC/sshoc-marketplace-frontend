@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-import styles from '@/components/item-form/FormHelpText.module.css'
+import css from '@/components/item-form/FormHelpText.module.css'
 
 export function FormHelpText(): JSX.Element {
   return (
-    <p className={styles['text']}>
+    <p className={css['text']}>
       If you need more details on metadata fields, please consult{' '}
       <Link href="/contribute/metadata-guidelines#guidance-for-metadata-fields">
         <a>our guidelines</a>

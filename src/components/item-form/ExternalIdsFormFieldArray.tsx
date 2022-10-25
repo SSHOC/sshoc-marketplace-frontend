@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { FormFieldArray } from '@/components/common/FormFieldArray'
@@ -11,7 +12,9 @@ import { FormRecordRemoveButton } from '@/components/common/FormRecordRemoveButt
 import { ItemIdentifierServiceSelect } from '@/components/item-form/ItemIdentifierServiceSelect'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { ItemExternalIdInput } from '@/data/sshoc/api/item'
+import { useItemSources } from '@/data/sshoc/hooks/item'
 import { FormTextField } from '@/lib/core/form/FormTextField'
+import { useFieldState } from '@/lib/core/form/useFieldState'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ExternalIdsFormFieldArrayProps {
@@ -55,7 +58,10 @@ export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps)
             <FormFieldListItem key={name}>
               <FormFieldGroup>
                 <ItemIdentifierServiceSelect field={fieldGroup.identifierService} />
-                <FormTextField {...fieldGroup.identifier} />
+                <ItemIdentifierField
+                  field={fieldGroup.identifier}
+                  identifierServiceFieldName={fieldGroup.identifierService.name}
+                />
               </FormFieldGroup>
               <FormFieldListItemControls>
                 <FormRecordRemoveButton
@@ -80,4 +86,37 @@ export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps)
       </FormFieldArrayControls>
     </FormFieldArray>
   )
+}
+
+export interface ItemIdentifierFieldProps {
+  field: ItemFormFields['fields']['externalIds']['fields']['identifier']
+  identifierServiceFieldName: string
+}
+
+export function ItemIdentifierField(props: ItemIdentifierFieldProps): JSX.Element {
+  const { field, identifierServiceFieldName } = props
+
+  const { t } = useI18n<'authenticated' | 'common'>()
+  const service = useFieldState<string | null>(identifierServiceFieldName).input.value
+  const value = useFieldState<string | null>(field.name).input.value
+  const itemSources = useItemSources(undefined, { enabled: service != null && service.length > 0 })
+  const sources = itemSources.data ?? []
+  const source = sources.find((source) => {
+    return source.code === service
+  })
+  const template = source?.urlTemplate?.replace(/{source-item-id}/, value ?? '')
+
+  const description = (
+    <Fragment>
+      <span>{field.description}</span>
+      {template != null ? (
+        <span>
+          {' '}
+          {t(['authenticated', 'itemExternalId', 'description'], { values: { template } })}
+        </span>
+      ) : null}
+    </Fragment>
+  )
+
+  return <FormTextField {...field} description={description} />
 }

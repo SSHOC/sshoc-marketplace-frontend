@@ -455,6 +455,12 @@ export const dictionary: Dictionary = {
       'file-or-url': 'Either select a file to upload, or provide a URL to import, but not both.',
     },
   },
+  itemExternalId: {
+    description: 'The generated ID will be: {{template}}.',
+  },
+  actorExternalId: {
+    description: 'The generated ID will be: {{template}}.',
+  },
   'other-suggested-versions': {
     message: {
       one: 'There is one other suggested change to this item.',

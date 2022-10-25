@@ -332,6 +332,12 @@ export interface Dictionary {
       'file-or-url': string
     }
   }
+  itemExternalId: {
+    description: string
+  }
+  actorExternalId: {
+    description: string
+  }
   'other-suggested-versions': {
     message: Plurals
     warning: string
