@@ -272,11 +272,11 @@ export const dictionary: Dictionary = {
     },
     externalIds: {
       label: 'External IDs',
-      description: '',
+      description: 'Other URLs relevant to the resource.',
     },
     'externalIds.identifier': {
       label: 'Identifier',
-      description: '',
+      description: 'Other URLs relevant to the resource, e.g. ORCID, etc.',
     },
     'externalIds.identifierService': {
       label: 'ID Service',
