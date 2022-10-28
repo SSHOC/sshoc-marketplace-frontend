@@ -95,7 +95,7 @@ function useGroupedFacetValues(
     const grouped = new Map<string, Map<string, number>>()
 
     Object.entries(values).forEach(([value, { count }]) => {
-      const firstCharacter = value.charAt(0)
+      const firstCharacter = value.charAt(0).toUpperCase()
 
       if (!grouped.has(firstCharacter)) {
         grouped.set(firstCharacter, new Map())
