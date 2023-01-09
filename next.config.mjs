@@ -28,9 +28,6 @@ import { getHighlighter } from 'shiki'
 import { syntaxHighlightingTheme } from './config/docs.config.mjs'
 import { defaultLocale, locales } from './config/i18n.config.mjs'
 
-const isProductionDeploy =
-  process.env['NEXT_PUBLIC_BASE_URL'] === 'https://marketplace.sshopencloud.eu'
-
 /** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
 /** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
@@ -90,7 +87,7 @@ const config = {
       },
     ]
 
-    if (!isProductionDeploy) {
+    if (process.env['NEXT_PUBLIC_BOTS'] !== 'enabled') {
       headers.push({
         source: '/:path*',
         headers: [

@@ -17,7 +17,7 @@ import { SiteMetadata } from '@/lib/core/metadata/SiteMetadata'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
-if (process.env['NEXT_PUBLIC_API_MOCKING'] === 'enabled') {
+if (process.env['NEXT_PUBLIC_MOCK_API'] === 'enabled') {
   await import('@/lib/core/app/msw').then(({ start }) => {
     start()
   })

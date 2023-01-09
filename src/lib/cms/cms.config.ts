@@ -14,11 +14,8 @@ export const config: CmsConfig = {
     branch: backend.branch,
     auth_scope: backend.isPublic ? 'public_repo' : 'repo',
 
-    auth_type: backend.auth.type,
     base_url: backend.auth.apiBaseUrl,
-    api_root: backend.auth.apiRoot,
     auth_endpoint: backend.auth.endpoint,
-    app_id: backend.auth.appId,
 
     open_authoring: false,
     squash_merges: true,

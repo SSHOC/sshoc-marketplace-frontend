@@ -41,8 +41,8 @@
     "test:watch": "yarn run test --watch",
     "test:e2e": "start-server-and-test start :3000 cypress",
     "test:e2e:headless": "start-server-and-test start :3000 cypress:headless",
-    "test:e2e:dev": "cross-env NEXT_PUBLIC_API_MOCKING=disabled start-server-and-test dev :3000 cypress",
-    "test:e2e:dev:headless": "cross-env NEXT_PUBLIC_API_MOCKING=disabled start-server-and-test dev :3000 cypress:headless",
+    "test:e2e:dev": "cross-env NEXT_PUBLIC_MOCK_API=disabled start-server-and-test dev :3000 cypress",
+    "test:e2e:dev:headless": "cross-env NEXT_PUBLIC_MOCK_API=disabled start-server-and-test dev :3000 cypress:headless",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "yarn run format && yarn run lint && yarn run typecheck && yarn run test"
   },
@@ -101,6 +101,7 @@
     "@stefanprobst/is-nonempty-array": "^1.0.1",
     "@stefanprobst/is-nonempty-string": "^1.0.1",
     "@stefanprobst/log": "^1.0.3",
+    "@stefanprobst/netlify-cms-oauth-client": "^0.1.2",
     "@stefanprobst/next-error-boundary": "legacy",
     "@stefanprobst/next-i18n": "legacy",
     "@stefanprobst/next-page-metadata": "legacy",
