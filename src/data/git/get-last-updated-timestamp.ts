@@ -10,14 +10,14 @@ async function getCommits(filePath: string) {
     searchParams: { path: filePath },
   })
 
-  return request(url, {
-    headers: {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      authorization: 'Bearer ' + process.env['GITHUB_TOKEN']!,
-      Accept: 'application/vnd.github+json',
-    },
-    responseType: 'json',
-  })
+  const token = process.env['GITHUB_TOKEN']
+  const headers = token != null ? { authorization: `Bearer ${token}` } : undefined
+
+  if (token == null) {
+    log.warn('Fetching last updated timestamps without access token.')
+  }
+
+  return request(url, { headers, responseType: 'json' })
 }
 
 export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
