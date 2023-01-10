@@ -42,8 +42,6 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           context: .
           push: true
@@ -60,6 +58,7 @@ jobs:
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
