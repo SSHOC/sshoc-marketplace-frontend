@@ -3090,6 +3090,17 @@
   resolved "https://registry.npmjs.org/@stefanprobst/log/-/log-1.0.3.tgz#3962b5954ae1622dc6c64ed501357ebf4adabfd6"
   integrity sha512-6lNIxwfg98UyvrQGlMHmqp0H8XCQFAbS/lDWt6D4kH/z0Goxg/GxqZ9vDdlswmYvphT5ubFOWk2SGwGBeGATVg==
 
+"@stefanprobst/netlify-cms-oauth-client@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@stefanprobst/netlify-cms-oauth-client/-/netlify-cms-oauth-client-0.1.2.tgz#a797147455de995688e0ec07ab0110277b27370a"
+  integrity sha512-G57z++exD6nESB3wiK2YIoF22vec8LPAU6MEHgT4sMZ6st+BLw0jCy2jfMZ6vqoABAUsN75uJICZPLNQV0lotw==
+  dependencies:
+    "@stefanprobst/is-absolute-url" "^1.0.2"
+    "@stefanprobst/is-nonempty-string" "^1.0.1"
+    "@stefanprobst/request" "^0.1.11"
+    node-fetch "^3.2.10"
+    strip-indent "^4.0.0"
+
 "@stefanprobst/next-error-boundary@legacy":
   version "3.0.2-legacy"
   resolved "https://registry.npmjs.org/@stefanprobst/next-error-boundary/-/next-error-boundary-3.0.2-legacy.tgz#aadb52ef4a12db2d27a379ce8c9b6c73ac929691"
@@ -3280,6 +3291,15 @@
   version "0.1.10"
   resolved "https://registry.npmjs.org/@stefanprobst/request/-/request-0.1.10.tgz#10185b8dc6f98bd492aa5e108a8544794b38fa5f"
   integrity sha512-1ahaE4K7ibO5lrVbGxqC8L4HclSAQ2S6Uh0q3PEv9JcG+3AImGY2oJ+pUUlAJYd9gDJay0fDL/jeE/2LfCQdRA==
+  optionalDependencies:
+    abort-controller "^3.0.0"
+    form-data "^4.0.0"
+    node-fetch "^3.0.0"
+
+"@stefanprobst/request@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@stefanprobst/request/-/request-0.1.11.tgz#3c55ef5e7f69857b5f371b329983aaf877976515"
+  integrity sha512-9qpvInjikpf/35RAH4M73mtP5JZmD5qNltumeE5HcvMYazOkFDAiNA4Xbkt5ELWQdDgT1iYnUxJa2bSr+tTiwQ==
   optionalDependencies:
     abort-controller "^3.0.0"
     form-data "^4.0.0"
@@ -13966,6 +13986,15 @@ node-fetch@^3.0.0:
   version "3.2.3"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-3.2.3.tgz#a03c9cc2044d21d1a021566bd52f080f333719a6"
   integrity sha512-AXP18u4pidSZ1xYXRDPY/8jdv3RAozIt/WLNR/MBGZAz+xjtlr90RvCnsvHQRiXyWliZF/CpytExp32UU67/SA==
+  dependencies:
+    data-uri-to-buffer "^4.0.0"
+    fetch-blob "^3.1.4"
+    formdata-polyfill "^4.0.10"
+
+node-fetch@^3.2.10:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.3.0.tgz#37e71db4ecc257057af828d523a7243d651d91e4"
+  integrity sha512-BKwRP/O0UvoMKp7GNdwPlObhYGB5DQqwhEDQlNKuoqwVYSxkSZCSbHjnFFmUEtwSKRPU4kNK8PbDYYitwaE3QA==
   dependencies:
     data-uri-to-buffer "^4.0.0"
     fetch-blob "^3.1.4"
