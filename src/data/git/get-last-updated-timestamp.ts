@@ -1,53 +1,27 @@
-import type { UrlSearchParamsInit } from '@stefanprobst/request'
+import { log } from '@stefanprobst/log'
 import { createUrl, request } from '@stefanprobst/request'
-import { posix } from 'path'
 
-import { log } from '@/lib/utils'
 import { backend } from '~/config/cms.config'
 
-const gitlabBaseUrl = backend.auth.apiBaseUrl
-const gitlabprojectId = backend.projectId
-const gitlabBranch = process.env['NEXT_PUBLIC_GITLAB_REPOSITORY_CURRENT_BRANCH'] ?? backend.branch
-const gitlabAccesToken = process.env['GITLAB_ACCESS_TOKEN']
-
-function createGitlabApiRequest(pathname: string, searchParams?: UrlSearchParamsInit) {
+async function getCommits(filePath: string) {
   const url = createUrl({
-    baseUrl: gitlabBaseUrl,
-    pathname: posix.join('/api/v4/projects/', gitlabprojectId, pathname),
-    searchParams: searchParams ?? {},
+    baseUrl: 'https://api.github.com',
+    pathname: `/repos/${backend.repo}/commits`,
+    searchParams: { path: filePath },
   })
 
-  const request = new Request(String(url))
-
-  if (gitlabAccesToken != null) {
-    request.headers.set('PRIVATE-TOKEN', gitlabAccesToken)
-  }
-
-  return request
-}
-
-async function getLastCommitId(filePath: string): Promise<string> {
-  const req = createGitlabApiRequest('repository/files/' + encodeURIComponent(filePath), {
-    ref: gitlabBranch,
-  })
-  const { last_commit_id: lastCommitId } = await request(req, { responseType: 'json' })
-  return lastCommitId
-}
-
-async function getCommitTimestamp(sha: string): Promise<string> {
-  const req = createGitlabApiRequest('repository/commits/' + sha)
-  const { committed_date: commitTimestamp } = await request(req, { responseType: 'json' })
-  return commitTimestamp
+  return request(url, { responseType: 'json' })
 }
 
 export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
-  if (gitlabAccesToken == null) {
-    log.warn('No gitlab access token provided, using current timestamp.')
-    return Promise.resolve(new Date())
+  const commits = await getCommits(filePath)
+  const [lastCommit] = commits
+  const timestamp = lastCommit?.commit.committer.date
+
+  if (timestamp == null) {
+    log.warn('Failed to fetch last updated timestamp, using current date.')
+    return new Date()
   }
 
-  const lastCommidId = await getLastCommitId(filePath)
-  const commitTimestamp = await getCommitTimestamp(lastCommidId)
-
-  return new Date(commitTimestamp)
+  return new Date(timestamp)
 }
