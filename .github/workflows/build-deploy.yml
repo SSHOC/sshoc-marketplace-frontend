@@ -47,6 +47,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://marketplace.sshopencloud.eu
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://marketplace-api.sshopencloud.eu
