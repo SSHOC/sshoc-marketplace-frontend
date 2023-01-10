@@ -10,7 +10,14 @@ async function getCommits(filePath: string) {
     searchParams: { path: filePath },
   })
 
-  return request(url, { responseType: 'json' })
+  return request(url, {
+    headers: {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      authorization: 'Bearer ' + process.env['GITHUB_TOKEN']!,
+      Accept: 'application/vnd.github+json',
+    },
+    responseType: 'json',
+  })
 }
 
 export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
