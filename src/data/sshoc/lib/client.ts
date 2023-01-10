@@ -12,7 +12,9 @@ import { baseUrl } from '~/config/sshoc.config'
 const defaultReponseType = 'json' as const
 
 export const createUrl = (init: Omit<UrlInit, 'baseUrl'>): URL => {
-  return _createUrl({ baseUrl, ...init })
+  const url = _createUrl({ baseUrl, ...init })
+  console.log({ url })
+  return url
 }
 
 export const request = (
