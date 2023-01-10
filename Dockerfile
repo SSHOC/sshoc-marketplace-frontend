@@ -39,8 +39,8 @@ ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
 # docker buildkit currently cannot mount secrets directly to env vars
 # @see https://github.com/moby/buildkit/issues/2122
 USER root
-RUN --mount=type=secret,id=GITHUB_TOKEN \
-  export GITHUB_TOKEN="$(cat /run/secrets/GITHUB_TOKEN)" && \
+RUN --mount=type=secret,id=github_token \
+  export GITHUB_TOKEN="$(cat /run/secrets/github_token)" && \
   yarn build && \
   unset GITHUB_TOKEN
 USER node

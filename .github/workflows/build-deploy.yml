@@ -58,7 +58,8 @@ jobs:
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
