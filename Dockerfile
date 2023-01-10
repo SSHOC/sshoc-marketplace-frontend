@@ -35,9 +35,15 @@ ARG NEXT_PUBLIC_GOOGLE_SITE_ID
 ARG NEXT_PUBLIC_LOCAL_CMS_BACKEND
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
-ARG GITHUB_TOKEN
 
-RUN yarn build
+# docker buildkit currently cannot mount secrets directly to env vars
+# @see https://github.com/moby/buildkit/issues/2122
+USER root
+RUN --mount=type=secret,id=GITHUB_TOKEN \
+  export GITHUB_TOKEN="$(cat /run/secrets/GITHUB_TOKEN)" && \
+  yarn build && \
+  unset GITHUB_TOKEN
+USER node
 
 # serve
 FROM node:16-slim AS serve
