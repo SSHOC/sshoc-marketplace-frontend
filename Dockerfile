@@ -36,6 +36,7 @@ ARG NEXT_PUBLIC_LOCAL_CMS_BACKEND
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
 
+# @see https://docs.docker.com/build/ci/github-actions/examples/#secrets
 # docker buildkit currently cannot mount secrets directly to env vars
 # @see https://github.com/moby/buildkit/issues/2122
 USER root
