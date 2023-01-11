@@ -67,5 +67,5 @@ jobs:
         uses: acdh-oeaw/deploy-action@v1
         with:
           token: ${{ secrets.RANCHER_API_TOKEN }}
-          project: c-zdbh8:p-tk5b7
-          deployment: sshoc:sshoc-marketplace-frontend
+          project: c-m-6hwgqq2g:p-jv25s
+          deployment: sshoc-marketplace-frontend:sshoc-mp-frontend
