@@ -60,9 +60,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # - name: Deploy to cluster
-      #   uses: acdh-oeaw/deploy-action@v1
-      #   with:
-      #     token: ${{ secrets.RANCHER_API_TOKEN }}
-      #     project: c-m-6hwgqq2g:p-jv25s
-      #     deployment: sshoc-marketplace-frontend:sshoc-mp-frontend
+      - name: Deploy to cluster
+        uses: acdh-oeaw/deploy-action@v1
+        with:
+          token: ${{ secrets.RANCHER_API_TOKEN }}
+          project: c-m-6hwgqq2g:p-jv25s
+          deployment: sshoc-marketplace-frontend:sshoc-mp-frontenddev
