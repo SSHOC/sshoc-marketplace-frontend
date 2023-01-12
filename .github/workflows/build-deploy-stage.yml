@@ -55,6 +55,8 @@ jobs:
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at
             NEXT_PUBLIC_MATOMO_APP_ID=198
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
+            NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
+            NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=stage
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
           cache-from: type=gha

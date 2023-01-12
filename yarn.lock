@@ -3090,10 +3090,10 @@
   resolved "https://registry.npmjs.org/@stefanprobst/log/-/log-1.0.3.tgz#3962b5954ae1622dc6c64ed501357ebf4adabfd6"
   integrity sha512-6lNIxwfg98UyvrQGlMHmqp0H8XCQFAbS/lDWt6D4kH/z0Goxg/GxqZ9vDdlswmYvphT5ubFOWk2SGwGBeGATVg==
 
-"@stefanprobst/netlify-cms-oauth-client@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@stefanprobst/netlify-cms-oauth-client/-/netlify-cms-oauth-client-0.1.2.tgz#a797147455de995688e0ec07ab0110277b27370a"
-  integrity sha512-G57z++exD6nESB3wiK2YIoF22vec8LPAU6MEHgT4sMZ6st+BLw0jCy2jfMZ6vqoABAUsN75uJICZPLNQV0lotw==
+"@stefanprobst/netlify-cms-oauth-client@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@stefanprobst/netlify-cms-oauth-client/-/netlify-cms-oauth-client-0.1.3.tgz#8e349b0cfebd797f7485b5e0e18d40a3e188a864"
+  integrity sha512-VxyKxzTUq4CNhGyaCvFrzjk3WDrQ6L0Y9gL5puUHXorYqKi1ZQ/Wv8Om1llAB+r4tGA4e0wcpGUMMN5mwkjYBg==
   dependencies:
     "@stefanprobst/is-absolute-url" "^1.0.2"
     "@stefanprobst/is-nonempty-string" "^1.0.1"
