@@ -45,9 +45,9 @@ The system consists of multiple components deployed as separate containers in a 
 
 The system is deployed in three instances:
 - development - used by developers for testing new functionality
-- staging - instance based on the latest version of the code and data model 
+- staging - instance based on the latest version of the code and data model
 - production - stable instance publicly available at [marketplace.sshopencloud.eu](https://marketplace.sshopencloud.eu/)
- 
+
 A *continuous integration and deployment setup* is in place, where pushing changes to corresponding branches in the git repository trigger a set of tests to be run and upon successful completion a new version of the application is automatically deployed.
 
 There are a number of dynamic parts of the data model, which require configuration or initial population upon installation of a new naked instance. These “system data” are maintained as YAML-configuration files as part of the backend source code and are applied during initialisation of the system. This includes:
@@ -69,19 +69,19 @@ for anyone to use. Some of the functionalities are closed, but most are opened, 
 and retrieving detailed information on all items of the Marketplace.
 
 You can inspect the API Swagger documentation here:
-<https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs>
+[https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs](https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs)
 
 The endpoint of the SSH Open Marketplace API is:
-<https://marketplace-api.sshopencloud.eu/api/>
+[https://marketplace-api.sshopencloud.eu/api/](https://marketplace-api.sshopencloud.eu/api/)
 
 The API responses are in JSON and follow the data model that we have created for the Marketplace
 (see "Data model" section above).
 
 For example, you can request a description of all the "tools and services" that the SSH Open
 Marketplace provides at
-<https://marketplace-api.sshopencloud.eu/api/tools-services>
+[https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
 and following pages
-<https://marketplace-api.sshopencloud.eu/api/tools-services?page=2>.
+[https://marketplace-api.sshopencloud.eu/api/tools-services?page=2](https://marketplace-api.sshopencloud.eu/api/tools-services?page=2).
 
 <ApiEndpoint title="Item search" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
   <ApiParamTextField label="Search" param="q" placeholder="Search term" />
