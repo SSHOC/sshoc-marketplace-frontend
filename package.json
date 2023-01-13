@@ -120,6 +120,7 @@
     "@stefanprobst/rehype-shiki": "^2.2.0",
     "@stefanprobst/remark-extract-yaml-frontmatter": "^2.2.3",
     "@stefanprobst/remark-mdx-page": "^3.0.1",
+    "@stefanprobst/remark-resource-links": "^1.0.2",
     "@stefanprobst/remark-smart-quotes": "^1.0.1",
     "@stefanprobst/request": "^0.1.10",
     "@stefanprobst/val-loader": "^4.0.0-4",

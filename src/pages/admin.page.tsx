@@ -12,12 +12,19 @@ import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 const Cms = dynamic(
   async () => {
     const { default: Cms } = await import('netlify-cms-app')
+    const { default: withResourceLinks } = await import('@stefanprobst/remark-resource-links')
 
     Cms.registerPreviewStyle('/assets/cms/styles/index.css')
 
     Cms.registerPreviewTemplate('about-pages', memo(AboutScreenLayout))
     Cms.registerPreviewTemplate('contribute-pages', memo(ContributeScreenLayout))
 
+    /**
+     * Register plugins to the richtext editor widget to (i) avoid saving
+     * autolinks, and (ii) enforce serialisation that is closer to `prettier`'s
+     * format.
+     */
+    Cms.registerRemarkPlugin(withResourceLinks)
     Cms.registerRemarkPlugin({
       settings: {
         bullet: '-',

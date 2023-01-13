@@ -3276,6 +3276,13 @@
     acorn-jsx "^5.3.2"
     esbuild "^0.13.13"
 
+"@stefanprobst/remark-resource-links@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@stefanprobst/remark-resource-links/-/remark-resource-links-1.0.2.tgz#f443ad19558b37dd9c786eecc337a6649e21f699"
+  integrity sha512-PbEoSr3k9OMZ6T6BFziIkPaKBPogTbrEH4yJ8kXjVtzT8WB6WdaoMDXyam0+Vo5WZbBfAMBkG2iYHRZUh65xdA==
+  dependencies:
+    remark-stringify "^6.0.0"
+
 "@stefanprobst/remark-smart-quotes@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@stefanprobst/remark-smart-quotes/-/remark-smart-quotes-1.0.1.tgz#3ec458296dc4a65103b444e5058d918a50570017"
@@ -16275,7 +16282,7 @@ remark-stringify@^10.0.0, remark-stringify@^10.0.2:
     mdast-util-to-markdown "^1.0.0"
     unified "^10.0.0"
 
-remark-stringify@^6.0.4:
+remark-stringify@^6.0.0, remark-stringify@^6.0.4:
   version "6.0.4"
   resolved "https://registry.npmjs.org/remark-stringify/-/remark-stringify-6.0.4.tgz#16ac229d4d1593249018663c7bddf28aafc4e088"
   integrity sha512-eRWGdEPMVudijE/psbIDNcnJLRVx3xhfuEsTDGgH4GsFF91dVhw5nhmnBppafJ7+NWINW6C7ZwWbi30ImJzqWg==
