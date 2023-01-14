@@ -1,0 +1,33 @@
+.nav {
+  display: grid;
+  gap: 8px;
+}
+
+.heading {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.list {
+  display: grid;
+  gap: 4px;
+  margin-block-end: 4px;
+  font-size: 0.875rem;
+
+  & a {
+    color: var(--color-link-text);
+
+    &:hover {
+      color: var(--color-link-text-hover);
+    }
+  }
+
+  &[data-depth] {
+    padding-inline-start: 12px;
+  }
+}
+
+.list-item {
+  display: grid;
+  gap: 4px;
+}

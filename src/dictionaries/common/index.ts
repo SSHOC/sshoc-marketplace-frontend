@@ -36,6 +36,7 @@ export interface Dictionary {
   'see-all-facets': string
   'see-more': string
   'select-file': string
+  'table-of-contents': string
   ui: {
     clear: string
     select: {

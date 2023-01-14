@@ -43,6 +43,7 @@ export const dictionary: Dictionary = {
   'see-all-facets': 'See all {{facet}}',
   'see-more': 'See more',
   'select-file': 'Select file',
+  'table-of-contents': 'Table of contents',
   ui: {
     clear: 'Clear',
     select: {

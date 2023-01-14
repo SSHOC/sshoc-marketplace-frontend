@@ -12,6 +12,7 @@ import { LastUpdatedTimestamp } from '@/components/common/LastUpdatedTimestamp'
 import { Prose } from '@/components/common/Prose'
 import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { ScreenTitle } from '@/components/common/ScreenTitle'
+import { TableOfContents } from '@/components/common/TableOfContents'
 import { BackgroundImage } from '@/components/contribute/BackgroundImage'
 import { Content } from '@/components/contribute/Content'
 import { ContributeScreenLayout } from '@/components/contribute/ContributeScreenLayout'
@@ -98,6 +99,9 @@ export default function ContributePage(props: ContributePage.TemplateProps): JSX
           </ScreenHeader>
           <ContributeScreenNavigation />
           <Content>
+            {props.metadata.toc === true ? (
+              <TableOfContents tableOfContents={props.tableOfContents} />
+            ) : null}
             <Prose>{props.children}</Prose>
             <LastUpdatedTimestamp dateTime={props.lastUpdatedTimestamp} />
           </Content>

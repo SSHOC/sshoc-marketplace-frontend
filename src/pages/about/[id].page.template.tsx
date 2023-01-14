@@ -16,6 +16,7 @@ import { LastUpdatedTimestamp } from '@/components/common/LastUpdatedTimestamp'
 import { Prose } from '@/components/common/Prose'
 import { ScreenHeader } from '@/components/common/ScreenHeader'
 import { ScreenTitle } from '@/components/common/ScreenTitle'
+import { TableOfContents } from '@/components/common/TableOfContents'
 import { getLastUpdatedTimestamp } from '@/data/git/get-last-updated-timestamp'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
@@ -98,6 +99,9 @@ export default function AboutPage(props: AboutPage.TemplateProps): JSX.Element {
           </ScreenHeader>
           <AboutScreenNavigation />
           <Content>
+            {props.metadata.toc === true ? (
+              <TableOfContents tableOfContents={props.tableOfContents} />
+            ) : null}
             <Prose>{props.children}</Prose>
             <LastUpdatedTimestamp dateTime={props.lastUpdatedTimestamp} />
           </Content>
