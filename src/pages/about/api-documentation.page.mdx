@@ -3,7 +3,83 @@ title: API Documentation
 navigationMenu:
   title: API Documentation
   position: 5
-toc: true
+toc: false
 ---
+import { ApiEndpoint } from '@/components/documentation/ApiEndpoint'
+import { ApiParamTextField } from '@/components/documentation/ApiParamTextField'
+import { ApiParamSelect } from '@/components/documentation/ApiParamSelect'
+import { Item } from '@/lib/core/ui/Collection/Item'
 
-## API Documentation
+## API documentation
+
+The SSH Open Marketplace also includes an Application Programming Interface (API), which is opened
+for anyone to use. Some of the functionalities are closed, but most are opened, such as searching
+and retrieving detailed information on all items of the Marketplace.
+
+You can inspect the API Swagger documentation here:
+[https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs](https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs)
+
+The endpoint of the SSH Open Marketplace API is:
+[https://marketplace-api.sshopencloud.eu/api/](https://marketplace-api.sshopencloud.eu/api/)
+
+The API responses are in JSON and follow the data model that we have created for the Marketplace
+(see ["Data model" section](/about/implementation#data-model)).
+
+For example, you can request a description of all the "tools and services" that the SSH Open
+Marketplace provides at
+[https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
+
+The following documentation provides API user stories and easy to test API calls as examples of the API use for anyone interested in testing the approach. 
+
+### Basic API calls: exploring the SSH Open Marketplace data
+
+This section lists and provides a step-by step explanation for the most useful API calls of the SSH Open Marketplace, in read access only. Using the GET requests presented below will allow you to retrieve information from the Marketplace, using various parameters. 
+
+#### Items list
+It is possible to retrieve the list of Marketplace items by type. 
+
+For example, as a trainer in digital methods, you are interested in retrieving the list of all the “training materials” of the Marketplace, so that you can display the list on your own teaching blog.  To retrieve all the training materials listed in the SSH Open Marketplace, you can use the following API request: [https://marketplace-api.sshopencloud.eu/api/training-materials/](https://marketplace-api.sshopencloud.eu/api/training-materials/). 
+Because there is a limited  number of results per page, you can access the next pages as follows: [https://marketplace-api.sshopencloud.eu/api/training-materials/?page=2](https://marketplace-api.sshopencloud.eu/api/training-materials/?page=2).
+
+Testing different calls in the box below will allow you to look into the different API calls to retrieve Marketplace items by type.
+
+
+#### Items search
+The /api/item-search query is a powerful one and supports a number of parameters to refine the search. Some basic examples of its use are described below.
+
+As a researcher in Digital Humanities interested in network analysis, you want to retrieve all the items in the Marketplace using (in their label or description) a specific term, such as for example “Gephi”.  The API request to use for this example is the following: [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi). 
+And you can try out other terms in the widget below.
+
+<ApiEndpoint title="Item search" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <ApiParamTextField label="Search" param="q" placeholder="Search term" />
+
+  <ApiParamSelect label="Page" param="page">
+    <Item key={1}>Page 1</Item>
+    <Item key={2}>Page 2</Item>
+    <Item key={3}>Page 3</Item>
+  </ApiParamSelect>
+</ApiEndpoint>
+
+
+
+The API also includes some endpoints that are only accessible to logged in users. To use them, you
+need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to
+connect to the other endpoint, by passing the Token as a Bearer Authentication.
+
+### Example
+
+```
+curl -i --request POST 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/auth/sign-in' --header 'Content-Type: application/json' --data-raw '{"username": "SomeUserName","password": "xxxxxxxx"}'
+```
+
+Will respond with a Token as such:
+
+```
+Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn
+```
+
+And this is then used in the following requests to prove you are authenticated, for example:
+
+```
+curl -X DELETE 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/datasets/3752' --header 'Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn'
+```
