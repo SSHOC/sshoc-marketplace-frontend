@@ -3,7 +3,7 @@ title: API Documentation
 navigationMenu:
   title: API Documentation
   position: 5
-toc: false
+toc: true
 ---
 import { ApiEndpoint } from '@/components/documentation/ApiEndpoint'
 import { ApiParamTextField } from '@/components/documentation/ApiParamTextField'
@@ -43,6 +43,24 @@ For example, as a trainer in digital methods, you are interested in retrieving t
 Because there is a limited  number of results per page, you can access the next pages as follows: [https://marketplace-api.sshopencloud.eu/api/training-materials/?page=2](https://marketplace-api.sshopencloud.eu/api/training-materials/?page=2).
 
 Testing different calls in the box below will allow you to look into the different API calls to retrieve Marketplace items by type.
+
+<ApiEndpoint title="Retrieve items by type" endpoint={{ key: 'item-list' }}>
+
+  <ApiParamSelect label="item-type">
+    <Item key={1}>/api/tools-services</Item>
+    <Item key={2}>/api/training-materials/</Item>
+    <Item key={3}>/api/datasets</Item>
+    <Item key={4}>/api/publications</Item>
+    <Item key={5}>/api/workflows/</Item>
+  </ApiParamSelect>
+
+  <ApiParamSelect label="Page" param="page">
+    <Item key={1}>Page 1</Item>
+    <Item key={2}>Page 2</Item>
+    <Item key={3}>Page 3</Item>
+  </ApiParamSelect>
+</ApiEndpoint>
+
 
 
 #### Items search
