@@ -271,8 +271,6 @@ Result: New item stored in the database with the status SUGGESTED
 }
 ```
 
-
-
 - **Contributor suggesting changes to an existing item**. After proper authentication (see section above), a contributor can suggest changes to an existing item using the token. The example below describes the addition of a new property to an existing training material. The API call to use is: PUT api/training-materials/{persistentId} 
 
 This PUT api/training-materials/{persistentId} needs to be sent with a JSON as input including the result of the corresponding GET api/training-materials/{persistentId} and the changes the contributor wants to suggest. 
@@ -411,6 +409,5 @@ Step 3: PUT api/training-materials/ejzW3x . The contributor pastes in the body t
      "media": []
 }
 ```
-Result: New version of an existing item stored in the database with the status SUGGESTED
 
-
+Result: New version of an existing item stored in the database with the status SUGGESTED.
