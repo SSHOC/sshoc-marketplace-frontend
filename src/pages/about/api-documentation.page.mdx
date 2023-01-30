@@ -81,31 +81,20 @@ And you can try out other terms in the widget below.
 More parameters can be added to the query, you can for example choose the item type you want to concentrate on, by adding a category type. So if you only want to search for publications using “Gephi”, you will use the following query:  [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication) 
 
 <ApiEndpoint title="Item search & Item category" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
-
   <ApiParamTextField label="Search" param="q" placeholder="Search term" />
 
   <ApiParamSelect label="Category" param="categories">
-
     <Item key={1}>tool-or-service</Item>
-
     <Item key={2}>training-material</Item>
-
     <Item key={3}>dataset</Item>
-
-   <Item key={4}>publication</Item>
-
+    <Item key={4}>publication</Item>
     <Item key={5}>workflow</Item>
-
   </ApiParamSelect>
 
   <ApiParamSelect label="Page" param="page">
-
     <Item key={1}>Page 1</Item>
-
     <Item key={2}>Page 2</Item>
-
     <Item key={3}>Page 3</Item>
-
   </ApiParamSelect>
 
 </ApiEndpoint>
@@ -115,33 +104,21 @@ More specific searches can also be undertaken using some of the parameters of th
 As an open science officer, you are interested in retrieving all the items in the Marketplace using open licenses. An initial call can give you the list of items using the license field (i.e. for which the license field is not empty): [https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%5B\*%20TO%20\*%5D](https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%5B*%20TO%20*%5D) Then, instead of looking for all licenses referenced, you want to restrict the search to items using the [Creative Commons Attribution 4.0 International](http://spdx.org/licenses/CC-BY-4.0) license and this call can help you: [https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%22Creative%20Commons%20Attribution%204.0%20International%22](https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%22Creative%20Commons%20Attribution%204.0%20International%22) 
 
 <ApiEndpoint title="Item search on specific fields" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
-
   <ApiParamSelect label="allowed property codes" param="d">
-
-<Item key={1}>source</Item>
-
-<Item key={2}>contributor</Item>
-
-<Item key={3}>license</Item>
-
- <Item key={4}>journal</Item>
-
-<Item key={5}>resource-category</Item>
-
+     <Item key={1}>source</Item>
+     <Item key={2}>contributor</Item>
+     <Item key={3}>license</Item>
+     <Item key={4}>journal</Item>
+     <Item key={5}>resource-category</Item>
   </ApiParamSelect>
 
   <ApiParamTextField label="Search" param="d" placeholder="Search term" />
 
   <ApiParamSelect label="Page" param="page">
-
-<Item key={1}>Page 1</Item>
-
-<Item key={2}>Page 2</Item>
-
-<Item key={3}>Page 3</Item>
-
+     <Item key={1}>Page 1</Item>
+     <Item key={2}>Page 2</Item>
+     <Item key={3}>Page 3</Item>
   </ApiParamSelect>
-
 </ApiEndpoint>
 
 A complementary parameter allows users to search among faceted fields such as activity, keyword or language. 
@@ -149,29 +126,19 @@ A complementary parameter allows users to search among faceted fields such as ac
 As a DARIAH officer, you are interested in retrieving all the items tagged as “DARIAH national resource”. This tag is a keyword in the SSH Open Marketplace and the following call will give you the results you’re looking for [https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource) 
 
 <ApiEndpoint title="Item search on faceted fields" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
-
   <ApiParamSelect label="allowed property codes" param="f">
-
-<Item key={1}>activity</Item>
-
-<Item key={2}>keyword</Item>
-
-<Item key={3}>language</Item>
-
-   </ApiParamSelect>
+     <Item key={1}>activity</Item>
+     <Item key={2}>keyword</Item>
+     <Item key={3}>language</Item>
+  </ApiParamSelect>
 
   <ApiParamTextField label="Search" param="f" placeholder="Search term" />
 
   <ApiParamSelect label="Page" param="page">
-
-<Item key={1}>Page 1</Item>
-
-<Item key={2}>Page 2</Item>
-
-<Item key={3}>Page 3</Item>
-
+     <Item key={1}>Page 1</Item>
+     <Item key={2}>Page 2</Item>
+     <Item key={3}>Page 3</Item>
   </ApiParamSelect>
-
 </ApiEndpoint>
 
 Note that it is also possible to mix the “d” and “f” parameters in one query, such as for example: [https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource) 
@@ -182,18 +149,13 @@ As a researcher in Palaeography, you are interested in digital resources and met
 
 <ApiEndpoint title="Concept search among the SSH Open marketplace vocabularies" endpoint={{ key: 'concept-search', pathname: '/api/concept-search' }}>
 
-   <ApiParamTextField label="Search" param="Search concept" placeholder="q" />
+  <ApiParamTextField label="Search" param="Search concept" placeholder="q" />
 
   <ApiParamSelect label="Page" param="page">
-
-<Item key={1}>Page 1</Item>
-
-<Item key={2}>Page 2</Item>
-
-<Item key={3}>Page 3</Item>
-
+     <Item key={1}>Page 1</Item>
+     <Item key={2}>Page 2</Item>
+     <Item key={3}>Page 3</Item>
   </ApiParamSelect>
-
 </ApiEndpoint>
 
 Using then the advanced item search query [https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography) you understand that no items is tagged yet with the Palaeography discipline concept and you decide to tag your favorite resources - IIIF Universal Viewer; Kraken and Transkribus - with your discipline, following the [“enrich an item” guidelines](https://marketplace.sshopencloud.eu/contribute/enrich-an-individual-item) or via the API, see Managing items section below. 
@@ -409,9 +371,5 @@ Step 3: PUT api/training-materials/ejzW3x . The contributor pastes in the body t
      "media": []
 }
 ```
-
-
-
-
 
 Result: New version of an existing item stored in the database with the status SUGGESTED.
