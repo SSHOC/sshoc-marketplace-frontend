@@ -52,7 +52,7 @@ jobs:
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_MOCK_API=disabled
             NEXT_PUBLIC_BOTS=disabled
-            NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at
+            NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_APP_ID=198
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
