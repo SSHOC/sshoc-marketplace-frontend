@@ -16,6 +16,14 @@ import {
   actorSourceInputSchema,
 } from '@/data/sshoc/validation-schemas/actor'
 
+export const actorSortOrders = ['score', 'name'] as const
+
+export type ActorSortOrder = typeof actorSortOrders[number]
+
+export function isActorSortOrder(sortOrder: string): sortOrder is ActorSortOrder {
+  return actorSortOrders.includes(sortOrder as ActorSortOrder)
+}
+
 /** ActorDto */
 export interface Actor {
   id: number
@@ -258,6 +266,7 @@ export function getActorHistory(
 export namespace SearchActors {
   export type SearchParams = PaginatedRequest<{
     q?: string
+    order?: ActorSortOrder
     'd.name'?: string
     'd.email'?: string
     'd.website'?: UrlString

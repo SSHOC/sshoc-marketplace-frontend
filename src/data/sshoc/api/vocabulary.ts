@@ -10,8 +10,15 @@ import type { PropertyTypeRef } from '@/data/sshoc/api/property'
 import type { RequestOptions } from '@/data/sshoc/lib/client'
 import { createUrl, request } from '@/data/sshoc/lib/client'
 import type { AllowedRequestOptions, BooleanString, UrlString } from '@/data/sshoc/lib/types'
+import { conceptInputSchema } from '@/data/sshoc/validation-schemas/vocabulary'
 
-import { conceptInputSchema } from '../validation-schemas/vocabulary'
+export const conceptSortOrders = ['score', 'label'] as const
+
+export type ConceptSortOrder = typeof conceptSortOrders[number]
+
+export function isConceptSortOrder(sortOrder: string): sortOrder is ConceptSortOrder {
+  return conceptSortOrders.includes(sortOrder as ConceptSortOrder)
+}
 
 /** VocabularyBasicDto */
 export interface VocabularyBase {
@@ -440,6 +447,7 @@ export function getConceptRelations(
 export namespace SearchConcepts {
   export type SearchParams = PaginatedRequest<{
     q?: string
+    order?: ConceptSortOrder
     types?: Array<string>
     'f.candidate'?: Array<BooleanString>
     /** @default false */

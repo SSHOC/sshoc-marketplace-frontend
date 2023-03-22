@@ -3,6 +3,7 @@ import { Fragment, useMemo } from 'react'
 import { useForm } from 'react-final-form'
 
 import { ItemInfo } from '@/components/common/ItemInfo'
+import { Link } from '@/components/common/Link'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { PropertyType } from '@/data/sshoc/api/property'
 import { useConceptSearchInfinite } from '@/data/sshoc/hooks/vocabulary'
@@ -12,8 +13,6 @@ import { Item } from '@/lib/core/ui/Collection/Item'
 import { mapBy } from '@/lib/utils'
 import { useDebouncedState } from '@/lib/utils/hooks/useDebouncedState'
 import { debounceDelay } from '~/config/sshoc.config'
-
-import { Link } from '../common/Link'
 
 export interface ConceptComboBoxProps {
   conceptSearchTerm: string
@@ -41,6 +40,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
   // TODO: `placeholderData`
   const conceptSearchResults = useConceptSearchInfinite({
     q: debouncedConceptSearchTerm.length > 0 ? debouncedConceptSearchTerm : undefined,
+    order: 'label',
     types: [propertyTypeId],
   })
   const items = useMemo(() => {

@@ -40,6 +40,7 @@ export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
   // TODO: `placeholderData`
   const actorSearchResults = useActorSearchInfinite({
     q: debouncedActorSearchTerm.length > 0 ? debouncedActorSearchTerm : undefined,
+    order: 'name',
   })
   const items = useMemo(() => {
     if (actorSearchResults.data?.pages == null) return []
