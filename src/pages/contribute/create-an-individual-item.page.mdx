@@ -5,26 +5,221 @@ navigationMenu:
   position: 3
 toc: false
 ---
-With the curation dashboard of the Marketplace you may suggest new items through the convenient
-create an individual item function. In order to access this feature, you will need to log in, which
-should be possible very conveniently using already existing credentials.
+Adding items to the SSH Open Marketplace is an easy process. Here are the **5 steps** you can follow to create an item on your own.
+
+## 1. Log in
+
+First, you need to sign in to the SSH Open Marketplace which should be possible very conveniently using already existing credentials (academic or social accounts are available). 
 
 ![Sign in the SSH Open Marketplace steps 1 and 2](/assets/cms/images/signin1.png)
 
 ![Sign in the SSH Open Marketplace step 3](/assets/cms/images/signin2.png)
 
-Once you click on the "Create" button for your chosen Marketplace entry, you will be automatically
-proposed the various fields that need to be filled out.
+## 2. Reflect on our inclusion criteria
+
+Take a moment to reflect on our \[4 inclusion criteria questions](/about/data-population#inclusion-criteria-for-adding-resources-4-questions-to-ask):
+
+- _Is this resource relevant to the SSH scientific community?_
+- _Is the resource current, supported, and ideally open?_
+- _Is the resource FAIR – Findable, Accessible, Interoperable and Re-usable - or contributing to the uptake of Open Science best practices?_
+
+If you answer yes to these first three questions, you are (almost) good to go! The last question you should consider is the following:
+
+- _Is the resource already in the Marketplace?_ Take a look at existing items, typing the name of your resource in the search. If the same item already exists, please consult the next section _[Edit/Enrich an item](/contribute/enrich-an-individual-item)_. If you get no results, then you may proceed with the creation of your item!
+
+## 3. Choose the item type
+
+The first choice you need to make to create an item in the SSH Open Marketplace relates to the type of content you want to add. At the moment, 5 different content types are available:
+
+<div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'var(--prose-column-xs) 1fr' }}>
+
+![Tool or service](/assets/images/categories/tool-or-service.svg)
+
+<div>
+
+**Tools & services**
+
+</div>
+</div>
+
+<div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'var(--prose-column-xs) 1fr' }}>
+
+![Training Material](/assets/images/categories/training-material.svg)
+
+<div>
+
+**Training materials**
+
+</div>
+</div>
+
+<div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'var(--prose-column-xs) 1fr' }}>
+
+![Workflow](/assets/images/categories/workflow.svg)
+
+<div>
+
+**Workflows**
+
+</div>
+</div>
+
+<div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'var(--prose-column-xs) 1fr' }}>
+
+![Dataset](/assets/images/categories/dataset.svg)
+
+<div>
+
+**Datasets**
+
+</div>
+</div>
+
+<div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: 'var(--prose-column-xs) 1fr' }}>
+
+![Publication](/assets/images/categories/publication.svg)
+
+<div>
+
+**Publications**
+
+</div>
+</div>
+
+If you are unsure about which item types you should choose, you can [take a look at our dedicated section](/about/data-population#types-of-content).
+
+Once you know which type to choose, click on the appropriate creation button:
 
 !["Create an item" banner](/assets/cms/images/create_mp.png)
 
+## 4. Fill in the form
+
+Once you click on the “Create” button for your chosen Marketplace entry, the various fields that can be filled out will be automatically proposed. 
+
+_Note_: if you are creating a DARIAH national resource, you can also take a look at our [dedicated guidelines](https://doi.org/10.5281/zenodo.7410293).  
+
 ![Edit form "Create a training material" screenshot](/assets/cms/images/create-item.png)
 
-If you need some explanation or examples for some of the metadata fields, please consult the
-["Guidance for metadata fields" table](/contribute/metadata-guidelines).
+The [full metadata guidelines are available here](https://marketplace.sshopencloud.eu/contribute/metadata-guidelines#guidance-for-metadata-fields). However, below are some examples of the main questions you may encounter when creating your resource.
 
-You can also save your proposed item and come back to it later, if you realise that you need some
-more time to work on perfecting the entry before submission to the editorial team. Via the "My
-account" dashboard, you can access your contributed and draft items.
+- **Which fields should I fill in?**
+
+  Only two fields are **mandatory** in the SSH Open Marketplace: label (= name of a resource) and description. However, we strongly encourage you to fill in all the **recommended** fields that are present by default in the forms, depending on the item types you want to create (i.e. if you want to create a publication, all the bibliographic metadata are included by default in the edit forms). [See metadata status section for details](/contribute/metadata-guidelines#metadata-status).
+- **How to create a good description of a resource?**
+  Check the original resource, and if possible, reuse the text description of the source. This description should be short and should aim at raising interest Example: "Gephi is a Photoshop alternative for the humanities….”! We recommend a short paragraph, around 800 characters, although longer descriptions may be needed for a workflow and its steps.
+
+  Description field supports Markdown, although to include links we recommend using the _See also_ property.
+- **What is the external ID field and how to fill it?**
+
+  In addition to the link/URL of a resource (accessibleAt field), external identifiers should be added when possible. They link Marketplace items to other authoritative representations of any given resource on the web, such as a git repository or a wikidata or wikipedia entry and contribute to increase the (meta)data quality. 
+
+  _Note_: these external identifiers are available both for Marketplace items (Wikidata, Github, DOI or Handle.Net identifiers) as well as for Actors (ORCID, Wikidata, Twitter or ROR identifiers).
+
+  As shown below, to add an external ID to an item, you first need to click on “Add External ID”, then to choose which type of IDs you want to add, and finally to add only the last part of the related URL (ex. only add DARIAH-ERIC/dariah-campus in the field if you want to refer to https://github.com/DARIAH-ERIC/dariah-campus). Below the field you can preview the generated URL.
+
+![Add an external ID - step 1](/assets/cms/images/screenshot-2023-05-08-at-17.43.35.png)
+
+![Add an external ID - steps 2 and 3](/assets/cms/images/screenshot-2023-05-08-at-17.49.22.png)
+
+- **How to add or create actors?**
+
+A few recommendations are given [in the metadata guidelines (scroll down until "actors"](/contribute/metadata-guidelines#guidance-for-metadata-fields)). An Actor is a person or an organisation who contributed in some way to the creation of the resource described in the SSH Open Marketplace. Here is a more detailed description of the steps to follow to add or create an actor.
+
+1. While on an item form, you want to add an actor, but can not find it in the existing list of actors. The search bar will give you a “no results found” like in the screenshot below.  
+
+![](/assets/cms/images/actor_notfound.jpg)
+
+2. You can create an actor using the “create actor” button on the right
+
+![Create an actor button](/assets/cms/images/create_actor2.jpg)
+
+3. Name of an actor is mandatory: while creating an actor, you need at least to add a name.  Add ExternalID for actors: ORCID, recommended. Add ROR IDs for research organisation. Affiliations can also be added, but the choice is possible only among the current list of actors. So if you don’t find an affiliation, you need to create it as an actor as well.
+
+![Add actor external ID screenshot](/assets/cms/images/screenshot-2023-05-08-at-18.02.19.png)
+
+_Note on the actors’ roles_. For a given item, you can choose a role for an actor: contributor, author, reviewer, director, programmer, editor, provider, contact, funder, helpdesk. By default, the Actor’s role is contributor. 
+
+- **Which Activity to choose to describe an item?**
+
+  The “Activity” field is an important one! It allows a description of the activity you can do with the resource. You can select a term, drawn from the Taxonomy of Digital Research Activities in the Humanities (TaDIRAH) that is “designed to help community-driven sites and projects structure their digital humanities (DH) content and gain better visibility”.
+
+  To choose among the TaDIRAH concepts, you can either start typing a term you have in mind to see if it exists, or consult existing terms, via the TaDIRAH browser: [https://tadirah.info/pages/Browser.html](https://tadirah.info/pages/Browser.html) .
+
+  TaDIRAH has 7 top concepts, grouping a bit more than 150 concepts in total. Here is a list of this top concepts, to give you an idea of what is covered by this taxonomy:
+
+  1. Analyzing
+  2. Capturing
+  3. Creating
+  4. Disseminating
+  5. Enriching
+  6. Interpreting
+  7. Storing
+
+  Please note that if you want to add several activities, you will need to add (a) new property line(s) in the edit form, via the “add property” button.
+- **Which license to choose?**
+
+Licensing information is very important (especially for the tools & services). Knowing at a glance under which conditions and with which licence a service is available can greatly facilitate its re-use. You can select a license, drawn from the controlled vocabulary SPDX License List. If you do not find any match in this vocabulary, please leave the license field empty and fill in the _terms of use_. 
+
+The _terms of use_ field is a free text field, so you can add anything you want in it. 
+
+- **How to add an image?**
+
+Two different kinds of images can be added to a resource: media that appear in the middle of an item page and thumbnail (=logo) that are displayed on the top left corner of an item, just before the name of a resource.
+
+\[screenshot]
+
+**Media** 
+
+Media can be images or videos. Clicking on “+ Add Media” will open a pop-up window, like shown in the screenshot below.  
+
+\[screenshot]
+
+Some recommendations to add images: 
+
+1. Look for freely available screenshots or visualisations of a tool (CC licence or similar). 
+2. If that doesn’t yield good results, look for material available on the original website. 
+3. Consider making own screenshots. 
+4. NOTE: You can add the URL of an image, if you choose to upload, image must be 1MB or smaller in size. Format supported: JPG, TIFF, PNG, GIF. 
+
+Some recommendations to add videos: 
+
+1. If on YouTube or Vimeo: just deliver the URL (title/caption of the video might be retrieved automatically). 
+2. If elsewhere: provide link to video and descriptive caption. 
+
+**Media-caption**: every media should include a descriptive caption, i.e verbose information mentioning license and credits about the media used.
+
+**Thumbnails**
+
+To visually enhance the resource entry, a thumbnail can be inserted. It will appear on the top left corner, just before the name of an item. 
+
+Please try to provide a logo related to the MP Entry, if we are authorized to use it. If no logo is submitted, a generic icon is automatically provided. Recommendations in terms of quality: 200x200 pixel.
+
+- **Why and how to add relations to an item?** 
+
+If other entries and items in the MP are related to your tool or service (e.g. training material or publications) it is very relevant information for the user to indicate this connection here. Not only does this increase the likelihood of people browsing the Marketplace serendipitously discovering connections, but it also creates context around a resource and thus makes it easier for newcomers to understand how this resource can be used. Please note that in the near future, datasets and publications without any relations will be deleted from the Marketplace. It is particularly important to add relations to other items when you create datasets or publications items. 
+
+You have several options of  how to specify the relation:
+
+- Simple relation (relates to / is related to) - this is the type of relation attributed by default
+- Documentation (documents / is documented by) - if the resource created can be described as documenting another one, this relation type should be chosen. Ex: a training material documents the use of a tool. A tool is documented by a training material.
+- Mention (mentions / is mentioned in) - if the resource created is cited in another resource, this relation type can be chosen. Ex: a tool is mentioned in a publication. A publication mentions a tool.
+- Extension (extends / is extended by) - if the resource created is a direct extension of another, either because it develops it further or maybe because it adds to or prolongs another, this relation type can be chosen. Ex: a training material extends another from the same curricula, a service is extended by a new component (itself registered as service in the MP).  
+
+\[screenshot]
+
+Only registered entries of the MP can be chosen as related item: if you start typing the name of the item it will be suggested automatically in a list.
+
+**If you need some explanation or examples for some of the metadata fields, please consult the
+["Guidance for metadata fields" table](/contribute/metadata-guidelines).**
+
+Once you fill in everything you wanted, you are ready to submit it to the moderators. You can also save your proposed item and come back to it later, if you realise that you need some more time to work on perfecting the entry before submission to the editorial team. Via the “My account” dashboard, you can access your contributed and draft items.
 
 !["My contributor account" screenshot](/assets/cms/images/my_account_contrib.png)
+
+## **5. Suggest the item for moderation**
+
+What happens next? 
+
+Once you click on the  “submit” button, your suggested item is reviewed by a moderator (i.e a member of the Editorial Board) who will accept or reject it. In case of rejection or additional questions, the moderator will get in touch with you.
+
+Once accepted, your item is published on the SSH Open Marketplace. You and other contributors can still edit the entry (see next section).
