@@ -5,6 +5,7 @@ navigationMenu:
   position: 5
 toc: false
 ---
+
 import { ApiEndpoint } from '@/components/documentation/ApiEndpoint'
 import { ApiParamTextField } from '@/components/documentation/ApiParamTextField'
 import { ApiParamSelect } from '@/components/documentation/ApiParamSelect'
@@ -32,21 +33,21 @@ This section lists and provides a step-by step explanation for the most useful A
 
 It is possible to retrieve the list of Marketplace items by type. 
 
-For example, as a trainer in digital methods, you are interested in retrieving the list of all the “training materials” of the Marketplace, so that you can display the list on your own teaching blog.  To retrieve all the training materials listed in the SSH Open Marketplace, you can use the following API request: [https://marketplace-api.sshopencloud.eu/api/training-materials](https://marketplace-api.sshopencloud.eu/api/training-materials). Because there is a limited  number of results per page, you can access the next pages as follows: [https://marketplace-api.sshopencloud.eu/api/training-materials?page=2](https://marketplace-api.sshopencloud.eu/api/training-materials?page=2). If you have a look in the Swagger documentation of this endpoint, you will see the parameter “page” but also an additional parameter “perpage”, where you can define how many results per page should be returned (the default value is 20 results per page, the maximum 100 results per page), try it out with: [https://marketplace-api.sshopencloud.eu/api/training-materials?page=2&perpage=50](https://marketplace-api.sshopencloud.eu/api/training-materials?page=2&perpage=50). The API delivers back additional information based on your URL: it will tell you how many pages are available (“pages”) and how many results you have (“hits”). The result list is an array (“trainingMaterials” for the example API request) containing basic information about every training material.
+For example, as a trainer in digital methods, you are interested in retrieving the list of all the “training materials” of the Marketplace, so that you can display the list on your own teaching blog.  To retrieve all the training materials listed in the SSH Open Marketplace, you can use the following API request: [https://marketplace-api.sshopencloud.eu/api/training-materials](https://marketplace-api.sshopencloud.eu/api/training-materials). Because there is a limited  number of results per page, you can access the next pages as follows: [https://marketplace-api.sshopencloud.eu/api/training-materials?page=2](https://marketplace-api.sshopencloud.eu/api/training-materials?page=2). If you have a look in the Swagger documentation of this endpoint, you will see the parameter “page” but also an additional parameter “perpage”, where you can define how many results per page should be returned (the default value is 20 results per page, the maximum 100 results per page), try it out with: [https://marketplace-api.sshopencloud.eu/api/training-materials?page=2\&perpage=50](https://marketplace-api.sshopencloud.eu/api/training-materials?page=2\&perpage=50). The API delivers back additional information based on your URL: it will tell you how many pages are available (“pages”) and how many results you have (“hits”). The result list is an array (“trainingMaterials” for the example API request) containing basic information about every training material.
 
 Testing different calls in the box below will allow you to look into the different API calls to retrieve Marketplace items by type. Every item type of the Marketplace does have a dedicated API endpoint.
 
-- tools & services: [https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
-- training materials: [https://marketplace-api.sshopencloud.eu/api/training-materials](https://marketplace-api.sshopencloud.eu/api/training-materials)
-- publications: [https://marketplace-api.sshopencloud.eu/api/publications](https://marketplace-api.sshopencloud.eu/api/publications)
-- datasets: [https://marketplace-api.sshopencloud.eu/api/datasets](https://marketplace-api.sshopencloud.eu/api/datasets)
-- workflows: [https://marketplace-api.sshopencloud.eu/api/workflows](https://marketplace-api.sshopencloud.eu/api/workflows)
+*   tools & services: [https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
+*   training materials: [https://marketplace-api.sshopencloud.eu/api/training-materials](https://marketplace-api.sshopencloud.eu/api/training-materials)
+*   publications: [https://marketplace-api.sshopencloud.eu/api/publications](https://marketplace-api.sshopencloud.eu/api/publications)
+*   datasets: [https://marketplace-api.sshopencloud.eu/api/datasets](https://marketplace-api.sshopencloud.eu/api/datasets)
+*   workflows: [https://marketplace-api.sshopencloud.eu/api/workflows](https://marketplace-api.sshopencloud.eu/api/workflows)
 
 ### Items search
 
 The /api/item-search query is a powerful one and supports a number of parameters to refine the search. Some basic examples of its use are described below.
 
-As a researcher in Digital Humanities interested in network analysis, you want to retrieve all the items in the Marketplace using (in their label or description) a specific term, such as for example “Gephi”.  The API request to use for this example is the following: [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi). 
+As a researcher in Digital Humanities interested in network analysis, you want to retrieve all the items in the Marketplace using (in their label or description) a specific term, such as for example “Gephi”.  The API request to use for this example is the following: [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi).
 And you can try out other terms in the widget below.
 
 <ApiEndpoint title="Item search" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
@@ -59,22 +60,25 @@ And you can try out other terms in the widget below.
   </ApiParamSelect>
 </ApiEndpoint>
 
-More parameters can be added to the query, you can for example choose the item type you want to concentrate on, by adding a category type. So if you only want to search for publications using “Gephi”, you will use the following query:  [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication).
+More parameters can be added to the query, you can for example choose the item type you want to concentrate on, by adding a category type. So if you only want to search for publications using “Gephi”, you will use the following query:  [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi\&categories=publication](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi\&categories=publication).
 
 <ApiEndpoint title="Item search & Item category" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
- <ApiParamTextField label="Search" param="q" placeholder="Search term" />
-  <ApiParamSelect label="Category" param="categories">
-    <Item key={1}>tool-or-service</Item>
-    <Item key={2}>training-material</Item>
-    <Item key={3}>dataset</Item>
-    <Item key={4}>publication</Item>
-    <Item key={5}>workflow</Item>
-  </ApiParamSelect>
-  <ApiParamSelect label="Page" param="page">
-    <Item key={1}>Page 1</Item>
-    <Item key={2}>Page 2</Item>
-    <Item key={3}>Page 3</Item>
-  </ApiParamSelect>
+  <div style={{ display: "grid" }}>
+    <ApiParamTextField label="Search" param="q" placeholder="Search term" />
+
+      <ApiParamSelect label="Category" param="categories">
+        <Item key="tool-or-service">tool-or-service</Item>
+        <Item key="training-material">training-material</Item>
+        <Item key="dataset">dataset</Item>
+        <Item key="publication">publication</Item>
+        <Item key="workflow">workflow</Item>
+      </ApiParamSelect>
+      <ApiParamSelect label="Page" param="page">
+        <Item key={1}>Page 1</Item>
+        <Item key={2}>Page 2</Item>
+        <Item key={3}>Page 3</Item>
+      </ApiParamSelect>
+  </div>
 </ApiEndpoint>
 
 More specific searches can also be undertaken using some of the parameters of this API call. Again, have a look in the corresponding Swagger documentation of the API endpoint to see all possible parameters.
@@ -85,24 +89,24 @@ Some attributes or dynamic properties are also facets - activity, keyword, langu
 
 As a DARIAH officer, you are interested in retrieving all the items tagged as “DARIAH national resource”. This tag is a keyword in the SSH Open Marketplace and the following call will give you the results you’re looking for [https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource) 
 
-Note that it is also possible to mix the “d” and “f” parameters in one query, such as for example: [https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource) 
+Note that it is also possible to mix the “d” and “f” parameters in one query, such as for example: [https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22\&f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22\&f.keyword=DARIAH%20National%20Resource) 
 
 ### Vocabulary & concepts search
 
 As a researcher in Palaeography, you are interested in digital resources and methods associated with your discipline. A standard item search via [https://marketplace-api.sshopencloud.eu/api/item-search?q=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?q=Palaeography) would give you some results, but you want to understand if some items are specifically tagged as Palaegraphic resources. Thanks to the concept search API call allowing the exploration of all the concept used in the [13 controlled vocabularies](/contribute/metadata-guidelines#vocabularies) of the SSH Open Marketplace, you can first understand that “Palaeography” is an existing concept in the discipline vocabulary of the Marketplace: [https://marketplace-api.sshopencloud.eu/api/concept-search?q=Palaeography](https://marketplace-api.sshopencloud.eu/api/concept-search?q=Palaeography) 
 
 <ApiEndpoint title="Concept search among the SSH Open marketplace vocabularies" endpoint={{ key: 'concept-search', pathname: '/api/concept-search' }}>
-   <ApiParamTextField label="Search" param="Search concept" placeholder="q" />
-   <ApiParamSelect label="Page" param="page">
-      <Item key={1}>Page 1</Item>
-      <Item key={2}>Page 2</Item>
-      <Item key={3}>Page 3</Item>
-  </ApiParamSelect>
+     <ApiParamTextField label="Search" param="Search concept" placeholder="q" />
+     <ApiParamSelect label="Page" param="page">
+  <Item key={1}>Page 1</Item>
+  <Item key={2}>Page 2</Item>
+  <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
 </ApiEndpoint>
 
-Using then the advanced item search query [https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography) you understand that no items is tagged yet with the Palaeography discipline concept and you decide to tag your favorite resources - IIIF Universal Viewer; Kraken and Transkribus - with your discipline, following the [“enrich an item” guidelines](/contribute/enrich-an-individual-item).    
+Using then the advanced item search query [https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography) you understand that no items is tagged yet with the Palaeography discipline concept and you decide to tag your favorite resources - IIIF Universal Viewer; Kraken and Transkribus - with your discipline, following the [“enrich an item” guidelines](/contribute/enrich-an-individual-item).
 
-## Advanced API calls - editing the SSH Open Marketplace data 
+## Advanced API calls - editing the SSH Open Marketplace data
 
 This section lists and provides a step-by step explanation for the most useful API calls of the SSH Open Marketplace for authenticated users. Using the POST, PUT, DELETE requests presented below will allow you to make changes to the Marketplace data, using various parameters.
 
@@ -110,11 +114,11 @@ Some of the endpoints presented below are accessible to authenticated contributo
 
 ### API authentication
 
-The API includes some endpoints that are only accessible to logged in users. To use them, you need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to connect to the other endpoint, by passing the Token as a Bearer Authentication. 
+The API includes some endpoints that are only accessible to logged in users. To use them, you need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to connect to the other endpoint, by passing the Token as a Bearer Authentication.
 
 Example:
 
-```
+```bash
 curl -i --request POST 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/auth/sign-in' --header 'Content-Type: application/json' --data-raw '{"username": "SomeUserName","password": "xxxxxxxx"}'
 ```
 
@@ -126,39 +130,39 @@ Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn
 
 And this is then used in the following requests to prove you are authenticated, for example:
 
-```
+```bash
 curl -X DELETE 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/datasets/3752' --header 'Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn'
 ```
 
-Once you are authenticated, you can perform different actions on the data via the API. 
+Once you are authenticated, you can perform different actions on the data via the API.
 
 There are two different ways to authenticate based on the type of user account:
 
-- **Local users**: these are user accounts to perform administrative tasks, e.g. the local administration user or a dedicated local user for ingestion pipelines. Such local users do have a username and a login password. They can use the API endpoint “GET /api/auth/sign-in” as mentioned above. Local users should only be created if AAI is not an option (see API endpoint “POST /api/users”).
-- **AAI users**: most of the contributors will create an account by using the AAI mechanism. Authentication is different, as the marketplace does not have any information about their passwords. The system only has a username from the AAI which gives some clues about the login node, e.g. using the DARIAH AAI results in a username “[alotofnumbersandcharacters@dariah.eu](mailto:alotofnumbersandcharacters@dariah.eu)”. Getting the Bearer Token using this authentication is a bit more complicated. Indeed, first the AAI provider needs to check if the user is the right one and only afterwards the marketplace can give a token to this user. All in all, the three following steps are necessary:
+*   **Local users**: these are user accounts to perform administrative tasks, e.g. the local administration user or a dedicated local user for ingestion pipelines. Such local users do have a username and a login password. They can use the API endpoint “GET /api/auth/sign-in” as mentioned above. Local users should only be created if AAI is not an option (see API endpoint “POST /api/users”).
+*   **AAI users**: most of the contributors will create an account by using the AAI mechanism. Authentication is different, as the marketplace does not have any information about their passwords. The system only has a username from the AAI which gives some clues about the login node, e.g. using the DARIAH AAI results in a username “[alotofnumbersandcharacters@dariah.eu](mailto:alotofnumbersandcharacters@dariah.eu)”. Getting the Bearer Token using this authentication is a bit more complicated. Indeed, first the AAI provider needs to check if the user is the right one and only afterwards the marketplace can give a token to this user. All in all, the three following steps are necessary:
 
-  - Call the API endpoint “GET /oauth2/authorize/eosc” which requires three urls to give as parameters, telling the browser where to redirect. This is necessary as the call to this API endpoint results in a first redirect to the AAI provider login page, which means that the marketplace will be disconnected. After the AAI provider gives clearance, it will redirect back to the marketplace using one of the three urls given in the API call based on the state of the AAI check: success, failure, registration. This also implies that you need to call this in a browser or in an environment that is able to show the AAI login page, e.g. Insomnia has troubles and can’t be used; also curl will not work properly, as you need to interact with the AAI page. It is possible to choose any website for the redirects, but as the success will additionally deliver a personal token from the AAI, it should only point to websites in our control, e.g. [https://marketplace.sshopencloud.eu](https://marketplace.sshopencloud.eu). A call then looks like this: [https://marketplace-api.sshopencloud.eu/oauth2/authorize/eosc?success-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu&failure-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu&registration-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu](https://marketplace-api.sshopencloud.eu/oauth2/authorize/eosc?success-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu&failure-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu&registration-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu) 
-  - If login at the AAI was successful, it will redirect to the success-redirect-url and will additionally add the delivered AAI token into this URL. Taking the example from above, in case of success the browser will redirect to: [https://marketplace.sshopencloud.eu/#MANY-NUMBERS-AND-CHARACTERS=](https://marketplace.sshopencloud.eu/#MANY-NUMBERS-AND-CHARACTERS=) It is now necessary to copy & paste this AAI token (all data between the # and the = characters, e.g. MANY-NUMBERS-AND-CHARACTERS).
-  - With this AAI token it is now possible to get the Marketplace Bearer Token calling “PUT /api/oauth/token” having set the attribute “registration” to “false”, e.g.
+    *   Call the API endpoint “GET /oauth2/authorize/eosc” which requires three urls to give as parameters, telling the browser where to redirect. This is necessary as the call to this API endpoint results in a first redirect to the AAI provider login page, which means that the marketplace will be disconnected. After the AAI provider gives clearance, it will redirect back to the marketplace using one of the three urls given in the API call based on the state of the AAI check: success, failure, registration. This also implies that you need to call this in a browser or in an environment that is able to show the AAI login page, e.g. Insomnia has troubles and can't be used; also curl will not work properly, as you need to interact with the AAI page. It is possible to choose any website for the redirects, but as the success will additionally deliver a personal token from the AAI, it should only point to websites in our control, e.g. [https://marketplace.sshopencloud.eu](https://marketplace.sshopencloud.eu). A call then looks like this: [https://marketplace-api.sshopencloud.eu/oauth2/authorize/eosc?success-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu\&failure-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu\&registration-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu](https://marketplace-api.sshopencloud.eu/oauth2/authorize/eosc?success-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu\&failure-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu\&registration-redirect-url=https%3A%2F%2Fmarketplace.sshopencloud.eu) 
+    *   If login at the AAI was successful, it will redirect to the success-redirect-url and will additionally add the delivered AAI token into this URL. Taking the example from above, in case of success the browser will redirect to: [https://marketplace.sshopencloud.eu/#MANY-NUMBERS-AND-CHARACTERS=](https://marketplace.sshopencloud.eu/#MANY-NUMBERS-AND-CHARACTERS=) It is now necessary to copy & paste this AAI token (all data between the # and the = characters, e.g. MANY-NUMBERS-AND-CHARACTERS).
+    *   With this AAI token it is now possible to get the Marketplace Bearer Token calling “PUT /api/oauth/token” having set the attribute “registration” to “false”, e.g.
 
-```
+```bash
 curl -v -X PUT "https://marketplace-api.sshopencloud.eu/api/oauth/token" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{"token":"MANY-NUMBERS-AND-CHARACTERS","registration":false}"
 ```
 
-  The Bearer Token to use in the Marketplace will be delivered back in the header of the call under the key “Authorization” (using -v in the curl call should give you this information).
-  But be aware, that the AAI token due to security reasons is only valid for 10 minutes. If you get a “no active token for user”-error, it means that you need to apply for a new AAI token, starting again this workflow.
+The Bearer Token to use in the Marketplace will be delivered back in the header of the call under the key “Authorization” (using -v in the curl call should give you this information).
+But be aware, that the AAI token due to security reasons is only valid for 10 minutes. If you get a “no active token for user”-error, it means that you need to apply for a new AAI token, starting again this workflow.
 
 ### Managing items
 
 #### Contributor suggesting a new item.
 
-After proper authentication (see section above), a contributor can suggest a new item using the token. The example below describes the creation of a new tool.  
+After proper authentication (see section above), a contributor can suggest a new item using the token. The example below describes the creation of a new tool.
 
-**API call:** POST api/tools-services
+**API call:** `POST api/tools-services`
 
 This POST api/tools-services needs to be sent with a JSON as input including at least a label and a description. Additional values can also be added based on the following structure:
 
-```
+```json
 {
     "label": "kraken",
     "description": "kraken is a turn-key OCR system optimized for historical and non-Latin script material."
@@ -167,7 +171,7 @@ This POST api/tools-services needs to be sent with a JSON as input including at 
 
 **Result**: New item stored in the database with the status SUGGESTED
 
-```
+```json
 {
     "id": 42054,
     "category": "tool-or-service",
@@ -194,150 +198,156 @@ This POST api/tools-services needs to be sent with a JSON as input including at 
 }
 ```
 
-#### \
+#### \\
 
-Contributor suggesting changes to an existing item. 
+Contributor suggesting changes to an existing item.
 
-After proper authentication (see section above), a contributor can propose changes to an existing item using the token. The example below describes the addition of a new property to an existing training material.  
+After proper authentication (see section above), a contributor can propose changes to an existing item using the token. The example below describes the addition of a new property to an existing training material.
 
-**API call**: PUT api/training-materials/{persistentId} 
+**API call**: `PUT api/training-materials/{persistentId}`
 
-This PUT api/training-materials/{persistentId} needs to be sent with a JSON as input including the result of the corresponding GET api/training-materials/{persistentId} and the changes the contributor wants to suggest. 
+This `PUT api/training-materials/{persistentId}` needs to be sent with a JSON as input including the result of the corresponding `GET api/training-materials/{persistentId}` and the changes the contributor wants to suggest.
 
-Step 1: GET api/training-materials/{persistentId}. In this example, the contributor wishes to edit the CloudCompare - Tutorials Video item (ID: ejzW3x): [https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x](https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x) 
+Step 1: `GET api/training-materials/{persistentId}`. In this example, the contributor wishes to edit the CloudCompare - Tutorials Video item (ID: ejzW3x): [https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x](https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x) 
 
-Step 2: Copy the body of the GET call 
+Step 2: Copy the body of the GET call
 
-Step 3: PUT api/training-materials/ejzW3x . The contributor pastes in the body the result of the GET call and add the changes they want to introduce. In our case, the contributor wishes to add the  “3d” keyword to the CloudCompare training. There are two points to keep in mind here: First of all, the data you send to the API must be a valid JSON. If you change something that you copied from the GET call in the first step, you need to be aware that it must be done in a way that does not break the JSON itself, otherwise the API will return an error message and your PUT request will be ignored. Secondly, there are some expectations of what the data structure must look like, that you provide to the API. A new keyword must be added in a way, how a vocabulary concept is expressed in the SSH Open Marketplace API. Usually, you find an example of the expected syntax in the Swagger documentation of the API endpoint in the section “Request body”. A keyword is a property, therefore it must be added in the “properties” array. As it is connected to a vocabulary, you must also be aware about the way such a property type is expressed.
+Step 3: PUT api/training-materials/ejzW3x . The contributor pastes in the body the result of the GET call and add the changes they want to introduce. In our case, the contributor wishes to add the “3d” keyword to the CloudCompare training. There are two points to keep in mind here: First of all, the data you send to the API must be a valid JSON. If you change something that you copied from the GET call in the first step, you need to be aware that it must be done in a way that does not break the JSON itself, otherwise the API will return an error message and your PUT request will be ignored. Secondly, there are some expectations of what the data structure must look like, that you provide to the API. A new keyword must be added in a way, how a vocabulary concept is expressed in the SSH Open Marketplace API. Usually, you find an example of the expected syntax in the Swagger documentation of the API endpoint in the section “Request body”. A keyword is a property, therefore it must be added in the “properties” array. As it is connected to a vocabulary, you must also be aware about the way such a property type is expressed.
 
-```
-{
-    "id": 40331,
-    "category": "training-material",
-    "label": "CloudCompare - Tutorials Video",
-    "persistentId": "ejzW3x",
-    "lastInfoUpdate": "2022-01-17T14:15:03+0000",
-    "status": "approved",
-    "informationContributor": {
-   	 "id": 65,
-   	 "username": "4ea88b26c3275dbb81ef7ec4f4c5869ce4c0e751268125e9361f0f36e542fb18@dariah.eu",
-   	 "displayName": "Laure Barbot",
-   	 "status": "enabled",
-   	 "registrationDate": "2021-07-28T07:54:55+0000",
-   	 "role": "moderator",
-   	 "config": false
-    },
-    "description": "Video tutorials related to CloudCompare",
-    "contributors": [
-   	 {
-   		 "actor": {
-   			 "id": 1593,
-   			 "name": "Eugene Liscio",
-   			 "externalIds": [],
-   			 "affiliations": []
-   		 },
-   		 "role": {
-   			 "code": "author",
-   			 "label": "Author",
-   			 "ord": 2
-   		 }
-   	 }
-    ],
-    "properties": [
-   	 {
-   		 "type": {
-   			 "code": "language",
-   			 "label": "Language",
-   			 "type": "concept",
-   			 "groupName": "Categorisation",
-   			 "hidden": false,
-   			 "ord": 20,
-   			 "allowedVocabularies": [
-   				 {
-   					 "code": "iso-639-3",
-   					 "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
-   					 "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
-   					 "label": "ISO 639-3 Language Codes",
-   					 "closed": true
-   				 }
-   			 ]
-   		 },
-   		 "concept": {
-   			 "code": "eng",
-   			 "vocabulary": {
-   				 "code": "iso-639-3",
-   				 "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
-   				 "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
-   				 "label": "ISO 639-3 Language Codes",
-   				 "closed": true
-   			 },
-   			 "label": "English",
-   			 "notation": "",
-   			 "uri": "https://vocabs.acdh.oeaw.ac.at/iso6393/eng",
-   			 "candidate": false
-   		 }
-   	 },
-   	   {
-  	"type": {
-    	"code": "keyword",
-    	"label": "Keyword",
-    	"type": "concept",
-    	"groupName": "Categorisation",
-    	"hidden": false,
-    	"ord": 18,
-    	"allowedVocabularies": [
-      	{
+<details>
+  <summary>
+    API Response
+  </summary>
+
+  ```json
+  {
+      "id": 40331,
+      "category": "training-material",
+      "label": "CloudCompare - Tutorials Video",
+      "persistentId": "ejzW3x",
+      "lastInfoUpdate": "2022-01-17T14:15:03+0000",
+      "status": "approved",
+      "informationContributor": {
+     	 "id": 65,
+     	 "username": "4ea88b26c3275dbb81ef7ec4f4c5869ce4c0e751268125e9361f0f36e542fb18@dariah.eu",
+     	 "displayName": "Laure Barbot",
+     	 "status": "enabled",
+     	 "registrationDate": "2021-07-28T07:54:55+0000",
+     	 "role": "moderator",
+     	 "config": false
+      },
+      "description": "Video tutorials related to CloudCompare",
+      "contributors": [
+     	 {
+     		 "actor": {
+     			 "id": 1593,
+     			 "name": "Eugene Liscio",
+     			 "externalIds": [],
+     			 "affiliations": []
+     		 },
+     		 "role": {
+     			 "code": "author",
+     			 "label": "Author",
+     			 "ord": 2
+     		 }
+     	 }
+      ],
+      "properties": [
+     	 {
+     		 "type": {
+     			 "code": "language",
+     			 "label": "Language",
+     			 "type": "concept",
+     			 "groupName": "Categorisation",
+     			 "hidden": false,
+     			 "ord": 20,
+     			 "allowedVocabularies": [
+     				 {
+     					 "code": "iso-639-3",
+     					 "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
+     					 "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
+     					 "label": "ISO 639-3 Language Codes",
+     					 "closed": true
+     				 }
+     			 ]
+     		 },
+     		 "concept": {
+     			 "code": "eng",
+     			 "vocabulary": {
+     				 "code": "iso-639-3",
+     				 "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
+     				 "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
+     				 "label": "ISO 639-3 Language Codes",
+     				 "closed": true
+     			 },
+     			 "label": "English",
+     			 "notation": "",
+     			 "uri": "https://vocabs.acdh.oeaw.ac.at/iso6393/eng",
+     			 "candidate": false
+     		 }
+     	 },
+     	   {
+    	"type": {
+      	"code": "keyword",
+      	"label": "Keyword",
+      	"type": "concept",
+      	"groupName": "Categorisation",
+      	"hidden": false,
+      	"ord": 18,
+      	"allowedVocabularies": [
+        	{
+          	"code": "sshoc-keyword",
+          	"scheme": "https://vocabs.dariah.eu/sshoc-keyword/Schema",
+          	"namespace": "https://vocabs.dariah.eu/sshoc-keyword/",
+          	"label": "Keywords from SSHOC MP",
+          	"closed": false
+        	}
+      	]
+    	},
+    	"concept": {
+      	"code": "3d",
+      	"vocabulary": {
         	"code": "sshoc-keyword",
         	"scheme": "https://vocabs.dariah.eu/sshoc-keyword/Schema",
         	"namespace": "https://vocabs.dariah.eu/sshoc-keyword/",
         	"label": "Keywords from SSHOC MP",
         	"closed": false
-      	}
-    	]
-  	},
-  	"concept": {
-    	"code": "3d",
-    	"vocabulary": {
-      	"code": "sshoc-keyword",
-      	"scheme": "https://vocabs.dariah.eu/sshoc-keyword/Schema",
-      	"namespace": "https://vocabs.dariah.eu/sshoc-keyword/",
-      	"label": "Keywords from SSHOC MP",
-      	"closed": false
-    	},
-    	"label": "3D",
-    	"notation": "",
-    	"uri": "https://vocabs.dariah.eu/sshoc-keyword/3d",
-    	"candidate": false
+      	},
+      	"label": "3D",
+      	"notation": "",
+      	"uri": "https://vocabs.dariah.eu/sshoc-keyword/3d",
+      	"candidate": false
+    	}
   	}
-	}
-    ],
-    "externalIds": [],
-    "accessibleAt": [
-   	 "http://www.danielgm.net/cc/tutorials.html"
-    ],
-    "source": {
-   	 "id": 3,
-   	 "label": "SSK Zotero Resources",
-   	 "url": "https://www.zotero.org/groups/427927/ssk-parthenos",
-   	 "urlTemplate": "https://api.zotero.org/groups/427927/items/{source-item-id}"
-    },
-    "sourceItemId": "JVFDSGD7",
-    "relatedItems": [
-   	 {
-   		 "id": 40330,
-   		 "persistentId": "Ruek2W",
-   		 "category": "tool-or-service",
-   		 "label": "CloudCompare - Documentation",
-   		 "description": "Documentation about CloudCompare",
-   		 "relation": {
-   			 "code": "is-related-to",
-   			 "label": "Is related to",
-   			 "inverseOf": "relates-to"
-   		 }
-   	 }
-    ],
-     "media": []
-}
-```
+      ],
+      "externalIds": [],
+      "accessibleAt": [
+     	 "http://www.danielgm.net/cc/tutorials.html"
+      ],
+      "source": {
+     	 "id": 3,
+     	 "label": "SSK Zotero Resources",
+     	 "url": "https://www.zotero.org/groups/427927/ssk-parthenos",
+     	 "urlTemplate": "https://api.zotero.org/groups/427927/items/{source-item-id}"
+      },
+      "sourceItemId": "JVFDSGD7",
+      "relatedItems": [
+     	 {
+     		 "id": 40330,
+     		 "persistentId": "Ruek2W",
+     		 "category": "tool-or-service",
+     		 "label": "CloudCompare - Documentation",
+     		 "description": "Documentation about CloudCompare",
+     		 "relation": {
+     			 "code": "is-related-to",
+     			 "label": "Is related to",
+     			 "inverseOf": "relates-to"
+     		 }
+     	 }
+      ],
+       "media": []
+  }
+  ```
+</details>
 
 **Result**: New version of an existing item stored in the database with the status SUGGESTED

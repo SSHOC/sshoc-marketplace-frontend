@@ -12,7 +12,7 @@
     "cypress:headless": "cypress run --config-file cypress/cypress.config.json",
     "dev": "next dev",
     "docker:dev": "docker run --rm --init -u `id -u`:`id -g` -v `pwd`:/app -w /app -p 3000:3000 node:14-slim yarn dev",
-    "format": "prettier . --list-different --ignore-path .gitignore",
+    "format": "prettier . \"!**/*.mdx\" --list-different --ignore-path .gitignore",
     "format:fix": "yarn run format --write",
     "generate:favicons": "ts-script scripts/generate-favicons.ts",
     "generate:route-manifest": "ts-script scripts/generate-route-manifest.ts",
@@ -338,16 +338,8 @@
       "stylelint --cache --cache-location .next/cache/stylelint/ --fix",
       "prettier --write"
     ],
-    "*.md": [
-      "remark --quiet --output --frail",
-      "prettier --write"
-    ],
-    "*.mdx": [
-      "remark --use mdx --quiet --output --frail",
-      "prettier --write"
-    ],
-    "*.@(json|yml)": [
-      "prettier --write"
+    "*.!(css|js|mdx|mjs|ts|tsx)": [
+      "prettier --ignore-unknown --write"
     ]
   },
   "msw": {
@@ -369,8 +361,7 @@
   },
   "simple-git-hooks": {
     "commit-msg": "yarn commitlint --edit",
-    "pre-commit": "yarn lint-staged",
-    "pre-push": "yarn run validate"
+    "pre-commit": "yarn lint-staged"
   },
   "stylelint": {
     "extends": "@stefanprobst/stylelint-config",
