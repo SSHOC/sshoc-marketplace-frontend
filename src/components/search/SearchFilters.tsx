@@ -5,6 +5,7 @@ import type { FormEvent, ReactNode } from 'react'
 import { Fragment, useRef } from 'react'
 
 import { getTopFacetValues } from '@/components/common/getTopFacetValues'
+import { ItemCategoryIcon } from '@/components/common/ItemCategoryIcon'
 import { ItemSearchDialog } from '@/components/common/ItemSearchDialog'
 import { Link } from '@/components/common/Link'
 import { SearchFacetsOverlay } from '@/components/common/SearchFacetsOverlay'
@@ -443,7 +444,19 @@ function ItemCategoryFacets(): JSX.Element {
         {items.map(([value, { count }]) => {
           return (
             <FacetValue key={value} value={value}>
-              {t(['common', 'item-categories', value, 'other'])}
+              <span
+                style={{
+                  display: 'grid',
+                  gap: '6px',
+                  gridTemplateColumns: '20px 1fr',
+                  alignItems: 'center',
+                }}
+              >
+                <span aria-hidden style={{ aspectRatio: '1' }}>
+                  <ItemCategoryIcon category={value} />
+                </span>
+                {t(['common', 'item-categories', value, 'other'])}
+              </span>
               <span className={css['secondary']}>{count}</span>
             </FacetValue>
           )

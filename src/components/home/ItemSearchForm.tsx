@@ -1,6 +1,7 @@
 import type { FormEvent, Key } from 'react'
 import { useMemo, useState } from 'react'
 
+import { ItemCategoryIcon } from '@/components/common/ItemCategoryIcon'
 import { ItemSearchTermAutocomplete } from '@/components/common/ItemSearchTermAutocomplete'
 import { useSearchItems } from '@/components/common/useSearchItems'
 import css from '@/components/home/ItemSearchForm.module.css'
@@ -122,7 +123,23 @@ function ItemCategorySelect(props: ItemCategorySelectProps): JSX.Element {
       onSelectionChange={onSelectionChange}
     >
       {(item) => {
-        return <Item>{item.label}</Item>
+        return (
+          <Item textValue={item.label}>
+            <span
+              style={{
+                display: 'grid',
+                gap: '6px',
+                gridTemplateColumns: '20px 1fr',
+                alignItems: 'center',
+              }}
+            >
+              <span aria-hidden style={{ aspectRatio: '1' }}>
+                {item.id !== allItemCategories ? <ItemCategoryIcon category={item.id} /> : null}
+              </span>
+              {item.label}
+            </span>
+          </Item>
+        )
       }}
     </Select>
   )
