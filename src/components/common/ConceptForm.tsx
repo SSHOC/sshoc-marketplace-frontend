@@ -32,9 +32,15 @@ export function ConceptForm(props: ConceptFormProps): JSX.Element {
       initialValues={initialValues}
       name={name}
       onSubmit={onSubmit}
-      validate={validateSchema(
-        conceptInputSchema.merge(z.object({ vocabulary: vocabularyRefSchema })),
-      )}
+      validate={async (values) => {
+        const result = await validateSchema(
+          conceptInputSchema.merge(z.object({ vocabulary: vocabularyRefSchema })),
+        )(
+          // @ts-expect-error Ensure the validation error is put on `vocabulary.code`, not `vocabulary`.
+          { vocabulary: {}, ...values },
+        )
+        return result
+      }}
     >
       <FormSection>
         <FormSelect
