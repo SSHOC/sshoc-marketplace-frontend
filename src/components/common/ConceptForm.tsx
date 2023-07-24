@@ -1,9 +1,11 @@
+import { z } from 'zod'
+
 import { ConceptFormControls } from '@/components/common/ConceptFormControls'
 import { FormSection } from '@/components/common/FormSection'
 import { useConceptFormFields } from '@/components/common/useConceptFormFields'
 import type { PropertyType } from '@/data/sshoc/api/property'
 import type { ConceptInput, Vocabulary } from '@/data/sshoc/api/vocabulary'
-import { conceptInputSchema } from '@/data/sshoc/validation-schemas/vocabulary'
+import { conceptInputSchema, vocabularyRefSchema } from '@/data/sshoc/validation-schemas/vocabulary'
 import { Form } from '@/lib/core/form/Form'
 import { FormSelect } from '@/lib/core/form/FormSelect'
 import { FormTextField } from '@/lib/core/form/FormTextField'
@@ -30,7 +32,9 @@ export function ConceptForm(props: ConceptFormProps): JSX.Element {
       initialValues={initialValues}
       name={name}
       onSubmit={onSubmit}
-      validate={validateSchema(conceptInputSchema)}
+      validate={validateSchema(
+        conceptInputSchema.merge(z.object({ vocabulary: vocabularyRefSchema })),
+      )}
     >
       <FormSection>
         <FormSelect
