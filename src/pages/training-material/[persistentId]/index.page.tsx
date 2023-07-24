@@ -1,4 +1,5 @@
 import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -127,6 +128,14 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
   const { t } = useI18n<'common'>()
   const category = trainingMaterial?.category ?? 'training-material'
   const label = trainingMaterial?.label ?? t(['common', 'item-categories', category, 'one'])
+
+  if (
+    _trainingMaterial.error != null &&
+    _trainingMaterial.error instanceof HttpError &&
+    _trainingMaterial.error.response.status === 404
+  ) {
+    router.push('/404')
+  }
 
   if (router.isFallback || trainingMaterial == null) {
     return (

@@ -28,6 +28,8 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
          */
         // if (query.state.data == null) return
 
+        if (error instanceof HttpError && error.response.status === 404) return
+
         const meta = query.meta as QueryMetadata | undefined
         const customMessage =
           typeof meta?.messages?.error === 'function'

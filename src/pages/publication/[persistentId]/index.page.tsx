@@ -1,4 +1,5 @@
 import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -127,6 +128,14 @@ export default function PublicationPage(props: PublicationPage.Props): JSX.Eleme
   const { t } = useI18n<'common'>()
   const category = publication?.category ?? 'publication'
   const label = publication?.label ?? t(['common', 'item-categories', category, 'one'])
+
+  if (
+    _publication.error != null &&
+    _publication.error instanceof HttpError &&
+    _publication.error.response.status === 404
+  ) {
+    router.push('/404')
+  }
 
   if (router.isFallback || publication == null) {
     return (

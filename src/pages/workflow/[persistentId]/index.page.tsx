@@ -1,4 +1,5 @@
 import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -129,6 +130,14 @@ export default function WorkflowPage(props: WorkflowPage.Props): JSX.Element {
   const { t } = useI18n<'common'>()
   const category = workflow?.category ?? 'workflow'
   const label = workflow?.label ?? t(['common', 'item-categories', category, 'one'])
+
+  if (
+    _workflow.error != null &&
+    _workflow.error instanceof HttpError &&
+    _workflow.error.response.status === 404
+  ) {
+    router.push('/404')
+  }
 
   if (router.isFallback || workflow == null) {
     return (

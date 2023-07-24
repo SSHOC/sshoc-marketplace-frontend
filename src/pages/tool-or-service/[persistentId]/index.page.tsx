@@ -1,4 +1,5 @@
 import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -125,6 +126,14 @@ export default function ToolOrServicePage(props: ToolOrServicePage.Props): JSX.E
   const { t } = useI18n<'common'>()
   const category = toolOrService?.category ?? 'tool-or-service'
   const label = toolOrService?.label ?? t(['common', 'item-categories', category, 'one'])
+
+  if (
+    _toolOrService.error != null &&
+    _toolOrService.error instanceof HttpError &&
+    _toolOrService.error.response.status === 404
+  ) {
+    router.push('/404')
+  }
 
   if (router.isFallback || toolOrService == null) {
     return (
