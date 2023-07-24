@@ -9,6 +9,7 @@ import { useAuth } from '@/lib/core/auth/useAuth'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { routes } from '@/lib/core/navigation/routes'
 import type { Href } from '@/lib/core/navigation/types'
+import { usePathname } from '@/lib/core/navigation/usePathname'
 import { Disclosure } from '@/lib/core/page/Disclosure'
 import css from '@/lib/core/page/MobileNavigationMenu.module.css'
 import { ModalDialog } from '@/lib/core/page/ModalDialog'
@@ -44,6 +45,8 @@ function NavigationMenu(): JSX.Element {
     triggerRef,
   )
   const router = useRouter()
+  const pathname = usePathname()
+  const currentUser = useCurrentUser()
 
   useEffect(() => {
     router.events.on('routeChangeStart', state.close)
@@ -104,6 +107,19 @@ function NavigationMenu(): JSX.Element {
                   <Separator />
                   <ContributeNavLinks />
                   <AboutNavLinks />
+                  <Separator />
+                  <li className={css['nav-item']}>
+                    <NavLink
+                      variant="nav-mobile-menu-link"
+                      href={routes.ContactPage({
+                        email: currentUser.data?.email,
+                        subject: t(['common', 'report-issue']),
+                        message: t(['common', 'report-issue-message'], { values: { pathname } }),
+                      })}
+                    >
+                      {t(['common', 'report-issue'])}
+                    </NavLink>
+                  </li>
                 </ul>
               </nav>
             </div>
