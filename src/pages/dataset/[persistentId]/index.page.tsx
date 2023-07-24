@@ -1,4 +1,5 @@
 import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -127,6 +128,14 @@ export default function DatasetPage(props: DatasetPage.Props): JSX.Element {
   const { t } = useI18n<'common'>()
   const category = dataset?.category ?? 'dataset'
   const label = dataset?.label ?? t(['common', 'item-categories', category, 'one'])
+
+  if (
+    _dataset.error != null &&
+    _dataset.error instanceof HttpError &&
+    _dataset.error.response.status === 404
+  ) {
+    router.push('/404')
+  }
 
   if (router.isFallback || dataset == null) {
     return (
