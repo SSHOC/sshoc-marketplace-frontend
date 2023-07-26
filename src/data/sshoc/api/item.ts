@@ -326,6 +326,11 @@ export type ItemHistoryEntry = Pick<
   | 'version'
 >
 
+export type ContributedItem = Pick<
+  ItemBase,
+  'category' | 'id' | 'label' | 'lastInfoUpdate' | 'persistentId' | 'status'
+>
+
 /**
  * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/127#note_502140
  * @see https://gitlab.gwdg.de/sshoc/sshoc-marketplace-backend/-/issues/152#note_565636
@@ -889,6 +894,25 @@ export function getItemCategories(
   requestOptions?: AllowedRequestOptions,
 ): Promise<GetItemCategories.Response> {
   const url = createUrl({ pathname: '/api/items-categories' })
+  const options: RequestOptions = { ...requestOptions }
+
+  return request(url, options, auth)
+}
+
+export namespace GetContributedItems {
+  export type SearchParams = PaginatedRequest<{
+    order?: 'label' | 'modified-on'
+  }>
+  export type Params = SearchParams
+  export type Response = PaginatedResponse<{ items: Array<ContributedItem> }>
+}
+
+export function getContributedItems(
+  params: GetContributedItems.Params,
+  auth?: AuthData,
+  requestOptions?: AllowedRequestOptions,
+): Promise<GetContributedItems.Response> {
+  const url = createUrl({ pathname: '/api/contributed-items', searchParams: params })
   const options: RequestOptions = { ...requestOptions }
 
   return request(url, options, auth)

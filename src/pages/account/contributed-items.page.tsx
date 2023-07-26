@@ -2,10 +2,9 @@ import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
-import { AccountScreenWithFiltersLayout } from '@/components/account/AccountScreenWithFiltersLayout'
+import { AccountScreenWithoutFiltersLayout } from '@/components/account/AccountScreenWithoutFiltersLayout'
 import { BackgroundImage } from '@/components/account/BackgroundImage'
 import { ContributedItemsBackgroundFetchIndicator } from '@/components/account/ContributedItemsBackgroundFetchIndicator'
-import { ContributedItemSearchFilters } from '@/components/account/ContributedItemSearchFilters'
 import { ContributedItemSearchResults } from '@/components/account/ContributedItemSearchResults'
 import { ContributedItemSearchResultsFooter } from '@/components/account/ContributedItemSearchResultsFooter'
 import { ContributedItemSearchResultsHeader } from '@/components/account/ContributedItemSearchResultsHeader'
@@ -66,7 +65,7 @@ export default function ContributedItemsPage(_props: ContributedItemsPage.Props)
     <Fragment>
       <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
       <PageMainContent>
-        <AccountScreenWithFiltersLayout>
+        <AccountScreenWithoutFiltersLayout>
           <BackgroundImage />
           <ScreenHeader>
             <Breadcrumbs links={breadcrumbs} />
@@ -78,12 +77,11 @@ export default function ContributedItemsPage(_props: ContributedItemsPage.Props)
               <ContributedItemsBackgroundFetchIndicator />
             </SpacedRow>
           </ScreenHeader>
-          <ContributedItemSearchFilters />
           <ContributedItemSearchResultsHeader />
           <ContributedItemSearchResults />
           <ContributedItemSearchResultsFooter />
           <FundingNotice />
-        </AccountScreenWithFiltersLayout>
+        </AccountScreenWithoutFiltersLayout>
       </PageMainContent>
     </Fragment>
   )

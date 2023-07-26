@@ -11,12 +11,12 @@ import { SearchResultControls } from '@/components/common/SearchResultControls'
 import { SearchResultMeta } from '@/components/common/SearchResultMeta'
 import { SearchResultTitle } from '@/components/common/SearchResultTitle'
 import { Timestamp } from '@/components/common/Timestamp'
-import type { ItemCategory, ItemSearch } from '@/data/sshoc/api/item'
+import type { ContributedItem } from '@/data/sshoc/api/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 
 export interface ContributedItemSearchResultProps {
-  item: ItemSearch.Response['items'][number] & { category: ItemCategory }
+  item: ContributedItem
 }
 
 export function ContributedItemSearchResult(props: ContributedItemSearchResultProps): JSX.Element {

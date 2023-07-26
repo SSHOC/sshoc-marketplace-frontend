@@ -11,7 +11,7 @@ import { contributedItemsSortOrder } from '~/config/sshoc.config'
 export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
   const { t } = useI18n<'common'>()
   const searchFilters = useContributedItemsSearchFilters()
-  const sortOrder = searchFilters.order[0]
+  const sortOrder = searchFilters.order
   const { searchContributedItems } = useContributedItemsSearch()
 
   const items = contributedItemsSortOrder.map((id) => {
@@ -24,7 +24,7 @@ export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
   })
 
   function onChange(key: Key) {
-    const searchParams = { ...searchFilters, order: [key as ContributedItemSortOrder] }
+    const searchParams = { ...searchFilters, order: key as ContributedItemSortOrder }
     searchContributedItems(searchParams)
   }
 
