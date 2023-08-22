@@ -11,6 +11,7 @@ import type {
   DeleteItemRelation,
   DeleteItemRelationKind,
   DeleteItemSource,
+  GetContributedItems,
   GetDraftItems,
   GetItemCategories,
   GetItemComments,
@@ -37,6 +38,7 @@ import {
   deleteItemRelation,
   deleteItemRelationKind,
   deleteItemSource,
+  getContributedItems,
   getDraftItems,
   getItemCategories,
   getItemComments,
@@ -72,6 +74,7 @@ const comments = 'comments'
 const lastComments = 'lastComments'
 const source = 'source'
 const sources = 'sources'
+const contributedItems = 'contributedItems'
 
 export const keys = {
   all(auth?: AuthData | undefined) {
@@ -142,6 +145,9 @@ export const keys = {
   },
   source(params: GetItemSource.Params, auth?: AuthData | undefined) {
     return [items, source, params, auth ?? null] as const
+  },
+  contributedItems(params: GetContributedItems.Params, auth?: AuthData | undefined) {
+    return [contributedItems, params, auth ?? null] as const
   },
 }
 
@@ -755,5 +761,25 @@ export function useDeleteItemSource(
         options?.onSuccess?.(source, ...args)
       },
     },
+  )
+}
+
+export function useContributedItems<TData = GetContributedItems.Response>(
+  params: GetContributedItems.Params,
+  auth?: AuthData | undefined,
+  options?: UseQueryOptions<
+    GetContributedItems.Response,
+    Error,
+    TData,
+    ReturnType<typeof keys.contributedItems>
+  >,
+) {
+  const session = useSession(auth)
+  return useQuery(
+    keys.contributedItems(params, auth),
+    ({ signal }) => {
+      return getContributedItems(params, session, { signal })
+    },
+    options,
   )
 }

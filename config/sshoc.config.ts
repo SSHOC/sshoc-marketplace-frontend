@@ -17,7 +17,7 @@ export const maxPreviewMetadataValues = 5
 export const defaultItemSearchResultsSortOrder: ItemSortOrder = 'score'
 
 export function isContributedItemSortOrder(order: string): order is ContributedItemSortOrder {
-  return itemSortOrders.includes(order as ContributedItemSortOrder)
+  return contributedItemsSortOrder.includes(order as ContributedItemSortOrder)
 }
 
 function isAllowedContributedItemSortOrder(
