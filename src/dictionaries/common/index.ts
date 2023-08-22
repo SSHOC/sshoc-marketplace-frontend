@@ -72,6 +72,7 @@ export interface Dictionary {
     'sign-in': string
     'sign-up': string
     success: string
+    'terms-of-use': string
     /** Duplicated in `authenticated` dictionary. */
     account: string
   }

@@ -79,6 +79,7 @@ export const dictionary: Dictionary = {
     'sign-in': 'Sign in',
     'sign-up': 'Sign up',
     success: 'Success',
+    'terms-of-use': 'Terms of use',
     account: 'My account',
   },
   facets: {
