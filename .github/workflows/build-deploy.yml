@@ -34,19 +34,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
+      - name: Extract metadata (tags, labels) for Docker (production)
+        id: meta-production
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=main
 
       - name: Build and push Docker image (production)
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-production.outputs.tags }}
+          labels: ${{ steps.meta-production.outputs.labels }}
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://marketplace.sshopencloud.eu
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://marketplace-api.sshopencloud.eu
@@ -70,13 +72,21 @@ jobs:
           project: c-m-6hwgqq2g:p-jv25s
           deployment: sshoc-marketplace-frontend:sshoc-mp-frontend
 
+      - name: Extract metadata (tags, labels) for Docker (stage)
+        id: meta-stage
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=stage
+
       - name: Build and push Docker image (stage)
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:stage
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-stage.outputs.tags }}
+          labels: ${{ steps.meta-stage.outputs.labels }}
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
@@ -99,13 +109,21 @@ jobs:
           project: c-m-6hwgqq2g:p-jv25s
           deployment: sshoc-marketplace-frontend:sshoc-mp-frontendstg
 
+      - name: Extract metadata (tags, labels) for Docker (dev)
+        id: meta-dev
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=dev
+
       - name: Build and push Docker image (dev)
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-dev.outputs.tags }}
+          labels: ${{ steps.meta-dev.outputs.labels }}
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
