@@ -40,7 +40,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (production)
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -63,9 +63,67 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy to cluster
+      - name: Deploy to cluster (production)
         uses: acdh-oeaw/deploy-action@v1
         with:
           token: ${{ secrets.RANCHER_API_TOKEN }}
           project: c-m-6hwgqq2g:p-jv25s
           deployment: sshoc-marketplace-frontend:sshoc-mp-frontend
+
+      - name: Build and push Docker image (stage)
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_MOCK_API=disabled
+            NEXT_PUBLIC_BOTS=disabled
+            NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
+            NEXT_PUBLIC_MATOMO_APP_ID=198
+            NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
+            NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
+            NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
+          secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to cluster (stage)
+        uses: acdh-oeaw/deploy-action@v1
+        with:
+          token: ${{ secrets.RANCHER_API_TOKEN }}
+          project: c-m-6hwgqq2g:p-jv25s
+          deployment: sshoc-marketplace-frontend:sshoc-mp-frontendstg
+
+      - name: Build and push Docker image (dev)
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_MOCK_API=disabled
+            NEXT_PUBLIC_BOTS=disabled
+            NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
+            NEXT_PUBLIC_MATOMO_APP_ID=190
+            NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
+            NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
+            NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
+          secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to cluster (dev)
+        uses: acdh-oeaw/deploy-action@v1
+        with:
+          token: ${{ secrets.RANCHER_API_TOKEN }}
+          project: c-m-6hwgqq2g:p-jv25s
+          deployment: sshoc-marketplace-frontend:sshoc-mp-frontenddev
