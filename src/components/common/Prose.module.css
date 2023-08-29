@@ -59,7 +59,7 @@
     border-left-width: var(--size-0-5);
   }
 
-  & :is(h1, h2, h3, h4) {
+  & :is(h1, h2, h3, h4, h5) {
     color: var(--color-heading);
     font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-tight);
@@ -86,6 +86,15 @@
   & h4,
   & [data-rank='4'] {
     margin-block: var(--space-6) var(--space-2);
+    font-size: var(--font-size-4);
+  }
+
+  & h5,
+  & [data-rank='5'] {
+    margin-block: var(--space-6) var(--space-2);
+    font-weight: var(--font-weight-medium);
+    font-style: italic;
+    font-size: var(--font-size-4);
   }
 
   & :is(img, figure, audio, video, svg) {
@@ -145,7 +154,7 @@
     border-top-width: 1px;
   }
 
-  & :is(hr, h2, h3, h4) + * {
+  & :is(hr, h2, h3, h4, h5) + * {
     margin-block-start: 0;
   }
 
