@@ -11,6 +11,10 @@
 
   &[data-validation-state='invalid'] {
     color: var(--color-negative-600);
+
+    & [data-help-text] {
+      color: var(--color-neutral-600);
+    }
   }
 
   &[data-disabled] {
