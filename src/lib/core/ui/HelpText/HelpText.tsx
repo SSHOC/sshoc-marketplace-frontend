@@ -38,10 +38,17 @@ export const HelpText = forwardRef(function HelpText(
       {isErrorMessage ? (
         <Fragment>
           {showErrorIcon === true ? <Icon icon={AlertIcon} /> : null}
-          <div {...errorMessageProps}>{errorMessage}</div>
+          <div {...errorMessageProps} data-error-message>
+            {errorMessage}
+          </div>
+          <div {...descriptionProps} data-help-text>
+            {description}
+          </div>
         </Fragment>
       ) : (
-        <div {...descriptionProps}>{description}</div>
+        <div {...descriptionProps} data-help-text>
+          {description}
+        </div>
       )}
     </div>
   )
