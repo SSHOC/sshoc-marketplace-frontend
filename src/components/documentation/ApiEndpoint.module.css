@@ -14,6 +14,7 @@
 
 .controls {
   display: flex;
+  gap: 32px;
   align-items: center;
   justify-content: space-between;
   min-height: var(--size-12);
@@ -29,8 +30,13 @@
 
 .controls-left {
   display: flex;
+  flex: 1;
   gap: var(--space-4);
   align-items: center;
+
+  & > * {
+    width: 100%;
+  }
 }
 
 .controls-right {
@@ -40,17 +46,44 @@
 }
 
 .url {
-  padding-block: var(--space-3);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-block: var(--space-2);
   padding-inline: var(--space-4);
   border-top: 1px solid var(--color-neutral-200);
   background-color: var(--color-neutral-50);
 
   & > pre {
+    flex: 1;
     margin: 0;
-    padding: 0;
+    padding: 8px 0;
     background-color: transparent;
     color: inherit;
     font-size: var(--font-size-3-5);
+  }
+
+  & > button {
+    display: grid;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: 4px;
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+    transition: background-color ease 150ms;
+    place-items: center;
+
+    &:hover {
+      background-color: var(--color-neutral-200);
+    }
+
+    & svg {
+      /** Unset prose styles, so they don't affect select chevron icon. */
+      margin: 0;
+    }
   }
 }
 

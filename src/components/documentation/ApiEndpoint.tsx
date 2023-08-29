@@ -2,13 +2,16 @@ import { assert } from '@stefanprobst/assert'
 import type { RequestOptions } from '@stefanprobst/request'
 import { createUrl, request } from '@stefanprobst/request'
 import type { FormEvent, ReactNode } from 'react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 
 import { Prose } from '@/components/common/Prose'
 import css from '@/components/documentation/ApiEndpoint.module.css'
 import { ApiParamsProvider } from '@/components/documentation/ApiParamsContext'
 import { Button } from '@/lib/core/ui/Button/Button'
+import { Icon } from '@/lib/core/ui/Icon/Icon'
+import CheckMarkIcon from '@/lib/core/ui/icons/checkmark.svg?symbol-icon'
+import ClipboardIcon from '@/lib/core/ui/icons/clipboard.svg?symbol-icon'
 import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
 import { baseUrl } from '~/config/sshoc.config'
 
@@ -50,6 +53,30 @@ export function ApiEndpoint(props: ApiEndpointProps): JSX.Element {
     event.preventDefault()
   }
 
+  const [isCopiedToClipboard, setCopiedToClipboard] = useState(false)
+
+  function onCopy() {
+    navigator.clipboard.writeText(String(url))
+    setCopiedToClipboard(true)
+  }
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    if (isCopiedToClipboard === true) {
+      timer = setTimeout(() => {
+        setCopiedToClipboard(false)
+        timer = null
+      }, 2000)
+    }
+
+    return () => {
+      if (timer != null) {
+        clearTimeout(timer)
+      }
+    }
+  }, [isCopiedToClipboard])
+
   return (
     <aside className={css['container']}>
       <strong className={css['title']}>{title}</strong>
@@ -66,6 +93,16 @@ export function ApiEndpoint(props: ApiEndpointProps): JSX.Element {
       </form>
       <div className={css['url']}>
         <pre>{String(url)}</pre>
+        <button
+          aria-label="Copy to clipboard"
+          onClick={onCopy}
+          title={isCopiedToClipboard ? 'Copied' : 'Copy to clipboard'}
+        >
+          {isCopiedToClipboard
+           ? <Icon icon={CheckMarkIcon} />
+           : <Icon icon={ClipboardIcon} />
+          }
+        </button>
       </div>
       <div className={css['result']}>
         {result.data != null ? (
