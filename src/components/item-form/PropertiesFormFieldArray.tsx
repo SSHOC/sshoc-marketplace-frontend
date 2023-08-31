@@ -57,7 +57,7 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 
   return (
     <FormFieldArray>
-      <FormFieldList>
+      <FormFieldList key={fieldArray.fields.length}>
         {fieldArray.fields.map((name, index) => {
           function onRemove() {
             fieldArray.fields.remove(index)

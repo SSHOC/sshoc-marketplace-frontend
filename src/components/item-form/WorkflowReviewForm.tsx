@@ -218,7 +218,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
   return (
     <FormFieldArray>
       <WorkflowTitle />
-      <FormFieldList>
+      <FormFieldList key={fieldArray.fields.length}>
         {fieldArray.fields.map((name, index) => {
           function onEdit() {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

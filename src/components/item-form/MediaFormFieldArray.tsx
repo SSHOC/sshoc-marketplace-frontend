@@ -64,7 +64,7 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): JSX.Elemen
 
   return (
     <FormFieldArray>
-      <FormFieldList variant="thumbnails">
+      <FormFieldList variant="thumbnails" key={fieldArray.fields.length}>
         {fieldArray.fields.map((name, index) => {
           function onRemove() {
             fieldArray.fields.remove(index)
