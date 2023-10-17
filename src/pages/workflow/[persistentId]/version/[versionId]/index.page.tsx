@@ -28,9 +28,10 @@ import { ItemProperties } from '@/components/item/ItemProperties'
 import { ItemRelatedItems } from '@/components/item/ItemRelatedItems'
 import { ItemSource } from '@/components/item/ItemSource'
 import { ItemTitle } from '@/components/item/ItemTitle'
-import { ItemVersionScreenLayout } from '@/components/item/ItemVersionScreenLayout'
 import { WorkflowContentContributors } from '@/components/item/WorkflowContentContributors'
+import { WorkflowStepsList } from '@/components/item/WorkflowStepsList'
 import { WorkflowVersionControls } from '@/components/item/WorkflowVersionControls'
+import { WorkflowVersionScreenLayout } from '@/components/item/WorkflowVersionScreenLayout'
 import type { Workflow } from '@/data/sshoc/api/workflow'
 import { useWorkflow, useWorkflowVersion } from '@/data/sshoc/hooks/workflow'
 import type { PageComponent } from '@/lib/core/app/types'
@@ -152,7 +153,7 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
         twitter={{}}
       />
       <PageMainContent>
-        <ItemVersionScreenLayout>
+        <WorkflowVersionScreenLayout>
           <BackgroundImage />
           <Alert color="notice">
             {t(['authenticated', 'item-status-alert'], {
@@ -198,8 +199,9 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
             <ItemMedia media={workflow.media} />
             <ItemRelatedItems items={workflow.relatedItems} />
           </ItemDetails>
+          <WorkflowStepsList steps={workflow.composedOf} />
           <FundingNotice />
-        </ItemVersionScreenLayout>
+        </WorkflowVersionScreenLayout>
       </PageMainContent>
     </Fragment>
   )
