@@ -1,5 +1,6 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
-import { useForm } from 'react-final-form'
+import { Fragment } from 'react'
+import { Field, FormSpy, useForm } from 'react-final-form'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { FormControls } from '@/components/common/FormControls'
@@ -111,30 +112,122 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
       onSubmit={onSubmitPage}
       validate={validate}
     >
-      <ReviewFormMetadata diff={diff}>
-        <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
-        {page.type === 'workflow' ? (
-          <WorkflowFormSections onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
-        ) : null}
-        {page.type === 'steps' ? (
-          <FormSections>
-            <WorkflowStepsFormSection setPage={setPage} />
+      <WorkflowFormNavigation onBeforeSubmit={onBeforeSubmit} page={page} setPage={setPage} />
+      {page.type === 'workflow' ? (
+        <WorkflowFormSections diff={diff} onBeforeSubmit={onBeforeSubmit} onCancel={onCancel} />
+      ) : null}
+      {page.type === 'steps' ? (
+        <FormSections>
+          <WorkflowStepsFormSection setPage={setPage} />
 
-            <ItemReviewFormControls<WorkflowFormValues>
-              onBeforeSubmit={onBeforeSubmit}
-              onReject={onReject}
-              onCancel={onCancel}
-            />
-          </FormSections>
-        ) : null}
-        {page.type === 'step' ? (
-          <WorkflowStepFormSections
-            index={page.index}
+          <ItemReviewFormControls<WorkflowFormValues>
             onBeforeSubmit={onBeforeSubmit}
-            onCancel={onCancelStep}
+            onReject={onReject}
+            onCancel={onCancel}
           />
-        ) : null}
-      </ReviewFormMetadata>
+        </FormSections>
+      ) : null}
+      {page.type === 'step' ? (
+        <WorkflowStepFormSections
+          diff={diff}
+          index={page.index}
+          onBeforeSubmit={onBeforeSubmit}
+          onCancel={onCancelStep}
+        />
+      ) : null}
+
+      {/*
+       * This is a hack to avoid unregistering fields, so the diff data attached to fields is not
+       * destroyed. Normally, `final-form` will automatically unregister form fields when they
+       * leave the dom, and also clear any form field state. Since we attach the diff data to
+       * form fields we need to keep it even when we switch screens in the multi-step form.
+       * By keeping subscriptions alive in `FormSpy`, we avoid fields being unregistered.
+       * An alternative approach would probably require not attaching diff data to the fields,
+       * but managing it separately.
+       *
+       * @see https://github.com/final-form/react-final-form/issues/803
+       * @see https://github.com/final-form/react-final-form/issues/639
+       */}
+      <FormSpy subscription={{ values: true }}>
+        {({ values }) => {
+          return (
+            <>
+              {/* eslint-disable arrow-body-style */}
+              <Field name="label" render={() => null} subscription={{}} />
+              <Field name="description" render={() => null} subscription={{}} />
+              <Field name="version" render={() => null} subscription={{}} />
+              <Field name="dateCreated" render={() => null} subscription={{}} />
+              <Field name="dateLastUpdated" render={() => null} subscription={{}} />
+              <Field name="accessibleAt" render={() => null} subscription={{}} />
+              <Field name="externalIds" render={() => null} subscription={{}} />
+              <Field name="contributors" render={() => null} subscription={{}} />
+              <Field name="properties" render={() => null} subscription={{}} />
+              <Field name="media" render={() => null} subscription={{}} />
+              <Field name="relatedItems" render={() => null} subscription={{}} />
+              <Field name="thumbnail" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['composedOf']?.map((_step: unknown, index: number) => {
+                  return (
+                    <Fragment key={index}>
+                      <Field
+                        name={`composedOf[${index}].label`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].description`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].version`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].accessibleAt`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].externalIds`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].contributors`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].properties`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].media`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].relatedItems`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                      <Field
+                        name={`composedOf[${index}].thumbnail`}
+                        render={() => null}
+                        subscription={{}}
+                      />
+                    </Fragment>
+                  )
+                })}
+              </Fragment>
+              {/* eslint-enable arrow-body-style */}
+            </>
+          )
+        }}
+      </FormSpy>
     </Form>
   )
 }
@@ -142,10 +235,11 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
 interface WorkflowFormSectionsProps {
   onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
   onCancel: () => void
+  diff: any
 }
 
 function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
-  const { onCancel } = props
+  const { diff, onCancel } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const form = useForm<WorkflowFormValues>()
@@ -165,26 +259,28 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
   }
 
   return (
-    <FormSections>
-      <MainReviewFormSection formFields={formFields} />
-      <DateReviewFormSection formFields={formFields} />
-      <ActorReviewFormSection formFields={formFields} />
-      <PropertyReviewFormSection formFields={formFields} />
-      <MediaReviewFormSection formFields={formFields} />
-      <ThumbnailReviewFormSection formFields={formFields} />
-      <RelatedReviewItemFormSection formFields={formFields} />
+    <ReviewFormMetadata diff={diff}>
+      <FormSections>
+        <MainReviewFormSection formFields={formFields} />
+        <DateReviewFormSection formFields={formFields} />
+        <ActorReviewFormSection formFields={formFields} />
+        <PropertyReviewFormSection formFields={formFields} />
+        <MediaReviewFormSection formFields={formFields} />
+        <ThumbnailReviewFormSection formFields={formFields} />
+        <RelatedReviewItemFormSection formFields={formFields} />
 
-      <OtherSuggestedItemVersionsFormSection />
+        <OtherSuggestedItemVersionsFormSection />
 
-      <FormControls>
-        <FormButtonLink onPress={onCancel}>
-          {t(['authenticated', 'controls', 'cancel'])}
-        </FormButtonLink>
-        <FormButton onPress={onBeforeSubmit} type="submit">
-          {t(['authenticated', 'controls', 'next'])}
-        </FormButton>
-      </FormControls>
-    </FormSections>
+        <FormControls>
+          <FormButtonLink onPress={onCancel}>
+            {t(['authenticated', 'controls', 'cancel'])}
+          </FormButtonLink>
+          <FormButton onPress={onBeforeSubmit} type="submit">
+            {t(['authenticated', 'controls', 'next'])}
+          </FormButton>
+        </FormControls>
+      </FormSections>
+    </ReviewFormMetadata>
   )
 }
 
@@ -280,10 +376,11 @@ interface WorkflowStepFormSectionsProps {
   index: number
   onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
   onCancel: () => void
+  diff: any
 }
 
 function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Element {
-  const { index, onCancel } = props
+  const { diff: _diff, index, onCancel } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const form = useForm<WorkflowFormValues>()
@@ -294,21 +391,29 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
     props.onBeforeSubmit?.(form)
   }
 
-  return (
-    <FormSections>
-      <MainReviewFormSection formFields={formFields} />
-      <PropertyReviewFormSection formFields={formFields} />
-      <MediaReviewFormSection formFields={formFields} />
-      <RelatedReviewItemFormSection formFields={formFields} />
+  const diff = {
+    equal: _diff.equal,
+    item: _diff.item.composedOf[index] ?? {},
+    other: _diff.other.composedOf[index] ?? {},
+  }
 
-      <FormControls>
-        <FormButtonLink onPress={onCancel}>
-          {t(['authenticated', 'controls', 'cancel'])}
-        </FormButtonLink>
-        <FormButton onPress={onBeforeSubmit} type="submit">
-          {t(['authenticated', 'controls', 'save'])}
-        </FormButton>
-      </FormControls>
-    </FormSections>
+  return (
+    <ReviewFormMetadata diff={diff} prefix={name}>
+      <FormSections>
+        <MainReviewFormSection formFields={formFields} />
+        <PropertyReviewFormSection formFields={formFields} />
+        <MediaReviewFormSection formFields={formFields} />
+        <RelatedReviewItemFormSection formFields={formFields} />
+
+        <FormControls>
+          <FormButtonLink onPress={onCancel}>
+            {t(['authenticated', 'controls', 'cancel'])}
+          </FormButtonLink>
+          <FormButton onPress={onBeforeSubmit} type="submit">
+            {t(['authenticated', 'controls', 'save'])}
+          </FormButton>
+        </FormControls>
+      </FormSections>
+    </ReviewFormMetadata>
   )
 }
