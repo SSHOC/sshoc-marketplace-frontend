@@ -9,6 +9,7 @@ export function PageFooter(): JSX.Element {
   const links = [
     { label: t(['common', 'pages', 'about']), href: routes.AboutPage({ id: 'service' }) },
     { label: t(['common', 'pages', 'privacy-policy']), href: routes.PrivacyPolicyPage() },
+    { label: t(['common', 'pages', 'imprint']), href: routes.ImprintPage() },
     { label: t(['common', 'pages', 'terms-of-use']), href: routes.TermsOfUsePage() },
     { label: t(['common', 'pages', 'contact']), href: routes.ContactPage() },
   ]

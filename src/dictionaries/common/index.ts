@@ -66,6 +66,7 @@ export interface Dictionary {
     about: string
     contribute: string
     'privacy-policy': string
+    imprint: string
     contact: string
     'page-not-found': string
     'internal-server-error': string
