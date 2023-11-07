@@ -8,6 +8,7 @@ import type {
 } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
 import { ScreenHeader } from '@/components/common/ScreenHeader'
@@ -172,6 +173,7 @@ export default function EditTrainingMaterialPage(
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <ItemForm<UpdateTrainingMaterialFormValues>
               formFields={formFields}
               name="update-item"

@@ -8,6 +8,7 @@ import type {
 } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
 import { ScreenHeader } from '@/components/common/ScreenHeader'
@@ -180,6 +181,7 @@ export default function EditWorkflowPage(props: EditWorkflowPage.Props): JSX.Ele
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <WorkflowForm<UpdateWorkflowFormValues>
               formFields={formFields}
               initialValues={workflow}

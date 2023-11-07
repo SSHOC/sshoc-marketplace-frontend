@@ -8,6 +8,7 @@ import type {
 } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
+import { FormHelpText } from '@/components/item-form/FormHelpText'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
 import { ScreenHeader } from '@/components/common/ScreenHeader'
@@ -168,6 +169,7 @@ export default function EditToolOrServicePage(props: EditToolOrServicePage.Props
             <ScreenTitle>{title}</ScreenTitle>
           </ScreenHeader>
           <Content>
+            <FormHelpText />
             <ItemForm<UpdateToolOrServiceFormValues>
               formFields={formFields}
               name="update-item"
