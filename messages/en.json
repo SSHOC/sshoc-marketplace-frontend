@@ -1,0 +1,73 @@
+{
+	"AppFooter": {
+		"links": {
+			"about": "About",
+			"contact": "Contact",
+			"imprint": "Imprint",
+			"privacy-policy": "Privacy policy",
+			"terms-of-use": "Terms of use"
+		},
+		"navigation-secondary": "Secondary"
+	},
+	"AppHeader": {
+		"links": {
+			"about": "About",
+			"browse": "Browse",
+			"contribute": "Contribute",
+			"home": "Home",
+			"search-tools-and-services": "Tools and services",
+			"search-training-materials": "Training materials",
+			"search-publications": "Publications",
+			"search-datasets": "Datasets",
+			"search-workflows": "workflows"
+		},
+		"navigation-primary": "Primary"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Change color scheme",
+		"color-schemes": {
+			"dark": "Dark",
+			"light": "Light",
+			"system": "System"
+		}
+	},
+	"Error": {
+		"something-went-wrong": "Something went wrong!",
+		"try-again": "Try again"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"Loading": {
+		"loading": "Loading"
+	},
+	"LocaleLayout": {
+		"meta": {
+			"title": "Social Sciences & Humanities Open Marketplace",
+			"description": "Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.",
+			"twitter": {
+				"creator": "@sshopencloud",
+				"site": "@sshopencloud"
+			}
+		},
+		"skip-to-main-content": "Skip to main content"
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Current language: {locale}",
+		"switch-locale": "Switch to {locale}"
+	},
+	"Manifest": {
+		"name": "Social Sciences & Humanities Open Marketplace",
+		"short-name": "SSHOC Marketplace",
+		"description": "Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	}
+}

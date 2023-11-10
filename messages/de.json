@@ -1,0 +1,79 @@
+{
+	"AppFooter": {
+		"links": {
+			"about": "Über das Projekt",
+			"contact": "Kontakt",
+			"imprint": "Impressum",
+			"privacy-policy": "Datenschutzerklärung",
+			"terms-of-use": "Benutzungsbedingungen"
+		},
+		"navigation-secondary": "Sekundär"
+	},
+	"AppHeader": {
+		"links": {
+			"about": "Über das Projekt",
+			"browse": "Blättern",
+			"contribute": "Beitragen",
+			"home": "Startseite",
+			"search-tools-and-services": "Tools und services",
+			"search-training-materials": "Trainingsmaterialien",
+			"search-publications": "Publikationen",
+			"search-datasets": "Datensätze",
+			"search-workflows": "workflows"
+		},
+		"navigation-primary": "Primär"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Farbschema ändern",
+		"color-schemes": {
+			"dark": "Dunkel",
+			"light": "Hell",
+			"system": "System"
+		}
+	},
+	"ContactPage": {
+		"meta": {
+			"title": "Kontakt"
+		},
+		"title": "Kontakt"
+	},
+	"Error": {
+		"something-went-wrong": "Etwas ist schief gelaufen!",
+		"try-again": "Erneut versuchen"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Impressum"
+		},
+		"title": "Impressum"
+	},
+	"Loading": {
+		"loading": "Laden"
+	},
+	"LocaleLayout": {
+		"meta": {
+			"title": "Social Sciences & Humanities Open Marketplace",
+			"description": "Neue sozial- und geisteswissenschaftliche Ressourcen entdecken: Werkzeuge, Dienste, Trainingsmaterialien und Daten, kontextualisiert.",
+			"twitter": {
+				"creator": "@sshopencloud",
+				"site": "@sshopencloud"
+			}
+		},
+		"skip-to-main-content": "Zum Hauptinhalt springen"
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Aktuelle Sprache: {locale}",
+		"switch-locale": "Zu {locale} wechseln"
+	},
+	"Manifest": {
+		"name": "Social Sciences & Humanities Open Marketplace",
+		"short-name": "SSHOC Marketplace",
+		"description": "Neue sozial- und geisteswissenschaftliche Ressourcen entdecken: Werkzeuge, Dienste, Trainingsmaterialien und Daten, kontextualisiert."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Seite nicht gefunden"
+		},
+		"title": "Seite nicht gefunden"
+	}
+}
