@@ -1,5 +1,6 @@
 .text {
-  display: inline-flex;
+  display: flex;
+  flex-shrink: 0;
   gap: var(--space-1-5);
   color: var(--color-neutral-600);
 }

@@ -1,5 +1,5 @@
 .text {
-  display: inline-flex;
+  display: flex;
   gap: var(--space-1-5);
   color: var(--color-text);
 }
@@ -14,4 +14,10 @@
 
 .text[data-size='md'] {
   font-size: var(--font-size-3-75);
+}
+
+.text span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
