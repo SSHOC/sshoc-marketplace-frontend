@@ -86,6 +86,10 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
               <MetadataLabel>{t(['common', 'item', 'status'])}:</MetadataLabel>
               <span>{t(['common', 'item-status', item.status])}</span>
             </MetadataValue>
+            <MetadataValue>
+              <MetadataLabel>{t(['common', 'item', 'content-contributors', 'one'])}:</MetadataLabel>
+              <span>{item.owner}</span>
+            </MetadataValue>
           </MetadataValues>
         </SearchResultContent>
         <SearchResultControls>
