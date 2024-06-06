@@ -76,21 +76,29 @@ export function useItemDiffFormInitialValues<T extends Item>(
 
     add(diff.item, initialValues)
     diff.item.composedOf?.forEach((step, index) => {
+      // TODO: needs clarification how to deal with re-ordered, inserted, and deleted steps
+      // TODO: should backend return null
+      // if (initialValues.composedOf[index] == null) {
+      //   initialValues.composedOf[index] = {
+      //     label: '',
+      //     description: '',
+      //     version: '',
+      //     accessibleAt: [],
+      //     externalIds: [],
+      //     contributors: [],
+      //     properties: [],
+      //     relatedItems: [],
+      //     media: [],
+      //     composedOf: [],
+      //   }
+      // }
+      // add(step, initialValues.composedOf[index])
+
       if (initialValues.composedOf[index] == null) {
-        initialValues.composedOf[index] = {
-          label: '',
-          description: '',
-          version: '',
-          accessibleAt: [],
-          externalIds: [],
-          contributors: [],
-          properties: [],
-          relatedItems: [],
-          media: [],
-          composedOf: [],
-        }
+        initialValues.composedOf[index] = null
+      } else {
+        add(step, initialValues.composedOf[index])
       }
-      add(step, initialValues.composedOf[index])
     })
 
     return initialValues

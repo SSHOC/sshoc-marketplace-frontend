@@ -9,6 +9,8 @@ import { FormFieldArrayControls } from '@/components/common/FormFieldArrayContro
 import { FormFieldList } from '@/components/common/FormFieldList'
 import { FormRecordAddButton } from '@/components/common/FormRecordAddButton'
 import { FormSections } from '@/components/common/FormSections'
+import { SearchResult } from '@/components/common/SearchResult'
+import { SearchResultTitle } from '@/components/common/SearchResultTitle'
 import { ActorReviewFormSection } from '@/components/item-form/ActorReviewFormSection'
 import { DateReviewFormSection } from '@/components/item-form/DateReviewFormSection'
 import { ItemReviewFormControls } from '@/components/item-form/ItemReviewFormControls'
@@ -35,6 +37,7 @@ import type { FormProps } from '@/lib/core/form/Form'
 import { Form } from '@/lib/core/form/Form'
 import { FormButton } from '@/lib/core/form/FormButton'
 import { FormButtonLink } from '@/lib/core/form/FormButtonLink'
+import { useFieldState } from '@/lib/core/form/useFieldState'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type WorkflowFormValues = WorkflowInput & {
@@ -118,7 +121,7 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
       ) : null}
       {page.type === 'steps' ? (
         <FormSections>
-          <WorkflowStepsFormSection setPage={setPage} />
+          <WorkflowStepsFormSection diff={diff} setPage={setPage} />
 
           <ItemReviewFormControls<WorkflowFormValues>
             onBeforeSubmit={onBeforeSubmit}
@@ -159,14 +162,87 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
               <Field name="dateCreated" render={() => null} subscription={{}} />
               <Field name="dateLastUpdated" render={() => null} subscription={{}} />
               <Field name="accessibleAt" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['accessibleAt'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`accessibleAt[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="externalIds" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['externalIds'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`externalIds[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="contributors" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['contributors'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`contributors[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="properties" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['properties'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`properties[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="media" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['media'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`media[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="relatedItems" render={() => null} subscription={{}} />
+              <Fragment>
+                {values['relatedItems'].map((_value: unknown, index: number) => {
+                  return (
+                    <Field
+                      key={index}
+                      name={`relatedItems[${index}]`}
+                      render={() => null}
+                      subscription={{}}
+                    />
+                  )
+                })}
+              </Fragment>
               <Field name="thumbnail" render={() => null} subscription={{}} />
               <Fragment>
-                {values['composedOf']?.map((_step: unknown, index: number) => {
+                {values['composedOf']?.map((step: any, index: number) => {
+                  if (step == null) return null
                   return (
                     <Fragment key={index}>
                       <Field
@@ -189,31 +265,103 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['accessibleAt'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].accessibleAt[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].externalIds`}
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['externalIds'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].externalIds[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].contributors`}
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['contributors'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].contributors[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].properties`}
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['properties'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].properties[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].media`}
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['media'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].media[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].relatedItems`}
                         render={() => null}
                         subscription={{}}
                       />
+                      <Fragment>
+                        {step['relatedItems'].map((_value: unknown, i: number) => {
+                          return (
+                            <Field
+                              key={i}
+                              name={`composedOf[${index}].relatedItems[${i}]`}
+                              render={() => null}
+                              subscription={{}}
+                            />
+                          )
+                        })}
+                      </Fragment>
                       <Field
                         name={`composedOf[${index}].thumbnail`}
                         render={() => null}
@@ -235,7 +383,7 @@ export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element 
 interface WorkflowFormSectionsProps {
   onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void
   onCancel: () => void
-  diff: any
+  diff: ItemsDiff | undefined
 }
 
 function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
@@ -285,11 +433,12 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
 }
 
 interface WorkflowStepsFormSectionProps {
+  diff: ItemsDiff | undefined
   setPage: WorkflowReviewFormProps['setPage']
 }
 
 function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Element {
-  const { setPage } = props
+  const { diff, setPage } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<UndefinedLeaves<WorkflowStepInput> | WorkflowStepInput>(
@@ -349,7 +498,9 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
 
           return (
             <li key={name}>
-              <WorkflowStepPreview
+              <WorkflowStepListItem
+                // @ts-expect-error Ignore
+                item={diff?.item.composedOf[index]}
                 name={name}
                 index={index}
                 onEdit={onEdit}
@@ -369,6 +520,56 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         </FormRecordAddButton>
       </FormFieldArrayControls>
     </FormFieldArray>
+  )
+}
+
+interface WorkflowStepListItemProps {
+  item: any
+  name: string
+  index: number
+  onEdit: () => void
+  onRemove: () => void
+  onMoveUp: () => void
+  onMoveDown: () => void
+  isFirst: boolean
+  isLast: boolean
+}
+
+function WorkflowStepListItem(props: WorkflowStepListItemProps) {
+  const { item, name, index, onEdit, onRemove, onMoveUp, onMoveDown, isFirst, isLast } = props
+
+  const step = useFieldState<WorkflowStepInput | null>(name).input.value
+
+  /**
+   * This can happen in a review form, when the step has been deleted.
+   */
+  if (step == null) {
+    return (
+      <SearchResult
+        style={{
+          border: '1px solid var(--color-negative-200)',
+          backgroundColor: 'var(--color-negative-100)',
+        }}
+      >
+        <SearchResultTitle>
+          {item.label} (This step has been deleted, or a previous step has been deleted, and now the
+          order is messed up)
+        </SearchResultTitle>
+      </SearchResult>
+    )
+  }
+
+  return (
+    <WorkflowStepPreview
+      name={name}
+      index={index}
+      onEdit={onEdit}
+      onRemove={onRemove}
+      onMoveUp={onMoveUp}
+      onMoveDown={onMoveDown}
+      isFirst={isFirst}
+      isLast={isLast}
+    />
   )
 }
 

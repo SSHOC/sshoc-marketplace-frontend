@@ -6,5 +6,5 @@ import { workflowStepInputSchema } from '@/data/sshoc/validation-schemas/workflo
 export const workflowInputSchema = itemBaseInputSchema
 
 export const workflowWithStepsInputSchema = workflowInputSchema.and(
-  z.object({ composedOf: z.array(workflowStepInputSchema).optional() }),
+  z.object({ composedOf: z.array(workflowStepInputSchema.nullable()).optional() }),
 )
