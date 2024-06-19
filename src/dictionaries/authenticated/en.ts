@@ -295,7 +295,7 @@ export const dictionary: Dictionary = {
       description: '',
     },
     'affiliations.actor': {
-      label: 'Name',
+      label: 'Affiliated with',
       description: '',
     },
   },
