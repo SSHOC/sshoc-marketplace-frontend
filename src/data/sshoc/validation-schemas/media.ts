@@ -60,3 +60,13 @@ export const mediaUploadSchema =
         params: { mediaInput: ['file', 'url'] },
       },
     )
+    .refine(
+      (data) => {
+        if (data.sourceUrl != null && data.sourceUrl.includes('youtube.com/watch')) return false
+        return true
+      },
+      {
+        message: 'Provide a youtube embed link, not a youtube watch link',
+        path: ['sourceUrl'],
+      },
+    )
