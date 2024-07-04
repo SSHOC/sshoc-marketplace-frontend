@@ -12,6 +12,8 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { routes } from '@/lib/core/navigation/routes'
 import { isNonEmptyString } from '@/lib/utils'
 import EoscLogo from '~/public/assets/images/eosc.svg?symbol-icon'
+import { Icon } from '@/lib/core/ui/Icon/Icon'
+import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
 
 export type SignInFormValues = SignInInput
 
@@ -23,6 +25,7 @@ export function SignInForm(): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(
     {
+      isDisabled: true,
       onPress() {
         signInWithOAuth()
       },
@@ -66,6 +69,14 @@ export function SignInForm(): JSX.Element {
         <EoscLogo aria-hidden />
         Sign in with EOSC
       </button>
+      <div className={css['disabled-note']}>
+        <Icon icon={AlertIcon} />
+        <span>
+          We are currently experiencing a technical issue with the EOSC-login that we are working
+          diligently to resolve. Please bear with us as we work to restore access as soon as
+          possible. Thank you for your patience and understanding.
+        </span>
+      </div>
       <div role="separator" className={css['separator']}>
         <span>{t(['common', 'auth', 'sign-in-alternative'])}</span>
         <div className={css['line']} />
