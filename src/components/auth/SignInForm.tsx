@@ -10,10 +10,10 @@ import { FormButton } from '@/lib/core/form/FormButton'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { routes } from '@/lib/core/navigation/routes'
-import { isNonEmptyString } from '@/lib/utils'
-import EoscLogo from '~/public/assets/images/eosc.svg?symbol-icon'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
+import { isNonEmptyString } from '@/lib/utils'
+import EoscLogo from '~/public/assets/images/eosc.svg?symbol-icon'
 
 export type SignInFormValues = SignInInput
 
@@ -25,7 +25,9 @@ export function SignInForm(): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(
     {
-      isDisabled: true,
+      isDisabled:
+        process.env["NEXT_PUBLIC_BASE_URL"] !== 'https://sshoc-marketplace.acdh-dev.oeaw.ac.at' &&
+        process.env["NEXT_PUBLIC_BASE_URL"] !== 'http://localhost:3000',
       onPress() {
         signInWithOAuth()
       },
