@@ -26,8 +26,10 @@ export function SignInForm(): JSX.Element {
   const { buttonProps } = useButton(
     {
       isDisabled:
-        process.env["NEXT_PUBLIC_BASE_URL"] !== 'https://sshoc-marketplace.acdh-dev.oeaw.ac.at' &&
-        process.env["NEXT_PUBLIC_BASE_URL"] !== 'http://localhost:3000',
+        process.env['NEXT_PUBLIC_BASE_URL'] !==
+          'https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at' &&
+        process.env['NEXT_PUBLIC_BASE_URL'] !== 'https://sshoc-marketplace.acdh-dev.oeaw.ac.at' &&
+        process.env['NEXT_PUBLIC_BASE_URL'] !== 'http://localhost:3000',
       onPress() {
         signInWithOAuth()
       },
