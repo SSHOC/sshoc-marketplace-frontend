@@ -10,7 +10,7 @@
 .oauth-button {
   display: grid;
   grid-template-rows: var(--size-8);
-  grid-template-columns: var(--size-8) 1fr var(--size-8);
+  grid-template-columns: var(--size-10) 1fr var(--size-10);
   align-items: center;
   padding: var(--space-4);
   border: none;
@@ -32,6 +32,10 @@
   & > svg {
     width: 100%;
     height: 100%;
+  }
+
+  & > img {
+    border-radius: 9999px;
   }
 
   &:disabled {
@@ -83,17 +87,4 @@
   margin-block: var(--space-8);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-none);
-}
-
-.disabled-note {
-  display: flex;
-  gap: 0.75rem;
-  color: var(--color-negative-600);
-
-  & > svg {
-    flex-shrink: 0;
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-block: 4px;
-  }
 }

@@ -123,7 +123,7 @@ export const dictionary: Dictionary = {
       'not-accepted-terms-of-service': 'Accepting the Privacy policy is required.',
     },
     'sign-in-message-oauth':
-      'Sign in with EOSC using existing accounts such as <Provider>Google</Provider>, <Provider>Dariah</Provider>, <Provider>eduTEAMS</Provider> and multiple academic accounts.',
+      'Sign in with MyAccessID using existing accounts such as <Provider>Google</Provider>, <Provider>ORCID</Provider>, <Provider>DARIAH</Provider>, <Provider>eduTEAMS</Provider> and multiple academic accounts.',
     'sign-in-message-basic-auth':
       'Sign in with a local account is used by maintainers to manage the website.',
     'sign-in-helptext':
