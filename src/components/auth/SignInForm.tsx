@@ -10,10 +10,7 @@ import { FormButton } from '@/lib/core/form/FormButton'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { routes } from '@/lib/core/navigation/routes'
-import { Icon } from '@/lib/core/ui/Icon/Icon'
-import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
 import { isNonEmptyString } from '@/lib/utils'
-import EoscLogo from '~/public/assets/images/eosc.svg?symbol-icon'
 
 export type SignInFormValues = SignInInput
 
@@ -25,11 +22,6 @@ export function SignInForm(): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(
     {
-      isDisabled:
-        process.env['NEXT_PUBLIC_BASE_URL'] !==
-          'https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at' &&
-        process.env['NEXT_PUBLIC_BASE_URL'] !== 'https://sshoc-marketplace.acdh-dev.oeaw.ac.at' &&
-        process.env['NEXT_PUBLIC_BASE_URL'] !== 'http://localhost:3000',
       onPress() {
         signInWithOAuth()
       },
@@ -70,17 +62,10 @@ export function SignInForm(): JSX.Element {
         })}
       </p>
       <button {...buttonProps} ref={buttonRef} className={css['oauth-button']}>
-        <EoscLogo aria-hidden />
-        Sign in with EOSC
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/assets/images/logo-my-access-id.png" alt="" />
+        Sign in with MyAccessID
       </button>
-      <div className={css['disabled-note']}>
-        <Icon icon={AlertIcon} />
-        <span>
-          We are currently experiencing a technical issue with the EOSC-login that we are working
-          diligently to resolve. Please bear with us as we work to restore access as soon as
-          possible. Thank you for your patience and understanding.
-        </span>
-      </div>
       <div role="separator" className={css['separator']}>
         <span>{t(['common', 'auth', 'sign-in-alternative'])}</span>
         <div className={css['line']} />
