@@ -15,13 +15,14 @@ import { MediaFormSection } from '@/components/item-form/MediaFormSection'
 import { PropertyFormSection } from '@/components/item-form/PropertyFormSection'
 import { RelatedItemFormSection } from '@/components/item-form/RelatedItemFormSection'
 import { ThumbnailFormSection } from '@/components/item-form/ThumbnailFormSection'
-import { WorkflowMainFormSection } from '@/components/item-form/WorkflowMainFormSection'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
 import { useWorkflowStepFormFields } from '@/components/item-form/useWorkflowStepFormFields'
 import { useWorkflowStepFormRecommendedFields } from '@/components/item-form/useWorkflowStepFormRecommendedFields'
 import { WorkflowFormNavigation } from '@/components/item-form/WorkflowFormNavigation'
+import { WorkflowMainFormSection } from '@/components/item-form/WorkflowMainFormSection'
+import { WorkflowStepMainFormSection } from '@/components/item-form/WorkflowStepMainFormSection'
 import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
@@ -279,9 +280,8 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
 
   return (
     <FormSections>
-      <WorkflowMainFormSection formFields={formFields} />
+      <WorkflowStepMainFormSection formFields={formFields} />
       <PropertyFormSection formFields={formFields} />
-      <MediaFormSection formFields={formFields} />
       <RelatedItemFormSection formFields={formFields} />
 
       <FormControls>
