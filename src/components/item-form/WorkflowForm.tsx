@@ -11,11 +11,11 @@ import { FormSections } from '@/components/common/FormSections'
 import { ActorFormSection } from '@/components/item-form/ActorFormSection'
 import { DateFormSection } from '@/components/item-form/DateFormSection'
 import { ItemFormControls } from '@/components/item-form/ItemFormControls'
-import { MainFormSection } from '@/components/item-form/MainFormSection'
 import { MediaFormSection } from '@/components/item-form/MediaFormSection'
 import { PropertyFormSection } from '@/components/item-form/PropertyFormSection'
 import { RelatedItemFormSection } from '@/components/item-form/RelatedItemFormSection'
 import { ThumbnailFormSection } from '@/components/item-form/ThumbnailFormSection'
+import { WorkflowMainFormSection } from '@/components/item-form/WorkflowMainFormSection'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useWorkflowFormFields } from '@/components/item-form/useWorkflowFormFields'
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
@@ -151,7 +151,7 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
 
   return (
     <FormSections>
-      <MainFormSection formFields={formFields} />
+      <WorkflowMainFormSection formFields={formFields} />
       <DateFormSection formFields={formFields} />
       <ActorFormSection formFields={formFields} />
       <PropertyFormSection formFields={formFields} />
@@ -279,7 +279,7 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
 
   return (
     <FormSections>
-      <MainFormSection formFields={formFields} />
+      <WorkflowMainFormSection formFields={formFields} />
       <PropertyFormSection formFields={formFields} />
       <MediaFormSection formFields={formFields} />
       <RelatedItemFormSection formFields={formFields} />
