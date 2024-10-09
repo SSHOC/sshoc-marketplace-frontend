@@ -73,6 +73,7 @@ export const dictionary: Dictionary = {
     about: 'About',
     contribute: 'Contribute',
     'privacy-policy': 'Privacy policy',
+    imprint: 'Imprint',
     contact: 'Contact',
     'page-not-found': 'Page not found',
     'internal-server-error': 'Internal server error',
