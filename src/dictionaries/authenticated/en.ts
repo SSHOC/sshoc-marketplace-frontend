@@ -381,6 +381,7 @@ export const dictionary: Dictionary = {
     'information-contributor': { one: 'User', other: 'Users' },
     'other-facets': 'Other',
     'deprecated-at-source': 'Deprecated at source',
+    'conflict-at-source': 'Conflict at source',
   },
   'curation-flags': {
     coverage: 'Coverage',

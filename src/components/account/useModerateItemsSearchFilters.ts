@@ -31,6 +31,7 @@ export type SearchFilters = Pick<
    */
   'd.curation'?: Array<CurationFlag>
   'd.deprecated-at-source': boolean
+  'd.conflict-at-source': boolean
 }
 
 export function useModerateItemsSearchFilters(): Required<SearchFilters> {
@@ -51,6 +52,7 @@ export function useModerateItemsSearchFilters(): Required<SearchFilters> {
       'd.lastInfoUpdate': [],
       'd.curation': [],
       'd.deprecated-at-source': false,
+      'd.conflict-at-source': false,
     }
 
     if (searchParams == null) {
@@ -87,6 +89,7 @@ export function useModerateItemsSearchFilters(): Required<SearchFilters> {
       'd.curation': curation,
       'd.deprecated-at-source':
         searchParams.get('d.deprecated-at-source')?.toLowerCase() === 'true',
+      'd.conflict-at-source': searchParams.get('d.conflict-at-source')?.toLowerCase() === 'true',
     }
 
     return searchFilters

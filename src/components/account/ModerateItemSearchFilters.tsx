@@ -172,7 +172,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
         } else if (typeof value === 'boolean') {
           /**
            * Usually, value will be a string, and activeFilters an array,
-           * except for `d.deprecated-at-source` which is a free-floating boolean flag.
+           * except for `d.deprecated-at-source` and `d.conflict-at-source` which are free-floating boolean flags.
            */
           searchModerateItems({
             ...searchFilters,
@@ -403,9 +403,18 @@ function ActiveOtherFacets() {
       label: t(['authenticated', 'moderate-items', 'deprecated-at-source']),
       value: searchFilters['d.deprecated-at-source'],
     },
+    conflictAtSource: {
+      name: 'd.conflict-at-source' as const,
+      label: t(['authenticated', 'moderate-items', 'conflict-at-source']),
+      value: searchFilters['d.conflict-at-source'],
+    },
   }
 
-  if (fields.lastInfoUpdate.value == null && fields.deprecatedAtSource.value !== true) {
+  if (
+    fields.lastInfoUpdate.value == null &&
+    fields.deprecatedAtSource.value !== true &&
+    fields.conflictAtSource.value !== true
+  ) {
     return <Fragment />
   }
 
@@ -442,6 +451,21 @@ function ActiveOtherFacets() {
                 values: {
                   facet: t(['authenticated', 'moderate-items', 'deprecated-at-source']),
                   value: String(fields.deprecatedAtSource.value),
+                },
+              })}
+            />
+          </li>
+        ) : null}
+        {fields.conflictAtSource.value === true ? (
+          <li className={css['active-facet-value']}>
+            {t(['authenticated', 'moderate-items', 'conflict-at-source'])}
+            <RemoveFacetValueButton
+              name={fields.conflictAtSource.name}
+              value={fields.conflictAtSource.value}
+              label={t(['common', 'search', 'remove-filter-value'], {
+                values: {
+                  facet: t(['authenticated', 'moderate-items', 'conflict-at-source']),
+                  value: String(fields.conflictAtSource.value),
                 },
               })}
             />
@@ -869,6 +893,18 @@ function OtherFacets(): JSX.Element {
         })
       },
     },
+    conflictAtSource: {
+      name: 'd.conflict-at-source',
+      label: t(['authenticated', 'moderate-items', 'conflict-at-source']),
+      value: searchFilters['d.conflict-at-source'],
+      onChange(key: boolean) {
+        searchModerateItems({
+          ...searchFilters,
+          page: 1,
+          'd.conflict-at-source': key,
+        })
+      },
+    },
   }
 
   return (
@@ -885,6 +921,13 @@ function OtherFacets(): JSX.Element {
             onChange={fields.deprecatedAtSource.onChange}
           >
             {fields.deprecatedAtSource.label}
+          </CheckBox>
+          <CheckBox
+            name={fields.conflictAtSource.name}
+            isSelected={fields.conflictAtSource.value}
+            onChange={fields.conflictAtSource.onChange}
+          >
+            {fields.conflictAtSource.label}
           </CheckBox>
           <DateField
             name={fields.lastInfoUpdate.name}
