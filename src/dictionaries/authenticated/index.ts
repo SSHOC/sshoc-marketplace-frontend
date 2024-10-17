@@ -291,6 +291,7 @@ export interface Dictionary {
     'information-contributor': Plurals
     'other-facets': string
     'deprecated-at-source': string
+    'conflict-at-source': string
   }
   'curation-flags': Record<CurationFlag, string>
   concepts: {
