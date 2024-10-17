@@ -1,20 +1,22 @@
 # base
 FROM node:22-slim AS base
 
+RUN corepack enable
+
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node package.json pnpm-lock.yaml ./
 
 # cannot use `--ignore-scripts` for `sharp` to compile
-RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
+RUN pnpm install --frozen-lockfile
 
 # build
 FROM base AS build
 
-RUN yarn install --frozen-lockfile --ignore-scripts --silent --prefer-offline
+RUN pnpm install --frozen-lockfile --ignore-scripts --offline
 
 COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.mjs ./
 COPY --chown=node:node scripts ./scripts
@@ -42,7 +44,7 @@ ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
 USER root
 RUN --mount=type=secret,id=github_token \
   export GITHUB_TOKEN="$(cat /run/secrets/github_token)" && \
-  yarn build && \
+  pnpm build && \
   unset GITHUB_TOKEN
 USER node
 
