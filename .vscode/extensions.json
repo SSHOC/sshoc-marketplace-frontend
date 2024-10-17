@@ -4,8 +4,6 @@
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",
-    "orta.vscode-jest",
-    "shelex.vscode-cy-helper",
     "stylelint.vscode-stylelint",
     "unifiedjs.vscode-mdx"
   ]

@@ -2,7 +2,7 @@
   "css.validate": false,
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -10,7 +10,7 @@
   "editor.renderWhitespace": "boundary",
   "editor.rulers": [100],
   "editor.suggest.localityBonus": true,
-  "editor.wordBasedSuggestions": false,
+  "editor.wordBasedSuggestions": "off",
   "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
   "eslint.enable": true,
   "eslint.validate": ["javascript", "typescript", "typescriptreact"],
@@ -23,10 +23,6 @@
     ".next": true,
     "out": true,
     "storybook-build": true
-  },
-  "jest.autoRun": {
-    "watch": false,
-    "onSave": "test-file"
   },
   "less.validate": false,
   "scss.validate": false,
