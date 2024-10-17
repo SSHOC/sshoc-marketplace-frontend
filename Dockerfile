@@ -1,5 +1,5 @@
 # base
-FROM node:18-slim AS base
+FROM node:20-slim AS base
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
@@ -47,7 +47,7 @@ RUN --mount=type=secret,id=github_token \
 USER node
 
 # serve
-FROM node:18-slim AS serve
+FROM node:20-slim AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
