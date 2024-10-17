@@ -7,11 +7,11 @@ import { FormTextArea } from '@/lib/core/form/FormTextArea'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
-export interface WorkflowMainFormSectionProps {
+export interface WorkflowStepMainFormSectionProps {
   formFields: ItemFormFields
 }
 
-export function WorkflowMainFormSection(props: WorkflowMainFormSectionProps): JSX.Element {
+export function WorkflowStepMainFormSection(props: WorkflowStepMainFormSectionProps): JSX.Element {
   const { fields } = props.formFields
 
   const { t } = useI18n<'authenticated' | 'common'>()
