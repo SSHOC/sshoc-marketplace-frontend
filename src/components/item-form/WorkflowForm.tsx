@@ -11,7 +11,6 @@ import { FormSections } from '@/components/common/FormSections'
 import { ActorFormSection } from '@/components/item-form/ActorFormSection'
 import { DateFormSection } from '@/components/item-form/DateFormSection'
 import { ItemFormControls } from '@/components/item-form/ItemFormControls'
-import { MainFormSection } from '@/components/item-form/MainFormSection'
 import { MediaFormSection } from '@/components/item-form/MediaFormSection'
 import { PropertyFormSection } from '@/components/item-form/PropertyFormSection'
 import { RelatedItemFormSection } from '@/components/item-form/RelatedItemFormSection'
@@ -22,6 +21,8 @@ import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPag
 import { useWorkflowStepFormFields } from '@/components/item-form/useWorkflowStepFormFields'
 import { useWorkflowStepFormRecommendedFields } from '@/components/item-form/useWorkflowStepFormRecommendedFields'
 import { WorkflowFormNavigation } from '@/components/item-form/WorkflowFormNavigation'
+import { WorkflowMainFormSection } from '@/components/item-form/WorkflowMainFormSection'
+import { WorkflowStepMainFormSection } from '@/components/item-form/WorkflowStepMainFormSection'
 import { WorkflowStepPreview } from '@/components/item-form/WorkflowStepPreview'
 import { WorkflowTitle } from '@/components/item-form/WorkflowTitle'
 import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
@@ -151,7 +152,7 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
 
   return (
     <FormSections>
-      <MainFormSection formFields={formFields} />
+      <WorkflowMainFormSection formFields={formFields} />
       <DateFormSection formFields={formFields} />
       <ActorFormSection formFields={formFields} />
       <PropertyFormSection formFields={formFields} />
@@ -279,9 +280,8 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
 
   return (
     <FormSections>
-      <MainFormSection formFields={formFields} />
+      <WorkflowStepMainFormSection formFields={formFields} />
       <PropertyFormSection formFields={formFields} />
-      <MediaFormSection formFields={formFields} />
       <RelatedItemFormSection formFields={formFields} />
 
       <FormControls>
