@@ -44,6 +44,13 @@ function normalizeSearchFilters(filters: SearchFilters) {
         break
       }
 
+      case 'd.conflict-at-source': {
+        if (value === true) {
+          searchFilters['d.conflict-at-source'] = 'true'
+        }
+        break
+      }
+
       default:
         searchFilters[key] = value
     }

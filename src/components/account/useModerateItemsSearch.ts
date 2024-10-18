@@ -18,12 +18,6 @@ export function useModerateItemsSearch(): UseModerateItemsSearchResult {
   const router = useRouter()
 
   function getSearchModerateItemsLink(query: ModerateItemsPage.SearchParamsInput) {
-    // FIXME: https://github.com/SSHOC/sshoc-marketplace-backend/issues/477#issuecomment-2422307954
-    if (query['d.conflict-at-source'] === false) {
-      // @ts-expect-error It's ok.
-      delete query['d.conflict-at-source']
-    }
-
     /** Filter out empty values to avoid `key=` query parameters. */
     return {
       href: routes.ModerateItemsPage(sanitizeSearchParams(query)),
