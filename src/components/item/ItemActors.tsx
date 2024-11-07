@@ -5,6 +5,7 @@ import css from '@/components/item/ItemMetadata.module.css'
 import type { Actor } from '@/data/sshoc/api/actor'
 import type { Item } from '@/data/sshoc/api/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
+import { createKey } from '@/lib/utils/create-key'
 
 export interface ItemActorsProps {
   actors: Item['contributors']
@@ -187,7 +188,7 @@ function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
 
         if (id.identifierService.urlTemplate == null) {
           return (
-            <span>
+            <span key={createKey(id.identifierService.code, id.identifier)}>
               {id.identifierService.label}: {id.identifier}
             </span>
           )
@@ -197,7 +198,7 @@ function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
 
         return (
           <a
-            key={id.identifierService.code}
+            key={createKey(id.identifierService.code, id.identifier)}
             href={href}
             target="_blank"
             rel="noreferrer"

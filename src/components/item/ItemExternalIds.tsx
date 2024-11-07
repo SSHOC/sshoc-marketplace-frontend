@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
+import { createKey } from '@/lib/utils/create-key'
 
 export interface ItemExternalIdsProps {
   ids: Item['externalIds']
@@ -30,16 +31,16 @@ export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element {
 
             if (id.identifierService.urlTemplate == null) {
               return (
-                <span>
+                <li key={createKey(id.identifierService.code, id.identifier)}>
                   {id.identifierService.label}: {id.identifier}
-                </span>
+                </li>
               )
             }
 
             const href = id.identifierService.urlTemplate.replace('{source-item-id}', id.identifier)
 
             return (
-              <li key={id.identifierService.code}>
+              <li key={createKey(id.identifierService.code, id.identifier)}>
                 <div>
                   <a href={href} target="_blank" rel="noreferrer" className={css['link']}>
                     {id.identifierService.label}
