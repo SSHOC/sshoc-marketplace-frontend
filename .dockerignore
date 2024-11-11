@@ -38,14 +38,6 @@ out/
 /playwright-report/
 /test-results/
 
-# generated
-public/**/favicon.ico
-public/**/icon.svg
-public/**/apple-touch-icon.png
-public/**/*.webmanifest
-public/**/open-graph.*
-public/assets/cms/styles/*.css
-
 
 ## .dockerignore ##
 

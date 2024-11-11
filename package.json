@@ -12,8 +12,6 @@
     "build": "next build",
     "cms:server": "decap-server",
     "dev": "next dev",
-    "generate:favicons": "ts-script scripts/generate-favicons.ts",
-    "postbuild": "pnpm run generate:favicons",
     "start": "next start"
   },
   "dependencies": {
@@ -145,7 +143,6 @@
     "@react-types/select": "^3.9.7",
     "@react-types/shared": "^3.25.0",
     "@react-types/textfield": "^3.9.7",
-    "@stefanprobst/favicons": "^2.4.0",
     "@stefanprobst/next-image-loader": "^1.0.4",
     "@stefanprobst/ts-script": "^1.0.2",
     "@stefanprobst/tsconfig": "^1.1.1",

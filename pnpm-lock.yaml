@@ -398,9 +398,6 @@ importers:
       '@react-types/textfield':
         specifier: ^3.9.7
         version: 3.9.7(react@18.3.1)
-      '@stefanprobst/favicons':
-        specifier: ^2.4.0
-        version: 2.4.0
       '@stefanprobst/next-image-loader':
         specifier: ^1.0.4
         version: 1.0.4(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -1266,11 +1263,6 @@ packages:
 
   '@stefanprobst/capitalize@1.0.2':
     resolution: {integrity: sha512-5puCNhSg0jIUL4w4pQFdR6NwE6itcATLXnjUwE9sE5cYgT0Y+S/EO0E/YuGoHhG2GfFMXY0x7UjzJ9cLYDnAMA==}
-
-  '@stefanprobst/favicons@2.4.0':
-    resolution: {integrity: sha512-INoBCH7k3UQ3MsFlNKX901/240bvABq3077P6kzqqrrpvL8Vo6vAok+equweD5xQxvj5wVp8xgpFI/vuHEMfWw==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   '@stefanprobst/is-absolute-url@1.0.2':
     resolution: {integrity: sha512-wG6ZSuBvXJeEAYTW93rCD9om7Epps8p8cWSnArpEN9ffLuZ0kefK12xV+FJFqPvoaaVkgfEK19ATAO8Aa1s4Lw==}
@@ -6672,12 +6664,6 @@ snapshots:
   '@stefanprobst/assert@1.0.3': {}
 
   '@stefanprobst/capitalize@1.0.2': {}
-
-  '@stefanprobst/favicons@2.4.0':
-    dependencies:
-      '@stefanprobst/log': 1.0.3
-      mri: 1.2.0
-      sharp: 0.30.7
 
   '@stefanprobst/is-absolute-url@1.0.2': {}
 
