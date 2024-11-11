@@ -1,6 +1,5 @@
 import { I18nProvider as AriaI18nProvider } from '@react-aria/i18n'
 import { OverlayProvider } from '@react-aria/overlays'
-import { SSRProvider as AriaSsrProvider } from '@react-aria/ssr'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { useQueryErrorResetBoundary } from 'react-query'
@@ -85,11 +84,9 @@ export function Providers(props: ProvidersProps): JSX.Element {
             onSignOut={onSignOut}
           >
             <PageAccessControl>
-              <AriaSsrProvider>
-                <AriaI18nProvider locale={locale}>
-                  <OverlayProvider>{props.children}</OverlayProvider>
-                </AriaI18nProvider>
-              </AriaSsrProvider>
+              <AriaI18nProvider locale={locale}>
+                <OverlayProvider>{props.children}</OverlayProvider>
+              </AriaI18nProvider>
             </PageAccessControl>
           </AuthProvider>
         </QueryProvider>
