@@ -10,30 +10,18 @@
   "scripts": {
     "analyze-bundle": "cross-env BUNDLE_ANALYZER=enabled next build",
     "build": "next build",
-    "cm": "git-cz",
     "cms:server": "decap-server",
     "dev": "next dev",
-    "docker:dev": "docker run --rm --init -u `id -u`:`id -g` -v `pwd`:/app -w /app -p 3000:3000 node:22-slim pnpm run dev",
-    "format": "prettier . \"!**/*.mdx\" --list-different --ignore-path .gitignore",
-    "format:fix": "pnpm run format --write",
     "generate:favicons": "ts-script scripts/generate-favicons.ts",
     "generate:route-manifest": "ts-script scripts/generate-route-manifest.ts",
-    "lint": "run-p \"lint:*:check\"",
-    "lint:fix": "run-p \"lint:*:fix\"",
-    "lint:code:check": "next lint --dir . --ignore-path .gitignore",
-    "lint:code:fix": "pnpm run lint:code:check --fix",
-    "lint:styles:check": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
-    "lint:styles:fix": "pnpm run lint:styles:check --fix",
     "postbuild": "pnpm run generate:favicons",
     "postinstall": "patch-package",
     "prebuild": "pnpm run generate:route-manifest",
-    "prepare": "simple-git-hooks || true",
     "start": "next start",
     "stories:build": "build-storybook --config-dir stories --quiet",
     "stories:build:docs": "pnpm run stories:build --docs",
     "stories:dev": "start-storybook --config-dir stories --port 6006 --no-open",
     "stories:dev:docs": "pnpm run stories:dev --docs",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "pnpm run format && pnpm run lint && pnpm run typecheck"
   },
   "dependencies": {
@@ -155,11 +143,8 @@
     "zod": "^3.14.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.1",
-    "@commitlint/cz-commitlint": "^16.2.1",
     "@faker-js/faker": "^6.1.1",
     "@mswjs/data": "^0.9.2",
-    "@next/eslint-plugin-next": "^12.1.6",
     "@react-types/button": "^3.4.2",
     "@react-types/checkbox": "^3.2.4",
     "@react-types/combobox": "^3.2.2",
@@ -171,12 +156,8 @@
     "@react-types/select": "^3.5.2",
     "@react-types/shared": "^3.11.0",
     "@react-types/textfield": "^3.3.1",
-    "@stefanprobst/commitlint-config": "^1.0.2",
-    "@stefanprobst/eslint-config-next": "^5.0.2",
     "@stefanprobst/favicons": "^2.0.4",
     "@stefanprobst/next-image-loader": "^1.0.3",
-    "@stefanprobst/prettier-config": "^2.0.1",
-    "@stefanprobst/stylelint-config": "^2.1.2",
     "@stefanprobst/ts-script": "^1.0.2",
     "@stefanprobst/tsconfig": "^1.1.1",
     "@storybook/addon-a11y": "^6.4.19",
@@ -198,25 +179,17 @@
     "@types/react-dom": "^18.3.1",
     "@types/sharp": "^0.29.5",
     "autoprefixer": "^10.4.2",
-    "commitizen": "^4.2.4",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.9.0",
-    "eslint-plugin-storybook": "^0.5.7",
+    "decap-server": "^3.1.2",
     "jose": "^4.3.8",
-    "lint-staged": "^12.1.7",
     "match-sorter": "^6.3.1",
     "msw": "^0.39.2",
     "msw-storybook-addon": "^1.6.3",
-    "decap-server": "^3.1.2",
     "npm-run-all2": "^7.0.1",
     "postcss": "^8.4.5",
     "postcss-custom-media": "^8.0.0",
     "postcss-nesting": "^10.1.2",
-    "prettier": "^2.6.0",
     "remark-frontmatter": "^4.0.1",
     "remark-mdx": "^2.1.0",
-    "simple-git-hooks": "^2.7.0",
-    "stylelint": "^14.6.0",
     "typescript": "^4.6.2"
   },
   "resolutions": {
@@ -236,70 +209,6 @@
       "not op_mini all"
     ]
   },
-  "commitlint": {
-    "extends": "@stefanprobst/commitlint-config"
-  },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
-  },
-  "eslintConfig": {
-    "extends": "@stefanprobst/eslint-config-next",
-    "overrides": [
-      {
-        "files": [
-          "**/*.cjs"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "src/data/**/api/*.ts",
-          "src/data/**/hooks/*.ts",
-          "src/__templates__/**/page.tsx",
-          "src/pages/**/*.page.tsx",
-          "src/pages/**/*.page.template.tsx"
-        ],
-        "rules": {
-          "@typescript-eslint/no-namespace": "off"
-        }
-      },
-      {
-        "files": [
-          "src/data/**/hooks/*.ts"
-        ],
-        "rules": {
-          "@typescript-eslint/explicit-module-boundary-types": "off"
-        }
-      },
-      {
-        "files": [
-          "stories/**/*.stories.@(js|mjs|ts|tsx)"
-        ],
-        "extends": "plugin:storybook/recommended",
-        "rules": {
-          "@typescript-eslint/explicit-module-boundary-types": "off"
-        }
-      }
-    ],
-    "ignorePatterns": "public/mockServiceWorker.js"
-  },
-  "lint-staged": {
-    "*.@(js|mjs|ts|tsx)": [
-      "eslint --fix --cache --cache-location .next/cache/eslint/",
-      "prettier --write"
-    ],
-    "*.css": [
-      "stylelint --cache --cache-location .next/cache/stylelint/ --fix",
-      "prettier --write"
-    ],
-    "*.!(css|js|mdx|mjs|ts|tsx)": [
-      "prettier --ignore-unknown --write"
-    ]
-  },
   "msw": {
     "workerDirectory": "public"
   },
@@ -308,28 +217,6 @@
       "postcss-custom-media": {},
       "postcss-nesting": {},
       "autoprefixer": {}
-    }
-  },
-  "prettier": "@stefanprobst/prettier-config",
-  "remarkConfig": {
-    "plugins": [
-      "frontmatter",
-      "gfm"
-    ]
-  },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm exec commitlint --edit",
-    "pre-commit": "pnpm exec lint-staged"
-  },
-  "stylelint": {
-    "extends": "@stefanprobst/stylelint-config",
-    "rules": {
-      "block-no-empty": [
-        true,
-        {
-          "severity": "warning"
-        }
-      ]
     }
   }
 }
