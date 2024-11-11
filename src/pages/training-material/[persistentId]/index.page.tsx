@@ -1,101 +1,103 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
-import { HttpError } from '@stefanprobst/request'
+import { HttpError } from "@stefanprobst/request";
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
-} from 'next'
-import { useRouter } from 'next/router'
-import { Fragment } from 'react'
-import { dehydrate, QueryClient, useQueryClient } from 'react-query'
+} from "next";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
+import { dehydrate, QueryClient, useQueryClient } from "react-query";
 
-import { FundingNotice } from '@/components/common/FundingNotice'
-import { ItemSearchBar } from '@/components/common/ItemSearchBar'
-import { ScreenHeader } from '@/components/common/ScreenHeader'
-import { BackgroundImage } from '@/components/item/BackgroundImage'
-import { ItemAccessibleAtLinks } from '@/components/item/ItemAccessibleAtLinks'
-import { ItemActors } from '@/components/item/ItemActors'
-import { ItemCitation } from '@/components/item/ItemCitation'
-import { ItemComments } from '@/components/item/ItemComments'
-import { ItemDateCreated } from '@/components/item/ItemDateCreated'
-import { ItemDateLastUpdated } from '@/components/item/ItemDateLastUpdated'
-import { ItemDescription } from '@/components/item/ItemDescription'
-import { ItemDetails } from '@/components/item/ItemDetails'
-import { ItemExternalIds } from '@/components/item/ItemExternalIds'
-import { ItemHeader } from '@/components/item/ItemHeader'
-import { ItemInfo } from '@/components/item/ItemInfo'
-import { ItemMedia } from '@/components/item/ItemMedia'
-import { ItemMetadata } from '@/components/item/ItemMetadata'
-import { ItemProperties } from '@/components/item/ItemProperties'
-import { ItemRelatedItems } from '@/components/item/ItemRelatedItems'
-import { ItemScreenLayout } from '@/components/item/ItemScreenLayout'
-import { ItemSource } from '@/components/item/ItemSource'
-import { ItemTitle } from '@/components/item/ItemTitle'
-import { TrainingMaterialContentContributors } from '@/components/item/TrainingMaterialContentContributors'
-import { TrainingMaterialControls } from '@/components/item/TrainingMaterialControls'
-import { TrainingMaterialSchemaOrgMetadata } from '@/components/item/TrainingMaterialSchemaOrgMetadata'
-import type { TrainingMaterial } from '@/data/sshoc/api/training-material'
-import { getTrainingMaterial } from '@/data/sshoc/api/training-material'
-import { keys, useTrainingMaterial } from '@/data/sshoc/hooks/training-material'
-import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
-import type { PageComponent, SharedPageProps } from '@/lib/core/app/types'
-import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
-import { load } from '@/lib/core/i18n/load'
-import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
-import { PageMainContent } from '@/lib/core/page/PageMainContent'
-import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
-import { Centered } from '@/lib/core/ui/Centered/Centered'
-import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
-import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
+import { FundingNotice } from "@/components/common/FundingNotice";
+import { ItemSearchBar } from "@/components/common/ItemSearchBar";
+import { ScreenHeader } from "@/components/common/ScreenHeader";
+import { BackgroundImage } from "@/components/item/BackgroundImage";
+import { ItemAccessibleAtLinks } from "@/components/item/ItemAccessibleAtLinks";
+import { ItemActors } from "@/components/item/ItemActors";
+import { ItemCitation } from "@/components/item/ItemCitation";
+import { ItemComments } from "@/components/item/ItemComments";
+import { ItemDateCreated } from "@/components/item/ItemDateCreated";
+import { ItemDateLastUpdated } from "@/components/item/ItemDateLastUpdated";
+import { ItemDescription } from "@/components/item/ItemDescription";
+import { ItemDetails } from "@/components/item/ItemDetails";
+import { ItemExternalIds } from "@/components/item/ItemExternalIds";
+import { ItemHeader } from "@/components/item/ItemHeader";
+import { ItemInfo } from "@/components/item/ItemInfo";
+import { ItemMedia } from "@/components/item/ItemMedia";
+import { ItemMetadata } from "@/components/item/ItemMetadata";
+import { ItemProperties } from "@/components/item/ItemProperties";
+import { ItemRelatedItems } from "@/components/item/ItemRelatedItems";
+import { ItemScreenLayout } from "@/components/item/ItemScreenLayout";
+import { ItemSource } from "@/components/item/ItemSource";
+import { ItemTitle } from "@/components/item/ItemTitle";
+import { TrainingMaterialContentContributors } from "@/components/item/TrainingMaterialContentContributors";
+import { TrainingMaterialControls } from "@/components/item/TrainingMaterialControls";
+import { TrainingMaterialSchemaOrgMetadata } from "@/components/item/TrainingMaterialSchemaOrgMetadata";
+import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
+import { getTrainingMaterial } from "@/data/sshoc/api/training-material";
+import {
+  keys,
+  useTrainingMaterial,
+} from "@/data/sshoc/hooks/training-material";
+import { isNotFoundError } from "@/data/sshoc/utils/isNotFoundError";
+import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
+import { getLocale } from "@/lib/core/i18n/getLocale";
+import { getLocales } from "@/lib/core/i18n/getLocales";
+import { load } from "@/lib/core/i18n/load";
+import type { WithDictionaries } from "@/lib/core/i18n/types";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
+import { routes } from "@/lib/core/navigation/routes";
+import { PageMainContent } from "@/lib/core/page/PageMainContent";
+import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
+import { Centered } from "@/lib/core/ui/Centered/Centered";
+import { FullPage } from "@/lib/core/ui/FullPage/FullPage";
+import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 
 export namespace TrainingMaterialPage {
   export interface PathParamsInput extends ParamsInput {
-    persistentId: TrainingMaterial['persistentId']
+    persistentId: TrainingMaterial["persistentId"];
   }
-  export type PathParams = StringParams<PathParamsInput>
-  export type SearchParamsInput = Record<string, never>
-  export interface Props extends WithDictionaries<'common'> {
-    params: PathParams
-    initialQueryState: SharedPageProps['initialQueryState']
+  export type PathParams = StringParams<PathParamsInput>;
+  export type SearchParamsInput = Record<string, never>;
+  export interface Props extends WithDictionaries<"common"> {
+    params: PathParams;
+    initialQueryState: SharedPageProps["initialQueryState"];
   }
 }
 
 export async function getStaticPaths(
-  context: GetStaticPathsContext,
+  context: GetStaticPathsContext
 ): Promise<GetStaticPathsResult<TrainingMaterialPage.PathParams>> {
-  const locales = getLocales(context)
+  const locales = getLocales(context);
   const paths = locales.flatMap((locale) => {
-    const persistentIds: Array<TrainingMaterial['persistentId']> = []
+    const persistentIds: Array<TrainingMaterial["persistentId"]> = [];
     return persistentIds.map((persistentId) => {
-      const params = { persistentId }
-      return { locale, params }
-    })
-  })
+      const params = { persistentId };
+      return { locale, params };
+    });
+  });
 
   return {
     paths,
-    fallback: 'blocking',
-  }
+    fallback: "blocking",
+  };
 }
 
 export async function getStaticProps(
-  context: GetStaticPropsContext<TrainingMaterialPage.PathParams>,
+  context: GetStaticPropsContext<TrainingMaterialPage.PathParams>
 ): Promise<GetStaticPropsResult<TrainingMaterialPage.Props>> {
-  const locale = getLocale(context)
-  const params = context.params as TrainingMaterialPage.PathParams
-  const dictionaries = await load(locale, ['common'])
+  const locale = getLocale(context);
+  const params = context.params as TrainingMaterialPage.PathParams;
+  const dictionaries = await load(locale, ["common"]);
 
   try {
-    const persistentId = params.persistentId
-    const queryClient = new QueryClient()
+    const persistentId = params.persistentId;
+    const queryClient = new QueryClient();
     await queryClient.prefetchQuery(keys.detail({ persistentId }), () => {
-      return getTrainingMaterial({ persistentId })
-    })
+      return getTrainingMaterial({ persistentId });
+    });
 
     return {
       props: {
@@ -103,38 +105,42 @@ export async function getStaticProps(
         params,
         initialQueryState: dehydrate(queryClient),
       },
-    }
+    };
   } catch (error) {
     if (isNotFoundError(error)) {
       return {
         notFound: true,
-      }
+      };
     }
 
-    throw error
+    throw error;
   }
 }
 
-export default function TrainingMaterialPage(props: TrainingMaterialPage.Props): JSX.Element {
-  const { persistentId } = props.params
-  const queryClient = useQueryClient()
+export default function TrainingMaterialPage(
+  props: TrainingMaterialPage.Props
+): JSX.Element {
+  const { persistentId } = props.params;
+  const queryClient = useQueryClient();
   const _trainingMaterial = useTrainingMaterial({ persistentId }, undefined, {
     /** Pre-populate cache with data fetched server-side without authentication in `getStaticProps`. */
     initialData: queryClient.getQueryData(keys.detail({ persistentId })),
-  })
-  const trainingMaterial = _trainingMaterial.data
+  });
+  const trainingMaterial = _trainingMaterial.data;
 
-  const router = useRouter()
-  const { t } = useI18n<'common'>()
-  const category = trainingMaterial?.category ?? 'training-material'
-  const label = trainingMaterial?.label ?? t(['common', 'item-categories', category, 'one'])
+  const router = useRouter();
+  const { t } = useI18n<"common">();
+  const category = trainingMaterial?.category ?? "training-material";
+  const label =
+    trainingMaterial?.label ??
+    t(["common", "item-categories", category, "one"]);
 
   if (
     _trainingMaterial.error != null &&
     _trainingMaterial.error instanceof HttpError &&
     _trainingMaterial.error.response.status === 404
   ) {
-    router.push('/404')
+    router.push("/404");
   }
 
   if (router.isFallback || trainingMaterial == null) {
@@ -149,20 +155,28 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
           </FullPage>
         </PageMainContent>
       </Fragment>
-    )
+    );
   }
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: routes.HomePage(), label: t(["common", "pages", "home"]) },
     {
-      href: routes.SearchPage({ categories: [trainingMaterial.category], order: ['label'] }),
-      label: t(['common', 'item-categories', trainingMaterial.category, 'other']),
+      href: routes.SearchPage({
+        categories: [trainingMaterial.category],
+        order: ["label"],
+      }),
+      label: t([
+        "common",
+        "item-categories",
+        trainingMaterial.category,
+        "other",
+      ]),
     },
     {
       href: routes.TrainingMaterialPage({ persistentId }),
       label,
     },
-  ]
+  ];
 
   return (
     <Fragment>
@@ -180,12 +194,17 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
           <ScreenHeader>
             <ItemSearchBar />
             <Breadcrumbs links={breadcrumbs} />
-            <ItemTitle category={trainingMaterial.category} thumbnail={trainingMaterial.thumbnail}>
+            <ItemTitle
+              category={trainingMaterial.category}
+              thumbnail={trainingMaterial.thumbnail}
+            >
               {trainingMaterial.label}
             </ItemTitle>
           </ScreenHeader>
           <ItemHeader>
-            <TrainingMaterialControls persistentId={trainingMaterial.persistentId} />
+            <TrainingMaterialControls
+              persistentId={trainingMaterial.persistentId}
+            />
             <ItemDescription description={trainingMaterial.description} />
           </ItemHeader>
           <ItemInfo>
@@ -196,10 +215,15 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
             <ItemMetadata>
               <ItemProperties properties={trainingMaterial.properties} />
               <ItemActors actors={trainingMaterial.contributors} />
-              <ItemSource source={trainingMaterial.source} id={trainingMaterial.sourceItemId} />
+              <ItemSource
+                source={trainingMaterial.source}
+                id={trainingMaterial.sourceItemId}
+              />
               <ItemExternalIds ids={trainingMaterial.externalIds} />
               <ItemDateCreated dateTime={trainingMaterial.dateCreated} />
-              <ItemDateLastUpdated dateTime={trainingMaterial.dateLastUpdated} />
+              <ItemDateLastUpdated
+                dateTime={trainingMaterial.dateLastUpdated}
+              />
               {/* <Suspense fallback={<LoadingIndicator />}> */}
               <TrainingMaterialContentContributors
                 persistentId={trainingMaterial.persistentId}
@@ -218,9 +242,9 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
         </ItemScreenLayout>
       </PageMainContent>
     </Fragment>
-  )
+  );
 }
 
-const Page: PageComponent<TrainingMaterialPage.Props> = TrainingMaterialPage
+const Page: PageComponent<TrainingMaterialPage.Props> = TrainingMaterialPage;
 
-Page.getLayout = undefined
+Page.getLayout = undefined;

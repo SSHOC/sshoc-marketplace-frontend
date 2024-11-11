@@ -1,7 +1,6 @@
 /* @ts-expect-error Missing module declaration. */
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import { log } from "@stefanprobst/log";
-import { RouteManifestPlugin } from "@stefanprobst/next-route-manifest";
 import createSvgPlugin from "@stefanprobst/next-svg";
 import withToc from "@stefanprobst/rehype-extract-toc";
 import withTocExport from "@stefanprobst/rehype-extract-toc/mdx";
@@ -33,14 +32,6 @@ import { defaultLocale, locales } from "./config/i18n.config.mjs";
 /** @typedef {import('@mdx-js/loader').Options} MdxOptions */
 /** @typedef {import('@stefanprobst/remark-mdx-page').Options} MdxPageOptions */
 /** @typedef {import('hast').Element} HastElement */
-/** @typedef {import('@stefanprobst/next-route-manifest').Options} RouteManifestConfig */
-
-/** @type {RouteManifestConfig} */
-export const routeManifestConfig = {
-  outputFolder: path.join(process.cwd(), "src", "lib", "core", "navigation"),
-  pagesFolder: path.join(process.cwd(), "src", "pages"),
-  pageExtensions: ["page.tsx", "page.template.tsx"],
-};
 
 /** @type {NextConfig} */
 const config = {
@@ -156,11 +147,6 @@ const config = {
       use: [{ loader: "@stefanprobst/val-loader" }],
       exclude: /node_modules/,
     });
-
-    /** Auto-generate route manifest. */
-    if (!context.isServer) {
-      config.plugins?.push(new RouteManifestPlugin(routeManifestConfig));
-    }
 
     /** @type {(heading: HastElement, id: string) => Array<HastElement>} */
     function createPermalink(headingElement, id) {

@@ -46,9 +46,6 @@ public/**/*.webmanifest
 public/**/open-graph.*
 public/assets/cms/styles/*.css
 
-# generated route manifest
-src/lib/core/navigation/routes.ts
-
 
 ## .dockerignore ##
 
