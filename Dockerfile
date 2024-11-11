@@ -1,65 +1,67 @@
-# base
-FROM node:22-slim AS base
+# syntax=docker/dockerfile:1
+
+# using alpine base image to avoid `sharp` memory leaks.
+# @see https://sharp.pixelplumbing.com/install#linux-memory-allocator
+
+# build
+FROM node:22-alpine AS build
+
+RUN corepack enable
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
 
-# cannot use `--ignore-scripts` for `sharp` to compile
-RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
+RUN pnpm fetch
 
-# build
-FROM base AS build
+COPY --chown=node:node ./ ./
 
-RUN yarn install --frozen-lockfile --ignore-scripts --silent --prefer-offline
-
-COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.mjs ./
-COPY --chown=node:node scripts ./scripts
-COPY --chown=node:node config ./config
-COPY --chown=node:node public ./public
-COPY --chown=node:node src ./src
-
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
+# ARG NEXT_PUBLIC_APP_BASE_URL
 ARG NEXT_PUBLIC_BASE_URL
 ARG NEXT_PUBLIC_SSHOC_API_BASE_URL
 ARG NEXT_PUBLIC_MOCK_API
 ARG NEXT_PUBLIC_BOTS
 ARG NEXT_PUBLIC_MATOMO_BASE_URL
+# ARG NEXT_PUBLIC_MATOMO_ID
 ARG NEXT_PUBLIC_MATOMO_APP_ID
+# ARG NEXT_PUBLIC_REDMINE_ID
 ARG NEXT_PUBLIC_GOOGLE_SITE_ID
 ARG NEXT_PUBLIC_LOCAL_CMS_BACKEND
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
 
-# @see https://docs.docker.com/build/ci/github-actions/examples/#secrets
-# docker buildkit currently cannot mount secrets directly to env vars
-# @see https://github.com/moby/buildkit/issues/2122
-USER root
-RUN --mount=type=secret,id=github_token \
-  export GITHUB_TOKEN="$(cat /run/secrets/github_token)" && \
-  yarn build && \
-  unset GITHUB_TOKEN
-USER node
+# disable validation for runtime environment variables
+ENV ENV_VALIDATION=public
+
+RUN pnpm install --frozen-lockfile --offline
+
+ENV BUILD_MODE=standalone
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# mount secrets which need to be available at build time
+RUN --mount=type=secret,id=github_token,uid=1000 \
+		GITHUB_TOKEN=$(cat /run/secrets/github_token) \
+		pnpm run build
 
 # serve
-FROM node:22-slim AS serve
+FROM node:22-alpine AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --from=build --chown=node:node /app/next.config.mjs ./
+COPY --from=build --chown=node:node /app/next.config.js ./
 COPY --from=build --chown=node:node /app/public ./public
+COPY --from=build --chown=node:node /app/db/migrations ./db/migrations
 COPY --from=build --chown=node:node /app/.next/standalone ./
 COPY --from=build --chown=node:node /app/.next/static ./.next/static
 
-# Ensures folder is owned by node:node when mounted as volume.
+# Ensure folder is owned by node:node when mounted as volume.
 RUN mkdir -p /app/.next/cache/images
 
 ENV NODE_ENV=production
@@ -67,3 +69,12 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 CMD ["node", "server.js"]
+
+
+
+
+
+
+
+
+
