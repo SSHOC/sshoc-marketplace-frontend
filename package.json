@@ -8,23 +8,21 @@
   },
   "packageManager": "pnpm@9.12.3",
   "scripts": {
-    "analyze-bundle": "cross-env BUNDLE_ANALYZER=enabled next build",
+    "analyze-bundle": "BUNDLE_ANALYZER=enabled next build",
     "build": "next build",
     "cms:server": "decap-server",
     "dev": "next dev",
     "generate:favicons": "ts-script scripts/generate-favicons.ts",
     "generate:route-manifest": "ts-script scripts/generate-route-manifest.ts",
     "postbuild": "pnpm run generate:favicons",
-    "postinstall": "patch-package",
     "prebuild": "pnpm run generate:route-manifest",
-    "start": "next start",
-    "validate": "pnpm run format && pnpm run lint && pnpm run typecheck"
+    "start": "next start"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
     "@next/bundle-analyzer": "^12.3.4",
-    "@react-aria/accordion": "3.0.0-alpha.35",
-    "@react-aria/autocomplete": "3.0.0-alpha.35",
+    "@react-aria/accordion": "^3.0.0-alpha.35",
+    "@react-aria/autocomplete": "^3.0.0-alpha.35",
     "@react-aria/breadcrumbs": "^3.5.18",
     "@react-aria/button": "^3.10.1",
     "@react-aria/checkbox": "^3.14.8",
@@ -111,8 +109,6 @@
     "next": "^12.3.4",
     "nodemailer": "^6.9.16",
     "nprogress": "^0.2.0",
-    "patch-package": "^6.5.1",
-    "postinstall-postinstall": "^2.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-final-form": "^6.5.9",
@@ -183,6 +179,10 @@
   "pnpm": {
     "overrides": {
       "@swc/helpers@~0.4": "0.4.36"
+    },
+    "patchedDependencies": {
+      "@react-aria/link": "patches/@react-aria__link.patch",
+      "final-form": "patches/final-form.patch"
     }
   },
   "browserslist": {

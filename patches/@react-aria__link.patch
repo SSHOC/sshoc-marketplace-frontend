@@ -1,0 +1,87 @@
+diff --git a/dist/useLink.main.js b/dist/useLink.main.js
+index 030214343a2cb17d0f5aea3ad449f40803703b41..3e595fb83ec70c0f551724641ee2e157999df1f7 100644
+--- a/dist/useLink.main.js
++++ b/dist/useLink.main.js
+@@ -18,7 +18,7 @@ $parcel$export(module.exports, "useLink", () => $fbe6b19572273b2f$export$dcf14c9
+  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+  * OF ANY KIND, either express or implied. See the License for the specific language
+  * governing permissions and limitations under the License.
+- */ 
++ */
+ 
+ 
+ function $fbe6b19572273b2f$export$dcf14c9974fe2767(props, ref) {
+@@ -55,7 +55,9 @@ function $fbe6b19572273b2f$export$dcf14c9974fe2767(props, ref) {
+                 (_pressProps_onClick = pressProps.onClick) === null || _pressProps_onClick === void 0 ? void 0 : _pressProps_onClick.call(pressProps, e);
+                 if (deprecatedOnClick) {
+                     deprecatedOnClick(e);
+-                    console.warn('onClick is deprecated, please use onPress');
++                    if (process.env.NODE_ENV !== 'production') {
++                      console.warn('onClick is deprecated, please use onPress');
++                    }
+                 }
+                 // If a custom router is provided, prevent default and forward if this link should client navigate.
+                 if (!router.isNative && e.currentTarget instanceof HTMLAnchorElement && e.currentTarget.href && // If props are applied to a router Link component, it may have already prevented default.
+diff --git a/dist/useLink.mjs b/dist/useLink.mjs
+index 2ff84c372aef031f2862bf88fbbf956ea501b432..e416a8e65df364b712f23f5fdbccecc74fc8d920 100644
+--- a/dist/useLink.mjs
++++ b/dist/useLink.mjs
+@@ -12,7 +12,7 @@ import {usePress as $5Ot33$usePress} from "@react-aria/interactions";
+  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+  * OF ANY KIND, either express or implied. See the License for the specific language
+  * governing permissions and limitations under the License.
+- */ 
++ */
+ 
+ 
+ function $298d61e98472621b$export$dcf14c9974fe2767(props, ref) {
+@@ -49,7 +49,9 @@ function $298d61e98472621b$export$dcf14c9974fe2767(props, ref) {
+                 (_pressProps_onClick = pressProps.onClick) === null || _pressProps_onClick === void 0 ? void 0 : _pressProps_onClick.call(pressProps, e);
+                 if (deprecatedOnClick) {
+                     deprecatedOnClick(e);
+-                    console.warn('onClick is deprecated, please use onPress');
++                    if (process.env.NODE_ENV !== 'production') {
++                      console.warn('onClick is deprecated, please use onPress');
++                    }
+                 }
+                 // If a custom router is provided, prevent default and forward if this link should client navigate.
+                 if (!router.isNative && e.currentTarget instanceof HTMLAnchorElement && e.currentTarget.href && // If props are applied to a router Link component, it may have already prevented default.
+diff --git a/dist/useLink.module.js b/dist/useLink.module.js
+index 2ff84c372aef031f2862bf88fbbf956ea501b432..e416a8e65df364b712f23f5fdbccecc74fc8d920 100644
+--- a/dist/useLink.module.js
++++ b/dist/useLink.module.js
+@@ -12,7 +12,7 @@ import {usePress as $5Ot33$usePress} from "@react-aria/interactions";
+  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+  * OF ANY KIND, either express or implied. See the License for the specific language
+  * governing permissions and limitations under the License.
+- */ 
++ */
+ 
+ 
+ function $298d61e98472621b$export$dcf14c9974fe2767(props, ref) {
+@@ -49,7 +49,9 @@ function $298d61e98472621b$export$dcf14c9974fe2767(props, ref) {
+                 (_pressProps_onClick = pressProps.onClick) === null || _pressProps_onClick === void 0 ? void 0 : _pressProps_onClick.call(pressProps, e);
+                 if (deprecatedOnClick) {
+                     deprecatedOnClick(e);
+-                    console.warn('onClick is deprecated, please use onPress');
++                    if (process.env.NODE_ENV !== 'production') {
++                      console.warn('onClick is deprecated, please use onPress');
++                    }
+                 }
+                 // If a custom router is provided, prevent default and forward if this link should client navigate.
+                 if (!router.isNative && e.currentTarget instanceof HTMLAnchorElement && e.currentTarget.href && // If props are applied to a router Link component, it may have already prevented default.
+diff --git a/src/useLink.ts b/src/useLink.ts
+index fe019f59b1be8a56e36d6467d02ece04bd08e99d..5830ecc789ad43c831060c3ebf20d14a2fd583a7 100644
+--- a/src/useLink.ts
++++ b/src/useLink.ts
+@@ -76,7 +76,9 @@ export function useLink(props: AriaLinkOptions, ref: RefObject<FocusableElement
+         pressProps.onClick?.(e);
+         if (deprecatedOnClick) {
+           deprecatedOnClick(e);
+-          console.warn('onClick is deprecated, please use onPress');
++          if (process.env.NODE_ENV !== 'production') {
++            console.warn('onClick is deprecated, please use onPress');
++          }
+         }
+ 
+         // If a custom router is provided, prevent default and forward if this link should client navigate.
