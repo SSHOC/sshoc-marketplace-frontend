@@ -8,8 +8,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    },
-    "types": ["react/next", "@jest/types"]
+    }
   },
   "include": [
     "next-env.d.ts",
