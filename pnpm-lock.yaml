@@ -443,9 +443,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.1
         version: 18.3.1
-      '@types/sharp':
-        specifier: ^0.29.5
-        version: 0.29.5
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.49)
@@ -1573,9 +1570,6 @@ packages:
 
   '@types/set-cookie-parser@2.4.2':
     resolution: {integrity: sha512-fBZgytwhYAUkj/jC/FAV4RQ5EerRup1YQsXQCh8rZfiHkc4UahC192oH0smGwsXol3cL3A5oETuAHeQHmhXM4w==}
-
-  '@types/sharp@0.29.5':
-    resolution: {integrity: sha512-3TC+S3H5RwnJmLYMHrcdfNjz/CaApKmujjY9b6PU/pE6n0qfooi99YqXGWoW8frU9EWYj/XTI35Pzxa+ThAZ5Q==}
 
   '@types/statuses@2.0.5':
     resolution: {integrity: sha512-jmIUGWrAiwu3dZpxntxieC+1n/5c3mjrImkmOSQ2NC5uP6cYO4aAZDdSmRcI5C1oiTmqlZGHC+/NmJrKogbP5A==}
@@ -7071,10 +7065,6 @@ snapshots:
       csstype: 3.0.11
 
   '@types/set-cookie-parser@2.4.2':
-    dependencies:
-      '@types/node': 22.9.0
-
-  '@types/sharp@0.29.5':
     dependencies:
       '@types/node': 22.9.0
 
