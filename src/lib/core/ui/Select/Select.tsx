@@ -1,55 +1,64 @@
-import { FocusScope, useFocusRing } from '@react-aria/focus'
-import { useHover } from '@react-aria/interactions'
-import { DismissButton, useOverlayPosition } from '@react-aria/overlays'
-import { HiddenSelect, useSelect } from '@react-aria/select'
-import { mergeProps, useLayoutEffect, useResizeObserver } from '@react-aria/utils'
-import { useSelectState } from '@react-stately/select'
-import type { Placement } from '@react-types/overlays'
-import type { AriaSelectProps } from '@react-types/select'
-import type { Alignment, LabelPosition, LoadingState } from '@react-types/shared'
-import type { ForwardedRef } from 'react'
-import { forwardRef, Fragment, useCallback, useRef, useState } from 'react'
-import useComposedRef from 'use-composed-ref'
+import { FocusScope, useFocusRing } from "@react-aria/focus";
+import { useHover } from "@react-aria/interactions";
+import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
+import { HiddenSelect, useSelect } from "@react-aria/select";
+import {
+  mergeProps,
+  useLayoutEffect,
+  useResizeObserver,
+} from "@react-aria/utils";
+import { useSelectState } from "@react-stately/select";
+import type { Placement } from "@react-types/overlays";
+import type { AriaSelectProps } from "@react-types/select";
+import type {
+  Alignment,
+  LabelPosition,
+  LoadingState,
+} from "@react-types/shared";
+import type { ForwardedRef } from "react";
+import { forwardRef, Fragment, useCallback, useRef, useState } from "react";
+import useComposedRef from "use-composed-ref";
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { Field } from '@/lib/core/ui/Field/Field'
-import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
-import { Icon } from '@/lib/core/ui/Icon/Icon'
-import AlertIcon from '@/lib/core/ui/icons/alert.svg?symbol-icon'
-import CheckmarkIcon from '@/lib/core/ui/icons/checkmark.svg?symbol-icon'
-import ChevronIcon from '@/lib/core/ui/icons/chevron.svg?symbol-icon'
-import { ListBoxBase } from '@/lib/core/ui/ListBox/ListBoxBase'
-import type { ListBoxHeights } from '@/lib/core/ui/ListBox/useListBoxLayout'
-import { useListBoxLayout } from '@/lib/core/ui/ListBox/useListBoxLayout'
-import { Popover } from '@/lib/core/ui/Popover/Popover'
-import { ProgressSpinner } from '@/lib/core/ui/ProgressSpinner/ProgressSpinner'
-import css from '@/lib/core/ui/Select/Select.module.css'
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { Field } from "@/lib/core/ui/Field/Field";
+import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
+import { Icon } from "@/lib/core/ui/Icon/Icon";
+import AlertIcon from "@/lib/core/ui/icons/alert.svg?symbol-icon";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
+import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
+import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
+import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
+import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
+import { Popover } from "@/lib/core/ui/Popover/Popover";
+import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
+import css from "@/lib/core/ui/Select/Select.module.css";
 
-export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 'isLoading'> {
+export interface SelectProps<T extends object>
+  extends Omit<AriaSelectProps<T>, "isLoading"> {
   /** @default 'start' */
-  align?: Alignment
-  autoFocus?: boolean
+  align?: Alignment;
+  autoFocus?: boolean;
   /** @default 'primary' */
-  color?: 'form' | 'primary'
+  color?: "form" | "primary";
   /** @default 'bottom' */
-  direction?: 'bottom' | 'top'
+  direction?: "bottom" | "top";
   /**
    * Intentionally omitted, because HTML allows `readonly` only on `input` and `textarea`,
    * but not on `select`. We *could* use `aria-readonly`, which is allowed for role `listbox`
    * and `combobox`, but does not work great with our current markup
    * (button with `aria-haspopup="listbox"`).
    */
-  isReadOnly?: never
-  layout?: ListBoxHeights<T>
-  loadingState?: LoadingState
-  maxHeight?: number
+  isReadOnly?: never;
+  layout?: ListBoxHeights<T>;
+  loadingState?: LoadingState;
+  maxHeight?: number;
   /** @default 'md' */
-  size?: 'md' | 'sm'
+  size?: "md" | "sm";
 }
 
 export const Select = forwardRef(function Select<T extends object>(
   props: SelectProps<T>,
-  forwardedRef: ForwardedRef<HTMLDivElement>,
+  forwardedRef: ForwardedRef<HTMLDivElement>
 ): JSX.Element {
   // const isMobile = useIsMobileDevice()
 
@@ -59,53 +68,62 @@ export const Select = forwardRef(function Select<T extends object>(
   //   return <SelectBase ref={forwardedRef} {...props} />
   // }
 
-  return <SelectBase ref={forwardedRef} {...props} />
+  return <SelectBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
-  props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element
+  props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
+) => JSX.Element;
 
 const SelectBase = forwardRef(function SelectBase<T extends object>(
   props: SelectProps<T>,
-  forwardedRef: ForwardedRef<HTMLDivElement>,
+  forwardedRef: ForwardedRef<HTMLDivElement>
 ): JSX.Element {
   const {
-    color = 'primary',
-    align = 'start',
+    color = "primary",
+    align = "start",
     autoComplete,
     autoFocus,
-    direction = 'bottom',
+    direction = "bottom",
     isDisabled,
     label,
-    labelPosition = 'top' as LabelPosition,
+    labelPosition = "top" as LabelPosition,
     layout: _layout,
     loadingState,
     maxHeight,
     // menuWidth,
     name,
     shouldFlip = true,
-    size = 'md',
+    size = "md",
     validationState,
-  } = props
+  } = props;
 
-  const { t } = useI18n<'common'>()
+  const { t } = useI18n<"common">();
 
-  const state = useSelectState<T>(props)
-  const popoverRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const listboxRef = useRef<HTMLDivElement>(null)
-  const fieldRef = useRef<HTMLDivElement>(null)
-  const ref = useComposedRef(fieldRef, forwardedRef)
+  const state = useSelectState<T>(props);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const ref = useComposedRef(fieldRef, forwardedRef);
 
-  const layout = useListBoxLayout<T>(state, _layout)
-  const { labelProps, triggerProps, valueProps, menuProps, descriptionProps, errorMessageProps } =
-    useSelect<T>(
-      {
-        ...props,
-        keyboardDelegate: layout,
-      },
-      state,
-      triggerRef,
-    )
+  const layout = useListBoxLayout<T>(
+    state,
+    props.loadingState === "loadingMore"
+  );
+  const {
+    labelProps,
+    triggerProps,
+    valueProps,
+    menuProps,
+    descriptionProps,
+    errorMessageProps,
+  } = useSelect<T>(
+    {
+      ...props,
+      keyboardDelegate: layout,
+    },
+    state,
+    triggerRef
+  );
 
   const { overlayProps, placement, updatePosition } = useOverlayPosition({
     isOpen: state.isOpen,
@@ -116,20 +134,21 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     scrollRef: listboxRef,
     shouldFlip: shouldFlip,
     targetRef: triggerRef,
-  })
+  });
 
-  const { hoverProps, isHovered } = useHover(props)
-  const { focusProps, isFocusVisible } = useFocusRing(props)
+  const { hoverProps, isHovered } = useHover(props);
+  const { focusProps, isFocusVisible } = useFocusRing(props);
 
-  const placeholder = props.placeholder ?? t(['common', 'ui', 'select', 'placeholder'])
+  const placeholder =
+    props.placeholder ?? t(["common", "ui", "select", "placeholder"]);
 
-  const isInvalid = validationState === 'invalid'
+  const isInvalid = validationState === "invalid";
 
   const listbox = (
     <FocusScope contain restoreFocus>
       <DismissButton
         onDismiss={() => {
-          return state.close()
+          return state.close();
         }}
       />
       <ListBoxBase<T>
@@ -140,7 +159,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
         color={color}
         disallowEmptySelection
         focusOnPointerEnter
-        isLoading={loadingState === 'loadingMore'}
+        isLoading={loadingState === "loadingMore"}
         layout={layout}
         onLoadMore={props.onLoadMore}
         shouldSelectOnPressUp
@@ -148,40 +167,40 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       />
       <DismissButton
         onDismiss={() => {
-          return state.close()
+          return state.close();
         }}
       />
     </FocusScope>
-  )
+  );
 
-  const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined)
+  const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined);
 
   const onResize = useCallback(() => {
     if (triggerRef.current) {
-      const width = triggerRef.current.offsetWidth
-      setButtonWidth(width)
+      const width = triggerRef.current.offsetWidth;
+      setButtonWidth(width);
     }
-  }, [triggerRef, setButtonWidth])
+  }, [triggerRef, setButtonWidth]);
 
-  useResizeObserver({ onResize, ref: triggerRef })
+  useResizeObserver({ onResize, ref: triggerRef });
 
-  useLayoutEffect(onResize, [state.selectedKey, onResize])
+  useLayoutEffect(onResize, [state.selectedKey, onResize]);
 
   // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
   useLayoutEffect(() => {
     if (state.isOpen) {
       requestAnimationFrame(() => {
-        updatePosition()
-      })
+        updatePosition();
+      });
     }
-  }, [state.isOpen, updatePosition])
+  }, [state.isOpen, updatePosition]);
 
   const style = {
     ...overlayProps.style,
     minWidth: buttonWidth,
     width: buttonWidth,
     // width: menuWidth ?? buttonWidth,
-  }
+  };
 
   const overlay = (
     <Popover
@@ -195,31 +214,31 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     >
       {listbox}
     </Popover>
-  )
+  );
 
   const contents = (
     <span
       {...valueProps}
-      className={css['select-value']}
+      className={css["select-value"]}
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      data-placeholder={state.selectedItem == null ? '' : undefined}
+      data-placeholder={state.selectedItem == null ? "" : undefined}
     >
       {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
       {state.selectedItem != null ? state.selectedItem.rendered : placeholder}
     </span>
-  )
+  );
 
-  const loadingIndicator = <ProgressSpinner size="sm" />
+  const loadingIndicator = <ProgressSpinner size="sm" />;
 
   const picker = (
     <Fragment>
       <div
-        className={css['select-input-group']}
+        className={css["select-input-group"]}
         data-color={color}
         data-open={state.isOpen}
-        data-active={state.isOpen === true ? '' : undefined}
-        data-focused={isFocusVisible ? '' : undefined}
-        data-hovered={isHovered ? '' : undefined}
+        data-active={state.isOpen === true ? "" : undefined}
+        data-focused={isFocusVisible ? "" : undefined}
+        data-hovered={isHovered ? "" : undefined}
         data-size={size}
         data-validation-state={validationState}
         data-loading-state={loadingState}
@@ -243,10 +262,10 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
           validationState={validationState}
         >
           {contents}
-          {loadingState === 'loading' ? (
-            <div className={css['validation-icon']}>{loadingIndicator}</div>
+          {loadingState === "loading" ? (
+            <div className={css["validation-icon"]}>{loadingIndicator}</div>
           ) : validationState ? (
-            <div className={css['validation-icon']}>
+            <div className={css["validation-icon"]}>
               <Icon icon={isInvalid ? AlertIcon : CheckmarkIcon} />
             </div>
           ) : null}
@@ -256,7 +275,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       </div>
       {state.collection.size === 0 ? null : overlay}
     </Fragment>
-  )
+  );
 
   return (
     <Field
@@ -271,7 +290,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     >
       {picker}
     </Field>
-  )
+  );
 }) as <T extends object>(
-  props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element
+  props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
+) => JSX.Element;

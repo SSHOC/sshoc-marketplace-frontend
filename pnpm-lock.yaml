@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@swc/helpers@~0.4': 0.4.36
+  webpack: ^5.94.0
 
 patchedDependencies:
   '@react-aria/link':
@@ -302,8 +302,8 @@ importers:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-toastify:
-        specifier: 8.1.1
-        version: 8.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^10.0.6
+        version: 10.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rehype-react:
         specifier: ^7.2.0
         version: 7.2.0(@types/react@18.3.12)
@@ -759,7 +759,7 @@ packages:
   '@mdx-js/loader@2.3.0':
     resolution: {integrity: sha512-IqsscXh7Q3Rzb+f5DXYk0HU71PK+WuFsEhf+mSV3fOhpLcEpgsHvTQ2h0T6TlZ5gHOaBeFjkXwB52by7ypMyNg==}
     peerDependencies:
-      webpack: '>=4'
+      webpack: ^5.94.0
 
   '@mdx-js/mdx@2.1.0':
     resolution: {integrity: sha512-AuZGNLSGrytOd7a81E2SsWAOYg/eV5I51BlUPc11PPmPwhpovu7mwfyQ8PH1jxhdH0Is6aRtXHERuDxon0TluQ==}
@@ -1390,7 +1390,7 @@ packages:
     resolution: {integrity: sha512-Ldx0i7RyIXZ+Cp1zhc9g2lU6RkNPsR8K6KYRK6ndxcqoSrTubyFPLTVYKVcWUQFlDsHY1OqWXwWuqZ9rNHAz7w==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
-      webpack: ^5.0.0
+      webpack: ^5.94.0
 
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
@@ -4475,11 +4475,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
 
-  react-toastify@8.1.1:
-    resolution: {integrity: sha512-KQa+j+JHjy69xpPYheaWUq3SjVw1sV2D7/QsXW6Tpo2x9HhUCvASezAMYDmLhfAYoSnaXUVnTNFAgZQA75SExQ==}
+  react-toastify@10.0.6:
+    resolution: {integrity: sha512-yYjp+omCDf9lhZcrZHKbSq7YMuK0zcYkDFTzfRFgTXkTFHZ1ToxwAonzA4JI5CxA91JpjFLmwEsZEgfYfOqI1A==}
     peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
+      react: '>=18'
+      react-dom: '>=18'
 
   react-toastify@9.1.3:
     resolution: {integrity: sha512-fPfb8ghtn/XMxw3LkxQBk3IyagNpF/LIKjOBflbexr2AWxAH1MJgvnESwEwBn9liLFXgTKWgBSdZpw9m4OTHTg==}
@@ -5046,7 +5046,7 @@ packages:
       '@swc/core': '*'
       esbuild: '*'
       uglify-js: '*'
-      webpack: ^5.1.0
+      webpack: ^5.94.0
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -10543,9 +10543,9 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  react-toastify@8.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-toastify@10.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      clsx: 1.2.1
+      clsx: 2.1.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
