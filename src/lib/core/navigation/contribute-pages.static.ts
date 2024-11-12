@@ -44,11 +44,10 @@ export default async function load(): Promise<ValLoaderResult> {
       .map(async (folderEntry) => {
         const id = folderEntry.name.slice(0, -fileExtension.length);
 
-        const vfile = matter(
-          await read(path.join(folderPath, folderEntry.name), {
-            encoding: "utf-8",
-          })
-        );
+        const vfile = await read(path.join(folderPath, folderEntry.name), {
+          encoding: "utf-8",
+        });
+        matter(vfile, { strip: true });
         const { navigationMenu } = vfile.data[
           "matter"
         ] as ContributePageMetadata;

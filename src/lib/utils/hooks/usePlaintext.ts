@@ -1,12 +1,12 @@
 // import excerpt from '@stefanprobst/remark-excerpt'
-import type { Root } from 'mdast'
-import { toMarkdown } from 'mdast-util-to-markdown'
+import type { Root } from "mdast";
+import { toMarkdown } from "mdast-util-to-markdown";
 // import { toString } from 'mdast-util-to-string'
-import { useEffect, useMemo, useState } from 'react'
-import withGfm from 'remark-gfm'
-import fromMarkdown from 'remark-parse'
-import stripMarkdown from 'strip-markdown'
-import { unified } from 'unified'
+import { useEffect, useMemo, useState } from "react";
+import withGfm from "remark-gfm";
+import fromMarkdown from "remark-parse";
+import stripMarkdown from "strip-markdown";
+import { unified } from "unified";
 
 const processor = unified()
   .use(fromMarkdown)
@@ -24,48 +24,48 @@ const processor = unified()
      *
      * @see https://github.com/remarkjs/remark/discussions/963
      */
-    this.Compiler = function compile(tree: Root) {
+    this.compiler = function compile(tree: Root) {
       // return toString(tree)
-      return toMarkdown(tree)
-    }
-  })
+      return toMarkdown(tree);
+    };
+  });
 
 export interface UsePlaintextArgs {
-  markdown: string
+  markdown: string;
 }
 
 export function usePlaintextSync(args: UsePlaintextArgs): string {
-  const { markdown } = args
+  const { markdown } = args;
 
   const plaintext = useMemo(() => {
-    return String(processor.processSync(markdown))
-  }, [markdown])
+    return String(processor.processSync(markdown));
+  }, [markdown]);
 
-  return plaintext
+  return plaintext;
 }
 
 export function usePlaintext(args: UsePlaintextArgs): string {
-  const { markdown } = args
+  const { markdown } = args;
 
-  const [plaintext, setPlaintext] = useState('')
+  const [plaintext, setPlaintext] = useState("");
 
   useEffect(() => {
-    let isCanceled = false
+    let isCanceled = false;
 
     async function run() {
-      const vfile = await processor.process(markdown)
+      const vfile = await processor.process(markdown);
 
       if (!isCanceled) {
-        setPlaintext(String(vfile).replace(/\n+/g, ' ').trim())
+        setPlaintext(String(vfile).replace(/\n+/g, " ").trim());
       }
     }
 
-    run()
+    run();
 
     return () => {
-      isCanceled = true
-    }
-  }, [markdown])
+      isCanceled = true;
+    };
+  }, [markdown]);
 
-  return plaintext
+  return plaintext;
 }

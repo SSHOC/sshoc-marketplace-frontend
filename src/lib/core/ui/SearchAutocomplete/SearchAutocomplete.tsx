@@ -3,11 +3,7 @@ import { useFocusRing } from "@react-aria/focus";
 import { useFilter } from "@react-aria/i18n";
 import { useHover } from "@react-aria/interactions";
 import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
-import {
-  mergeProps,
-  useLayoutEffect,
-  useResizeObserver,
-} from "@react-aria/utils";
+import { mergeProps, useResizeObserver } from "@react-aria/utils";
 import { useComboBoxState } from "@react-stately/combobox";
 import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from "@react-types/autocomplete";
 import type { AriaButtonProps } from "@react-types/button";
@@ -37,6 +33,7 @@ import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 import css from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete.module.css";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
+import { useIsomorphicLayoutEffect } from "@/lib/utils/hooks/useIsomorphicLayoutEffect";
 
 export interface SearchAutocompleteProps<T extends object>
   extends AriaSearchAutocompleteProps<T> {
@@ -150,12 +147,12 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<
 
   useResizeObserver({ onResize, ref: fieldRef });
 
-  useLayoutEffect(onResize, [onResize]);
+  useIsomorphicLayoutEffect(onResize, [onResize]);
 
   // Update position once the ListBox has rendered. This ensures that
   // it flips properly when it doesn't fit in the available space.
   // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (state.isOpen) {
       requestAnimationFrame(() => {
         updatePosition();

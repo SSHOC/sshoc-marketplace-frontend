@@ -1,8 +1,9 @@
+import { useIsomorphicLayoutEffect } from "@/lib/utils/hooks/useIsomorphicLayoutEffect";
 import { useCollator } from "@react-aria/i18n";
 import type { ListLayoutOptions } from "@react-stately/layout";
 import { ListLayout } from "@react-stately/layout";
 import type { ListState } from "@react-stately/list";
-import { useLayoutEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 export type ListBoxHeights<T> = Pick<
   ListLayoutOptions<T>,
@@ -32,7 +33,7 @@ export function useListBoxLayout<T extends object>(
   layout.collection = state.collection;
   layout.disabledKeys = state.disabledKeys;
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (layout.isLoading !== isLoading) {
       layout.isLoading = isLoading;
       layout.virtualizer?.relayoutNow();

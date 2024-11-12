@@ -2,11 +2,7 @@ import { FocusScope, useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
 import { HiddenSelect, useSelect } from "@react-aria/select";
-import {
-  mergeProps,
-  useLayoutEffect,
-  useResizeObserver,
-} from "@react-aria/utils";
+import { mergeProps, useResizeObserver } from "@react-aria/utils";
 import { useSelectState } from "@react-stately/select";
 import type { Placement } from "@react-types/overlays";
 import type { AriaSelectProps } from "@react-types/select";
@@ -32,6 +28,7 @@ import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 import css from "@/lib/core/ui/Select/Select.module.css";
+import { useIsomorphicLayoutEffect } from "@/lib/utils/hooks/useIsomorphicLayoutEffect";
 
 export interface SelectProps<T extends object>
   extends Omit<AriaSelectProps<T>, "isLoading"> {
@@ -184,10 +181,10 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 
   useResizeObserver({ onResize, ref: triggerRef });
 
-  useLayoutEffect(onResize, [state.selectedKey, onResize]);
+  useIsomorphicLayoutEffect(onResize, [state.selectedKey, onResize]);
 
   // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (state.isOpen) {
       requestAnimationFrame(() => {
         updatePosition();

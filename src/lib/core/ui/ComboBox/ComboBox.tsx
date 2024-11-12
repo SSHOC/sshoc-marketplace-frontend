@@ -3,11 +3,7 @@ import { useFocusRing } from "@react-aria/focus";
 import { useFilter } from "@react-aria/i18n";
 import { useHover } from "@react-aria/interactions";
 import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
-import {
-  mergeProps,
-  useLayoutEffect,
-  useResizeObserver,
-} from "@react-aria/utils";
+import { mergeProps, useResizeObserver } from "@react-aria/utils";
 import { useComboBoxState } from "@react-stately/combobox";
 import type { AriaButtonProps } from "@react-types/button";
 import type { AriaComboBoxProps } from "@react-types/combobox";
@@ -45,6 +41,7 @@ import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
+import { useIsomorphicLayoutEffect } from "@/lib/utils/hooks/useIsomorphicLayoutEffect";
 
 export interface ComboBoxProps<T extends object>
   extends AriaComboBoxProps<T>,
@@ -162,12 +159,12 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 
   useResizeObserver({ onResize, ref: fieldRef });
 
-  useLayoutEffect(onResize, [onResize]);
+  useIsomorphicLayoutEffect(onResize, [onResize]);
 
   // Update position once the ListBox has rendered. This ensures that
   // it flips properly when it doesn't fit in the available space.
   // TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (state.isOpen) {
       requestAnimationFrame(() => {
         updatePosition();

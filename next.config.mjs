@@ -1,4 +1,3 @@
-/* @ts-expect-error Missing module declaration. */
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import { log } from "@stefanprobst/log";
 import createSvgPlugin from "@stefanprobst/next-svg";
@@ -10,7 +9,7 @@ import withListsWithAriaRole from "@stefanprobst/rehype-lists-with-aria-role";
 import withNextImage from "@stefanprobst/rehype-next-image";
 import withNextLinks from "@stefanprobst/rehype-next-links";
 import withNoReferrerLinks from "@stefanprobst/rehype-noreferrer-links";
-import withSyntaxHighlighting from "@stefanprobst/rehype-shiki";
+import withSyntaxHighlighting from "@shikijs/rehype";
 import withParsedFrontmatter from "@stefanprobst/remark-extract-yaml-frontmatter";
 import withParsedFrontmatterExport from "@stefanprobst/remark-extract-yaml-frontmatter/mdx";
 import withPage from "@stefanprobst/remark-mdx-page";
@@ -252,15 +251,7 @@ const config = {
               [withHeadingFragmentLinks, { generate: createPermalink }],
               withToc,
               withTocExport,
-              () => {
-                return async (tree, file) => {
-                  const highlighter = await getHighlighter({
-                    theme: syntaxHighlightingTheme,
-                  });
-                  /* @ts-expect-error Attacher always returns a transformer. */
-                  return withSyntaxHighlighting({ highlighter })(tree, file);
-                };
-              },
+              [withSyntaxHighlighting, { theme: syntaxHighlightingTheme }],
             ],
             recmaPlugins: [
               [
@@ -329,15 +320,7 @@ const config = {
               [withHeadingFragmentLinks, { generate: createPermalink }],
               withToc,
               withTocExport,
-              () => {
-                return async (tree, file) => {
-                  const highlighter = await getHighlighter({
-                    theme: syntaxHighlightingTheme,
-                  });
-                  /* @ts-expect-error Attacher always returns a transformer. */
-                  return withSyntaxHighlighting({ highlighter })(tree, file);
-                };
-              },
+              [withSyntaxHighlighting, { theme: syntaxHighlightingTheme }],
             ],
             recmaPlugins: [
               [
