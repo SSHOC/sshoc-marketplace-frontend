@@ -42,8 +42,17 @@ import {
   times,
 } from "@/lib/utils";
 
-const { datatype, name, date, helpers, internet, random, lorem, system } =
-  faker;
+const {
+  datatype,
+  date,
+  helpers,
+  internet,
+  lorem,
+  number,
+  person,
+  string,
+  system,
+} = faker;
 
 /** Ensure reproducible random values for model properties. */
 export const seed = 123;
@@ -123,23 +132,21 @@ const actor = {
   },
   generate(): Actor {
     const _actor: Actor = {
-      id: datatype.number(),
-      name: name.findName(),
-      externalIds: times(
-        datatype.number(Math.min(2, actorSourceStore.size))
-      ).map(() => {
-        return {
-          identifierService: actorSource.get(),
-          identifier: datatype.uuid(),
-        };
-      }),
-      website: optional(internet.url()),
-      email: optional(internet.email()),
-      affiliations: times(datatype.number(Math.min(2, actorStore.size))).map(
+      id: number.int(),
+      name: person.fullName(),
+      externalIds: times(number.int(Math.min(2, actorSourceStore.size))).map(
         () => {
-          return actor.get();
+          return {
+            identifierService: actorSource.get(),
+            identifier: string.uuid(),
+          };
         }
       ),
+      website: optional(internet.url()),
+      email: optional(internet.email()),
+      affiliations: times(number.int(Math.min(2, actorStore.size))).map(() => {
+        return actor.get();
+      }),
     };
     return _actor;
   },
@@ -161,9 +168,9 @@ const actorRole = {
   },
   generate(): ActorRole {
     const _actorRole: ActorRole = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.word()),
-      ord: datatype.number(),
+      ord: number.int(),
     };
     return _actorRole;
   },
@@ -185,9 +192,9 @@ const actorSource = {
   },
   generate(): ActorSource {
     const _actorSource: ActorSource = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.words()),
-      ord: datatype.number(),
+      ord: number.int(),
       urlTemplate: optional(internet.url()),
     };
     return _actorSource;
@@ -210,9 +217,9 @@ const itemSource = {
   },
   generate(): ItemSource {
     const _itemSource: ItemSource = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.words()),
-      ord: datatype.number(),
+      ord: number.int(),
       urlTemplate: optional(internet.url()),
     };
     return _itemSource;
@@ -235,7 +242,7 @@ const source = {
   },
   generate(): Source {
     const _source: Source = {
-      id: datatype.number(),
+      id: number.int(),
       label: capitalize(lorem.words()),
       url: internet.url(),
       urlTemplate: internet.url(),
@@ -261,14 +268,14 @@ const vocabulary = {
   },
   generate(): Vocabulary {
     const _vocabulary: VocabularyBase = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.words()),
       closed: datatype.boolean(),
       accessibleAt: optional(internet.url()),
     };
-    const _concepts = times(datatype.number({ min: 5, max: 50 })).map(() => {
+    const _concepts = times(number.int({ min: 5, max: 50 })).map(() => {
       return {
-        code: datatype.uuid(),
+        code: string.uuid(),
         vocabulary: { ..._vocabulary },
         label: capitalize(lorem.words()),
         notation: lorem.word(),
@@ -303,7 +310,7 @@ const media = {
   generate(): MediaDetails {
     const isLocalFile = datatype.boolean();
     const _mediaBase: MediaDetailsBase = {
-      mediaId: datatype.uuid(),
+      mediaId: string.uuid(),
       category: helpers.arrayElement(mediaCategories),
       mimeType: system.mimeType(),
       hasThumbnail: datatype.boolean(),
@@ -340,18 +347,18 @@ const propertyType = {
   generate(): PropertyType {
     const _type = helpers.arrayElement(propertyTypeType);
     const _propertyTypeBase: Omit<PropertyTypeBase, "type"> = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.words()),
       groupName: optional(lorem.word()),
       hidden: datatype.boolean(),
-      ord: datatype.number(),
+      ord: number.int(),
     };
     if (_type === "concept") {
       return {
         ..._propertyTypeBase,
         type: _type,
         allowedVocabularies: times(
-          datatype.number(Math.min(2, vocabularyStore.size))
+          number.int(Math.min(2, vocabularyStore.size))
         ).map(() => {
           return vocabulary.get();
         }),
@@ -381,7 +388,7 @@ const itemRelation = {
   },
   generate(): ItemRelation {
     const _itemRelation: ItemRelation = {
-      code: datatype.uuid(),
+      code: string.uuid(),
       label: capitalize(lorem.words()),
       inverseOf:
         itemRelationStore.size > 0
@@ -448,8 +455,8 @@ const item = {
     partial?: Partial<Omit<ItemBase, "category">>
   ): Omit<ItemBase, "category"> {
     const _item: Omit<ItemBase, "category"> = {
-      persistentId: datatype.uuid(),
-      id: datatype.number(),
+      persistentId: string.uuid(),
+      id: number.int(),
       label: capitalize(lorem.words()),
       version: optional(system.semver()),
       lastInfoUpdate: date.recent().toISOString(),
@@ -457,14 +464,14 @@ const item = {
       informationContributor: user.get(),
       description: lorem.paragraph(),
       contributors: times(
-        datatype.number(Math.min(3, actorStore.size, actorRoleStore.size))
+        number.int(Math.min(3, actorStore.size, actorRoleStore.size))
       ).map(() => {
         return {
           actor: actor.get(),
           role: actorRole.get(),
         };
       }),
-      properties: times(datatype.number(12)).map(() => {
+      properties: times(number.int(12)).map(() => {
         const _type = propertyType.get();
         if (_type.type === "concept") {
           return {
@@ -479,42 +486,40 @@ const item = {
           value: lorem.words(),
         };
       }),
-      externalIds: times(datatype.number(2)).map(() => {
+      externalIds: times(number.int(2)).map(() => {
         return {
-          identifier: datatype.uuid(),
+          identifier: string.uuid(),
           identifierService: itemSource.get(),
         };
       }),
-      accessibleAt: times(datatype.number(3)).map(() => {
+      accessibleAt: times(number.int(3)).map(() => {
         return internet.url();
       }),
       source: optional(source.get()),
-      sourceItemId: optional(datatype.uuid()),
-      relatedItems: times(datatype.number(Math.min(3, itemStore.size))).map(
-        () => {
-          const _item = item.get();
-          const category = _item.category;
-          const _relatedItemBase = {
-            persistentId: datatype.uuid(),
-            id: datatype.number(),
-            label: capitalize(lorem.words()),
-            description: lorem.paragraphs(),
-            relation: itemRelation.get(),
-          };
-          if (category === "step") {
-            return {
-              ..._relatedItemBase,
-              category,
-              workflowId: workflow.get().persistentId,
-            };
-          }
+      sourceItemId: optional(string.uuid()),
+      relatedItems: times(number.int(Math.min(3, itemStore.size))).map(() => {
+        const _item = item.get();
+        const category = _item.category;
+        const _relatedItemBase = {
+          persistentId: string.uuid(),
+          id: number.int(),
+          label: capitalize(lorem.words()),
+          description: lorem.paragraphs(),
+          relation: itemRelation.get(),
+        };
+        if (category === "step") {
           return {
-            category,
             ..._relatedItemBase,
+            category,
+            workflowId: workflow.get().persistentId,
           };
         }
-      ),
-      media: times(datatype.number(Math.min(3, mediaStore.size))).map(() => {
+        return {
+          category,
+          ..._relatedItemBase,
+        };
+      }),
+      media: times(number.int(Math.min(3, mediaStore.size))).map(() => {
         return {
           info: media.get(),
           caption: lorem.words(),
@@ -579,6 +584,7 @@ const item = {
       activity: "properties.*.type.code.activity",
       keyword: "properties.*.type.code.keyword",
       source: "source.identifierService.code",
+      language: "properties.*.type.code.language", // FIXME: check if this is correct
     };
 
     const matches = Object.entries(facets ?? {}).reduce(
@@ -617,6 +623,7 @@ const item = {
       activity: {},
       keyword: {},
       source: {},
+      language: {},
     };
     itemFacets.forEach((facet) => {
       const store = db.facets.get(facet);
@@ -775,7 +782,7 @@ const workflow = {
     const _workflow: Workflow = {
       ...item.generate(),
       category: "workflow",
-      composedOf: times(datatype.number(6)).map(() => {
+      composedOf: times(number.int(6)).map(() => {
         return workflowStep.generate();
       }),
       ...partial,
@@ -831,9 +838,9 @@ const user = {
   },
   generate(partial?: Partial<User>): User {
     const _user: User = {
-      id: datatype.number(),
+      id: number.int(),
       username: internet.userName(),
-      displayName: name.findName(),
+      displayName: person.fullName(),
       status: helpers.arrayElement(userStatus),
       registrationDate: date.past().toISOString(),
       role: helpers.arrayElement(userRoles),

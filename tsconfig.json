@@ -1,9 +1,6 @@
 {
-  "extends": "@stefanprobst/tsconfig",
+  "extends": "@acdh-oeaw/tsconfig",
   "compilerOptions": {
-    "target": "es2019",
-    "noUncheckedIndexedAccess": true,
-    // "exactOptionalPropertyTypes": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
