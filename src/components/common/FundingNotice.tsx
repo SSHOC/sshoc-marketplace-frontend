@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 import css from '@/components/common/FundingNotice.module.css'
 import { useI18n } from '@/lib/core/i18n/useI18n'

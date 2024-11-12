@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 import css from '@/components/search/BackgroundImage.module.css'
 import Clouds from '~/public/assets/images/backgrounds/search@2x.png'

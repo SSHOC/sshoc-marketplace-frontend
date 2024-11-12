@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 import css from '@/components/terms-of-use/BackgroundImage.module.css'
 import Clouds from '~/public/assets/images/backgrounds/terms-of-use@2x.png'
