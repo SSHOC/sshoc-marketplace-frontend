@@ -86,12 +86,17 @@ const config = {
     defaultLocale,
   },
   images: {
-    // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // dangerouslyAllowSVG: true,
-    domains:
-      process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"] != null
-        ? [process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"]]
-        : undefined,
+    remotePatterns: process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"]
+      ? [
+          {
+            protocol: "https",
+            hostname: new URL(process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"])
+              .hostname,
+            port: "",
+            search: "",
+          },
+        ]
+      : undefined,
   },
   output: "standalone",
   pageExtensions: ["page.tsx", "page.mdx", "api.ts"],
