@@ -7,7 +7,7 @@
     "node": "22.x",
     "pnpm": "9.x"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@9.13.0",
   "scripts": {
     "analyze-bundle": "BUNDLE_ANALYZER=enabled next build",
     "build": "next build",
@@ -90,7 +90,7 @@
     "change-case": "^5.4.4",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "decap-cms-app": "^3.3.3",
+    "decap-cms-app": "^3.4.0",
     "final-form": "^4.20.10",
     "final-form-arrays": "^3.1.0",
     "final-form-focus": "^1.1.2",

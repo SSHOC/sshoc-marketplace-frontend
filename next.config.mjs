@@ -213,7 +213,7 @@ const config = {
       "[id].template.tsx"
     );
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), "src", "pages", "about"),
       use: [
         {
@@ -282,7 +282,7 @@ const config = {
       "[id].template.tsx"
     );
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), "src", "pages", "contribute"),
       use: [
         {
