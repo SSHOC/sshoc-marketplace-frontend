@@ -1,17 +1,17 @@
-import { ItemVersionControls } from '@/components/item/ItemVersionControls'
-import type { ItemStatus } from '@/data/sshoc/api/item'
-import type { Tool } from '@/data/sshoc/api/tool-or-service'
+import { ItemVersionControls } from "@/components/item/ItemVersionControls";
+import type { ItemStatus } from "@/lib/data/sshoc/api/item";
+import type { Tool } from "@/lib/data/sshoc/api/tool-or-service";
 
 export interface ToolOrServiceVersionControlsProps {
-  persistentId: Tool['persistentId']
-  status: ItemStatus
-  versionId: Tool['id']
+  persistentId: Tool["persistentId"];
+  status: ItemStatus;
+  versionId: Tool["id"];
 }
 
 export function ToolOrServiceVersionControls(
-  props: ToolOrServiceVersionControlsProps,
+  props: ToolOrServiceVersionControlsProps
 ): JSX.Element {
-  const { persistentId, status, versionId } = props
+  const { persistentId, status, versionId } = props;
 
   return (
     <ItemVersionControls
@@ -20,5 +20,5 @@ export function ToolOrServiceVersionControls(
       status={status}
       versionId={versionId}
     />
-  )
+  );
 }

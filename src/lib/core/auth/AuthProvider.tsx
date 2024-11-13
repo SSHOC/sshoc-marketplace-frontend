@@ -16,13 +16,13 @@ import type {
   OAuthRegistrationInput,
   SignInInput,
   SignUpResponse,
-} from "@/data/sshoc/api/auth";
+} from "@/lib/data/sshoc/api/auth";
 import {
   authorizeWithEosc,
   signInUser,
   signUpUser,
   validateOAuthToken,
-} from "@/data/sshoc/api/auth";
+} from "@/lib/data/sshoc/api/auth";
 import type { PageComponent } from "@/lib/core/app/types";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { routes } from "@/lib/core/navigation/routes";

@@ -1,21 +1,21 @@
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
-import type { Item, ItemsDiff } from '@/data/sshoc/api/item'
+import type { Item, ItemsDiff } from "@/lib/data/sshoc/api/item";
 
 export interface UseItemDiffFormInitialValues<T extends Item> {
-  diff: ItemsDiff | undefined
-  item: T | undefined
+  diff: ItemsDiff | undefined;
+  item: T | undefined;
 }
 
 export function useItemDiffFormInitialValues<T extends Item>(
-  args: UseItemDiffFormInitialValues<T>,
+  args: UseItemDiffFormInitialValues<T>
 ): T | undefined {
-  const { diff, item } = args
+  const { diff, item } = args;
 
   const initialValues = useMemo(() => {
-    if (diff == null || item == null || diff.equal) return item
+    if (diff == null || item == null || diff.equal) return item;
 
-    const initialValues = { ...item }
+    const initialValues = { ...item };
 
     /**
      * Add deleted array field items to initial form values, so we can attach
@@ -25,55 +25,55 @@ export function useItemDiffFormInitialValues<T extends Item>(
       /* @ts-expect-error Not worth fixing types here. */
       if (Array.isArray(value) && value.length > initialValues[key].length) {
         switch (key) {
-          case 'accessibleAt':
+          case "accessibleAt":
             initialValues[key] = initialValues[key].concat(
-              Array(value.length - initialValues[key].length).fill(undefined),
-            )
-            break
-          case 'externalIds':
+              Array(value.length - initialValues[key].length).fill(undefined)
+            );
+            break;
+          case "externalIds":
             initialValues[key] = initialValues[key].concat(
               Array(value.length - initialValues[key].length).fill({
                 identifier: undefined,
                 identifierService: { code: undefined },
-              }),
-            )
-            break
-          case 'contributors':
+              })
+            );
+            break;
+          case "contributors":
             initialValues[key] = initialValues[key].concat(
               Array(value.length - initialValues[key].length).fill({
                 role: { code: undefined },
                 actor: { id: undefined },
-              }),
-            )
-            break
-          case 'properties':
+              })
+            );
+            break;
+          case "properties":
             initialValues[key] = initialValues[key].concat(
               Array(value.length - initialValues[key].length).fill({
                 type: { code: undefined, type: undefined },
                 // value: undefined,
                 concept: { uri: undefined },
-              }),
-            )
-            break
-          case 'relatedItems':
+              })
+            );
+            break;
+          case "relatedItems":
             initialValues[key] = initialValues[key].concat(
               Array(value.length - initialValues[key].length).fill({
                 relation: { code: undefined },
                 persistentId: undefined,
-              }),
-            )
-            break
-          case 'media':
+              })
+            );
+            break;
+          case "media":
             initialValues[key] = initialValues[key].concat(
-              Array(value.length - initialValues[key].length).fill(undefined),
-            )
-            break
+              Array(value.length - initialValues[key].length).fill(undefined)
+            );
+            break;
         }
       }
-    })
+    });
 
-    return initialValues
-  }, [diff, item])
+    return initialValues;
+  }, [diff, item]);
 
-  return initialValues
+  return initialValues;
 }

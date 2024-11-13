@@ -1,15 +1,15 @@
 // import styles from '@/components/item/ItemCitation.module.css'
-import type { Item } from '@/data/sshoc/api/item'
+import type { Item } from "@/lib/data/sshoc/api/item";
 // import { itemRoutes as routes } from '@/lib/core/navigation/item-routes'
 // import { createSiteUrl, isNonEmptyString } from '@/lib/utils'
 
 export interface ItemCitationProps {
-  item: Item
+  item: Item;
 }
 
 export function ItemCitation(_props: ItemCitationProps): JSX.Element | null {
   /** @see https://github.com/SSHOC/sshoc-marketplace-frontend/issues/182 */
-  return null
+  return null;
 
   // const { item } = props
 

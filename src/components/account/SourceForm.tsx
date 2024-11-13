@@ -1,25 +1,25 @@
-import { SourceFormControls } from '@/components/account/SourceFormControls'
-import { useSourceFormFields } from '@/components/account/useSourceFormFields'
-import { FormSection } from '@/components/common/FormSection'
-import type { SourceInput } from '@/data/sshoc/api/source'
-import { sourceInputSchema } from '@/data/sshoc/validation-schemas/source'
-import { Form } from '@/lib/core/form/Form'
-import { FormTextField } from '@/lib/core/form/FormTextField'
-import { validateSchema } from '@/lib/core/form/validateSchema'
+import { SourceFormControls } from "@/components/account/SourceFormControls";
+import { useSourceFormFields } from "@/components/account/useSourceFormFields";
+import { FormSection } from "@/components/common/FormSection";
+import type { SourceInput } from "@/lib/data/sshoc/api/source";
+import { sourceInputSchema } from "@/lib/data/sshoc/validation-schemas/source";
+import { Form } from "@/lib/core/form/Form";
+import { FormTextField } from "@/lib/core/form/FormTextField";
+import { validateSchema } from "@/lib/core/form/validateSchema";
 
-export type SourceFormValues = SourceInput
+export type SourceFormValues = SourceInput;
 
 export interface SourceFormProps {
-  initialValues?: Partial<SourceFormValues>
-  name?: string
-  onCancel: () => void
-  onSubmit: (source: SourceFormValues) => void
+  initialValues?: Partial<SourceFormValues>;
+  name?: string;
+  onCancel: () => void;
+  onSubmit: (source: SourceFormValues) => void;
 }
 
 export function SourceForm(props: SourceFormProps): JSX.Element {
-  const { initialValues, name, onCancel, onSubmit } = props
+  const { initialValues, name, onCancel, onSubmit } = props;
 
-  const fields = useSourceFormFields()
+  const fields = useSourceFormFields();
 
   return (
     <Form
@@ -36,5 +36,5 @@ export function SourceForm(props: SourceFormProps): JSX.Element {
         <SourceFormControls onCancel={onCancel} />
       </FormSection>
     </Form>
-  )
+  );
 }

@@ -1,22 +1,22 @@
-import { z } from 'zod'
+import { z } from "zod";
 
-import { mediaCategories } from '@/data/sshoc/api/media'
-import { conceptRefSchema } from '@/data/sshoc/validation-schemas/vocabulary'
-import { isEmptyFileList } from '@/lib/utils'
+import { mediaCategories } from "@/lib/data/sshoc/api/media";
+import { conceptRefSchema } from "@/lib/data/sshoc/validation-schemas/vocabulary";
+import { isEmptyFileList } from "@/lib/utils";
 
 export const mediaDetailsRefSchema = z.object({
   mediaId: z.string(),
-})
+});
 
 export const mediaLocationInputSchema = z.object({
   sourceUrl: z.string().url(),
-})
+});
 
 export const mediaSourceInputSchema = z.object({
   serviceUrl: z.string().url(),
   mediaCategory: z.enum(mediaCategories),
   ord: z.number().optional(),
-})
+});
 
 export const mediaUploadSchema =
   // FIXME: Use discriminated union.
@@ -40,33 +40,37 @@ export const mediaUploadSchema =
     })
     .refine(
       (data) => {
-        return !(isEmptyFileList(data.file) && data.sourceUrl == null)
+        return !(isEmptyFileList(data.file) && data.sourceUrl == null);
       },
       {
-        message: 'File or URL required',
+        message: "File or URL required",
         // FIXME: `path: [FORM_ERROR]`
-        path: ['sourceUrl'],
+        path: ["sourceUrl"],
         params: { mediaInput: [] },
-      },
+      }
     )
     .refine(
       (data) => {
-        return !(!isEmptyFileList(data.file) && data.sourceUrl != null)
+        return !(!isEmptyFileList(data.file) && data.sourceUrl != null);
       },
       {
-        message: 'Provide either file or URL, not both',
+        message: "Provide either file or URL, not both",
         // FIXME: `path: [FORM_ERROR]`
-        path: ['sourceUrl'],
-        params: { mediaInput: ['file', 'url'] },
-      },
+        path: ["sourceUrl"],
+        params: { mediaInput: ["file", "url"] },
+      }
     )
     .refine(
       (data) => {
-        if (data.sourceUrl != null && data.sourceUrl.includes('youtube.com/watch')) return false
-        return true
+        if (
+          data.sourceUrl != null &&
+          data.sourceUrl.includes("youtube.com/watch")
+        )
+          return false;
+        return true;
       },
       {
-        message: 'Provide a youtube embed link, not a youtube watch link',
-        path: ['sourceUrl'],
-      },
-    )
+        message: "Provide a youtube embed link, not a youtube watch link",
+        path: ["sourceUrl"],
+      }
+    );

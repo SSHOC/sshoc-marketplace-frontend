@@ -1,24 +1,26 @@
-import { HttpError } from '@stefanprobst/request'
-import { MutationCache, QueryCache, QueryClient } from 'react-query'
-import { broadcastQueryClient } from 'react-query/broadcastQueryClient-experimental'
+import { HttpError } from "@stefanprobst/request";
+import { MutationCache, QueryCache, QueryClient } from "react-query";
+import { broadcastQueryClient } from "react-query/broadcastQueryClient-experimental";
 
-import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
+import { isNotFoundError } from "@/lib/data/sshoc/utils/isNotFoundError";
 import type {
   DefaultErrorMessageMap,
   MutationMetadata,
   QueryMetadata,
-} from '@/lib/core/query/types'
-import { toast } from '@/lib/core/toast/toast'
-import { includes, isNonEmptyString } from '@/lib/utils'
-import { toastAutoCloseDelay } from '~/config/site.config'
+} from "@/lib/core/query/types";
+import { toast } from "@/lib/core/toast/toast";
+import { includes, isNonEmptyString } from "@/lib/utils";
+import { toastAutoCloseDelay } from "~/config/site.config";
 
-export type { QueryClient }
+export type { QueryClient };
 
 /**
  * Creates a `QueryClient` with global error handlers for queries and mutations.
  * Note that global error handlers will run *before* an error is delegated to an error boundary.
  */
-export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap): QueryClient {
+export function createQueryClient(
+  defaultErrorMessages: DefaultErrorMessageMap
+): QueryClient {
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
       onError(error, query) {
@@ -28,13 +30,13 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
          */
         // if (query.state.data == null) return
 
-        if (error instanceof HttpError && error.response.status === 404) return
+        if (error instanceof HttpError && error.response.status === 404) return;
 
-        const meta = query.meta as QueryMetadata | undefined
+        const meta = query.meta as QueryMetadata | undefined;
         const customMessage =
-          typeof meta?.messages?.error === 'function'
+          typeof meta?.messages?.error === "function"
             ? meta.messages.error(error, query)
-            : undefined
+            : undefined;
         const message =
           customMessage != null
             ? customMessage
@@ -42,63 +44,71 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             ? error.message
             : isNonEmptyString(error)
             ? error
-            : defaultErrorMessages.query.error
+            : defaultErrorMessages.query.error;
 
         /** Global error toast can be prevented when `meta.messages.error` returns `false`. */
         if (message !== false) {
-          toast.error(message, { toastId: String(query.queryKey) })
+          toast.error(message, { toastId: String(query.queryKey) });
         }
 
-        if (error instanceof HttpError && includes([401, 403], error.response.status)) {
+        if (
+          error instanceof HttpError &&
+          includes([401, 403], error.response.status)
+        ) {
           // TODO: Handle authentication errors here in global `onError` callback, or in root error boundary?
         }
       },
     }),
     mutationCache: new MutationCache({
       onMutate(variables, mutation) {
-        const meta = mutation.meta as MutationMetadata | undefined
+        const meta = mutation.meta as MutationMetadata | undefined;
         const customMessage =
-          typeof meta?.messages?.mutate === 'function'
+          typeof meta?.messages?.mutate === "function"
             ? meta.messages.mutate(variables, mutation)
-            : undefined
-        const message = customMessage != null ? customMessage : defaultErrorMessages.mutation.mutate
+            : undefined;
+        const message =
+          customMessage != null
+            ? customMessage
+            : defaultErrorMessages.mutation.mutate;
 
         /** Global loading toast can be prevented when `meta.messages.mutate` returns `false`. */
         if (message !== false) {
-          const toastId = String(mutation.mutationId)
-          toast.loading(message, { toastId, role: 'status' })
+          const toastId = String(mutation.mutationId);
+          toast.loading(message, { toastId, role: "status" });
         }
       },
       onSuccess(data, variables, context, mutation) {
-        const meta = mutation.meta as MutationMetadata | undefined
+        const meta = mutation.meta as MutationMetadata | undefined;
         const customMessage =
-          typeof meta?.messages?.success === 'function'
+          typeof meta?.messages?.success === "function"
             ? meta.messages.success(data, variables, context, mutation)
-            : undefined
+            : undefined;
         const message =
-          customMessage != null ? customMessage : defaultErrorMessages.mutation.success
+          customMessage != null
+            ? customMessage
+            : defaultErrorMessages.mutation.success;
 
         /** Global loading toast can be prevented when `meta.messages.mutate` returns `false`. */
         if (message !== false) {
-          const toastId = String(mutation.mutationId)
+          const toastId = String(mutation.mutationId);
           toast.update(toastId, {
             render: message,
-            type: 'success',
+            type: "success",
             isLoading: null,
             autoClose: toastAutoCloseDelay,
             closeButton: null,
             closeOnClick: null,
             draggable: null,
             delay: 100, // Work around one of the race conditions in `react-toastify`.
-          })
+          });
         }
       },
       onError(error, variables, context, mutation) {
-        const meta = mutation.meta as MutationMetadata | undefined
+        const meta = mutation.meta as MutationMetadata | undefined;
         const customMessage =
-          typeof meta?.messages?.error === 'function'
+          typeof meta?.messages?.error === "function"
             ? meta.messages.error(error, variables, context, mutation)
-            : undefined
+            : undefined;
         const message =
           customMessage != null
             ? customMessage
@@ -106,24 +116,27 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
             ? error.message
             : isNonEmptyString(error)
             ? error
-            : defaultErrorMessages.mutation.error
+            : defaultErrorMessages.mutation.error;
 
         /** Global error toast can be prevented when `meta.messages.error` returns `false`. */
         if (message !== false) {
-          const toastId = String(mutation.mutationId)
+          const toastId = String(mutation.mutationId);
           toast.update(toastId, {
             render: message,
-            type: 'error',
+            type: "error",
             isLoading: null,
             autoClose: toastAutoCloseDelay,
             closeButton: null,
             closeOnClick: null,
             draggable: null,
             delay: 100, // Work around one of the race conditions in `react-toastify`.
-          })
+          });
         }
 
-        if (error instanceof HttpError && includes([401, 403], error.response.status)) {
+        if (
+          error instanceof HttpError &&
+          includes([401, 403], error.response.status)
+        ) {
           // TODO: Handle authentication errors here in global `onError` callback, or in root error boundary?
         }
       },
@@ -132,39 +145,45 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
       queries: {
         retry(failureCount, error) {
           if (isNotFoundError(error)) {
-            return false
+            return false;
           } else if (failureCount < 2) {
-            return true
+            return true;
           } else {
-            return false
+            return false;
           }
         },
         // staleTime: 10 * 1000,
         /** Currently, `@react-aria` is not compatible with React 18 Suspense. */
         // suspense: true,
         useErrorBoundary(error) {
-          if (!(error instanceof HttpError)) return true
+          if (!(error instanceof HttpError)) return true;
 
           /**
            * Propagate only server errors and authentication errors to the error boundary.
            */
-          return error.response.status >= 500 || includes([401, 403], error.response.status)
+          return (
+            error.response.status >= 500 ||
+            includes([401, 403], error.response.status)
+          );
         },
       },
       mutations: {
         useErrorBoundary(error) {
-          if (!(error instanceof HttpError)) return true
+          if (!(error instanceof HttpError)) return true;
 
           /**
            * Propagate only server errors and authentication errors to the error boundary.
            */
-          return error.response.status >= 500 || includes([401, 403], error.response.status)
+          return (
+            error.response.status >= 500 ||
+            includes([401, 403], error.response.status)
+          );
         },
       },
     },
-  })
+  });
 
-  broadcastQueryClient({ queryClient })
+  broadcastQueryClient({ queryClient });
 
-  return queryClient
+  return queryClient;
 }

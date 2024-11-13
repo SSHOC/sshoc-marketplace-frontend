@@ -1,61 +1,75 @@
-import type { Key } from 'react'
-import { useMemo } from 'react'
+import type { Key } from "react";
+import { useMemo } from "react";
 
-import { useSearchItems } from '@/components/common/useSearchItems'
-import type { ItemCategory, ItemSearchSuggestion } from '@/data/sshoc/api/item'
-import { useItemAutocomplete } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { Item } from '@/lib/core/ui/Collection/Item'
-import { HighlightedText } from '@/lib/core/ui/HighlightedText/HighlightedText'
-import { SearchAutocomplete } from '@/lib/core/ui/SearchAutocomplete/SearchAutocomplete'
-import { mapBy } from '@/lib/utils'
-import { useDebouncedState } from '@/lib/utils/hooks/useDebouncedState'
-import { debounceDelay } from '~/config/sshoc.config'
+import { useSearchItems } from "@/components/common/useSearchItems";
+import type {
+  ItemCategory,
+  ItemSearchSuggestion,
+} from "@/lib/data/sshoc/api/item";
+import { useItemAutocomplete } from "@/lib/data/sshoc/hooks/item";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { Item } from "@/lib/core/ui/Collection/Item";
+import { HighlightedText } from "@/lib/core/ui/HighlightedText/HighlightedText";
+import { SearchAutocomplete } from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete";
+import { mapBy } from "@/lib/utils";
+import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
+import { debounceDelay } from "~/config/sshoc.config";
 
 export interface ItemSearchAutocompleteProps {
-  itemCategory?: ItemCategory
-  itemSearchTerm: string
-  onChangeItemSearchTerm: (itemSearchTerm: string) => void
-  onSubmit?: () => void
+  itemCategory?: ItemCategory;
+  itemSearchTerm: string;
+  onChangeItemSearchTerm: (itemSearchTerm: string) => void;
+  onSubmit?: () => void;
   /** @default 'md' */
-  size?: 'md' | 'sm'
+  size?: "md" | "sm";
 }
 
-export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): JSX.Element {
-  const { itemCategory, itemSearchTerm, onChangeItemSearchTerm, onSubmit, size } = props
+export function ItemSearchTermAutocomplete(
+  props: ItemSearchAutocompleteProps
+): JSX.Element {
+  const {
+    itemCategory,
+    itemSearchTerm,
+    onChangeItemSearchTerm,
+    onSubmit,
+    size,
+  } = props;
 
-  const { t } = useI18n<'common'>()
-  const { searchItems } = useSearchItems()
+  const { t } = useI18n<"common">();
+  const { searchItems } = useSearchItems();
   const debouncedItemSearchTerm = useDebouncedState({
     value: itemSearchTerm,
     delay: debounceDelay,
-  }).trim()
+  }).trim();
   const itemAutocompleteSuggestions = useItemAutocomplete({
     q: debouncedItemSearchTerm,
     category: itemCategory,
-  })
+  });
   const itemsById = useMemo(() => {
     if (itemAutocompleteSuggestions.data?.suggestions == null) {
-      return new Map<string, ItemSearchSuggestion>()
+      return new Map<string, ItemSearchSuggestion>();
     }
-    return mapBy(itemAutocompleteSuggestions.data.suggestions, 'persistentId')
-  }, [itemAutocompleteSuggestions.data])
-  const items = itemSearchTerm.length > 0 ? itemAutocompleteSuggestions.data?.suggestions ?? [] : []
+    return mapBy(itemAutocompleteSuggestions.data.suggestions, "persistentId");
+  }, [itemAutocompleteSuggestions.data]);
+  const items =
+    itemSearchTerm.length > 0
+      ? itemAutocompleteSuggestions.data?.suggestions ?? []
+      : [];
 
   function onSelectSuggestion(value: string, key: Key | null) {
-    const item = itemsById.get(key as string)
-    const q = item?.phrase ?? value
-    const categories = itemCategory != null ? [itemCategory] : undefined
-    searchItems({ q, categories })
-    onSubmit?.()
+    const item = itemsById.get(key as string);
+    const q = item?.phrase ?? value;
+    const categories = itemCategory != null ? [itemCategory] : undefined;
+    searchItems({ q, categories });
+    onSubmit?.();
   }
 
   return (
     <SearchAutocomplete
       name="q"
-      aria-label={t(['common', 'home', 'search', 'item-search-term'])}
+      aria-label={t(["common", "home", "search", "item-search-term"])}
       items={items}
-      loadingState={itemAutocompleteSuggestions.isLoading ? 'loading' : 'idle'}
+      loadingState={itemAutocompleteSuggestions.isLoading ? "loading" : "idle"}
       inputValue={itemSearchTerm}
       onInputChange={onChangeItemSearchTerm}
       onSubmit={onSelectSuggestion}
@@ -66,8 +80,8 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
           <Item key={item.persistentId} textValue={item.phrase}>
             <HighlightedText text={item.phrase} searchPhrase={itemSearchTerm} />
           </Item>
-        )
+        );
       }}
     </SearchAutocomplete>
-  )
+  );
 }

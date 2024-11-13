@@ -1,92 +1,93 @@
-import type { ItemInput } from '@/data/sshoc/api/item'
-import { isNonEmptyString } from '@/lib/utils'
+import type { ItemInput } from "@/lib/data/sshoc/api/item";
+import { isNonEmptyString } from "@/lib/utils";
 
 export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
-  const item = {} as any
+  const item = {} as any;
 
   Object.entries(values).forEach(([key, value]) => {
     switch (key) {
-      case 'accessibleAt': {
+      case "accessibleAt": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: unknown) => {
-            if (v == null) return false
-            return true
-          })
+            if (v == null) return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'externalIds': {
+      case "externalIds": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.identifierService?.code == null) return false
-            if (!isNonEmptyString(v.identifier)) return false
-            return true
-          })
+            if (v == null) return false;
+            if (v.identifierService?.code == null) return false;
+            if (!isNonEmptyString(v.identifier)) return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'contributors': {
+      case "contributors": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.role?.code == null) return false
-            if (v.actor?.id == null) return false
-            return true
-          })
+            if (v == null) return false;
+            if (v.role?.code == null) return false;
+            if (v.actor?.id == null) return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'properties': {
+      case "properties": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.type?.code == null) return false
-            if (v.concept?.uri == null && !isNonEmptyString(v.value)) return false
-            return true
-          })
+            if (v == null) return false;
+            if (v.type?.code == null) return false;
+            if (v.concept?.uri == null && !isNonEmptyString(v.value))
+              return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'relatedItems': {
+      case "relatedItems": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.relation?.code == null) return false
-            if (v.persistentId == null) return false
-            return true
-          })
+            if (v == null) return false;
+            if (v.relation?.code == null) return false;
+            if (v.persistentId == null) return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'media': {
+      case "media": {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: unknown) => {
-            if (v == null) return false
-            return true
-          })
+            if (v == null) return false;
+            return true;
+          });
         }
-        break
+        break;
       }
 
-      case 'composedOf': {
+      case "composedOf": {
         if (Array.isArray(value)) {
-          item[key] = value.map(removeEmptyItemFields)
+          item[key] = value.map(removeEmptyItemFields);
         }
-        break
+        break;
       }
 
       default: {
-        item[key] = value
-        break
+        item[key] = value;
+        break;
       }
     }
-  })
+  });
 
-  return item
+  return item;
 }

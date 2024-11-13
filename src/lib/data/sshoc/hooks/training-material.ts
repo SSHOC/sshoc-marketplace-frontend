@@ -1,7 +1,16 @@
-import type { UseInfiniteQueryOptions, UseMutationOptions, UseQueryOptions } from 'react-query'
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query'
+import type {
+  UseInfiniteQueryOptions,
+  UseMutationOptions,
+  UseQueryOptions,
+} from "react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 
-import type { AuthData } from '@/data/sshoc/api/common'
+import type { AuthData } from "@/lib/data/sshoc/api/common";
 import type {
   CommitDraftTrainingMaterial,
   CreateTrainingMaterial,
@@ -20,7 +29,7 @@ import type {
   MergeTrainingMaterials,
   RevertTrainingMaterialToVersion,
   UpdateTrainingMaterial,
-} from '@/data/sshoc/api/training-material'
+} from "@/lib/data/sshoc/api/training-material";
 import {
   commitDraftTrainingMaterial,
   createTrainingMaterial,
@@ -39,90 +48,118 @@ import {
   mergeTrainingMaterials,
   revertTrainingMaterialToVersion,
   updateTrainingMaterial,
-} from '@/data/sshoc/api/training-material'
-import { keys as itemKeys } from '@/data/sshoc/hooks/item'
-import { useSession } from '@/data/sshoc/lib/useSession'
-import { revalidate } from '@/lib/core/app/revalidate'
-import { itemRoutes } from '@/lib/core/navigation/item-routes'
+} from "@/lib/data/sshoc/api/training-material";
+import { keys as itemKeys } from "@/lib/data/sshoc/hooks/item";
+import { useSession } from "@/lib/data/sshoc/lib/useSession";
+import { revalidate } from "@/lib/core/app/revalidate";
+import { itemRoutes } from "@/lib/core/navigation/item-routes";
 
 // TODO: This needs some hierarchy, to be able to effectively use React Query's
 // query invalidation with partial query key matching.
 /** scope */
-const trainingMaterial = 'training-material'
+const trainingMaterial = "training-material";
 /** kind */
-const list = 'list'
-const detail = 'detail'
-const infinite = 'infinite'
-const version = 'version'
-const history = 'history'
-const informationContributors = 'informationContributors'
-const versionInformationContributors = 'versionInformationContributors'
-const merged = 'merged'
-const sources = 'sources'
-const diff = 'diff'
+const list = "list";
+const detail = "detail";
+const infinite = "infinite";
+const version = "version";
+const history = "history";
+const informationContributors = "informationContributors";
+const versionInformationContributors = "versionInformationContributors";
+const merged = "merged";
+const sources = "sources";
+const diff = "diff";
 
 export const keys = {
   all(auth?: AuthData | undefined) {
-    return [trainingMaterial, auth ?? null] as const
+    return [trainingMaterial, auth ?? null] as const;
   },
   lists(auth?: AuthData | undefined) {
-    return [trainingMaterial, list, auth ?? null] as const
+    return [trainingMaterial, list, auth ?? null] as const;
   },
   list(params: GetTrainingMaterials.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, list, params, auth ?? null] as const
+    return [trainingMaterial, list, params, auth ?? null] as const;
   },
-  listInfinite(params: GetTrainingMaterials.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, list, infinite, params, auth ?? null] as const
+  listInfinite(
+    params: GetTrainingMaterials.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, list, infinite, params, auth ?? null] as const;
   },
   details(auth?: AuthData | undefined) {
-    return [trainingMaterial, detail, auth ?? null] as const
+    return [trainingMaterial, detail, auth ?? null] as const;
   },
   detail(params: GetTrainingMaterial.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, detail, params, auth ?? null] as const
+    return [trainingMaterial, detail, params, auth ?? null] as const;
   },
   // versions(auth?: AuthData | undefined) {
   //   return [trainingMaterial, version, auth ?? null] as const
   // },
-  version(params: GetTrainingMaterialVersion.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, version, params, auth ?? null] as const
+  version(
+    params: GetTrainingMaterialVersion.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, version, params, auth ?? null] as const;
   },
   // histories(auth?: AuthData | undefined) {
   //   return [trainingMaterial, history, auth ?? null] as const
   // },
-  history(params: GetTrainingMaterialHistory.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, history, params, auth ?? null] as const
+  history(
+    params: GetTrainingMaterialHistory.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, history, params, auth ?? null] as const;
   },
   // informationContributors(auth?: AuthData | undefined) {
   //   return [trainingMaterial, informationContributors, auth ?? null] as const
   // },
   informationContributors(
     params: GetTrainingMaterialInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData | undefined
   ) {
-    return [trainingMaterial, informationContributors, params, auth ?? null] as const
+    return [
+      trainingMaterial,
+      informationContributors,
+      params,
+      auth ?? null,
+    ] as const;
   },
   // versionInformationContributors(auth?: AuthData | undefined) {
   //   return [trainingMaterial, versionInformationContributors, auth ?? null] as const
   // },
   versionInformationContributors(
     params: GetTrainingMaterialVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData | undefined
   ) {
-    return [trainingMaterial, versionInformationContributors, params, auth ?? null] as const
+    return [
+      trainingMaterial,
+      versionInformationContributors,
+      params,
+      auth ?? null,
+    ] as const;
   },
-  merged(params: GetMergedTrainingMaterial.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, merged, params, auth ?? null] as const
+  merged(
+    params: GetMergedTrainingMaterial.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, merged, params, auth ?? null] as const;
   },
-  sources(params: GetTrainingMaterialSources.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, sources, params, auth ?? null] as const
+  sources(
+    params: GetTrainingMaterialSources.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, sources, params, auth ?? null] as const;
   },
   diff(params: GetTrainingMaterialDiff.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, diff, params, auth ?? null] as const
+    return [trainingMaterial, diff, params, auth ?? null] as const;
   },
-  diffVersion(params: GetTrainingMaterialVersionDiff.Params, auth?: AuthData | undefined) {
-    return [trainingMaterial, version, diff, params, auth ?? null] as const
+  diffVersion(
+    params: GetTrainingMaterialVersionDiff.Params,
+    auth?: AuthData | undefined
+  ) {
+    return [trainingMaterial, version, diff, params, auth ?? null] as const;
   },
-}
+};
 
 export function useTrainingMaterials<TData = GetTrainingMaterials.Response>(
   params: GetTrainingMaterials.Params,
@@ -132,19 +169,21 @@ export function useTrainingMaterials<TData = GetTrainingMaterials.Response>(
     Error,
     TData,
     ReturnType<typeof keys.list>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.list(params, session),
     ({ signal }) => {
-      return getTrainingMaterials(params, session, { signal })
+      return getTrainingMaterials(params, session, { signal });
     },
-    { keepPreviousData: true, ...options },
-  )
+    { keepPreviousData: true, ...options }
+  );
 }
 
-export function useTrainingMaterialsInfinite<TData = GetTrainingMaterials.Response>(
+export function useTrainingMaterialsInfinite<
+  TData = GetTrainingMaterials.Response
+>(
   params: GetTrainingMaterials.Params,
   auth?: AuthData | undefined,
   options?: UseInfiniteQueryOptions<
@@ -153,23 +192,25 @@ export function useTrainingMaterialsInfinite<TData = GetTrainingMaterials.Respon
     TData,
     GetTrainingMaterials.Response,
     ReturnType<typeof keys.listInfinite>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useInfiniteQuery(
     keys.listInfinite(params, session),
     ({ signal, pageParam = params.page }) => {
-      return getTrainingMaterials({ ...params, page: pageParam }, session, { signal })
+      return getTrainingMaterials({ ...params, page: pageParam }, session, {
+        signal,
+      });
     },
     {
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
-        return undefined
+        if (lastPage.page < lastPage.pages) return lastPage.page + 1;
+        return undefined;
       },
-    },
-  )
+    }
+  );
 }
 
 export function useTrainingMaterial<TData = GetTrainingMaterial.Response>(
@@ -180,19 +221,21 @@ export function useTrainingMaterial<TData = GetTrainingMaterial.Response>(
     Error,
     TData,
     ReturnType<typeof keys.detail>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.detail(params, session),
     ({ signal }) => {
-      return getTrainingMaterial(params, session, { signal })
+      return getTrainingMaterial(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
-export function useTrainingMaterialVersion<TData = GetTrainingMaterialVersion.Response>(
+export function useTrainingMaterialVersion<
+  TData = GetTrainingMaterialVersion.Response
+>(
   params: GetTrainingMaterialVersion.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -200,19 +243,21 @@ export function useTrainingMaterialVersion<TData = GetTrainingMaterialVersion.Re
     Error,
     TData,
     ReturnType<typeof keys.version>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.version(params, session),
     ({ signal }) => {
-      return getTrainingMaterialVersion(params, session, { signal })
+      return getTrainingMaterialVersion(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
-export function useTrainingMaterialHistory<TData = GetTrainingMaterialHistory.Response>(
+export function useTrainingMaterialHistory<
+  TData = GetTrainingMaterialHistory.Response
+>(
   params: GetTrainingMaterialHistory.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -220,20 +265,20 @@ export function useTrainingMaterialHistory<TData = GetTrainingMaterialHistory.Re
     Error,
     TData,
     ReturnType<typeof keys.history>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.history(params, session),
     ({ signal }) => {
-      return getTrainingMaterialHistory(params, session, { signal })
+      return getTrainingMaterialHistory(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
 export function useTrainingMaterialInformationContributors<
-  TData = GetTrainingMaterialInformationContributors.Response,
+  TData = GetTrainingMaterialInformationContributors.Response
 >(
   params: GetTrainingMaterialInformationContributors.Params,
   auth?: AuthData | undefined,
@@ -242,20 +287,22 @@ export function useTrainingMaterialInformationContributors<
     Error,
     TData,
     ReturnType<typeof keys.informationContributors>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.informationContributors(params, session),
     ({ signal }) => {
-      return getTrainingMaterialInformationContributors(params, session, { signal })
+      return getTrainingMaterialInformationContributors(params, session, {
+        signal,
+      });
     },
-    options,
-  )
+    options
+  );
 }
 
 export function useTrainingMaterialVersionInformationContributors<
-  TData = GetTrainingMaterialVersionInformationContributors.Response,
+  TData = GetTrainingMaterialVersionInformationContributors.Response
 >(
   params: GetTrainingMaterialVersionInformationContributors.Params,
   auth?: AuthData | undefined,
@@ -264,16 +311,20 @@ export function useTrainingMaterialVersionInformationContributors<
     Error,
     TData,
     ReturnType<typeof keys.versionInformationContributors>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.versionInformationContributors(params, session),
     ({ signal }) => {
-      return getTrainingMaterialVersionInformationContributors(params, session, { signal })
+      return getTrainingMaterialVersionInformationContributors(
+        params,
+        session,
+        { signal }
+      );
     },
-    options,
-  )
+    options
+  );
 }
 
 export function useCreateTrainingMaterial(
@@ -283,27 +334,27 @@ export function useCreateTrainingMaterial(
     CreateTrainingMaterial.Response,
     Error,
     { data: CreateTrainingMaterial.Body }
-  >,
+  >
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     ({ data }: { data: CreateTrainingMaterial.Body }) => {
-      return createTrainingMaterial(params, data, session)
+      return createTrainingMaterial(params, data, session);
     },
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: trainingMaterial.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        options?.onSuccess?.(trainingMaterial, ...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        options?.onSuccess?.(trainingMaterial, ...args);
       },
-    },
-  )
+    }
+  );
 }
 
 export function useUpdateTrainingMaterial(
@@ -313,143 +364,157 @@ export function useUpdateTrainingMaterial(
     UpdateTrainingMaterial.Response,
     Error,
     { data: UpdateTrainingMaterial.Body }
-  >,
+  >
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     ({ data }: { data: UpdateTrainingMaterial.Body }) => {
-      return updateTrainingMaterial(params, data, session)
+      return updateTrainingMaterial(params, data, session);
     },
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: trainingMaterial.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }))
-        options?.onSuccess?.(trainingMaterial, ...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        queryClient.invalidateQueries(
+          keys.detail({ persistentId: params.persistentId })
+        );
+        options?.onSuccess?.(trainingMaterial, ...args);
       },
-    },
-  )
+    }
+  );
 }
 
 export function useDeleteTrainingMaterial(
   params: DeleteTrainingMaterial.Params,
   auth?: AuthData | undefined,
-  options?: UseMutationOptions<DeleteTrainingMaterial.Response, Error>,
+  options?: UseMutationOptions<DeleteTrainingMaterial.Response, Error>
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     () => {
-      return deleteTrainingMaterial(params, session)
+      return deleteTrainingMaterial(params, session);
     },
     {
       ...options,
       onSuccess(...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: params.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }))
-        options?.onSuccess?.(...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        queryClient.invalidateQueries(
+          keys.detail({ persistentId: params.persistentId })
+        );
+        options?.onSuccess?.(...args);
       },
-    },
-  )
+    }
+  );
 }
 
 export function useDeleteTrainingMaterialVersion(
   params: DeleteTrainingMaterialVersion.Params,
   auth?: AuthData | undefined,
-  options?: UseMutationOptions<DeleteTrainingMaterialVersion.Response, Error>,
+  options?: UseMutationOptions<DeleteTrainingMaterialVersion.Response, Error>
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     () => {
-      return deleteTrainingMaterialVersion(params, session)
+      return deleteTrainingMaterialVersion(params, session);
     },
     {
       ...options,
       onSuccess(...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: params.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }))
-        options?.onSuccess?.(...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        queryClient.invalidateQueries(
+          keys.detail({ persistentId: params.persistentId })
+        );
+        options?.onSuccess?.(...args);
       },
-    },
-  )
+    }
+  );
 }
 
 export function useRevertTrainingMaterialToVersion(
   params: RevertTrainingMaterialToVersion.Params,
   auth?: AuthData | undefined,
-  options?: UseMutationOptions<RevertTrainingMaterialToVersion.Response, Error>,
+  options?: UseMutationOptions<RevertTrainingMaterialToVersion.Response, Error>
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     () => {
-      return revertTrainingMaterialToVersion(params, session)
+      return revertTrainingMaterialToVersion(params, session);
     },
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: trainingMaterial.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }))
-        options?.onSuccess?.(trainingMaterial, ...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        queryClient.invalidateQueries(
+          keys.detail({ persistentId: params.persistentId })
+        );
+        options?.onSuccess?.(trainingMaterial, ...args);
       },
-    },
-  )
+    }
+  );
 }
 
-export const useApproveTrainingMaterialVersion = useRevertTrainingMaterialToVersion
-export const useRejectTrainingMaterialVersion = useDeleteTrainingMaterialVersion
+export const useApproveTrainingMaterialVersion =
+  useRevertTrainingMaterialToVersion;
+export const useRejectTrainingMaterialVersion =
+  useDeleteTrainingMaterialVersion;
 
 export function useCommitDraftTrainingMaterial(
   params: CommitDraftTrainingMaterial.Params,
   auth?: AuthData | undefined,
-  options?: UseMutationOptions<CommitDraftTrainingMaterial.Response, Error>,
+  options?: UseMutationOptions<CommitDraftTrainingMaterial.Response, Error>
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     () => {
-      return commitDraftTrainingMaterial(params, session)
+      return commitDraftTrainingMaterial(params, session);
     },
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: trainingMaterial.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }))
-        queryClient.invalidateQueries(itemKeys.drafts())
-        options?.onSuccess?.(trainingMaterial, ...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        queryClient.invalidateQueries(
+          keys.detail({ persistentId: params.persistentId })
+        );
+        queryClient.invalidateQueries(itemKeys.drafts());
+        options?.onSuccess?.(trainingMaterial, ...args);
       },
-    },
-  )
+    }
+  );
 }
 
-export function useMergedTrainingMaterial<TData = GetMergedTrainingMaterial.Response>(
+export function useMergedTrainingMaterial<
+  TData = GetMergedTrainingMaterial.Response
+>(
   params: GetMergedTrainingMaterial.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -457,16 +522,16 @@ export function useMergedTrainingMaterial<TData = GetMergedTrainingMaterial.Resp
     Error,
     TData,
     ReturnType<typeof keys.merged>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.merged(params, session),
     ({ signal }) => {
-      return getMergedTrainingMaterial(params, session, { signal })
+      return getMergedTrainingMaterial(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
 export function useMergeTrainingMaterials(
@@ -476,30 +541,32 @@ export function useMergeTrainingMaterials(
     MergeTrainingMaterials.Response,
     Error,
     { data: MergeTrainingMaterials.Body }
-  >,
+  >
 ) {
-  const queryClient = useQueryClient()
-  const session = useSession(auth)
+  const queryClient = useQueryClient();
+  const session = useSession(auth);
   return useMutation(
     ({ data }: { data: MergeTrainingMaterials.Body }) => {
-      return mergeTrainingMaterials(params, data, session)
+      return mergeTrainingMaterials(params, data, session);
     },
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = itemRoutes.ItemPage('training-material')({
+        const pathname = itemRoutes.ItemPage("training-material")({
           persistentId: trainingMaterial.persistentId,
-        }).pathname
-        revalidate({ pathname })
-        queryClient.invalidateQueries(itemKeys.search())
-        queryClient.invalidateQueries(keys.lists())
-        options?.onSuccess?.(trainingMaterial, ...args)
+        }).pathname;
+        revalidate({ pathname });
+        queryClient.invalidateQueries(itemKeys.search());
+        queryClient.invalidateQueries(keys.lists());
+        options?.onSuccess?.(trainingMaterial, ...args);
       },
-    },
-  )
+    }
+  );
 }
 
-export function useTrainingMaterialDiff<TData = GetTrainingMaterialDiff.Response>(
+export function useTrainingMaterialDiff<
+  TData = GetTrainingMaterialDiff.Response
+>(
   params: GetTrainingMaterialDiff.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -507,19 +574,21 @@ export function useTrainingMaterialDiff<TData = GetTrainingMaterialDiff.Response
     Error,
     TData,
     ReturnType<typeof keys.diff>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.diff(params, session),
     ({ signal }) => {
-      return getTrainingMaterialDiff(params, session, { signal })
+      return getTrainingMaterialDiff(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
-export function useTrainingMaterialVersionDiff<TData = GetTrainingMaterialVersionDiff.Response>(
+export function useTrainingMaterialVersionDiff<
+  TData = GetTrainingMaterialVersionDiff.Response
+>(
   params: GetTrainingMaterialVersionDiff.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -527,19 +596,21 @@ export function useTrainingMaterialVersionDiff<TData = GetTrainingMaterialVersio
     Error,
     TData,
     ReturnType<typeof keys.diffVersion>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.diffVersion(params, session),
     ({ signal }) => {
-      return getTrainingMaterialVersionDiff(params, session, { signal })
+      return getTrainingMaterialVersionDiff(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }
 
-export function useTrainingMaterialSources<TData = GetTrainingMaterialSources.Response>(
+export function useTrainingMaterialSources<
+  TData = GetTrainingMaterialSources.Response
+>(
   params: GetTrainingMaterialSources.Params,
   auth?: AuthData | undefined,
   options?: UseQueryOptions<
@@ -547,14 +618,14 @@ export function useTrainingMaterialSources<TData = GetTrainingMaterialSources.Re
     Error,
     TData,
     ReturnType<typeof keys.sources>
-  >,
+  >
 ) {
-  const session = useSession(auth)
+  const session = useSession(auth);
   return useQuery(
     keys.sources(params, session),
     ({ signal }) => {
-      return getTrainingMaterialSources(params, session, { signal })
+      return getTrainingMaterialSources(params, session, { signal });
     },
-    options,
-  )
+    options
+  );
 }

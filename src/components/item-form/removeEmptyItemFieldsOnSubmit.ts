@@ -1,7 +1,9 @@
-import type { ItemInput } from '@/data/sshoc/api/item'
-import { removeEmptyItemFields } from '@/data/sshoc/utils/removeEmptyItemFields'
+import type { ItemInput } from "@/lib/data/sshoc/api/item";
+import { removeEmptyItemFields } from "@/lib/data/sshoc/utils/removeEmptyItemFields";
 
-export function removeEmptyItemFieldsOnSubmit<T extends ItemInput>(values: T): T {
+export function removeEmptyItemFieldsOnSubmit<T extends ItemInput>(
+  values: T
+): T {
   /**
    * We allow submitting with empty fields, because we pre-populate the "create new item" forms
    * with empty recommended fields, and users should be able to (i) see regular error messages
@@ -13,10 +15,10 @@ export function removeEmptyItemFieldsOnSubmit<T extends ItemInput>(values: T): T
    * actual request handlers, we *also* need to remove those empty fields. So this will run twice,
    * but is cheap.
    */
-  if ('__submitting__' in values) {
+  if ("__submitting__" in values) {
     // delete values['__submitting__']
-    return removeEmptyItemFields(values)
+    return removeEmptyItemFields(values);
   }
 
-  return values
+  return values;
 }

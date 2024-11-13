@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-import type { GetDataset } from "@/data/sshoc/api/dataset";
-import { createUrl } from "@/data/sshoc/lib/client";
-import { db } from "@/data/sshoc/mocks/data/db";
+import type { GetDataset } from "@/lib/data/sshoc/api/dataset";
+import { createUrl } from "@/lib/data/sshoc/lib/client";
+import { db } from "@/lib/data/sshoc/mocks/data/db";
 
 export const handlers = [
   rest.get<never, StringParams<GetDataset.Params>, GetDataset.Response>(

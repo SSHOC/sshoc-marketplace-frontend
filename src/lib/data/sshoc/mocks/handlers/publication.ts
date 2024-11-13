@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-import type { GetPublication } from "@/data/sshoc/api/publication";
-import { createUrl } from "@/data/sshoc/lib/client";
-import { db } from "@/data/sshoc/mocks/data/db";
+import type { GetPublication } from "@/lib/data/sshoc/api/publication";
+import { createUrl } from "@/lib/data/sshoc/lib/client";
+import { db } from "@/lib/data/sshoc/mocks/data/db";
 
 export const handlers = [
   rest.get<never, StringParams<GetPublication.Params>, GetPublication.Response>(

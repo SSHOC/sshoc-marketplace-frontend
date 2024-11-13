@@ -3,24 +3,27 @@ import type {
   BeforeRequestHook,
   RequestOptions,
   UrlInit,
-} from '@stefanprobst/request'
-import { createUrl as _createUrl, request as _request } from '@stefanprobst/request'
+} from "@stefanprobst/request";
+import {
+  createUrl as _createUrl,
+  request as _request,
+} from "@stefanprobst/request";
 
-import type { AuthData } from '@/data/sshoc/api/common'
-import { baseUrl } from '~/config/sshoc.config'
+import type { AuthData } from "@/lib/data/sshoc/api/common";
+import { baseUrl } from "~/config/sshoc.config";
 
-const defaultReponseType = 'json' as const
+const defaultReponseType = "json" as const;
 
-export const createUrl = (init: Omit<UrlInit, 'baseUrl'>): URL => {
-  return _createUrl({ baseUrl, ...init })
-}
+export const createUrl = (init: Omit<UrlInit, "baseUrl">): URL => {
+  return _createUrl({ baseUrl, ...init });
+};
 
 export const request = (
   input: Request | URL,
   init: RequestOptions,
-  auth?: AuthData,
+  auth?: AuthData
 ): ReturnType<typeof _request> => {
-  const options = { responseType: defaultReponseType, ...init, auth }
+  const options = { responseType: defaultReponseType, ...init, auth };
 
   /**
    * Avoid sending empty query params.
@@ -29,18 +32,18 @@ export const request = (
    * params on a dynamic property query.
    */
   if (input instanceof URL) {
-    const searchParams = new URLSearchParams(input.searchParams)
+    const searchParams = new URLSearchParams(input.searchParams);
     searchParams.forEach((value, key) => {
-      if (value === '') {
-        input.searchParams.delete(key)
+      if (value === "") {
+        input.searchParams.delete(key);
       }
-    })
+    });
   }
 
-  return _request(input, options)
-}
+  return _request(input, options);
+};
 
-export type { AfterResponseHook, BeforeRequestHook, RequestOptions }
+export type { AfterResponseHook, BeforeRequestHook, RequestOptions };
 
 // TODO: `useRequest` which adds token from auth context provider,
 // to avoid manually adding the token in every single hook.

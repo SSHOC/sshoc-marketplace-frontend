@@ -1,13 +1,13 @@
 import type { ValLoaderResult } from "@stefanprobst/val-loader";
 
-import type { PropertyType } from "@/data/sshoc/api/property";
+import type { PropertyType } from "@/lib/data/sshoc/api/property";
 import { mapBy } from "@/lib/utils";
 
 export type StaticResult = Record<PropertyType["code"], PropertyType>;
 
 export default async function load(): Promise<ValLoaderResult> {
   /** FIXME: webpack loaders icurrently don't support esm. */
-  const { getPropertyTypes } = await import("@/data/sshoc/api/property");
+  const { getPropertyTypes } = await import("@/lib/data/sshoc/api/property");
 
   const data = await getPropertyTypes({ perpage: 100 });
   const propertyTypesById = Object.fromEntries(

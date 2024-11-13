@@ -1,16 +1,21 @@
-import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
-import type { PropertyType } from '@/data/sshoc/api/property'
-import type { FormSelectProps } from '@/lib/core/form/FormSelect'
-import { FormSelect } from '@/lib/core/form/FormSelect'
-import { Item } from '@/lib/core/ui/Collection/Item'
+import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
+import type { PropertyType } from "@/lib/data/sshoc/api/property";
+import type { FormSelectProps } from "@/lib/core/form/FormSelect";
+import { FormSelect } from "@/lib/core/form/FormSelect";
+import { Item } from "@/lib/core/ui/Collection/Item";
 
 export interface PropertyTypeSelectProps
-  extends Pick<FormSelectProps<PropertyType>, 'items' | 'loadingState' | 'onSelectionChange'> {
-  field: ItemFormFields['fields']['properties']['fields']['type']
+  extends Pick<
+    FormSelectProps<PropertyType>,
+    "items" | "loadingState" | "onSelectionChange"
+  > {
+  field: ItemFormFields["fields"]["properties"]["fields"]["type"];
 }
 
-export function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
-  const { field, items, loadingState, onSelectionChange } = props
+export function PropertyTypeSelect(
+  props: PropertyTypeSelectProps
+): JSX.Element {
+  const { field, items, loadingState, onSelectionChange } = props;
 
   return (
     <FormSelect
@@ -20,8 +25,8 @@ export function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element 
       onSelectionChange={onSelectionChange}
     >
       {(item) => {
-        return <Item key={item.code}>{item.label}</Item>
+        return <Item key={item.code}>{item.label}</Item>;
       }}
     </FormSelect>
-  )
+  );
 }

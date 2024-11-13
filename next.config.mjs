@@ -98,7 +98,7 @@ const config = {
       : undefined,
   },
   output: "standalone",
-  pageExtensions: ["page.tsx", "page.mdx", "api.ts"],
+  pageExtensions: ["ts", "tsx", "mdx"],
   poweredByHeader: false,
   /**
    * React Spectrum currently has issues with `StrictMode`.
@@ -210,7 +210,7 @@ const config = {
       "src",
       "pages",
       "about",
-      "[id].page.template.tsx"
+      "[id].template.tsx"
     );
     config.module?.rules?.push({
       test: /\.page\.mdx$/,
@@ -279,7 +279,7 @@ const config = {
       "src",
       "pages",
       "contribute",
-      "[id].page.template.tsx"
+      "[id].template.tsx"
     );
     config.module?.rules?.push({
       test: /\.page\.mdx$/,

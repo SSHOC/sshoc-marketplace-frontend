@@ -1,60 +1,62 @@
-import type { SearchFilters } from '@/components/account/useModerateItemsSearchFilters'
-import { useModerateItemsSearchFilters } from '@/components/account/useModerateItemsSearchFilters'
-import { useItemSearch } from '@/data/sshoc/hooks/item'
-import { convertDynamicPropertySearchParams } from '@/data/sshoc/lib/convertDynamicPropertySearchParams'
-import { entries } from '@/lib/utils'
+import type { SearchFilters } from "@/components/account/useModerateItemsSearchFilters";
+import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
+import { useItemSearch } from "@/lib/data/sshoc/hooks/item";
+import { convertDynamicPropertySearchParams } from "@/lib/data/sshoc/lib/convertDynamicPropertySearchParams";
+import { entries } from "@/lib/utils";
 
 /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 export function useModerateItemsSearchResults() {
-  const searchFilters = useModerateItemsSearchFilters()
-  const normalizedSearchFilters = normalizeSearchFilters(searchFilters)
-  const searchParams = convertDynamicPropertySearchParams(normalizedSearchFilters)
-  const contributedItemsSearch = useItemSearch(searchParams)
+  const searchFilters = useModerateItemsSearchFilters();
+  const normalizedSearchFilters = normalizeSearchFilters(searchFilters);
+  const searchParams = convertDynamicPropertySearchParams(
+    normalizedSearchFilters
+  );
+  const contributedItemsSearch = useItemSearch(searchParams);
 
-  return contributedItemsSearch
+  return contributedItemsSearch;
 }
 
 function normalizeSearchFilters(filters: SearchFilters) {
-  const searchFilters = {} as any
+  const searchFilters = {} as any;
 
   entries(filters).forEach(([key, value]) => {
     switch (key) {
-      case 'd.curation': {
+      case "d.curation": {
         if (Array.isArray(value)) {
           value.forEach((flag) => {
-            searchFilters[`d.curation-flag-${flag}`] = 'true'
-          })
+            searchFilters[`d.curation-flag-${flag}`] = "true";
+          });
         }
-        break
+        break;
       }
 
-      case 'd.lastInfoUpdate': {
+      case "d.lastInfoUpdate": {
         if (Array.isArray(value)) {
-          searchFilters['d.lastInfoUpdate'] = value.map((date) => {
-            return `[${new Date(date).toISOString()} TO NOW]`
-          })
+          searchFilters["d.lastInfoUpdate"] = value.map((date) => {
+            return `[${new Date(date).toISOString()} TO NOW]`;
+          });
         }
-        break
+        break;
       }
 
-      case 'd.deprecated-at-source': {
+      case "d.deprecated-at-source": {
         if (value === true) {
-          searchFilters['d.deprecated-at-source'] = 'true'
+          searchFilters["d.deprecated-at-source"] = "true";
         }
-        break
+        break;
       }
 
-      case 'd.conflict-at-source': {
+      case "d.conflict-at-source": {
         if (value === true) {
-          searchFilters['d.conflict-at-source'] = 'true'
+          searchFilters["d.conflict-at-source"] = "true";
         }
-        break
+        break;
       }
 
       default:
-        searchFilters[key] = value
+        searchFilters[key] = value;
     }
-  })
+  });
 
-  return searchFilters
+  return searchFilters;
 }

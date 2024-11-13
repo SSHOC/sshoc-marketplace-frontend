@@ -1,79 +1,105 @@
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
-import { useVocabularySearchFilters } from '@/components/account/useVocabularySearchFilters'
-import { MetadataLabel } from '@/components/common/MetadataLabel'
-import { MetadataValue } from '@/components/common/MetadataValue'
-import { MetadataValues } from '@/components/common/MetadataValues'
-import { SearchResult } from '@/components/common/SearchResult'
-import { SearchResultContent } from '@/components/common/SearchResultContent'
-import { SearchResultControls } from '@/components/common/SearchResultControls'
-import { SearchResultMeta } from '@/components/common/SearchResultMeta'
-import { SearchResultTitle } from '@/components/common/SearchResultTitle'
-import type { SearchConcepts } from '@/data/sshoc/api/vocabulary'
+import { useVocabularySearchFilters } from "@/components/account/useVocabularySearchFilters";
+import { MetadataLabel } from "@/components/common/MetadataLabel";
+import { MetadataValue } from "@/components/common/MetadataValue";
+import { MetadataValues } from "@/components/common/MetadataValues";
+import { SearchResult } from "@/components/common/SearchResult";
+import { SearchResultContent } from "@/components/common/SearchResultContent";
+import { SearchResultControls } from "@/components/common/SearchResultControls";
+import { SearchResultMeta } from "@/components/common/SearchResultMeta";
+import { SearchResultTitle } from "@/components/common/SearchResultTitle";
+import type { SearchConcepts } from "@/lib/data/sshoc/api/vocabulary";
 import {
   useApproveSuggestedConcept,
   useRejectSuggestedConcept,
-} from '@/data/sshoc/hooks/vocabulary'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import type { MutationMetadata } from '@/lib/core/query/types'
-import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
+} from "@/lib/data/sshoc/hooks/vocabulary";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import type { MutationMetadata } from "@/lib/core/query/types";
+import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 
 export interface VocabularySearchResultProps {
-  concept: SearchConcepts.Response['concepts'][number]
+  concept: SearchConcepts.Response["concepts"][number];
 }
 
-export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.Element {
-  const { concept } = props
+export function VocabularySearchResult(
+  props: VocabularySearchResultProps
+): JSX.Element {
+  const { concept } = props;
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const { t } = useI18n<"authenticated" | "common">();
 
   const rejectConceptMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'concepts', 'reject-candidate-concept-pending'])
+        return t([
+          "authenticated",
+          "concepts",
+          "reject-candidate-concept-pending",
+        ]);
       },
       success() {
-        return t(['authenticated', 'concepts', 'reject-candidate-concept-success'])
+        return t([
+          "authenticated",
+          "concepts",
+          "reject-candidate-concept-success",
+        ]);
       },
       error() {
-        return t(['authenticated', 'concepts', 'reject-candidate-concept-error'])
+        return t([
+          "authenticated",
+          "concepts",
+          "reject-candidate-concept-error",
+        ]);
       },
     },
-  }
+  };
   const rejectConcept = useRejectSuggestedConcept(
     { code: concept.code, vocabularyCode: concept.vocabulary.code },
     undefined,
-    { meta: rejectConceptMeta },
-  )
+    { meta: rejectConceptMeta }
+  );
 
   const approveConceptMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'concepts', 'approve-candidate-concept-pending'])
+        return t([
+          "authenticated",
+          "concepts",
+          "approve-candidate-concept-pending",
+        ]);
       },
       success() {
-        return t(['authenticated', 'concepts', 'approve-candidate-concept-success'])
+        return t([
+          "authenticated",
+          "concepts",
+          "approve-candidate-concept-success",
+        ]);
       },
       error() {
-        return t(['authenticated', 'concepts', 'approve-candidate-concept-error'])
+        return t([
+          "authenticated",
+          "concepts",
+          "approve-candidate-concept-error",
+        ]);
       },
     },
-  }
+  };
   const approveConcept = useApproveSuggestedConcept(
     { code: concept.code, vocabularyCode: concept.vocabulary.code },
     undefined,
-    { meta: approveConceptMeta },
-  )
+    { meta: approveConceptMeta }
+  );
 
   function onReject() {
-    rejectConcept.mutate({})
+    rejectConcept.mutate({});
   }
 
   function onApprove() {
-    approveConcept.mutate({})
+    approveConcept.mutate({});
   }
 
-  const isCandidateConcept = concept.candidate === true
+  const isCandidateConcept = concept.candidate === true;
 
   return (
     <Fragment>
@@ -82,8 +108,10 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.
         <SearchResultMeta>
           {isCandidateConcept ? (
             <MetadataValue size="sm">
-              <MetadataLabel size="sm">{t(['authenticated', 'concepts', 'status'])}:</MetadataLabel>
-              {t(['authenticated', 'concepts', 'concept-status', 'candidate'])}
+              <MetadataLabel size="sm">
+                {t(["authenticated", "concepts", "status"])}:
+              </MetadataLabel>
+              {t(["authenticated", "concepts", "concept-status", "candidate"])}
             </MetadataValue>
           ) : null}
         </SearchResultMeta>
@@ -91,20 +119,20 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.
           <MetadataValues>
             <MetadataValue>
               <MetadataLabel>
-                {t(['authenticated', 'concepts', 'concept-vocabulary', 'one'])}:
+                {t(["authenticated", "concepts", "concept-vocabulary", "one"])}:
               </MetadataLabel>
               {concept.vocabulary.code}
             </MetadataValue>
             <MetadataValue>
               <MetadataLabel>
-                {t(['authenticated', 'concepts', 'property-type', 'other'])}:
+                {t(["authenticated", "concepts", "property-type", "other"])}:
               </MetadataLabel>
               {concept.types
                 .map((type) => {
-                  return type.code
+                  return type.code;
                 })
                 // TODO: Intl.ListFormat, once support is better.
-                .join(', ')}
+                .join(", ")}
             </MetadataValue>
           </MetadataValues>
         </SearchResultContent>
@@ -112,25 +140,31 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.
           {isCandidateConcept ? (
             <Fragment>
               <ButtonLink
-                aria-label={t(['authenticated', 'concepts', 'reject-candidate-concept'], {
-                  values: { label: concept.label },
-                })}
+                aria-label={t(
+                  ["authenticated", "concepts", "reject-candidate-concept"],
+                  {
+                    values: { label: concept.label },
+                  }
+                )}
                 onPress={onReject}
               >
-                {t(['authenticated', 'controls', 'reject'])}
+                {t(["authenticated", "controls", "reject"])}
               </ButtonLink>
               <ButtonLink
-                aria-label={t(['authenticated', 'concepts', 'approve-candidate-concept'], {
-                  values: { label: concept.label },
-                })}
+                aria-label={t(
+                  ["authenticated", "concepts", "approve-candidate-concept"],
+                  {
+                    values: { label: concept.label },
+                  }
+                )}
                 onPress={onApprove}
               >
-                {t(['authenticated', 'controls', 'approve'])}
+                {t(["authenticated", "controls", "approve"])}
               </ButtonLink>
             </Fragment>
           ) : null}
         </SearchResultControls>
       </SearchResult>
     </Fragment>
-  )
+  );
 }

@@ -1,15 +1,17 @@
-import { ItemVersionControls } from '@/components/item/ItemVersionControls'
-import type { Dataset } from '@/data/sshoc/api/dataset'
-import type { ItemStatus } from '@/data/sshoc/api/item'
+import { ItemVersionControls } from "@/components/item/ItemVersionControls";
+import type { Dataset } from "@/lib/data/sshoc/api/dataset";
+import type { ItemStatus } from "@/lib/data/sshoc/api/item";
 
 export interface DatasetVersionControlsProps {
-  persistentId: Dataset['persistentId']
-  status: ItemStatus
-  versionId: Dataset['id']
+  persistentId: Dataset["persistentId"];
+  status: ItemStatus;
+  versionId: Dataset["id"];
 }
 
-export function DatasetVersionControls(props: DatasetVersionControlsProps): JSX.Element {
-  const { persistentId, status, versionId } = props
+export function DatasetVersionControls(
+  props: DatasetVersionControlsProps
+): JSX.Element {
+  const { persistentId, status, versionId } = props;
 
   return (
     <ItemVersionControls
@@ -18,5 +20,5 @@ export function DatasetVersionControls(props: DatasetVersionControlsProps): JSX.
       status={status}
       versionId={versionId}
     />
-  )
+  );
 }

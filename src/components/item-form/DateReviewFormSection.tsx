@@ -1,29 +1,37 @@
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
-import { FormSection } from '@/components/common/FormSection'
-import { FormSectionTitle } from '@/components/common/FormSectionTitle'
-import { ReviewField } from '@/components/item-form/ReviewField'
-import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
-import type { ItemsDiff } from '@/data/sshoc/api/item'
-import { FormDateField } from '@/lib/core/form/FormDateField'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { DateField } from '@/lib/core/ui/DateField/DateField'
+import { FormSection } from "@/components/common/FormSection";
+import { FormSectionTitle } from "@/components/common/FormSectionTitle";
+import { ReviewField } from "@/components/item-form/ReviewField";
+import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
+import type { ItemsDiff } from "@/lib/data/sshoc/api/item";
+import { FormDateField } from "@/lib/core/form/FormDateField";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { DateField } from "@/lib/core/ui/DateField/DateField";
 
 export interface DateReviewFormSectionProps {
-  formFields: ItemFormFields
+  formFields: ItemFormFields;
 }
 
-export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.Element {
-  const { category, fields } = props.formFields
+export function DateReviewFormSection(
+  props: DateReviewFormSectionProps
+): JSX.Element {
+  const { category, fields } = props.formFields;
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const { t } = useI18n<"authenticated" | "common">();
 
-  if (category === 'dataset' || category === 'publication' || category === 'training-material') {
+  if (
+    category === "dataset" ||
+    category === "publication" ||
+    category === "training-material"
+  ) {
     return (
       <FormSection>
-        <FormSectionTitle>{t(['authenticated', 'forms', 'date-section'])}</FormSectionTitle>
+        <FormSectionTitle>
+          {t(["authenticated", "forms", "date-section"])}
+        </FormSectionTitle>
 
-        <ReviewField<ItemsDiff['item']['dateCreated']>
+        <ReviewField<ItemsDiff["item"]["dateCreated"]>
           name={fields.label.name}
           review={({ createLabel, status, value }) => {
             return (
@@ -33,13 +41,13 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.El
                 label={createLabel(fields.dateCreated.label)}
                 value={value}
               />
-            )
+            );
           }}
         >
           <FormDateField {...fields.dateCreated} />
         </ReviewField>
 
-        <ReviewField<ItemsDiff['item']['dateLastUpdated']>
+        <ReviewField<ItemsDiff["item"]["dateLastUpdated"]>
           name={fields.label.name}
           review={({ createLabel, status, value }) => {
             return (
@@ -49,14 +57,14 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.El
                 label={createLabel(fields.dateLastUpdated.label)}
                 value={value}
               />
-            )
+            );
           }}
         >
           <FormDateField {...fields.dateLastUpdated} />
         </ReviewField>
       </FormSection>
-    )
+    );
   }
 
-  return <Fragment />
+  return <Fragment />;
 }

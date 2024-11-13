@@ -1,93 +1,101 @@
-import { VisuallyHidden } from '@react-aria/visually-hidden'
-import { Fragment, useMemo } from 'react'
+import { VisuallyHidden } from "@react-aria/visually-hidden";
+import { Fragment, useMemo } from "react";
 
-import css from '@/components/item/ItemMetadata.module.css'
-import type { Actor } from '@/data/sshoc/api/actor'
-import type { Item } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { createKey } from '@/lib/utils/create-key'
+import css from "@/components/item/ItemMetadata.module.css";
+import type { Actor } from "@/lib/data/sshoc/api/actor";
+import type { Item } from "@/lib/data/sshoc/api/item";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { createKey } from "@/lib/utils/create-key";
 
 export interface ItemActorsProps {
-  actors: Item['contributors']
+  actors: Item["contributors"];
 }
 
 export function ItemActors(props: ItemActorsProps): JSX.Element {
-  const { actors } = props
+  const { actors } = props;
 
-  const { t } = useI18n<'common'>()
-  const roles = useGroupedActors({ actors })
+  const { t } = useI18n<"common">();
+  const roles = useGroupedActors({ actors });
 
   if (roles.length === 0) {
-    return <Fragment />
+    return <Fragment />;
   }
 
   return (
     <div>
       <dt>
-        <VisuallyHidden>{t(['common', 'item', 'actors', 'other'])}</VisuallyHidden>
+        <VisuallyHidden>
+          {t(["common", "item", "actors", "other"])}
+        </VisuallyHidden>
       </dt>
       <dd>
-        <dl className={css['groups']}>
+        <dl className={css["groups"]}>
           {roles.map(([role, actors]) => {
             return (
-              <div key={role} className={css['group']}>
-                <dt className={css['group-label']}>{role}</dt>
+              <div key={role} className={css["group"]}>
+                <dt className={css["group-label"]}>{role}</dt>
                 <dd>
-                  <ul role="list" className={css['group-items']}>
+                  <ul role="list" className={css["group-items"]}>
                     {actors.map(([name, actor]) => {
                       return (
                         <li key={name}>
                           <div>{name}</div>
-                          <ActorAffiliations affiliations={actor.affiliations} />
+                          <ActorAffiliations
+                            affiliations={actor.affiliations}
+                          />
                           <ActorEmail email={actor.email} />
                           <ActorWebsite website={actor.website} />
                           <ActorExternalIds externalIds={actor.externalIds} />
                         </li>
-                      )
+                      );
                     })}
                   </ul>
                 </dd>
               </div>
-            )
+            );
           })}
         </dl>
       </dd>
     </div>
-  )
+  );
 }
 
 interface UseGroupedActorsArgs {
-  actors: Item['contributors']
+  actors: Item["contributors"];
 }
 
-function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[string, Actor]>]> {
-  const { actors } = args
+function useGroupedActors(
+  args: UseGroupedActorsArgs
+): Array<[string, Array<[string, Actor]>]> {
+  const { actors } = args;
 
-  const { createCollator } = useI18n<'common'>()
+  const { createCollator } = useI18n<"common">();
 
   const roles = useMemo(() => {
-    const compare = createCollator()
+    const compare = createCollator();
 
-    const roles = new Map<string, Map<string, any>>()
+    const roles = new Map<string, Map<string, any>>();
 
     actors.forEach((actor) => {
-      const roleLabel = actor.role.label
-      const name = actor.actor.name
+      const roleLabel = actor.role.label;
+      const name = actor.actor.name;
 
       if (!roles.has(roleLabel)) {
-        roles.set(roleLabel, new Map())
+        roles.set(roleLabel, new Map());
       }
       /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
-      const role = roles.get(roleLabel)!
+      const role = roles.get(roleLabel)!;
 
       if (!role.has(name)) {
-        role.set(name, actor.actor)
+        role.set(name, actor.actor);
       }
-    })
+    });
 
-    const sortedRoles = Array.from(roles).sort(([roleLabel], [otherRoleLabel]) => {
-      return compare(roleLabel, otherRoleLabel)
-    })
+    const sortedRoles = Array.from(roles).sort(
+      ([roleLabel], [otherRoleLabel]) => {
+        return compare(roleLabel, otherRoleLabel);
+      }
+    );
 
     const sorted = sortedRoles.map(([roleLabel, actors]) => {
       return [
@@ -99,102 +107,111 @@ function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[str
         // .sort(([name], [otherName]) => {
         //   return compare(name, otherName)
         // }),
-      ]
-    })
+      ];
+    });
 
-    return sorted
-  }, [actors, createCollator])
+    return sorted;
+  }, [actors, createCollator]);
 
-  return roles as Array<[string, Array<[string, Actor]>]>
+  return roles as Array<[string, Array<[string, Actor]>]>;
 }
 
 interface ActorAffiliationsProps {
-  affiliations: Actor['affiliations']
+  affiliations: Actor["affiliations"];
 }
 
 function ActorAffiliations(props: ActorAffiliationsProps): JSX.Element {
-  const { affiliations } = props
+  const { affiliations } = props;
 
   if (affiliations.length === 0) {
-    return <Fragment />
+    return <Fragment />;
   }
 
   return (
-    <div className={css['secondary']}>
+    <div className={css["secondary"]}>
       {affiliations
         .map((actor) => {
-          return actor.name
+          return actor.name;
         })
-        .join(', ')}
+        .join(", ")}
     </div>
-  )
+  );
 }
 
 interface ActorEmailProps {
-  email: Actor['email']
+  email: Actor["email"];
 }
 
 function ActorEmail(props: ActorEmailProps): JSX.Element {
-  const { email } = props
+  const { email } = props;
 
   if (email == null) {
-    return <Fragment />
+    return <Fragment />;
   }
 
   return (
     <div>
-      <a className={css['link']} href={`mailto:${email}`}>
+      <a className={css["link"]} href={`mailto:${email}`}>
         {email}
       </a>
     </div>
-  )
+  );
 }
 
 interface ActorWebsiteProps {
-  website: Actor['website']
+  website: Actor["website"];
 }
 
 function ActorWebsite(props: ActorWebsiteProps): JSX.Element {
-  const { website } = props
+  const { website } = props;
 
   if (website == null) {
-    return <Fragment />
+    return <Fragment />;
   }
 
   return (
     <div>
-      <a className={css['link']} href={website} target="_blank" rel="noreferrer">
+      <a
+        className={css["link"]}
+        href={website}
+        target="_blank"
+        rel="noreferrer"
+      >
         {website}
       </a>
     </div>
-  )
+  );
 }
 
 interface ActorExternalIdsProps {
-  externalIds: Actor['externalIds']
+  externalIds: Actor["externalIds"];
 }
 
 function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
-  const { externalIds } = props
+  const { externalIds } = props;
 
   if (externalIds.length === 0) {
-    return <Fragment />
+    return <Fragment />;
   }
 
   return (
-    <div className={css['values']}>
+    <div className={css["values"]}>
       {externalIds.map((id) => {
-        if (internalExternalIds.includes(id.identifierService.code)) return null
+        if (internalExternalIds.includes(id.identifierService.code))
+          return null;
 
         if (id.identifierService.urlTemplate == null) {
           return (
             <span key={createKey(id.identifierService.code, id.identifier)}>
               {id.identifierService.label}: {id.identifier}
             </span>
-          )
+          );
         }
 
-        const href = id.identifierService.urlTemplate.replace('{source-actor-id}', id.identifier)
+        const href = id.identifierService.urlTemplate.replace(
+          "{source-actor-id}",
+          id.identifier
+        );
 
         return (
           <a
@@ -202,14 +219,14 @@ function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className={css['link']}
+            className={css["link"]}
           >
             {id.identifierService.label}
           </a>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
-const internalExternalIds = ['SourceActorId']
+const internalExternalIds = ["SourceActorId"];

@@ -4,9 +4,9 @@ import type {
   GetItemCategories,
   ItemCategoryWithWorkflowStep,
   ItemSearch,
-} from "@/data/sshoc/api/item";
-import { createUrl } from "@/data/sshoc/lib/client";
-import { db } from "@/data/sshoc/mocks/data/db";
+} from "@/lib/data/sshoc/api/item";
+import { createUrl } from "@/lib/data/sshoc/lib/client";
+import { db } from "@/lib/data/sshoc/mocks/data/db";
 
 export const handlers = [
   rest.get<never, never, GetItemCategories.Response>(

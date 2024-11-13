@@ -1,23 +1,24 @@
-import { SchemaOrg } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 
-import { isPropertyConcept } from '@/data/sshoc/api/property'
-import type { TrainingMaterial } from '@/data/sshoc/api/training-material'
+import { isPropertyConcept } from "@/lib/data/sshoc/api/property";
+import type { TrainingMaterial } from "@/lib/data/sshoc/api/training-material";
 
 export interface TrainingMaterialSchemaOrgMetadataProps {
-  trainingMaterial: TrainingMaterial
+  trainingMaterial: TrainingMaterial;
 }
 
 export function TrainingMaterialSchemaOrgMetadata(
-  props: TrainingMaterialSchemaOrgMetadataProps,
+  props: TrainingMaterialSchemaOrgMetadataProps
 ): JSX.Element {
-  const { trainingMaterial } = props
+  const { trainingMaterial } = props;
 
-  const conceptBasedProperties = trainingMaterial.properties.filter(isPropertyConcept)
+  const conceptBasedProperties =
+    trainingMaterial.properties.filter(isPropertyConcept);
 
   return (
     <SchemaOrg
       schema={{
-        '@type': 'CreativeWork',
+        "@type": "CreativeWork",
         headline: trainingMaterial.label,
         name: trainingMaterial.label,
         abstract: trainingMaterial.description,
@@ -25,32 +26,32 @@ export function TrainingMaterialSchemaOrgMetadata(
         url: trainingMaterial.accessibleAt,
         about: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'keyword'
+            return property.type.code === "keyword";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
         license: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'license'
+            return property.type.code === "license";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
         version: trainingMaterial.version,
         contributor: trainingMaterial.contributors.map((contributor) => {
-          return contributor.actor.name
+          return contributor.actor.name;
         }),
         dateCreated: trainingMaterial.dateCreated,
         dateModified: trainingMaterial.dateLastUpdated,
         inLanguage: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'language'
+            return property.type.code === "language";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
       }}
     />
-  )
+  );
 }

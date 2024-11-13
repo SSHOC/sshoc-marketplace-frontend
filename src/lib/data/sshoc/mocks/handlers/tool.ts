@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-import type { GetTool } from "@/data/sshoc/api/tool-or-service";
-import { createUrl } from "@/data/sshoc/lib/client";
-import { db } from "@/data/sshoc/mocks/data/db";
+import type { GetTool } from "@/lib/data/sshoc/api/tool-or-service";
+import { createUrl } from "@/lib/data/sshoc/lib/client";
+import { db } from "@/lib/data/sshoc/mocks/data/db";
 
 export const handlers = [
   rest.get<never, StringParams<GetTool.Params>, GetTool.Response>(

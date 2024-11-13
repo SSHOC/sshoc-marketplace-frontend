@@ -2,9 +2,9 @@ import { faker } from "@faker-js/faker";
 import * as jwt from "jose";
 import { matchSorter } from "match-sorter";
 
-import type { Actor, ActorRole, ActorSource } from "@/data/sshoc/api/actor";
-import type { PaginatedResponse } from "@/data/sshoc/api/common";
-import type { Dataset } from "@/data/sshoc/api/dataset";
+import type { Actor, ActorRole, ActorSource } from "@/lib/data/sshoc/api/actor";
+import type { PaginatedResponse } from "@/lib/data/sshoc/api/common";
+import type { Dataset } from "@/lib/data/sshoc/api/dataset";
 import type {
   ItemBase,
   ItemCategoryWithWorkflowStep,
@@ -14,25 +14,34 @@ import type {
   ItemSearchResult,
   ItemSource,
   ItemWithWorkflowStep,
-} from "@/data/sshoc/api/item";
-import { itemFacets, itemStatus } from "@/data/sshoc/api/item";
-import type { MediaDetails, MediaDetailsBase } from "@/data/sshoc/api/media";
-import { mediaCategories } from "@/data/sshoc/api/media";
+} from "@/lib/data/sshoc/api/item";
+import { itemFacets, itemStatus } from "@/lib/data/sshoc/api/item";
+import type {
+  MediaDetails,
+  MediaDetailsBase,
+} from "@/lib/data/sshoc/api/media";
+import { mediaCategories } from "@/lib/data/sshoc/api/media";
 import type {
   Property,
   PropertyType,
   PropertyTypeBase,
-} from "@/data/sshoc/api/property";
-import { isPropertyConcept, propertyTypeType } from "@/data/sshoc/api/property";
-import type { Publication } from "@/data/sshoc/api/publication";
-import type { Source, SourceBase } from "@/data/sshoc/api/source";
-import type { Tool } from "@/data/sshoc/api/tool-or-service";
-import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
-import type { User } from "@/data/sshoc/api/user";
-import { userRoles, userStatus } from "@/data/sshoc/api/user";
-import type { Vocabulary, VocabularyBase } from "@/data/sshoc/api/vocabulary";
-import type { Workflow } from "@/data/sshoc/api/workflow";
-import type { WorkflowStep } from "@/data/sshoc/api/workflow-step";
+} from "@/lib/data/sshoc/api/property";
+import {
+  isPropertyConcept,
+  propertyTypeType,
+} from "@/lib/data/sshoc/api/property";
+import type { Publication } from "@/lib/data/sshoc/api/publication";
+import type { Source, SourceBase } from "@/lib/data/sshoc/api/source";
+import type { Tool } from "@/lib/data/sshoc/api/tool-or-service";
+import type { TrainingMaterial } from "@/lib/data/sshoc/api/training-material";
+import type { User } from "@/lib/data/sshoc/api/user";
+import { userRoles, userStatus } from "@/lib/data/sshoc/api/user";
+import type {
+  Vocabulary,
+  VocabularyBase,
+} from "@/lib/data/sshoc/api/vocabulary";
+import type { Workflow } from "@/lib/data/sshoc/api/workflow";
+import type { WorkflowStep } from "@/lib/data/sshoc/api/workflow-step";
 import {
   capitalize,
   identity,

@@ -1,21 +1,23 @@
-import { SchemaOrg } from '@stefanprobst/next-page-metadata'
+import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 
-import type { Dataset } from '@/data/sshoc/api/dataset'
-import { isPropertyConcept } from '@/data/sshoc/api/property'
+import type { Dataset } from "@/lib/data/sshoc/api/dataset";
+import { isPropertyConcept } from "@/lib/data/sshoc/api/property";
 
 export interface DatasetSchemaOrgMetadataProps {
-  dataset: Dataset
+  dataset: Dataset;
 }
 
-export function DatasetSchemaOrgMetadata(props: DatasetSchemaOrgMetadataProps): JSX.Element {
-  const { dataset } = props
+export function DatasetSchemaOrgMetadata(
+  props: DatasetSchemaOrgMetadataProps
+): JSX.Element {
+  const { dataset } = props;
 
-  const conceptBasedProperties = dataset.properties.filter(isPropertyConcept)
+  const conceptBasedProperties = dataset.properties.filter(isPropertyConcept);
 
   return (
     <SchemaOrg
       schema={{
-        '@type': 'Dataset',
+        "@type": "Dataset",
         headline: dataset.label,
         name: dataset.label,
         abstract: dataset.description,
@@ -23,32 +25,32 @@ export function DatasetSchemaOrgMetadata(props: DatasetSchemaOrgMetadataProps): 
         url: dataset.accessibleAt,
         about: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'keyword'
+            return property.type.code === "keyword";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
         license: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'license'
+            return property.type.code === "license";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
         version: dataset.version,
         contributor: dataset.contributors.map((contributor) => {
-          return contributor.actor.name
+          return contributor.actor.name;
         }),
         dateCreated: dataset.dateCreated,
         dateModified: dataset.dateLastUpdated,
         inLanguage: conceptBasedProperties
           .filter((property) => {
-            return property.type.code === 'language'
+            return property.type.code === "language";
           })
           .map((property) => {
-            return property.concept.label
+            return property.concept.label;
           }),
       }}
     />
-  )
+  );
 }

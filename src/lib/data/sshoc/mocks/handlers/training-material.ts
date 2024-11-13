@@ -1,8 +1,8 @@
 import { rest } from "msw";
 
-import type { GetTrainingMaterial } from "@/data/sshoc/api/training-material";
-import { createUrl } from "@/data/sshoc/lib/client";
-import { db } from "@/data/sshoc/mocks/data/db";
+import type { GetTrainingMaterial } from "@/lib/data/sshoc/api/training-material";
+import { createUrl } from "@/lib/data/sshoc/lib/client";
+import { db } from "@/lib/data/sshoc/mocks/data/db";
 
 export const handlers = [
   rest.get<

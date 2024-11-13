@@ -1,75 +1,83 @@
-import type { FormApi, SubmissionErrors } from 'final-form'
-import { FORM_ERROR } from 'final-form'
-import { useRouter } from 'next/router'
+import type { FormApi, SubmissionErrors } from "final-form";
+import { FORM_ERROR } from "final-form";
+import { useRouter } from "next/router";
 
-import type { ItemFormValues } from '@/components/item-form/ItemForm'
-import { ItemForm } from '@/components/item-form/ItemForm'
-import { removeEmptyItemFieldsOnSubmit } from '@/components/item-form/removeEmptyItemFieldsOnSubmit'
-import { useCreateItemMeta } from '@/components/item-form/useCreateItemMeta'
-import { useCreateOrUpdateTrainingMaterial } from '@/components/item-form/useCreateOrUpdateTrainingMaterial'
-import { useTrainingMaterialFormFields } from '@/components/item-form/useTrainingMaterialFormFields'
-import { useTrainingMaterialFormRecommendedFields } from '@/components/item-form/useTrainingMaterialFormRecommendedFields'
-import { useTrainingMaterialValidationSchema } from '@/components/item-form/useTrainingMaterialValidationSchema'
-import type { TrainingMaterialInput } from '@/data/sshoc/api/training-material'
-import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
-import { routes } from '@/lib/core/navigation/routes'
+import type { ItemFormValues } from "@/components/item-form/ItemForm";
+import { ItemForm } from "@/components/item-form/ItemForm";
+import { removeEmptyItemFieldsOnSubmit } from "@/components/item-form/removeEmptyItemFieldsOnSubmit";
+import { useCreateItemMeta } from "@/components/item-form/useCreateItemMeta";
+import { useCreateOrUpdateTrainingMaterial } from "@/components/item-form/useCreateOrUpdateTrainingMaterial";
+import { useTrainingMaterialFormFields } from "@/components/item-form/useTrainingMaterialFormFields";
+import { useTrainingMaterialFormRecommendedFields } from "@/components/item-form/useTrainingMaterialFormRecommendedFields";
+import { useTrainingMaterialValidationSchema } from "@/components/item-form/useTrainingMaterialValidationSchema";
+import type { TrainingMaterialInput } from "@/lib/data/sshoc/api/training-material";
+import { getApiErrorMessage } from "@/lib/data/sshoc/utils/get-api-error-message";
+import { routes } from "@/lib/core/navigation/routes";
 
-export type CreateTrainingMaterialFormValues = ItemFormValues<TrainingMaterialInput>
+export type CreateTrainingMaterialFormValues =
+  ItemFormValues<TrainingMaterialInput>;
 
 export function TrainingMaterialCreateForm(): JSX.Element {
-  const category = 'training-material'
+  const category = "training-material";
 
-  const router = useRouter()
-  const formFields = useTrainingMaterialFormFields()
-  const recommendedFields = useTrainingMaterialFormRecommendedFields()
-  const validate = useTrainingMaterialValidationSchema(removeEmptyItemFieldsOnSubmit)
-  const meta = useCreateItemMeta({ category })
-  const createOrUpdateTrainingMaterial = useCreateOrUpdateTrainingMaterial(undefined, { meta })
+  const router = useRouter();
+  const formFields = useTrainingMaterialFormFields();
+  const recommendedFields = useTrainingMaterialFormRecommendedFields();
+  const validate = useTrainingMaterialValidationSchema(
+    removeEmptyItemFieldsOnSubmit
+  );
+  const meta = useCreateItemMeta({ category });
+  const createOrUpdateTrainingMaterial = useCreateOrUpdateTrainingMaterial(
+    undefined,
+    { meta }
+  );
 
   function onSubmit(
     values: CreateTrainingMaterialFormValues,
     form: FormApi<CreateTrainingMaterialFormValues>,
-    done?: (errors?: SubmissionErrors) => void,
+    done?: (errors?: SubmissionErrors) => void
   ) {
-    const shouldSaveAsDraft = values['__draft__'] === true
-    delete values['__draft__']
+    const shouldSaveAsDraft = values["__draft__"] === true;
+    delete values["__draft__"];
 
-    const data = removeEmptyItemFieldsOnSubmit(values)
-    delete values['__submitting__']
+    const data = removeEmptyItemFieldsOnSubmit(values);
+    delete values["__submitting__"];
 
-    form.pauseValidation()
+    form.pauseValidation();
     createOrUpdateTrainingMaterial.mutate(
       { data, draft: shouldSaveAsDraft },
       {
         onSuccess(trainingMaterial) {
-          if (trainingMaterial.status === 'draft') {
+          if (trainingMaterial.status === "draft") {
             form.batch(() => {
-              form.change('persistentId', trainingMaterial.persistentId)
-              form.change('status', trainingMaterial.status)
-            })
-            window.scrollTo(0, 0)
-            form.resumeValidation()
-          } else if (trainingMaterial.status === 'approved') {
+              form.change("persistentId", trainingMaterial.persistentId);
+              form.change("status", trainingMaterial.status);
+            });
+            window.scrollTo(0, 0);
+            form.resumeValidation();
+          } else if (trainingMaterial.status === "approved") {
             router.push(
-              routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),
-            )
+              routes.TrainingMaterialPage({
+                persistentId: trainingMaterial.persistentId,
+              })
+            );
           } else {
-            router.push(routes.SuccessPage())
+            router.push(routes.SuccessPage());
           }
-          done?.()
+          done?.();
         },
         onError(error) {
-          form.resumeValidation()
+          form.resumeValidation();
           getApiErrorMessage(error).then((message) => {
-            done?.({ [FORM_ERROR]: message })
-          })
+            done?.({ [FORM_ERROR]: message });
+          });
         },
-      },
-    )
+      }
+    );
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(routes.AccountPage());
   }
 
   return (
@@ -81,5 +89,5 @@ export function TrainingMaterialCreateForm(): JSX.Element {
       onSubmit={onSubmit}
       validate={validate}
     />
-  )
+  );
 }

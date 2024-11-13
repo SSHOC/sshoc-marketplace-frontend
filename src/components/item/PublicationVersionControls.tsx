@@ -1,15 +1,17 @@
-import { ItemVersionControls } from '@/components/item/ItemVersionControls'
-import type { ItemStatus } from '@/data/sshoc/api/item'
-import type { Publication } from '@/data/sshoc/api/publication'
+import { ItemVersionControls } from "@/components/item/ItemVersionControls";
+import type { ItemStatus } from "@/lib/data/sshoc/api/item";
+import type { Publication } from "@/lib/data/sshoc/api/publication";
 
 export interface PublicationVersionControlsProps {
-  persistentId: Publication['persistentId']
-  status: ItemStatus
-  versionId: Publication['id']
+  persistentId: Publication["persistentId"];
+  status: ItemStatus;
+  versionId: Publication["id"];
 }
 
-export function PublicationVersionControls(props: PublicationVersionControlsProps): JSX.Element {
-  const { persistentId, status, versionId } = props
+export function PublicationVersionControls(
+  props: PublicationVersionControlsProps
+): JSX.Element {
+  const { persistentId, status, versionId } = props;
 
   return (
     <ItemVersionControls
@@ -18,5 +20,5 @@ export function PublicationVersionControls(props: PublicationVersionControlsProp
       status={status}
       versionId={versionId}
     />
-  )
+  );
 }
