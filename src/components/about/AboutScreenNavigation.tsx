@@ -1,10 +1,18 @@
-import { ScreenNavigation } from '@/components/common/ScreenNavigation'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { useAboutNavItems } from '@/lib/core/page/useAboutNavItems'
+import { ScreenNavigation } from "@/components/common/ScreenNavigation";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import type { NavItems } from "@/lib/core/page/types";
 
-export function AboutScreenNavigation(): JSX.Element {
-  const { t } = useI18n<'common'>()
-  const items = useAboutNavItems()
+interface AboutScreenNavigationProps {
+  navigationMenu: NavItems;
+}
 
-  return <ScreenNavigation label={t(['common', 'pages', 'about'])} items={items} />
+export function AboutScreenNavigation(
+  props: AboutScreenNavigationProps
+): JSX.Element {
+  const { t } = useI18n<"common">();
+  const items = props.navigationMenu;
+
+  return (
+    <ScreenNavigation label={t(["common", "pages", "about"])} items={items} />
+  );
 }

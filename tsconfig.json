@@ -3,9 +3,19 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -13,7 +23,13 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.config.mjs",
-    "scripts/*.loader.cjs"
+    "scripts/*.loader.cjs",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".next", "out", "public"]
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "public"
+  ]
 }
