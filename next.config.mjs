@@ -54,10 +54,6 @@ const config = {
 
     return headers;
   },
-  i18n: {
-    locales,
-    defaultLocale,
-  },
   images: {
     remotePatterns: process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"]
       ? [
