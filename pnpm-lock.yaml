@@ -154,27 +154,6 @@ importers:
       '@shikijs/rehype':
         specifier: ^1.22.2
         version: 1.22.2
-      '@stefanprobst/assert':
-        specifier: ^1.0.3
-        version: 1.0.3
-      '@stefanprobst/capitalize':
-        specifier: ^1.0.2
-        version: 1.0.2
-      '@stefanprobst/is-absolute-url':
-        specifier: ^1.0.2
-        version: 1.0.2
-      '@stefanprobst/is-nonempty-array':
-        specifier: ^1.0.1
-        version: 1.0.1
-      '@stefanprobst/is-nonempty-string':
-        specifier: ^1.0.1
-        version: 1.0.1
-      '@stefanprobst/log':
-        specifier: ^1.0.3
-        version: 1.0.3
-      '@stefanprobst/netlify-cms-oauth-client':
-        specifier: ^0.1.3
-        version: 0.1.3
       '@stefanprobst/next-error-boundary':
         specifier: ^3.0.2
         version: 3.0.2(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -187,15 +166,6 @@ importers:
       '@stefanprobst/next-svg':
         specifier: ^4.2.1
         version: 4.2.1(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@stefanprobst/next-theme':
-        specifier: ^2.0.6
-        version: 2.0.6(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      '@stefanprobst/pick':
-        specifier: ^1.0.3
-        version: 1.0.3
-      '@stefanprobst/range':
-        specifier: ^1.1.1
-        version: 1.1.1
       '@stefanprobst/rehype-extract-toc':
         specifier: ^2.2.0
         version: 2.2.0
@@ -1403,24 +1373,8 @@ packages:
   '@stefanprobst/assert@1.0.3':
     resolution: {integrity: sha512-3FkU7sHtfCpgO3+YqNWDRc3b220LO/ZtdxUtiVhP0+2xqZ+E9LNe3hXaiFeVCeSUmi3y8V333L4+x6ME2vzpHg==}
 
-  '@stefanprobst/capitalize@1.0.2':
-    resolution: {integrity: sha512-5puCNhSg0jIUL4w4pQFdR6NwE6itcATLXnjUwE9sE5cYgT0Y+S/EO0E/YuGoHhG2GfFMXY0x7UjzJ9cLYDnAMA==}
-
   '@stefanprobst/is-absolute-url@1.0.2':
     resolution: {integrity: sha512-wG6ZSuBvXJeEAYTW93rCD9om7Epps8p8cWSnArpEN9ffLuZ0kefK12xV+FJFqPvoaaVkgfEK19ATAO8Aa1s4Lw==}
-
-  '@stefanprobst/is-nonempty-array@1.0.1':
-    resolution: {integrity: sha512-REvsmLrVWL/IxXVpi7DmFoxqNLg5tEFXFB+Mji8/HJ9or97fPDWdXTZWx76UQVemMHpbUHXY1OUb2aouWMwA8A==}
-
-  '@stefanprobst/is-nonempty-string@1.0.1':
-    resolution: {integrity: sha512-goAibS+rdsbNz9ZqLFVKS3lLSly7hHlFix0m7MCh7M5CXdBxpq5V3K3EnwI8Vps3oYxRU9f4NAf/jRYOIss0FA==}
-
-  '@stefanprobst/log@1.0.3':
-    resolution: {integrity: sha512-6lNIxwfg98UyvrQGlMHmqp0H8XCQFAbS/lDWt6D4kH/z0Goxg/GxqZ9vDdlswmYvphT5ubFOWk2SGwGBeGATVg==}
-
-  '@stefanprobst/netlify-cms-oauth-client@0.1.3':
-    resolution: {integrity: sha512-VxyKxzTUq4CNhGyaCvFrzjk3WDrQ6L0Y9gL5puUHXorYqKi1ZQ/Wv8Om1llAB+r4tGA4e0wcpGUMMN5mwkjYBg==}
-    engines: {node: '>=16', pnpm: '>=7'}
 
   '@stefanprobst/next-error-boundary@3.0.2':
     resolution: {integrity: sha512-8IScHyhmvZgYBGHkE827f93dweG4p7ZR1L41QMWlo26DFrZfpHnkwY8HOX8QRmAf/DUJilCE3aSm5FGIQGmF8g==}
@@ -1448,19 +1402,6 @@ packages:
     engines: {node: '>=14.17', yarn: 1.x}
     peerDependencies:
       next: '>=12.0.0'
-
-  '@stefanprobst/next-theme@2.0.6':
-    resolution: {integrity: sha512-rfR8W37wfihIzT0/RsVHXTTuw9Fw3wiPGi/2EBdNce1Go11v+YBoQ5GbUPrfsuO5VoTS47GWReRwj0u7nSPdpA==}
-    engines: {node: '>=14.17', yarn: 1.x}
-    peerDependencies:
-      next: '>=11.0.0'
-      react: '>=16.14.0'
-
-  '@stefanprobst/pick@1.0.3':
-    resolution: {integrity: sha512-eqVC6/iPGz4SZTp/r+ogl0i+KkOQRRl14pPSjrrp6sAthAw3MzSHU0pxC6fLgrW6mzd1ZoLS6BpsSml3yhL9Vw==}
-
-  '@stefanprobst/range@1.1.1':
-    resolution: {integrity: sha512-2iu8gJpBBXlDkNM6wnGs3LbjwvLym2w9uV8m05Lc/sDMUC2Hif1YBVZrLRSaGXUNDN2TFNeN1cFDzQSs0Gj6ow==}
 
   '@stefanprobst/rehype-extract-toc@2.2.0':
     resolution: {integrity: sha512-/4UjstX8ploZklY8MmlOQoXB1jWIo3Go4MP0R39sbkoWuN6rJ7Zt6l4bjkDPM4hKsjoODh9SSKn2otlp3XL3/A==}
@@ -3755,10 +3696,6 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  min-indent@1.0.1:
-    resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
-    engines: {node: '>=4'}
-
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -4740,10 +4677,6 @@ packages:
   strip-bom-string@1.0.0:
     resolution: {integrity: sha512-uCC2VHvQRYu+lMh4My/sFNmF2klFymLX1wHJeXnbEJERpV/ZsVuonzerjfrGpIGF7LBVa1O7i9kjiWvJiFck8g==}
     engines: {node: '>=0.10.0'}
-
-  strip-indent@4.0.0:
-    resolution: {integrity: sha512-mnVSV2l+Zv6BLpSD/8V87CW/y9EmmbYzGCIavsnsI6/nwn26DwffM/yztm30Z/I2DY9wdS3vXVCMnHDgZaVNoA==}
-    engines: {node: '>=12'}
 
   strip-markdown@6.0.0:
     resolution: {integrity: sha512-mSa8FtUoX3ExJYDkjPUTC14xaBAn4Ik5GPQD45G5E2egAmeV3kHgVSTfIoSDggbF6Pk9stahVgqsLCNExv6jHw==}
@@ -6534,23 +6467,7 @@ snapshots:
 
   '@stefanprobst/assert@1.0.3': {}
 
-  '@stefanprobst/capitalize@1.0.2': {}
-
   '@stefanprobst/is-absolute-url@1.0.2': {}
-
-  '@stefanprobst/is-nonempty-array@1.0.1': {}
-
-  '@stefanprobst/is-nonempty-string@1.0.1': {}
-
-  '@stefanprobst/log@1.0.3': {}
-
-  '@stefanprobst/netlify-cms-oauth-client@0.1.3':
-    dependencies:
-      '@stefanprobst/is-absolute-url': 1.0.2
-      '@stefanprobst/is-nonempty-string': 1.0.1
-      '@stefanprobst/request': 0.1.11
-      node-fetch: 3.3.0
-      strip-indent: 4.0.0
 
   '@stefanprobst/next-error-boundary@3.0.2(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -6583,16 +6500,6 @@ snapshots:
       svgo-loader: 3.0.0
     transitivePeerDependencies:
       - supports-color
-
-  '@stefanprobst/next-theme@2.0.6(next@14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@stefanprobst/assert': 1.0.3
-      next: 14.2.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-
-  '@stefanprobst/pick@1.0.3': {}
-
-  '@stefanprobst/range@1.1.1': {}
 
   '@stefanprobst/rehype-extract-toc@2.2.0':
     dependencies:
@@ -7360,7 +7267,8 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  data-uri-to-buffer@4.0.0: {}
+  data-uri-to-buffer@4.0.0:
+    optional: true
 
   date-fns@2.30.0:
     dependencies:
@@ -8215,6 +8123,7 @@ snapshots:
     dependencies:
       node-domexception: 1.0.0
       web-streams-polyfill: 3.2.0
+    optional: true
 
   final-form-arrays@3.1.0(final-form@4.20.10(patch_hash=idqvv74j7zggmxklyvq3htysrm)):
     dependencies:
@@ -8266,6 +8175,7 @@ snapshots:
   formdata-polyfill@4.0.10:
     dependencies:
       fetch-blob: 3.1.5
+    optional: true
 
   forwarded@0.2.0: {}
 
@@ -9652,8 +9562,6 @@ snapshots:
 
   mime@1.6.0: {}
 
-  min-indent@1.0.1: {}
-
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -9754,13 +9662,15 @@ snapshots:
     dependencies:
       '@types/nlcst': 2.0.3
 
-  node-domexception@1.0.0: {}
+  node-domexception@1.0.0:
+    optional: true
 
   node-fetch@3.3.0:
     dependencies:
       data-uri-to-buffer: 4.0.0
       fetch-blob: 3.1.5
       formdata-polyfill: 4.0.10
+    optional: true
 
   node-polyglot@2.6.0:
     dependencies:
@@ -10926,10 +10836,6 @@ snapshots:
 
   strip-bom-string@1.0.0: {}
 
-  strip-indent@4.0.0:
-    dependencies:
-      min-indent: 1.0.1
-
   strip-markdown@6.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -11360,7 +11266,8 @@ snapshots:
 
   web-namespaces@2.0.1: {}
 
-  web-streams-polyfill@3.2.0: {}
+  web-streams-polyfill@3.2.0:
+    optional: true
 
   web-worker@1.3.0: {}
 
