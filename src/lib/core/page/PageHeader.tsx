@@ -11,7 +11,12 @@ import css from "@/lib/core/page/PageHeader.module.css";
 import { PageNavigation } from "@/lib/core/page/PageNavigation";
 import Logo from "~/public/assets/images/logo-with-text.svg";
 
-export function PageHeader(): JSX.Element {
+interface PageHeaderProps {
+  about: any;
+  contribute: any;
+}
+
+export function PageHeader(props: PageHeaderProps): JSX.Element {
   const { t } = useI18n<"common">();
   const pathname = usePathname();
   const currentUser = useCurrentUser();
@@ -42,7 +47,7 @@ export function PageHeader(): JSX.Element {
         </div>
         <AuthButton />
       </div>
-      <PageNavigation />
+      <PageNavigation about={props.about} contribute={props.contribute} />
       <MobileNavigationMenu />
     </header>
   );

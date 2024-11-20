@@ -87,7 +87,7 @@ export default async function AboutPageContainer(
       return {
         id: navigationMenu.title,
         label: navigationMenu.title,
-        href: routes.AboutPage({ id }),
+        href: routes.AboutPage({ id: entry.slice(0, -4) }),
         position: navigationMenu.position,
       };
     })

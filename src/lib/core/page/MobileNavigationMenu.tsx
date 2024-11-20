@@ -11,9 +11,7 @@ import { usePathname } from "@/lib/core/navigation/usePathname";
 import { Disclosure } from "@/lib/core/page/Disclosure";
 import css from "@/lib/core/page/MobileNavigationMenu.module.css";
 import { ModalDialog } from "@/lib/core/page/ModalDialog";
-import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
 import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
-import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 import { useCreateItemLinks } from "@/lib/core/page/useCreateItemLinks";
 import { useItemCategoryNavItems } from "@/lib/core/page/useItemCategoryNavItems";
 import { Button } from "@/lib/core/ui/Button/Button";
@@ -262,7 +260,7 @@ function BrowseNavLinks(): JSX.Element {
 
 function ContributeNavLinks(): JSX.Element {
   const { t } = useI18n<"common">();
-  const items = useContributeNavItems();
+  const items = [] as any;
 
   return (
     <li className={css["nav-item"]}>
@@ -291,7 +289,7 @@ function ContributeNavLinks(): JSX.Element {
 
 function AboutNavLinks(): JSX.Element {
   const { t } = useI18n<"common">();
-  const items = useAboutNavItems();
+  const items = [] as any;
 
   return (
     <li className={css["nav-item"]}>

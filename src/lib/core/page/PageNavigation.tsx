@@ -7,13 +7,18 @@ import { NavLink } from "@/components/common/NavLink";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { NavigationMenu } from "@/lib/core/page/NavigationMenu";
 import css from "@/lib/core/page/PageNavigation.module.css";
-import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
 import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
-import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 import { useItemCategoryNavItems } from "@/lib/core/page/useItemCategoryNavItems";
 import { createHref } from "@/lib/core/navigation/create-href";
 
-export function PageNavigation(): JSX.Element {
+interface PageNavigationProps {
+  about: any;
+  contribute: any;
+}
+
+export function PageNavigation(props: PageNavigationProps): JSX.Element {
+  const { about, contribute } = props;
+
   return (
     <nav className={css["main-nav"]}>
       <ul className={css["nav-items"]} role="list">
@@ -21,8 +26,8 @@ export function PageNavigation(): JSX.Element {
         <Separator />
         <BrowseNavMenu />
         <Separator />
-        <ContributeNavMenu />
-        <AboutNavMenu />
+        <ContributeNavMenu items={props.contribute} />
+        <AboutNavMenu items={props.about} />
       </ul>
     </nav>
   );
@@ -82,9 +87,8 @@ function BrowseNavMenu(): JSX.Element {
   );
 }
 
-function ContributeNavMenu(): JSX.Element {
+function ContributeNavMenu({ items }: { items: any }): JSX.Element {
   const { t } = useI18n<"common">();
-  const items = useContributeNavItems();
   const router = useRouter();
 
   function onAction(key: Key) {
@@ -114,9 +118,8 @@ function ContributeNavMenu(): JSX.Element {
   );
 }
 
-function AboutNavMenu(): JSX.Element {
+function AboutNavMenu({ items }: { items: any }): JSX.Element {
   const { t } = useI18n<"common">();
-  const items = useAboutNavItems();
   const router = useRouter();
 
   function onAction(key: Key) {

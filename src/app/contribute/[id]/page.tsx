@@ -87,7 +87,7 @@ export default async function ContributePageContainer(
       return {
         id: navigationMenu.title,
         label: navigationMenu.title,
-        href: routes.AboutPage({ id }),
+        href: routes.ContributePage({ id: entry.slice(0, -4) }),
         position: navigationMenu.position,
       };
     })

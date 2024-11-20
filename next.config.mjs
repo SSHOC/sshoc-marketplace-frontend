@@ -2,8 +2,7 @@ import createBundleAnalyzer from "@next/bundle-analyzer";
 import { log } from "@acdh-oeaw/lib";
 import createSvgPlugin from "@stefanprobst/next-svg";
 
-/** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
-/** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
+/** @typedef {import('next').NextConfig} NextConfig */
 
 /** @type {NextConfig} */
 const config = {
@@ -70,53 +69,8 @@ const config = {
    * @see e.g. https://github.com/adobe/react-spectrum/issues/977
    */
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: "/about",
-        destination: "/about/service",
-      },
-      {
-        source: "/browse",
-        destination: "/browse/activity",
-      },
-    ];
-  },
   typescript: {
     ignoreBuildErrors: true,
-  },
-  webpack(config, context) {
-    /**
-     * @see https://github.com/vercel/next.js/discussions/30870
-     */
-    config.infrastructureLogging = {
-      ...config.infrastructureLogging,
-      level: "error",
-    };
-
-    /** Enable top-level await. */
-    config.experiments = config.experiments ?? {};
-    config.experiments.topLevelAwait = true;
-
-    /**
-     * @see https://github.com/vercel/next.js/issues/17806
-     */
-    config.module?.rules?.push({
-      test: /\.mjs$/,
-      type: "javascript/auto",
-      resolve: {
-        fullySpecified: false,
-      },
-    });
-
-    /** Evaluate modules at build-time. */
-    config.module?.rules?.push({
-      test: /\.static\.ts$/,
-      use: [{ loader: "@stefanprobst/val-loader" }],
-      exclude: /node_modules/,
-    });
-
-    return config;
   },
 };
 
