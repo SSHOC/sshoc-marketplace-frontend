@@ -12,26 +12,19 @@ import { matter } from "vfile-matter";
 import { routes } from "@/lib/core/navigation/routes";
 import { Image } from "@/components/common/Image";
 import { Link } from "@/components/common/Link";
-
-import withToc, { type Toc } from "@stefanprobst/rehype-extract-toc";
-import withTocExport from "@stefanprobst/rehype-extract-toc/mdx";
-import withHeadingFragmentLinks from "@stefanprobst/rehype-fragment-links";
-import withImageCaptions from "@stefanprobst/rehype-image-captions";
-import withListsWithAriaRole from "@stefanprobst/rehype-lists-with-aria-role";
-import withNextImage from "@stefanprobst/rehype-next-image";
-import withNextLinks from "@stefanprobst/rehype-next-links";
-import withNoReferrerLinks from "@stefanprobst/rehype-noreferrer-links";
-import withSyntaxHighlighting from "@shikijs/rehype";
-import withParsedFrontmatter from "@stefanprobst/remark-extract-yaml-frontmatter";
-import withParsedFrontmatterExport from "@stefanprobst/remark-extract-yaml-frontmatter/mdx";
-import withSmartQuotes from "@stefanprobst/remark-smart-quotes";
-import withHeadingIds from "rehype-slug";
-import withFrontmatter from "remark-frontmatter";
+import {
+  type TableOfContents,
+  withTableOfContents,
+  typographyConfig,
+} from "@acdh-oeaw/mdx-lib";
 import withGfm from "remark-gfm";
-// import { headingRank } from "hast-util-heading-rank";
-// import { h } from "hastscript";
+import withFrontmatter from "remark-frontmatter";
+import withMdxFrontmatter from "remark-mdx-frontmatter";
+import withHeadingIds from "rehype-slug";
+import withSyntaxHighlighting from "@shikijs/rehype";
+import withTypographicQuotes from "remark-smartypants";
+
 import { syntaxHighlightingTheme } from "~/config/docs.config.mjs";
-import { collection } from "@/lib/cms/collections/contribute-pages";
 
 interface ContributePageMetadata {
   title: string;
@@ -42,11 +35,18 @@ interface ContributePageMetadata {
 }
 
 interface ExtendedContributePageMetadata extends ContributePageMetadata {
-  tableOfContents: Toc;
+  tableOfContents: TableOfContents;
   toc: true;
 }
 
-const contentFolderPath = join(process.cwd(), collection.folder!);
+const contentFolderPath = join(
+  process.cwd(),
+  "src",
+  "app",
+  "contribute",
+  "[id]",
+  "_content"
+);
 
 export namespace ContributePage {
   export interface PathParamsInput extends ParamsInput {
@@ -106,25 +106,17 @@ export default async function ContributePageContainer(
     ...runtime,
     remarkPlugins: [
       withFrontmatter,
-      withParsedFrontmatter,
-      withParsedFrontmatterExport,
+      withMdxFrontmatter,
       withGfm,
-      // withSmartQuotes,
+      [withTypographicQuotes, typographyConfig],
     ],
     remarkRehypeOptions: {
       footnoteLabel: "Footnotes",
       footnoteBackLabel: "Back to content",
     },
     rehypePlugins: [
-      // withNoReferrerLinks,
-      // withNextLinks,
-      // withImageCaptions,
-      // withNextImage,
-      // withListsWithAriaRole,
       withHeadingIds,
-      // withHeadingFragmentLinks,
-      withToc,
-      withTocExport,
+      withTableOfContents,
       [withSyntaxHighlighting, { theme: syntaxHighlightingTheme }],
     ],
   });
@@ -148,23 +140,3 @@ export default async function ContributePageContainer(
     </ContributePage>
   );
 }
-
-// /** @type {(heading: HastElement, id: string) => Array<HastElement>} */
-// function createPermalink(headingElement, id) {
-//   const permaLinkId = ["permalink", id].join("-");
-//   const ariaLabelledBy = [permaLinkId, id].join(" ");
-
-//   return [
-//     h(
-//       "div",
-//       { dataPermalink: true, dataRank: headingRank(headingElement) },
-//       [
-//         h("a", { ariaLabelledBy, href: "#" + id }, [
-//           h("span", { id: permaLinkId, hidden: true }, "Permalink to"),
-//           h("span", "#"),
-//         ]),
-//         headingElement,
-//       ]
-//     ),
-//   ];
-// }

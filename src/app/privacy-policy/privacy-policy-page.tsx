@@ -1,3 +1,5 @@
+"use client";
+
 import { FundingNotice } from "@/components/common/FundingNotice";
 
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
@@ -7,7 +9,6 @@ import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { BackgroundImage } from "@/components/privacy-policy/BackgroundImage";
 import { Content } from "@/components/privacy-policy/Content";
-
 import { PrivacyPolicyScreenLayout } from "@/components/privacy-policy/PrivacyPolicyScreenLayout";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { routes } from "@/lib/core/navigation/routes";
@@ -27,6 +28,8 @@ export default function PrivacyPolicyPage(
   const { children, lastUpdatedTimestamp, title: pageTitle } = props;
 
   const { t } = useI18n<"common">();
+
+  const title = t(["common", "pages", "privacy-policy"]);
 
   const breadcrumbs = [
     { href: routes.HomePage(), label: t(["common", "pages", "home"]) },

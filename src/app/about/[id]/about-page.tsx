@@ -1,6 +1,5 @@
 "use client";
 
-import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import type { ReactNode } from "react";
 import { Fragment } from "react";
 
@@ -21,6 +20,7 @@ import { routes } from "@/lib/core/navigation/routes";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import type { NavItems } from "@/lib/core/page/types";
+import { type TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 
 interface AboutPageProps {
   children: ReactNode;

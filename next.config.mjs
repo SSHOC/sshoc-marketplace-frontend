@@ -1,10 +1,9 @@
 import createBundleAnalyzer from "@next/bundle-analyzer";
-import { log } from "@stefanprobst/log";
+import { log } from "@acdh-oeaw/lib";
 import createSvgPlugin from "@stefanprobst/next-svg";
 
 /** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
 /** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
-/** @typedef {import('hast').Element} HastElement */
 
 /** @type {NextConfig} */
 const config = {
@@ -21,10 +20,6 @@ const config = {
             key: "X-DNS-Prefetch-Control",
             value: "on",
           },
-          // {
-          //   key: 'Content-Security-Policy',
-          //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-          // },
         ],
       },
       {
@@ -68,7 +63,6 @@ const config = {
       : undefined,
   },
   output: "standalone",
-  pageExtensions: ["ts", "tsx", "mdx"],
   poweredByHeader: false,
   /**
    * React Spectrum currently has issues with `StrictMode`.
@@ -121,38 +115,6 @@ const config = {
       use: [{ loader: "@stefanprobst/val-loader" }],
       exclude: /node_modules/,
     });
-
-    // /** Page sections. */
-    // config.module?.rules?.push({
-    //   test: /\.mdx$/,
-    //   include: path.join(process.cwd(), "src", "components"),
-    //   use: [
-    //     context.defaultLoaders.babel,
-    //     {
-    //       loader: "@mdx-js/loader",
-    //       /** @type {MdxOptions} */
-    //       options: {
-    //         jsx: true,
-    //         remarkPlugins: [
-    //           withFrontmatter,
-    //           withParsedFrontmatter,
-    //           withParsedFrontmatterExport,
-    //           withGfm,
-    //           withSmartQuotes,
-    //         ],
-    //         rehypePlugins: [
-    //           withNoReferrerLinks,
-    //           withNextLinks,
-    //           withImageCaptions,
-    //           withNextImage,
-    //           withListsWithAriaRole,
-    //           withHeadingIds,
-    //           [withHeadingFragmentLinks, { generate: createPermalink }],
-    //         ],
-    //       },
-    //     },
-    //   ],
-    // });
 
     return config;
   },
