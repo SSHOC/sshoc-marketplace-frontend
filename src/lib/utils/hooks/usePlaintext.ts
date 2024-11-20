@@ -1,7 +1,5 @@
-// import excerpt from '@stefanprobst/remark-excerpt'
 import type { Root } from "mdast";
 import { toMarkdown } from "mdast-util-to-markdown";
-// import { toString } from 'mdast-util-to-string'
 import { useEffect, useMemo, useState } from "react";
 import withGfm from "remark-gfm";
 import fromMarkdown from "remark-parse";
@@ -11,10 +9,6 @@ import { unified } from "unified";
 const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
-  // .use(excerpt, {
-  //   maxLength,
-  //   preferWordBoundaries: true,
-  // })
   .use(stripMarkdown)
   .use(function toPlaintext() {
     /**
@@ -25,7 +19,6 @@ const processor = unified()
      * @see https://github.com/remarkjs/remark/discussions/963
      */
     this.compiler = function compile(tree: Root) {
-      // return toString(tree)
       return toMarkdown(tree);
     };
   });

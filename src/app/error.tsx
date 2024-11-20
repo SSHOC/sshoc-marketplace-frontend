@@ -1,4 +1,4 @@
-"use error";
+"use client";
 
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { FundingNotice } from "@/components/common/FundingNotice";

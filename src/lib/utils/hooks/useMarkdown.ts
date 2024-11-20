@@ -1,7 +1,6 @@
 import * as runtime from "react/jsx-runtime";
 import type { ReactNode } from "react";
-import { createElement, Fragment, useEffect, useMemo, useState } from "react";
-// import toHtml from 'rehype-stringify'
+import { useEffect, useMemo, useState } from "react";
 import toVdom from "rehype-react";
 import withGfm from "remark-gfm";
 import fromMarkdown from "remark-parse";
@@ -12,11 +11,7 @@ const processor = unified()
   .use(fromMarkdown)
   .use(withGfm)
   .use(toHast)
-  .use(toVdom, {
-    Fragment: runtime.Fragment,
-    jsx: runtime.jsx,
-    jsxs: runtime.jsxs,
-  });
+  .use(toVdom, runtime);
 
 export interface UseMarkdownArgs {
   markdown: string;
