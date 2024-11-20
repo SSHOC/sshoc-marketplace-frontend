@@ -10,6 +10,8 @@ import { AnalyticsScript } from "@/lib/core/analytics/AnalyticsScript";
 import { reportPageView } from "@/lib/core/analytics/analytics-service";
 import { ContextProviders as Providers } from "@/app/_components/providers";
 
+// FIXME: port <SiteMetadata /> from @/lib/core/metadata/SiteMetadata
+
 interface RootLayoutProps {
   children: ReactNode;
 }
@@ -28,7 +30,7 @@ export default async function RootLayout(
   const locale = "en";
   const dictionaries = await load(locale, ["common"]);
 
-  // reportPageView(); // FIXME:
+  // reportPageView(); // FIXME: move to client component
 
   return (
     <html lang="en">
@@ -36,7 +38,7 @@ export default async function RootLayout(
 
       <body>
         <Providers
-          isPageAccessible={true}
+          isPageAccessible={true} // FIXME:
           pageProps={{
             dictionaries,
             initialQueryState: undefined,

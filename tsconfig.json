@@ -2,20 +2,12 @@
   "extends": "@acdh-oeaw/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
+    "exactOptionalPropertyTypes": false,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "~/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "strictNullChecks": true
+    "plugins": [{ "name": "next" }]
   },
   "include": [
     "next-env.d.ts",
@@ -26,10 +18,5 @@
     "scripts/*.loader.cjs",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "out",
-    "public"
-  ]
+  "exclude": ["node_modules", ".next", "out", "public"]
 }

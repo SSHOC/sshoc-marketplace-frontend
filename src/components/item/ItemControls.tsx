@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Fragment } from "react";
 
 import { LinkButton } from "@/components/common/LinkButton";
@@ -25,6 +25,7 @@ import { itemRoutes } from "@/lib/core/navigation/item-routes";
 import { routes } from "@/lib/core/navigation/routes";
 import type { MutationMetadata, QueryMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export interface ItemControlProps {
   category: ItemCategory;
@@ -105,12 +106,11 @@ function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
       ) : null}
       {draft.data != null && draft.data.status === "draft" ? (
         <LinkButton
-          href={itemRoutes.ItemEditVersionPage(category)(
-            {
-              persistentId,
-              versionId: draft.data.id,
-            },
-            { draft: true }
+          href={createHref(
+            itemRoutes.ItemEditVersionPage(category)(
+              { persistentId, versionId: draft.data.id },
+              { draft: true }
+            )
           )}
           color="secondary"
           size="xs"
@@ -157,7 +157,7 @@ function DeleteItemButton(props: DeleteItemButtonProps): JSX.Element {
   const deleteItem = useDeleteItem(category)({ persistentId }, undefined, {
     meta,
     onSuccess() {
-      router.push(routes.AccountPage());
+      router.push(createHref(routes.AccountPage()));
     },
   });
 

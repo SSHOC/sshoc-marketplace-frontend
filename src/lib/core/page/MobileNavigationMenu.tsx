@@ -1,10 +1,8 @@
 import { OverlayContainer } from "@react-aria/overlays";
 import Image from "next/legacy/image";
-import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
-import { useCurrentUser } from "@/lib/data/sshoc/hooks/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { routes } from "@/lib/core/navigation/routes";
@@ -24,6 +22,7 @@ import { Icon } from "@/lib/core/ui/Icon/Icon";
 import MenuIcon from "@/lib/core/ui/icons/menu.svg?symbol-icon";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
+import { useCurrentUser } from "@/lib/data/sshoc/hooks/auth";
 import Logo from "~/public/assets/images/logo-with-text.svg";
 
 export function MobileNavigationMenu(): JSX.Element {
@@ -44,19 +43,20 @@ function NavigationMenu(): JSX.Element {
     state,
     triggerRef
   );
-  const router = useRouter();
   const pathname = usePathname();
   const currentUser = useCurrentUser();
 
   useEffect(() => {
-    router.events.on("routeChangeStart", state.close);
     window.addEventListener("resize", state.close, { passive: true });
 
     return () => {
-      router.events.off("routeChangeStart", state.close);
       window.removeEventListener("resize", state.close);
     };
-  }, [router.events, state.close]);
+  }, [state.close]);
+
+  useEffect(() => {
+    state.close();
+  }, [pathname, state.close]);
 
   return (
     <Fragment>

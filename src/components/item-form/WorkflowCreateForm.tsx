@@ -1,6 +1,6 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { removeEmptyItemFieldsOnSubmit } from "@/components/item-form/removeEmptyItemFieldsOnSubmit";
@@ -15,6 +15,7 @@ import type { WorkflowInput } from "@/lib/data/sshoc/api/workflow";
 import type { WorkflowStepInput } from "@/lib/data/sshoc/api/workflow-step";
 import { getApiErrorMessage } from "@/lib/data/sshoc/utils/get-api-error-message";
 import { routes } from "@/lib/core/navigation/routes";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export type CreateWorkflowFormValues = ItemFormValues<
   WorkflowInput & { composedOf?: Array<ItemFormValues<WorkflowStepInput>> }
@@ -73,10 +74,12 @@ export function WorkflowCreateForm(
             form.resumeValidation();
           } else if (workflow.status === "approved") {
             router.push(
-              routes.WorkflowPage({ persistentId: workflow.persistentId })
+              createHref(
+                routes.WorkflowPage({ persistentId: workflow.persistentId })
+              )
             );
           } else {
-            router.push(routes.SuccessPage());
+            router.push(createHref(routes.SuccessPage()));
           }
           done?.();
         },
@@ -91,7 +94,7 @@ export function WorkflowCreateForm(
   }
 
   function onCancel() {
-    router.push(routes.AccountPage());
+    router.push(createHref(routes.AccountPage()));
   }
 
   return (

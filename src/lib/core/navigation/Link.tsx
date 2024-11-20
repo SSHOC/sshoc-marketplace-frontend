@@ -7,7 +7,7 @@ import type { Locale } from "~/config/i18n.config.mjs";
 
 export interface LinkProps
   extends Omit<NextLinkProps, "as" | "href" | "locale"> {
-  href: Href;
+  href: Href | string;
   locale?: Locale | false;
   children?: ReactNode;
 }

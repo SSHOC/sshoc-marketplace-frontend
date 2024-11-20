@@ -1,4 +1,4 @@
-import type { AboutPage } from "../../../pages/about/[id].template";
+import type { AboutPage } from "../../../pages/about/[id]";
 import type { ActorsPage } from "../../../pages/account/actors";
 import type { ContributedItemsPage } from "../../../pages/account/contributed-items";
 import type { DraftItemsPage } from "../../../pages/account/draft-items";
@@ -12,7 +12,7 @@ import type { SignInPage } from "../../../pages/auth/sign-in";
 import type { SignUpPage } from "../../../pages/auth/sign-up";
 import type { BrowsePage } from "../../../pages/browse/[id]";
 import type { ContactPage } from "../../../pages/contact/index";
-import type { ContributePage } from "../../../pages/contribute/[id].template";
+import type { ContributePage } from "../../../pages/contribute/[id]";
 import type { EditDatasetPage } from "../../../pages/dataset/[persistentId]/edit";
 import type { DatasetHistoryPage } from "../../../pages/dataset/[persistentId]/history";
 import type { DatasetPage } from "../../../pages/dataset/[persistentId]/index";
@@ -59,61 +59,61 @@ export const routes = {
     { id }: AboutPage.PathParamsInput,
     searchParams?: AboutPage.SearchParamsInput
   ) {
-    return { pathname: `/about/${id}`, query: searchParams };
+    return { pathname: `/about/${id}`, searchParams };
   },
   ActorsPage(searchParams?: ActorsPage.SearchParamsInput) {
-    return { pathname: `/account/actors`, query: searchParams };
+    return { pathname: `/account/actors`, searchParams };
   },
   ContributedItemsPage(searchParams?: ContributedItemsPage.SearchParamsInput) {
-    return { pathname: `/account/contributed-items`, query: searchParams };
+    return { pathname: `/account/contributed-items`, searchParams };
   },
   DraftItemsPage(searchParams?: DraftItemsPage.SearchParamsInput) {
-    return { pathname: `/account/draft-items`, query: searchParams };
+    return { pathname: `/account/draft-items`, searchParams };
   },
   AccountPage(searchParams?: AccountPage.SearchParamsInput) {
-    return { pathname: `/account`, query: searchParams };
+    return { pathname: `/account`, searchParams };
   },
   ModerateItemsPage(searchParams?: ModerateItemsPage.SearchParamsInput) {
-    return { pathname: `/account/moderate-items`, query: searchParams };
+    return { pathname: `/account/moderate-items`, searchParams };
   },
   SourcesPage(searchParams?: SourcesPage.SearchParamsInput) {
-    return { pathname: `/account/sources`, query: searchParams };
+    return { pathname: `/account/sources`, searchParams };
   },
   UsersPage(searchParams?: UsersPage.SearchParamsInput) {
-    return { pathname: `/account/users`, query: searchParams };
+    return { pathname: `/account/users`, searchParams };
   },
   VocabulariesPage(searchParams?: VocabulariesPage.SearchParamsInput) {
-    return { pathname: `/account/vocabularies`, query: searchParams };
+    return { pathname: `/account/vocabularies`, searchParams };
   },
   AdminPage(searchParams?: AdminPage.SearchParamsInput) {
-    return { pathname: `/admin`, query: searchParams };
+    return { pathname: `/admin`, searchParams };
   },
   SignInPage(searchParams?: SignInPage.SearchParamsInput) {
-    return { pathname: `/auth/sign-in`, query: searchParams };
+    return { pathname: `/auth/sign-in`, searchParams };
   },
   SignUpPage(searchParams?: SignUpPage.SearchParamsInput) {
-    return { pathname: `/auth/sign-up`, query: searchParams };
+    return { pathname: `/auth/sign-up`, searchParams };
   },
   BrowsePage(
     { id }: BrowsePage.PathParamsInput,
     searchParams?: BrowsePage.SearchParamsInput
   ) {
-    return { pathname: `/browse/${id}`, query: searchParams };
+    return { pathname: `/browse/${id}`, searchParams };
   },
   ContactPage(searchParams?: ContactPage.SearchParamsInput) {
-    return { pathname: `/contact`, query: searchParams };
+    return { pathname: `/contact`, searchParams };
   },
   ContributePage(
     { id }: ContributePage.PathParamsInput,
     searchParams?: ContributePage.SearchParamsInput
   ) {
-    return { pathname: `/contribute/${id}`, query: searchParams };
+    return { pathname: `/contribute/${id}`, searchParams };
   },
   EditDatasetPage(
     { persistentId }: EditDatasetPage.PathParamsInput,
     searchParams?: EditDatasetPage.SearchParamsInput
   ) {
-    return { pathname: `/dataset/${persistentId}/edit`, query: searchParams };
+    return { pathname: `/dataset/${persistentId}/edit`, searchParams };
   },
   DatasetHistoryPage(
     { persistentId }: DatasetHistoryPage.PathParamsInput,
@@ -121,14 +121,14 @@ export const routes = {
   ) {
     return {
       pathname: `/dataset/${persistentId}/history`,
-      query: searchParams,
+      searchParams,
     };
   },
   DatasetPage(
     { persistentId }: DatasetPage.PathParamsInput,
     searchParams?: DatasetPage.SearchParamsInput
   ) {
-    return { pathname: `/dataset/${persistentId}`, query: searchParams };
+    return { pathname: `/dataset/${persistentId}`, searchParams };
   },
   EditDatasetVersionPage(
     { persistentId, versionId }: EditDatasetVersionPage.PathParamsInput,
@@ -136,7 +136,7 @@ export const routes = {
   ) {
     return {
       pathname: `/dataset/${persistentId}/version/${versionId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   DatasetVersionPage(
@@ -145,7 +145,7 @@ export const routes = {
   ) {
     return {
       pathname: `/dataset/${persistentId}/version/${versionId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   ReviewDatasetPage(
@@ -154,17 +154,17 @@ export const routes = {
   ) {
     return {
       pathname: `/dataset/${persistentId}/version/${versionId}/review`,
-      query: searchParams,
+      searchParams,
     };
   },
   CreateDatasetPage(searchParams?: CreateDatasetPage.SearchParamsInput) {
-    return { pathname: `/dataset/new`, query: searchParams };
+    return { pathname: `/dataset/new`, searchParams };
   },
   HomePage(searchParams?: HomePage.SearchParamsInput) {
-    return { pathname: `/`, query: searchParams };
+    return { pathname: `/`, searchParams };
   },
   PrivacyPolicyPage(searchParams?: PrivacyPolicyPage.SearchParamsInput) {
-    return { pathname: `/privacy-policy`, query: searchParams };
+    return { pathname: `/privacy-policy`, searchParams };
   },
   EditPublicationPage(
     { persistentId }: EditPublicationPage.PathParamsInput,
@@ -172,7 +172,7 @@ export const routes = {
   ) {
     return {
       pathname: `/publication/${persistentId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   PublicationHistoryPage(
@@ -181,14 +181,14 @@ export const routes = {
   ) {
     return {
       pathname: `/publication/${persistentId}/history`,
-      query: searchParams,
+      searchParams,
     };
   },
   PublicationPage(
     { persistentId }: PublicationPage.PathParamsInput,
     searchParams?: PublicationPage.SearchParamsInput
   ) {
-    return { pathname: `/publication/${persistentId}`, query: searchParams };
+    return { pathname: `/publication/${persistentId}`, searchParams };
   },
   EditPublicationVersionPage(
     { persistentId, versionId }: EditPublicationVersionPage.PathParamsInput,
@@ -196,7 +196,7 @@ export const routes = {
   ) {
     return {
       pathname: `/publication/${persistentId}/version/${versionId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   PublicationVersionPage(
@@ -205,7 +205,7 @@ export const routes = {
   ) {
     return {
       pathname: `/publication/${persistentId}/version/${versionId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   ReviewPublicationPage(
@@ -214,22 +214,22 @@ export const routes = {
   ) {
     return {
       pathname: `/publication/${persistentId}/version/${versionId}/review`,
-      query: searchParams,
+      searchParams,
     };
   },
   CreatePublicationPage(
     searchParams?: CreatePublicationPage.SearchParamsInput
   ) {
-    return { pathname: `/publication/new`, query: searchParams };
+    return { pathname: `/publication/new`, searchParams };
   },
   SearchPage(searchParams?: SearchPage.SearchParamsInput) {
-    return { pathname: `/search`, query: searchParams };
+    return { pathname: `/search`, searchParams };
   },
   SuccessPage(searchParams?: SuccessPage.SearchParamsInput) {
-    return { pathname: `/success`, query: searchParams };
+    return { pathname: `/success`, searchParams };
   },
   TermsOfUsePage(searchParams?: TermsOfUsePage.SearchParamsInput) {
-    return { pathname: `/terms-of-use`, query: searchParams };
+    return { pathname: `/terms-of-use`, searchParams };
   },
   EditToolOrServicePage(
     { persistentId }: EditToolOrServicePage.PathParamsInput,
@@ -237,7 +237,7 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   ToolOrServiceHistoryPage(
@@ -246,7 +246,7 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}/history`,
-      query: searchParams,
+      searchParams,
     };
   },
   ToolOrServicePage(
@@ -255,7 +255,7 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   EditToolOrServiceVersionPage(
@@ -264,7 +264,7 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}/version/${versionId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   ToolOrServiceVersionPage(
@@ -273,7 +273,7 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}/version/${versionId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   ReviewToolOrServicePage(
@@ -282,13 +282,13 @@ export const routes = {
   ) {
     return {
       pathname: `/tool-or-service/${persistentId}/version/${versionId}/review`,
-      query: searchParams,
+      searchParams,
     };
   },
   CreateToolOrServicePage(
     searchParams?: CreateToolOrServicePage.SearchParamsInput
   ) {
-    return { pathname: `/tool-or-service/new`, query: searchParams };
+    return { pathname: `/tool-or-service/new`, searchParams };
   },
   EditTrainingMaterialPage(
     { persistentId }: EditTrainingMaterialPage.PathParamsInput,
@@ -296,7 +296,7 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   TrainingMaterialHistoryPage(
@@ -305,7 +305,7 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}/history`,
-      query: searchParams,
+      searchParams,
     };
   },
   TrainingMaterialPage(
@@ -314,7 +314,7 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   EditTrainingMaterialVersionPage(
@@ -326,7 +326,7 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}/version/${versionId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   TrainingMaterialVersionPage(
@@ -335,7 +335,7 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}/version/${versionId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   ReviewTrainingMaterialPage(
@@ -344,19 +344,19 @@ export const routes = {
   ) {
     return {
       pathname: `/training-material/${persistentId}/version/${versionId}/review`,
-      query: searchParams,
+      searchParams,
     };
   },
   CreateTrainingMaterialPage(
     searchParams?: CreateTrainingMaterialPage.SearchParamsInput
   ) {
-    return { pathname: `/training-material/new`, query: searchParams };
+    return { pathname: `/training-material/new`, searchParams };
   },
   EditWorkflowPage(
     { persistentId }: EditWorkflowPage.PathParamsInput,
     searchParams?: EditWorkflowPage.SearchParamsInput
   ) {
-    return { pathname: `/workflow/${persistentId}/edit`, query: searchParams };
+    return { pathname: `/workflow/${persistentId}/edit`, searchParams };
   },
   WorkflowHistoryPage(
     { persistentId }: WorkflowHistoryPage.PathParamsInput,
@@ -364,14 +364,14 @@ export const routes = {
   ) {
     return {
       pathname: `/workflow/${persistentId}/history`,
-      query: searchParams,
+      searchParams,
     };
   },
   WorkflowPage(
     { persistentId }: WorkflowPage.PathParamsInput,
     searchParams?: WorkflowPage.SearchParamsInput
   ) {
-    return { pathname: `/workflow/${persistentId}`, query: searchParams };
+    return { pathname: `/workflow/${persistentId}`, searchParams };
   },
   EditWorkflowVersionPage(
     { persistentId, versionId }: EditWorkflowVersionPage.PathParamsInput,
@@ -379,7 +379,7 @@ export const routes = {
   ) {
     return {
       pathname: `/workflow/${persistentId}/version/${versionId}/edit`,
-      query: searchParams,
+      searchParams,
     };
   },
   WorkflowVersionPage(
@@ -388,7 +388,7 @@ export const routes = {
   ) {
     return {
       pathname: `/workflow/${persistentId}/version/${versionId}`,
-      query: searchParams,
+      searchParams,
     };
   },
   ReviewWorkflowPage(
@@ -397,10 +397,10 @@ export const routes = {
   ) {
     return {
       pathname: `/workflow/${persistentId}/version/${versionId}/review`,
-      query: searchParams,
+      searchParams,
     };
   },
   CreateWorkflowPage(searchParams?: CreateWorkflowPage.SearchParamsInput) {
-    return { pathname: `/workflow/new`, query: searchParams };
+    return { pathname: `/workflow/new`, searchParams };
   },
 };

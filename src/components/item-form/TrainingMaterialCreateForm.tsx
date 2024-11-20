@@ -1,6 +1,6 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { ItemForm } from "@/components/item-form/ItemForm";
@@ -13,6 +13,7 @@ import { useTrainingMaterialValidationSchema } from "@/components/item-form/useT
 import type { TrainingMaterialInput } from "@/lib/data/sshoc/api/training-material";
 import { getApiErrorMessage } from "@/lib/data/sshoc/utils/get-api-error-message";
 import { routes } from "@/lib/core/navigation/routes";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export type CreateTrainingMaterialFormValues =
   ItemFormValues<TrainingMaterialInput>;
@@ -57,12 +58,14 @@ export function TrainingMaterialCreateForm(): JSX.Element {
             form.resumeValidation();
           } else if (trainingMaterial.status === "approved") {
             router.push(
-              routes.TrainingMaterialPage({
-                persistentId: trainingMaterial.persistentId,
-              })
+              createHref(
+                routes.TrainingMaterialPage({
+                  persistentId: trainingMaterial.persistentId,
+                })
+              )
             );
           } else {
-            router.push(routes.SuccessPage());
+            router.push(createHref(routes.SuccessPage()));
           }
           done?.();
         },
@@ -77,7 +80,7 @@ export function TrainingMaterialCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage());
+    router.push(createHref(routes.AccountPage()));
   }
 
   return (

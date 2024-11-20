@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { LinkButton } from "@/components/common/LinkButton";
 import css from "@/components/item/ItemVersionControls.module.css";
@@ -14,6 +14,7 @@ import { itemRoutes } from "@/lib/core/navigation/item-routes";
 import { routes } from "@/lib/core/navigation/routes";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export interface ItemVersionControlsProps {
   category: ItemCategory;
@@ -101,7 +102,7 @@ function DeleteItemVersionButton(props: DeleteItemButtonProps): JSX.Element {
     {
       meta,
       onSuccess() {
-        router.push(routes.AccountPage());
+        router.push(createHref(routes.AccountPage()));
       },
     }
   );

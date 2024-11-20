@@ -1,6 +1,6 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { ItemForm } from "@/components/item-form/ItemForm";
@@ -13,6 +13,7 @@ import { useDatasetValidationSchema } from "@/components/item-form/useDatasetVal
 import type { DatasetInput } from "@/lib/data/sshoc/api/dataset";
 import { getApiErrorMessage } from "@/lib/data/sshoc/utils/get-api-error-message";
 import { routes } from "@/lib/core/navigation/routes";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export type CreateDatasetFormValues = ItemFormValues<DatasetInput>;
 
@@ -51,10 +52,12 @@ export function DatasetCreateForm(): JSX.Element {
             form.resumeValidation();
           } else if (dataset.status === "approved") {
             router.push(
-              routes.DatasetPage({ persistentId: dataset.persistentId })
+              createHref(
+                routes.DatasetPage({ persistentId: dataset.persistentId })
+              )
             );
           } else {
-            router.push(routes.SuccessPage());
+            router.push(createHref(routes.SuccessPage()));
           }
           done?.();
         },
@@ -69,7 +72,7 @@ export function DatasetCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage());
+    router.push(createHref(routes.AccountPage()));
   }
 
   return (

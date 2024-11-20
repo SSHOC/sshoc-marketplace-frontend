@@ -1,7 +1,7 @@
 import { HttpError } from "@stefanprobst/request";
 import type { JwtPayload } from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import {
   createContext,
@@ -29,6 +29,7 @@ import { routes } from "@/lib/core/navigation/routes";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { assert, createSiteUrl, isNonEmptyString } from "@/lib/utils";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 type SessionStatus =
   | "awaitingRegistrationFormData"
@@ -78,6 +79,7 @@ export interface UseSessionArgs {
 export function useSession(args: UseSessionArgs): UseSessionResult {
   const [session, setSession] = useState<Session>(initialSessionState);
   const router = useRouter();
+  const pathname = usePathname() ?? "";
   const searchParams = useSearchParams();
   const { isPageAccessible } = args;
 
@@ -86,9 +88,8 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
       if (isPageAccessible == null || isPageAccessible === true) {
         setSession({ status: "signedOut", token: null });
       } else {
-        router.push(routes.HomePage()).then(() => {
-          setSession({ status: "signedOut", token: null });
-        });
+        router.push(createHref(routes.HomePage()));
+        setSession({ status: "signedOut", token: null });
       }
     }
 
@@ -100,10 +101,10 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
           router.replace(next);
         } else if (
           [routes.SignInPage().pathname, routes.SignUpPage().pathname].includes(
-            router.pathname
+            pathname
           )
         ) {
-          router.replace(routes.HomePage());
+          router.replace(createHref(routes.HomePage()));
         }
       } else {
         signOut();
@@ -335,7 +336,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
         signOut();
       },
       onSettled() {
-        router.replace(routes.HomePage());
+        router.replace(createHref(routes.HomePage()));
       },
       meta: validateRegistrationDataMeta,
       useErrorBoundary(error) {
@@ -358,7 +359,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     switch (searchParams.get(redirectSearchParamKey)) {
       case redirectSearchParamValues.success: {
         if (isValidIdToken(fragment)) {
-          router.replace({ pathname: window.location.pathname });
+          router.replace(createHref({ pathname: window.location.pathname }));
           validateIdToken.mutate(fragment);
         } else {
           signOut();
@@ -368,7 +369,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
 
       case redirectSearchParamValues.registration: {
         if (isValidIdToken(fragment)) {
-          router.replace({ pathname: window.location.pathname });
+          router.replace(createHref({ pathname: window.location.pathname }));
           validateIdTokenAndRequestRegistrationToken.mutate(fragment);
         } else {
           signOut();
@@ -377,7 +378,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       }
 
       case redirectSearchParamValues.error: {
-        router.replace({ pathname: window.location.pathname });
+        router.replace(createHref({ pathname: window.location.pathname }));
         signOut();
         return;
       }
@@ -399,19 +400,12 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     signOut,
   ]);
 
+  const pathname = usePathname();
   useEffect(() => {
-    function registrationCanceled() {
-      if (session.status === "awaitingRegistrationFormData") {
-        signOut();
-      }
+    if (session.status === "awaitingRegistrationFormData") {
+      signOut();
     }
-
-    router.events.on("routeChangeStart", registrationCanceled);
-
-    return () => {
-      return router.events.off("routeChangeStart", registrationCanceled);
-    };
-  }, [session, signOut, router]);
+  }, [pathname]);
 
   useEffect(() => {
     function onLocalStorageChange(event: StorageEvent) {

@@ -10,7 +10,7 @@ import type { TreeState } from "@react-stately/tree";
 import { useTreeState } from "@react-stately/tree";
 import type { AriaMenuProps } from "@react-types/menu";
 import type { Node } from "@react-types/shared";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import type { HTMLAttributes, Key, RefObject } from "react";
 import { Fragment, useEffect, useRef } from "react";
 
@@ -23,6 +23,7 @@ import menuStyles from "@/lib/core/page/NavigationMenu.module.css";
 import { Popover } from "@/lib/core/page/Popover";
 import { useAccountMenuItems } from "@/lib/core/page/useAccountMenuItems";
 import { Button } from "@/lib/core/ui/Button/Button";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export function AccountMenu(): JSX.Element {
   const { t } = useI18n<"common">();
@@ -44,14 +45,11 @@ export function AccountMenu(): JSX.Element {
   const items = useAccountMenuItems();
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    router.events.on("routeChangeStart", state.close);
-
-    return () => {
-      router.events.off("routeChangeStart", state.close);
-    };
-  }, [router, state.close]);
+    state.close();
+  }, [pathname]);
 
   function onAction(key: Key) {
     const item = items.find((item) => {
@@ -63,7 +61,9 @@ export function AccountMenu(): JSX.Element {
     if (item.type === "button") {
       item.onPress();
     } else {
-      router.push(item.href);
+      router.push(
+        typeof item.href === "string" ? item.href : createHref(item.href)
+      );
     }
   }
 

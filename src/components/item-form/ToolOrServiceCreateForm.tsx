@@ -1,6 +1,6 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { ItemForm } from "@/components/item-form/ItemForm";
@@ -13,6 +13,7 @@ import { useToolValidationSchema } from "@/components/item-form/useToolValidatio
 import type { ToolInput } from "@/lib/data/sshoc/api/tool-or-service";
 import { getApiErrorMessage } from "@/lib/data/sshoc/utils/get-api-error-message";
 import { routes } from "@/lib/core/navigation/routes";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export type CreateToolFormValues = ItemFormValues<ToolInput>;
 
@@ -51,10 +52,12 @@ export function ToolOrServiceCreateForm(): JSX.Element {
             form.resumeValidation();
           } else if (tool.status === "approved") {
             router.push(
-              routes.ToolOrServicePage({ persistentId: tool.persistentId })
+              createHref(
+                routes.ToolOrServicePage({ persistentId: tool.persistentId })
+              )
             );
           } else {
-            router.push(routes.SuccessPage());
+            router.push(createHref(routes.SuccessPage()));
           }
           done?.();
         },
@@ -69,7 +72,7 @@ export function ToolOrServiceCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage());
+    router.push(createHref(routes.AccountPage()));
   }
 
   return (

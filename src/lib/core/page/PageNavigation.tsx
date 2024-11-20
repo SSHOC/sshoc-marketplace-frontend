@@ -1,5 +1,5 @@
 import { Item } from "@react-stately/collections";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import type { Key } from "react";
 import { Fragment } from "react";
 
@@ -11,6 +11,7 @@ import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
 import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
 import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 import { useItemCategoryNavItems } from "@/lib/core/page/useItemCategoryNavItems";
+import { createHref } from "@/lib/core/navigation/create-href";
 
 export function PageNavigation(): JSX.Element {
   return (
@@ -61,7 +62,7 @@ function BrowseNavMenu(): JSX.Element {
 
     if (item == null) return;
 
-    router.push(item.href);
+    router.push(createHref(item.href));
   }
 
   return (
@@ -93,7 +94,7 @@ function ContributeNavMenu(): JSX.Element {
 
     if (item == null) return;
 
-    router.push(item.href);
+    router.push(createHref(item.href));
   }
 
   return (
@@ -125,7 +126,7 @@ function AboutNavMenu(): JSX.Element {
 
     if (item == null) return;
 
-    router.push(item.href);
+    router.push(createHref(item.href));
   }
 
   return (
