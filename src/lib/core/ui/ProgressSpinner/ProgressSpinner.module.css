@@ -1,8 +1,0 @@
-.container {
-  display: grid;
-  color: var(--progress-spinner-color, currentColor);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
-  place-items: center;
-}

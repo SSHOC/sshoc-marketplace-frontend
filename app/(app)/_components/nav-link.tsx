@@ -1,0 +1,24 @@
+"use client";
+
+import type { ReactNode } from "react";
+
+import { Link, type LinkProps } from "@/components/link";
+import { useNavLink } from "@/lib/use-nav-link";
+
+interface NavLinkProps extends LinkProps {}
+
+export function NavLink(props: Readonly<NavLinkProps>): ReactNode {
+	const { children, ...rest } = props;
+
+	const navLinkProps = useNavLink(rest);
+
+	return (
+		<Link
+			{...rest}
+			{...navLinkProps}
+			data-current={Boolean(navLinkProps["aria-current"]) || undefined}
+		>
+			{children}
+		</Link>
+	);
+}

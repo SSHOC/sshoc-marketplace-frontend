@@ -1,0 +1,64 @@
+{
+	"mdx": {
+		"footnote-back-label": "Back to reference {reference}",
+		"footnotes": "Footnotes"
+	},
+	"AppFooter": {
+		"links": {
+			"about": "About",
+			"contact": "Contact",
+			"privacy-policy": "Privacy policy",
+			"terms-of-use": "Terms of use"
+		},
+		"navigation-secondary": "Secondary"
+	},
+	"AppHeader": {
+		"links": {
+			"about": "About",
+			"browse": "Browse",
+			"browse-activities": "Browse activities",
+			"browse-keywords": "Browse keywords",
+			"browse-languages": "Browse languages",
+			"browse-sources": "Browse sources",
+			"contribute": "Contribute",
+			"datasets": "Datasets",
+			"home": "Home",
+			"publications": "Publications",
+			"tools-services": "Tools & services",
+			"training-materials": "Training materials",
+			"workflows": "Workflows"
+		},
+		"navigation-primary": "Primary",
+		"report-issue": "Report an issue"
+	},
+	"Error": {
+		"something-went-wrong": "Something went wrong!",
+		"try-again": "Try again"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"IndexPage": {
+		"lead-in": "Discover new and contextualised resources for your research in Social Sciences and Humanities: tools, services, training materials, workflows and datasets.",
+		"title": "Social Sciences & Humanities Open Marketplace",
+		"read-more": "Read more"
+	},
+	"Loading": {
+		"loading": "Loading"
+	},
+	"LocaleLayout": {
+		"skip-to-main-content": "Skip to main content"
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"TableOfContents": {
+		"title": "Table of contents"
+	}
+}

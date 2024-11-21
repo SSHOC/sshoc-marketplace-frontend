@@ -1,0 +1,250 @@
+/* stylelint-disable color-no-hex */
+
+@import url("@/styles/tokens.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer base {
+	*,
+	*::after,
+	*::before {
+		margin: 0;
+		padding: 0;
+		border-color: var(--color-stroke-weak);
+	}
+
+	:root,
+	body {
+		block-size: 100%;
+	}
+
+	:root {
+		background-color: var(--color-background-base);
+		color: var(--color-text-strong);
+		font-family: var(--font-family-body);
+		overflow-wrap: break-word;
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		text-size-adjust: none;
+		-webkit-tap-highlight-color: transparent;
+		/* stylelint-disable-next-line property-no-unknown */
+		interpolate-size: allow-keywords;
+	}
+
+	:focus {
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-stroke-focus);
+		outline-offset: 2px;
+	}
+
+	blockquote {
+		text-wrap: balance;
+	}
+
+	:is(h1, h2, h3, h4, h5, h6) {
+		font-family: var(--font-family-heading);
+		text-wrap: balance;
+	}
+
+	iframe {
+		border: 0;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	table {
+		font-variant-numeric: tabular-nums;
+	}
+
+	textarea {
+		field-sizing: content;
+		min-block-size: 3lh;
+	}
+
+	[id] {
+		scroll-margin-block-start: 2ex;
+	}
+
+	[inert] ::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* stylelint-disable-next-line order/order */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::after,
+		*::before {
+			transition-duration: 0.01ms !important;
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			scroll-behavior: auto !important;
+		}
+	}
+
+	/** Scale up hit targets on high resolution mobile devices. */
+	@media (resolution >= 200dpi) {
+		:root {
+			font-size: 18px;
+		}
+	}
+}
+
+@layer utilities {
+	.alignment-grid {
+		--alignment-color: var(--color-neutral-200);
+
+		background-image: linear-gradient(to right, var(--alignment-color) 1px, transparent 1px),
+			linear-gradient(to bottom, var(--alignment-color) 1px, transparent 1px);
+		background-size: 24px 24px;
+	}
+
+	.layout-grid {
+		--max-content-width: 100%;
+		--column-count: 4;
+		--column-gap: 1rem; /** 16px */
+		--padding-inline: 2rem; /** 32px */
+
+		display: grid;
+		grid-template-columns:
+			minmax(calc(var(--padding-inline) - var(--column-gap)), 1fr)
+			repeat(
+				var(--column-count),
+				calc(
+					(
+							min(100% - 2 * var(--padding-inline), var(--max-content-width)) -
+								(var(--column-count) - 1) * var(--column-gap)
+						) / var(--column-count)
+				)
+			)
+			minmax(calc(var(--padding-inline) - var(--column-gap)), 1fr);
+		column-gap: var(--column-gap);
+
+		& > :where(*) {
+			grid-column: 2 / -2;
+		}
+	}
+
+	/* stylelint-disable-next-line media-query-no-invalid, order/order */
+	@media screen(sm) {
+		.layout-grid {
+			--max-content-width: 100%;
+			--column-count: 8;
+			--column-gap: 1.5rem; /** 24px */
+			--padding-inline: 3rem; /** 48px */
+		}
+	}
+
+	/* stylelint-disable-next-line media-query-no-invalid */
+	@media screen(xl) {
+		.layout-grid {
+			--max-content-width: 75rem; /** 1200px */
+			--column-count: 12;
+			--column-gap: 2rem; /** 32px */
+			--padding-inline: 7.5rem; /** 120px */
+		}
+	}
+
+	.layout-subgrid {
+		display: grid;
+		grid-template-columns: subgrid;
+		grid-column: 1 / -1;
+
+		& > :where(*) {
+			grid-column: 2 / -2;
+		}
+	}
+
+	.focus-visible-outline {
+		@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-stroke-focus;
+	}
+
+	.focus-visible-outline-offset-0 {
+		@apply focus-visible:outline-offset-0;
+	}
+
+	.focus-visible-outline-offset-2 {
+		@apply focus-visible:outline-offset-2;
+	}
+
+	.interactive {
+		@apply relative overflow-clip;
+		@apply after:absolute after:inset-0 after:transition after:pointer-events-none;
+	}
+
+	.hover-overlay {
+		@apply hover:after:bg-fill-hover;
+	}
+
+	.press-overlay {
+		@apply active:after:bg-fill-press;
+	}
+
+	.selected-overlay {
+		@apply selected:after:bg-fill-hover selected:after:border-l-4 selected:after:border-stroke-selected;
+	}
+}
+
+@layer utilities {
+	:root {
+		--color-neutral-0: #fff;
+		--color-neutral-50: #f8fafc;
+		--color-neutral-100: #f1f5f9;
+		--color-neutral-200: #e2e8f0;
+		--color-neutral-300: #cbd5e1;
+		--color-neutral-400: #94a3b8;
+		--color-neutral-500: #64748b;
+		--color-neutral-600: #475569;
+		--color-neutral-700: #334155;
+		--color-neutral-800: #1e293b;
+		--color-neutral-900: #0f172a;
+		--color-neutral-950: #020617;
+		--color-neutral-1000: #000;
+	}
+
+	.prose {
+		--tw-prose-body: var(--color-neutral-700);
+		--tw-prose-headings: var(--color-neutral-900);
+		--tw-prose-lead: var(--color-neutral-600);
+		--tw-prose-links: var(--color-neutral-900);
+		--tw-prose-bold: var(--color-neutral-900);
+		--tw-prose-counters: var(--color-neutral-500);
+		--tw-prose-bullets: var(--color-neutral-300);
+		--tw-prose-hr: var(--color-neutral-200);
+		--tw-prose-quotes: var(--color-neutral-900);
+		--tw-prose-quote-borders: var(--color-neutral-200);
+		--tw-prose-captions: var(--color-neutral-500);
+		--tw-prose-code: var(--color-neutral-900);
+		--tw-prose-pre-code: var(--color-neutral-200);
+		--tw-prose-pre-bg: var(--color-neutral-800);
+		--tw-prose-th-borders: var(--color-neutral-300);
+		--tw-prose-td-borders: var(--color-neutral-200);
+	}
+
+	[data-ui-color-scheme="dark"] .prose {
+		--tw-prose-body: var(--color-neutral-300);
+		--tw-prose-headings: var(--color-neutral-0);
+		--tw-prose-lead: var(--color-neutral-400);
+		--tw-prose-links: var(--color-neutral-0);
+		--tw-prose-bold: var(--color-neutral-0);
+		--tw-prose-counters: var(--color-neutral-400);
+		--tw-prose-bullets: var(--color-neutral-600);
+		--tw-prose-hr: var(--color-neutral-700);
+		--tw-prose-quotes: var(--color-gray-100);
+		--tw-prose-quote-borders: var(--color-neutral-700);
+		--tw-prose-captions: var(--color-neutral-400);
+		--tw-prose-code: var(--color-neutral-0);
+		--tw-prose-pre-code: var(--color-neutral-300);
+		--tw-prose-pre-bg: color-mix(in sRGB, var(--color-neutral-1000) 50%, transparent);
+		--tw-prose-th-borders: var(--color-neutral-600);
+		--tw-prose-td-borders: var(--color-neutral-700);
+	}
+}

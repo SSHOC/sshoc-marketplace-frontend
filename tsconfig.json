@@ -1,24 +1,25 @@
 {
-  "extends": "@stefanprobst/tsconfig",
-  "compilerOptions": {
-    "target": "es2019",
-    "noUncheckedIndexedAccess": true,
-    // "exactOptionalPropertyTypes": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"]
-    },
-    "types": ["react/next", "@jest/types"]
-  },
-  "include": [
-    "next-env.d.ts",
-    "app.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.config.mjs",
-    "scripts/*.loader.cjs",
-    "stories/main.cjs"
-  ],
-  "exclude": ["node_modules", ".next", "cypress", "out", "public", "storybook-static"]
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "@acdh-oeaw/tsconfig",
+	"compilerOptions": {
+		"module": "preserve",
+		"paths": {
+			"@/*": ["./*"]
+		},
+		"plugins": [{ "name": "next" }]
+	},
+	"include": [
+		"./next-env.d.ts",
+		"./**/*.d.ts",
+		"./**/*.js",
+		// "./**/*.mdx",
+		"./**/*.ts",
+		"./**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules", "out"],
+	"mdx": {
+		"checkMdx": false,
+		"plugins": ["remark-frontmatter", "remark-gfm"]
+	}
 }

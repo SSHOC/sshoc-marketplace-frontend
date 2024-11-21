@@ -1,61 +1,50 @@
 ## .gitignore ##
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+node_modules/
+.pnpm-store/
 
-# testing
-/coverage
+# logs
+*.log
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
+# non-public environment variables
+.env.keys
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
+
+# caches
+.eslintcache
+.prettiercache
+.stylelintcache
+*.tsbuildinfo
 
 # vercel
 .vercel
 
-# caches
-.eslintcache
-.stylelintcache
-*.tsbuildinfo
+# misc
+.DS_Store
+.idea/
 
-# generated
-public/**/favicon.ico
-public/**/icon.svg
-public/**/apple-touch-icon.png
-public/**/*.webmanifest
-public/**/open-graph.*
-public/assets/cms/styles/*.css
+# next.js
+.next/
+next-env.d.ts
+out/
 
-# generated route manifest
-src/lib/core/navigation/routes.ts
+# test
+/coverage/
 
-# storybook
-storybook-static/
+# playwright
+/blob-report/
+/playwright/.cache/
+/playwright-report/
+/test-results/
+
 
 ## .dockerignore ##
 
 # git
 .git/
+.gitattributes
 .gitignore
 
 # github
@@ -63,3 +52,15 @@ storybook-static/
 
 # vscode settings
 .vscode/
+
+# environment variables
+.env
+.env.*
+
+# tests
+playwright.config.ts
+/e2e/
+/test/
+
+# misc
+.editorconfig

@@ -1,6 +1,0 @@
-.title {
-  grid-area: title;
-  color: var(--color-heading);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-4);
-}
