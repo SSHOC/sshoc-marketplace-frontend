@@ -4,15 +4,15 @@ frontend application for the sshoc open marketplace.
 
 ## prerequisites
 
-- [node.js 16.x](https://nodejs.org/de/download)
-- [yarn 1.x](https://classic.yarnpkg.com)
+- [node.js 22.x](https://nodejs.org)
+- [pnpm 9.x](https://pnpm.io)
 
 ## how to run locally
 
 install dependencies:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 if you don't plan to run a backend instance locally, create a `.env.development.local` file, and
@@ -26,7 +26,7 @@ NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
 run a local development server on [http://localhost:3000](http://localhost:3000):
 
 ```bash
-yarn run dev
+pnpm run dev
 ```
 
 ## how to deploy

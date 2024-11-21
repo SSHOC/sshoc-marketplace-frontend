@@ -14,21 +14,8 @@
   "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
   "eslint.enable": true,
   "eslint.validate": ["javascript", "typescript", "typescriptreact"],
-  "files.exclude": {
-    "**/node_modules": true,
-    "**/coverage": true,
-    ".eslintcache": true,
-    ".stylelintcache": true,
-    "**/*.tsbuildinfo": true,
-    ".next": true,
-    "out": true,
-    "storybook-build": true
-  },
   "less.validate": false,
   "scss.validate": false,
-  "search.exclude": {
-    "yarn.lock": true
-  },
   "stylelint.enable": true,
   "tailwindCSS.validate": false,
   "typescript.tsdk": "node_modules/typescript/lib",

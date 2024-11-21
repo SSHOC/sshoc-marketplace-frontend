@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# logs
+*.log
+
 # testing
 /coverage
 
@@ -17,12 +20,6 @@
 
 # misc
 .DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # local env files
 .env.local
@@ -30,11 +27,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# vercel
-.vercel
-
 # caches
 .eslintcache
+.prettiercache
 .stylelintcache
 *.tsbuildinfo
 
