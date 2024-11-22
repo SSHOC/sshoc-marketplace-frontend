@@ -4,7 +4,7 @@ import { traceExporter } from "./instrumentation.node";
 
 export function register() {
 	registerOTel({
-		serviceName: "ACDH-CH App",
+		serviceName: "SSHOC marketplace frontend",
 		traceExporter: traceExporter,
 	});
 }

@@ -6,8 +6,8 @@ import { Link } from "@/components/content/link";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { Tab, Tabs } from "@/components/content/tabs";
 import { Video } from "@/components/content/video";
-import { Image } from "@/components/image";
 import { Link as Anchor } from "@/components/link";
+import { ServerImage as Image } from "@/components/server-image";
 
 const components = {
 	a: Anchor,

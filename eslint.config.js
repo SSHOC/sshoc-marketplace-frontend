@@ -30,7 +30,13 @@ const config = [
 				},
 				{
 					name: "next/navigation",
-					importNames: ["redirect", "permanentRedirect", "useRouter", "usePathname"],
+					importNames: [
+						"redirect",
+						"permanentRedirect",
+						"useRouter",
+						"usePathname",
+						"useSearchParams",
+					],
 					message: "Please use @/lib/i18n/navigation instead.",
 				},
 				{

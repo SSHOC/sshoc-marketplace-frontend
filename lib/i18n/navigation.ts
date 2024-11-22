@@ -1,17 +1,34 @@
-import { createNavigation } from "next-intl/navigation";
-import type { ComponentPropsWithRef, FC } from "react";
+// import { createNavigation } from "next-intl/navigation";
+// import type { ComponentPropsWithRef, FC } from "react";
 
-import { routing } from "@/config/i18n.config";
+// import { routing } from "@/config/i18n.config";
 
-const { Link, redirect: _redirect, usePathname, useRouter } = createNavigation(routing);
+/**
+ * When enabling i18n routing, create locale-aware wrappers with `createNavigation`
+ * from `next-intl/navigation`.
+ */
 
-/** FIXME: @see https://github.com/amannn/next-intl/issues/823 */
-const redirect: typeof _redirect = _redirect;
+// const { Link, redirect: _redirect, usePathname, useRouter } = createNavigation(routing);
 
-export { redirect, usePathname, useRouter };
+// /** FIXME: @see https://github.com/amannn/next-intl/issues/823 */
+// const redirect: typeof _redirect = _redirect;
 
-export type LocaleLinkProps = Omit<ComponentPropsWithRef<typeof Link>, "href"> & {
-	href?: string | undefined;
-};
+// export { redirect, usePathname, useRouter };
 
-export const LocaleLink = Link as FC<LocaleLinkProps>;
+// export type LocaleLinkProps = Omit<ComponentPropsWithRef<typeof Link>, "href"> & {
+// 	href?: string | undefined;
+// };
+
+// export const LocaleLink = Link as FC<LocaleLinkProps>;
+
+// eslint-disable-next-line no-restricted-imports
+import Link, { type LinkProps } from "next/link";
+import type { ReactNode } from "react";
+
+interface LocaleLinkProps extends LinkProps {
+	children: ReactNode;
+}
+
+export { Link as LocaleLink, type LocaleLinkProps };
+// eslint-disable-next-line no-restricted-imports
+export { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";

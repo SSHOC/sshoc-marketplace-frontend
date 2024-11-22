@@ -1,12 +1,12 @@
 "use client";
 
-// eslint-disable-next-line no-restricted-imports
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { Button } from "react-aria-components";
 
 import { NavLink } from "@/app/(app)/_components/nav-link";
+import { Image } from "@/components/image";
 import type { LinkProps } from "@/components/link";
+import logo from "@/public/assets/images/logo-with-text.svg";
 
 interface NavigationLink {
 	type: "link";
@@ -44,7 +44,8 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 								return (
 									<li key={id}>
 										<NavLink href={item.href}>
-											<Image alt="" priority={true} src="/assets/images/logo-with-text.svg" />
+											{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+											<Image alt="" priority={true} src={logo} />
 											<span className="sr-only">{item.label}</span>
 										</NavLink>
 									</li>
