@@ -25,6 +25,7 @@ export const env = createEnv({
 			KEYSTATIC_GITHUB_CLIENT_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
 			KEYSTATIC_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
 			OPENTELEMETRY_COLLECTOR_URL: v.optional(v.pipe(v.string(), v.url())),
+			OPENTELEMETRY_SERVICE_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
 		});
 
 		return v.parse(Schema, input);
@@ -66,6 +67,7 @@ export const env = createEnv({
 		KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
 		KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
 		OPENTELEMETRY_COLLECTOR_URL: process.env.OPENTELEMETRY_COLLECTOR_URL,
+		OPENTELEMETRY_SERVICE_NAME: process.env.OPENTELEMETRY_SERVICE_NAME,
 		NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
 		NEXT_PUBLIC_APP_BASE_URL: process.env.NEXT_PUBLIC_APP_BASE_URL,
 		NEXT_PUBLIC_BOTS: process.env.NEXT_PUBLIC_BOTS,

@@ -58,7 +58,7 @@ export default async function AboutPage(props: Readonly<AboutPageProps>): Promis
 	const { default: Content } = await entry.compile(content);
 
 	return (
-		<MainContent className="layout-grid">
+		<MainContent className="layout-grid content-start">
 			<section className="layout-subgrid relative bg-fill-weaker py-24">
 				<h1>{title}</h1>
 				<div className="prose">

@@ -1,10 +1,20 @@
-import { registerOTel } from "@vercel/otel";
+import { createUrl } from "@acdh-oeaw/lib";
+import { OTLPHttpJsonTraceExporter, registerOTel } from "@vercel/otel";
 
-import { traceExporter } from "./instrumentation.node";
+import { env } from "@/config/env.config";
 
 export function register() {
-	registerOTel({
-		serviceName: "SSHOC marketplace frontend",
-		traceExporter: traceExporter,
-	});
+	if (env.OPENTELEMETRY_COLLECTOR_URL != null && env.OPENTELEMETRY_SERVICE_NAME != null) {
+		const traceEndpoint = createUrl({
+			baseUrl: env.OPENTELEMETRY_COLLECTOR_URL,
+			pathname: "/v1/traces",
+		});
+
+		registerOTel({
+			serviceName: env.OPENTELEMETRY_SERVICE_NAME,
+			traceExporter: new OTLPHttpJsonTraceExporter({
+				url: String(traceEndpoint),
+			}),
+		});
+	}
 }

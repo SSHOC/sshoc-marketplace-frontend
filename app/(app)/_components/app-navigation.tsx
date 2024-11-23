@@ -36,16 +36,16 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 
 	return (
 		<nav aria-label={label}>
-			<ul className="flex items-center gap-4 text-sm" role="list">
+			<ul className="flex flex-wrap items-center gap-4 text-sm" role="list">
 				{Object.entries(navigation).map(([id, item]) => {
 					switch (item.type) {
 						case "link": {
 							if (id === "home") {
 								return (
-									<li key={id}>
+									<li key={id} className="shrink-0">
 										<NavLink href={item.href}>
 											{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-											<Image alt="" priority={true} src={logo} />
+											<Image alt="" className="h-12 w-auto" priority={true} src={logo} />
 											<span className="sr-only">{item.label}</span>
 										</NavLink>
 									</li>
@@ -54,13 +54,15 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 
 							return (
 								<li key={id}>
-									<NavLink href={item.href}>{item.label}</NavLink>
+									<NavLink className="inline-flex text-center" href={item.href}>
+										{item.label}
+									</NavLink>
 								</li>
 							);
 						}
 
 						case "separator": {
-							return <li key={id} role="separator" />;
+							return <li key={id} aria-orientation="vertical" role="separator" />;
 						}
 
 						case "menu": {

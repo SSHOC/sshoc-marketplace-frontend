@@ -12,8 +12,10 @@ export async function AppHeader(): Promise<ReactNode> {
 
 	const label = t("navigation-primary");
 
-	const aboutPages = await createCollectionResource("about-pages", locale).all();
-	const contributePages = await createCollectionResource("contribute-pages", locale).all();
+	const [aboutPages, contributePages] = await Promise.all([
+		createCollectionResource("about-pages", locale).all(),
+		createCollectionResource("contribute-pages", locale).all(),
+	]);
 
 	const navigation = {
 		home: {

@@ -22,11 +22,11 @@ const config = [
 				"error",
 				{
 					name: "next/image",
-					message: "Please use @/components/image instead.",
+					message: "Please use `@/components/image` or `@/components/server-image` instead.",
 				},
 				{
 					name: "next/link",
-					message: "Please use @/components/link instead.",
+					message: "Please use `@/components/link` instead.",
 				},
 				{
 					name: "next/navigation",
@@ -37,11 +37,11 @@ const config = [
 						"usePathname",
 						"useSearchParams",
 					],
-					message: "Please use @/lib/i18n/navigation instead.",
+					message: "Please use `@/lib/i18n/navigation` instead.",
 				},
 				{
 					name: "next/router",
-					message: "Please use @/lib/i18n/navigation instead.",
+					message: "Please use `@/lib/i18n/navigation` instead.",
 				},
 			],
 			"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],

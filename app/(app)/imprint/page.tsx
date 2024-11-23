@@ -28,7 +28,7 @@ export default async function ImprintPage(_props: Readonly<ImprintPageProps>): P
 	const t = await getTranslations("ImprintPage");
 
 	return (
-		<MainContent className="layout-grid">
+		<MainContent className="layout-grid content-start">
 			<section className="layout-subgrid relative bg-fill-weaker py-24">
 				{/* @ts-expect-error @see https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69970 */}
 				<ImprintPageContent locale={locale} title={t("title")} />

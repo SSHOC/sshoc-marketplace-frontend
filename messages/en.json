@@ -58,6 +58,12 @@
 		},
 		"title": "Page not found"
 	},
+	"SignInPage": {
+		"meta": {
+			"title": "Sign in"
+		},
+		"title": "Sign in"
+	},
 	"TableOfContents": {
 		"title": "Table of contents"
 	}

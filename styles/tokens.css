@@ -354,7 +354,7 @@
 	--line-height-tiny: 1.25rem;
 	--line-height-uppercase: 1.25rem;
 
-	--font-weight-strong: 600;
+	--font-weight-strong: 700;
 	--font-weight-weak: 400;
 
 	--font-family-body: var(--font-body, ui-sans-serif), system-ui, sans-serif;

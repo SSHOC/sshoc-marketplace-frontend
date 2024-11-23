@@ -35,7 +35,7 @@ export default async function NotFoundPage(
 	return (
 		<MainContent className="layout-grid bg-fill-weaker">
 			<section className="grid place-content-center place-items-center py-24">
-				<h1 className="text-balance font-heading text-display font-strong text-text-strong">
+				<h1 className="text-balance text-center font-heading text-display font-strong text-text-strong">
 					{t("title")}
 				</h1>
 			</section>

@@ -28,7 +28,7 @@ export default async function IndexPage(_props: Readonly<IndexPageProps>): Promi
 	const t = await getTranslations("IndexPage");
 
 	return (
-		<MainContent className="layout-grid">
+		<MainContent className="layout-grid content-start">
 			<section className="layout-subgrid relative py-8">
 				<h1>{t("title")}</h1>
 				<p>{t("lead-in")}</p>

@@ -11,7 +11,7 @@ export function Image(props: Readonly<ImageProps>): ReactNode {
 
 	/** @see https://nextjs.org/docs/pages/api-reference/components/image#getimageprops */
 	if (placeholder == null || placeholder === "empty") {
-		return <img {...getImageProps(props)} alt={alt} />;
+		return <img {...getImageProps(props).props} alt={alt} />;
 	}
 
 	return <NextImage {...props} alt={alt} />;
