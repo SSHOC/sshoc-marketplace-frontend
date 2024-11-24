@@ -36,3 +36,6 @@ out/
 /playwright/.cache/
 /playwright-report/
 /test-results/
+
+# generated api-client
+/lib/api/types.ts

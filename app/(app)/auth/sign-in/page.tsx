@@ -3,9 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { SignInForm } from "@/app/(app)/auth/sign-in/_components/sign-in-form";
-import { Link } from "@/components/link";
 import { MainContent } from "@/components/main-content";
-import { createHref } from "@/lib/create-href";
 
 interface SignInPageProps extends EmptyObject {}
 
@@ -31,8 +29,6 @@ export default async function SignInPage(_props: Readonly<SignInPageProps>): Pro
 				<h1>{t("title")}</h1>
 
 				<SignInForm />
-
-				<Link href={createHref({})}>Sign in</Link>
 			</section>
 		</MainContent>
 	);
