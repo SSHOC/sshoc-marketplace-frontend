@@ -184,12 +184,12 @@
 		@apply hover:after:bg-fill-hover;
 	}
 
-	.press-overlay {
-		@apply active:after:bg-fill-press;
-	}
-
 	.selected-overlay {
 		@apply selected:after:bg-fill-hover selected:after:border-l-4 selected:after:border-stroke-selected;
+	}
+
+	.press-overlay {
+		@apply pressed:after:bg-fill-press;
 	}
 }
 
