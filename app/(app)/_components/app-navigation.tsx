@@ -1,16 +1,30 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { Button } from "react-aria-components";
+import { cn } from "@acdh-oeaw/style-variants";
+import { ChevronDownIcon, ChevronRightIcon, MenuIcon, XIcon } from "lucide-react";
+import { Fragment, type ReactNode } from "react";
+import {
+	Button,
+	Dialog,
+	DialogTrigger,
+	Disclosure,
+	DisclosurePanel,
+	Heading,
+	Menu,
+	MenuItem,
+	MenuTrigger,
+	Modal,
+	ModalOverlay,
+	Popover,
+	Separator,
+} from "react-aria-components";
 
-import { NavLink } from "@/app/(app)/_components/nav-link";
-import { Image } from "@/components/image";
-import type { LinkProps } from "@/components/link";
-import logo from "@/public/assets/images/logo-with-text.svg";
+import { NavLink, type NavLinkProps } from "@/app/(app)/_components/nav-link";
+import { Logo } from "@/components/logo";
 
 interface NavigationLink {
 	type: "link";
-	href: LinkProps["href"];
+	href: NavLinkProps["href"];
 	label: string;
 }
 
@@ -35,26 +49,32 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 	const { label, navigation } = props;
 
 	return (
-		<nav aria-label={label}>
-			<ul className="flex flex-wrap items-center gap-4 text-sm" role="list">
+		<nav aria-label={label} className="hidden md:flex md:gap-x-12">
+			<NavLink
+				className={cn(
+					"-ml-1.5 grid shrink-0 place-content-center self-center rounded-2 p-1.5",
+					"interactive focus-visible:focus-outline",
+				)}
+				href={navigation.home.href}
+			>
+				<Logo className="h-8 w-auto text-text-strong" />
+				<span className="sr-only">{navigation.home.label}</span>
+			</NavLink>
+
+			<ul className="flex flex-wrap text-small" role="list">
 				{Object.entries(navigation).map(([id, item]) => {
 					switch (item.type) {
 						case "link": {
-							if (id === "home") {
-								return (
-									<li key={id} className="shrink-0">
-										<NavLink href={item.href}>
-											{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-											<Image alt="" className="h-12 w-auto" priority={true} src={logo} />
-											<span className="sr-only">{item.label}</span>
-										</NavLink>
-									</li>
-								);
-							}
-
 							return (
 								<li key={id}>
-									<NavLink className="inline-flex text-center" href={item.href}>
+									<NavLink
+										className={cn(
+											"inline-flex px-4 py-6 text-text-strong",
+											"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+											"aria-[current]:select-overlay aria-[current]:select-overlay-border-bottom",
+										)}
+										href={item.href}
+									>
 										{item.label}
 									</NavLink>
 								</li>
@@ -62,13 +82,71 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 						}
 
 						case "separator": {
-							return <li key={id} aria-orientation="vertical" role="separator" />;
+							return (
+								<Separator
+									key={id}
+									className="mx-1 h-full border-l border-stroke-weak"
+									elementType="li"
+									orientation="vertical"
+								/>
+							);
 						}
 
 						case "menu": {
 							return (
 								<li key={id}>
-									<Button>{item.label}</Button>
+									<MenuTrigger>
+										<Button
+											className={cn(
+												"inline-flex items-center gap-x-3 px-4 py-6 text-text-strong",
+												"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+											)}
+										>
+											{item.label}
+											<ChevronDownIcon
+												aria-hidden={true}
+												className="size-5 shrink-0 text-icon-neutral"
+											/>
+										</Button>
+										<Popover
+											className={cn(
+												"min-w-[var(--trigger-width)] rounded-2 border border-stroke-weak bg-background-overlay shadow-overlay",
+												"placement-bottom:translate-y-1 placement-bottom:slide-in-from-top-2 entering:animate-in entering:fade-in-0 exiting:animate-out exiting:fade-out-0 exiting:zoom-out-95",
+											)}
+											placement="bottom"
+										>
+											<Menu className="max-h-[inherit] min-w-40 overflow-auto py-2">
+												{Object.entries(item.children).map(([id, item]) => {
+													switch (item.type) {
+														case "link": {
+															return (
+																<MenuItem
+																	key={id}
+																	className={cn(
+																		"flex cursor-pointer select-none items-center gap-x-3 px-4 py-3 text-small text-text-strong",
+																		"interactive focus-visible:focus-outline focus-visible:-focus-outline-offset-2 hover:hover-overlay pressed:press-overlay",
+																	)}
+																	href={item.href}
+																	textValue={item.label}
+																>
+																	{item.label}
+																</MenuItem>
+															);
+														}
+
+														case "separator": {
+															return (
+																<Separator
+																	key={id}
+																	className="my-1 w-full border-b border-stroke-weak"
+																/>
+															);
+														}
+													}
+												})}
+											</Menu>
+										</Popover>
+									</MenuTrigger>
 								</li>
 							);
 						}
@@ -76,5 +154,166 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 				})}
 			</ul>
 		</nav>
+	);
+}
+
+interface AppNavigationMobileProps {
+	label: string;
+	menuCloseLabel: string;
+	menuOpenLabel: string;
+	menuTitleLabel: string;
+	navigation: Record<string, NavigationItem>;
+}
+
+export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode {
+	const { label, menuCloseLabel, menuOpenLabel, menuTitleLabel, navigation } = props;
+
+	return (
+		<DialogTrigger>
+			<nav aria-label={label} className="flex items-center py-1 md:hidden">
+				<Button
+					className={cn(
+						"-ml-3 grid place-content-center rounded-2 p-3",
+						"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+					)}
+				>
+					<MenuIcon aria-hidden={true} className="size-6 shrink-0 text-icon-neutral" />
+					<span className="sr-only">{menuOpenLabel}</span>
+				</Button>
+			</nav>
+			<ModalOverlay
+				className={cn(
+					"fixed left-0 top-0 isolate z-20 h-[var(--visual-viewport-height)] w-full bg-fill-overlay",
+					"entering:duration-200 entering:ease-out entering:animate-in entering:fade-in",
+					"exiting:duration-200 exiting:ease-in exiting:animate-out exiting:fade-out",
+				)}
+				isDismissable={true}
+			>
+				<Modal
+					className={cn(
+						"mr-12 size-full max-h-full max-w-sm bg-background-overlay shadow-overlay forced-colors:bg-[Canvas]",
+						"entering:duration-200 entering:ease-out entering:animate-in entering:slide-in-from-left",
+						"exiting:duration-200 exiting:ease-in exiting:animate-out exiting:slide-out-to-left",
+					)}
+				>
+					<Dialog className="relative h-full max-h-[inherit] overflow-auto">
+						{({ close }) => {
+							return (
+								<Fragment>
+									<header className="p-6">
+										<Heading className="sr-only" slot="title">
+											{menuTitleLabel}
+										</Heading>
+										<Button
+											className={cn(
+												"-my-3 -ml-3 grid place-content-center rounded-2 p-3",
+												"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+											)}
+											slot="close"
+										>
+											<XIcon aria-hidden={true} className="size-6 shrink-0 text-icon-neutral" />
+											<span className="sr-only">{menuCloseLabel}</span>
+										</Button>
+									</header>
+									<ul className="text-small" role="list">
+										{Object.entries(navigation).map(([id, item]) => {
+											switch (item.type) {
+												case "link": {
+													return (
+														<li key={id}>
+															<NavLink
+																className={cn(
+																	"inline-flex w-full px-6 py-3 text-text-strong",
+																	"interactive focus-visible:focus-outline focus-visible:-focus-outline-offset-2 hover:hover-overlay pressed:press-overlay",
+																	"aria-[current]:hover-overlay aria-[current]:select-overlay",
+																)}
+																href={item.href}
+																onClick={close}
+															>
+																{item.label}
+															</NavLink>
+														</li>
+													);
+												}
+
+												case "separator": {
+													return (
+														<Separator
+															key={id}
+															className="my-1 w-full border-b border-stroke-weak"
+															elementType="li"
+														/>
+													);
+												}
+
+												case "menu": {
+													return (
+														<li key={id}>
+															<Disclosure>
+																<Heading>
+																	<Button
+																		className={cn(
+																			"inline-flex w-full items-center justify-between px-6 py-3 text-text-strong",
+																			"interactive focus-visible:focus-outline focus-visible:-focus-outline-offset-2 hover:hover-overlay pressed:press-overlay",
+																			"expanded:hover-overlay expanded:select-overlay",
+																		)}
+																		slot="trigger"
+																	>
+																		{item.label}
+																		<ChevronRightIcon
+																			aria-hidden={true}
+																			className="size-5 shrink-0"
+																		/>
+																	</Button>
+																</Heading>
+																<DisclosurePanel>
+																	<ul role="list">
+																		{Object.entries(item.children).map(([id, item]) => {
+																			switch (item.type) {
+																				case "link": {
+																					return (
+																						<li key={id}>
+																							<NavLink
+																								className={cn(
+																									"inline-flex w-full px-6 py-3 text-text-strong",
+																									"interactive focus-visible:focus-outline focus-visible:-focus-outline-offset-2 hover:hover-overlay pressed:press-overlay",
+																									"aria-[current]:hover-overlay aria-[current]:select-overlay",
+																								)}
+																								href={item.href}
+																								onClick={close}
+																							>
+																								{item.label}
+																							</NavLink>
+																						</li>
+																					);
+																				}
+
+																				case "separator": {
+																					return (
+																						<Separator
+																							key={id}
+																							className="my-1 w-full border-b border-stroke-weak"
+																							elementType="li"
+																						/>
+																					);
+																				}
+																			}
+																		})}
+																	</ul>
+																</DisclosurePanel>
+															</Disclosure>
+														</li>
+													);
+												}
+											}
+										})}
+									</ul>
+								</Fragment>
+							);
+						}}
+					</Dialog>
+				</Modal>
+			</ModalOverlay>
+		</DialogTrigger>
 	);
 }

@@ -66,7 +66,7 @@
 		"server-only": "^0.0.1",
 		"sharp": "^0.33.5",
 		"shiki": "^1.23.1",
-		"valibot": "^1.0.0-beta.7"
+		"valibot": "^1.0.0-beta.8"
 	},
 	"devDependencies": {
 		"@acdh-oeaw/eslint-config": "^2.0.5",
@@ -85,7 +85,7 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/hast": "^3.0.4",
 		"@types/mdx": "^2.0.13",
-		"@types/node": "^22.9.1",
+		"@types/node": "^22.9.3",
 		"@types/react": "npm:types-react@rc",
 		"@types/react-dom": "npm:types-react-dom@rc",
 		"axe-core": "^4.10.2",
@@ -110,7 +110,7 @@
 		"tailwindcss-animate": "^1.0.7",
 		"tailwindcss-react-aria-components": "^1.2.0",
 		"tsx": "^4.19.2",
-		"typescript": "^5.6.3"
+		"typescript": "^5.7.2"
 	},
 	"pnpm": {
 		"overrides": {

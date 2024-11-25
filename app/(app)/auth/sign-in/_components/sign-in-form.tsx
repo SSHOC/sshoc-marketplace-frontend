@@ -33,6 +33,7 @@ export function SignInForm(): ReactNode {
 				body: JSON.stringify({ username, password }),
 			});
 
+			// api issues token which are valid for 24 hours
 			const token = response.headers.get("authorization");
 
 			if (token == null) {
@@ -49,6 +50,7 @@ export function SignInForm(): ReactNode {
 	}
 
 	return (
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		<form action={action}>
 			<label>
 				<div>Username</div>

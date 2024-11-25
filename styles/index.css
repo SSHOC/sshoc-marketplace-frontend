@@ -34,16 +34,6 @@
 		interpolate-size: allow-keywords;
 	}
 
-	:focus {
-		outline: 2px solid transparent;
-		outline-offset: 2px;
-	}
-
-	:focus-visible {
-		outline: 2px solid var(--color-stroke-focus);
-		outline-offset: 2px;
-	}
-
 	blockquote {
 		text-wrap: balance;
 	}
@@ -163,16 +153,17 @@
 		}
 	}
 
-	.focus-visible-outline {
-		@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-stroke-focus;
+	.focus-outline {
+		@apply outline outline-2 outline-stroke-focus outline-offset-2;
 	}
 
-	.focus-visible-outline-offset-0 {
-		@apply focus-visible:outline-offset-0;
+	.focus-outline-offset-0 {
+		@apply outline-offset-0;
 	}
 
-	.focus-visible-outline-offset-2 {
-		@apply focus-visible:outline-offset-2;
+	/* stylelint-disable-next-line selector-class-pattern */
+	.-focus-outline-offset-2 {
+		@apply -outline-offset-2;
 	}
 
 	.interactive {
@@ -181,15 +172,23 @@
 	}
 
 	.hover-overlay {
-		@apply hover:after:bg-fill-hover;
+		@apply after:bg-fill-hover;
 	}
 
-	.selected-overlay {
-		@apply selected:after:bg-fill-hover selected:after:border-l-4 selected:after:border-stroke-selected;
+	.select-overlay {
+		@apply after:border-stroke-selected after:border-l-4;
+	}
+
+	.select-overlay-border-bottom {
+		@apply after:border-l-0 after:border-b-4;
 	}
 
 	.press-overlay {
-		@apply pressed:after:bg-fill-press;
+		@apply after:bg-fill-press;
+	}
+
+	.target-area {
+		@apply before:absolute before:min-w-[44px] before:min-h-[44px] before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:pointer-events-none;
 	}
 }
 

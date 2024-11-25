@@ -28,6 +28,9 @@
 			"training-materials": "Training materials",
 			"workflows": "Workflows"
 		},
+		"navigation-menu": "Navigation menu",
+		"navigation-menu-close": "Close navigation menu",
+		"navigation-menu-open": "Open navigation menu",
 		"navigation-primary": "Primary",
 		"report-issue": "Report an issue"
 	},

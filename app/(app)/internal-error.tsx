@@ -36,7 +36,7 @@ export default function InternalError(props: Readonly<InternalErrorProps>): Reac
 				<Button
 					className={cn(
 						"rounded-2 border border-stroke-brand-strong bg-fill-brand-strong px-3 py-1.5 text-tiny font-strong text-text-inverse-strong shadow-raised",
-						"interactive focus-visible-outline focus-visible-outline-offset-2 hover-overlay press-overlay",
+						"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
 					)}
 					isPending={isPending}
 					onPress={() => {

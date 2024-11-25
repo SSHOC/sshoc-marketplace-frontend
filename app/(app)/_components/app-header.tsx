@@ -2,7 +2,11 @@ import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
-import { AppNavigation, type NavigationItem } from "@/app/(app)/_components/app-navigation";
+import {
+	AppNavigation,
+	AppNavigationMobile,
+	type NavigationItem,
+} from "@/app/(app)/_components/app-navigation";
 import { createHref } from "@/lib/create-href";
 import { createCollectionResource } from "@/lib/keystatic/resources";
 
@@ -139,8 +143,15 @@ export async function AppHeader(): Promise<ReactNode> {
 
 	return (
 		<header className="layout-grid border-b border-stroke-weak bg-fill-weaker">
-			<div className="flex items-center justify-between gap-4 py-6">
+			<div className="flex items-center justify-between gap-x-12">
 				<AppNavigation label={label} navigation={navigation} />
+				<AppNavigationMobile
+					label={label}
+					menuCloseLabel={t("navigation-menu-close")}
+					menuOpenLabel={t("navigation-menu-open")}
+					menuTitleLabel={t("navigation-menu")}
+					navigation={navigation}
+				/>
 			</div>
 		</header>
 	);
