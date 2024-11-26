@@ -23,7 +23,7 @@ export function SkipLink(props: Readonly<SkipLinkProps>): ReactNode {
 
 	return (
 		<Link
-			className="bg-background text-on-background fixed z-50 -translate-y-full rounded px-4 py-3 transition focus:translate-y-0"
+			className="fixed z-50 m-1 translate-y-[calc(-100%-0.25rem)] rounded bg-background-inverse px-4 py-3 text-text-inverse-strong transition focus-visible:translate-y-0"
 			href={createHref({ hash: targetId })}
 			id={id}
 			onClick={onClick}

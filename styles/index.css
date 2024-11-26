@@ -34,6 +34,20 @@
 		interpolate-size: allow-keywords;
 	}
 
+	:focus {
+		/** Transparent outline. */
+		@apply outline-none;
+	}
+
+	:focus-visible {
+		@apply outline outline-2 outline-stroke-focus outline-offset-2;
+	}
+
+	/** Let react aria components handle focus state. */
+	[data-rac]:where(:focus, :focus-visible) {
+		@apply outline-none;
+	}
+
 	blockquote {
 		text-wrap: balance;
 	}
@@ -237,7 +251,7 @@
 		--tw-prose-counters: var(--color-neutral-400);
 		--tw-prose-bullets: var(--color-neutral-600);
 		--tw-prose-hr: var(--color-neutral-700);
-		--tw-prose-quotes: var(--color-gray-100);
+		--tw-prose-quotes: var(--color-neutral-100);
 		--tw-prose-quote-borders: var(--color-neutral-700);
 		--tw-prose-captions: var(--color-neutral-400);
 		--tw-prose-code: var(--color-neutral-0);

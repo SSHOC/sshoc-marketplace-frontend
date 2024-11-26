@@ -20,7 +20,8 @@ import {
 } from "react-aria-components";
 
 import { NavLink, type NavLinkProps } from "@/app/(app)/_components/nav-link";
-import { Logo } from "@/components/logo";
+import { Image } from "@/components/image";
+import logo from "@/public/assets/images/logo-with-text.svg";
 
 interface NavigationLink {
 	type: "link";
@@ -52,12 +53,13 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 		<nav aria-label={label} className="hidden md:flex md:gap-x-12">
 			<NavLink
 				className={cn(
-					"-ml-1.5 grid shrink-0 place-content-center self-center rounded-2 p-1.5",
+					"-ml-2 grid shrink-0 place-content-center self-center rounded-2 p-2",
 					"interactive focus-visible:focus-outline",
 				)}
 				href={navigation.home.href}
 			>
-				<Logo className="h-8 w-auto text-text-strong" />
+				{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+				<Image alt="" className="h-8 w-auto" priority={true} src={logo} />
 				<span className="sr-only">{navigation.home.label}</span>
 			</NavLink>
 
@@ -174,7 +176,7 @@ export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode 
 				<Button
 					className={cn(
 						"-ml-3 grid place-content-center rounded-2 p-3",
-						"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+						"interactive focus-visible:focus-outline focus-visible:focus-outline-offset-0 hover:hover-overlay pressed:press-overlay",
 					)}
 				>
 					<MenuIcon aria-hidden={true} className="size-6 shrink-0 text-icon-neutral" />
@@ -207,7 +209,7 @@ export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode 
 										<Button
 											className={cn(
 												"-my-3 -ml-3 grid place-content-center rounded-2 p-3",
-												"interactive focus-visible:focus-outline hover:hover-overlay pressed:press-overlay",
+												"interactive focus-visible:focus-outline focus-visible:focus-outline-offset-0 hover:hover-overlay pressed:press-overlay",
 											)}
 											slot="close"
 										>
