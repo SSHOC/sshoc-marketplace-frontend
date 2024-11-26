@@ -172,7 +172,7 @@ export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode 
 
 	return (
 		<DialogTrigger>
-			<nav aria-label={label} className="flex items-center py-1 md:hidden">
+			<nav aria-label={label} className="flex items-center py-3 md:hidden">
 				<Button
 					className={cn(
 						"-ml-3 grid place-content-center rounded-2 p-3",
