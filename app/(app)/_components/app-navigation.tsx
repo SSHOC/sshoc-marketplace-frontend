@@ -19,9 +19,8 @@ import {
 	Separator,
 } from "react-aria-components";
 
-import { NavLink, type NavLinkProps } from "@/app/(app)/_components/nav-link";
-import { Image } from "@/components/image";
-import logo from "@/public/assets/images/logo-with-text.svg";
+import { Logo } from "@/components/logo";
+import { NavLink, type NavLinkProps } from "@/components/nav-link";
 
 interface NavigationLink {
 	type: "link";
@@ -58,8 +57,7 @@ export function AppNavigation(props: AppNavigationProps): ReactNode {
 				)}
 				href={navigation.home.href}
 			>
-				{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-				<Image alt="" className="h-8 w-auto" priority={true} src={logo} />
+				<Logo className="h-8 w-auto text-text-strong" />
 				<span className="sr-only">{navigation.home.label}</span>
 			</NavLink>
 
@@ -230,7 +228,7 @@ export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode 
 																	"aria-[current]:hover-overlay aria-[current]:select-overlay",
 																)}
 																href={item.href}
-																onClick={close}
+																onPress={close}
 															>
 																{item.label}
 															</NavLink>
@@ -282,7 +280,7 @@ export function AppNavigationMobile(props: AppNavigationMobileProps): ReactNode 
 																									"aria-[current]:hover-overlay aria-[current]:select-overlay",
 																								)}
 																								href={item.href}
-																								onClick={close}
+																								onPress={close}
 																							>
 																								{item.label}
 																							</NavLink>

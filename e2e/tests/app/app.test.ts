@@ -150,4 +150,26 @@ test.describe("app", () => {
 		await indexPage.skipLink.click();
 		await expect(indexPage.mainContent).toBeFocused();
 	});
+
+	test("should add aria-current attribute to nav links", async ({ createIndexPage }) => {
+		const { indexPage, i18n } = await createIndexPage(defaultLocale);
+		await indexPage.goto();
+
+		const homeLink = indexPage.page
+			.getByRole("link", {
+				name: i18n.t("AppHeader.links.home"),
+			})
+			.first();
+		const imprintLink = indexPage.page.getByRole("link", {
+			name: i18n.t("AppFooter.links.imprint"),
+		});
+
+		await expect(homeLink).toHaveAttribute("aria-current", "page");
+		await expect(imprintLink).not.toHaveAttribute("aria-current", "page");
+
+		await imprintLink.click();
+
+		await expect(homeLink).not.toHaveAttribute("aria-current", "page");
+		await expect(imprintLink).toHaveAttribute("aria-current", "page");
+	});
 });

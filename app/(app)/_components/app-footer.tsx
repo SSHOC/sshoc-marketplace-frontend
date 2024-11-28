@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import { NavLink } from "@/app/(app)/_components/nav-link";
 import type { LinkProps } from "@/components/link";
+import { NavLink } from "@/components/nav-link";
 import { createHref } from "@/lib/create-href";
 
 interface NavigationLink {

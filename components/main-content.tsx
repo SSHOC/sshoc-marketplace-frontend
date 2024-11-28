@@ -1,3 +1,4 @@
+import { cn } from "@acdh-oeaw/style-variants";
 import type { ReactNode } from "react";
 
 export const id = "main-content";
@@ -11,7 +12,7 @@ export function MainContent(props: Readonly<MainContentProps>): ReactNode {
 	const { children, className } = props;
 
 	return (
-		<main className={className} id={id} tabIndex={-1}>
+		<main className={cn("outline-none", className)} id={id} tabIndex={-1}>
 			{children}
 		</main>
 	);

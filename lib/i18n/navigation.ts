@@ -28,7 +28,7 @@ import type { ComponentPropsWithRef, ReactNode } from "react";
 
 interface LocaleLinkProps extends Omit<ComponentPropsWithRef<typeof Link>, "href"> {
 	children: ReactNode;
-	href: string;
+	href?: string | undefined;
 }
 
 export { Link as LocaleLink, type LocaleLinkProps };

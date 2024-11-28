@@ -13,11 +13,7 @@ export function NavLink(props: Readonly<NavLinkProps>): ReactNode {
 	const navLinkProps = useNavLink(rest);
 
 	return (
-		<Link
-			{...rest}
-			{...navLinkProps}
-			data-current={Boolean(navLinkProps["aria-current"]) || undefined}
-		>
+		<Link {...rest} {...navLinkProps}>
 			{children}
 		</Link>
 	);

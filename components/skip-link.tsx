@@ -17,7 +17,7 @@ export function SkipLink(props: Readonly<SkipLinkProps>): ReactNode {
 	/**
 	 * @see https://bugzilla.mozilla.org/show_bug.cgi?id=308064
 	 */
-	function onClick() {
+	function onPress() {
 		document.getElementById(targetId)?.focus();
 	}
 
@@ -26,7 +26,7 @@ export function SkipLink(props: Readonly<SkipLinkProps>): ReactNode {
 			className="fixed z-50 m-1 translate-y-[calc(-100%-0.25rem)] rounded bg-background-inverse px-4 py-3 text-text-inverse-strong transition focus-visible:translate-y-0"
 			href={createHref({ hash: targetId })}
 			id={id}
-			onClick={onClick}
+			onPress={onPress}
 		>
 			{children}
 		</Link>

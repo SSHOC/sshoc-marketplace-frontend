@@ -299,6 +299,7 @@
 
 :root {
 	--corner-radius-0: 0rem;
+	--corner-radius-2: 0.125rem;
 	--corner-radius-4: 0.25rem;
 	--corner-radius-8: 0.5rem;
 	--corner-radius-12: 0.75rem;
@@ -354,7 +355,7 @@
 	--line-height-tiny: 1.25rem;
 	--line-height-uppercase: 1.25rem;
 
-	--font-weight-strong: 700;
+	--font-weight-strong: 600;
 	--font-weight-weak: 400;
 
 	--font-family-body: var(--font-body, ui-sans-serif), system-ui, sans-serif;
