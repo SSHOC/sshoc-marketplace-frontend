@@ -1,4 +1,3 @@
-import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import animatePlugin from "tailwindcss-animate";
 import reactAriaComponentsPlugin from "tailwindcss-react-aria-components";
@@ -12,11 +11,12 @@ const config = {
 		"variant",
 		['&:where([data-ui-color-scheme="dark"], [data-ui-color-scheme="dark"] *)'],
 	],
-	plugins: [animatePlugin, reactAriaComponentsPlugin, typographyPlugin],
+	plugins: [animatePlugin, reactAriaComponentsPlugin],
 	theme: {
 		extend: {
 			borderRadius: {
 				"0": "var(--corner-radius-0)",
+				"0.5": "var(--corner-radius-2)",
 				"1": "var(--corner-radius-4)",
 				"2": "var(--corner-radius-8)",
 				"3": "var(--corner-radius-12)",
@@ -119,9 +119,12 @@ const config = {
 			fontSize: {
 				display: [
 					"var(--font-size-display)",
-					{ letterSpacing: "-0.0175em", lineHeight: "var(--line-height-display)" },
+					{ letterSpacing: "-1px", lineHeight: "var(--line-height-display)" },
 				],
-				"heading-1": ["var(--font-size-heading-1)", { lineHeight: "var(--line-height-heading-1)" }],
+				"heading-1": [
+					"var(--font-size-heading-1)",
+					{ letterSpacing: "-0.5px", lineHeight: "var(--line-height-heading-1)" },
+				],
 				"heading-2": ["var(--font-size-heading-2)", { lineHeight: "var(--line-height-heading-2)" }],
 				"heading-3": ["var(--font-size-heading-3)", { lineHeight: "var(--line-height-heading-3)" }],
 				"heading-4": ["var(--font-size-heading-4)", { lineHeight: "var(--line-height-heading-4)" }],
@@ -164,19 +167,6 @@ const config = {
 				"32": "var(--spacing-128)",
 				"48": "var(--spacing-192)",
 				"64": "var(--spacing-256)",
-			},
-			typography: {
-				DEFAULT: {
-					css: {
-						maxWidth: null,
-						/** Don't add quotes around `blockquote`. */
-						"blockquote p:first-of-type::before": null,
-						"blockquote p:last-of-type::after": null,
-						/** Don't add backticks around inline `code`. */
-						"code::before": null,
-						"code::after": null,
-					},
-				},
 			},
 		},
 	},

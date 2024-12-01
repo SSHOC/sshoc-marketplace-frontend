@@ -14,7 +14,7 @@ export const env = createEnv({
 		const Schema = v.object({
 			BUILD_MODE: v.optional(v.picklist(["export", "standalone"])),
 			BUNDLE_ANALYZER: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
-			EMAIL_CONTACT_ADDRESS: v.optional(v.pipe(v.string(), v.email())),
+			EMAIL_ADDRESS: v.optional(v.pipe(v.string(), v.email())),
 			EMAIL_SMTP_PASSWORD: v.optional(v.pipe(v.string(), v.nonEmpty())),
 			EMAIL_SMTP_PORT: v.optional(
 				v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
@@ -58,7 +58,7 @@ export const env = createEnv({
 	environment: {
 		BUILD_MODE: process.env.BUILD_MODE,
 		BUNDLE_ANALYZER: process.env.BUNDLE_ANALYZER,
-		EMAIL_CONTACT_ADDRESS: process.env.EMAIL_CONTACT_ADDRESS,
+		EMAIL_ADDRESS: process.env.EMAIL_CONTACT_ADDRESS,
 		EMAIL_SMTP_PORT: process.env.EMAIL_SMTP_PORT,
 		EMAIL_SMTP_SERVER: process.env.EMAIL_SMTP_SERVER,
 		EMAIL_SMTP_USERNAME: process.env.EMAIL_SMTP_USERNAME,

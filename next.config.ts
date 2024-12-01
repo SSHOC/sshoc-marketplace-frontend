@@ -10,6 +10,22 @@ const config: NextConfig = {
 		dirs: [process.cwd()],
 		ignoreDuringBuilds: true,
 	},
+	headers() {
+		const headers: Awaited<ReturnType<NonNullable<NextConfig["headers"]>>> = [
+			/** @see https://nextjs.org/docs/app/building-your-application/deploying#streaming-and-suspense */
+			{
+				source: "/:path*{/}?",
+				headers: [
+					{
+						key: "X-Accel-Buffering",
+						value: "no",
+					},
+				],
+			},
+		];
+
+		return Promise.resolve(headers);
+	},
 	images: {
 		remotePatterns: env.NEXT_PUBLIC_API_BASE_URL
 			? [

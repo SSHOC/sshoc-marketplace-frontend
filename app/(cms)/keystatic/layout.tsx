@@ -1,5 +1,4 @@
 import "@/styles/index.css";
-import "@/styles/content.css";
 
 import type { Metadata } from "next";
 import { type ReactNode, Suspense } from "react";

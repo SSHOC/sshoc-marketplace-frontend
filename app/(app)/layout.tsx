@@ -1,5 +1,4 @@
 import "@/styles/index.css";
-import "@/styles/content.css";
 
 import { pick } from "@acdh-oeaw/lib";
 import { cn } from "@acdh-oeaw/style-variants";

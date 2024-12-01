@@ -37,7 +37,7 @@ export default config({
 			mark() {
 				return <Logo />;
 			},
-			name: "ACDH-CH",
+			name: "SSHOC Marketplace",
 		},
 		navigation: {
 			AboutPages: locales.map((locale) => {

@@ -2,22 +2,22 @@ import { Disclosure } from "@/components/content/disclosure";
 import { Embed } from "@/components/content/embed";
 import { Figure } from "@/components/content/figure";
 import { Grid, GridItem } from "@/components/content/grid";
-import { Link } from "@/components/content/link";
+import { Link as ContentLink } from "@/components/content/link";
 import { TableOfContents } from "@/components/content/table-of-contents";
 import { Tab, Tabs } from "@/components/content/tabs";
 import { Video } from "@/components/content/video";
-import { Link as Anchor } from "@/components/link";
+import { Link } from "@/components/link";
 import { ServerImage as Image } from "@/components/server-image";
 
 const components = {
-	a: Anchor,
+	a: Link,
 	Disclosure,
 	Embed,
 	Figure,
 	Grid,
 	GridItem,
 	img: Image,
-	Link,
+	Link: ContentLink,
 	Tab,
 	TableOfContents,
 	Tabs,

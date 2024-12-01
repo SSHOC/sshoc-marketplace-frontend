@@ -166,6 +166,14 @@
 		}
 	}
 
+	.max-w-text {
+		max-width: var(--max-width-text, 42rem);
+	}
+
+	.content-max-w-text > * {
+		max-width: var(--max-width-text, 42rem);
+	}
+
 	/** Interaction states. */
 
 	.focus-outline {
@@ -209,17 +217,12 @@
 	/** Typography. */
 
 	.typography {
-		--max-content-width: 42rem;
 		--color-typography-strong: var(--color-text-strong);
 		--color-typography-weak: var(--color-text-weak);
 
 		color: var(--color-typography-weak);
 		font-size: var(--font-size-small);
 		line-height: var(--line-height-small);
-
-		& > * {
-			max-width: var(--max-content-width);
-		}
 
 		& > :first-child {
 			margin-block-start: 0;
@@ -230,7 +233,7 @@
 		}
 
 		& :where(p) {
-			margin-block: 0.625rem;
+			margin-block: 0.75rem;
 			font-size: var(--font-size-small);
 			line-height: var(--line-small);
 		}
@@ -253,6 +256,10 @@
 			font-weight: var(--font-weight-strong);
 			font-weight: 500;
 			text-decoration: underline;
+
+			&:hover {
+				text-decoration: none;
+			}
 		}
 
 		& :where(h1, h2, h3, h4, h5, h6) {
@@ -265,9 +272,11 @@
 			font-weight: var(--font-weight-strong);
 			font-size: var(--font-size-heading-1);
 			line-height: var(--line-height-heading-1);
+			letter-spacing: -0.5px;
 
 			& code {
 				font-size: 75%;
+				letter-spacing: unset;
 			}
 		}
 
@@ -283,7 +292,7 @@
 		}
 
 		& :where(h3) {
-			margin-block: 1.75rem 0.25rem;
+			margin-block: 2rem 0.25rem;
 			font-weight: var(--font-weight-strong);
 			font-size: var(--font-size-heading-3);
 			line-height: var(--line-height-heading-3);
@@ -294,7 +303,7 @@
 		}
 
 		& :where(h4) {
-			margin-block: 1rem 0.25rem;
+			margin-block: 1.5rem 0.25rem;
 			font-weight: var(--font-weight-strong);
 			font-size: var(--font-size-heading-4);
 			line-height: var(--line-height-heading-4);
@@ -326,7 +335,7 @@
 			border-top: 1px solid var(--color-stroke-weak);
 
 			& + * {
-				margin-block-start: 0.625rem;
+				margin-block-start: 0.75rem;
 			}
 		}
 
@@ -436,18 +445,22 @@
 		}
 
 		& :where(dd) {
-			margin-block: 0.625rem;
+			margin-block: 0.75rem;
 			padding-inline-start: 1.5rem;
 		}
 
 		& :where(dt) {
-			margin-block: 0.625rem;
+			margin-block: 0.75rem;
 			font-weight: var(--font-weight-strong);
 		}
 
 		& :where(img, picture, figure, video) {
 			display: block;
+			width: 100%;
 			margin-block: 1.25rem;
+		}
+
+		& :where(img, video) {
 			border: 1px solid var(--color-stroke-weak);
 			border-radius: var(--corner-radius-16);
 		}
@@ -475,11 +488,11 @@
 
 		& :where(table) {
 			width: 100%;
-			margin-top: 2em;
-			margin-bottom: 2em;
+			margin-top: 1.25rem;
+			margin-bottom: 1.25rem;
 			table-layout: auto;
-			font-size: 0.875em;
-			line-height: 1.7143;
+			font-size: var(--font-size-tiny);
+			line-height: var(--line-height-tiny);
 
 			& :where(thead) {
 				border-bottom-width: 1px;
@@ -487,10 +500,10 @@
 
 				& :where(th) {
 					vertical-align: bottom;
-					padding-inline: 0.5714em;
+					padding-inline: 0.625rem;
 					color: var(--color-stroke-weak);
 					font-weight: var(--font-weight-strong);
-					padding-block-end: 0.5714em;
+					padding-block-end: 0.625rem;
 
 					&:first-child {
 						padding-inline-start: 0;
@@ -514,8 +527,8 @@
 
 				& :where(td) {
 					vertical-align: baseline;
-					padding-inline: 0.5714em;
-					padding-block: 0.5714em;
+					padding-inline: 0.625rem;
+					padding-block: 0.625rem;
 
 					&:first-child {
 						padding-inline-start: 0;
@@ -533,8 +546,8 @@
 
 				& :where(td) {
 					vertical-align: top;
-					padding-inline: 0.5714em;
-					padding-block: 0.5714em;
+					padding-inline: 0.625rem;
+					padding-block: 0.625rem;
 
 					&:first-child {
 						padding-inline-start: 0;
