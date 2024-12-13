@@ -7,7 +7,7 @@ interface FormProps extends AriaFormProps {
 	children: ReactNode;
 }
 
-export function Form(props: FormProps): ReactNode {
+export function Form(props: Readonly<FormProps>): ReactNode {
 	const { children, ...rest } = props;
 
 	return <AriaForm {...rest}>{children}</AriaForm>;

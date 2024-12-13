@@ -6,7 +6,7 @@ interface SearchFormProps extends ComponentPropsWithoutRef<"form"> {
 	role?: "form" | "search";
 }
 
-export function SearchForm(props: SearchFormProps): ReactNode {
+export function SearchForm(props: Readonly<SearchFormProps>): ReactNode {
 	const { children, role = "search", ...rest } = props;
 
 	return (

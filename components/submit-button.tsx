@@ -8,7 +8,7 @@ interface SubmitButtonProps extends Omit<ButtonProps, "isPending"> {
 	children: ReactNode;
 }
 
-export function SubmitButton(props: SubmitButtonProps): ReactNode {
+export function SubmitButton(props: Readonly<SubmitButtonProps>): ReactNode {
 	const { children, ...rest } = props;
 
 	const { pending: isPending } = useFormStatus();

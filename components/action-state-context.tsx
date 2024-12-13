@@ -10,7 +10,7 @@ interface ActionStateProviderProps {
 	state: ActionState;
 }
 
-export function ActionStateProvider(props: ActionStateProviderProps): ReactNode {
+export function ActionStateProvider(props: Readonly<ActionStateProviderProps>): ReactNode {
 	const { children, state } = props;
 
 	return <ActionStateContext.Provider value={state}>{children}</ActionStateContext.Provider>;
