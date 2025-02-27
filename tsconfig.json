@@ -17,8 +17,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.config.mjs",
-    "scripts/*.loader.cjs",
-    "stories/main.cjs"
+    "scripts/*.loader.cjs"
   ],
-  "exclude": ["node_modules", ".next", "out", "public", "storybook-static"]
+  "exclude": ["node_modules", ".next", "out", "public"]
 }

@@ -41,8 +41,6 @@ yarn-error.log*
 # generated route manifest
 src/lib/core/navigation/routes.ts
 
-# storybook
-storybook-static/
 
 ## .dockerignore ##
 
