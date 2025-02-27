@@ -39,10 +39,10 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
           customMessage != null
             ? customMessage
             : error instanceof Error && isNonEmptyString(error.message)
-            ? error.message
-            : isNonEmptyString(error)
-            ? error
-            : defaultErrorMessages.query.error
+              ? error.message
+              : isNonEmptyString(error)
+                ? error
+                : defaultErrorMessages.query.error
 
         /** Global error toast can be prevented when `meta.messages.error` returns `false`. */
         if (message !== false) {
@@ -103,10 +103,10 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
           customMessage != null
             ? customMessage
             : error instanceof Error && isNonEmptyString(error.message)
-            ? error.message
-            : isNonEmptyString(error)
-            ? error
-            : defaultErrorMessages.mutation.error
+              ? error.message
+              : isNonEmptyString(error)
+                ? error
+                : defaultErrorMessages.mutation.error
 
         /** Global error toast can be prevented when `meta.messages.error` returns `false`. */
         if (message !== false) {

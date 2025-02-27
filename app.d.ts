@@ -30,10 +30,10 @@ type UndefinedLeaves<T> = {
   [K in keyof T]: undefined extends T[K]
     ? never
     : T[K] extends Array<unknown>
-    ? []
-    : T[K] extends object
-    ? UndefinedLeaves<T[K]>
-    : undefined
+      ? []
+      : T[K] extends object
+        ? UndefinedLeaves<T[K]>
+        : undefined
 }
 
 declare module '*.mdx' {

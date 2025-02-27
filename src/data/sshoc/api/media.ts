@@ -11,7 +11,7 @@ import {
 
 export const mediaCategories = ['image', 'video', 'embed', 'object', 'thumbnail'] as const
 
-export type MediaCategory = typeof mediaCategories[number]
+export type MediaCategory = (typeof mediaCategories)[number]
 
 export interface MediaDetailsBase {
   mediaId: string

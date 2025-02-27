@@ -18,7 +18,8 @@
   display: block;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px var(--color-page-loading-indicator),
+  box-shadow:
+    0 0 10px var(--color-page-loading-indicator),
     0 0 5px var(--color-page-loading-indicator);
   opacity: 100%;
   transform: rotate(3deg) translate(0, -4px);

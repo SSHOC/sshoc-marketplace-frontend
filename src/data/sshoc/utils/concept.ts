@@ -2,7 +2,7 @@ import type { BooleanString } from '@/data/sshoc/lib/types'
 
 export const conceptStatus = ['candidate', 'approved'] as const
 
-export type ConceptStatus = typeof conceptStatus[number]
+export type ConceptStatus = (typeof conceptStatus)[number]
 
 export function isConceptStatus(value: string): value is ConceptStatus {
   return conceptStatus.includes(value as ConceptStatus)

@@ -39,16 +39,16 @@ export function usePagination(options: UsePaginationArgs): UsePaginationResult {
     ...(siblingsStart > boundaryCount + 2
       ? ['ellipsis' as const]
       : boundaryCount + 1 < pages - boundaryCount
-      ? [boundaryCount + 1]
-      : []),
+        ? [boundaryCount + 1]
+        : []),
 
     ...range(siblingsStart, siblingsEnd),
 
     ...(siblingsEnd < pages - boundaryCount - 1
       ? ['ellipsis' as const]
       : pages - boundaryCount > boundaryCount
-      ? [pages - boundaryCount]
-      : []),
+        ? [pages - boundaryCount]
+        : []),
 
     ...endPages,
   ]

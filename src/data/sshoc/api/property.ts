@@ -22,7 +22,7 @@ export const propertyTypeType = [
   'boolean',
 ] as const
 
-export type PropertyTypeType = typeof propertyTypeType[number]
+export type PropertyTypeType = (typeof propertyTypeType)[number]
 
 export interface PropertyBase {
   type: PropertyType

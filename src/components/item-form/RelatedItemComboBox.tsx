@@ -68,8 +68,8 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Elemen
   const loadingState = itemSearchResults.isLoading
     ? 'loading'
     : itemSearchResults.isFetchingNextPage
-    ? 'loadingMore'
-    : 'idle'
+      ? 'loadingMore'
+      : 'idle'
 
   return (
     <FormComboBox

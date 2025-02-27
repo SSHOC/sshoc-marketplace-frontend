@@ -72,8 +72,8 @@ export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
   const loadingState = actorSearchResults.isLoading
     ? 'loading'
     : actorSearchResults.isFetchingNextPage
-    ? 'loadingMore'
-    : 'idle'
+      ? 'loadingMore'
+      : 'idle'
 
   return (
     <FormComboBox

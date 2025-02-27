@@ -28,7 +28,7 @@ function isAllowedContributedItemSortOrder(
 
 export const contributedItemsSortOrder = itemSortOrders.filter(isAllowedContributedItemSortOrder)
 
-export type ContributedItemSortOrder = typeof contributedItemsSortOrder[number]
+export type ContributedItemSortOrder = (typeof contributedItemsSortOrder)[number]
 
 export const defaultContributedItemsSortOrder: ContributedItemSortOrder = 'modified-on'
 
@@ -44,7 +44,7 @@ function isAllowedModerateItemSortOrder(
 
 export const moderateItemsSortOrder = itemSortOrders.filter(isAllowedModerateItemSortOrder)
 
-export type ModerateItemSortOrder = typeof contributedItemsSortOrder[number]
+export type ModerateItemSortOrder = (typeof contributedItemsSortOrder)[number]
 
 export const defaultModerateItemsSortOrder: ModerateItemSortOrder = 'modified-on'
 

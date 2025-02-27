@@ -6,7 +6,7 @@ import { sourceInputSchema } from '@/data/sshoc/validation-schemas/source'
 
 export const sourceSortOrders = ['name', 'date'] as const
 
-export type SourceSortOrder = typeof sourceSortOrders[number]
+export type SourceSortOrder = (typeof sourceSortOrders)[number]
 
 export function isSourceSortOrder(sortOrder: string): sortOrder is SourceSortOrder {
   return sourceSortOrders.includes(sortOrder as SourceSortOrder)

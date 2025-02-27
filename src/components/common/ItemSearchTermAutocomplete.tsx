@@ -40,7 +40,8 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
     }
     return mapBy(itemAutocompleteSuggestions.data.suggestions, 'persistentId')
   }, [itemAutocompleteSuggestions.data])
-  const items = itemSearchTerm.length > 0 ? itemAutocompleteSuggestions.data?.suggestions ?? [] : []
+  const items =
+    itemSearchTerm.length > 0 ? (itemAutocompleteSuggestions.data?.suggestions ?? []) : []
 
   function onSelectSuggestion(value: string, key: Key | null) {
     const item = itemsById.get(key as string)

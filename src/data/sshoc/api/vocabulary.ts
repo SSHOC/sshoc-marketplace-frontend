@@ -14,7 +14,7 @@ import { conceptInputSchema } from '@/data/sshoc/validation-schemas/vocabulary'
 
 export const conceptSortOrders = ['score', 'label'] as const
 
-export type ConceptSortOrder = typeof conceptSortOrders[number]
+export type ConceptSortOrder = (typeof conceptSortOrders)[number]
 
 export function isConceptSortOrder(sortOrder: string): sortOrder is ConceptSortOrder {
   return conceptSortOrders.includes(sortOrder as ConceptSortOrder)

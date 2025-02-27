@@ -93,8 +93,8 @@ function LicenceComboBox(props: LicenceComboBoxProps): JSX.Element {
   const loadingState = licences.isLoading
     ? 'loading'
     : licences.isFetchingNextPage
-    ? 'loadingMore'
-    : 'idle'
+      ? 'loadingMore'
+      : 'idle'
 
   return (
     <FormComboBox
