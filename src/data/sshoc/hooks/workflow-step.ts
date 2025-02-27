@@ -1,5 +1,5 @@
 import type { UseMutationOptions, UseQueryOptions } from 'react-query'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 
 import type { AuthData } from '@/data/sshoc/api/common'
 import type {

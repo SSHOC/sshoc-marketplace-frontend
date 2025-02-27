@@ -337,7 +337,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     const searchParams = new URLSearchParams(window.location.search)
     const fragment = window.location.hash.slice(1)
     // TODO:
-    const next = searchParams.get(nextPageKey)
+    // const next = searchParams.get(nextPageKey)
 
     switch (searchParams.get(redirectSearchParamKey)) {
       case redirectSearchParamValues.success: {

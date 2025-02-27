@@ -147,7 +147,7 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
 
   const ref = useRef<HTMLAnchorElement | HTMLLIElement>(null)
   const isDisabled = state.disabledKeys.has(item.key)
-  const isFocused = state.selectionManager.focusedKey === item.key
+  // const isFocused = state.selectionManager.focusedKey === item.key
   const { menuItemProps } = useMenuItem(
     {
       key: item.key,

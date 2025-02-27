@@ -1,4 +1,3 @@
-import { useFocusRing } from '@react-aria/focus'
 import { isFocusVisible, useHover } from '@react-aria/interactions'
 import { useOption } from '@react-aria/listbox'
 import { mergeProps, useObjectRef } from '@react-aria/utils'
@@ -29,19 +28,18 @@ export const ListBoxOption = forwardRef(function ListBoxOption<T extends object>
   const state = useListBoxContext<T>()
 
   const ref = useObjectRef(forwardedRef)
-  const { descriptionProps, isDisabled, isFocused, isSelected, labelProps, optionProps } =
-    useOption<T>(
-      {
-        'aria-label': item['aria-label'],
-        isVirtualized: true,
-        key,
-        shouldFocusOnHover,
-        shouldSelectOnPressUp,
-        shouldUseVirtualFocus,
-      },
-      state,
-      ref,
-    )
+  const { isDisabled, isFocused, isSelected, optionProps } = useOption<T>(
+    {
+      'aria-label': item['aria-label'],
+      isVirtualized: true,
+      key,
+      shouldFocusOnHover,
+      shouldSelectOnPressUp,
+      shouldUseVirtualFocus,
+    },
+    state,
+    ref,
+  )
   // const { focusProps, isFocusVisible } = useFocusRing(props)
   const { hoverProps, isHovered } = useHover({ ...props, isDisabled })
   const isKeyboardModality = isFocusVisible()

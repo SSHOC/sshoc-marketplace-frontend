@@ -27,8 +27,6 @@ import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
-import { Centered } from '@/lib/core/ui/Centered/Centered'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 
 export namespace BrowsePage {
   export interface PathParamsInput extends ParamsInput {

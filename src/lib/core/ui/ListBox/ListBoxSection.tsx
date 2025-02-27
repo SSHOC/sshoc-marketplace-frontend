@@ -17,7 +17,7 @@ export interface ListBoxSectionProps<T extends object> {
 
 export const ListBoxSection = forwardRef(function ListBoxSection<T extends object>(
   props: ListBoxSectionProps<T>,
-  forwardedRef: ForwardedRef<HTMLDivElement>,
+  _forwardedRef: ForwardedRef<HTMLDivElement>,
 ): JSX.Element {
   const { children, header, reusableView } = props
   const item = reusableView.content

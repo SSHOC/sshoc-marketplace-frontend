@@ -37,7 +37,7 @@ export const MenuItem = forwardRef(function MenuItem<T extends object>(
   const isDisabled = state.disabledKeys.has(key)
 
   const menuItemRef = useRef<HTMLLIElement>(null)
-  const { menuItemProps, labelProps, descriptionProps, keyboardShortcutProps } = useMenuItem(
+  const { menuItemProps } = useMenuItem(
     {
       isSelected,
       isDisabled,
