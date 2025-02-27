@@ -5,12 +5,10 @@
   "scripts": {
     "analyze-bundle": "cross-env BUNDLE_ANALYZER=enabled next build",
     "build": "next build",
-    "cm": "git-cz",
     "cms:server": "netlify-cms-proxy-server",
     "cypress": "cypress open --config-file cypress/cypress.config.json",
     "cypress:headless": "cypress run --config-file cypress/cypress.config.json",
     "dev": "next dev",
-    "docker:dev": "docker run --rm --init -u `id -u`:`id -g` -v `pwd`:/app -w /app -p 3000:3000 node:14-slim yarn dev",
     "format": "prettier . \"!**/*.mdx\" --list-different --ignore-path .gitignore",
     "format:fix": "yarn run format --write",
     "generate:route-manifest": "ts-script scripts/generate-route-manifest.ts",
@@ -168,7 +166,6 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
-    "@commitlint/cz-commitlint": "^16.2.1",
     "@faker-js/faker": "^6.1.1",
     "@jest/types": "^27.5.1",
     "@mswjs/data": "^0.9.2",
@@ -216,7 +213,6 @@
     "@types/react-dom": "^17.0.11",
     "@types/sharp": "^0.29.5",
     "autoprefixer": "^10.4.2",
-    "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
     "cypress": "^9.5.3",
     "cypress-real-events": "^1.7.0",
@@ -267,11 +263,6 @@
   },
   "commitlint": {
     "extends": "@stefanprobst/commitlint-config"
-  },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
   },
   "eslintConfig": {
     "extends": "@stefanprobst/eslint-config-next",
