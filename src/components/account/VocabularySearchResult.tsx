@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 
-import { useVocabularySearchFilters } from '@/components/account/useVocabularySearchFilters'
 import { MetadataLabel } from '@/components/common/MetadataLabel'
 import { MetadataValue } from '@/components/common/MetadataValue'
 import { MetadataValues } from '@/components/common/MetadataValues'
