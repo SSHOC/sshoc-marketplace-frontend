@@ -5,7 +5,7 @@ import { RouterContext } from 'next/dist/shared/lib/router-context'
 import type { ReactNode } from 'react'
 
 import { dictionary as common } from '@/dictionaries/common/en'
-import { mockRouter } from '~/test/lib/create-mock-router'
+import { mockRouter } from '@/lib/cms/previews/create-mock-router'
 
 const dictionaries = { common }
 
