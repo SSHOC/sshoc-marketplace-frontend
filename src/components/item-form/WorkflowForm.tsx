@@ -50,7 +50,7 @@ export interface WorkflowFormProps extends FormProps<WorkflowFormValues> {
 }
 
 export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
-  const { formFields, initialValues, name, onCancel, onSubmit, validate, page, setPage } = props
+  const { initialValues, name, onCancel, onSubmit, validate, page, setPage } = props
 
   function onBeforeSaveAsDraft(form: FormApi<WorkflowFormValues>) {
     form.batch(() => {

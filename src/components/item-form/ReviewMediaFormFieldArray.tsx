@@ -68,22 +68,22 @@ export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps)
             fieldArray.fields.remove(index)
           }
 
-          const fieldGroup = {
-            info: {
-              ...field.fields.info,
-              name: [name, field.fields.info.name].join('.'),
-              _root: [name, field.fields.info._root].join('.'),
-            },
-            caption: {
-              ...field.fields.caption,
-              name: [name, field.fields.caption.name].join('.'),
-            },
-            licence: {
-              ...field.fields.licence,
-              name: [name, field.fields.licence.name].join('.'),
-              _root: [name, field.fields.licence._root].join('.'),
-            },
-          }
+          // const fieldGroup = {
+          //   info: {
+          //     ...field.fields.info,
+          //     name: [name, field.fields.info.name].join('.'),
+          //     _root: [name, field.fields.info._root].join('.'),
+          //   },
+          //   caption: {
+          //     ...field.fields.caption,
+          //     name: [name, field.fields.caption.name].join('.'),
+          //   },
+          //   licence: {
+          //     ...field.fields.licence,
+          //     name: [name, field.fields.licence.name].join('.'),
+          //     _root: [name, field.fields.licence._root].join('.'),
+          //   },
+          // }
 
           return (
             <FormFieldListItem key={name}>

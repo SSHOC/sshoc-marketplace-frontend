@@ -54,18 +54,7 @@ export interface WorkflowReviewFormProps extends FormProps<WorkflowFormValues> {
 }
 
 export function WorkflowReviewForm(props: WorkflowReviewFormProps): JSX.Element {
-  const {
-    diff,
-    formFields,
-    initialValues,
-    name,
-    onCancel,
-    onReject,
-    onSubmit,
-    validate,
-    page,
-    setPage,
-  } = props
+  const { diff, initialValues, name, onCancel, onReject, onSubmit, validate, page, setPage } = props
 
   function onBeforeSubmit(form: FormApi<WorkflowFormValues>) {
     form.change('__submitting__', true)
