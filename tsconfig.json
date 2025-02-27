@@ -20,5 +20,5 @@
     "scripts/*.loader.cjs",
     "stories/main.cjs"
   ],
-  "exclude": ["node_modules", ".next", "cypress", "out", "public", "storybook-static"]
+  "exclude": ["node_modules", ".next", "out", "public", "storybook-static"]
 }

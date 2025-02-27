@@ -6,8 +6,6 @@
     "analyze-bundle": "cross-env BUNDLE_ANALYZER=enabled next build",
     "build": "next build",
     "cms:server": "netlify-cms-proxy-server",
-    "cypress": "cypress open --config-file cypress/cypress.config.json",
-    "cypress:headless": "cypress run --config-file cypress/cypress.config.json",
     "dev": "next dev",
     "format": "prettier . \"!**/*.mdx\" --list-different --ignore-path .gitignore",
     "format:fix": "yarn run format --write",
@@ -34,10 +32,6 @@
     "test:ci": "yarn run test --ci",
     "test:coverage": "yarn run test --coverage",
     "test:watch": "yarn run test --watch",
-    "test:e2e": "start-server-and-test start :3000 cypress",
-    "test:e2e:headless": "start-server-and-test start :3000 cypress:headless",
-    "test:e2e:dev": "cross-env NEXT_PUBLIC_MOCK_API=disabled start-server-and-test dev :3000 cypress",
-    "test:e2e:dev:headless": "cross-env NEXT_PUBLIC_MOCK_API=disabled start-server-and-test dev :3000 cypress:headless",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "yarn run format && yarn run lint && yarn run typecheck && yarn run test"
   },
@@ -195,7 +189,6 @@
     "@storybook/builder-webpack5": "^6.4.19",
     "@storybook/manager-webpack5": "^6.4.19",
     "@storybook/react": "^6.4.19",
-    "@testing-library/cypress": "^8.0.2",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.3",
@@ -214,10 +207,7 @@
     "@types/sharp": "^0.29.5",
     "autoprefixer": "^10.4.2",
     "cross-env": "^7.0.3",
-    "cypress": "^9.5.3",
-    "cypress-real-events": "^1.7.0",
     "eslint": "^8.9.0",
-    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-storybook": "^0.5.7",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
@@ -239,7 +229,6 @@
     "remark-frontmatter": "^4.0.1",
     "remark-mdx": "^2.1.0",
     "simple-git-hooks": "^2.7.0",
-    "start-server-and-test": "^1.14.0",
     "strip-indent": "^4.0.0",
     "stylelint": "^14.6.0",
     "typescript": "^4.6.2"
@@ -293,15 +282,6 @@
         ],
         "rules": {
           "@typescript-eslint/explicit-module-boundary-types": "off"
-        }
-      },
-      {
-        "files": [
-          "cypress/**/*.@(spec|test).e2e.@(js|mjs|ts|tsx)"
-        ],
-        "extends": "plugin:cypress/recommended",
-        "parserOptions": {
-          "project": "./cypress/tsconfig.json"
         }
       },
       {
