@@ -12,5 +12,5 @@ export interface LinkProps extends Omit<NextLinkProps, 'as' | 'href' | 'locale'>
 }
 
 export function Link(props: LinkProps): JSX.Element {
-  return <NextLink {...props} />
+  return <NextLink legacyBehavior {...props} />
 }
