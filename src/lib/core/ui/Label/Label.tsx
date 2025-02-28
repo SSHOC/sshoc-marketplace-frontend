@@ -27,8 +27,8 @@ export const Label = forwardRef(function Label(
     htmlFor,
     includeNecessityIndicatorInAccessibilityName,
     isRequired,
-    labelAlign = props.labelPosition === 'side' ? 'start' : null,
-    labelPosition = 'top',
+    // labelAlign = props.labelPosition === 'side' ? 'start' : null,
+    // labelPosition = 'top',
     necessityIndicator,
     onClick, // FIXME: why do we need this?
   } = props

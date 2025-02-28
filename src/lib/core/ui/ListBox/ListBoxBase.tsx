@@ -7,7 +7,7 @@ import type { ListState } from '@react-stately/list'
 import type { ReusableView } from '@react-stately/virtualizer'
 import type { AsyncLoadable, Node } from '@react-types/shared'
 import type { CSSProperties, ForwardedRef, HTMLAttributes, ReactNode } from 'react'
-import { forwardRef, useRef } from 'react'
+import { forwardRef, useMemo, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
 import { useI18n } from '@/lib/core/i18n/useI18n'
@@ -97,7 +97,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 
   type View = ReusableView<Node<T>, unknown>
   const renderWrapper = (
-    parent: View,
+    parent: View | undefined,
     reusableView: View,
     children: Array<View>,
     renderChildren: (views: Array<View>) => Array<JSX.Element>,
@@ -106,12 +106,14 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
       return (
         <ListBoxSection
           key={reusableView.key}
-          header={
+          item={reusableView.content!}
+          layoutInfo={reusableView.layoutInfo!}
+          virtualizer={reusableView.virtualizer}
+          headerLayoutInfo={
             children.find((c) => {
               return c.viewType === 'header'
-            })!
+            })?.layoutInfo ?? null
           }
-          reusableView={reusableView}
         >
           {renderChildren(
             children.filter((c) => {
@@ -122,11 +124,25 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
       )
     }
 
-    return <VirtualizerItem key={reusableView.key} parent={parent} reusableView={reusableView} />
+    return (
+      <VirtualizerItem
+        key={reusableView.key}
+        layoutInfo={reusableView.layoutInfo!}
+        virtualizer={reusableView.virtualizer}
+        parent={parent?.layoutInfo}
+      >
+        {reusableView.rendered}
+      </VirtualizerItem>
+    )
   }
 
   const _ref = useComposedRef(listBoxRef, forwardedRef)
   const ref = useObjectRef(_ref)
+
+  const focusedKey = state.selectionManager.focusedKey
+  const persistedKeys = useMemo(() => {
+    return focusedKey != null ? new Set([focusedKey]) : null
+  }, [focusedKey])
 
   return (
     <ListBoxContext.Provider value={state}>
@@ -134,16 +150,17 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
         ref={ref}
         {...mergeProps(listBoxProps, domProps)}
         className={css['listbox']}
+        persistedKeys={persistedKeys}
+        autoFocus={Boolean(props.autoFocus) || undefined}
+        scrollDirection="vertical"
         collection={state.collection}
         data-color={color}
-        focusedKey={state.selectionManager.focusedKey}
-        isLoading={props.isLoading}
         layout={layout}
+        // @ts-expect-error I guess it's fine.
+        renderWrapper={renderWrapper}
+        isLoading={props.isLoading}
         onLoadMore={props.onLoadMore}
         onScroll={onScroll}
-        renderWrapper={renderWrapper}
-        scrollDirection="vertical"
-        shouldUseVirtualFocus={shouldUseVirtualFocus}
         sizeToFit="height"
         transitionDuration={transitionDuration}
       >

@@ -68,8 +68,8 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
   const loadingState = conceptSearchResults.isLoading
     ? 'loading'
     : conceptSearchResults.isFetchingNextPage
-    ? 'loadingMore'
-    : 'idle'
+      ? 'loadingMore'
+      : 'idle'
 
   const description = (
     <Fragment>

@@ -58,9 +58,6 @@ const config = {
     dirs: ['.'],
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    outputStandalone: true,
-  },
   async headers() {
     const headers = [
       {
@@ -115,6 +112,7 @@ const config = {
         ? [process.env['NEXT_PUBLIC_SSHOC_API_BASE_URL']]
         : undefined,
   },
+  output: 'standalone',
   pageExtensions: ['page.tsx', 'page.mdx', 'api.ts'],
   poweredByHeader: false,
   /**

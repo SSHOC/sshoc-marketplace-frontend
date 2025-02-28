@@ -18,7 +18,7 @@ export const booleanString = z.preprocess((arg: unknown) => {
     ? arg === 'TRUE'
       ? true
       : arg === 'FALSE'
-      ? false
-      : undefined
+        ? false
+        : undefined
     : undefined
 }, z.boolean())

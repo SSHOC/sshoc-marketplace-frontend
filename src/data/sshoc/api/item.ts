@@ -43,7 +43,7 @@ export const itemStatus = [
   'deprecated',
 ] as const
 
-export type ItemStatus = typeof itemStatus[number]
+export type ItemStatus = (typeof itemStatus)[number]
 
 export function isItemStatus(status: string): status is ItemStatus {
   return itemStatus.includes(status as ItemStatus)
@@ -51,7 +51,7 @@ export function isItemStatus(status: string): status is ItemStatus {
 
 export const itemSortOrders = ['score', 'label', 'modified-on'] as const
 
-export type ItemSortOrder = typeof itemSortOrders[number]
+export type ItemSortOrder = (typeof itemSortOrders)[number]
 
 export function isItemSortOrder(sortOrder: string): sortOrder is ItemSortOrder {
   return itemSortOrders.includes(sortOrder as ItemSortOrder)
@@ -59,7 +59,7 @@ export function isItemSortOrder(sortOrder: string): sortOrder is ItemSortOrder {
 
 export const itemDraftSortOrders = ['label', 'modified-on'] as const
 
-export type ItemDraftSortOrder = typeof itemDraftSortOrders[number]
+export type ItemDraftSortOrder = (typeof itemDraftSortOrders)[number]
 
 export function isItemDraftSortOrder(sortOrder: string): sortOrder is ItemDraftSortOrder {
   return itemDraftSortOrders.includes(sortOrder as ItemDraftSortOrder)
@@ -67,7 +67,7 @@ export function isItemDraftSortOrder(sortOrder: string): sortOrder is ItemDraftS
 
 export const itemFacets = ['activity', 'keyword', 'source', 'language'] as const
 
-export type ItemFacet = typeof itemFacets[number]
+export type ItemFacet = (typeof itemFacets)[number]
 
 export function isItemFacet(facet: string): facet is ItemFacet {
   return itemFacets.includes(facet as ItemFacet)

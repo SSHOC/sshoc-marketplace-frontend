@@ -48,7 +48,7 @@ const TrayWrapper = forwardRef(function TrayWrapper(
   props: TrayWrapperProps,
   forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
-  const { children, isOpen, isFixedHeight, isNonModal, overlayProps, ...otherProps } = props
+  const { children, isOpen, isNonModal, overlayProps, ...otherProps } = props
 
   const ref = useObjectRef(forwardedRef)
 

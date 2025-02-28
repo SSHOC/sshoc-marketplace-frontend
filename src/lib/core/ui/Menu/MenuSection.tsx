@@ -4,7 +4,6 @@ import type { TreeState } from '@react-stately/tree'
 import type { Node } from '@react-types/shared'
 import type { ForwardedRef, Key } from 'react'
 import { forwardRef, Fragment } from 'react'
-import useComposedRef from 'use-composed-ref'
 
 import css from '@/lib/core/ui/Menu/Menu.module.css'
 
@@ -20,7 +19,7 @@ export interface MenuSectionProps<T extends object> {
 
 export const MenuSection = forwardRef(function MenuSection<T extends object>(
   props: MenuSectionProps<T>,
-  forwardedRef: ForwardedRef<HTMLElement>,
+  _forwardedRef: ForwardedRef<HTMLElement>,
 ): JSX.Element {
   const { item, state, onAction, variant } = props
 

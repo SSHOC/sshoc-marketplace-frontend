@@ -98,10 +98,7 @@ export function ApiEndpoint(props: ApiEndpointProps): JSX.Element {
           onClick={onCopy}
           title={isCopiedToClipboard ? 'Copied' : 'Copy to clipboard'}
         >
-          {isCopiedToClipboard
-           ? <Icon icon={CheckMarkIcon} />
-           : <Icon icon={ClipboardIcon} />
-          }
+          {isCopiedToClipboard ? <Icon icon={CheckMarkIcon} /> : <Icon icon={ClipboardIcon} />}
         </button>
       </div>
       <div className={css['result']}>

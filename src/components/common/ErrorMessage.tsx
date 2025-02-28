@@ -11,7 +11,7 @@ export interface ErrorMessageProps {
 export function ErrorMessage(props: ErrorMessageProps): JSX.Element {
   const { t } = useI18n<'common'>()
 
-  const { message = t(['common', 'default-error-message']), onRetry, statusCode = 500 } = props
+  const { message = t(['common', 'default-error-message']), statusCode = 500 } = props
 
   return (
     <section role="alert" className={css['container']}>

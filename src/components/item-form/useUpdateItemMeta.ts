@@ -26,8 +26,8 @@ export function useUpdateItemMeta(
             variables.draft === true
               ? 'update-item-draft-pending'
               : hasPublishPermission
-              ? 'update-item-pending'
-              : 'update-item-suggestion-pending',
+                ? 'update-item-pending'
+                : 'update-item-suggestion-pending',
           ],
           {
             values: { category: label },
@@ -42,8 +42,8 @@ export function useUpdateItemMeta(
             variables.draft === true
               ? 'update-item-draft-success'
               : hasPublishPermission
-              ? 'update-item-success'
-              : 'update-item-suggestion-success',
+                ? 'update-item-success'
+                : 'update-item-suggestion-success',
           ],
           {
             values: { category: label },
@@ -58,8 +58,8 @@ export function useUpdateItemMeta(
             variables.draft === true
               ? 'update-item-draft-error'
               : hasPublishPermission
-              ? 'update-item-error'
-              : 'update-item-suggestion-error',
+                ? 'update-item-error'
+                : 'update-item-suggestion-error',
           ],
           {
             values: { category: label },

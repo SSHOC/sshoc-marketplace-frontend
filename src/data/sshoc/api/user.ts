@@ -10,7 +10,7 @@ import {
 
 export const userStatus = ['during-registration', 'enabled', 'locked'] as const
 
-export type UserStatus = typeof userStatus[number]
+export type UserStatus = (typeof userStatus)[number]
 
 export const userRoles = [
   'contributor',
@@ -20,11 +20,11 @@ export const userRoles = [
   'administrator',
 ] as const
 
-export type UserRole = typeof userRoles[number]
+export type UserRole = (typeof userRoles)[number]
 
 export const userSortOrders = ['username', 'date'] as const
 
-export type UserSortOrder = typeof userSortOrders[number]
+export type UserSortOrder = (typeof userSortOrders)[number]
 
 export function isUserSortOrder(sortOrder: string): sortOrder is UserSortOrder {
   return userSortOrders.includes(sortOrder as UserSortOrder)

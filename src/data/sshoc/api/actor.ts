@@ -18,7 +18,7 @@ import {
 
 export const actorSortOrders = ['score', 'name'] as const
 
-export type ActorSortOrder = typeof actorSortOrders[number]
+export type ActorSortOrder = (typeof actorSortOrders)[number]
 
 export function isActorSortOrder(sortOrder: string): sortOrder is ActorSortOrder {
   return actorSortOrders.includes(sortOrder as ActorSortOrder)

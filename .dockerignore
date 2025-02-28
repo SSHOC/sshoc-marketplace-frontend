@@ -38,19 +38,9 @@ yarn-error.log*
 .stylelintcache
 *.tsbuildinfo
 
-# generated
-public/**/favicon.ico
-public/**/icon.svg
-public/**/apple-touch-icon.png
-public/**/*.webmanifest
-public/**/open-graph.*
-public/assets/cms/styles/*.css
-
 # generated route manifest
 src/lib/core/navigation/routes.ts
 
-# storybook
-storybook-static/
 
 ## .dockerignore ##
 

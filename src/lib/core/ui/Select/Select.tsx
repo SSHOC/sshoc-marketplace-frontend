@@ -6,7 +6,7 @@ import { mergeProps, useLayoutEffect, useResizeObserver } from '@react-aria/util
 import { useSelectState } from '@react-stately/select'
 import type { Placement } from '@react-types/overlays'
 import type { AriaSelectProps } from '@react-types/select'
-import type { Alignment, LabelPosition, LoadingState } from '@react-types/shared'
+import type { Alignment, LoadingState } from '@react-types/shared'
 import type { ForwardedRef } from 'react'
 import { forwardRef, Fragment, useCallback, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
@@ -76,7 +76,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     direction = 'bottom',
     isDisabled,
     label,
-    labelPosition = 'top' as LabelPosition,
+    // labelPosition = 'top' as LabelPosition,
     layout: _layout,
     loadingState,
     maxHeight,

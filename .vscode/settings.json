@@ -21,8 +21,7 @@
     ".stylelintcache": true,
     "**/*.tsbuildinfo": true,
     ".next": true,
-    "out": true,
-    "storybook-build": true
+    "out": true
   },
   "less.validate": false,
   "scss.validate": false,

@@ -107,8 +107,8 @@ export default function EditWorkflowPage(props: EditWorkflowPage.Props): JSX.Ele
         page.type === 'workflow'
           ? label
           : page.type === 'steps'
-          ? t(['common', 'item-categories', 'step', 'other'])
-          : t(['common', 'item-categories', 'step', 'one']),
+            ? t(['common', 'item-categories', 'step', 'other'])
+            : t(['common', 'item-categories', 'step', 'one']),
     },
   })
 

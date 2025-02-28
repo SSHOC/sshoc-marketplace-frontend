@@ -1,5 +1,5 @@
-import type { ImageProps as NextImageProps } from 'next/image'
-import NextImage from 'next/image'
+import type { ImageProps as NextImageProps, StaticImageData } from 'next/legacy/image'
+import NextImage from 'next/legacy/image'
 
 export type ImageProps = NextImageProps
 
