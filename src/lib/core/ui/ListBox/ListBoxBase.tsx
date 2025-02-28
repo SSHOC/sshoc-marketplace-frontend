@@ -97,7 +97,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 
   type View = ReusableView<Node<T>, unknown>
   const renderWrapper = (
-    parent: View,
+    parent: View | undefined,
     reusableView: View,
     children: Array<View>,
     renderChildren: (views: Array<View>) => Array<JSX.Element>,
@@ -129,7 +129,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
         key={reusableView.key}
         layoutInfo={reusableView.layoutInfo!}
         virtualizer={reusableView.virtualizer}
-        parent={parent.layoutInfo!}
+        parent={parent?.layoutInfo}
       >
         {reusableView.rendered}
       </VirtualizerItem>
@@ -141,7 +141,6 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 
   const focusedKey = state.selectionManager.focusedKey
   const persistedKeys = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return focusedKey != null ? new Set([focusedKey]) : null
   }, [focusedKey])
 
