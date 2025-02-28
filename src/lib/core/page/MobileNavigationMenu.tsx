@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@react-aria/overlays'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useRef } from 'react'
 

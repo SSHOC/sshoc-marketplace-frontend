@@ -43,9 +43,9 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
   const items =
     itemSearchTerm.length > 0 ? (itemAutocompleteSuggestions.data?.suggestions ?? []) : []
 
-  function onSelectSuggestion(value: string, key: Key | null) {
+  function onSelectSuggestion(value: string | null, key: Key | null) {
     const item = itemsById.get(key as string)
-    const q = item?.phrase ?? value
+    const q = item?.phrase ?? value ?? undefined
     const categories = itemCategory != null ? [itemCategory] : undefined
     searchItems({ q, categories })
     onSubmit?.()
