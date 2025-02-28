@@ -1704,16 +1704,6 @@
     react-schemaorg "^2.0.0"
     schema-dts "^1.0.0"
 
-"@stefanprobst/next-route-manifest@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-route-manifest/-/next-route-manifest-0.1.5.tgz#5a4878161c97cbb98b2a474ec11841812dc86001"
-  integrity sha512-mUcEHNdcjnC2yJTrRixJeRsFZybBQ8l5Yc/M4KNzM511p5l9C7qefb4b4Cnh3Czaeaix/fhRkIuQtltNt6LpmA==
-  dependencies:
-    "@stefanprobst/log" "^1.0.1"
-    "@types/prettier" "^2.4.2"
-    prettier "^2.4.1"
-    schema-utils "^4.0.0"
-
 "@stefanprobst/next-svg@^4.2.1":
   version "4.2.1"
   resolved "https://registry.npmjs.org/@stefanprobst/next-svg/-/next-svg-4.2.1.tgz#ce2777d67e775d39ee2e8e515a524ae4334a6a48"
@@ -2212,11 +2202,6 @@
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/pluralize/-/pluralize-0.0.29.tgz#6ffa33ed1fc8813c469b859681d09707eb40d03c"
   integrity sha512-BYOID+l2Aco2nBik+iYS4SZX0Lf20KPILP5RGmM1IgzdwNdTs0eebiFriOPcej1sX9mLnSoiNte5zcFxssgpGA==
-
-"@types/prettier@^2.4.2":
-  version "2.4.4"
-  resolved "https://registry.npmjs.org/@types/prettier/-/prettier-2.4.4.tgz#5d9b63132df54d8909fce1c3f8ca260fdd693e17"
-  integrity sha512-ReVR2rLTV1kvtlWFyuot+d1pkpG2Fw/XKE3PDAdj57rbM97ttSp9JZ2UsP+2EHTylra9cUf6JA7tGwW1INzUrA==
 
 "@types/prop-types@*":
   version "15.7.4"
@@ -8834,11 +8819,6 @@ prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
-
-prettier@^2.4.1:
-  version "2.6.0"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-2.6.0.tgz#12f8f504c4d8ddb76475f441337542fa799207d4"
-  integrity sha512-m2FgJibYrBGGgQXNzfd0PuDGShJgRavjUoRCw1mZERIWVSXF0iLzLm+aOqTAbLnC3n6JzUhAA8uZnFVghHJ86A==
 
 prettier@^3.5.2:
   version "3.5.2"
