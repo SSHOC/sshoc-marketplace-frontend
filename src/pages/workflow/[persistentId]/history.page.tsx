@@ -122,11 +122,11 @@ export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): J
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.WorkflowPage({ persistentId }),
+      href: `/workflow/${persistentId}`,
       label,
     },
     {
-      href: routes.WorkflowHistoryPage({ persistentId }),
+      href: `/workflow/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

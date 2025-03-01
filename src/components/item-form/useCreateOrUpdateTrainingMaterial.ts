@@ -84,9 +84,7 @@ export function useCreateOrUpdateTrainingMaterial(
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = routes.TrainingMaterialPage({
-          persistentId: trainingMaterial.persistentId,
-        }).pathname
+        const pathname = `/training-material/${trainingMaterial.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

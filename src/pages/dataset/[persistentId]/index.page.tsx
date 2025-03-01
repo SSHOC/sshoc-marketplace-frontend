@@ -157,7 +157,7 @@ export default function DatasetPage(props: DatasetPage.Props): JSX.Element {
       label: t(['common', 'item-categories', dataset.category, 'other']),
     },
     {
-      href: routes.DatasetPage({ persistentId }),
+      href: `/dataset/${persistentId}`,
       label,
     },
   ]

@@ -144,7 +144,7 @@ export default function EditToolOrServiceVersionPage(
             })
             window.scrollTo(0, 0)
           } else if (tool.status === 'approved') {
-            router.push(routes.ToolOrServicePage({ persistentId: tool.persistentId }))
+            router.push(`/tool-or-service/${tool.persistentId}`)
           } else {
             router.push(`/success`)
           }

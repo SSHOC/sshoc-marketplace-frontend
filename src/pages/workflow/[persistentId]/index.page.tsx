@@ -159,7 +159,7 @@ export default function WorkflowPage(props: WorkflowPage.Props): JSX.Element {
       label: t(['common', 'item-categories', workflow.category, 'other']),
     },
     {
-      href: routes.WorkflowPage({ persistentId }),
+      href: `/workflow/${persistentId}`,
       label,
     },
   ]

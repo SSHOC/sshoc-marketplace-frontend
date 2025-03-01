@@ -138,7 +138,7 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): JSX
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.DatasetVersionPage({ persistentId, versionId }),
+      href: `/dataset/${persistentId}/versions/${versionId}`,
       label,
     },
   ]

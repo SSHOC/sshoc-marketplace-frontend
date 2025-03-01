@@ -157,7 +157,7 @@ export default function PublicationPage(props: PublicationPage.Props): JSX.Eleme
       label: t(['common', 'item-categories', publication.category, 'other']),
     },
     {
-      href: routes.PublicationPage({ persistentId }),
+      href: `/publication/${persistentId}`,
       label,
     },
   ]

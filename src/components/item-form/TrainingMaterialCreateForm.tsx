@@ -49,9 +49,7 @@ export function TrainingMaterialCreateForm(): JSX.Element {
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (trainingMaterial.status === 'approved') {
-            router.push(
-              routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),
-            )
+            router.push(`/training-material/${trainingMaterial.persistentId}`)
           } else {
             router.push(`/success`)
           }

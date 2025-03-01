@@ -155,7 +155,7 @@ export default function ToolOrServicePage(props: ToolOrServicePage.Props): JSX.E
       label: t(['common', 'item-categories', toolOrService.category, 'other']),
     },
     {
-      href: routes.ToolOrServicePage({ persistentId }),
+      href: `/tool-or-service/${persistentId}`,
       label,
     },
   ]

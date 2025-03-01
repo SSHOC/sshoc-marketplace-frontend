@@ -84,9 +84,7 @@ export function useCreateOrUpdatePublication(
     {
       ...options,
       onSuccess(publication, ...args) {
-        const pathname = routes.PublicationPage({
-          persistentId: publication.persistentId,
-        }).pathname
+        const pathname = `/publication/${publication.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

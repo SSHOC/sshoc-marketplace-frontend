@@ -122,11 +122,11 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.DatasetPage({ persistentId }),
+      href: `/dataset/${persistentId}`,
       label,
     },
     {
-      href: routes.DatasetHistoryPage({ persistentId }),
+      href: `/dataset/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

@@ -143,7 +143,7 @@ export default function TrainingMaterialVersionPage(
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.TrainingMaterialVersionPage({ persistentId, versionId }),
+      href: `/training-material/${persistentId}/versions/${versionId}`,
       label,
     },
   ]

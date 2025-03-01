@@ -124,11 +124,11 @@ export default function TrainingMaterialHistoryPage(
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.TrainingMaterialPage({ persistentId }),
+      href: `/training-material/${persistentId}`,
       label,
     },
     {
-      href: routes.TrainingMaterialHistoryPage({ persistentId }),
+      href: `/training-material/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

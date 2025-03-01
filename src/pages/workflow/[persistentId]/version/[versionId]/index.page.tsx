@@ -137,7 +137,7 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.WorkflowVersionPage({ persistentId, versionId }),
+      href: `/workflow/${workflow.persistentId}/versions/${versionId}`,
       label,
     },
   ]

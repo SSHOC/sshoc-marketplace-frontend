@@ -171,7 +171,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
             })
             window.scrollTo(0, 0)
           } else if (workflow.status === 'approved') {
-            router.push(routes.WorkflowPage({ persistentId: workflow.persistentId }))
+            router.push(`/workflow/${workflow.persistentId}`)
           } else {
             router.push(`/success`)
           }

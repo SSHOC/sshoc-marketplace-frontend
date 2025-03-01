@@ -136,7 +136,7 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.PublicationVersionPage({ persistentId, versionId }),
+      href: `/publication/${persistentId}/versions/${versionId}`,
       label,
     },
   ]

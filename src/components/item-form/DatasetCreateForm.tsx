@@ -49,7 +49,7 @@ export function DatasetCreateForm(): JSX.Element {
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (dataset.status === 'approved') {
-            router.push(routes.DatasetPage({ persistentId: dataset.persistentId }))
+            router.push(`/dataset/${dataset.persistentId}`)
           } else {
             router.push(`/success`)
           }

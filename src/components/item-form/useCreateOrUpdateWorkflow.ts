@@ -263,9 +263,7 @@ export function useCreateOrUpdateWorkflow(
     {
       ...options,
       onSuccess(workflow, ...args) {
-        const pathname = routes.WorkflowPage({
-          persistentId: workflow.persistentId,
-        }).pathname
+        const pathname = `/workflow/${workflow.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

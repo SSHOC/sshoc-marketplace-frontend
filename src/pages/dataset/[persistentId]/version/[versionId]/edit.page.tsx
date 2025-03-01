@@ -144,7 +144,7 @@ export default function EditDatasetVersionPage(props: EditDatasetVersionPage.Pro
             })
             window.scrollTo(0, 0)
           } else if (dataset.status === 'approved') {
-            router.push(routes.DatasetPage({ persistentId: dataset.persistentId }))
+            router.push(`/dataset/${dataset.persistentId}`)
           } else {
             router.push(`/success`)
           }

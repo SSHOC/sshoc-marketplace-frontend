@@ -124,11 +124,11 @@ export default function ToolOrServiceHistoryPage(
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.ToolOrServicePage({ persistentId }),
+      href: `/tool-or-service/${persistentId}`,
       label,
     },
     {
-      href: routes.ToolOrServiceHistoryPage({ persistentId }),
+      href: `/tool-or-service/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

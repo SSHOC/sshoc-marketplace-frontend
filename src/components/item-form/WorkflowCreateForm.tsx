@@ -64,7 +64,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (workflow.status === 'approved') {
-            router.push(routes.WorkflowPage({ persistentId: workflow.persistentId }))
+            router.push(`/workflow/${workflow.persistentId}`)
           } else {
             router.push(`/success`)
           }

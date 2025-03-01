@@ -161,7 +161,7 @@ export default function ReviewPublicationPage(props: ReviewPublicationPage.Props
             })
             window.scrollTo(0, 0)
           } else if (publication.status === 'approved') {
-            router.push(routes.PublicationPage({ persistentId: publication.persistentId }))
+            router.push(`/publication/${publication.persistentId}`)
           } else {
             router.push(`/success`)
           }

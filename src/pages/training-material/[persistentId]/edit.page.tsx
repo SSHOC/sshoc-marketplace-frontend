@@ -127,9 +127,7 @@ export default function EditTrainingMaterialPage(
             })
             window.scrollTo(0, 0)
           } else if (trainingMaterial.status === 'approved') {
-            router.push(
-              routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),
-            )
+            router.push(`/training-material/${trainingMaterial.persistentId}`)
           } else {
             router.push(`/success`)
           }

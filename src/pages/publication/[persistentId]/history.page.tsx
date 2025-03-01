@@ -122,11 +122,11 @@ export default function PublicationHistoryPage(props: PublicationHistoryPage.Pro
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.PublicationPage({ persistentId }),
+      href: `/publication/${persistentId}`,
       label,
     },
     {
-      href: routes.PublicationHistoryPage({ persistentId }),
+      href: `/publication/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

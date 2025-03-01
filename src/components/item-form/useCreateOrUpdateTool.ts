@@ -71,9 +71,7 @@ export function useCreateOrUpdateTool(
     {
       ...options,
       onSuccess(tool, ...args) {
-        const pathname = routes.ToolOrServicePage({
-          persistentId: tool.persistentId,
-        }).pathname
+        const pathname = `/tool-or-service/${tool.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

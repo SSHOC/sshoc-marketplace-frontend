@@ -157,7 +157,7 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
       label: t(['common', 'item-categories', trainingMaterial.category, 'other']),
     },
     {
-      href: routes.TrainingMaterialPage({ persistentId }),
+      href: `/training-material/${persistentId}`,
       label,
     },
   ]

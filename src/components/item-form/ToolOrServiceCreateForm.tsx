@@ -49,7 +49,7 @@ export function ToolOrServiceCreateForm(): JSX.Element {
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (tool.status === 'approved') {
-            router.push(routes.ToolOrServicePage({ persistentId: tool.persistentId }))
+            router.push(`/tool-or-service/${tool.persistentId}`)
           } else {
             router.push(`/success`)
           }

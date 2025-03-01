@@ -138,7 +138,7 @@ export default function ToolOrServiceVersionPage(
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.ToolOrServiceVersionPage({ persistentId, versionId }),
+      href: `/tool-or-service/${persistentId}/versions/${versionId}`,
       label,
     },
   ]

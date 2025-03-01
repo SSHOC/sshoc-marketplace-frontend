@@ -159,7 +159,7 @@ export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): JSX.E
             })
             window.scrollTo(0, 0)
           } else if (dataset.status === 'approved') {
-            router.push(routes.DatasetPage({ persistentId: dataset.persistentId }))
+            router.push(`/dataset/${dataset.persistentId}`)
           } else {
             router.push(`/success`)
           }

@@ -76,9 +76,7 @@ export function useCreateOrUpdateDataset(
     {
       ...options,
       onSuccess(dataset, ...args) {
-        const pathname = routes.DatasetPage({
-          persistentId: dataset.persistentId,
-        }).pathname
+        const pathname = `/dataset/${dataset.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())
