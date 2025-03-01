@@ -13,7 +13,7 @@ frontend is built with:
 - **React Query 3** for data fetching, caching, and request de-duplication
 - **Node.js 22** Runtime environment
 - **Yarn 1** as package manager
-- **Netlify CMS** for content management
+- **Decap CMS** for content management
 
 ## Architecture
 
@@ -130,6 +130,5 @@ existing implementations when adding new protected routes.
 
 ## Content Management
 
-The application uses Netlify CMS for content management. Content is managed through markdown files
-and the [CMS configuration](`src/lib/cms/cms.config.ts`) defines the available fields and
-collections.
+The application uses Decap CMS for content management. Content is managed through markdown files and
+the [CMS configuration](`src/lib/cms/cms.config.ts`) defines the available fields and collections.

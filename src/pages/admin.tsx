@@ -10,7 +10,7 @@ import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
 const Cms = dynamic(
   async () => {
-    const { default: Cms } = await import('netlify-cms-app')
+    const { default: Cms } = await import('decap-cms-app')
     const { default: withResourceLinks } = await import('@stefanprobst/remark-resource-links')
 
     Cms.registerPreviewStyle('/assets/cms/styles/index.css')

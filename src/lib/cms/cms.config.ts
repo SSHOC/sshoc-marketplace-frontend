@@ -1,4 +1,4 @@
-import type { CmsConfig } from 'netlify-cms-core'
+import type { CmsConfig } from 'decap-cms-core'
 
 import { collection as aboutPages } from '@/lib/cms/collections/about-pages'
 import { collection as contributePages } from '@/lib/cms/collections/contribute-pages'
