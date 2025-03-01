@@ -1,3 +1,5 @@
+'use client'
+
 import { I18nProvider as AriaI18nProvider } from '@react-aria/i18n'
 import { OverlayProvider } from '@react-aria/overlays'
 import type { ReactNode } from 'react'
@@ -9,7 +11,6 @@ import { AuthProvider } from '@/lib/core/auth/AuthProvider'
 import { PageAccessControl } from '@/lib/core/auth/PageAccessControl'
 import { I18nProvider } from '@/lib/core/i18n/I18nProvider'
 import { useLocale } from '@/lib/core/i18n/useLocale'
-import { PageProvider } from '@/lib/core/page/PageProvider'
 import type { QueryClient } from '@/lib/core/query/create-query-client'
 import { createQueryClient } from '@/lib/core/query/create-query-client'
 import { QueryProvider } from '@/lib/core/query/QueryProvider'
@@ -76,21 +77,19 @@ export function Providers(props: ProvidersProps): JSX.Element {
 
   return (
     <I18nProvider dictionaries={dictionaries}>
-      <PageProvider>
-        <QueryProvider client={queryClient} state={initialQueryState}>
-          <AuthProvider
-            isPageAccessible={isPageAccessible}
-            onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
-            onSignOut={onSignOut}
-          >
-            <PageAccessControl>
-              <AriaI18nProvider locale={locale}>
-                <OverlayProvider>{props.children}</OverlayProvider>
-              </AriaI18nProvider>
-            </PageAccessControl>
-          </AuthProvider>
-        </QueryProvider>
-      </PageProvider>
+      <QueryProvider client={queryClient} state={initialQueryState}>
+        <AuthProvider
+          isPageAccessible={isPageAccessible}
+          onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
+          onSignOut={onSignOut}
+        >
+          <PageAccessControl>
+            <AriaI18nProvider locale={locale}>
+              <OverlayProvider>{props.children}</OverlayProvider>
+            </AriaI18nProvider>
+          </PageAccessControl>
+        </AuthProvider>
+      </QueryProvider>
       <ToastContainer />
     </I18nProvider>
   )
