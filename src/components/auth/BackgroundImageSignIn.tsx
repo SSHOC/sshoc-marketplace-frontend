@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 
 import css from '@/components/auth/BackgroundImage.module.css'
 import Clouds from '~/public/assets/images/backgrounds/sign-in@2x.png'
