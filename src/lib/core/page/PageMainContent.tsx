@@ -1,21 +1,18 @@
 import type { ReactNode } from 'react'
 
 import css from '@/lib/core/page/PageMainContent.module.css'
-import { usePage } from '@/lib/core/page/PageProvider'
+
+import { useSkipToMainContent } from './useSkipToMainContent'
 
 export interface PageMainContentProps {
   children?: ReactNode
 }
 
 export function PageMainContent(props: PageMainContentProps): JSX.Element {
-  const { pageLoadingIndicator, skipToMainContent } = usePage()
+  const { targetProps } = useSkipToMainContent()
 
   return (
-    <main
-      className={css['container']}
-      {...pageLoadingIndicator.regionProps}
-      {...skipToMainContent.targetProps}
-    >
+    <main className={css['container']} {...targetProps}>
       {props.children}
     </main>
   )
