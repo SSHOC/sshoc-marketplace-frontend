@@ -101,7 +101,7 @@ const config = {
         : undefined,
   },
   output: 'standalone',
-  pageExtensions: ['page.tsx', 'page.mdx', 'api.ts'],
+  pageExtensions: ['tsx', 'mdx', 'ts'],
   poweredByHeader: false,
   /**
    * React Spectrum currently has issues with `StrictMode`.
@@ -204,12 +204,11 @@ const config = {
     const aboutPageTemplate = path.join(
       process.cwd(),
       'src',
-      'pages',
-      'about',
-      '[id].page.template.tsx',
+      '__templates__',
+      'about.[id].template.tsx',
     )
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), 'src', 'pages', 'about'),
       use: [
         {
@@ -274,12 +273,11 @@ const config = {
     const contributePageTemplate = path.join(
       process.cwd(),
       'src',
-      'pages',
-      'contribute',
-      '[id].page.template.tsx',
+      '__templates__',
+      'contribute.[id].template.tsx',
     )
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), 'src', 'pages', 'contribute'),
       use: [
         {

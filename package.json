@@ -237,8 +237,8 @@
           "src/data/**/api/*.ts",
           "src/data/**/hooks/*.ts",
           "src/__templates__/**/page.tsx",
-          "src/pages/**/*.page.tsx",
-          "src/pages/**/*.page.template.tsx"
+          "src/pages/**/*.tsx",
+          "src/pages/**/*.template.tsx"
         ],
         "rules": {
           "@typescript-eslint/no-namespace": "off"

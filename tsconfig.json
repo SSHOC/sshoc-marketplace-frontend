@@ -6,10 +6,23 @@
     // "exactOptionalPropertyTypes": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./*"
+      ]
     },
-    "types": ["react/next", "@jest/types"]
+    "types": [
+      "react/next",
+      "@jest/types"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -17,7 +30,13 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.config.mjs",
-    "scripts/*.loader.cjs"
+    "scripts/*.loader.cjs",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".next", "out", "public"]
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "public"
+  ]
 }
