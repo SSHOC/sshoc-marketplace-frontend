@@ -1715,13 +1715,6 @@
     recast "^0.20.5"
     svgo-loader "^3.0.0"
 
-"@stefanprobst/next-theme@legacy":
-  version "2.0.6-legacy"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-theme/-/next-theme-2.0.6-legacy.tgz#b9c09d9cf71fd305b4dd6fc24da4f6e8851c8a53"
-  integrity sha512-5TNs5a5Axua04zNf+splGHtwPJEKa8/ewNLg7v6joRrogueX5dV7/PMXd76oIQj7RyASD95gRV8I1OGgiUbjSg==
-  dependencies:
-    "@stefanprobst/assert" "^1.0.2"
-
 "@stefanprobst/pick@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@stefanprobst/pick/-/pick-1.0.3.tgz#e7368548807408140f56bf808459dd3747b675d8"

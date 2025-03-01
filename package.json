@@ -84,7 +84,6 @@
     "@stefanprobst/next-i18n": "legacy",
     "@stefanprobst/next-page-metadata": "legacy",
     "@stefanprobst/next-svg": "^4.2.1",
-    "@stefanprobst/next-theme": "legacy",
     "@stefanprobst/pick": "^1.0.3",
     "@stefanprobst/range": "^1.1.1",
     "@stefanprobst/rehype-extract-toc": "^2.1.3",
