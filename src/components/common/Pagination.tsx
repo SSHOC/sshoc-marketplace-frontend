@@ -7,7 +7,6 @@ import { Link } from '@/components/common/Link'
 import { NavLink } from '@/components/common/NavLink'
 import css from '@/components/common/Pagination.module.css'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import type { Href } from '@/lib/core/navigation/types'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import TriangleIcon from '@/lib/core/ui/icons/triangle.svg?symbol-icon'
 import { toPositiveInteger } from '@/lib/utils'
@@ -17,7 +16,7 @@ export interface PaginationProps<TResults, TFilters> {
   searchResults: TResults
   searchFilters: TFilters
   searchItems: (filters: TFilters) => Promise<boolean>
-  getSearchItemsLink: (filters: TFilters) => { href: Href; shallow?: boolean; scroll?: boolean }
+  getSearchItemsLink: (filters: TFilters) => { href: string; shallow?: boolean; scroll?: boolean }
   /** @default 'primary' */
   variant?: 'input' | 'primary'
 }

@@ -1,9 +1,9 @@
-import type { Href } from '@/lib/core/navigation/types'
+import type { LinkProps } from 'next/link'
 
 export interface NavItem {
   id: string
   label: string
-  href: Href
+  href: LinkProps['href']
 }
 
 export type NavItems = Array<NavItem>
