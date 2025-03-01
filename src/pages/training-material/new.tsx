@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -28,15 +28,15 @@ export namespace CreateTrainingMaterialPage {
   export type Props = WithDictionaries<'authenticated' | 'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<CreateTrainingMaterialPage.PathParams>,
-): Promise<GetStaticPropsResult<CreateTrainingMaterialPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common', 'authenticated'])
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<CreateTrainingMaterialPage.Props>
+> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common', 'authenticated'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

@@ -1,6 +1,4 @@
-import type { Dictionary } from '@/dictionaries/common'
-
-export const dictionary: Dictionary = {
+const messages = {
   'skip-to-main-content': 'Skip to main content',
   'page-loading-indicator': 'Page loading indicator',
   'default-spinner-message': 'Loading...',
@@ -260,3 +258,5 @@ export const dictionary: Dictionary = {
     'delete-item-version-error': 'Failed to delete {{category}} version.',
   },
 }
+
+export default messages

@@ -1,10 +1,5 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
-import type {
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from 'next'
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -44,10 +39,10 @@ export namespace PublicationHistoryPage {
   }
 }
 
-export async function getStaticPaths(
-  context: GetStaticPathsContext,
-): Promise<GetStaticPathsResult<PublicationHistoryPage.PathParams>> {
-  const locales = getLocales(context)
+export async function getStaticPaths(): Promise<
+  GetStaticPathsResult<PublicationHistoryPage.PathParams>
+> {
+  const locales = getLocales()
   const paths = locales.flatMap((locale) => {
     const persistentIds: Array<Publication['persistentId']> = []
     return persistentIds.map((persistentId) => {
@@ -65,13 +60,13 @@ export async function getStaticPaths(
 export async function getStaticProps(
   context: GetStaticPropsContext<PublicationHistoryPage.PathParams>,
 ): Promise<GetStaticPropsResult<PublicationHistoryPage.Props>> {
-  const locale = getLocale(context)
+  const locale = getLocale()
   const params = context.params as PublicationHistoryPage.PathParams
-  const dictionaries = await load(locale, ['common', 'authenticated'])
+  const messages = await load(locale, ['common', 'authenticated'])
 
   return {
     props: {
-      dictionaries,
+      messages,
       params,
     },
   }

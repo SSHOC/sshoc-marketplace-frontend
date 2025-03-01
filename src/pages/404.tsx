@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { ErrorMessage } from '@/components/common/ErrorMessage'
@@ -23,15 +23,13 @@ export namespace NotFoundPage {
   export type Props = WithDictionaries<'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<NotFoundPage.PathParams>,
-): Promise<GetStaticPropsResult<NotFoundPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<NotFoundPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

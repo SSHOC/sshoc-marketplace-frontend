@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { BackgroundGradient } from '@/components/auth/BackgroundGradient'
@@ -26,15 +26,13 @@ export namespace SignUpPage {
   export type Props = WithDictionaries<'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<SignUpPage.PathParams>,
-): Promise<GetStaticPropsResult<SignUpPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<SignUpPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import * as path from 'path'
 import { Fragment } from 'react'
 import { fileURLToPath } from 'url'
@@ -35,18 +35,16 @@ export namespace PrivacyPolicyPage {
   }
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<PrivacyPolicyPage.PathParams>,
-): Promise<GetStaticPropsResult<PrivacyPolicyPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<PrivacyPolicyPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   const filePath = path.relative(process.cwd(), fileURLToPath(import.meta.url))
   const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString()
 
   return {
     props: {
-      dictionaries,
+      messages,
       lastUpdatedTimestamp,
     },
   }

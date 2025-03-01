@@ -1,10 +1,5 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
-import type {
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from 'next'
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -52,10 +47,10 @@ export namespace EditDatasetVersionPage {
   }
 }
 
-export async function getStaticPaths(
-  context: GetStaticPathsContext,
-): Promise<GetStaticPathsResult<EditDatasetVersionPage.PathParams>> {
-  const locales = getLocales(context)
+export async function getStaticPaths(): Promise<
+  GetStaticPathsResult<EditDatasetVersionPage.PathParams>
+> {
+  const locales = getLocales()
   const paths = locales.flatMap((locale) => {
     const persistentIds: Array<Dataset['persistentId']> = []
     return persistentIds.flatMap((persistentId) => {
@@ -76,13 +71,13 @@ export async function getStaticPaths(
 export async function getStaticProps(
   context: GetStaticPropsContext<EditDatasetVersionPage.PathParams>,
 ): Promise<GetStaticPropsResult<EditDatasetVersionPage.Props>> {
-  const locale = getLocale(context)
+  const locale = getLocale()
   const params = context.params as EditDatasetVersionPage.PathParams
-  const dictionaries = await load(locale, ['common', 'authenticated'])
+  const messages = await load(locale, ['common', 'authenticated'])
 
   return {
     props: {
-      dictionaries,
+      messages,
       params,
     },
   }

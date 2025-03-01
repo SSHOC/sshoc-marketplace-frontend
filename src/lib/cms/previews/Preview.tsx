@@ -1,13 +1,15 @@
 import type { ErrorFallbackProps } from '@stefanprobst/next-error-boundary'
 import { ErrorBoundary } from '@stefanprobst/next-error-boundary'
-import { I18nProvider } from '@stefanprobst/next-i18n'
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime'
+import { NextIntlClientProvider } from 'next-intl'
 import type { ReactNode } from 'react'
 
-import { dictionary as common } from '@/dictionaries/common/en'
 import { mockRouter } from '@/lib/cms/previews/create-mock-router'
+import { dictionary as common } from '@/messages/common/en'
+import { defaultLocale } from '~/config/i18n.config'
 
-const dictionaries = { common }
+const locale = defaultLocale
+const messages = { common }
 
 export interface PreviewProps {
   children?: ReactNode
@@ -17,7 +19,9 @@ export function Preview(props: PreviewProps): JSX.Element {
   return (
     <RouterContext.Provider value={mockRouter}>
       <ErrorBoundary fallback={ErrorFallback}>
-        <I18nProvider dictionaries={dictionaries}>{props.children}</I18nProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {props.children}
+        </NextIntlClientProvider>
       </ErrorBoundary>
     </RouterContext.Provider>
   )

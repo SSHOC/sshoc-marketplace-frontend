@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { AccountScreenWithFiltersLayout } from '@/components/account/AccountScreenWithFiltersLayout'
@@ -30,15 +30,13 @@ export namespace ModerateItemsPage {
   export type Props = WithDictionaries<'authenticated' | 'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<ModerateItemsPage.PathParams>,
-): Promise<GetStaticPropsResult<ModerateItemsPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['authenticated', 'common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<ModerateItemsPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['authenticated', 'common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

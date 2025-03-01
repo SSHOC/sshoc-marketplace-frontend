@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -18,6 +18,7 @@ import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
+
 // import { Centered } from '@/lib/core/ui/Centered/Centered'
 // import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 
@@ -28,15 +29,13 @@ export namespace HomePage {
   export type Props = WithDictionaries<'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<HomePage.PathParams>,
-): Promise<GetStaticPropsResult<HomePage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<HomePage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

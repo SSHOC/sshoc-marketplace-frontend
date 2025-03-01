@@ -1,10 +1,5 @@
 import { createUrlSearchParams, HttpError } from '@stefanprobst/request'
-import type {
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from 'next'
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { dehydrate, QueryClient, useQueryClient } from 'react-query'
@@ -63,10 +58,8 @@ export namespace PublicationPage {
   }
 }
 
-export async function getStaticPaths(
-  context: GetStaticPathsContext,
-): Promise<GetStaticPathsResult<PublicationPage.PathParams>> {
-  const locales = getLocales(context)
+export async function getStaticPaths(): Promise<GetStaticPathsResult<PublicationPage.PathParams>> {
+  const locales = getLocales()
   const paths = locales.flatMap((locale) => {
     const persistentIds: Array<Publication['persistentId']> = []
     return persistentIds.map((persistentId) => {
@@ -84,9 +77,9 @@ export async function getStaticPaths(
 export async function getStaticProps(
   context: GetStaticPropsContext<PublicationPage.PathParams>,
 ): Promise<GetStaticPropsResult<PublicationPage.Props>> {
-  const locale = getLocale(context)
+  const locale = getLocale()
   const params = context.params as PublicationPage.PathParams
-  const dictionaries = await load(locale, ['common'])
+  const messages = await load(locale, ['common'])
 
   try {
     const persistentId = params.persistentId
@@ -97,7 +90,7 @@ export async function getStaticProps(
 
     return {
       props: {
-        dictionaries,
+        messages,
         params,
         initialQueryState: dehydrate(queryClient),
       },

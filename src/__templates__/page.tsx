@@ -27,7 +27,7 @@ export namespace TemplatePage {
 // export async function getStaticPaths(
 //   context: GetStaticPathsContext,
 // ): Promise<GetStaticPathsResult<TemplatePage.PathParams>> {
-//   const locales = getLocales(context)
+//   const locales = getLocales()
 //   const paths = locales.map((locale) => {
 //     const params = {}
 //     return { locale, params }
@@ -42,13 +42,13 @@ export namespace TemplatePage {
 export async function getStaticProps(
   context: GetStaticPropsContext<TemplatePage.PathParams>,
 ): Promise<GetStaticPropsResult<TemplatePage.Props>> {
-  const locale = getLocale(context)
+  const locale = getLocale()
   // const params = context.params as TemplatePage.PathParams
-  const dictionaries = await load(locale, ['common'])
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
       // params,
     },
   }

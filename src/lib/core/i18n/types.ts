@@ -1,5 +1,5 @@
-import type { Dictionary } from '@/dictionaries'
+import type { Dictionary } from '@/messages'
 
 export interface WithDictionaries<K extends keyof Dictionary = never> {
-  dictionaries: Pick<Dictionary, K>
+  messages: Pick<Dictionary, K>
 }

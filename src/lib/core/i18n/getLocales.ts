@@ -1,7 +1,5 @@
-import type { GetStaticPathsContext } from 'next'
+import { type Locale, locales } from '~/config/i18n.config'
 
-import type { Locales } from '~/config/i18n.config.mjs'
-
-export function getLocales(context: GetStaticPathsContext): Locales {
-  return context.locales as Locales
+export function getLocales(): ReadonlyArray<Locale> {
+  return locales
 }

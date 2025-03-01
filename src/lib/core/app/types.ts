@@ -1,7 +1,6 @@
 import type { AppProps as NextAppProps } from 'next/app'
 
 import type { User } from '@/data/sshoc/api/user'
-import type { Dictionary } from '@/dictionaries'
 import type { DehydratedState } from '@/lib/core/query/QueryProvider'
 
 export interface GetLayout {
@@ -14,7 +13,7 @@ export type PageComponent<T = unknown> = NextAppProps<T>['Component'] & {
 }
 
 export interface SharedPageProps {
-  dictionaries?: Partial<Dictionary>
+  messages?: IntlMessages
   initialQueryState?: DehydratedState
 }
 

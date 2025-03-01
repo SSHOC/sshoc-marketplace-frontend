@@ -1,10 +1,9 @@
-import type { Dictionary } from '@/dictionaries'
-import type { Locale } from '~/config/i18n.config.mjs'
+import type { Locale } from '~/config/i18n.config'
 
-export async function load<K extends keyof Dictionary>(
+export async function load(
   locale: Locale,
-  namespaces: Array<K>,
-): Promise<Pick<Dictionary, K>> {
+  namespaces: Array<keyof IntlMessages>,
+): Promise<IntlMessages> {
   const translations = await Promise.all(
     namespaces.map(async (namespace) => {
       /**
@@ -12,8 +11,8 @@ export async function load<K extends keyof Dictionary>(
        *
        * @see https://webpack.js.org/api/module-methods/#dynamic-expressions-in-import
        */
-      const dictionary = await import(`@/dictionaries/${namespace}/${locale}.ts`).then((module) => {
-        return module.dictionary
+      const dictionary = await import(`@/messages/${namespace}/${locale}.ts`).then((module) => {
+        return module.default
       })
 
       return [namespace, dictionary]

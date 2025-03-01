@@ -1,6 +1,4 @@
-import type { Dictionary } from '@/dictionaries/authenticated'
-
-export const dictionary: Dictionary = {
+const messages = {
   pages: {
     account: 'My account',
     'contributed-items': 'My contributed items',
@@ -482,3 +480,5 @@ export const dictionary: Dictionary = {
   },
   'item-status-alert': 'You are currently viewing a {{category}} with status: {{status}}.',
 }
+
+export default messages

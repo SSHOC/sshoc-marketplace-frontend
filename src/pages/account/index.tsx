@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { AccountHelpText } from '@/components/account/AccountHelpText'
@@ -25,15 +25,13 @@ export namespace AccountPage {
   export type Props = WithDictionaries<'authenticated' | 'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<AccountPage.PathParams>,
-): Promise<GetStaticPropsResult<AccountPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['authenticated', 'common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<AccountPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['authenticated', 'common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }

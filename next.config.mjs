@@ -23,9 +23,7 @@ import withGfm from 'remark-gfm'
 import { getHighlighter } from 'shiki'
 
 import { syntaxHighlightingTheme } from './config/docs.config.mjs'
-import { defaultLocale, locales } from './config/i18n.config.mjs'
 
-/** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
 /** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 /** @typedef {import('@mdx-js/loader').Options} MdxOptions */
@@ -87,10 +85,6 @@ const config = {
     }
 
     return headers
-  },
-  i18n: {
-    locales,
-    defaultLocale,
   },
   images: {
     // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

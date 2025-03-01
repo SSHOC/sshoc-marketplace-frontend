@@ -1,5 +1,6 @@
 import type { Toc } from '@stefanprobst/rehype-extract-toc'
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import * as path from 'path'
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
@@ -21,7 +22,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
@@ -38,6 +38,7 @@ import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
  * (it is added by `@stefanprobst/remark-extract-yaml-frontmatter/mdx`).
  */
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AboutPage {
   export interface PathParamsInput extends ParamsInput {
     id: string
@@ -55,11 +56,9 @@ export namespace AboutPage {
   }
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<AboutPage.PathParams>,
-): Promise<GetStaticPropsResult<AboutPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<AboutPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   const filePath = path.relative(process.cwd(), fileURLToPath(import.meta.url))
   const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString()
@@ -67,7 +66,7 @@ export async function getStaticProps(
 
   return {
     props: {
-      dictionaries,
+      messages,
       lastUpdatedTimestamp,
       params: { id },
     },
@@ -77,10 +76,10 @@ export async function getStaticProps(
 export default function AboutPage(props: AboutPage.TemplateProps): JSX.Element {
   const { id } = props.params
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('pages.home') },
     { href: `/about/${id}`, label: props.metadata.title },
   ]
 

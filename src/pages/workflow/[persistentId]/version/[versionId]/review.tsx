@@ -1,10 +1,5 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
-import type {
-  GetStaticPathsContext,
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-} from 'next'
+import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
@@ -56,10 +51,10 @@ export namespace ReviewWorkflowPage {
   }
 }
 
-export async function getStaticPaths(
-  context: GetStaticPathsContext,
-): Promise<GetStaticPathsResult<ReviewWorkflowPage.PathParams>> {
-  const locales = getLocales(context)
+export async function getStaticPaths(): Promise<
+  GetStaticPathsResult<ReviewWorkflowPage.PathParams>
+> {
+  const locales = getLocales()
   const paths = locales.flatMap((locale) => {
     const persistentIds: Array<Workflow['persistentId']> = []
     return persistentIds.flatMap((persistentId) => {
@@ -80,13 +75,13 @@ export async function getStaticPaths(
 export async function getStaticProps(
   context: GetStaticPropsContext<ReviewWorkflowPage.PathParams>,
 ): Promise<GetStaticPropsResult<ReviewWorkflowPage.Props>> {
-  const locale = getLocale(context)
+  const locale = getLocale()
   const params = context.params as ReviewWorkflowPage.PathParams
-  const dictionaries = await load(locale, ['common', 'authenticated'])
+  const messages = await load(locale, ['common', 'authenticated'])
 
   return {
     props: {
-      dictionaries,
+      messages,
       params,
     },
   }

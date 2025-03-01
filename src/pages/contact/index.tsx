@@ -1,4 +1,4 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -30,15 +30,13 @@ export namespace ContactPage {
   export type Props = WithDictionaries<'common'>
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<ContactPage.PathParams>,
-): Promise<GetStaticPropsResult<ContactPage.Props>> {
-  const locale = getLocale(context)
-  const dictionaries = await load(locale, ['common'])
+export async function getStaticProps(): Promise<GetStaticPropsResult<ContactPage.Props>> {
+  const locale = getLocale()
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
     },
   }
 }
