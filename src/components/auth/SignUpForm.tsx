@@ -8,7 +8,6 @@ import { FormCheckBox } from '@/lib/core/form/FormCheckBox'
 import { FormHiddenField } from '@/lib/core/form/FormHiddenField'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { isEmail, isNonEmptyString } from '@/lib/utils'
@@ -89,7 +88,7 @@ export function SignUpForm(): JSX.Element {
             {t(['common', 'auth', 'accept-terms-of-service'], {
               components: {
                 PrivacyPolicyLink(props) {
-                  return <Link href={routes.PrivacyPolicyPage()}>{props.children}</Link>
+                  return <Link href="/privacy-policy">{props.children}</Link>
                 },
               },
             })}
@@ -107,7 +106,7 @@ export function SignUpForm(): JSX.Element {
           {t(['common', 'auth', 'sign-up-helptext'], {
             components: {
               ContactLink(props) {
-                return <Link href={routes.ContactPage()}>{props.children}</Link>
+                return <Link href="/contact">{props.children}</Link>
               },
             },
           })}

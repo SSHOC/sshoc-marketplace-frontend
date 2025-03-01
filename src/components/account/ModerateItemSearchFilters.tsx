@@ -19,7 +19,6 @@ import { useUsersInfinite } from '@/data/sshoc/hooks/user'
 import type { CurationFlag } from '@/data/sshoc/utils/curation'
 import { curationFlags } from '@/data/sshoc/utils/curation'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import type { IsoDateString } from '@/lib/core/types'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
@@ -47,7 +46,7 @@ export function ModerateItemSearchFilters(): JSX.Element {
       <header className={css['section-header']}>
         <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
         <div className={css['clear-link']}>
-          <Link href={routes.ModerateItemsPage()}>{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/account/moderate-items">{t(['common', 'search', 'clear-filters'])}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -487,7 +486,7 @@ function SearchFacetsForm(): JSX.Element {
     <form
       onSubmit={onSubmit}
       method="get"
-      action={routes.ModerateItemsPage().pathname}
+      action="/account/moderate-items"
       className={css['facets']}
     >
       <input type="hidden" name="q" value={searchFilters.q} />

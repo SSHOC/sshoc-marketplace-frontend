@@ -3,7 +3,6 @@ import { Fragment } from 'react'
 import { NavLinkButton } from '@/components/common/NavLinkButton'
 import { useAuth } from '@/lib/core/auth/useAuth'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { AccountMenu } from '@/lib/core/page/AccountMenu'
 
 export function AuthButton(): JSX.Element {
@@ -17,7 +16,7 @@ export function AuthButton(): JSX.Element {
   if (isSignedOut) {
     return (
       <NavLinkButton
-        href={routes.SignInPage()}
+        href="/auth/sign-in"
         size="sm"
         style={{
           '--button-padding-inline': 'var(--space-16)',

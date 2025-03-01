@@ -6,7 +6,6 @@ import { ItemSearchTermAutocomplete } from '@/components/common/ItemSearchTermAu
 import { useSearchItems } from '@/components/common/useSearchItems'
 import { useSearchFilters } from '@/components/search/useSearchFilters'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { isNonEmptyString } from '@/lib/utils'
 
@@ -41,7 +40,7 @@ function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
       noValidate
       role="search"
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
       onSubmit={onSubmit}
       aria-label={t(['common', 'search', 'search-items'])}
       className={css['container']}

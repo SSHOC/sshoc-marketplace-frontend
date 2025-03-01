@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
@@ -21,7 +20,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { SpacedRow } from '@/lib/core/ui/SpacedRow/SpacedRow'
@@ -52,8 +50,8 @@ export default function SearchPage(_props: SearchPage.Props): JSX.Element {
   const title = t(['common', 'pages', 'search'])
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
-    { href: routes.SearchPage(), label: t(['common', 'pages', 'search']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/search', label: t(['common', 'pages', 'search']) },
   ]
 
   return (

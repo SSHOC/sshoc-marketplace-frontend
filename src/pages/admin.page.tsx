@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import dynamic from 'next/dynamic'
 import { Fragment, memo } from 'react'
 

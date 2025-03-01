@@ -1,13 +1,12 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { sanitizeSearchParams } from '@/lib/utils'
 import type { ModerateItemsPage } from '@/pages/account/moderate-items.page'
 
 export interface UseModerateItemsSearchResult {
   getSearchModerateItemsLink: (query: ModerateItemsPage.SearchParamsInput) => {
-    href: Href
+    href: string
     shallow: boolean
     scroll: boolean
   }
@@ -20,7 +19,7 @@ export function useModerateItemsSearch(): UseModerateItemsSearchResult {
   function getSearchModerateItemsLink(query: ModerateItemsPage.SearchParamsInput) {
     /** Filter out empty values to avoid `key=` query parameters. */
     return {
-      href: routes.ModerateItemsPage(sanitizeSearchParams(query)),
+      href: `/account/moderate-items?${createUrlSearchParams(sanitizeSearchParams(query))}`,
       shallow: true,
       scroll: true,
     }

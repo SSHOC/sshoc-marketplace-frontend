@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@react-aria/overlays'
-import Image from "next/legacy/image"
+import { createUrlSearchParams } from '@stefanprobst/request'
+import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useRef } from 'react'
 
@@ -7,7 +8,6 @@ import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAuth } from '@/lib/core/auth/useAuth'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import type { Href } from '@/lib/core/navigation/types'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { Disclosure } from '@/lib/core/page/Disclosure'
@@ -84,7 +84,7 @@ function NavigationMenu(): JSX.Element {
           >
             <header className={css['header']}>
               <div className={css['home-link']}>
-                <NavLink aria-label={t(['common', 'pages', 'home'])} href={routes.HomePage()}>
+                <NavLink aria-label={t(['common', 'pages', 'home'])} href="/">
                   <Image src={Logo} alt="" priority />
                 </NavLink>
               </div>
@@ -111,11 +111,11 @@ function NavigationMenu(): JSX.Element {
                   <li className={css['nav-item']}>
                     <NavLink
                       variant="nav-mobile-menu-link"
-                      href={routes.ContactPage({
+                      href={`/contact?${createUrlSearchParams({
                         email: currentUser.data?.email,
                         subject: t(['common', 'report-issue']),
                         message: t(['common', 'report-issue-message'], { values: { pathname } }),
-                      })}
+                      })}`}
                     >
                       {t(['common', 'report-issue'])}
                     </NavLink>
@@ -147,7 +147,7 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
   }
 
   if (!isSignedIn || currentUser.data == null) {
-    const item = { href: routes.SignInPage(), label: t(['common', 'auth', 'sign-in']) }
+    const item = { href: `/auth/sign-in`, label: t(['common', 'auth', 'sign-in']) }
 
     return (
       <li className={css['nav-item']}>
@@ -159,8 +159,8 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
   }
 
   const items = [
-    { id: 'account', href: routes.AccountPage(), label: t(['common', 'pages', 'account']) },
-  ] as Array<{ href: Href; label: string; id: string }>
+    { id: 'account', href: `/account`, label: t(['common', 'pages', 'account']) },
+  ] as Array<{ href: string; label: string; id: string }>
 
   return (
     <li className={css['nav-item']}>

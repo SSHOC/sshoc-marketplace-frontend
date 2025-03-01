@@ -1,3 +1,4 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
@@ -9,7 +10,6 @@ import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useItemCategories, useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { keys } from '@/lib/utils'
@@ -78,7 +78,7 @@ function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): J
         <SubSectionHeader>
           <SubSectionTitle>{t(['common', 'item-categories', category, 'other'])}</SubSectionTitle>
           <SubSectionHeaderLink
-            href={routes.SearchPage({ categories: [category], order: ['label'] })}
+            href={`/search?${createUrlSearchParams({ categories: [category], order: ['label'] })}`}
           >
             {t(['common', 'see-all'])}
           </SubSectionHeaderLink>

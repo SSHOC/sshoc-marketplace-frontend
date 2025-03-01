@@ -11,7 +11,6 @@ import { useDeleteWorkflowVersion } from '@/data/sshoc/hooks/workflow'
 import { AccessControl } from '@/lib/core/auth/AccessControl'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
-import { routes } from '@/lib/core/navigation/routes'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { Button } from '@/lib/core/ui/Button/Button'
 
@@ -96,7 +95,7 @@ function DeleteItemVersionButton(props: DeleteItemButtonProps): JSX.Element {
   const deleteItemVersion = useDeleteItemVersion(category)({ persistentId, versionId }, undefined, {
     meta,
     onSuccess() {
-      router.push(routes.AccountPage())
+      router.push(`/account`)
     },
   })
 

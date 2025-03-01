@@ -17,7 +17,6 @@ import { useSearchFilters } from '@/components/search/useSearchFilters'
 import { useSearchResults } from '@/components/search/useSearchResults'
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -41,7 +40,7 @@ export function SearchFilters(): JSX.Element {
       <header className={css['section-header']}>
         <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
         <div className={css['clear-link']}>
-          <Link href={routes.SearchPage()}>{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/search">{t(['common', 'search', 'clear-filters'])}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -370,12 +369,7 @@ function SearchFacetsForm(): JSX.Element {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      method="get"
-      action={routes.SearchPage().pathname}
-      className={css['facets']}
-    >
+    <form onSubmit={onSubmit} method="get" action="/search" className={css['facets']}>
       <input type="hidden" name="q" value={searchFilters.q} />
       <input type="hidden" name="order" value={searchFilters.order} />
       <input type="hidden" name="page" value={searchFilters.page} />

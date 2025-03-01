@@ -1,13 +1,12 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { sanitizeSearchParams } from '@/lib/utils'
 import type { DraftItemsPage } from '@/pages/account/draft-items.page'
 
 export interface UseDraftItemsSearchResult {
   getSearchDraftItemsLink: (query: DraftItemsPage.SearchParamsInput) => {
-    href: Href
+    href: string
     shallow: boolean
     scroll: boolean
   }
@@ -19,7 +18,11 @@ export function useDraftItemsSearch(): UseDraftItemsSearchResult {
 
   function getSearchDraftItemsLink(query: DraftItemsPage.SearchParamsInput) {
     /** Filter out empty values to avoid `key=` query parameters. */
-    return { href: routes.DraftItemsPage(sanitizeSearchParams(query)), shallow: true, scroll: true }
+    return {
+      href: `/account/draft-items?${createUrlSearchParams(sanitizeSearchParams(query))}`,
+      shallow: true,
+      scroll: true,
+    }
   }
 
   function searchDraftItems(query: DraftItemsPage.SearchParamsInput) {

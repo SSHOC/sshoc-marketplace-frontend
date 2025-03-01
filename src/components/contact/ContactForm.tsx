@@ -11,7 +11,6 @@ import { FormHiddenField } from '@/lib/core/form/FormHiddenField'
 import { FormTextArea } from '@/lib/core/form/FormTextArea'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { isEmail, isNonEmptyString } from '@/lib/utils'
@@ -53,7 +52,7 @@ export function ContactForm(): JSX.Element {
   }
   const submitContactForm = useSubmitContactForm({
     onSuccess() {
-      router.push(routes.HomePage())
+      router.push('/')
     },
     meta,
   })

@@ -1,9 +1,9 @@
-import Image from "next/legacy/image"
+import { createUrlSearchParams } from '@stefanprobst/request'
+import Image from 'next/legacy/image'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { AuthButton } from '@/lib/core/page/AuthButton'
 import { MobileNavigationMenu } from '@/lib/core/page/MobileNavigationMenu'
@@ -19,18 +19,18 @@ export function PageHeader(): JSX.Element {
   return (
     <header className={css['container']}>
       <div className={css['home-link']}>
-        <NavLink href={routes.HomePage()} aria-label={t(['common', 'pages', 'home'])}>
+        <NavLink href="/" aria-label={t(['common', 'pages', 'home'])}>
           <Image src={Logo} alt="" priority />
         </NavLink>
       </div>
       <div className={css['secondary-nav']}>
         <div className={css['secondary-nav-link']}>
           <NavLink
-            href={routes.ContactPage({
+            href={`/contact?${createUrlSearchParams({
               email: currentUser.data?.email,
               subject: t(['common', 'report-issue']),
               message: t(['common', 'report-issue-message'], { values: { pathname } }),
-            })}
+            })}`}
           >
             {t(['common', 'report-issue'])}
           </NavLink>

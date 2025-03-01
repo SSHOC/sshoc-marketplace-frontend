@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
@@ -16,7 +15,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
 export namespace SuccessPage {
@@ -56,9 +54,7 @@ export default function SuccessPage(_props: SuccessPage.Props): JSX.Element {
             </ScreenHeader>
             <p>{t(['common', 'success', 'message'])}</p>
             <SuccessCardControls>
-              <LinkButton href={routes.HomePage()}>
-                {t(['common', 'success', 'back-home'])}
-              </LinkButton>
+              <LinkButton href="/">{t(['common', 'success', 'back-home'])}</LinkButton>
             </SuccessCardControls>
           </SuccessCard>
           <FundingNotice />

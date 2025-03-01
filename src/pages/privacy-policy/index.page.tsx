@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import * as path from 'path'
 import { Fragment } from 'react'
@@ -23,7 +22,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -60,8 +58,8 @@ export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): JSX.E
   const title = t(['common', 'pages', 'privacy-policy'])
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
-    { href: routes.PrivacyPolicyPage(), label: t(['common', 'pages', 'privacy-policy']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/privacy-policy', label: t(['common', 'pages', 'privacy-policy']) },
   ]
 
   return (

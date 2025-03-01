@@ -14,7 +14,6 @@ import { keys } from '@/data/sshoc/hooks/publication'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable-next-line @typescript-eslint/no-namespace */
 export namespace UseCreateOrUpdatePublication {

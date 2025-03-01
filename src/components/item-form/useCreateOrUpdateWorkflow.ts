@@ -16,7 +16,6 @@ import { keys } from '@/data/sshoc/hooks/tool-or-service'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 // FIXME: DRY up.
 // TODO: export ItemFormValues<WorkflowInput & ...> type here, and use it on the /new page.

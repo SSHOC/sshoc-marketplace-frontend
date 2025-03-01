@@ -1,3 +1,4 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
@@ -8,7 +9,6 @@ import { SubSectionHeaderLink } from '@/components/home/SubSectionHeaderLink'
 import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { maxLastAddedItems } from '~/config/sshoc.config'
@@ -39,7 +39,9 @@ export function LastUpdatedItems(): JSX.Element {
       <section className={css['section']}>
         <SubSectionHeader>
           <SubSectionTitle>{t(['common', 'home', 'see-what-is-new'])}</SubSectionTitle>
-          <SubSectionHeaderLink href={routes.SearchPage({ order: ['modified-on'] })}>
+          <SubSectionHeaderLink
+            href={`/search?${createUrlSearchParams({ order: ['modified-on'] })}`}
+          >
             {t(['common', 'see-all'])}
           </SubSectionHeaderLink>
         </SubSectionHeader>

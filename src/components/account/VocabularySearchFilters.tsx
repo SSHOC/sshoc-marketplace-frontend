@@ -17,7 +17,6 @@ import type { PropertyType } from '@/data/sshoc/api/property'
 import type { ConceptStatus } from '@/data/sshoc/utils/concept'
 import { conceptStatus, mapConceptStatusToFacet } from '@/data/sshoc/utils/concept'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { CheckBoxGroup } from '@/lib/core/ui/CheckBoxGroup/CheckBoxGroup'
@@ -39,7 +38,7 @@ export function VocabularySearchFilters(): JSX.Element {
       <header className={css['section-header']}>
         <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
         <div className={css['clear-link']}>
-          <Link href={routes.VocabulariesPage()}>{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/account/vocabularies">{t(['common', 'search', 'clear-filters'])}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -256,12 +255,7 @@ function SearchFacetsForm(): JSX.Element {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      method="get"
-      action={routes.VocabulariesPage().pathname}
-      className={css['facets']}
-    >
+    <form onSubmit={onSubmit} method="get" action="/account/vocabularies" className={css['facets']}>
       <input type="hidden" name="q" value={searchFilters.q} />
       {/* <input type="hidden" name="order" value={searchFilters.order} /> */}
       <input type="hidden" name="page" value={searchFilters.page} />

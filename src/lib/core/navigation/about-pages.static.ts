@@ -3,7 +3,6 @@ import { promises as fs } from 'fs'
 import * as path from 'path'
 
 import { collection } from '@/lib/cms/collections/about-pages'
-import { routes } from '@/lib/core/navigation/routes'
 
 interface AboutPageMetadata {
   title: string
@@ -42,7 +41,7 @@ export default async function load(): Promise<ValLoaderResult> {
 
         return {
           label: navigationMenu.title,
-          href: routes.AboutPage({ id }),
+          href: `/about/${id}`,
           position: navigationMenu.position,
         }
       }),

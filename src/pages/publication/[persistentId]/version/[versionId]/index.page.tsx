@@ -1,4 +1,4 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { createUrlSearchParams } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -40,7 +40,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -131,9 +130,9 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
   }
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
     {
-      href: routes.SearchPage({ categories: [publication.category], order: ['label'] }),
+      href: `/search?${createUrlSearchParams({ categories: [publication.category], order: ['label'] })}`,
       label: t(['common', 'item-categories', category, 'other']),
     },
     {

@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
@@ -23,7 +22,6 @@ export namespace TemplatePage {
   // }
 }
 
-// import type { ParamsInput } from '@stefanprobst/next-route-manifest'
 // import type { GetStaticPathsContext, GetStaticPathsResult } from 'next'
 // import { getLocales } from '@/lib/core/i18n/getLocales'
 // export async function getStaticPaths(

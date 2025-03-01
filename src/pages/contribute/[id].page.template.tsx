@@ -1,4 +1,3 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
 import type { Toc } from '@stefanprobst/rehype-extract-toc'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import * as path from 'path'
@@ -24,7 +23,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -82,8 +80,8 @@ export default function ContributePage(props: ContributePage.TemplateProps): JSX
   const { t } = useI18n<'common'>()
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
-    { href: routes.ContributePage({ id }), label: props.metadata.title },
+    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: `/contribute/${id}`, label: props.metadata.title },
   ]
 
   return (

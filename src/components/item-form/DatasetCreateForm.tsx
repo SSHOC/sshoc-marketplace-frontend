@@ -12,7 +12,6 @@ import { useDatasetFormRecommendedFields } from '@/components/item-form/useDatas
 import { useDatasetValidationSchema } from '@/components/item-form/useDatasetValidationSchema'
 import type { DatasetInput } from '@/data/sshoc/api/dataset'
 import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
-import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateDatasetFormValues = ItemFormValues<DatasetInput>
 
@@ -52,7 +51,7 @@ export function DatasetCreateForm(): JSX.Element {
           } else if (dataset.status === 'approved') {
             router.push(routes.DatasetPage({ persistentId: dataset.persistentId }))
           } else {
-            router.push(routes.SuccessPage())
+            router.push(`/success`)
           }
           done?.()
         },
@@ -67,7 +66,7 @@ export function DatasetCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(`/account`)
   }
 
   return (

@@ -1,13 +1,12 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { sanitizeSearchParams } from '@/lib/utils'
 import type { UsersPage } from '@/pages/account/users.page'
 
 export interface UseUserSearchResult {
   getSearchUsersLink: (query: UsersPage.SearchParamsInput) => {
-    href: Href
+    href: string
     shallow: boolean
     scroll: boolean
   }
@@ -19,7 +18,11 @@ export function useUserSearch(): UseUserSearchResult {
 
   function getSearchUsersLink(query: UsersPage.SearchParamsInput) {
     /** Filter out empty values to avoid `key=` query parameters. */
-    return { href: routes.UsersPage(sanitizeSearchParams(query)), shallow: true, scroll: true }
+    return {
+      href: `/account/users?${createUrlSearchParams(sanitizeSearchParams(query))}`,
+      shallow: true,
+      scroll: true,
+    }
   }
 
   function searchUsers(query: UsersPage.SearchParamsInput) {

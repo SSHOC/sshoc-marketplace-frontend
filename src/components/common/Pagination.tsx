@@ -7,7 +7,6 @@ import { Link } from '@/components/common/Link'
 import { NavLink } from '@/components/common/NavLink'
 import css from '@/components/common/Pagination.module.css'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import type { Href } from '@/lib/core/navigation/types'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import TriangleIcon from '@/lib/core/ui/icons/triangle.svg?symbol-icon'
@@ -120,7 +119,7 @@ function PageInput<TResults, TFilters extends { page: number }>(
       noValidate
       onSubmit={onSubmit}
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
     >
       <label className={css['page-number-input']}>
         <VisuallyHidden>{t(['common', 'pagination', 'go-to-page'])}</VisuallyHidden>
