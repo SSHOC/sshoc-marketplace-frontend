@@ -6,7 +6,7 @@ import { useCanonicalUrl } from '@/lib/core/metadata/useCanonicalUrl'
 import { usePageTitleTemplate } from '@/lib/core/metadata/usePageTitleTemplate'
 import { useSiteMetadata } from '@/lib/core/metadata/useSiteMetadata'
 import { createFaviconLink } from '@/lib/utils'
-import { openGraphImageName, webManifest } from '~/config/site.config'
+import { openGraphImageName } from '~/config/site.config'
 
 export function SiteMetadata(): JSX.Element {
   const { locale, title, description, image, twitter } = useSiteMetadata()
@@ -23,11 +23,7 @@ export function SiteMetadata(): JSX.Element {
           href={String(createFaviconLink(locale, '/icon.svg'))}
           type="image/svg+xml"
         />
-        <link
-          rel="apple-touch-icon"
-          href={String(createFaviconLink(locale, '/apple-touch-icon.png'))}
-        />
-        <link rel="manifest" href={String(createFaviconLink(locale, webManifest))} />
+        <link rel="apple-touch-icon" href={String(createFaviconLink(locale, '/apple-icon.png'))} />
       </Head>
       <NextPageMetadata
         canonicalUrl={canonicalUrl}

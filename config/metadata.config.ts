@@ -40,24 +40,22 @@ export interface SiteMetadata {
   }
 }
 
-export const siteMetadata: Record<Locale, SiteMetadata> = {
-  en: {
-    locale: 'en',
-    url: String(createSiteUrl({ locale: 'en' })),
-    title: 'Social Sciences & Humanities Open Marketplace',
-    shortTitle: 'SSHOC Marketplace',
-    description:
-      'Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.',
-    favicon: {
-      src: 'public/assets/images/logo-maskable.svg',
-      maskable: true,
-    },
-    image: {
-      src: 'public/assets/images/logo-with-text.svg',
-      alt: 'SSHOC Marketplace',
-    },
-    twitter: {
-      handle: 'SSHOpenCloud',
-    },
+export const siteMetadata: SiteMetadata = {
+  locale: 'en',
+  url: String(createSiteUrl({ locale: 'en' })),
+  title: 'Social Sciences & Humanities Open Marketplace',
+  shortTitle: 'SSHOC Marketplace',
+  description:
+    'Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.',
+  favicon: {
+    src: 'public/assets/images/logo-maskable.svg',
+    maskable: true,
+  },
+  image: {
+    src: 'public/assets/images/logo-with-text.svg',
+    alt: 'SSHOC Marketplace',
+  },
+  twitter: {
+    handle: 'SSHOpenCloud',
   },
 } as const
