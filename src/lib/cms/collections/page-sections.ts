@@ -1,4 +1,4 @@
-import type { CmsCollection } from 'decap-cms-core'
+import type { CmsCollection } from 'netlify-cms-core'
 
 export const collection: CmsCollection = {
   name: 'page-sections',
