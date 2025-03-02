@@ -1,12 +1,12 @@
 import { useError } from '@stefanprobst/next-error-boundary'
 import { HttpError } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 
 import { SignInForm } from '@/components/auth/SignInForm'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { AuthorizationError } from '@/lib/core/error/AuthorizationError'
-import { useTranslations } from 'next-intl'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
 export function RootErrorFallback(): JSX.Element {
@@ -42,7 +42,7 @@ export function RootErrorFallback(): JSX.Element {
       <FullPage>
         <ErrorMessage
           statusCode={error instanceof HttpError ? error.response.status : undefined}
-          message={t(['common', 'default-authorization-error-message'])}
+          message={t('default-authorization-error-message')}
         />
       </FullPage>
     )

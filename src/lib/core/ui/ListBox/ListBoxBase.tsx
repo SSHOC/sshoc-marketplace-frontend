@@ -6,11 +6,11 @@ import type { ListLayout } from '@react-stately/layout'
 import type { ListState } from '@react-stately/list'
 import type { ReusableView } from '@react-stately/virtualizer'
 import type { AsyncLoadable, Node } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { CSSProperties, ForwardedRef, HTMLAttributes, ReactNode } from 'react'
 import { forwardRef, useMemo, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ListBox/ListBoxBase.module.css'
 import { ListBoxContext } from '@/lib/core/ui/ListBox/ListBoxContext'
 import { ListBoxOption } from '@/lib/core/ui/ListBox/ListBoxOption'
@@ -185,8 +185,8 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
                   aria-label={
                     // FIXME: use `loadingState`
                     state.collection.size > 0
-                      ? t(['common', 'ui', 'listbox', 'loading-more'])
-                      : t(['common', 'ui', 'listbox', 'loading'])
+                      ? t('ui.listbox.loading-more')
+                      : t('ui.listbox.loading')
                   }
                   size="sm"
                 />

@@ -7,11 +7,11 @@ import { useSelectState } from '@react-stately/select'
 import type { Placement } from '@react-types/overlays'
 import type { AriaSelectProps } from '@react-types/select'
 import type { Alignment, LoadingState } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { ForwardedRef } from 'react'
 import { forwardRef, Fragment, useCallback, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useTranslations } from 'next-intl'
 import { Field } from '@/lib/core/ui/Field/Field'
 import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
@@ -121,7 +121,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
   const { hoverProps, isHovered } = useHover(props)
   const { focusProps, isFocusVisible } = useFocusRing(props)
 
-  const placeholder = props.placeholder ?? t(['common', 'ui', 'select', 'placeholder'])
+  const placeholder = props.placeholder ?? t('ui.select.placeholder')
 
   const isInvalid = validationState === 'invalid'
 
@@ -135,7 +135,6 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       <ListBoxBase<T>
         ref={listboxRef}
         {...menuProps}
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         autoFocus={state.focusStrategy || true}
         color={color}
         disallowEmptySelection
@@ -201,10 +200,9 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     <span
       {...valueProps}
       className={css['select-value']}
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       data-placeholder={state.selectedItem == null ? '' : undefined}
     >
-      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+      {}
       {state.selectedItem != null ? state.selectedItem.rendered : placeholder}
     </span>
   )

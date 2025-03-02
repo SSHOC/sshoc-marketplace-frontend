@@ -1,8 +1,8 @@
 import type { AriaLabelingProps, DOMProps } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { CSSProperties, ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/LoadingIndicator/LoadingIndicator.module.css'
 
 export interface LoadingIndicatorStyleProps {
@@ -24,9 +24,7 @@ export const LoadingIndicator = forwardRef(function LoadingIndicator(
   const t = useTranslations('common')
 
   const message =
-    ariaLabel == null && ariaLabelledby == null
-      ? t(['common', 'default-spinner-message'])
-      : ariaLabel
+    ariaLabel == null && ariaLabelledby == null ? t('default-spinner-message') : ariaLabel
 
   function getRadius() {
     switch (size) {

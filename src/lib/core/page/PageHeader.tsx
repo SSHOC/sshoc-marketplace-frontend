@@ -1,9 +1,9 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
 import Image from 'next/legacy/image'
+import { useTranslations } from 'next-intl'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
-import { useTranslations } from 'next-intl'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { AuthButton } from '@/lib/core/page/AuthButton'
 import { MobileNavigationMenu } from '@/lib/core/page/MobileNavigationMenu'
@@ -19,7 +19,7 @@ export function PageHeader(): JSX.Element {
   return (
     <header className={css['container']}>
       <div className={css['home-link']}>
-        <NavLink href="/" aria-label={t(['common', 'pages', 'home'])}>
+        <NavLink href="/" aria-label={t('pages.home')}>
           <Image src={Logo} alt="" priority />
         </NavLink>
       </div>
@@ -28,11 +28,11 @@ export function PageHeader(): JSX.Element {
           <NavLink
             href={`/contact?${createUrlSearchParams({
               email: currentUser.data?.email,
-              subject: t(['common', 'report-issue']),
-              message: t(['common', 'report-issue-message'], { values: { pathname } }),
+              subject: t('report-issue'),
+              message: t('report-issue-message', { pathname }),
             })}`}
           >
-            {t(['common', 'report-issue'])}
+            {t('report-issue')}
           </NavLink>
         </div>
         <AuthButton />

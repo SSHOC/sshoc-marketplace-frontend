@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
 
@@ -5,7 +6,6 @@ import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAccessTokenExpirationTimer } from '@/lib/core/auth/useAccessTokenExpirationTimer'
 import { useAuth } from '@/lib/core/auth/useAuth'
 import { AuthorizationError } from '@/lib/core/error/AuthorizationError'
-import { useTranslations } from 'next-intl'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
@@ -36,12 +36,12 @@ export function PageAccessControl(props: PageAccessControlProps): JSX.Element {
   }
 
   if (!isSignedIn) {
-    throw new AuthorizationError(t(['common', 'default-authorization-error-message']))
+    throw new AuthorizationError(t('default-authorization-error-message'))
   }
 
   if (typeof isPageAccessible === 'function') {
     if (currentUser.data == null || isPageAccessible(currentUser.data) === false) {
-      throw new AuthorizationError(t(['common', 'default-authorization-error-message']))
+      throw new AuthorizationError(t('default-authorization-error-message'))
     }
   }
 

@@ -1,9 +1,9 @@
 import { useProgressBar } from '@react-aria/progress'
 import type { AriaLabelingProps, DOMProps } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { CSSProperties, ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css'
 
 export interface ProgressSpinnerStyleProps {
@@ -28,9 +28,7 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
     ...props,
     isIndeterminate: true,
     'aria-label':
-      ariaLabel == null && ariaLabelledby == null
-        ? t(['common', 'default-spinner-message'])
-        : ariaLabel,
+      ariaLabel == null && ariaLabelledby == null ? t('default-spinner-message') : ariaLabel,
   })
 
   function getRadius() {

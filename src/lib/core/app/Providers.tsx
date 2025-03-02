@@ -10,12 +10,11 @@ import { useQueryErrorResetBoundary } from 'react-query'
 import type { PageComponent, SharedPageProps } from '@/lib/core/app/types'
 import { AuthProvider } from '@/lib/core/auth/AuthProvider'
 import { PageAccessControl } from '@/lib/core/auth/PageAccessControl'
+import { getLocale } from '@/lib/core/i18n/getLocale'
 import type { QueryClient } from '@/lib/core/query/create-query-client'
 import { createQueryClient } from '@/lib/core/query/create-query-client'
 import { QueryProvider } from '@/lib/core/query/QueryProvider'
 import { ToastContainer } from '@/lib/core/toast/ToastContainer'
-
-import { getLocale } from '../i18n/getLocale'
 
 export interface ContextProvidersProps {
   children?: ReactNode

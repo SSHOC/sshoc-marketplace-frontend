@@ -1,7 +1,7 @@
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
 import type { SharedPageProps } from '@/lib/core/app/types'
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/layouts/PageLayout.module.css'
 import { AuthHeader } from '@/lib/core/page/AuthHeader'
 import { PageFooter } from '@/lib/core/page/PageFooter'
@@ -18,7 +18,7 @@ export function PageLayout(props: PageLayoutProps): JSX.Element {
 
   return (
     <div className={css['page-layout']}>
-      <SkipLink>{t(['common', 'skip-to-main-content'])}</SkipLink>
+      <SkipLink>{t('skip-to-main-content')}</SkipLink>
       <PageHeader />
       <AuthHeader />
       {props.children}

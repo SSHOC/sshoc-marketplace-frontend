@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import type { ReactNode } from 'react'
 
 import { mockRouter } from '@/lib/cms/previews/create-mock-router'
-import { dictionary as common } from '@/messages/common/en'
+import { default as common } from '@/messages/common/en'
 import { defaultLocale } from '~/config/i18n.config'
 
 const locale = defaultLocale

@@ -4,10 +4,10 @@ import { useTextField } from '@react-aria/textfield'
 import { mergeProps } from '@react-aria/utils'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import type { AriaTextFieldProps } from '@react-types/textfield'
+import { useTranslations } from 'next-intl'
 import type { ChangeEvent, ForwardedRef } from 'react'
 import { forwardRef, Fragment, useRef, useState } from 'react'
 
-import { useTranslations } from 'next-intl'
 import type { ButtonProps } from '@/lib/core/ui/Button/Button'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { Field } from '@/lib/core/ui/Field/Field'
@@ -34,7 +34,7 @@ export const FileInput = forwardRef(function FileInput(
   const {
     fileTypes = ['all'],
     color = 'gradient',
-    label = t(['common', 'select-file']),
+    label = t('select-file'),
     multiple = false,
     onChange,
     /**

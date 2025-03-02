@@ -1,5 +1,6 @@
-import { useAuth } from '@/lib/core/auth/useAuth'
 import { useTranslations } from 'next-intl'
+
+import { useAuth } from '@/lib/core/auth/useAuth'
 
 interface MenuItemBase {
   id: string
@@ -31,13 +32,13 @@ export function useAccountMenuItems(): Array<MenuItem> {
   const items: Array<MenuItem> = [
     {
       id: 'account',
-      label: t(['common', 'pages', 'account']),
+      label: t('pages.account'),
       type: 'nav-link',
       href: `/account`,
     },
     {
       id: 'sign-out',
-      label: t(['common', 'auth', 'sign-out']),
+      label: t('auth.sign-out'),
       type: 'button',
       onPress() {
         signOut()

@@ -11,13 +11,13 @@ import { useTreeState } from '@react-stately/tree'
 import type { AriaMenuProps } from '@react-types/menu'
 import type { Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import type { HTMLAttributes, Key, RefObject } from 'react'
 import { Fragment, useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/page/AccountMenu.module.css'
 import menuStyles from '@/lib/core/page/NavigationMenu.module.css'
 import { Popover } from '@/lib/core/page/Popover'
@@ -77,8 +77,8 @@ export function AccountMenu(): JSX.Element {
         data-hovered={isHovered ? '' : undefined}
         data-state={state.isOpen ? 'expanded' : 'collapsed'}
       >
-        {t(['common', 'auth', 'account-menu-message'], {
-          values: { username: currentUser.data.displayName },
+        {t('auth.account-menu-message', {
+          username: currentUser.data.displayName,
         })}
       </button>
       {state.isOpen ? (
@@ -86,7 +86,7 @@ export function AccountMenu(): JSX.Element {
           <Popover isDismissable isOpen={state.isOpen} onClose={state.close} shouldCloseOnBlur>
             <DismissButton onDismiss={state.close} />
             <Menu
-              aria-label={t(['common', 'auth', 'account-menu'])}
+              aria-label={t('auth.account-menu')}
               autoFocus={state.focusStrategy}
               items={items}
               menuProps={menuProps}

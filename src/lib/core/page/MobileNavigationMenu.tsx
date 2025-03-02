@@ -2,12 +2,12 @@ import { OverlayContainer } from '@react-aria/overlays'
 import { createUrlSearchParams } from '@stefanprobst/request'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment, useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useTranslations } from 'next-intl'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { Disclosure } from '@/lib/core/page/Disclosure'
 import css from '@/lib/core/page/MobileNavigationMenu.module.css'
@@ -62,7 +62,7 @@ function NavigationMenu(): JSX.Element {
       <Button
         ref={triggerRef}
         {...triggerProps}
-        aria-label={t(['common', 'navigation-menu'])}
+        aria-label={t('navigation-menu')}
         color="gradient"
         onPress={state.toggle}
         style={{
@@ -76,14 +76,14 @@ function NavigationMenu(): JSX.Element {
         <OverlayContainer>
           <ModalDialog
             {...(overlayProps as any)}
-            aria-label={t(['common', 'navigation-menu'])}
+            aria-label={t('navigation-menu')}
             isOpen={state.isOpen}
             onClose={state.close}
             isDismissable
           >
             <header className={css['header']}>
               <div className={css['home-link']}>
-                <NavLink aria-label={t(['common', 'pages', 'home'])} href="/">
+                <NavLink aria-label={t('pages.home')} href="/">
                   <Image src={Logo} alt="" priority />
                 </NavLink>
               </div>
@@ -112,11 +112,11 @@ function NavigationMenu(): JSX.Element {
                       variant="nav-mobile-menu-link"
                       href={`/contact?${createUrlSearchParams({
                         email: currentUser.data?.email,
-                        subject: t(['common', 'report-issue']),
-                        message: t(['common', 'report-issue-message'], { values: { pathname } }),
+                        subject: t('report-issue'),
+                        message: t('report-issue-message', { pathname }),
                       })}`}
                     >
-                      {t(['common', 'report-issue'])}
+                      {t('report-issue')}
                     </NavLink>
                   </li>
                 </ul>
@@ -146,7 +146,7 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
   }
 
   if (!isSignedIn || currentUser.data == null) {
-    const item = { href: `/auth/sign-in`, label: t(['common', 'auth', 'sign-in']) }
+    const item = { href: `/auth/sign-in`, label: t('auth.sign-in') }
 
     return (
       <li className={css['nav-item']}>
@@ -157,15 +157,17 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
     )
   }
 
-  const items = [
-    { id: 'account', href: `/account`, label: t(['common', 'pages', 'account']) },
-  ] as Array<{ href: string; label: string; id: string }>
+  const items = [{ id: 'account', href: `/account`, label: t('pages.account') }] as Array<{
+    href: string
+    label: string
+    id: string
+  }>
 
   return (
     <li className={css['nav-item']}>
       <Disclosure
-        label={t(['common', 'auth', 'account-menu-message'], {
-          values: { username: currentUser.data.displayName },
+        label={t('auth.account-menu-message', {
+          username: currentUser.data.displayName,
         })}
         className={css['nav-link-disclosure-button']}
       >
@@ -181,7 +183,7 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
           })}
           <li className={css['nav-item']}>
             <Button onPress={onSignOut} variant="nav-mobile-menu-link-secondary">
-              {t(['common', 'auth', 'sign-out'])}
+              {t('auth.sign-out')}
             </Button>
           </li>
         </ul>
@@ -218,10 +220,7 @@ function BrowseNavLinks(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <Disclosure
-        label={t(['common', 'pages', 'browse'])}
-        className={css['nav-link-disclosure-button']}
-      >
+      <Disclosure label={t('pages.browse')} className={css['nav-link-disclosure-button']}>
         <ul role="list">
           {items.map((item) => {
             return (
@@ -244,10 +243,7 @@ function ContributeNavLinks(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <Disclosure
-        label={t(['common', 'pages', 'contribute'])}
-        className={css['nav-link-disclosure-button']}
-      >
+      <Disclosure label={t('pages.contribute')} className={css['nav-link-disclosure-button']}>
         <ul role="list">
           {items.map((item) => {
             return (
@@ -270,10 +266,7 @@ function AboutNavLinks(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <Disclosure
-        label={t(['common', 'pages', 'about'])}
-        className={css['nav-link-disclosure-button']}
-      >
+      <Disclosure label={t('pages.about')} className={css['nav-link-disclosure-button']}>
         <ul role="list">
           {items.map((item) => {
             return (
@@ -300,10 +293,7 @@ function CreateItemLinks(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <Disclosure
-        label={t(['common', 'create-new-items'])}
-        className={css['nav-link-disclosure-button']}
-      >
+      <Disclosure label={t('create-new-items')} className={css['nav-link-disclosure-button']}>
         <ul role="list">
           {items.map((item) => {
             return (

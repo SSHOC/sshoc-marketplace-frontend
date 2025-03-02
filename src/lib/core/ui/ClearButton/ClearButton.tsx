@@ -3,11 +3,11 @@ import { useFocusRing } from '@react-aria/focus'
 import { useHover } from '@react-aria/interactions'
 import { mergeProps } from '@react-aria/utils'
 import type { AriaButtonProps } from '@react-types/button'
+import { useTranslations } from 'next-intl'
 import type { CSSProperties, ElementType, ForwardedRef, Ref } from 'react'
 import { forwardRef, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ClearButton/ClearButton.module.css'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import CrossIcon from '@/lib/core/ui/icons/cross.svg?symbol-icon'
@@ -32,7 +32,7 @@ export const ClearButton = forwardRef(function ClearButton<T extends ElementType
   const t = useTranslations('common')
 
   const {
-    'aria-label': ariaLabel = t(['common', 'ui', 'clear']),
+    'aria-label': ariaLabel = t('ui.clear'),
     children = defaultIcon,
     preventFocus = false,
     style,

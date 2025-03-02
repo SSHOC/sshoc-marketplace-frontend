@@ -9,11 +9,11 @@ import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from '@re
 import type { AriaButtonProps } from '@react-types/button'
 import type { Placement } from '@react-types/overlays'
 import type { LoadingState } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useTranslations } from 'next-intl'
 import { ClearButton } from '@/lib/core/ui/ClearButton/ClearButton'
 import { Field } from '@/lib/core/ui/Field/Field'
 // import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
@@ -90,7 +90,6 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     defaultFilter: contains,
     defaultSelectedKey: undefined,
     onSelectionChange(key) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (key != null) {
         // @ts-expect-error Error in upstream type definitions.
         onSubmit?.(null, key)
@@ -188,7 +187,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
           renderEmptyState={() => {
             if (isAsync !== true) return null
 
-            return <span>{t(['common', 'ui', 'autocomplete', 'no-results'])}</span>
+            return <span>{t('ui.autocomplete.no-results')}</span>
           }}
           shouldSelectOnPressUp
           shouldUseVirtualFocus

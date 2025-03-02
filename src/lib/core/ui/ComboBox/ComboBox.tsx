@@ -17,11 +17,11 @@ import type {
   LoadingState,
   NecessityIndicator,
 } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ComboBox/ComboBox.module.css'
 import { Field } from '@/lib/core/ui/Field/Field'
 import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
@@ -213,8 +213,8 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
             return (
               <span>
                 {loadingState === 'loading'
-                  ? t(['common', 'ui', 'combobox', 'loading'])
-                  : t(['common', 'ui', 'combobox', 'no-results'])}
+                  ? t('ui.combobox.loading')
+                  : t('ui.combobox.no-results')}
               </span>
             )
           }}

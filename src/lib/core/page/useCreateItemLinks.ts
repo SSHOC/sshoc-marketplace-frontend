@@ -1,6 +1,7 @@
+import { useTranslations } from 'next-intl'
+
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useItemCategories } from '@/data/sshoc/hooks/item'
-import { useTranslations } from 'next-intl'
 import { itemRoutes as routes } from '@/lib/core/navigation/item-routes'
 import type { NavItems } from '@/lib/core/page/types'
 import { keys } from '@/lib/utils'
@@ -18,8 +19,8 @@ export function useCreateItemLinks(): NavItems | null {
     .map((category) => {
       return {
         id: category,
-        label: t(['common', 'create-new-item'], {
-          values: { item: t(['common', 'item-categories', category, 'one']) },
+        label: t('create-new-item', {
+          item: t(`item-categories.${category}.one`),
         }),
         href: routes.ItemCreatePage(category)(),
       }

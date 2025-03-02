@@ -75,7 +75,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
     <Fragment>
       <span>{field.description} </span>
       {/* @ts-expect-error Assume all possible property types have translation. */}
-      <span>{t(['authenticated', 'properties', propertyTypeId, 'description'])} </span>
+      <span>{t(`authenticated.properties.${propertyTypeId}.description`)} </span>
       <small>
         See{' '}
         {allowedVocabularies.map((vocabulary, index) => {

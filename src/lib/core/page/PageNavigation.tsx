@@ -1,10 +1,10 @@
 import { Item } from '@react-stately/collections'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import type { Key } from 'react'
 import { Fragment } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
-import { useTranslations } from 'next-intl'
 import { NavigationMenu } from '@/lib/core/page/NavigationMenu'
 import css from '@/lib/core/page/PageNavigation.module.css'
 import { useAboutNavItems } from '@/lib/core/page/useAboutNavItems'
@@ -66,7 +66,7 @@ function BrowseNavMenu(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu label={t(['common', 'pages', 'browse'])} items={items} onAction={onAction}>
+      <NavigationMenu label={t('pages.browse')} items={items} onAction={onAction}>
         {(item) => {
           const props = { href: item.href }
 
@@ -94,11 +94,7 @@ function ContributeNavMenu(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu
-        label={t(['common', 'pages', 'contribute'])}
-        items={items}
-        onAction={onAction}
-      >
+      <NavigationMenu label={t('pages.contribute')} items={items} onAction={onAction}>
         {(item) => {
           const props = { href: item.href }
 
@@ -126,7 +122,7 @@ function AboutNavMenu(): JSX.Element {
 
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu label={t(['common', 'pages', 'about'])} items={items} onAction={onAction}>
+      <NavigationMenu label={t('pages.about')} items={items} onAction={onAction}>
         {(item) => {
           const props = { href: item.href }
 

@@ -1,13 +1,15 @@
 import type { JwtPayload } from 'jwt-decode'
 import jwtDecode from 'jwt-decode'
+import { useFormatter, useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useTranslations } from 'next-intl'
 import { useToast } from '@/lib/core/toast/useToast'
 
 export function useAccessTokenExpirationTimer(): void {
-  const { t, formatDateTime } = useI18n<'common'>()
+  const t = useTranslations('common')
+  const format = useFormatter()
+
   const { session } = useAuth()
   const toast = useToast()
 
@@ -20,10 +22,10 @@ export function useAccessTokenExpirationTimer(): void {
     if (exp == null) return
 
     function onTokenTimeout() {
-      const message = t(['common', 'token-expiration-warning'], {
-        values: {
-          time: formatDateTime((exp /** seconds */ as number) * 1000, { timeStyle: 'medium' }),
-        },
+      const message = t('token-expiration-warning', {
+        time: format.dateTime(new Date((exp /** seconds */ as number) * 1000), {
+          timeStyle: 'medium',
+        }),
       })
       toast.warn(message)
     }
@@ -35,5 +37,5 @@ export function useAccessTokenExpirationTimer(): void {
     return () => {
       window.clearTimeout(timeout)
     }
-  }, [token, t, formatDateTime, toast])
+  }, [token, t, format, toast])
 }

@@ -1,8 +1,8 @@
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { NavLinkButton } from '@/components/common/NavLinkButton'
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useTranslations } from 'next-intl'
 import { AccountMenu } from '@/lib/core/page/AccountMenu'
 
 export function AuthButton(): JSX.Element {
@@ -23,7 +23,7 @@ export function AuthButton(): JSX.Element {
           '--button-border-radius': '0 0 var(--border-radius-md) var(--border-radius-md)',
         }}
       >
-        {t(['common', 'auth', 'sign-in'])}
+        {t('auth.sign-in')}
       </NavLinkButton>
     )
   }
