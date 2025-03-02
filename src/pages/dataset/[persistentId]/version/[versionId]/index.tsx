@@ -31,7 +31,6 @@ import type { Dataset } from '@/data/sshoc/api/dataset'
 import { useDataset, useDatasetVersion } from '@/data/sshoc/hooks/dataset'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
@@ -59,15 +58,13 @@ export namespace DatasetVersionPage {
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<DatasetVersionPage.PathParams>
 > {
-  const locales = getLocales()
-  const paths = locales.flatMap((locale) => {
-    const persistentIds: Array<Dataset['persistentId']> = []
-    return persistentIds.flatMap((persistentId) => {
-      const versionIds: Array<Dataset['id']> = []
-      return versionIds.map((versionId) => {
-        const params = { persistentId, versionId: String(versionId) }
-        return { locale, params }
-      })
+  const persistentIds: Array<Dataset['persistentId']> = []
+  const versionIds: Array<Dataset['id']> = []
+
+  const paths = persistentIds.flatMap((persistentId) => {
+    return versionIds.map((versionId) => {
+      const params = { persistentId, versionId: String(versionId) }
+      return { params }
     })
   })
 

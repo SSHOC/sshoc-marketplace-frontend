@@ -34,7 +34,6 @@ import { keys, useTool } from '@/data/sshoc/hooks/tool-or-service'
 import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent, SharedPageProps } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
@@ -59,13 +58,11 @@ export namespace ToolOrServicePage {
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<ToolOrServicePage.PathParams>
 > {
-  const locales = getLocales()
-  const paths = locales.flatMap((locale) => {
-    const persistentIds: Array<Tool['persistentId']> = []
-    return persistentIds.map((persistentId) => {
-      const params = { persistentId }
-      return { locale, params }
-    })
+  const persistentIds: Array<Tool['persistentId']> = []
+
+  const paths = persistentIds.map((persistentId) => {
+    const params = { persistentId }
+    return { params }
   })
 
   return {

@@ -14,7 +14,6 @@ import type { ItemFacet } from '@/data/sshoc/api/item'
 import { itemFacets } from '@/data/sshoc/api/item'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
@@ -33,12 +32,9 @@ export namespace BrowsePage {
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult<BrowsePage.PathParams>> {
-  const locales = getLocales()
-  const paths = locales.flatMap((locale) => {
-    return itemFacets.map((id) => {
-      const params = { id }
-      return { locale, params }
-    })
+  const paths = itemFacets.map((id) => {
+    const params = { id }
+    return { params }
   })
 
   return {

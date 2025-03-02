@@ -17,7 +17,6 @@ import { useTrainingMaterialHistory } from '@/data/sshoc/hooks/training-material
 import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
@@ -42,13 +41,11 @@ export namespace TrainingMaterialHistoryPage {
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<TrainingMaterialHistoryPage.PathParams>
 > {
-  const locales = getLocales()
-  const paths = locales.flatMap((locale) => {
-    const persistentIds: Array<TrainingMaterial['persistentId']> = []
-    return persistentIds.map((persistentId) => {
-      const params = { persistentId }
-      return { locale, params }
-    })
+  const persistentIds: Array<TrainingMaterial['persistentId']> = []
+
+  const paths = persistentIds.map((persistentId) => {
+    const params = { persistentId }
+    return { params }
   })
 
   return {

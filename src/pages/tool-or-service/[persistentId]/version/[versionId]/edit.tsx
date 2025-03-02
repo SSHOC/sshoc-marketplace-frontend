@@ -21,7 +21,6 @@ import { useTool, useToolVersion } from '@/data/sshoc/hooks/tool-or-service'
 import type { PageComponent } from '@/lib/core/app/types'
 import { FORM_ERROR } from '@/lib/core/form/Form'
 import { getLocale } from '@/lib/core/i18n/getLocale'
-import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
@@ -48,15 +47,13 @@ export namespace EditToolOrServiceVersionPage {
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<EditToolOrServiceVersionPage.PathParams>
 > {
-  const locales = getLocales()
-  const paths = locales.flatMap((locale) => {
-    const persistentIds: Array<Tool['persistentId']> = []
-    return persistentIds.flatMap((persistentId) => {
-      const versionIds: Array<Tool['id']> = []
-      return versionIds.map((versionId) => {
-        const params = { persistentId, versionId: String(versionId) }
-        return { locale, params }
-      })
+  const persistentIds: Array<Tool['persistentId']> = []
+  const versionIds: Array<Tool['id']> = []
+
+  const paths = persistentIds.flatMap((persistentId) => {
+    return versionIds.map((versionId) => {
+      const params = { persistentId, versionId: String(versionId) }
+      return { params }
     })
   })
 
