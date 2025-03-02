@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { ActorsPage } from '@/pages/account/actors.page'
+import type { ActorsPage } from '@/pages/account/actors'
 
 export interface UseActorSearchResult {
   getSearchActorsLink: (query: ActorsPage.SearchParamsInput) => {

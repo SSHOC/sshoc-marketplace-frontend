@@ -1,3 +1,5 @@
+// import { useQueryKeys } from '@/data/sshoc/lib/useQueryKeys'
+import { useTranslations } from 'next-intl'
 import type { FormEvent, Key } from 'react'
 import { Fragment } from 'react'
 
@@ -26,8 +28,6 @@ import {
   useUpdateUserStatus,
 } from '@/data/sshoc/hooks/user'
 import { PASSED_IN_VIA_MUTATION_FUNCTION } from '@/data/sshoc/lib/const'
-// import { useQueryKeys } from '@/data/sshoc/lib/useQueryKeys'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { Item } from '@/lib/core/ui/Collection/Item'
 import { Select } from '@/lib/core/ui/Select/Select'
@@ -39,7 +39,7 @@ export interface UserSearchResultProps {
 export function UserSearchResult(props: UserSearchResultProps): JSX.Element {
   const { user } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
 
   return (
     <Fragment>
@@ -47,15 +47,13 @@ export function UserSearchResult(props: UserSearchResultProps): JSX.Element {
         <SearchResultTitle>{user.displayName}</SearchResultTitle>
         <SearchResultMeta>
           <MetadataValue size="sm">
-            <MetadataLabel size="sm">
-              {t(['authenticated', 'users', 'registration-date'])}:
-            </MetadataLabel>
+            <MetadataLabel size="sm">{t('users.registration-date')}:</MetadataLabel>
             <Timestamp dateTime={user.registrationDate} />
           </MetadataValue>
         </SearchResultMeta>
         <SearchResultContent>
           <MetadataValue>
-            <MetadataLabel>{t(['authenticated', 'users', 'email'])}:</MetadataLabel>
+            <MetadataLabel>{t('users.email')}:</MetadataLabel>
             <a href={`mailto:${user.email}`}>{user.email}</a>
           </MetadataValue>
         </SearchResultContent>
@@ -75,7 +73,7 @@ interface UserRoleSelectProps {
 function UserRoleSelect(props: UserRoleSelectProps): JSX.Element {
   const { user } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const userRoleIds = userRoles.map((role) => {
     return { id: role, label: role }
   })
@@ -86,13 +84,13 @@ function UserRoleSelect(props: UserRoleSelectProps): JSX.Element {
   const meta: MutationMetadata<UpdateUserRole.Response, Error> = {
     messages: {
       mutate() {
-        return t(['authenticated', 'users', 'update-user-role-pending'])
+        return t('users.update-user-role-pending')
       },
       success() {
-        return t(['authenticated', 'users', 'update-user-role-success'])
+        return t('users.update-user-role-success')
       },
       error() {
-        return t(['authenticated', 'users', 'update-user-role-error'])
+        return t('users.update-user-role-error')
       },
     },
   }
@@ -142,7 +140,7 @@ function UserRoleSelect(props: UserRoleSelectProps): JSX.Element {
         items={userRoleIds}
         isDisabled={updateUserRole.isLoading}
         loadingState={updateUserRole.isLoading ? 'loading' : undefined}
-        label={t(['authenticated', 'users', 'role'])}
+        label={t('users.role')}
         onSelectionChange={onUpdateUserRole}
         selectedKey={user.role}
         size="sm"
@@ -162,7 +160,7 @@ interface UserStatusSelectProps {
 function UserStatusSelect(props: UserStatusSelectProps): JSX.Element {
   const { user } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const items = userStatus.map((status) => {
     return { id: status, label: status }
   })
@@ -173,13 +171,13 @@ function UserStatusSelect(props: UserStatusSelectProps): JSX.Element {
   const meta: MutationMetadata<UpdateUserStatus.Response, Error> = {
     messages: {
       mutate() {
-        return t(['authenticated', 'users', 'update-user-status-pending'])
+        return t('users.update-user-status-pending')
       },
       success() {
-        return t(['authenticated', 'users', 'update-user-status-success'])
+        return t('users.update-user-status-success')
       },
       error() {
-        return t(['authenticated', 'users', 'update-user-status-error'])
+        return t('users.update-user-status-error')
       },
     },
   }
@@ -229,7 +227,7 @@ function UserStatusSelect(props: UserStatusSelectProps): JSX.Element {
         items={items}
         isDisabled={updateUserStatus.isLoading}
         loadingState={updateUserStatus.isLoading ? 'loading' : undefined}
-        label={t(['authenticated', 'users', 'status'])}
+        label={t('users.status')}
         onSelectionChange={onUpdateUserStatus}
         selectedKey={user.status}
         size="sm"

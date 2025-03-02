@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { LinkButton } from '@/components/common/LinkButton'
@@ -14,7 +15,6 @@ import {
 import { useDeleteWorkflow, useWorkflow } from '@/data/sshoc/hooks/workflow'
 import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
 import { AccessControl } from '@/lib/core/auth/AccessControl'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 import type { MutationMetadata, QueryMetadata } from '@/lib/core/query/types'
 import { Button } from '@/lib/core/ui/Button/Button'
@@ -27,7 +27,7 @@ export interface ItemControlProps {
 export function ItemControls(props: ItemControlProps): JSX.Element {
   const { category, persistentId } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
     <AccessControl>
@@ -38,7 +38,7 @@ export function ItemControls(props: ItemControlProps): JSX.Element {
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'history'])}
+          {t('controls.history')}
         </LinkButton>
         <AccessControl roles={['administrator']}>
           <DeleteItemButton category={category} persistentId={persistentId} />
@@ -56,7 +56,7 @@ interface EditItemMenuButtonProps {
 function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
   const { category, persistentId } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const meta: QueryMetadata = {
     messages: {
@@ -76,7 +76,7 @@ function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
         color="secondary"
         size="xs"
       >
-        {t(['common', 'controls', 'edit'])}
+        {t('controls.edit')}
       </LinkButton>
       {suggested.data != null && suggested.data.status === 'suggested' ? (
         <LinkButton
@@ -87,7 +87,7 @@ function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'edit-latest-suggestion'])}
+          {t('controls.edit-latest-suggestion')}
         </LinkButton>
       ) : null}
       {draft.data != null && draft.data.status === 'draft' ? (
@@ -102,7 +102,7 @@ function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'edit-latest-draft'])}
+          {t('controls.edit-latest-draft')}
         </LinkButton>
       ) : null}
     </Fragment>
@@ -117,21 +117,21 @@ interface DeleteItemButtonProps {
 function DeleteItemButton(props: DeleteItemButtonProps): JSX.Element {
   const { category, persistentId } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const router = useRouter()
 
-  const label = t(['common', 'item-categories', category, 'one'])
+  const label = t(`item-categories.${category}.one`)
 
   const meta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'controls', 'delete-item-pending'], { values: { category: label } })
+        return t('controls.delete-item-pending', { category: label })
       },
       success() {
-        return t(['common', 'controls', 'delete-item-success'], { values: { category: label } })
+        return t('controls.delete-item-success', { category: label })
       },
       error() {
-        return t(['common', 'controls', 'delete-item-error'], { values: { category: label } })
+        return t('controls.delete-item-error', { category: label })
       },
     },
   }
@@ -148,7 +148,7 @@ function DeleteItemButton(props: DeleteItemButtonProps): JSX.Element {
 
   return (
     <Button color="negative" onPress={onDelete} size="xs">
-      {t(['common', 'controls', 'delete'])}
+      {t('controls.delete')}
     </Button>
   )
 }

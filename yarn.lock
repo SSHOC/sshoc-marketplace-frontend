@@ -1725,7 +1725,7 @@
     "@react-types/overlays" "^3.8.12"
     "@react-types/shared" "^3.27.0"
 
-"@stefanprobst/assert@^1.0.1", "@stefanprobst/assert@^1.0.2", "@stefanprobst/assert@^1.0.3":
+"@stefanprobst/assert@^1.0.1", "@stefanprobst/assert@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@stefanprobst/assert/-/assert-1.0.3.tgz#a60e49dbdd7280582950120f54aad76cfdab93cf"
   integrity sha512-3FkU7sHtfCpgO3+YqNWDRc3b220LO/ZtdxUtiVhP0+2xqZ+E9LNe3hXaiFeVCeSUmi3y8V333L4+x6ME2vzpHg==
@@ -1797,13 +1797,6 @@
   integrity sha512-HZ/zmBJm8JmfsN7TpTI3MyMDXqwCyUfV8NLRQxR4gsBGU3uwps/MuVd7SlXonwoPK4pHlUVONtiqevxBZla6cw==
   dependencies:
     "@stefanprobst/assert" "^1.0.1"
-
-"@stefanprobst/next-i18n@legacy":
-  version "1.0.11-legacy"
-  resolved "https://registry.npmjs.org/@stefanprobst/next-i18n/-/next-i18n-1.0.11-legacy.tgz#6f53040197ba36987a4375d78e9a59c02d2606aa"
-  integrity sha512-S4ohTqW8+VNhWMjVL4vkb+8vwdcCVY8xJmkDcXkuHl5MGxTl1kUqkyMnCO3IpqoMeA8upClFO7MHO5JG8AchbQ==
-  dependencies:
-    "@stefanprobst/assert" "^1.0.2"
 
 "@stefanprobst/next-image-loader@^1.0.3":
   version "1.0.3"

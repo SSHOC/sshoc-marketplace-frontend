@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -14,7 +15,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -37,21 +37,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<CreateWorkf
 }
 
 export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const { page, setPage } = useWorkflowFormPage()
 
   const category = 'workflow'
-  const label = t(['common', 'item-categories', category, 'one'])
-  const title = t(['authenticated', 'forms', 'create-item'], {
-    values: {
-      item:
-        page.type === 'workflow'
-          ? label
-          : page.type === 'steps'
-            ? t(['common', 'item-categories', 'step', 'other'])
-            : t(['common', 'item-categories', 'step', 'one']),
-    },
+  const label = t(`common.item-categories.${category}.one`)
+  const title = t('authenticated.forms.create-item', {
+    item:
+      page.type === 'workflow'
+        ? label
+        : page.type === 'steps'
+          ? t('common.item-categories.step.other')
+          : t('common.item-categories.step.one'),
   })
 
   return (
@@ -75,8 +73,6 @@ export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JS
 }
 
 const Page: PageComponent<CreateWorkflowPage.Props> = CreateWorkflowPage
-
-Page.getLayout = undefined
 
 Page.isPageAccessible = function isPageAccessible(user) {
   return ['administrator', 'moderator', 'contributor'].includes(user.role)

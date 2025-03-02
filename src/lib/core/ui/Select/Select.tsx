@@ -11,7 +11,7 @@ import type { ForwardedRef } from 'react'
 import { forwardRef, Fragment, useCallback, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { Field } from '@/lib/core/ui/Field/Field'
 import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
@@ -87,7 +87,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     validationState,
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const state = useSelectState<T>(props)
   const popoverRef = useRef<HTMLDivElement>(null)

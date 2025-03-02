@@ -7,7 +7,7 @@ import { Fragment, useEffect, useRef } from 'react'
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { Disclosure } from '@/lib/core/page/Disclosure'
 import css from '@/lib/core/page/MobileNavigationMenu.module.css'
@@ -34,7 +34,7 @@ export function MobileNavigationMenu(): JSX.Element {
 }
 
 function NavigationMenu(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { isSignedIn } = useAuth()
   const state = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -136,7 +136,7 @@ interface AuthLinksProps {
 function AuthLinks(props: AuthLinksProps): JSX.Element {
   const { onClose } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { isSignedIn, signOut } = useAuth()
   const currentUser = useCurrentUser()
 
@@ -213,7 +213,7 @@ function ItemCategoryNavLinks(): JSX.Element {
 }
 
 function BrowseNavLinks(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useBrowseNavItems()
 
   return (
@@ -239,7 +239,7 @@ function BrowseNavLinks(): JSX.Element {
 }
 
 function ContributeNavLinks(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useContributeNavItems()
 
   return (
@@ -265,7 +265,7 @@ function ContributeNavLinks(): JSX.Element {
 }
 
 function AboutNavLinks(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useAboutNavItems()
 
   return (
@@ -291,7 +291,7 @@ function AboutNavLinks(): JSX.Element {
 }
 
 function CreateItemLinks(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useCreateItemLinks()
 
   if (items == null) {

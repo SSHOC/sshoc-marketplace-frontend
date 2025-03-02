@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { DraftItemsPage } from '@/pages/account/draft-items.page'
+import type { DraftItemsPage } from '@/pages/account/draft-items'
 
 export interface UseDraftItemsSearchResult {
   getSearchDraftItemsLink: (query: DraftItemsPage.SearchParamsInput) => {

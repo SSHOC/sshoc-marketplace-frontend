@@ -4,7 +4,7 @@ import type { CSSProperties, ForwardedRef } from 'react'
 import { forwardRef, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/CloseButton/CloseButton.module.css'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import CloseIcon from '@/lib/core/ui/icons/cross.svg?symbol-icon'
@@ -29,7 +29,7 @@ export const CloseButton = forwardRef(function CloseButton(
 ): JSX.Element {
   const { size = 'md', style } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const buttonRef = useRef<HTMLButtonElement>(null)
   const { buttonProps } = useButton(
     {

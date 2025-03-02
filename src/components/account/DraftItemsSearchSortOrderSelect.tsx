@@ -1,15 +1,15 @@
 import { Item } from '@react-stately/collections'
+import { useTranslations } from 'next-intl'
 import type { Key } from 'react'
 
 import { useDraftItemsSearch } from '@/components/account/useDraftItemsSearch'
 import { useDraftItemsSearchFilters } from '@/components/account/useDraftItemsSearchFilters'
 import type { ItemDraftSortOrder } from '@/data/sshoc/api/item'
 import { itemDraftSortOrders } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Select } from '@/lib/core/ui/Select/Select'
 
 export function DraftItemsSearchSortOrderSelect(): JSX.Element {
-  const { t } = useI18n<'authenticated'>()
+  const t = useTranslations('authenticated')
   const searchFilters = useDraftItemsSearchFilters()
   const sortOrder = searchFilters.order
   const { searchDraftItems } = useDraftItemsSearch()
@@ -17,8 +17,8 @@ export function DraftItemsSearchSortOrderSelect(): JSX.Element {
   const items = itemDraftSortOrders.map((id) => {
     return {
       id,
-      label: t(['authenticated', 'draft-items', 'sort-by'], {
-        values: { order: t(['authenticated', 'draft-items', 'sort-orders', id]) },
+      label: t('draft-items.sort-by', {
+        order: t(`draft-items.sort-orders.${id}`),
       }),
     }
   })
@@ -30,7 +30,7 @@ export function DraftItemsSearchSortOrderSelect(): JSX.Element {
 
   return (
     <Select
-      aria-label={t(['authenticated', 'draft-items', 'sort-order'])}
+      aria-label={t('draft-items.sort-order')}
       items={items}
       onSelectionChange={onChange}
       selectedKey={sortOrder}

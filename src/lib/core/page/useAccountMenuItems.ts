@@ -1,5 +1,5 @@
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 
 interface MenuItemBase {
   id: string
@@ -25,7 +25,7 @@ interface MenuItemButton extends MenuItemBase {
 type MenuItem = MenuItemButton | MenuItemLink | MenuItemNavLink
 
 export function useAccountMenuItems(): Array<MenuItem> {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { signOut } = useAuth()
 
   const items: Array<MenuItem> = [

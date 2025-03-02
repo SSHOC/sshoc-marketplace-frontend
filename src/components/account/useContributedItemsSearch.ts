@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { ContributedItemsPage } from '@/pages/account/contributed-items.page'
+import type { ContributedItemsPage } from '@/pages/account/contributed-items'
 
 export interface UseContributedItemsSearchResult {
   getSearchContributedItemsLink: (query: ContributedItemsPage.SearchParamsInput) => {

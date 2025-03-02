@@ -334,6 +334,7 @@ const messages = {
     },
   },
   users: {
+    'search-users': 'Search users',
     'sort-by': 'Sort by {{order}}',
     'sort-orders': {
       username: 'Username',

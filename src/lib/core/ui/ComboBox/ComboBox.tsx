@@ -21,7 +21,7 @@ import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ComboBox/ComboBox.module.css'
 import { Field } from '@/lib/core/ui/Field/Field'
 import { FieldButton } from '@/lib/core/ui/FieldButton/FieldButton'
@@ -92,7 +92,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
     size = 'md',
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const isAsync = loadingState != null
   const popoverRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)

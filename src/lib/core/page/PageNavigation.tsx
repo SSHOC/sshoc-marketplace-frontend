@@ -4,7 +4,7 @@ import type { Key } from 'react'
 import { Fragment } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { NavigationMenu } from '@/lib/core/page/NavigationMenu'
 import css from '@/lib/core/page/PageNavigation.module.css'
 import { useAboutNavItems } from '@/lib/core/page/useAboutNavItems'
@@ -50,7 +50,7 @@ function ItemCategoryNavLinks(): JSX.Element {
 }
 
 function BrowseNavMenu(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useBrowseNavItems()
   const router = useRouter()
 
@@ -78,7 +78,7 @@ function BrowseNavMenu(): JSX.Element {
 }
 
 function ContributeNavMenu(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useContributeNavItems()
   const router = useRouter()
 
@@ -110,7 +110,7 @@ function ContributeNavMenu(): JSX.Element {
 }
 
 function AboutNavMenu(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const items = useAboutNavItems()
   const router = useRouter()
 

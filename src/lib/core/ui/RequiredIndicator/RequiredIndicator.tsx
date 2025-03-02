@@ -1,6 +1,6 @@
 import type { NecessityIndicator } from '@react-types/shared'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import AsteriskIcon from '@/lib/core/ui/icons/asterisk.svg?symbol-icon'
 
@@ -18,7 +18,7 @@ export function RequiredIndicator(props: RequiredIndicatorProps): JSX.Element | 
     includeNecessityIndicatorInAccessibilityName = false,
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   if (necessityIndicator === 'label') {
     const necessityLabel = isRequired

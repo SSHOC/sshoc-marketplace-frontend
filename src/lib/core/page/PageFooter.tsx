@@ -1,9 +1,9 @@
 import { NavLink } from '@/components/common/NavLink'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/page/PageFooter.module.css'
 
 export function PageFooter(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const links = [
     { label: t(['common', 'pages', 'about']), href: '/about/service' },

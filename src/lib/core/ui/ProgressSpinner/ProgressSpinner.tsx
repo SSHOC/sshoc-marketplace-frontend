@@ -3,7 +3,7 @@ import type { AriaLabelingProps, DOMProps } from '@react-types/shared'
 import type { CSSProperties, ForwardedRef } from 'react'
 import { forwardRef } from 'react'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css'
 
 export interface ProgressSpinnerStyleProps {
@@ -22,7 +22,7 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
 ): JSX.Element {
   const { 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledby, size = 'md', style } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const { progressBarProps } = useProgressBar({
     ...props,

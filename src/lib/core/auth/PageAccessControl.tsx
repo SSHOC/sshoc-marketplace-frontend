@@ -5,7 +5,7 @@ import { useCurrentUser } from '@/data/sshoc/hooks/auth'
 import { useAccessTokenExpirationTimer } from '@/lib/core/auth/useAccessTokenExpirationTimer'
 import { useAuth } from '@/lib/core/auth/useAuth'
 import { AuthorizationError } from '@/lib/core/error/AuthorizationError'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
@@ -15,7 +15,7 @@ export interface PageAccessControlProps {
 }
 
 export function PageAccessControl(props: PageAccessControlProps): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { isPageAccessible, isInitialising, isValidating, isSignedIn } = useAuth()
   const currentUser = useCurrentUser()
   useAccessTokenExpirationTimer()

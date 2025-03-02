@@ -10,7 +10,7 @@ import type { CSSProperties, ForwardedRef, HTMLAttributes, ReactNode } from 'rea
 import { forwardRef, useMemo, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ListBox/ListBoxBase.module.css'
 import { ListBoxContext } from '@/lib/core/ui/ListBox/ListBoxContext'
 import { ListBoxOption } from '@/lib/core/ui/ListBox/ListBoxOption'
@@ -81,7 +81,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
     transitionDuration = 0,
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const listBoxRef = useRef<HTMLDivElement>(null)
   const { listBoxProps } = useListBox<T>(
     {

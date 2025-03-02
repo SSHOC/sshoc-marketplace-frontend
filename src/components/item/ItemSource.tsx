@@ -1,9 +1,9 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ItemSourceProps {
   source: Item['source']
@@ -13,7 +13,7 @@ export interface ItemSourceProps {
 export function ItemSource(props: ItemSourceProps): JSX.Element {
   const { source, id } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   if (source == null) {
     return <Fragment />
@@ -22,10 +22,10 @@ export function ItemSource(props: ItemSourceProps): JSX.Element {
   return (
     <div>
       <dt>
-        <VisuallyHidden>{t(['common', 'item', 'source', 'other'])}</VisuallyHidden>
+        <VisuallyHidden>{t('item.source.other')}</VisuallyHidden>
       </dt>
       <dd className={css['value-group']}>
-        <span className={css['value-group-label']}>{t(['common', 'item', 'source', 'one'])}:</span>
+        <span className={css['value-group-label']}>{t('item.source.one')}:</span>
         <div className={css['value-group-items']}>
           <a
             href={id != null ? source.urlTemplate.replace('{source-item-id}', id) : undefined}

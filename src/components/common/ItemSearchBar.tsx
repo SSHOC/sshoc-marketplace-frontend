@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 
@@ -5,7 +6,6 @@ import css from '@/components/common/ItemSearchBar.module.css'
 import { ItemSearchTermAutocomplete } from '@/components/common/ItemSearchTermAutocomplete'
 import { useSearchItems } from '@/components/common/useSearchItems'
 import { useSearchFilters } from '@/components/search/useSearchFilters'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { isNonEmptyString } from '@/lib/utils'
 
@@ -22,7 +22,7 @@ interface ItemSearchFormProps {
 function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
   const { initialItemSearchTerm } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { searchItems } = useSearchItems()
   const [itemSearchTerm, setItemSearchTerm] = useState(initialItemSearchTerm ?? '')
 
@@ -42,7 +42,7 @@ function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
       method="get"
       action="/search"
       onSubmit={onSubmit}
-      aria-label={t(['common', 'search', 'search-items'])}
+      aria-label={t('search.search-items')}
       className={css['container']}
     >
       <ItemSearchTermAutocomplete
@@ -51,7 +51,7 @@ function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
         size="sm"
       />
       <Button color="gradient" size="sm" type="submit">
-        {t(['common', 'search', 'submit-search-term'])}
+        {t('search.submit-search-term')}
       </Button>
     </form>
   )

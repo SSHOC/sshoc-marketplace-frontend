@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import type { SharedPageProps } from '@/lib/core/app/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/layouts/PageLayout.module.css'
 import { AuthHeader } from '@/lib/core/page/AuthHeader'
 import { PageFooter } from '@/lib/core/page/PageFooter'
@@ -14,7 +14,7 @@ export interface PageLayoutProps {
 }
 
 export function PageLayout(props: PageLayoutProps): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
     <div className={css['page-layout']}>

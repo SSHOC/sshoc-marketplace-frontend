@@ -1,4 +1,5 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 
 import { FormSection } from '@/components/common/FormSection'
 import { FormSectionTitle } from '@/components/common/FormSectionTitle'
@@ -9,7 +10,6 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { ItemsDiff } from '@/data/sshoc/api/item'
 import { FormTextArea } from '@/lib/core/form/FormTextArea'
 import { FormTextField } from '@/lib/core/form/FormTextField'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { TextArea } from '@/lib/core/ui/TextField/TextArea'
 import { TextField } from '@/lib/core/ui/TextField/TextField'
 
@@ -20,12 +20,12 @@ export interface MainReviewFormSectionProps {
 export function MainReviewFormSection(props: MainReviewFormSectionProps): JSX.Element {
   const { fields } = props.formFields
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
 
   return (
     <FormSection>
       <VisuallyHidden>
-        <FormSectionTitle>{t(['authenticated', 'forms', 'main-section'])}</FormSectionTitle>
+        <FormSectionTitle>{t('forms.main-section')}</FormSectionTitle>
       </VisuallyHidden>
 
       <ReviewField<ItemsDiff['item']['label']>

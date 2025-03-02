@@ -1,6 +1,7 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { Alert } from '@/components/common/Alert'
@@ -33,7 +34,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
@@ -103,10 +103,10 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
       usePublication({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const publication = _publication.data
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const category = publication?.category ?? 'publication'
-  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(`common.item-categories.${category}.one`)
   const label = publication?.label ?? categoryLabel
 
   if (router.isFallback || publication == null) {
@@ -125,10 +125,10 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
   }
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('common.pages.home') },
     {
       href: `/search?${createUrlSearchParams({ categories: [publication.category], order: ['label'] })}`,
-      label: t(['common', 'item-categories', category, 'other']),
+      label: t(`common.item-categories.${category}.other`),
     },
     {
       href: `/publication/${persistentId}/versions/${versionId}`,
@@ -149,11 +149,9 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
         <ItemVersionScreenLayout>
           <BackgroundImage />
           <Alert color="notice">
-            {t(['authenticated', 'item-status-alert'], {
-              values: {
-                category: categoryLabel,
-                status: t(['common', 'item-status', publication.status]),
-              },
+            {t('authenticated.item-status-alert', {
+              category: categoryLabel,
+              status: t(`common.item-status.${publication.status}`),
             })}
           </Alert>
           <ScreenHeader>

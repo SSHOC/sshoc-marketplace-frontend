@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -18,7 +19,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -42,13 +42,13 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<ContactPage
 }
 
 export default function ContactPage(_props: ContactPage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'contact'])
+  const title = t('pages.contact')
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
-    { href: '/contact', label: t(['common', 'pages', 'contact']) },
+    { href: '/', label: t('pages.home') },
+    { href: '/contact', label: t('pages.contact') },
   ]
 
   return (

@@ -2,11 +2,11 @@ import { Fragment } from 'react'
 
 import { NavLinkButton } from '@/components/common/NavLinkButton'
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { AccountMenu } from '@/lib/core/page/AccountMenu'
 
 export function AuthButton(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { isSignedIn, isSignedOut } = useAuth()
 
   if (isSignedIn) {

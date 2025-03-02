@@ -1,6 +1,7 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { Alert } from '@/components/common/Alert'
@@ -34,7 +35,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
@@ -104,10 +104,10 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
       useWorkflow({ persistentId, draft: true }, undefined, { enabled: router.isReady })
   const workflow = _workflow.data
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const category = workflow?.category ?? 'workflow'
-  const categoryLabel = t(['common', 'item-categories', category, 'one'])
+  const categoryLabel = t(`common.item-categories.${category}.one`)
   const label = workflow?.label ?? categoryLabel
 
   if (router.isFallback || workflow == null) {
@@ -126,10 +126,10 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
   }
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('common.pages.home') },
     {
       href: `/search?${createUrlSearchParams({ categories: [workflow.category], order: ['label'] })}`,
-      label: t(['common', 'item-categories', category, 'other']),
+      label: t(`common.item-categories.${category}.other`),
     },
     {
       href: `/workflow/${workflow.persistentId}/versions/${versionId}`,
@@ -150,11 +150,9 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): J
         <WorkflowVersionScreenLayout>
           <BackgroundImage />
           <Alert color="notice">
-            {t(['authenticated', 'item-status-alert'], {
-              values: {
-                category: categoryLabel,
-                status: t(['common', 'item-status', workflow.status]),
-              },
+            {t('authenticated.item-status-alert', {
+              category: categoryLabel,
+              status: t(`common.item-status.${workflow.status}`),
             })}
           </Alert>
           <ScreenHeader>

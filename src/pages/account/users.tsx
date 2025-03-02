@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { AccountScreenWithoutFiltersLayout } from '@/components/account/AccountScreenWithoutFiltersLayout'
@@ -16,7 +17,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -41,19 +41,19 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<UsersPage.P
 }
 
 export default function UsersPage(_props: UsersPage.Props): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
-  const title = t(['authenticated', 'pages', 'users'])
+  const title = t('authenticated.pages.users')
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('common.pages.home') },
     {
       href: `/account`,
-      label: t(['authenticated', 'pages', 'account']),
+      label: t('authenticated.pages.account'),
     },
     {
       href: `/account/users`,
-      label: t(['authenticated', 'pages', 'users']),
+      label: t('authenticated.pages.users'),
     },
   ]
 

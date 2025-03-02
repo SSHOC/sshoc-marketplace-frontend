@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { FormRecordEditButton } from '@/components/common/FormRecordEditButton'
 import { FormRecordRemoveButton } from '@/components/common/FormRecordRemoveButton'
 import { SearchResult } from '@/components/common/SearchResult'
@@ -5,7 +7,6 @@ import { SearchResultControls } from '@/components/common/SearchResultControls'
 import { SearchResultTitle } from '@/components/common/SearchResultTitle'
 import type { WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
 import { useFieldState } from '@/lib/core/form/useFieldState'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import TriangleIcon from '@/lib/core/ui/icons/triangle.svg?symbol-icon'
@@ -24,7 +25,7 @@ export interface WorkflowStepPreviewProps {
 export function WorkflowStepPreview(props: WorkflowStepPreviewProps): JSX.Element {
   const { name, index, onEdit, onRemove, onMoveUp, onMoveDown, isFirst, isLast } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const step = useFieldState<WorkflowStepInput>(name).input.value
   const position = String(index + 1)
 
@@ -35,28 +36,28 @@ export function WorkflowStepPreview(props: WorkflowStepPreviewProps): JSX.Elemen
         {!isFirst ? (
           <ButtonLink onPress={onMoveUp}>
             <Icon icon={TriangleIcon} rotation="half" />
-            {t(['authenticated', 'controls', 'move-up'])}
+            {t('controls.move-up')}
           </ButtonLink>
         ) : null}
         {!isLast ? (
           <ButtonLink onPress={onMoveDown}>
             <Icon icon={TriangleIcon} />
-            {t(['authenticated', 'controls', 'move-down'])}
+            {t('controls.move-down')}
           </ButtonLink>
         ) : null}
         <FormRecordEditButton
-          aria-label={t(['authenticated', 'forms', 'edit-workflow-step'], { values: { position } })}
+          aria-label={t('forms.edit-workflow-step', { position })}
           onPress={onEdit}
         >
-          {t(['authenticated', 'controls', 'edit'])}
+          {t('controls.edit')}
         </FormRecordEditButton>
         <FormRecordRemoveButton
-          aria-label={t(['authenticated', 'forms', 'remove-workflow-step'], {
-            values: { position },
+          aria-label={t('forms.remove-workflow-step', {
+            position,
           })}
           onPress={onRemove}
         >
-          {t(['authenticated', 'controls', 'delete'])}
+          {t('controls.delete')}
         </FormRecordRemoveButton>
       </SearchResultControls>
     </SearchResult>

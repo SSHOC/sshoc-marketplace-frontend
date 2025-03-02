@@ -14,7 +14,7 @@ import {
   validateOAuthToken,
 } from '@/data/sshoc/api/auth'
 import type { PageComponent } from '@/lib/core/app/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { assert, createSiteUrl, isNonEmptyString } from '@/lib/utils'
@@ -140,7 +140,7 @@ export interface AuthProviderProps {
 export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const { onSignIn, onSignOut, isPageAccessible } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const {
     session,
     signOut: _signOut,

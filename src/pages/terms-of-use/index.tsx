@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import * as path from 'path'
 import { Fragment } from 'react'
 import { fileURLToPath } from 'url'
@@ -20,7 +21,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
@@ -51,13 +51,13 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<TermsOfUseP
 }
 
 export default function TermsOfUsePage(props: TermsOfUsePage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'terms-of-use'])
+  const title = t('pages.terms-of-use')
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
-    { href: `/terms-of-use`, label: t(['common', 'pages', 'terms-of-use']) },
+    { href: '/', label: t('pages.home') },
+    { href: `/terms-of-use`, label: t('pages.terms-of-use') },
   ]
 
   return (

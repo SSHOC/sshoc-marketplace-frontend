@@ -1,15 +1,15 @@
 import { Item } from '@react-stately/collections'
+import { useTranslations } from 'next-intl'
 import type { Key } from 'react'
 
 import { useContributedItemsSearch } from '@/components/account/useContributedItemsSearch'
 import { useContributedItemsSearchFilters } from '@/components/account/useContributedItemsSearchFilters'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Select } from '@/lib/core/ui/Select/Select'
 import type { ContributedItemSortOrder } from '~/config/sshoc.config'
 import { contributedItemsSortOrder } from '~/config/sshoc.config'
 
 export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useContributedItemsSearchFilters()
   const sortOrder = searchFilters.order
   const { searchContributedItems } = useContributedItemsSearch()
@@ -17,8 +17,8 @@ export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
   const items = contributedItemsSortOrder.map((id) => {
     return {
       id,
-      label: t(['common', 'search', 'sort-by'], {
-        values: { order: t(['common', 'search', 'sort-orders', id]) },
+      label: t('search.sort-by', {
+        order: t(`search.sort-orders.${id}`),
       }),
     }
   })
@@ -30,7 +30,7 @@ export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
 
   return (
     <Select
-      aria-label={t(['common', 'search', 'sort-order'])}
+      aria-label={t('search.sort-order')}
       items={items}
       onSelectionChange={onChange}
       selectedKey={sortOrder}

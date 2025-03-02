@@ -1,11 +1,11 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -39,9 +39,7 @@ export namespace TemplatePage {
 //   }
 // }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<TemplatePage.PathParams>,
-): Promise<GetStaticPropsResult<TemplatePage.Props>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<TemplatePage.Props>> {
   const locale = getLocale()
   // const params = context.params as TemplatePage.PathParams
   const messages = await load(locale, ['common'])
@@ -55,9 +53,9 @@ export async function getStaticProps(
 }
 
 export default function TemplatePage(_props: TemplatePage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'home'])
+  const title = t('pages.home')
 
   return (
     <Fragment>

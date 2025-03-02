@@ -1,5 +1,6 @@
+import { useTranslations } from 'next-intl'
+
 import type { ItemCategoryWithWorkflowStep } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import DatasetIcon from '~/public/assets/images/categories/dataset.svg?symbol-icon'
 import PublicationIcon from '~/public/assets/images/categories/publication.svg?symbol-icon'
 import WorkflowStepIcon from '~/public/assets/images/categories/step.svg?symbol-icon'
@@ -12,9 +13,9 @@ export interface ItemCategoryIconProps {
 }
 
 export function ItemCategoryIcon(props: ItemCategoryIconProps): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const label = t(['common', 'item-categories', props.category, 'one'])
+  const label = t(`item-categories.${props.category}.one`)
 
   switch (props.category) {
     case 'dataset':

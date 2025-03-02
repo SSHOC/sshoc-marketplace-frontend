@@ -1,7 +1,7 @@
 import type { UrlInit } from '@stefanprobst/request'
 import { createUrl } from '@stefanprobst/request'
 
-import type { Locale } from '~/config/i18n.config.mjs'
+import type { Locale } from '~/config/i18n.config'
 import { baseUrl } from '~/config/site.config'
 
 export function createSiteUrl(

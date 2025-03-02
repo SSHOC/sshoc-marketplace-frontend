@@ -1,6 +1,7 @@
 import { useButton } from '@react-aria/button'
 import { useId } from '@react-aria/utils'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import type { FormEvent, ReactNode } from 'react'
 import { Fragment, useRef } from 'react'
 
@@ -16,7 +17,6 @@ import { ModalDialog } from '@/components/search/ModalDialog'
 import type { PropertyType } from '@/data/sshoc/api/property'
 import type { ConceptStatus } from '@/data/sshoc/utils/concept'
 import { conceptStatus, mapConceptStatusToFacet } from '@/data/sshoc/utils/concept'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { CheckBoxGroup } from '@/lib/core/ui/CheckBoxGroup/CheckBoxGroup'
@@ -31,14 +31,14 @@ import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogT
 import { length } from '@/lib/utils'
 
 export function VocabularySearchFilters(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('common')
 
   return (
     <aside className={css['container']}>
       <header className={css['section-header']}>
-        <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
+        <h2 className={css['section-title']}>{t('search.refine-search')}</h2>
         <div className={css['clear-link']}>
-          <Link href="/account/vocabularies">{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/account/vocabularies">{t('search.clear-filters')}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -60,7 +60,7 @@ export function VocabularySearchFilters(): JSX.Element {
 }
 
 function SearchFacetsDialog(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const state = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -79,7 +79,7 @@ function SearchFacetsDialog(): JSX.Element {
         data-dialog="facets"
         onPress={state.toggle}
       >
-        {t(['common', 'search', 'refine-search'])}
+        {t('search.refine-search')}
       </Button>
       <ActiveSearchFacets />
       {state.isOpen ? (
@@ -92,7 +92,7 @@ function SearchFacetsDialog(): JSX.Element {
         >
           <header className={css['overlay-header']}>
             <h2 className={css['overlay-title']} id={titleId}>
-              {t(['common', 'search', 'refine-search'])}
+              {t('search.refine-search')}
             </h2>
             <CloseButton autoFocus onPress={state.close} size="lg" />
           </header>
@@ -169,7 +169,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
 function ActiveConceptStatusFacets() {
   const name = 'f.status'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useVocabularySearchFilters()
 
   const values = searchFilters[name]
@@ -180,20 +180,18 @@ function ActiveConceptStatusFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'item', 'status'])}</h3>
+      <h3 className={css['active-facet-title']}>{t('common.item.status')}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
             <li key={value} className={css['active-facet-value']}>
-              {t(['authenticated', 'concepts', 'concept-status', value])}
+              {t(`authenticated.concepts.concept-status.${value}`)}
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['authenticated', 'concepts', 'status']),
-                    value: t(['authenticated', 'concepts', 'concept-status', value]),
-                  },
+                label={t('common.search.remove-filter-value', {
+                  facet: t('authenticated.concepts.status'),
+                  value: t(`authenticated.concepts.concept-status.${value}`),
                 })}
               />
             </li>
@@ -207,7 +205,7 @@ function ActiveConceptStatusFacets() {
 function ActivePropertyTypesFacets() {
   const name = 'types'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useVocabularySearchFilters()
   const searchResults = useVocabularySearchResults()
 
@@ -220,7 +218,7 @@ function ActivePropertyTypesFacets() {
   return (
     <div className={css['active-facet']}>
       <h3 className={css['active-facet-title']}>
-        {t(['authenticated', 'concepts', 'property-type', 'other'])}
+        {t('authenticated.concepts.property-type.other')}
       </h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
@@ -232,11 +230,9 @@ function ActivePropertyTypesFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['authenticated', 'concepts', 'property-type', 'one']),
-                    value: label,
-                  },
+                label={t('common.search.remove-filter-value', {
+                  facet: t('authenticated.concepts.property-type.one'),
+                  value: label,
                 })}
               />
             </li>
@@ -266,17 +262,17 @@ function SearchFacetsForm(): JSX.Element {
 }
 
 function ConceptStatusFacets(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const { searchVocabularies } = useVocabularySearch()
   const filters = useVocabularySearchFilters()
   const searchResults = useVocabularySearchResults()
 
   const facet = 'candidate'
   const name = 'f.status'
-  const label = t(['common', 'item', 'status'])
+  const label = t('common.item.status')
   const selectedKeys = filters[name]
   const items = conceptStatus.map((status) => {
-    return { id: status, label: t(['authenticated', 'concepts', 'concept-status', status]) }
+    return { id: status, label: t(`authenticated.concepts.concept-status.${status}`) }
   })
 
   function onChange(keys: Array<string>) {
@@ -304,7 +300,7 @@ function ConceptStatusFacets(): JSX.Element {
 function PropertyTypesFacets(): JSX.Element {
   const name = 'types'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useVocabularySearchFilters()
   const selectedKeys = searchFilters[name]
   const { searchVocabularies } = useVocabularySearch()
@@ -341,13 +337,13 @@ function PropertyTypesFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['authenticated', 'concepts', 'property-type', 'other'])}
+          title={t('authenticated.concepts.property-type.other')}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['authenticated', 'concepts', 'property-type', 'other'])}
+            aria-label={t('authenticated.concepts.property-type.other')}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -369,7 +365,7 @@ function PropertyTypesFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('common.search.show-more')}
     </ButtonLink>
   )
 
@@ -378,7 +374,7 @@ function PropertyTypesFacets(): JSX.Element {
       <Facet
         controls={hasMoreItems ? controls : undefined}
         defaultOpen
-        label={t(['authenticated', 'concepts', 'property-type', 'other'])}
+        label={t('authenticated.concepts.property-type.other')}
         name={name}
         onChange={onChange}
         value={selectedKeys}

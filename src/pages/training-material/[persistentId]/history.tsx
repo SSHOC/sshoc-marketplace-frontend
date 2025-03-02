@@ -1,6 +1,7 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -19,7 +20,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { QueryMetadata } from '@/lib/core/query/types'
@@ -88,14 +88,14 @@ export default function TrainingMaterialHistoryPage(
   const trainingMaterialHistory = useTrainingMaterialHistory({ persistentId }, undefined, { meta })
 
   const router = useRouter()
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const trainingMaterial = trainingMaterialHistory.data?.find((item) => {
     return item.status === 'approved'
   })
   const category = trainingMaterial?.category ?? 'training-material'
-  const label = trainingMaterial?.label ?? t(['common', 'item-categories', category, 'one'])
-  const title = t(['authenticated', 'item-history', 'item-history'], { values: { item: label } })
+  const label = trainingMaterial?.label ?? t(`common.item-categories.${category}.one`)
+  const title = t('authenticated.item-history.item-history', { item: label })
 
   if (router.isFallback) {
     return (
@@ -113,10 +113,10 @@ export default function TrainingMaterialHistoryPage(
   }
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('common.pages.home') },
     {
       href: `/search?${createUrlSearchParams({ categories: [category], order: ['label'] })}`,
-      label: t(['common', 'item-categories', category, 'other']),
+      label: t(`common.item-categories.${category}.other`),
     },
     {
       href: `/training-material/${persistentId}`,
@@ -124,7 +124,7 @@ export default function TrainingMaterialHistoryPage(
     },
     {
       href: `/training-material/${persistentId}/history`,
-      label: t(['authenticated', 'pages', 'item-version-history']),
+      label: t('authenticated.pages.item-version-history'),
     },
   ]
 

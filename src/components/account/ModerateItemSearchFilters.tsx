@@ -1,6 +1,7 @@
 import { useButton } from '@react-aria/button'
 import { useId } from '@react-aria/utils'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import type { FormEvent, ReactNode } from 'react'
 import { Fragment, useRef } from 'react'
 
@@ -18,7 +19,6 @@ import type { User } from '@/data/sshoc/api/user'
 import { useUsersInfinite } from '@/data/sshoc/hooks/user'
 import type { CurationFlag } from '@/data/sshoc/utils/curation'
 import { curationFlags } from '@/data/sshoc/utils/curation'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import type { IsoDateString } from '@/lib/core/types'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
@@ -39,14 +39,14 @@ import { entries, length, mapBy } from '@/lib/utils'
 import { maxItemSearchFacetValues, queryableItemStatus } from '~/config/sshoc.config'
 
 export function ModerateItemSearchFilters(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('common')
 
   return (
     <aside className={css['container']}>
       <header className={css['section-header']}>
-        <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
+        <h2 className={css['section-title']}>{t('search.refine-search')}</h2>
         <div className={css['clear-link']}>
-          <Link href="/account/moderate-items">{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/account/moderate-items">{t('search.clear-filters')}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -68,7 +68,7 @@ export function ModerateItemSearchFilters(): JSX.Element {
 }
 
 function SearchFacetsDialog(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('common')
   const state = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -87,7 +87,7 @@ function SearchFacetsDialog(): JSX.Element {
         data-dialog="facets"
         onPress={state.toggle}
       >
-        {t(['common', 'search', 'refine-search'])}
+        {t('search.refine-search')}
       </Button>
       <ActiveSearchFacets />
       {state.isOpen ? (
@@ -100,7 +100,7 @@ function SearchFacetsDialog(): JSX.Element {
         >
           <header className={css['overlay-header']}>
             <h2 className={css['overlay-title']} id={titleId}>
-              {t(['common', 'search', 'refine-search'])}
+              {t('search.refine-search')}
             </h2>
             <CloseButton autoFocus onPress={state.close} size="lg" />
           </header>
@@ -194,7 +194,8 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
 function ActiveCurationFacets() {
   const name = 'd.curation'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
+  const tc = useTranslations('common')
   const searchFilters = useModerateItemsSearchFilters()
 
   const values = searchFilters[name]
@@ -205,22 +206,18 @@ function ActiveCurationFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>
-        {t(['authenticated', 'moderate-items', 'curation'])}
-      </h3>
+      <h3 className={css['active-facet-title']}>{t('moderate-items.curation')}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
             <li key={value} className={css['active-facet-value']}>
-              {t(['authenticated', 'curation-flags', value])}
+              {t(`curation-flags.${value}`)}
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['authenticated', 'moderate-items', 'curation-flag', 'one']),
-                    value: t(['authenticated', 'curation-flags', value]),
-                  },
+                label={tc('search.remove-filter-value', {
+                  facet: t('moderate-items.curation-flag.one'),
+                  value: t(`curation-flags.${value}`),
                 })}
               />
             </li>
@@ -234,7 +231,7 @@ function ActiveCurationFacets() {
 function ActiveItemStatusFacets() {
   const name = 'd.status'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('common')
   const searchFilters = useModerateItemsSearchFilters()
 
   const values = searchFilters[name]
@@ -245,20 +242,18 @@ function ActiveItemStatusFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'item', 'status'])}</h3>
+      <h3 className={css['active-facet-title']}>{t('item.status')}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
             <li key={value} className={css['active-facet-value']}>
-              {t(['common', 'item-status', value])}
+              {t(`item-status.${value}`)}
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['common', 'item', 'status']),
-                    value: t(['common', 'item-status', value]),
-                  },
+                label={t('search.remove-filter-value', {
+                  facet: t('item.status'),
+                  value: t(`item-status.${value}`),
                 })}
               />
             </li>
@@ -273,7 +268,7 @@ function ActiveItemCategoryFacets() {
   const facet = 'item-category'
   const name = 'categories'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useModerateItemsSearchFilters()
 
   const values = searchFilters[name]
@@ -284,20 +279,18 @@ function ActiveItemCategoryFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
             <li key={value} className={css['active-facet-value']}>
-              {t(['common', 'item-categories', value, 'other'])}
+              {t(`item-categories.${value}.other`)}
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['common', 'facets', facet, 'other']),
-                    value: t(['common', 'item-categories', value, 'other']),
-                  },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value: t(`item-categories.${value}.other`),
                 })}
               />
             </li>
@@ -312,7 +305,7 @@ function ActiveSourceFacets() {
   const facet = 'source'
   const name = 'f.source'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('common')
   const searchFilters = useModerateItemsSearchFilters()
 
   const values = searchFilters[name]
@@ -323,7 +316,7 @@ function ActiveSourceFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
@@ -332,11 +325,9 @@ function ActiveSourceFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['common', 'facets', facet, 'one']),
-                    value,
-                  },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.one`),
+                  value,
                 })}
               />
             </li>
@@ -350,7 +341,7 @@ function ActiveSourceFacets() {
 function ActiveInformationContributorFacets() {
   const name = 'd.owner'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
 
   const values = searchFilters[name]
@@ -362,7 +353,7 @@ function ActiveInformationContributorFacets() {
   return (
     <div className={css['active-facet']}>
       <h3 className={css['active-facet-title']}>
-        {t(['authenticated', 'moderate-items', 'information-contributor', 'other'])}
+        {t('authenticated.moderate-items.information-contributor.other')}
       </h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
@@ -372,11 +363,9 @@ function ActiveInformationContributorFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['authenticated', 'moderate-items', 'information-contributor', 'one']),
-                    value,
-                  },
+                label={t('common.search.remove-filter-value', {
+                  facet: t('authenticated.moderate-items.information-contributor.one'),
+                  value,
                 })}
               />
             </li>
@@ -388,23 +377,23 @@ function ActiveInformationContributorFacets() {
 }
 
 function ActiveOtherFacets() {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
 
   const fields = {
     lastInfoUpdate: {
       name: 'd.lastInfoUpdate' as const,
-      label: t(['common', 'item', 'last-info-update']),
+      label: t('common.item.last-info-update'),
       value: searchFilters['d.lastInfoUpdate'][0],
     },
     deprecatedAtSource: {
       name: 'd.deprecated-at-source' as const,
-      label: t(['authenticated', 'moderate-items', 'deprecated-at-source']),
+      label: t('authenticated.moderate-items.deprecated-at-source'),
       value: searchFilters['d.deprecated-at-source'],
     },
     conflictAtSource: {
       name: 'd.conflict-at-source' as const,
-      label: t(['authenticated', 'moderate-items', 'conflict-at-source']),
+      label: t('authenticated.moderate-items.conflict-at-source'),
       value: searchFilters['d.conflict-at-source'],
     },
   }
@@ -420,52 +409,46 @@ function ActiveOtherFacets() {
   return (
     <div className={css['active-facet']}>
       <h3 className={css['active-facet-title']}>
-        {t(['authenticated', 'moderate-items', 'other-facets'])}
+        {t('authenticated.moderate-items.other-facets')}
       </h3>
       <ul role="list" className={css['active-facet-values']}>
         {fields.lastInfoUpdate.value != null ? (
           <li className={css['active-facet-value']}>
-            {t(['common', 'item', 'last-updated-on'], {
-              values: { date: fields.lastInfoUpdate.value },
+            {t('common.item.last-updated-on', {
+              date: fields.lastInfoUpdate.value,
             })}
             <RemoveFacetValueButton
               name={fields.lastInfoUpdate.name}
               value={fields.lastInfoUpdate.value}
-              label={t(['common', 'search', 'remove-filter-value'], {
-                values: {
-                  facet: t(['common', 'item', 'last-info-update']),
-                  value: fields.lastInfoUpdate.value,
-                },
+              label={t('common.search.remove-filter-value', {
+                facet: t('common.item.last-info-update'),
+                value: fields.lastInfoUpdate.value,
               })}
             />
           </li>
         ) : null}
         {fields.deprecatedAtSource.value === true ? (
           <li className={css['active-facet-value']}>
-            {t(['authenticated', 'moderate-items', 'deprecated-at-source'])}
+            {t('authenticated.moderate-items.deprecated-at-source')}
             <RemoveFacetValueButton
               name={fields.deprecatedAtSource.name}
               value={fields.deprecatedAtSource.value}
-              label={t(['common', 'search', 'remove-filter-value'], {
-                values: {
-                  facet: t(['authenticated', 'moderate-items', 'deprecated-at-source']),
-                  value: String(fields.deprecatedAtSource.value),
-                },
+              label={t('common.search.remove-filter-value', {
+                facet: t('authenticated.moderate-items.deprecated-at-source'),
+                value: String(fields.deprecatedAtSource.value),
               })}
             />
           </li>
         ) : null}
         {fields.conflictAtSource.value === true ? (
           <li className={css['active-facet-value']}>
-            {t(['authenticated', 'moderate-items', 'conflict-at-source'])}
+            {t('authenticated.moderate-items.conflict-at-source')}
             <RemoveFacetValueButton
               name={fields.conflictAtSource.name}
               value={fields.conflictAtSource.value}
-              label={t(['common', 'search', 'remove-filter-value'], {
-                values: {
-                  facet: t(['authenticated', 'moderate-items', 'conflict-at-source']),
-                  value: String(fields.conflictAtSource.value),
-                },
+              label={t('common.search.remove-filter-value', {
+                facet: t('authenticated.moderate-items.conflict-at-source'),
+                value: String(fields.conflictAtSource.value),
               })}
             />
           </li>
@@ -503,16 +486,16 @@ function SearchFacetsForm(): JSX.Element {
 }
 
 function CurationFacets(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const { searchModerateItems } = useModerateItemsSearch()
 
   const name = 'd.curation'
-  const label = t(['authenticated', 'moderate-items', 'curation'])
+  const label = t('authenticated.moderate-items.curation')
   const selectedKeys = searchFilters[name]
 
   const items = curationFlags.map((flag) => {
-    return { id: flag, label: t(['authenticated', 'curation-flags', flag]) }
+    return { id: flag, label: t(`authenticated.curation-flags.${flag}`) }
   })
 
   function onChange(keys: Array<string>) {
@@ -536,16 +519,16 @@ function CurationFacets(): JSX.Element {
 
 // FIXME: Duplicate in ContributedItemsSearchFilters
 function ItemStatusFacets(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const { searchModerateItems } = useModerateItemsSearch()
 
   const name = 'd.status'
-  const label = t(['common', 'item', 'status'])
+  const label = t('common.item.status')
   const selectedKeys = searchFilters[name]
 
   const items = queryableItemStatus.map((status) => {
-    return { id: status, label: t(['common', 'item-status', status]) }
+    return { id: status, label: t(`common.item-status.${status}`) }
   })
 
   function onChange(keys: Array<string>) {
@@ -572,7 +555,7 @@ function ItemCategoryFacets(): JSX.Element {
   const facet = 'item-category'
   const name = 'categories'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useModerateItemsSearchResults()
@@ -616,7 +599,7 @@ function ItemCategoryFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`common.facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -624,7 +607,7 @@ function ItemCategoryFacets(): JSX.Element {
         {items.map(([value, { count }]) => {
           return (
             <FacetValue key={value} value={value}>
-              {t(['common', 'item-categories', value, 'other'])}
+              {t(`common.item-categories.${value}.other`)}
               <span className={css['secondary']}>{count}</span>
             </FacetValue>
           )
@@ -639,7 +622,7 @@ function SourceFacets(): JSX.Element {
   const facet = 'source'
   const name = 'f.source'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useModerateItemsSearchResults()
@@ -676,13 +659,13 @@ function SourceFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['common', 'facets', facet, 'other'])}
+          title={t(`common.facets.${facet}.other`)}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['common', 'facets', facet, 'other'])}
+            aria-label={t(`common.facets.${facet}.other`)}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -704,7 +687,7 @@ function SourceFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('common.search.show-more')}
     </ButtonLink>
   )
 
@@ -712,7 +695,7 @@ function SourceFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`common.facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -734,7 +717,7 @@ function SourceFacets(): JSX.Element {
 function InformationContributorFacets(): JSX.Element {
   const name = 'd.owner'
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const selectedKeys = searchFilters[name]
   const users = useUsersInfinite({})
@@ -794,13 +777,13 @@ function InformationContributorFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['authenticated', 'moderate-items', 'information-contributor', 'other'])}
+          title={t('authenticated.moderate-items.information-contributor.other')}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['authenticated', 'moderate-items', 'information-contributor', 'other'])}
+            aria-label={t('authenticated.moderate-items.information-contributor.other')}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -822,7 +805,7 @@ function InformationContributorFacets(): JSX.Element {
                   return users.fetchNextPage()
                 }}
               >
-                {t(['common', 'search', 'show-more'])}
+                {t('common.search.show-more')}
               </ButtonLink>
             </div>
           ) : null}
@@ -833,7 +816,7 @@ function InformationContributorFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('common.search.show-more')}
     </ButtonLink>
   )
 
@@ -842,7 +825,7 @@ function InformationContributorFacets(): JSX.Element {
       <Facet
         controls={hasMoreItems ? controls : undefined}
         defaultOpen
-        label={t(['authenticated', 'moderate-items', 'information-contributor', 'other'])}
+        label={t('authenticated.moderate-items.information-contributor.other')}
         name={name}
         onChange={onChange}
         value={selectedKeys}
@@ -860,7 +843,7 @@ function InformationContributorFacets(): JSX.Element {
 }
 
 function OtherFacets(): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const searchFilters = useModerateItemsSearchFilters()
   const { searchModerateItems } = useModerateItemsSearch()
 
@@ -870,7 +853,7 @@ function OtherFacets(): JSX.Element {
   const fields = {
     lastInfoUpdate: {
       name: 'd.lastInfoUpdate',
-      label: t(['common', 'item', 'last-info-update']),
+      label: t('common.item.last-info-update'),
       value: searchFilters['d.lastInfoUpdate'][0] ?? '',
       onChange(key: string) {
         searchModerateItems({
@@ -882,7 +865,7 @@ function OtherFacets(): JSX.Element {
     },
     deprecatedAtSource: {
       name: 'd.deprecated-at-source',
-      label: t(['authenticated', 'moderate-items', 'deprecated-at-source']),
+      label: t('authenticated.moderate-items.deprecated-at-source'),
       value: searchFilters['d.deprecated-at-source'],
       onChange(key: boolean) {
         searchModerateItems({
@@ -894,7 +877,7 @@ function OtherFacets(): JSX.Element {
     },
     conflictAtSource: {
       name: 'd.conflict-at-source',
-      label: t(['authenticated', 'moderate-items', 'conflict-at-source']),
+      label: t('authenticated.moderate-items.conflict-at-source'),
       value: searchFilters['d.conflict-at-source'],
       onChange(key: boolean) {
         searchModerateItems({
@@ -909,7 +892,7 @@ function OtherFacets(): JSX.Element {
   return (
     <div>
       <FacetDisclosure
-        label={t(['authenticated', 'moderate-items', 'other-facets'])}
+        label={t('authenticated.moderate-items.other-facets')}
         state={state}
         triggerProps={triggerProps}
       >

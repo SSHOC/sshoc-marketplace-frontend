@@ -1,9 +1,9 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { createKey } from '@/lib/utils/create-key'
 
 export interface ItemExternalIdsProps {
@@ -13,7 +13,7 @@ export interface ItemExternalIdsProps {
 export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element {
   const { ids } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   if (ids.length === 0) {
     return <Fragment />
@@ -22,7 +22,7 @@ export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element {
   return (
     <div>
       <dt>
-        <VisuallyHidden>{t(['common', 'item', 'external-ids', 'other'])}</VisuallyHidden>
+        <VisuallyHidden>{t('item.external-ids.other')}</VisuallyHidden>
       </dt>
       <dd>
         <ul role="list">

@@ -1,4 +1,5 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
@@ -8,13 +9,12 @@ import { SubSectionHeader } from '@/components/home/SubSectionHeader'
 import { SubSectionHeaderLink } from '@/components/home/SubSectionHeaderLink'
 import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { maxLastAddedItems } from '~/config/sshoc.config'
 
 export function LastUpdatedItems(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const itemSearch = useItemSearch({ order: ['modified-on'], perpage: maxLastAddedItems })
 
   if (itemSearch.data == null) {
@@ -35,14 +35,14 @@ export function LastUpdatedItems(): JSX.Element {
 
   return (
     <section className={css['container']}>
-      <SectionTitle>{t(['common', 'home', 'last-updated'])}</SectionTitle>
+      <SectionTitle>{t('home.last-updated')}</SectionTitle>
       <section className={css['section']}>
         <SubSectionHeader>
-          <SubSectionTitle>{t(['common', 'home', 'see-what-is-new'])}</SubSectionTitle>
+          <SubSectionTitle>{t('home.see-what-is-new')}</SubSectionTitle>
           <SubSectionHeaderLink
             href={`/search?${createUrlSearchParams({ order: ['modified-on'] })}`}
           >
-            {t(['common', 'see-all'])}
+            {t('see-all')}
           </SubSectionHeaderLink>
         </SubSectionHeader>
         <ul role="list" className={css['items']}>

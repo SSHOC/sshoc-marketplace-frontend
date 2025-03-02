@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment, useRef } from 'react'
 
 import type { ActorFormValues } from '@/components/common/ActorForm'
@@ -7,7 +8,6 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { Actor, ActorRef } from '@/data/sshoc/api/actor'
 import { useActor, useUpdateActor } from '@/data/sshoc/hooks/actor'
 import { useFieldState } from '@/lib/core/form/useFieldState'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { ModalDialog } from '@/lib/core/ui/ModalDialog/ModalDialog'
 import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDialogState'
@@ -48,17 +48,17 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): JSX.Element
     dialog,
     triggerRef,
   )
-  const { t } = useI18n<'authenticated'>()
+  const t = useTranslations('authenticated')
   const meta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'actors', 'update-actor-pending'])
+        return t('actors.update-actor-pending')
       },
       success() {
-        return t(['authenticated', 'actors', 'update-actor-success'])
+        return t('actors.update-actor-success')
       },
       error() {
-        return t(['authenticated', 'actors', 'update-actor-error'])
+        return t('actors.update-actor-error')
       },
     },
   }
@@ -82,12 +82,12 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): JSX.Element
       <FormRecordEditButton
         ref={triggerRef}
         {...triggerProps}
-        aria-label={t(['authenticated', 'forms', 'edit-field'], {
-          values: { field: field.itemLabel },
+        aria-label={t('forms.edit-field', {
+          field: field.itemLabel,
         })}
         onPress={onOpenDialog}
       >
-        {t(['authenticated', 'controls', 'edit'])}
+        {t('controls.edit')}
       </FormRecordEditButton>
       {dialog.isOpen ? (
         <ModalDialog
@@ -95,7 +95,7 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): JSX.Element
           isDismissable
           isOpen={dialog.isOpen}
           onClose={onCloseDialog}
-          title={t(['authenticated', 'actors', 'create-actor'])}
+          title={t('actors.create-actor')}
         >
           <ActorForm
             initialValues={actor}

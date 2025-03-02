@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { UsersPage } from '@/pages/account/users.page'
+import type { UsersPage } from '@/pages/account/users'
 
 export interface UseUserSearchResult {
   getSearchUsersLink: (query: UsersPage.SearchParamsInput) => {

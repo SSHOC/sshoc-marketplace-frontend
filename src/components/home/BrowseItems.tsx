@@ -1,4 +1,5 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/common/Link'
@@ -9,14 +10,13 @@ import { SubSectionHeaderLink } from '@/components/home/SubSectionHeaderLink'
 import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import type { ItemFacet, ItemSearch } from '@/data/sshoc/api/item'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { length } from '@/lib/utils'
 import { maxBrowseFacets, maxLastAddedItems } from '~/config/sshoc.config'
 
 export function BrowseItems(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   /** Match the request from `LastUpdatedItems` so it can be deduplicated. Here we only need the list of facet values. */
   const itemSearch = useItemSearch({ order: ['modified-on'], perpage: maxLastAddedItems })
 
@@ -34,17 +34,17 @@ export function BrowseItems(): JSX.Element {
 
   return (
     <section className={css['container']}>
-      <SectionTitle>{t(['common', 'home', 'browse'])}</SectionTitle>
+      <SectionTitle>{t('home.browse')}</SectionTitle>
       <BrowseLinks
-        title={t(['common', 'home', 'browse-by-facet'], {
-          values: { facet: t(['common', 'facets', 'activity', 'one']) },
+        title={t('home.browse-by-facet', {
+          facet: t('facets.activity.one'),
         })}
         values={activity}
         facet="activity"
       />
       <BrowseLinks
-        title={t(['common', 'home', 'browse-by-facet'], {
-          values: { facet: t(['common', 'facets', 'keyword', 'one']) },
+        title={t('home.browse-by-facet', {
+          facet: t('facets.keyword.one'),
         })}
         values={keyword}
         facet="keyword"
@@ -62,7 +62,7 @@ interface BrowseLinksProps {
 function BrowseLinks(props: BrowseLinksProps): JSX.Element {
   const { title, values, facet } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   if (length(values) === 0) {
     return <Fragment />
@@ -73,12 +73,12 @@ function BrowseLinks(props: BrowseLinksProps): JSX.Element {
       <SubSectionHeader>
         <SubSectionTitle>{title}</SubSectionTitle>
         <SubSectionHeaderLink
-          aria-label={t(['common', 'see-all-facets'], {
-            values: { facet: t(['common', 'facets', facet, 'other']) },
+          aria-label={t('see-all-facets', {
+            facet: t(`facets.${facet}.other`),
           })}
           href={`/browse/${facet}`}
         >
-          {t(['common', 'see-all'])}
+          {t('see-all')}
         </SubSectionHeaderLink>
       </SubSectionHeader>
       <ul role="list" className={css['items']}>

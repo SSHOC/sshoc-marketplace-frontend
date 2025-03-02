@@ -1,10 +1,10 @@
+import { useTranslations } from 'next-intl'
 import type { Key } from 'react'
 import { useMemo } from 'react'
 
 import { useSearchItems } from '@/components/common/useSearchItems'
 import type { ItemCategory, ItemSearchSuggestion } from '@/data/sshoc/api/item'
 import { useItemAutocomplete } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Item } from '@/lib/core/ui/Collection/Item'
 import { HighlightedText } from '@/lib/core/ui/HighlightedText/HighlightedText'
 import { SearchAutocomplete } from '@/lib/core/ui/SearchAutocomplete/SearchAutocomplete'
@@ -24,7 +24,7 @@ export interface ItemSearchAutocompleteProps {
 export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): JSX.Element {
   const { itemCategory, itemSearchTerm, onChangeItemSearchTerm, onSubmit, size } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { searchItems } = useSearchItems()
   const debouncedItemSearchTerm = useDebouncedState({
     value: itemSearchTerm,
@@ -54,7 +54,7 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
   return (
     <SearchAutocomplete
       name="q"
-      aria-label={t(['common', 'home', 'search', 'item-search-term'])}
+      aria-label={t('home.search.item-search-term')}
       items={items}
       loadingState={itemAutocompleteSuggestions.isLoading ? 'loading' : 'idle'}
       inputValue={itemSearchTerm}

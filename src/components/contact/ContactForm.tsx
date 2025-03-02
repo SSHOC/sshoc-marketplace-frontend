@@ -1,5 +1,6 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
 
 import css from '@/components/contact/ContactForm.module.css'
@@ -10,7 +11,6 @@ import { FormButton } from '@/lib/core/form/FormButton'
 import { FormHiddenField } from '@/lib/core/form/FormHiddenField'
 import { FormTextArea } from '@/lib/core/form/FormTextArea'
 import { FormTextField } from '@/lib/core/form/FormTextField'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { isEmail, isNonEmptyString } from '@/lib/utils'
@@ -34,19 +34,19 @@ function useInitialContactFormValues(): Partial<ContactFormValues> {
 }
 
 export function ContactForm(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const router = useRouter()
   const initialContactFormValues = useInitialContactFormValues()
   const meta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'contact', 'form-submission-pending'])
+        return t('contact.form-submission-pending')
       },
       success() {
-        return t(['common', 'contact', 'form-submission-success'])
+        return t('contact.form-submission-success')
       },
       error() {
-        return t(['common', 'contact', 'form-submission-error'])
+        return t('contact.form-submission-error')
       },
     },
   }
@@ -79,15 +79,15 @@ export function ContactForm(): JSX.Element {
     const errors: Partial<Record<keyof ContactFormValues, string>> = {}
 
     if (!isNonEmptyString(values.email) || !isEmail(values.email)) {
-      errors.email = t(['common', 'contact', 'validation', 'invalid-email'])
+      errors.email = t('contact.validation.invalid-email')
     }
 
     if (!isNonEmptyString(values.subject)) {
-      errors.subject = t(['common', 'contact', 'validation', 'empty-subject'])
+      errors.subject = t('contact.validation.empty-subject')
     }
 
     if (!isNonEmptyString(values.message)) {
-      errors.message = t(['common', 'contact', 'validation', 'empty-message'])
+      errors.message = t('contact.validation.empty-message')
     }
 
     return errors
@@ -106,21 +106,11 @@ export function ContactForm(): JSX.Element {
       >
         <div className={css['form-fields']}>
           <FormHiddenField name="bot" />
-          <FormTextField
-            name="email"
-            label={t(['common', 'contact', 'email'])}
-            type="email"
-            isRequired
-          />
-          <FormTextField name="subject" label={t(['common', 'contact', 'subject'])} isRequired />
-          <FormTextArea
-            name="message"
-            label={t(['common', 'contact', 'message'])}
-            rows={6}
-            isRequired
-          />
+          <FormTextField name="email" label={t('contact.email')} type="email" isRequired />
+          <FormTextField name="subject" label={t('contact.subject')} isRequired />
+          <FormTextArea name="message" label={t('contact.message')} rows={6} isRequired />
           <div className={css['controls']}>
-            <FormButton type="submit">{t(['common', 'contact', 'submit'])}</FormButton>
+            <FormButton type="submit">{t('contact.submit')}</FormButton>
           </div>
         </div>
       </Form>

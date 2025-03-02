@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
@@ -15,7 +16,6 @@ import type { ItemExternalIdInput } from '@/data/sshoc/api/item'
 import { useItemSources } from '@/data/sshoc/hooks/item'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useFieldState } from '@/lib/core/form/useFieldState'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ExternalIdsFormFieldArrayProps {
   field: ItemFormFields['fields']['externalIds']
@@ -24,7 +24,7 @@ export interface ExternalIdsFormFieldArrayProps {
 export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps): JSX.Element {
   const { field } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<ItemExternalIdInput | UndefinedLeaves<ItemExternalIdInput>>(
     field.name,
     { subscription: {} },
@@ -65,12 +65,12 @@ export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps)
               </FormFieldGroup>
               <FormFieldListItemControls>
                 <FormRecordRemoveButton
-                  aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                    values: { field: field.itemLabel },
+                  aria-label={t('forms.remove-field', {
+                    field: field.itemLabel,
                   })}
                   onPress={onRemove}
                 >
-                  {t(['authenticated', 'controls', 'delete'])}
+                  {t('controls.delete')}
                 </FormRecordRemoveButton>
               </FormFieldListItemControls>
             </FormFieldListItem>
@@ -79,8 +79,8 @@ export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps)
       </FormFieldList>
       <FormFieldArrayControls>
         <FormRecordAddButton onPress={onAdd}>
-          {t(['authenticated', 'forms', 'add-field'], {
-            values: { field: field.itemLabel },
+          {t('forms.add-field', {
+            field: field.itemLabel,
           })}
         </FormRecordAddButton>
       </FormFieldArrayControls>
@@ -96,7 +96,7 @@ export interface ItemIdentifierFieldProps {
 export function ItemIdentifierField(props: ItemIdentifierFieldProps): JSX.Element {
   const { field, identifierServiceFieldName } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const service = useFieldState<string | null>(identifierServiceFieldName).input.value
   const value = useFieldState<string | null>(field.name).input.value
   const itemSources = useItemSources(undefined, { enabled: service != null && service.length > 0 })
@@ -109,12 +109,7 @@ export function ItemIdentifierField(props: ItemIdentifierFieldProps): JSX.Elemen
   const description = (
     <Fragment>
       <span>{field.description}</span>
-      {template != null ? (
-        <span>
-          {' '}
-          {t(['authenticated', 'itemExternalId', 'description'], { values: { template } })}
-        </span>
-      ) : null}
+      {template != null ? <span> {t('itemExternalId.description', { template })}</span> : null}
     </Fragment>
   )
 

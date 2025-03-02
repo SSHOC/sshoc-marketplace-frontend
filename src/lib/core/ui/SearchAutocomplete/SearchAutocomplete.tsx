@@ -13,7 +13,7 @@ import type { ForwardedRef, InputHTMLAttributes, RefObject } from 'react'
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { ClearButton } from '@/lib/core/ui/ClearButton/ClearButton'
 import { Field } from '@/lib/core/ui/Field/Field'
 // import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
@@ -73,7 +73,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     shouldFlip = true,
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const isAsync = loadingState != null
   const popoverRef = useRef<HTMLDivElement>(null)

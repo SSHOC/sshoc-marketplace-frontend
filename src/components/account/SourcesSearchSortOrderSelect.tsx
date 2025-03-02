@@ -1,15 +1,15 @@
 import { Item } from '@react-stately/collections'
+import { useTranslations } from 'next-intl'
 import type { Key } from 'react'
 
 import { useSourceSearch } from '@/components/account/useSourceSearch'
 import { useSourceSearchFilters } from '@/components/account/useSourceSearchFilters'
 import type { SourceSortOrder } from '@/data/sshoc/api/source'
 import { sourceSortOrders } from '@/data/sshoc/api/source'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Select } from '@/lib/core/ui/Select/Select'
 
 export function SourcesSearchSortOrderSelect(): JSX.Element {
-  const { t } = useI18n<'authenticated'>()
+  const t = useTranslations('authenticated')
   const searchFilters = useSourceSearchFilters()
   const sortOrder = searchFilters.order
   const { searchSources } = useSourceSearch()
@@ -17,8 +17,8 @@ export function SourcesSearchSortOrderSelect(): JSX.Element {
   const items = sourceSortOrders.map((id) => {
     return {
       id,
-      label: t(['authenticated', 'sources', 'sort-by'], {
-        values: { order: t(['authenticated', 'sources', 'sort-orders', id]) },
+      label: t('sources.sort-by', {
+        order: t(`sources.sort-orders.${id}`),
       }),
     }
   })
@@ -30,7 +30,7 @@ export function SourcesSearchSortOrderSelect(): JSX.Element {
 
   return (
     <Select
-      aria-label={t(['authenticated', 'sources', 'sort-order'])}
+      aria-label={t('sources.sort-order')}
       items={items}
       onSelectionChange={onChange}
       selectedKey={sortOrder}

@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode'
 import { useEffect } from 'react'
 
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { useToast } from '@/lib/core/toast/useToast'
 
 export function useAccessTokenExpirationTimer(): void {

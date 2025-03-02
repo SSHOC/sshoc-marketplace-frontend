@@ -7,7 +7,7 @@ import type { CSSProperties, ElementType, ForwardedRef, Ref } from 'react'
 import { forwardRef, useRef } from 'react'
 import useComposedRef from 'use-composed-ref'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import css from '@/lib/core/ui/ClearButton/ClearButton.module.css'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import CrossIcon from '@/lib/core/ui/icons/cross.svg?symbol-icon'
@@ -29,7 +29,7 @@ export const ClearButton = forwardRef(function ClearButton<T extends ElementType
 ): JSX.Element {
   const defaultIcon = <Icon icon={CrossIcon} width="0.5em" />
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const {
     'aria-label': ariaLabel = t(['common', 'ui', 'clear']),

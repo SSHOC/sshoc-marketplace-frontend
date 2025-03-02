@@ -1,4 +1,5 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
@@ -9,14 +10,13 @@ import { SubSectionHeaderLink } from '@/components/home/SubSectionHeaderLink'
 import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useItemCategories, useItemSearch } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { keys } from '@/lib/utils'
 import { maxRecommendedItemsPerCategory } from '~/config/sshoc.config'
 
 export function RecommendedItems(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const itemCategories = useItemCategories()
 
   if (itemCategories.data == null) {
@@ -31,7 +31,7 @@ export function RecommendedItems(): JSX.Element {
 
   return (
     <section className={css['container']}>
-      <SectionTitle>{t(['common', 'home', 'recommended'])}</SectionTitle>
+      <SectionTitle>{t('home.recommended')}</SectionTitle>
       <ul role="list" className={css['sections']}>
         {keys(itemCategories.data).map((category) => {
           if (category === 'step') return null
@@ -50,7 +50,7 @@ interface RecommendedItemsForCategoryProps {
 function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): JSX.Element {
   const { category } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const itemSearch = useItemSearch({
     categories: [category],
     'f.keyword': ['recommended'],
@@ -76,11 +76,11 @@ function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): J
     <li>
       <section className={css['section']}>
         <SubSectionHeader>
-          <SubSectionTitle>{t(['common', 'item-categories', category, 'other'])}</SubSectionTitle>
+          <SubSectionTitle>{t(`item-categories.${category}.other`)}</SubSectionTitle>
           <SubSectionHeaderLink
             href={`/search?${createUrlSearchParams({ categories: [category], order: ['label'] })}`}
           >
-            {t(['common', 'see-all'])}
+            {t('see-all')}
           </SubSectionHeaderLink>
         </SubSectionHeader>
         <ul role="list" className={css['items']}>

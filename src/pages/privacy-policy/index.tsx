@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import * as path from 'path'
 import { Fragment } from 'react'
 import { fileURLToPath } from 'url'
@@ -20,7 +21,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { IsoDateString } from '@/lib/core/types'
@@ -51,13 +51,13 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<PrivacyPoli
 }
 
 export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'privacy-policy'])
+  const title = t('pages.privacy-policy')
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
-    { href: '/privacy-policy', label: t(['common', 'pages', 'privacy-policy']) },
+    { href: '/', label: t('pages.home') },
+    { href: '/privacy-policy', label: t('pages.privacy-policy') },
   ]
 
   return (

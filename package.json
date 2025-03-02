@@ -81,7 +81,6 @@
     "@stefanprobst/log": "^1.0.3",
     "@stefanprobst/netlify-cms-oauth-client": "^0.1.3",
     "@stefanprobst/next-error-boundary": "legacy",
-    "@stefanprobst/next-i18n": "legacy",
     "@stefanprobst/next-page-metadata": "legacy",
     "@stefanprobst/next-svg": "^4.2.1",
     "@stefanprobst/pick": "^1.0.3",

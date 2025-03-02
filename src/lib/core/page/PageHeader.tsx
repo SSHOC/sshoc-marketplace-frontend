@@ -3,7 +3,7 @@ import Image from 'next/legacy/image'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { AuthButton } from '@/lib/core/page/AuthButton'
 import { MobileNavigationMenu } from '@/lib/core/page/MobileNavigationMenu'
@@ -12,7 +12,7 @@ import { PageNavigation } from '@/lib/core/page/PageNavigation'
 import Logo from '~/public/assets/images/logo-with-text.svg'
 
 export function PageHeader(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const pathname = usePathname()
   const currentUser = useCurrentUser()
 

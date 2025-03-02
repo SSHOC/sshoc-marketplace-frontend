@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { FormFieldArray } from '@/components/common/FormFieldArray'
@@ -9,7 +10,6 @@ import { FormRecordAddButton } from '@/components/common/FormRecordAddButton'
 import { FormRecordRemoveButton } from '@/components/common/FormRecordRemoveButton'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { FormTextField } from '@/lib/core/form/FormTextField'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface AccessibleAtFormFieldArrayProps {
   field: ItemFormFields['fields']['accessibleAt']
@@ -18,7 +18,7 @@ export interface AccessibleAtFormFieldArrayProps {
 export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProps): JSX.Element {
   const { field } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<string | undefined>(field.name, { subscription: {} })
 
   function onAdd() {
@@ -38,12 +38,12 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
               <FormTextField {...field} name={name} />
               <FormFieldListItemControls>
                 <FormRecordRemoveButton
-                  aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                    values: { field: field.itemLabel },
+                  aria-label={t('forms.remove-field', {
+                    field: field.itemLabel,
                   })}
                   onPress={onRemove}
                 >
-                  {t(['authenticated', 'controls', 'delete'])}
+                  {t('controls.delete')}
                 </FormRecordRemoveButton>
               </FormFieldListItemControls>
             </FormFieldListItem>
@@ -52,8 +52,8 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
       </FormFieldList>
       <FormFieldArrayControls>
         <FormRecordAddButton onPress={onAdd}>
-          {t(['authenticated', 'forms', 'add-field'], {
-            values: { field: field.itemLabel },
+          {t('forms.add-field', {
+            field: field.itemLabel,
           })}
         </FormRecordAddButton>
       </FormFieldArrayControls>

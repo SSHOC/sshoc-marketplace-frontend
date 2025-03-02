@@ -1,6 +1,7 @@
 import { useButton } from '@react-aria/button'
 import { useId } from '@react-aria/utils'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import type { FormEvent, ReactNode } from 'react'
 import { Fragment, useRef } from 'react'
 
@@ -16,7 +17,6 @@ import type { SearchFilters as ItemSearchFilters } from '@/components/search/use
 import { useSearchFilters } from '@/components/search/useSearchFilters'
 import { useSearchResults } from '@/components/search/useSearchResults'
 import type { ItemCategory } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -33,14 +33,14 @@ import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogT
 import { entries, length } from '@/lib/utils'
 
 export function SearchFilters(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
-    <aside className={css['container']} aria-label={t(['common', 'search', 'search-filters'])}>
+    <aside className={css['container']} aria-label={t('search.search-filters')}>
       <header className={css['section-header']}>
-        <h2 className={css['section-title']}>{t(['common', 'search', 'refine-search'])}</h2>
+        <h2 className={css['section-title']}>{t('search.refine-search')}</h2>
         <div className={css['clear-link']}>
-          <Link href="/search">{t(['common', 'search', 'clear-filters'])}</Link>
+          <Link href="/search">{t('search.clear-filters')}</Link>
         </div>
       </header>
       <div className={css['facets-form-container']}>
@@ -63,7 +63,7 @@ export function SearchFilters(): JSX.Element {
 }
 
 function SearchFacetsDialog(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const state = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -82,7 +82,7 @@ function SearchFacetsDialog(): JSX.Element {
         data-dialog="facets"
         onPress={state.toggle}
       >
-        {t(['common', 'search', 'refine-search'])}
+        {t('search.refine-search')}
       </Button>
       <ActiveSearchFacets />
       {state.isOpen ? (
@@ -95,7 +95,7 @@ function SearchFacetsDialog(): JSX.Element {
         >
           <header className={css['overlay-header']}>
             <h2 className={css['overlay-title']} id={titleId}>
-              {t(['common', 'search', 'refine-search'])}
+              {t('search.refine-search')}
             </h2>
             <CloseButton autoFocus onPress={state.close} size="lg" />
           </header>
@@ -182,7 +182,7 @@ function ActiveItemCategoryFacets() {
   const facet = 'item-category'
   const name = 'categories'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
 
   const values = searchFilters[name]
@@ -193,20 +193,18 @@ function ActiveItemCategoryFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
             <li key={value} className={css['active-facet-value']}>
-              {t(['common', 'item-categories', value, 'other'])}
+              {t(`item-categories.${value}.other`)}
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: {
-                    facet: t(['common', 'facets', facet, 'other']),
-                    value: t(['common', 'item-categories', value, 'other']),
-                  },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value: t(`item-categories.${value}.other`),
                 })}
               />
             </li>
@@ -221,7 +219,7 @@ function ActiveActivityFacets() {
   const facet = 'activity'
   const name = 'f.activity'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
 
   const values = searchFilters[name]
@@ -232,7 +230,7 @@ function ActiveActivityFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
@@ -241,8 +239,9 @@ function ActiveActivityFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: { facet: t(['common', 'facets', facet, 'other']), value },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value,
                 })}
               />
             </li>
@@ -257,7 +256,7 @@ function ActiveKeywordFacets() {
   const facet = 'keyword'
   const name = 'f.keyword'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
 
   const values = searchFilters[name]
@@ -268,7 +267,7 @@ function ActiveKeywordFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
@@ -277,8 +276,9 @@ function ActiveKeywordFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: { facet: t(['common', 'facets', facet, 'other']), value },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value,
                 })}
               />
             </li>
@@ -293,7 +293,7 @@ function ActiveLanguageFacets() {
   const facet = 'language'
   const name = 'f.language'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
 
   const values = searchFilters[name]
@@ -304,7 +304,7 @@ function ActiveLanguageFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
@@ -313,8 +313,9 @@ function ActiveLanguageFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: { facet: t(['common', 'facets', facet, 'other']), value },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value,
                 })}
               />
             </li>
@@ -329,7 +330,7 @@ function ActiveSourceFacets() {
   const facet = 'source'
   const name = 'f.source'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
 
   const values = searchFilters[name]
@@ -340,7 +341,7 @@ function ActiveSourceFacets() {
 
   return (
     <div className={css['active-facet']}>
-      <h3 className={css['active-facet-title']}>{t(['common', 'facets', facet, 'other'])}</h3>
+      <h3 className={css['active-facet-title']}>{t(`facets.${facet}.other`)}</h3>
       <ul role="list" className={css['active-facet-values']}>
         {values.map((value) => {
           return (
@@ -349,8 +350,9 @@ function ActiveSourceFacets() {
               <RemoveFacetValueButton
                 name={name}
                 value={value}
-                label={t(['common', 'search', 'remove-filter-value'], {
-                  values: { facet: t(['common', 'facets', facet, 'other']), value },
+                label={t('search.remove-filter-value', {
+                  facet: t(`facets.${facet}.other`),
+                  value,
                 })}
               />
             </li>
@@ -386,7 +388,7 @@ function ItemCategoryFacets(): JSX.Element {
   const facet = 'item-category'
   const name = 'categories'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useSearchResults()
@@ -430,7 +432,7 @@ function ItemCategoryFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -449,7 +451,7 @@ function ItemCategoryFacets(): JSX.Element {
                 <span aria-hidden style={{ aspectRatio: '1' }}>
                   <ItemCategoryIcon category={value} />
                 </span>
-                {t(['common', 'item-categories', value, 'other'])}
+                {t(`item-categories.${value}.other`)}
               </span>
               <span className={css['secondary']}>{count}</span>
             </FacetValue>
@@ -464,7 +466,7 @@ function ActivityFacets(): JSX.Element {
   const facet = 'activity'
   const name = 'f.activity'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useSearchResults()
@@ -501,13 +503,13 @@ function ActivityFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['common', 'facets', facet, 'other'])}
+          title={t(`facets.${facet}.other`)}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['common', 'facets', facet, 'other'])}
+            aria-label={t(`facets.${facet}.other`)}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -529,7 +531,7 @@ function ActivityFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('search.show-more')}
     </ButtonLink>
   )
 
@@ -537,7 +539,7 @@ function ActivityFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -560,7 +562,7 @@ function KeywordFacets(): JSX.Element {
   const facet = 'keyword'
   const name = 'f.keyword'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useSearchResults()
@@ -597,13 +599,13 @@ function KeywordFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['common', 'facets', facet, 'other'])}
+          title={t(`facets.${facet}.other`)}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...contentProps}
-            aria-label={t(['common', 'facets', facet, 'other'])}
+            aria-label={t(`facets.${facet}.other`)}
             name={name}
             onChange={onChange}
             value={selectedKeys}
@@ -625,7 +627,7 @@ function KeywordFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('search.show-more')}
     </ButtonLink>
   )
 
@@ -633,7 +635,7 @@ function KeywordFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -656,7 +658,7 @@ function LanguageFacets(): JSX.Element {
   const facet = 'language'
   const name = 'f.language'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useSearchResults()
@@ -693,13 +695,13 @@ function LanguageFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['common', 'facets', facet, 'other'])}
+          title={t(`facets.${facet}.other`)}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['common', 'facets', facet, 'other'])}
+            aria-label={t(`facets.${facet}.other`)}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -721,7 +723,7 @@ function LanguageFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('search.show-more')}
     </ButtonLink>
   )
 
@@ -729,7 +731,7 @@ function LanguageFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}
@@ -752,7 +754,7 @@ function SourceFacets(): JSX.Element {
   const facet = 'source'
   const name = 'f.source'
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const searchFilters = useSearchFilters()
   const selectedKeys = searchFilters[name]
   const searchResults = useSearchResults()
@@ -789,13 +791,13 @@ function SourceFacets(): JSX.Element {
     return (
       <div>
         <SearchFacetsOverlay
-          title={t(['common', 'facets', facet, 'other'])}
+          title={t(`facets.${facet}.other`)}
           onClose={overlay.close}
           triggerProps={triggerProps}
         >
           <CheckBoxGroup
             {...(contentProps as any)}
-            aria-label={t(['common', 'facets', facet, 'other'])}
+            aria-label={t(`facets.${facet}.other`)}
             name={name}
             value={selectedKeys}
             onChange={onChange}
@@ -817,7 +819,7 @@ function SourceFacets(): JSX.Element {
 
   const controls = (
     <ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-      {t(['common', 'search', 'show-more'])}
+      {t('search.show-more')}
     </ButtonLink>
   )
 
@@ -825,7 +827,7 @@ function SourceFacets(): JSX.Element {
     <div>
       <Facet
         defaultOpen
-        label={t(['common', 'facets', facet, 'other'])}
+        label={t(`facets.${facet}.other`)}
         name={name}
         value={selectedKeys}
         onChange={onChange}

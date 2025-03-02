@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { BackgroundGradient } from '@/components/auth/BackgroundGradient'
@@ -13,7 +14,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -38,9 +38,9 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<SignUpPage.
 }
 
 export default function SignUpPage(_props: SignUpPage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'sign-up'])
+  const title = t('pages.sign-up')
 
   return (
     <Fragment>

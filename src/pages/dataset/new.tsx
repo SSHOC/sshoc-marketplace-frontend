@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -13,7 +14,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -36,11 +36,11 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<CreateDatas
 }
 
 export default function CreateDatasetPage(_props: CreateDatasetPage.Props): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const category = 'dataset'
-  const label = t(['common', 'item-categories', category, 'one'])
-  const title = t(['authenticated', 'forms', 'create-item'], { values: { item: label } })
+  const label = t(`common.item-categories.${category}.one`)
+  const title = t('authenticated.forms.create-item', { item: label })
 
   return (
     <Fragment>

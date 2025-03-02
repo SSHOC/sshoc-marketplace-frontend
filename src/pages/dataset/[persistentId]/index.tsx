@@ -1,6 +1,7 @@
 import { createUrlSearchParams, HttpError } from '@stefanprobst/request'
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 import { dehydrate, QueryClient, useQueryClient } from 'react-query'
 
@@ -38,7 +39,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -116,9 +116,9 @@ export default function DatasetPage(props: DatasetPage.Props): JSX.Element {
   const dataset = _dataset.data
 
   const router = useRouter()
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const category = dataset?.category ?? 'dataset'
-  const label = dataset?.label ?? t(['common', 'item-categories', category, 'one'])
+  const label = dataset?.label ?? t(`item-categories.${category}.one`)
 
   if (
     _dataset.error != null &&
@@ -144,10 +144,10 @@ export default function DatasetPage(props: DatasetPage.Props): JSX.Element {
   }
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('pages.home') },
     {
       href: `/search?${createUrlSearchParams({ categories: [dataset.category], order: ['label'] })}`,
-      label: t(['common', 'item-categories', dataset.category, 'other']),
+      label: t(`item-categories.${dataset.category}.other`),
     },
     {
       href: `/dataset/${persistentId}`,

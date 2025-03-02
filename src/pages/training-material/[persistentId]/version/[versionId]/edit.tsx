@@ -1,6 +1,7 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { FundingNotice } from '@/components/common/FundingNotice'
@@ -26,7 +27,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
@@ -87,7 +87,7 @@ export async function getStaticProps(
 export default function EditTrainingMaterialVersionPage(
   props: EditTrainingMaterialVersionPage.Props,
 ): JSX.Element {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const router = useRouter()
 
   const { persistentId, versionId: _versionId } = props.params
@@ -112,8 +112,8 @@ export default function EditTrainingMaterialVersionPage(
   const trainingMaterial = _trainingMaterial.data
 
   const category = trainingMaterial?.category ?? 'training-material'
-  const label = t(['common', 'item-categories', category, 'one'])
-  const title = t(['authenticated', 'forms', 'edit-item'], { values: { item: label } })
+  const label = t(`common.item-categories.${category}.one`)
+  const title = t('authenticated.forms.edit-item', { item: label })
 
   const formFields = useTrainingMaterialFormFields()
   const validate = useTrainingMaterialValidationSchema()

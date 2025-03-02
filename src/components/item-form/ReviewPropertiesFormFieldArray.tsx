@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment, useMemo } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
@@ -17,7 +18,6 @@ import type { ItemsDiff } from '@/data/sshoc/api/item'
 import type { PropertyInput, PropertyType } from '@/data/sshoc/api/property'
 import { isPropertyConcept } from '@/data/sshoc/api/property'
 import { usePropertyTypes } from '@/data/sshoc/hooks/property'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { TextField } from '@/lib/core/ui/TextField/TextField'
 import { mapBy } from '@/lib/utils'
 
@@ -30,8 +30,7 @@ export function ReviewPropertiesFormFieldArray(
 ): JSX.Element {
   const { field } = props
 
-  const { t, createCollator } = useI18n<'authenticated' | 'common'>()
-  const compare = createCollator()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
     subscription: {},
   })
@@ -47,7 +46,7 @@ export function ReviewPropertiesFormFieldArray(
   const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
     select(data) {
       data.propertyTypes.sort((a, b) => {
-        return compare(a.label, b.label)
+        return a.label.localeCompare(b.label)
       })
 
       return data
@@ -130,12 +129,12 @@ export function ReviewPropertiesFormFieldArray(
                       propertyTypesMap={propertyTypesMap}
                     />
                     <FormRecordRemoveButton
-                      aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                        values: { field: field.itemLabel },
+                      aria-label={t('forms.remove-field', {
+                        field: field.itemLabel,
                       })}
                       onPress={onRemove}
                     >
-                      {t(['authenticated', 'controls', 'delete'])}
+                      {t('controls.delete')}
                     </FormRecordRemoveButton>
                   </FormFieldListItemControls>
                 </Fragment>
@@ -146,8 +145,8 @@ export function ReviewPropertiesFormFieldArray(
       </FormFieldList>
       <FormFieldArrayControls>
         <FormRecordAddButton onPress={onAdd}>
-          {t(['authenticated', 'forms', 'add-field'], {
-            values: { field: field.itemLabel },
+          {t('forms.add-field', {
+            field: field.itemLabel,
           })}
         </FormRecordAddButton>
       </FormFieldArrayControls>

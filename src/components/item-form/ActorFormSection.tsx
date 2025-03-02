@@ -1,9 +1,10 @@
+import { useTranslations } from 'next-intl'
+
 import { CreateActorButton } from '@/components/common/CreateActorButton'
 import { FormSection } from '@/components/common/FormSection'
 import { FormSectionTitle } from '@/components/common/FormSectionTitle'
 import { ActorsFormFieldArray } from '@/components/item-form/ActorsFormFieldArray'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { SpacedRow } from '@/lib/core/ui/SpacedRow/SpacedRow'
 
 export interface ActorFormSectionProps {
@@ -13,12 +14,12 @@ export interface ActorFormSectionProps {
 export function ActorFormSection(props: ActorFormSectionProps): JSX.Element {
   const { fields } = props.formFields
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
 
   return (
     <FormSection>
       <SpacedRow>
-        <FormSectionTitle>{t(['authenticated', 'forms', 'actors-section'])}</FormSectionTitle>
+        <FormSectionTitle>{t('forms.actors-section')}</FormSectionTitle>
         <CreateActorButton variant="button-link" />
       </SpacedRow>
       <ActorsFormFieldArray field={fields.contributors} />

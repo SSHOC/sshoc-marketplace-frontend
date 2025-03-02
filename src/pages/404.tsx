@@ -1,4 +1,5 @@
 import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { ErrorMessage } from '@/components/common/ErrorMessage'
@@ -12,7 +13,6 @@ import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -35,10 +35,10 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<NotFoundPag
 }
 
 export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'page-not-found'])
-  const message = t(['common', 'page-not-found-error-message'])
+  const title = t('pages.page-not-found')
+  const message = t('page-not-found-error-message')
 
   return (
     <Fragment>
@@ -51,7 +51,7 @@ export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
             <ErrorMessage message={message} statusCode={404} />
             <div>
               <LinkButton href="/" color="secondary">
-                {t(['common', 'go-to-main-page'])}
+                {t('go-to-main-page')}
               </LinkButton>
             </div>
           </Content>

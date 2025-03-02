@@ -7,7 +7,7 @@ import type { AriaTextFieldProps } from '@react-types/textfield'
 import type { ChangeEvent, ForwardedRef } from 'react'
 import { forwardRef, Fragment, useRef, useState } from 'react'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import type { ButtonProps } from '@/lib/core/ui/Button/Button'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { Field } from '@/lib/core/ui/Field/Field'
@@ -28,7 +28,7 @@ export const FileInput = forwardRef(function FileInput(
   props: FileInputProps,
   forwardedRef: ForwardedRef<HTMLDivElement>,
 ): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const [fileList, setFileList] = useState<FileList | null>(null)
 
   const {

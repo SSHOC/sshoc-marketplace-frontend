@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 
 import { LinkButton } from '@/components/common/LinkButton'
 import css from '@/components/item/ItemVersionControls.module.css'
@@ -9,7 +10,6 @@ import { useDeleteToolVersion } from '@/data/sshoc/hooks/tool-or-service'
 import { useDeleteTrainingMaterialVersion } from '@/data/sshoc/hooks/training-material'
 import { useDeleteWorkflowVersion } from '@/data/sshoc/hooks/workflow'
 import { AccessControl } from '@/lib/core/auth/AccessControl'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { Button } from '@/lib/core/ui/Button/Button'
@@ -24,7 +24,7 @@ export interface ItemVersionControlsProps {
 export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Element {
   const { category, persistentId, status, versionId } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
     <AccessControl>
@@ -37,7 +37,7 @@ export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Elemen
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'edit-version'])}
+          {t('controls.edit-version')}
         </LinkButton>
 
         <LinkButton
@@ -45,7 +45,7 @@ export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Elemen
           color="secondary"
           size="xs"
         >
-          {t(['common', 'controls', 'history'])}
+          {t('controls.history')}
         </LinkButton>
         <AccessControl roles={['administrator']}>
           <DeleteItemVersionButton
@@ -68,26 +68,26 @@ interface DeleteItemButtonProps {
 function DeleteItemVersionButton(props: DeleteItemButtonProps): JSX.Element {
   const { category, persistentId, versionId } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const router = useRouter()
 
-  const label = t(['common', 'item-categories', category, 'one'])
+  const label = t(`item-categories.${category}.one`)
 
   const meta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'controls', 'delete-item-version-pending'], {
-          values: { category: label },
+        return t('controls.delete-item-version-pending', {
+          category: label,
         })
       },
       success() {
-        return t(['common', 'controls', 'delete-item-version-success'], {
-          values: { category: label },
+        return t('controls.delete-item-version-success', {
+          category: label,
         })
       },
       error() {
-        return t(['common', 'controls', 'delete-item-version-error'], {
-          values: { category: label },
+        return t('controls.delete-item-version-error', {
+          category: label,
         })
       },
     },
@@ -105,7 +105,7 @@ function DeleteItemVersionButton(props: DeleteItemButtonProps): JSX.Element {
 
   return (
     <Button color="negative" onPress={onDelete} size="xs">
-      {t(['common', 'controls', 'delete'])}
+      {t('controls.delete')}
     </Button>
   )
 }

@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { ModerateItemsPage } from '@/pages/account/moderate-items.page'
+import type { ModerateItemsPage } from '@/pages/account/moderate-items'
 
 export interface UseModerateItemsSearchResult {
   getSearchModerateItemsLink: (query: ModerateItemsPage.SearchParamsInput) => {

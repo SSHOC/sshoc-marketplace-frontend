@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { Fragment, useMemo } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
@@ -17,7 +18,6 @@ import type { PropertyInput, PropertyType } from '@/data/sshoc/api/property'
 import { usePropertyTypes } from '@/data/sshoc/hooks/property'
 import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
 import { useFieldState } from '@/lib/core/form/useFieldState'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { mapBy } from '@/lib/utils'
 
 export interface PropertiesFormFieldArrayProps {
@@ -27,8 +27,7 @@ export interface PropertiesFormFieldArrayProps {
 export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): JSX.Element {
   const { field } = props
 
-  const { t, createCollator } = useI18n<'authenticated' | 'common'>()
-  const compare = createCollator()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
     subscription: {},
   })
@@ -44,7 +43,7 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
   const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
     select(data) {
       data.propertyTypes.sort((a, b) => {
-        return compare(a.label, b.label)
+        return a.label.localeCompare(b.label)
       })
 
       return data
@@ -100,12 +99,12 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
                     propertyTypesMap={propertyTypesMap}
                   />
                   <FormRecordRemoveButton
-                    aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                      values: { field: field.itemLabel },
+                    aria-label={t('forms.remove-field', {
+                      field: field.itemLabel,
                     })}
                     onPress={onRemove}
                   >
-                    {t(['authenticated', 'controls', 'delete'])}
+                    {t('controls.delete')}
                   </FormRecordRemoveButton>
                 </FormFieldListItemControls>
               </FormFieldListItem>
@@ -115,8 +114,8 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
       </FormFieldList>
       <FormFieldArrayControls>
         <FormRecordAddButton onPress={onAdd}>
-          {t(['authenticated', 'forms', 'add-field'], {
-            values: { field: field.itemLabel },
+          {t('forms.add-field', {
+            field: field.itemLabel,
           })}
         </FormRecordAddButton>
       </FormFieldArrayControls>

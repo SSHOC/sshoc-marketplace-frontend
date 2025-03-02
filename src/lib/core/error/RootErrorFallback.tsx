@@ -6,13 +6,13 @@ import { useEffect } from 'react'
 import { SignInForm } from '@/components/auth/SignInForm'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { AuthorizationError } from '@/lib/core/error/AuthorizationError'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useTranslations } from 'next-intl'
 import { FullPage } from '@/lib/core/ui/FullPage/FullPage'
 
 export function RootErrorFallback(): JSX.Element {
   const router = useRouter()
   const { error, onReset } = useError()
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   /**
    * TODO:

@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
 import { sanitizeSearchParams } from '@/lib/utils'
-import type { VocabulariesPage } from '@/pages/account/vocabularies.page'
+import type { VocabulariesPage } from '@/pages/account/vocabularies'
 
 export interface UseVocabularySearchResult {
   getSearchVocabulariesLink: (query: VocabulariesPage.SearchParamsInput) => {

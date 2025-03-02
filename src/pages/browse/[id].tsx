@@ -1,4 +1,5 @@
 import type { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { BackgroundImage } from '@/components/browse/BackgroundImage'
@@ -16,7 +17,6 @@ import { getLocale } from '@/lib/core/i18n/getLocale'
 import { getLocales } from '@/lib/core/i18n/getLocales'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -65,14 +65,14 @@ export async function getStaticProps(
 export default function BrowsePage(props: BrowsePage.Props): JSX.Element {
   const id = props.params.id as ItemFacet
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'browse', 'browse-facet'], {
-    values: { facet: t(['common', 'facets', id, 'other']) },
+  const title = t('browse.browse-facet', {
+    facet: t(`facets.${id}.other`),
   })
 
   const breadcrumbs = [
-    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t('pages.home') },
     { href: `/browse/${id}`, label: title },
   ]
 
