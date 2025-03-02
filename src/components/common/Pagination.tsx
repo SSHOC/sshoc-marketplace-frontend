@@ -1,4 +1,5 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import type { FormEvent } from 'react'
 import { Fragment } from 'react'
 import type { UseQueryResult } from 'react-query'
@@ -6,9 +7,6 @@ import type { UseQueryResult } from 'react-query'
 import { Link } from '@/components/common/Link'
 import { NavLink } from '@/components/common/NavLink'
 import css from '@/components/common/Pagination.module.css'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import TriangleIcon from '@/lib/core/ui/icons/triangle.svg?symbol-icon'
 import { toPositiveInteger } from '@/lib/utils'
@@ -18,7 +16,7 @@ export interface PaginationProps<TResults, TFilters> {
   searchResults: TResults
   searchFilters: TFilters
   searchItems: (filters: TFilters) => Promise<boolean>
-  getSearchItemsLink: (filters: TFilters) => { href: Href; shallow?: boolean; scroll?: boolean }
+  getSearchItemsLink: (filters: TFilters) => { href: string; shallow?: boolean; scroll?: boolean }
   /** @default 'primary' */
   variant?: 'input' | 'primary'
 }
@@ -29,7 +27,7 @@ export function Pagination<
 >(props: PaginationProps<TResults, TFilters>): JSX.Element {
   const { searchResults, searchFilters, searchItems, getSearchItemsLink } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const variant = props.variant ?? 'primary'
 
@@ -44,7 +42,7 @@ export function Pagination<
   const hasNextPage = page < pages
 
   return (
-    <nav aria-label={t(['common', 'pagination', 'navigation'])}>
+    <nav aria-label={t('pagination.navigation')}>
       <ol role="list" className={css['nav-items']}>
         <li className={css['nav-item']}>
           <Link
@@ -54,7 +52,7 @@ export function Pagination<
             variant="pagination"
           >
             <Icon icon={TriangleIcon} />
-            <span>{t(['common', 'pagination', 'previous-page'])}</span>
+            <span>{t('pagination.previous-page')}</span>
           </Link>
         </li>
         <li className={css['nav-item']}>
@@ -81,7 +79,7 @@ export function Pagination<
             rel="next"
             variant="pagination"
           >
-            <span>{t(['common', 'pagination', 'next-page'])}</span>
+            <span>{t('pagination.next-page')}</span>
             <Icon icon={TriangleIcon} />
           </Link>
         </li>
@@ -102,7 +100,7 @@ function PageInput<TResults, TFilters extends { page: number }>(
 ): JSX.Element {
   const { page, pages, searchFilters, searchItems } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     const formData = new FormData(event.currentTarget)
@@ -120,10 +118,10 @@ function PageInput<TResults, TFilters extends { page: number }>(
       noValidate
       onSubmit={onSubmit}
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
     >
       <label className={css['page-number-input']}>
-        <VisuallyHidden>{t(['common', 'pagination', 'go-to-page'])}</VisuallyHidden>
+        <VisuallyHidden>{t('pagination.go-to-page')}</VisuallyHidden>
         {/* TODO: @react-aria/number-field */}
         <input
           defaultValue={page}
@@ -133,9 +131,7 @@ function PageInput<TResults, TFilters extends { page: number }>(
           name="page"
           type="text"
         />
-        <span aria-hidden>
-          {t(['common', 'pagination', 'of-pages'], { values: { pages: String(pages) } })}
-        </span>
+        <span aria-hidden>{t('pagination.of-pages', { pages: String(pages) })}</span>
       </label>
       {/* Add hidden fields to preserve search filters when submitting html form without javascript. */}
       {Object.entries(searchFilters).map(([key, value]) => {

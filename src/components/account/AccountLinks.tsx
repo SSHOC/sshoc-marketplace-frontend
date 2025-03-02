@@ -11,7 +11,7 @@ export function AccountLinks(): JSX.Element {
         const Icon = link.icon
 
         return (
-          <li key={link.href.pathname}>
+          <li key={link.href}>
             <div className={css['link']}>
               <Link href={link.href}>
                 <Icon className={css['icon']} />

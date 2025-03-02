@@ -1,7 +1,6 @@
+import { useTranslations } from 'next-intl'
+
 import { useAuth } from '@/lib/core/auth/useAuth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 
 interface MenuItemBase {
   id: string
@@ -11,7 +10,7 @@ interface MenuItemBase {
 
 interface MenuItemNavLink extends MenuItemBase {
   type: 'nav-link'
-  href: Href
+  href: string
 }
 
 interface MenuItemLink extends MenuItemBase {
@@ -27,19 +26,19 @@ interface MenuItemButton extends MenuItemBase {
 type MenuItem = MenuItemButton | MenuItemLink | MenuItemNavLink
 
 export function useAccountMenuItems(): Array<MenuItem> {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { signOut } = useAuth()
 
   const items: Array<MenuItem> = [
     {
       id: 'account',
-      label: t(['common', 'pages', 'account']),
+      label: t('pages.account'),
       type: 'nav-link',
-      href: routes.AccountPage(),
+      href: `/account`,
     },
     {
       id: 'sign-out',
-      label: t(['common', 'auth', 'sign-out']),
+      label: t('auth.sign-out'),
       type: 'button',
       onPress() {
         signOut()

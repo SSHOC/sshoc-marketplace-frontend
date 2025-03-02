@@ -1,9 +1,6 @@
-/* @ts-expect-error Missing module declaration. */
 import createBundleAnalyzer from '@next/bundle-analyzer'
 import { log } from '@stefanprobst/log'
-import { RouteManifestPlugin } from '@stefanprobst/next-route-manifest'
 import createSvgPlugin from '@stefanprobst/next-svg'
-import prettierOptions from '@stefanprobst/prettier-config'
 import withToc from '@stefanprobst/rehype-extract-toc'
 import withTocExport from '@stefanprobst/rehype-extract-toc/mdx'
 import withHeadingFragmentLinks from '@stefanprobst/rehype-fragment-links'
@@ -26,15 +23,12 @@ import withGfm from 'remark-gfm'
 import { getHighlighter } from 'shiki'
 
 import { syntaxHighlightingTheme } from './config/docs.config.mjs'
-import { defaultLocale, locales } from './config/i18n.config.mjs'
 
-/** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
 /** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
 /** @typedef {import('webpack').Configuration} WebpackConfig */
 /** @typedef {import('@mdx-js/loader').Options} MdxOptions */
 /** @typedef {import('@stefanprobst/remark-mdx-page').Options} MdxPageOptions */
 /** @typedef {import('hast').Element} HastElement */
-/** @typedef {import('@stefanprobst/next-route-manifest').Options} RouteManifestConfig */
 
 // TODO:
 const _ContentSecurityPolicy = `
@@ -43,14 +37,6 @@ const _ContentSecurityPolicy = `
   media-src *;
   script-src 'self' matomo.acdh.oeaw.ac.at;
 `
-
-/** @type {RouteManifestConfig} */
-export const routeManifestConfig = {
-  outputFolder: path.join(process.cwd(), 'src', 'lib', 'core', 'navigation'),
-  pagesFolder: path.join(process.cwd(), 'src', 'pages'),
-  pageExtensions: ['page.tsx', 'page.template.tsx'],
-  prettierOptions,
-}
 
 /** @type {NextConfig} */
 const config = {
@@ -100,10 +86,6 @@ const config = {
 
     return headers
   },
-  i18n: {
-    locales,
-    defaultLocale,
-  },
   images: {
     // contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // dangerouslyAllowSVG: true,
@@ -113,7 +95,7 @@ const config = {
         : undefined,
   },
   output: 'standalone',
-  pageExtensions: ['page.tsx', 'page.mdx', 'api.ts'],
+  pageExtensions: ['tsx', 'mdx', 'ts'],
   poweredByHeader: false,
   /**
    * React Spectrum currently has issues with `StrictMode`.
@@ -163,11 +145,6 @@ const config = {
       use: [{ loader: '@stefanprobst/val-loader' }],
       exclude: /node_modules/,
     })
-
-    /** Auto-generate route manifest. */
-    if (!context.isServer) {
-      config.plugins?.push(new RouteManifestPlugin(routeManifestConfig))
-    }
 
     /** @type {(heading: HastElement, id: string) => Array<HastElement>} */
     function createPermalink(headingElement, id) {
@@ -221,12 +198,11 @@ const config = {
     const aboutPageTemplate = path.join(
       process.cwd(),
       'src',
-      'pages',
-      'about',
-      '[id].page.template.tsx',
+      '__templates__',
+      'about.[id].template.tsx',
     )
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), 'src', 'pages', 'about'),
       use: [
         {
@@ -291,12 +267,11 @@ const config = {
     const contributePageTemplate = path.join(
       process.cwd(),
       'src',
-      'pages',
-      'contribute',
-      '[id].page.template.tsx',
+      '__templates__',
+      'contribute.[id].template.tsx',
     )
     config.module?.rules?.push({
-      test: /\.page\.mdx$/,
+      test: /\.mdx$/,
       include: path.join(process.cwd(), 'src', 'pages', 'contribute'),
       use: [
         {

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { ItemLink } from '@/components/common/ItemLink'
 import { Link } from '@/components/common/Link'
 import { MetadataLabel } from '@/components/common/MetadataLabel'
@@ -16,7 +18,6 @@ import { useRevertToolToVersion } from '@/data/sshoc/hooks/tool-or-service'
 import { useRevertTrainingMaterialToVersion } from '@/data/sshoc/hooks/training-material'
 import { useRevertWorkflowToVersion } from '@/data/sshoc/hooks/workflow'
 import { AccessControl } from '@/lib/core/auth/AccessControl'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
@@ -29,7 +30,7 @@ export interface ItemHistorySearchResultProps {
 export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JSX.Element {
   const { item } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   return (
     <SearchResult>
@@ -46,18 +47,18 @@ export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JS
       </SearchResultTitle>
       <SearchResultMeta>
         <MetadataValue size="sm">
-          <MetadataLabel size="sm">{t(['common', 'item', 'last-info-update'])}:</MetadataLabel>
+          <MetadataLabel size="sm">{t('common.item.last-info-update')}:</MetadataLabel>
           <Timestamp dateTime={item.lastInfoUpdate} />
         </MetadataValue>
       </SearchResultMeta>
       <SearchResultContent>
         <MetadataValues>
           <MetadataValue>
-            <MetadataLabel>{t(['common', 'item', 'status'])}:</MetadataLabel>
-            <span>{t(['common', 'item-status', item.status])}</span>
+            <MetadataLabel>{t('common.item.status')}:</MetadataLabel>
+            <span>{t(`common.item-status.${item.status}`)}</span>
           </MetadataValue>
           <MetadataValue>
-            <MetadataLabel>{t(['common', 'item', 'content-contributors', 'one'])}:</MetadataLabel>
+            <MetadataLabel>{t('common.item.content-contributors.one')}:</MetadataLabel>
             <span>{item.informationContributor.displayName}</span>
           </MetadataValue>
         </MetadataValues>
@@ -65,7 +66,7 @@ export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JS
       <SearchResultControls>
         {item.status === 'approved' ? (
           <Link href={itemRoutes.ItemEditPage(item.category)({ persistentId: item.persistentId })}>
-            {t(['authenticated', 'controls', 'edit'])}
+            {t('authenticated.controls.edit')}
           </Link>
         ) : null}
         <AccessControl roles={['administrator', 'moderator']}>
@@ -84,18 +85,18 @@ function RevertButton(props: RevertButtonProps): JSX.Element {
   const { item } = props
   const { category, persistentId, id: versionId } = item
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   const meta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'item-history', 'revert-to-version-pending'])
+        return t('authenticated.item-history.revert-to-version-pending')
       },
       success() {
-        return t(['authenticated', 'item-history', 'revert-to-version-success'])
+        return t('authenticated.item-history.revert-to-version-success')
       },
       error() {
-        return t(['authenticated', 'item-history', 'revert-to-version-error'])
+        return t('authenticated.item-history.revert-to-version-error')
       },
     },
   }
@@ -109,7 +110,7 @@ function RevertButton(props: RevertButtonProps): JSX.Element {
     revertItemToVersion.mutate()
   }
 
-  return <ButtonLink onPress={onRevert}>{t(['authenticated', 'controls', 'revert'])}</ButtonLink>
+  return <ButtonLink onPress={onRevert}>{t('authenticated.controls.revert')}</ButtonLink>
 }
 
 function useRevertItemToVersion(category: ItemCategory) {

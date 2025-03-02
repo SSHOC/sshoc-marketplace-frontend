@@ -14,7 +14,6 @@ import { WorkflowForm } from '@/components/item-form/WorkflowForm'
 import type { WorkflowInput } from '@/data/sshoc/api/workflow'
 import type { WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
 import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
-import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateWorkflowFormValues = ItemFormValues<
   WorkflowInput & { composedOf?: Array<ItemFormValues<WorkflowStepInput>> }
@@ -65,9 +64,9 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (workflow.status === 'approved') {
-            router.push(routes.WorkflowPage({ persistentId: workflow.persistentId }))
+            router.push(`/workflow/${workflow.persistentId}`)
           } else {
-            router.push(routes.SuccessPage())
+            router.push(`/success`)
           }
           done?.()
         },
@@ -82,7 +81,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element 
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(`/account`)
   }
 
   return (

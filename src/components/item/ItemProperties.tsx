@@ -1,4 +1,5 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { Fragment, useMemo } from 'react'
 
@@ -8,7 +9,6 @@ import type { Item } from '@/data/sshoc/api/item'
 import type { Property } from '@/data/sshoc/api/property'
 import { isPropertyConcept } from '@/data/sshoc/api/property'
 import { usePublishPermission } from '@/data/sshoc/utils/usePublishPermission'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface ItemPropertiesProps {
   properties: Item['properties']
@@ -17,7 +17,7 @@ export interface ItemPropertiesProps {
 export function ItemProperties(props: ItemPropertiesProps): JSX.Element {
   const { properties } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const groups = useGroupedPropertyValues({ properties })
 
   if (groups.length === 0) {
@@ -27,7 +27,7 @@ export function ItemProperties(props: ItemPropertiesProps): JSX.Element {
   return (
     <div>
       <dt>
-        <VisuallyHidden>{t(['common', 'item', 'properties', 'other'])}</VisuallyHidden>
+        <VisuallyHidden>{t('item.properties.other')}</VisuallyHidden>
       </dt>
       <dd>
         <dl className={css['groups']}>
@@ -71,12 +71,9 @@ function useGroupedPropertyValues(
 ): Array<[string, Array<[string, Array<ReactNode>]>]> {
   const { properties } = args
 
-  const { createCollator } = useI18n<'common'>()
   const hasPermission = usePublishPermission()
 
   const groups = useMemo(() => {
-    const compare = createCollator()
-
     const groups = new Map<string, Map<string, Array<Property>>>()
 
     properties.forEach((property) => {
@@ -103,7 +100,7 @@ function useGroupedPropertyValues(
     })
 
     const sortedGroups = Array.from(groups).sort(([groupName], [otherGroupName]) => {
-      return compare(groupName, otherGroupName)
+      return groupName.localeCompare(otherGroupName)
     })
 
     const sorted = sortedGroups.map(([groupName, group]) => {
@@ -126,7 +123,7 @@ function useGroupedPropertyValues(
     })
 
     return sorted
-  }, [properties, createCollator, hasPermission])
+  }, [properties, hasPermission])
 
   return groups as Array<[string, Array<[string, Array<ReactNode>]>]>
 }

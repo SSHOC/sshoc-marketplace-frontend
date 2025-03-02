@@ -1,12 +1,11 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type { GetStaticPropsResult } from 'next'
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import type { PageComponent } from '@/lib/core/app/types'
 import { getLocale } from '@/lib/core/i18n/getLocale'
 import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
@@ -23,13 +22,12 @@ export namespace TemplatePage {
   // }
 }
 
-// import type { ParamsInput } from '@stefanprobst/next-route-manifest'
 // import type { GetStaticPathsContext, GetStaticPathsResult } from 'next'
 // import { getLocales } from '@/lib/core/i18n/getLocales'
 // export async function getStaticPaths(
 //   context: GetStaticPathsContext,
 // ): Promise<GetStaticPathsResult<TemplatePage.PathParams>> {
-//   const locales = getLocales(context)
+//   const locales = getLocales()
 //   const paths = locales.map((locale) => {
 //     const params = {}
 //     return { locale, params }
@@ -41,25 +39,23 @@ export namespace TemplatePage {
 //   }
 // }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<TemplatePage.PathParams>,
-): Promise<GetStaticPropsResult<TemplatePage.Props>> {
-  const locale = getLocale(context)
+export async function getStaticProps(): Promise<GetStaticPropsResult<TemplatePage.Props>> {
+  const locale = getLocale()
   // const params = context.params as TemplatePage.PathParams
-  const dictionaries = await load(locale, ['common'])
+  const messages = await load(locale, ['common'])
 
   return {
     props: {
-      dictionaries,
+      messages,
       // params,
     },
   }
 }
 
 export default function TemplatePage(_props: TemplatePage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
-  const title = t(['common', 'pages', 'home'])
+  const title = t('pages.home')
 
   return (
     <Fragment>

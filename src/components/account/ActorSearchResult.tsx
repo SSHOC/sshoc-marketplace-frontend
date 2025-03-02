@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment, useRef } from 'react'
 
 import { ActorForm } from '@/components/common/ActorForm'
@@ -11,7 +12,6 @@ import { SearchResultTitle } from '@/components/common/SearchResultTitle'
 import type { ActorInput, SearchActors } from '@/data/sshoc/api/actor'
 import { useDeleteActor, useUpdateActor } from '@/data/sshoc/hooks/actor'
 import { AccessControl } from '@/lib/core/auth/AccessControl'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 import { ModalDialog } from '@/lib/core/ui/ModalDialog/ModalDialog'
@@ -25,7 +25,7 @@ export interface ActorSearchResultProps {
 export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
   const { actor } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const dialog = useModalDialogTriggerState({})
   const triggerRef = useRef<HTMLButtonElement>(null)
   const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -37,13 +37,13 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
   const deleteActorMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'actors', 'delete-actor-pending'])
+        return t('actors.delete-actor-pending')
       },
       success() {
-        return t(['authenticated', 'actors', 'delete-actor-success'])
+        return t('actors.delete-actor-success')
       },
       error() {
-        return t(['authenticated', 'actors', 'delete-actor-error'])
+        return t('actors.delete-actor-error')
       },
     },
   }
@@ -52,13 +52,13 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
   const updateActorMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['authenticated', 'actors', 'update-actor-pending'])
+        return t('actors.update-actor-pending')
       },
       success() {
-        return t(['authenticated', 'actors', 'update-actor-success'])
+        return t('actors.update-actor-success')
       },
       error() {
-        return t(['authenticated', 'actors', 'update-actor-error'])
+        return t('actors.update-actor-error')
       },
     },
   }
@@ -89,13 +89,13 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
           <MetadataValues>
             {actor.email != null ? (
               <MetadataValue>
-                <MetadataLabel>{t(['authenticated', 'actors', 'email', 'label'])}:</MetadataLabel>
+                <MetadataLabel>{t('actors.email.label')}:</MetadataLabel>
                 <a href={`mailto:${actor.email}`}>{actor.email}</a>
               </MetadataValue>
             ) : null}
             {actor.website != null ? (
               <MetadataValue>
-                <MetadataLabel>{t(['authenticated', 'actors', 'website', 'label'])}:</MetadataLabel>
+                <MetadataLabel>{t('actors.website.label')}:</MetadataLabel>
                 <a href={actor.website} target="_blank" rel="noreferrer">
                   {actor.website}
                 </a>
@@ -103,9 +103,7 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
             ) : null}
             {Array.isArray(actor.affiliations) && actor.affiliations.length > 0 ? (
               <MetadataValue>
-                <MetadataLabel>
-                  {t(['authenticated', 'actors', 'affiliations', 'label'])}:
-                </MetadataLabel>
+                <MetadataLabel>{t('actors.affiliations.label')}:</MetadataLabel>
                 <span>
                   {actor.affiliations
                     .map((actor) => {
@@ -120,23 +118,23 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
         <SearchResultControls>
           <AccessControl roles={['administrator']}>
             <ButtonLink
-              aria-label={t(['authenticated', 'actors', 'delete-actor'], {
-                values: { name: actor.name },
+              aria-label={t('actors.delete-actor', {
+                name: actor.name,
               })}
               onPress={onDeleteActor}
             >
-              {t(['authenticated', 'controls', 'delete'])}
+              {t('controls.delete')}
             </ButtonLink>
           </AccessControl>
           <ButtonLink
             ref={triggerRef}
             {...triggerProps}
-            aria-label={t(['authenticated', 'actors', 'edit-actor'], {
-              values: { name: actor.name },
+            aria-label={t('actors.edit-actor', {
+              name: actor.name,
             })}
             onPress={onOpenEditDialog}
           >
-            {t(['authenticated', 'controls', 'edit'])}
+            {t('controls.edit')}
           </ButtonLink>
         </SearchResultControls>
       </SearchResult>
@@ -146,7 +144,7 @@ export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
           isDismissable
           isOpen={dialog.isOpen}
           onClose={onCloseEditDialog}
-          title={t(['authenticated', 'actors', 'edit-actor-dialog-title'])}
+          title={t('actors.edit-actor-dialog-title')}
         >
           <ActorForm
             initialValues={actor}

@@ -12,7 +12,6 @@ import { usePublicationFormRecommendedFields } from '@/components/item-form/useP
 import { usePublicationValidationSchema } from '@/components/item-form/usePublicationValidationSchema'
 import type { PublicationInput } from '@/data/sshoc/api/publication'
 import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
-import { routes } from '@/lib/core/navigation/routes'
 
 export type CreatePublicationFormValues = ItemFormValues<PublicationInput>
 
@@ -50,9 +49,9 @@ export function PublicationCreateForm(): JSX.Element {
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (publication.status === 'approved') {
-            router.push(routes.PublicationPage({ persistentId: publication.persistentId }))
+            router.push(`/publication/${publication.persistentId}`)
           } else {
-            router.push(routes.SuccessPage())
+            router.push(`/success`)
           }
           done?.()
         },
@@ -67,7 +66,7 @@ export function PublicationCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(`/account`)
   }
 
   return (

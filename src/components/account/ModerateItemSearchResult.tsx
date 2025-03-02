@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { ItemLink } from '@/components/common/ItemLink'
@@ -24,7 +25,6 @@ import {
   useRejectTrainingMaterialVersion,
 } from '@/data/sshoc/hooks/training-material'
 import { useApproveWorkflowVersion, useRejectWorkflowVersion } from '@/data/sshoc/hooks/workflow'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 import { ButtonLink } from '@/lib/core/ui/Button/ButtonLink'
 
@@ -36,7 +36,7 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
   const { item } = props
   const { category, persistentId, id: versionId } = item
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
   const meta = useReviewItemMeta({ category })
 
   const approveItem = useApproveItemVersion(category)({ persistentId, versionId }, undefined, {
@@ -71,7 +71,7 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
         <SearchResultMeta>
           <MetadataValue size="sm">
             <MetadataLabel size="sm">
-              {t(['authenticated', 'moderate-items', 'last-updated'])}:
+              {t('authenticated.moderate-items.last-updated')}:
             </MetadataLabel>
             <Timestamp dateTime={item.lastInfoUpdate} />
           </MetadataValue>
@@ -79,34 +79,30 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
         <SearchResultContent>
           <MetadataValues>
             <MetadataValue>
-              <MetadataLabel>{t(['common', 'item', 'item-category', 'one'])}:</MetadataLabel>
-              <span>{t(['common', 'item-categories', item.category, 'one'])}</span>
+              <MetadataLabel>{t('common.item.item-category.one')}:</MetadataLabel>
+              <span>{t(`common.item-categories.${item.category}.one`)}</span>
             </MetadataValue>
             <MetadataValue>
-              <MetadataLabel>{t(['common', 'item', 'status'])}:</MetadataLabel>
-              <span>{t(['common', 'item-status', item.status])}</span>
+              <MetadataLabel>{t('common.item.status')}:</MetadataLabel>
+              <span>{t(`common.item-status.${item.status}`)}</span>
             </MetadataValue>
           </MetadataValues>
         </SearchResultContent>
         <SearchResultControls>
           {['suggested', 'ingested'].includes(item.status) ? (
             <Fragment>
-              <ButtonLink onPress={onApprove}>
-                {t(['authenticated', 'controls', 'approve'])}
-              </ButtonLink>
-              <ButtonLink onPress={onReject}>
-                {t(['authenticated', 'controls', 'reject'])}
-              </ButtonLink>
+              <ButtonLink onPress={onApprove}>{t('authenticated.controls.approve')}</ButtonLink>
+              <ButtonLink onPress={onReject}>{t('authenticated.controls.reject')}</ButtonLink>
               <Link
                 href={itemRoutes.ItemReviewPage(item.category)({
                   persistentId: item.persistentId,
                   versionId: item.id,
                 })}
-                aria-label={t(['authenticated', 'moderate-items', 'review-item'], {
-                  values: { label: item.label },
+                aria-label={t('authenticated.moderate-items.review-item', {
+                  label: item.label,
                 })}
               >
-                {t(['authenticated', 'controls', 'review'])}
+                {t('authenticated.controls.review')}
               </Link>
             </Fragment>
           ) : null}

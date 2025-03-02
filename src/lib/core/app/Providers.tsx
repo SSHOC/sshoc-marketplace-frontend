@@ -1,5 +1,8 @@
+'use client'
+
 import { I18nProvider as AriaI18nProvider } from '@react-aria/i18n'
 import { OverlayProvider } from '@react-aria/overlays'
+import { NextIntlClientProvider } from 'next-intl'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { useQueryErrorResetBoundary } from 'react-query'
@@ -7,9 +10,7 @@ import { useQueryErrorResetBoundary } from 'react-query'
 import type { PageComponent, SharedPageProps } from '@/lib/core/app/types'
 import { AuthProvider } from '@/lib/core/auth/AuthProvider'
 import { PageAccessControl } from '@/lib/core/auth/PageAccessControl'
-import { I18nProvider } from '@/lib/core/i18n/I18nProvider'
-import { useLocale } from '@/lib/core/i18n/useLocale'
-import { PageProvider } from '@/lib/core/page/PageProvider'
+import { getLocale } from '@/lib/core/i18n/getLocale'
 import type { QueryClient } from '@/lib/core/query/create-query-client'
 import { createQueryClient } from '@/lib/core/query/create-query-client'
 import { QueryProvider } from '@/lib/core/query/QueryProvider'
@@ -26,18 +27,17 @@ export function ContextProviders(props: ContextProvidersProps): JSX.Element {
     return createQueryClient({
       query: {
         error:
-          props.pageProps.dictionaries?.common?.['default-query-error-message'] ??
+          props.pageProps.messages?.common['default-query-error-message'] ??
           'Something went wrong.',
       },
       mutation: {
         mutate:
-          props.pageProps.dictionaries?.common?.['default-mutation-pending-message'] ??
-          'Submitting...',
+          props.pageProps.messages?.common['default-mutation-pending-message'] ?? 'Submitting...',
         success:
-          props.pageProps.dictionaries?.common?.['default-mutation-success-message'] ??
+          props.pageProps.messages?.common['default-mutation-success-message'] ??
           'Successfully submitted.',
         error:
-          props.pageProps.dictionaries?.common?.['default-mutation-error-message'] ??
+          props.pageProps.messages?.common['default-mutation-error-message'] ??
           'Something went wrong.',
       },
     })
@@ -61,9 +61,9 @@ export interface ProvidersProps extends KeysAllowUndefined<SharedPageProps> {
 }
 
 export function Providers(props: ProvidersProps): JSX.Element {
-  const { dictionaries = {}, initialQueryState, isPageAccessible, queryClient } = props
+  const { messages = {}, initialQueryState, isPageAccessible, queryClient } = props
 
-  const { locale } = useLocale()
+  const locale = getLocale()
   const { reset } = useQueryErrorResetBoundary()
 
   function onSignIn() {
@@ -75,23 +75,21 @@ export function Providers(props: ProvidersProps): JSX.Element {
   }
 
   return (
-    <I18nProvider dictionaries={dictionaries}>
-      <PageProvider>
-        <QueryProvider client={queryClient} state={initialQueryState}>
-          <AuthProvider
-            isPageAccessible={isPageAccessible}
-            onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
-            onSignOut={onSignOut}
-          >
-            <PageAccessControl>
-              <AriaI18nProvider locale={locale}>
-                <OverlayProvider>{props.children}</OverlayProvider>
-              </AriaI18nProvider>
-            </PageAccessControl>
-          </AuthProvider>
-        </QueryProvider>
-      </PageProvider>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
+      <QueryProvider client={queryClient} state={initialQueryState}>
+        <AuthProvider
+          isPageAccessible={isPageAccessible}
+          onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
+          onSignOut={onSignOut}
+        >
+          <PageAccessControl>
+            <AriaI18nProvider locale={locale}>
+              <OverlayProvider>{props.children}</OverlayProvider>
+            </AriaI18nProvider>
+          </PageAccessControl>
+        </AuthProvider>
+      </QueryProvider>
       <ToastContainer />
-    </I18nProvider>
+    </NextIntlClientProvider>
   )
 }

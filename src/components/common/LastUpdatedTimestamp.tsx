@@ -1,5 +1,6 @@
+import { useFormatter, useTranslations } from 'next-intl'
+
 import css from '@/components/common/LastUpdatedTimestamp.module.css'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import type { IsoDateString } from '@/lib/core/types'
 
 export interface LastUpdatedTimestampProps {
@@ -9,12 +10,13 @@ export interface LastUpdatedTimestampProps {
 export function LastUpdatedTimestamp(props: LastUpdatedTimestampProps): JSX.Element {
   const { dateTime } = props
 
-  const { t, formatDateTime } = useI18n<'common'>()
+  const t = useTranslations('common')
+  const format = useFormatter()
 
   return (
     <time className={css['container']} dateTime={dateTime}>
-      {t(['common', 'item', 'last-updated-on'], {
-        values: { date: formatDateTime(new Date(dateTime)) },
+      {t('item.last-updated-on', {
+        date: format.dateTime(new Date(dateTime)),
       })}
     </time>
   )

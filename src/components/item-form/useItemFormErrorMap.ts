@@ -1,10 +1,9 @@
+import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
 import { z } from 'zod'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
-
 export function useItemFormErrorMap(): z.ZodErrorMap {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
 
   const errorMap = useMemo(() => {
     const errorMap: z.ZodErrorMap = function errorMap(issue, context) {
@@ -14,7 +13,7 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
       switch (issue.code) {
         case z.ZodIssueCode.invalid_type: {
           if (issue.received === 'undefined') {
-            return { message: t(['authenticated', 'validation', 'empty-field']) }
+            return { message: t('validation.empty-field') }
           }
           break
         }
@@ -22,9 +21,9 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
         case z.ZodIssueCode.invalid_string: {
           switch (issue.validation) {
             case 'email':
-              return { message: t(['authenticated', 'validation', 'invalid-email']) }
+              return { message: t('validation.invalid-email') }
             case 'url':
-              return { message: t(['authenticated', 'validation', 'invalid-url']) }
+              return { message: t('validation.invalid-url') }
             default:
               break
           }
@@ -46,10 +45,8 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
         case z.ZodIssueCode.custom: {
           if (issue.params?.['invalidValue'] === true) {
             return {
-              message: t(['authenticated', 'validation', 'invalid-value-type'], {
-                values: {
-                  type: t(['authenticated', 'validation', 'data-types', issue.params['type']]),
-                },
+              message: t('validation.invalid-value-type', {
+                type: t(`validation.data-types.${issue.params['type']}`),
               }),
             }
           }

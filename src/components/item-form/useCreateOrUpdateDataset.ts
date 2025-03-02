@@ -10,7 +10,6 @@ import { keys as itemKeys } from '@/data/sshoc/hooks/item'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable-next-line @typescript-eslint/no-namespace */
 export namespace UseCreateOrUpdateDataset {
@@ -77,9 +76,7 @@ export function useCreateOrUpdateDataset(
     {
       ...options,
       onSuccess(dataset, ...args) {
-        const pathname = routes.DatasetPage({
-          persistentId: dataset.persistentId,
-        }).pathname
+        const pathname = `/dataset/${dataset.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

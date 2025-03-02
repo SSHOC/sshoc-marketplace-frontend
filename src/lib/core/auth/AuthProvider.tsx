@@ -2,6 +2,7 @@ import { HttpError } from '@stefanprobst/request'
 import type { JwtPayload } from 'jwt-decode'
 import jwtDecode from 'jwt-decode'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import { useMutation } from 'react-query'
@@ -14,8 +15,6 @@ import {
   validateOAuthToken,
 } from '@/data/sshoc/api/auth'
 import type { PageComponent } from '@/lib/core/app/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { assert, createSiteUrl, isNonEmptyString } from '@/lib/utils'
@@ -74,7 +73,7 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
       if (isPageAccessible == null || isPageAccessible === true) {
         setSession({ status: 'signedOut', token: null })
       } else {
-        router.push(routes.HomePage()).then(() => {
+        router.push('/').then(() => {
           setSession({ status: 'signedOut', token: null })
         })
       }
@@ -86,10 +85,8 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
         const next = searchParams?.get(nextPageKey)
         if (next != null) {
           router.replace(next)
-        } else if (
-          [routes.SignInPage().pathname, routes.SignUpPage().pathname].includes(router.pathname)
-        ) {
-          router.replace(routes.HomePage())
+        } else if ([`/auth/sign-in`, `/auth/sign-up`].includes(router.pathname)) {
+          router.replace('/')
         }
       } else {
         signOut()
@@ -143,7 +140,7 @@ export interface AuthProviderProps {
 export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const { onSignIn, onSignOut, isPageAccessible } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const {
     session,
     signOut: _signOut,
@@ -168,13 +165,13 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const signInWithBasicAuthMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'auth', 'signing-in'])
+        return t('auth.signing-in')
       },
       success() {
-        return t(['common', 'auth', 'sign-in-success'])
+        return t('auth.sign-in-success')
       },
       error() {
-        return t(['common', 'auth', 'sign-in-error'])
+        return t('auth.sign-in-error')
       },
     },
   }
@@ -207,16 +204,16 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const validateIdTokenMeta: MutationMetadata = {
     messages: {
       mutate() {
-        // return t(['common', 'auth', 'signing-in'])
+        // return t('auth.signing-in')
         // FIXME: never gets updated with success message (at least in firefox), although
         // toast.update is called with the correct toast id.
         return false
       },
       success() {
-        return t(['common', 'auth', 'sign-in-success'])
+        return t('auth.sign-in-success')
       },
       error() {
-        return t(['common', 'auth', 'sign-in-error'])
+        return t('auth.sign-in-error')
       },
     },
   }
@@ -260,7 +257,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       },
       onSuccess() {
         updateSessionState('awaitingRegistrationFormData')
-        // router.push(routes.SignUpPage())
+        // router.push(`/auth/sign-up`)
       },
       onError() {
         signOut()
@@ -274,7 +271,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
             return false
           },
           error() {
-            return t(['common', 'auth', 'sign-up-error'])
+            return t('auth.sign-up-error')
           },
         },
       },
@@ -290,13 +287,13 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const validateRegistrationDataMeta: MutationMetadata = {
     messages: {
       mutate() {
-        return t(['common', 'auth', 'signing-up'])
+        return t('auth.signing-up')
       },
       success() {
-        return t(['common', 'auth', 'sign-up-success'])
+        return t('auth.sign-up-success')
       },
       error() {
-        return t(['common', 'auth', 'sign-up-error'])
+        return t('auth.sign-up-error')
       },
     },
   }
@@ -319,7 +316,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
         signOut()
       },
       onSettled() {
-        router.replace(routes.HomePage())
+        router.replace('/')
       },
       meta: validateRegistrationDataMeta,
       useErrorBoundary(error) {
@@ -493,7 +490,7 @@ const redirectUrls = {
     searchParams: { [redirectSearchParamKey]: redirectSearchParamValues.success },
   }),
   registration: createSiteUrl({
-    pathname: routes.SignUpPage().pathname,
+    pathname: `/auth/sign-up`,
     searchParams: { [redirectSearchParamKey]: redirectSearchParamValues.registration },
   }),
   error: createSiteUrl({

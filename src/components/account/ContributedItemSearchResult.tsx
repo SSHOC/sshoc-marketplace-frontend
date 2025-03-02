@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { ItemLink } from '@/components/common/ItemLink'
@@ -12,7 +13,6 @@ import { SearchResultMeta } from '@/components/common/SearchResultMeta'
 import { SearchResultTitle } from '@/components/common/SearchResultTitle'
 import { Timestamp } from '@/components/common/Timestamp'
 import type { ContributedItem } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes } from '@/lib/core/navigation/item-routes'
 
 export interface ContributedItemSearchResultProps {
@@ -22,7 +22,7 @@ export interface ContributedItemSearchResultProps {
 export function ContributedItemSearchResult(props: ContributedItemSearchResultProps): JSX.Element {
   const { item } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations()
 
   return (
     <Fragment>
@@ -40,7 +40,7 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
         <SearchResultMeta>
           <MetadataValue size="sm">
             <MetadataLabel size="sm">
-              {t(['authenticated', 'contributed-items', 'last-updated'])}:
+              {t('authenticated.contributed-items.last-updated')}:
             </MetadataLabel>
             <Timestamp dateTime={item.lastInfoUpdate} />
           </MetadataValue>
@@ -48,12 +48,12 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
         <SearchResultContent>
           <MetadataValues>
             <MetadataValue>
-              <MetadataLabel>{t(['common', 'item', 'item-category', 'one'])}:</MetadataLabel>
-              <span>{t(['common', 'item-categories', item.category, 'one'])}</span>
+              <MetadataLabel>{t('common.item.item-category.one')}:</MetadataLabel>
+              <span>{t(`common.item-categories.${item.category}.one`)}</span>
             </MetadataValue>
             <MetadataValue>
-              <MetadataLabel>{t(['common', 'item', 'status'])}:</MetadataLabel>
-              <span>{t(['common', 'item-status', item.status])}</span>
+              <MetadataLabel>{t('common.item.status')}:</MetadataLabel>
+              <span>{t(`common.item-status.${item.status}`)}</span>
             </MetadataValue>
           </MetadataValues>
         </SearchResultContent>
@@ -61,24 +61,24 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
           {item.status === 'approved' ? (
             <Link
               href={itemRoutes.ItemEditPage(item.category)({ persistentId: item.persistentId })}
-              aria-label={t(['authenticated', 'contributed-items', 'edit-item'], {
-                values: { label: item.label },
+              aria-label={t('authenticated.contributed-items.edit-item', {
+                label: item.label,
               })}
             >
-              {t(['authenticated', 'controls', 'edit'])}
+              {t('authenticated.controls.edit')}
             </Link>
           ) : null}
-          {['draft', 'suggested', 'ingested'].includes(item.status) ? (
+          {['draft.suggested.ingested'].includes(item.status) ? (
             <Link
               href={itemRoutes.ItemEditVersionPage(item.category)({
                 persistentId: item.persistentId,
                 versionId: item.id,
               })}
-              aria-label={t(['authenticated', 'contributed-items', 'edit-item'], {
-                values: { label: item.label },
+              aria-label={t('authenticated.contributed-items.edit-item', {
+                label: item.label,
               })}
             >
-              {t(['authenticated', 'controls', 'edit'])}
+              {t('authenticated.controls.edit')}
             </Link>
           ) : null}
         </SearchResultControls>

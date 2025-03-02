@@ -36,6 +36,18 @@ type UndefinedLeaves<T> = {
         : undefined
 }
 
+type Primitive = boolean | number | string
+
+interface ParamsInput {
+  [K: string]: Primitive | ReadonlyArray<Primitive>
+}
+
+type StringParams<T extends ParamsInput> = {
+  [K in keyof T as string extends K ? never : K]: Exclude<T[K], undefined> extends Primitive
+    ? string
+    : ReadonlyArray<string>
+}
+
 declare module '*.mdx' {
   import type { MDXContent } from 'mdx/types'
 

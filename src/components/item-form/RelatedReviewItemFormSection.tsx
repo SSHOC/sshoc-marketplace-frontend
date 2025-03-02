@@ -1,8 +1,9 @@
+import { useTranslations } from 'next-intl'
+
 import { FormSection } from '@/components/common/FormSection'
 import { FormSectionTitle } from '@/components/common/FormSectionTitle'
 import { ReviewRelatedItemsFormFieldArray } from '@/components/item-form/ReviewRelatedItemsFormFieldArray'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface RelatedReviewItemFormSectionProps {
   formFields: ItemFormFields
@@ -13,11 +14,11 @@ export function RelatedReviewItemFormSection(
 ): JSX.Element {
   const { fields } = props.formFields
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
 
   return (
     <FormSection>
-      <FormSectionTitle>{t(['authenticated', 'forms', 'related-items-section'])}</FormSectionTitle>
+      <FormSectionTitle>{t('forms.related-items-section')}</FormSectionTitle>
       <ReviewRelatedItemsFormFieldArray field={fields.relatedItems} />
     </FormSection>
   )

@@ -1,4 +1,5 @@
 import type { FormApi, SubmissionErrors } from 'final-form'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-final-form'
 import { useFieldArray } from 'react-final-form-arrays'
 
@@ -31,7 +32,6 @@ import type { FormProps } from '@/lib/core/form/Form'
 import { Form } from '@/lib/core/form/Form'
 import { FormButton } from '@/lib/core/form/FormButton'
 import { FormButtonLink } from '@/lib/core/form/FormButtonLink'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type WorkflowFormValues = WorkflowInput & {
   persistentId?: Workflow['persistentId']
@@ -133,7 +133,7 @@ interface WorkflowFormSectionsProps {
 function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
   const { onCancel } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const form = useForm<WorkflowFormValues>()
   const formFields = useWorkflowFormFields()
 
@@ -161,11 +161,9 @@ function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
       <RelatedItemFormSection formFields={formFields} />
 
       <FormControls>
-        <FormButtonLink onPress={onCancel}>
-          {t(['authenticated', 'controls', 'cancel'])}
-        </FormButtonLink>
+        <FormButtonLink onPress={onCancel}>{t('controls.cancel')}</FormButtonLink>
         <FormButton onPress={onBeforeSubmit} type="submit">
-          {t(['authenticated', 'controls', 'next'])}
+          {t('controls.next')}
         </FormButton>
       </FormControls>
     </FormSections>
@@ -179,7 +177,7 @@ interface WorkflowStepsFormSectionProps {
 function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Element {
   const { setPage } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<UndefinedLeaves<WorkflowStepInput> | WorkflowStepInput>(
     'composedOf',
     { subscription: { value: true } },
@@ -252,9 +250,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
         })}
       </FormFieldList>
       <FormFieldArrayControls>
-        <FormRecordAddButton onPress={onAdd}>
-          {t(['authenticated', 'forms', 'add-workflow-step'])}
-        </FormRecordAddButton>
+        <FormRecordAddButton onPress={onAdd}>{t('forms.add-workflow-step')}</FormRecordAddButton>
       </FormFieldArrayControls>
     </FormFieldArray>
   )
@@ -269,7 +265,7 @@ interface WorkflowStepFormSectionsProps {
 function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Element {
   const { index, onCancel } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const form = useForm<WorkflowFormValues>()
   const name = `composedOf[${index}]`
   const formFields = useWorkflowStepFormFields(name + '.')
@@ -285,11 +281,9 @@ function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Ele
       <RelatedItemFormSection formFields={formFields} />
 
       <FormControls>
-        <FormButtonLink onPress={onCancel}>
-          {t(['authenticated', 'controls', 'cancel'])}
-        </FormButtonLink>
+        <FormButtonLink onPress={onCancel}>{t('controls.cancel')}</FormButtonLink>
         <FormButton onPress={onBeforeSubmit} type="submit">
-          {t(['authenticated', 'controls', 'save'])}
+          {t('controls.save')}
         </FormButton>
       </FormControls>
     </FormSections>

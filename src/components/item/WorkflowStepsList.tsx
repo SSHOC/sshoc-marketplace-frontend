@@ -1,4 +1,5 @@
 import { useButton } from '@react-aria/button'
+import { useTranslations } from 'next-intl'
 import { Fragment, useRef } from 'react'
 
 import { ItemPreviewMetadata } from '@/components/common/ItemPreviewMetadata'
@@ -9,7 +10,6 @@ import { ItemDescription } from '@/components/item/ItemDescription'
 import { ItemRelatedItems } from '@/components/item/ItemRelatedItems'
 import css from '@/components/item/WorkflowStepsList.module.css'
 import type { Workflow } from '@/data/sshoc/api/workflow'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { useDisclosure } from '@/lib/core/ui/hooks/useDisclosure'
 import { useDisclosureState } from '@/lib/core/ui/hooks/useDisclosureState'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
@@ -22,7 +22,7 @@ export interface WorkflowStepsListProps {
 export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element {
   const { steps } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   const category = 'step'
 
@@ -34,7 +34,7 @@ export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element {
     <section className={css['container']}>
       <SectionHeader>
         <SectionTitle>
-          {t(['common', 'item-categories', category, 'other'])}
+          {t(`item-categories.${category}.other`)}
           <ItemsCount count={steps.length} />
         </SectionTitle>
       </SectionHeader>
@@ -59,7 +59,7 @@ interface WorkflowStepProps {
 function WorkflowStep(props: WorkflowStepProps): JSX.Element {
   const { index, step } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   // TODO: Convert to Accordion, once https://github.com/adobe/react-spectrum/issues/1989 is resolved.
   const state = useDisclosureState({})
@@ -87,7 +87,7 @@ function WorkflowStep(props: WorkflowStepProps): JSX.Element {
           data-state={state.isOpen ? 'expanded' : 'collapsed'}
           ref={buttonRef}
         >
-          {t(['common', 'item', state.isOpen ? 'collapse-workflow-step' : 'expand-workflow-step'])}
+          {t(`item.${state.isOpen ? 'collapse-workflow-step' : 'expand-workflow-step'}`)}
           <Icon icon={TriangleIcon} />
         </button>
       </header>

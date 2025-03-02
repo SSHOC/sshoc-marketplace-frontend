@@ -1,10 +1,9 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
+import { useTranslations } from 'next-intl'
 import type { ReactNode, SVGProps, VFC } from 'react'
 
 import type { UserRole } from '@/data/sshoc/api/user'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import ActorsIcon from '~/public/assets/images/account/actors.svg?symbol-icon'
 import ContributedItemsIcon from '~/public/assets/images/account/contributed-items.svg?symbol-icon'
 import DraftItemsIcon from '~/public/assets/images/account/draft-items.svg?symbol-icon'
@@ -14,7 +13,7 @@ import UsersIcon from '~/public/assets/images/account/users.svg?symbol-icon'
 import VocabulariesIcon from '~/public/assets/images/account/vocabularies.svg?symbol-icon'
 
 export interface AccountLink {
-  href: Href
+  href: string
   label: string
   icon: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>
   roles: Array<UserRole>
@@ -23,51 +22,51 @@ export interface AccountLink {
 export type AccountLinks = Array<AccountLink>
 
 export function useAccountLinks(): AccountLinks {
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const currentUser = useCurrentUser()
 
   if (currentUser.data == null) return []
 
   const links: AccountLinks = [
     {
-      href: routes.ContributedItemsPage(),
-      label: t(['authenticated', 'pages', 'contributed-items']),
+      href: `/account/contributed-items`,
+      label: t('pages.contributed-items'),
       icon: ContributedItemsIcon,
       roles: ['administrator', 'moderator', 'contributor'],
     },
     {
-      href: routes.DraftItemsPage(),
-      label: t(['authenticated', 'pages', 'draft-items']),
+      href: `/account/draft-items`,
+      label: t('pages.draft-items'),
       icon: DraftItemsIcon,
       roles: ['administrator', 'moderator', 'contributor'],
     },
     {
-      href: routes.ModerateItemsPage({ 'd.status': '(suggested OR ingested)' }),
-      label: t(['authenticated', 'pages', 'moderate-items']),
+      href: `/account/moderate-items?${createUrlSearchParams({ 'd.status': '(suggested OR ingested)' })}`,
+      label: t('pages.moderate-items'),
       icon: ModerateItemsIcon,
       roles: ['administrator', 'moderator'],
     },
     {
-      href: routes.ActorsPage(),
-      label: t(['authenticated', 'pages', 'actors']),
+      href: `/account/actors`,
+      label: t('pages.actors'),
       icon: ActorsIcon,
       roles: ['administrator', 'moderator'],
     },
     {
-      href: routes.SourcesPage(),
-      label: t(['authenticated', 'pages', 'sources']),
+      href: `/account/sources`,
+      label: t('pages.sources'),
       icon: SourcesIcon,
       roles: ['administrator'],
     },
     {
-      href: routes.UsersPage(),
-      label: t(['authenticated', 'pages', 'users']),
+      href: `/account/users`,
+      label: t('pages.users'),
       icon: UsersIcon,
       roles: ['administrator'],
     },
     {
-      href: routes.VocabulariesPage(),
-      label: t(['authenticated', 'pages', 'vocabularies']),
+      href: `/account/vocabularies`,
+      label: t('pages.vocabularies'),
       icon: VocabulariesIcon,
       roles: ['administrator', 'moderator'],
     },

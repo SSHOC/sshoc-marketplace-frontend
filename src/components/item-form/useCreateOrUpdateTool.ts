@@ -10,7 +10,6 @@ import { keys } from '@/data/sshoc/hooks/tool-or-service'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable-next-line @typescript-eslint/no-namespace */
 export namespace UseCreateOrUpdateTool {
@@ -72,9 +71,7 @@ export function useCreateOrUpdateTool(
     {
       ...options,
       onSuccess(tool, ...args) {
-        const pathname = routes.ToolOrServicePage({
-          persistentId: tool.persistentId,
-        }).pathname
+        const pathname = `/tool-or-service/${tool.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

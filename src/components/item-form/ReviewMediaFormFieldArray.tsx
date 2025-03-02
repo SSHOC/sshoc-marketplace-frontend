@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Fragment, useRef } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
@@ -14,7 +15,6 @@ import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import { useSubmitMediaUploadForm } from '@/components/item-form/useSubmitMediaUploadForm'
 import type { ItemMediaInput, ItemsDiff } from '@/data/sshoc/api/item'
 import { FormThumbnail } from '@/lib/core/form/FormThumbnail'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { ModalDialog } from '@/lib/core/ui/ModalDialog/ModalDialog'
 import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDialogState'
 import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogTrigger'
@@ -27,7 +27,7 @@ export interface ReviewMediaFormFieldArrayProps {
 export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps): JSX.Element {
   const { field } = props
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+  const t = useTranslations('authenticated')
   const fieldArray = useFieldArray<ItemMediaInput | UndefinedLeaves<ItemMediaInput>>(field.name, {
     subscription: {},
   })
@@ -106,12 +106,12 @@ export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps)
                   <FormThumbnail {...field} name={name} label={field.itemLabel} />
                   <FormFieldListItemControls>
                     <FormRecordRemoveButton
-                      aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                        values: { field: field.itemLabel },
+                      aria-label={t('forms.remove-field', {
+                        field: field.itemLabel,
                       })}
                       onPress={onRemove}
                     >
-                      {t(['authenticated', 'controls', 'delete'])}
+                      {t('controls.delete')}
                     </FormRecordRemoveButton>
                   </FormFieldListItemControls>
                 </Fragment>
@@ -122,8 +122,8 @@ export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps)
       </FormFieldList>
       <FormFieldArrayControls>
         <FormRecordAddButton ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-          {t(['authenticated', 'forms', 'add-field'], {
-            values: { field: field.itemLabel },
+          {t('forms.add-field', {
+            field: field.itemLabel,
           })}
         </FormRecordAddButton>
         {dialog.isOpen ? (
@@ -132,7 +132,7 @@ export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps)
             isDismissable
             isOpen={dialog.isOpen}
             onClose={onCloseDialog}
-            title={t(['authenticated', 'media', 'upload-media-dialog-title'])}
+            title={t('media.upload-media-dialog-title')}
           >
             <MediaUploadForm
               fileTypes={['image', 'video']}

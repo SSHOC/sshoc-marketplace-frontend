@@ -1,6 +1,6 @@
 import type { NecessityIndicator } from '@react-types/shared'
+import { useTranslations } from 'next-intl'
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import AsteriskIcon from '@/lib/core/ui/icons/asterisk.svg?symbol-icon'
 
@@ -18,12 +18,10 @@ export function RequiredIndicator(props: RequiredIndicatorProps): JSX.Element | 
     includeNecessityIndicatorInAccessibilityName = false,
   } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   if (necessityIndicator === 'label') {
-    const necessityLabel = isRequired
-      ? t(['common', 'ui', 'label', '(required)'])
-      : t(['common', 'ui', 'label', '(optional)'])
+    const necessityLabel = isRequired ? t('ui.label.(required)') : t('ui.label.(optional)')
 
     /**
      * When the field is required, `aria-required` is already set, so the
@@ -38,9 +36,7 @@ export function RequiredIndicator(props: RequiredIndicatorProps): JSX.Element | 
     return (
       <Icon
         aria-label={
-          includeNecessityIndicatorInAccessibilityName
-            ? t(['common', 'ui', 'label', '(required)'])
-            : undefined
+          includeNecessityIndicatorInAccessibilityName ? t('ui.label.(required)') : undefined
         }
         icon={AsteriskIcon}
         width="0.35em"

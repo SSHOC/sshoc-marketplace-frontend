@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import type { FormEvent, Key } from 'react'
 import { useMemo, useState } from 'react'
 
@@ -7,8 +8,6 @@ import { useSearchItems } from '@/components/common/useSearchItems'
 import css from '@/components/home/ItemSearchForm.module.css'
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useItemCategories } from '@/data/sshoc/hooks/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { Item } from '@/lib/core/ui/Collection/Item'
 import { Select } from '@/lib/core/ui/Select/Select'
@@ -25,7 +24,7 @@ export interface ItemSearchFormProps {
 export function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
   const { initialItemSearchTerm } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const { searchItems } = useSearchItems()
 
   const [selectedItemCategory, setSelectedItemCategory] =
@@ -48,9 +47,9 @@ export function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
       noValidate
       role="search"
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
       onSubmit={onSubmit}
-      aria-label={t(['common', 'home', 'search', 'search-items'])}
+      aria-label={t('home.search.search-items')}
       className={css['container']}
     >
       <ItemCategorySelect
@@ -63,7 +62,7 @@ export function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
         onChangeItemSearchTerm={setItemSearchTerm}
       />
       <Button color="gradient" type="submit">
-        {t(['common', 'home', 'search', 'submit'])}
+        {t('home.search.submit')}
       </Button>
     </form>
   )
@@ -77,19 +76,19 @@ interface ItemCategoryOption {
 type ItemCategoryOptions = Array<ItemCategoryOption>
 
 function useItemCategoryOptions() {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const itemCategories = useItemCategories()
 
   const options: ItemCategoryOptions = useMemo(() => {
     const options: ItemCategoryOptions = [
-      { id: allItemCategories, label: t(['common', 'home', 'search', 'all-item-categories']) },
+      { id: allItemCategories, label: t('home.search.all-item-categories') },
     ]
 
     if (itemCategories.data == null) return options
 
     keys(itemCategories.data).forEach((category) => {
       if (category === 'step') return
-      options.push({ id: category, label: t(['common', 'item-categories', category, 'other']) })
+      options.push({ id: category, label: t(`item-categories.${category}.other`) })
     })
 
     return options
@@ -106,7 +105,7 @@ interface ItemCategorySelectProps {
 function ItemCategorySelect(props: ItemCategorySelectProps): JSX.Element {
   const { selectedItemCategory, onSelectItemCategory } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const itemCategories = useItemCategoryOptions()
 
   function onSelectionChange(key: Key) {
@@ -116,7 +115,7 @@ function ItemCategorySelect(props: ItemCategorySelectProps): JSX.Element {
   return (
     <Select
       name="categories"
-      aria-label={t(['common', 'home', 'search', 'item-category'])}
+      aria-label={t('home.search.item-category')}
       items={itemCategories.data}
       loadingState={itemCategories.isLoading ? 'loading' : undefined}
       selectedKey={selectedItemCategory}

@@ -1,7 +1,7 @@
 import type { NextRouter } from 'next/router'
 
 import { noop } from '@/lib/utils'
-import { defaultLocale, locales } from '~/config/i18n.config.mjs'
+import { defaultLocale, locales } from '~/config/i18n.config'
 
 export const mockRouter: NextRouter = {
   basePath: '/',

@@ -1,12 +1,12 @@
 import { useButton } from '@react-aria/button'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import type { AriaButtonProps } from '@react-types/button'
+import { useTranslations } from 'next-intl'
 import { Fragment, useRef, useState } from 'react'
 
 import css from '@/components/item/ItemMedia.module.css'
 import type { Item } from '@/data/sshoc/api/item'
 import { getMediaThumbnailUrl, getMediaUrl, isMediaDetailsUrl } from '@/data/sshoc/api/media'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Icon } from '@/lib/core/ui/Icon/Icon'
 import ChevronIcon from '@/lib/core/ui/icons/chevron.svg?symbol-icon'
 import DocumentIcon from '@/lib/core/ui/icons/document.svg?symbol-icon'
@@ -18,7 +18,7 @@ export interface ItemMediaProps {
 export function ItemMedia(props: ItemMediaProps): JSX.Element {
   const { media } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
 
   if (media.length === 0) {
@@ -48,7 +48,7 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
   return (
     <section className={css['container']}>
       <h2>
-        <VisuallyHidden>{t(['common', 'item', 'media', 'other'])}</VisuallyHidden>
+        <VisuallyHidden>{t('item.media.other')}</VisuallyHidden>
       </h2>
       <div className={css['carousel-container']}>
         <figure className={css['media-container']}>
@@ -56,11 +56,11 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
           <MediaCaption media={currentMedia} />
         </figure>
         {hasMultipleMedia ? (
-          <nav aria-label={t(['common', 'item', 'media', 'other'])}>
+          <nav aria-label={t('item.media.other')}>
             <ol role="list" className={css['carousel-controls']}>
               <li data-direction="prev">
                 <Button onPress={onPreviousMedia} isDisabled={!hasPrevious}>
-                  <Icon icon={ChevronIcon} aria-label={t(['common', 'item', 'previous-media'])} />
+                  <Icon icon={ChevronIcon} aria-label={t('item.previous-media')} />
                 </Button>
               </li>
               <li>
@@ -73,7 +73,7 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
               </li>
               <li data-direction="next">
                 <Button onPress={onNextMedia} isDisabled={!hasNext}>
-                  <Icon icon={ChevronIcon} aria-label={t(['common', 'item', 'next-media'])} />
+                  <Icon icon={ChevronIcon} aria-label={t('item.next-media')} />
                 </Button>
               </li>
             </ol>
@@ -92,7 +92,7 @@ interface ItemMediaPreviewsProps {
 function ItemMediaPreviews(props: ItemMediaPreviewsProps): JSX.Element {
   const { media, onSelect } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
     <ol role="list" className={css['thumbnails']}>
@@ -106,8 +106,8 @@ function ItemMediaPreviews(props: ItemMediaPreviewsProps): JSX.Element {
                 onSelect(index)
               }}
               // TODO: should label use caption?
-              aria-label={t(['common', 'item', 'go-to-media'], {
-                values: { media: String(index) },
+              aria-label={t('item.go-to-media', {
+                media: String(index),
               })}
             >
               {hasThumbnail ? (
@@ -139,7 +139,7 @@ function Media(props: MediaProps): JSX.Element {
     ? info.location.sourceUrl
     : String(getMediaUrl({ mediaId: info.mediaId }))
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   switch (media.info.category) {
     case 'embed':
@@ -149,7 +149,7 @@ function Media(props: MediaProps): JSX.Element {
           // TODO:
           // sandbox="allow-popups; allow-same-origin; allow-scripts"
           loading="lazy"
-          title={caption ?? t(['common', 'item', 'embedded-content'])}
+          title={caption ?? t('item.embedded-content')}
           allow="fullscreen; picture-in-picture"
           referrerPolicy="no-referrer"
         />
@@ -162,7 +162,7 @@ function Media(props: MediaProps): JSX.Element {
       return (
         <a download href={url}>
           <Icon icon={DocumentIcon} />
-          {t(['common', 'item', 'download-media'])}
+          {t('item.download-media')}
         </a>
       )
     case 'video':

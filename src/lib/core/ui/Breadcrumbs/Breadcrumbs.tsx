@@ -1,19 +1,18 @@
+import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import type { Href } from '@/lib/core/navigation/types'
 import css from '@/lib/core/ui/Breadcrumbs/Breadcrumbs.module.css'
 
 export interface BreadcrumbsProps {
-  links: Array<{ href: Href; label: string; isCurrent?: boolean; isDisabled?: boolean }>
+  links: Array<{ href: string; label: string; isCurrent?: boolean; isDisabled?: boolean }>
 }
 
 export function Breadcrumbs(props: BreadcrumbsProps): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
-    <nav aria-label={t(['common', 'breadcrumbs'])}>
+    <nav aria-label={t('breadcrumbs')}>
       <ol role="list" className={css['nav-items']}>
         {props.links.map((link, index) => {
           return (

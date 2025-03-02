@@ -1,7 +1,7 @@
 import type { Toc } from '@stefanprobst/rehype-extract-toc'
+import { useTranslations } from 'next-intl'
 
 import css from '@/components/common/TableOfContents.module.css'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export interface TableOfContentsProps {
   /** @default 2 */
@@ -12,11 +12,11 @@ export interface TableOfContentsProps {
 export function TableOfContents(props: TableOfContentsProps): JSX.Element {
   const { maxDepth = 2, tableOfContents } = props
 
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
 
   return (
-    <nav aria-label={t(['common', 'table-of-contents'])} className={css['nav']}>
-      <h2 className={css['heading']}>{t(['common', 'table-of-contents'])}</h2>
+    <nav aria-label={t('table-of-contents')} className={css['nav']}>
+      <h2 className={css['heading']}>{t('table-of-contents')}</h2>
       <Level entries={tableOfContents} depth={1} maxDepth={maxDepth} />
     </nav>
   )

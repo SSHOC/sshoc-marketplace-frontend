@@ -1,9 +1,9 @@
-import Image from "next/legacy/image"
+import { createUrlSearchParams } from '@stefanprobst/request'
+import Image from 'next/legacy/image'
+import { useTranslations } from 'next-intl'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { usePathname } from '@/lib/core/navigation/usePathname'
 import { AuthButton } from '@/lib/core/page/AuthButton'
 import { MobileNavigationMenu } from '@/lib/core/page/MobileNavigationMenu'
@@ -12,27 +12,27 @@ import { PageNavigation } from '@/lib/core/page/PageNavigation'
 import Logo from '~/public/assets/images/logo-with-text.svg'
 
 export function PageHeader(): JSX.Element {
-  const { t } = useI18n<'common'>()
+  const t = useTranslations('common')
   const pathname = usePathname()
   const currentUser = useCurrentUser()
 
   return (
     <header className={css['container']}>
       <div className={css['home-link']}>
-        <NavLink href={routes.HomePage()} aria-label={t(['common', 'pages', 'home'])}>
+        <NavLink href="/" aria-label={t('pages.home')}>
           <Image src={Logo} alt="" priority />
         </NavLink>
       </div>
       <div className={css['secondary-nav']}>
         <div className={css['secondary-nav-link']}>
           <NavLink
-            href={routes.ContactPage({
+            href={`/contact?${createUrlSearchParams({
               email: currentUser.data?.email,
-              subject: t(['common', 'report-issue']),
-              message: t(['common', 'report-issue-message'], { values: { pathname } }),
-            })}
+              subject: t('report-issue'),
+              message: t('report-issue-message', { pathname }),
+            })}`}
           >
-            {t(['common', 'report-issue'])}
+            {t('report-issue')}
           </NavLink>
         </div>
         <AuthButton />
