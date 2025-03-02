@@ -75,7 +75,7 @@ export function Providers(props: ProvidersProps): JSX.Element {
   }
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <QueryProvider client={queryClient} state={initialQueryState}>
         <AuthProvider
           isPageAccessible={isPageAccessible}

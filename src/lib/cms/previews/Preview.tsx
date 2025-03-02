@@ -19,7 +19,7 @@ export function Preview(props: PreviewProps): JSX.Element {
   return (
     <RouterContext.Provider value={mockRouter}>
       <ErrorBoundary fallback={ErrorFallback}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
           {props.children}
         </NextIntlClientProvider>
       </ErrorBoundary>
