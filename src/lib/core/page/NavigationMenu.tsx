@@ -21,7 +21,6 @@ export interface NavigationMenuProps<T extends object> extends MenuTriggerProps 
   label?: ReactNode
   menuLabel?: string
   children: CollectionChildren<T>
-  onAction?: (key: Key) => void
 }
 
 /**
@@ -95,7 +94,7 @@ function Menu<T extends object>(props: MenuProps<T>) {
             key={item.key}
             item={item}
             state={state}
-            onAction={props.onAction}
+            onAction={item.props.onAction}
             onClose={props.onClose}
           />
         )
@@ -107,7 +106,7 @@ function Menu<T extends object>(props: MenuProps<T>) {
 interface MenuItemProps<T> {
   item: Node<T>
   state: TreeState<T>
-  onAction?: (key: Key) => void
+  onAction?: () => void
   onClose?: () => void
 }
 
@@ -134,6 +133,7 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
         ref={ref as RefObject<HTMLAnchorElement>}
         {...menuItemProps}
         href={item.props.href}
+        onPress={onAction}
         variant="nav-menu-link"
       >
         {item.rendered}

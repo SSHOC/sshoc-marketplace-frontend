@@ -1,6 +1,5 @@
 import { Item } from '@react-stately/collections'
 import { useRouter } from 'next/router'
-import type { Key } from 'react'
 import { Fragment } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
@@ -54,21 +53,16 @@ function BrowseNavMenu(): JSX.Element {
   const items = useBrowseNavItems()
   const router = useRouter()
 
-  function onAction(key: Key) {
-    const item = items.find((item) => {
-      return item.id === key
-    })
-
-    if (item == null) return
-
-    router.push(item.href)
-  }
-
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu label={t(['common', 'pages', 'browse'])} items={items} onAction={onAction}>
+      <NavigationMenu label={t(['common', 'pages', 'browse'])} items={items}>
         {(item) => {
-          const props = { href: item.href }
+          const props = {
+            href: item.href,
+            onAction() {
+              router.push(item.href)
+            },
+          }
 
           return <Item {...props}>{item.label}</Item>
         }}
@@ -82,25 +76,16 @@ function ContributeNavMenu(): JSX.Element {
   const items = useContributeNavItems()
   const router = useRouter()
 
-  function onAction(key: Key) {
-    const item = items.find((item) => {
-      return item.id === key
-    })
-
-    if (item == null) return
-
-    router.push(item.href)
-  }
-
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu
-        label={t(['common', 'pages', 'contribute'])}
-        items={items}
-        onAction={onAction}
-      >
+      <NavigationMenu label={t(['common', 'pages', 'contribute'])} items={items}>
         {(item) => {
-          const props = { href: item.href }
+          const props = {
+            href: item.href,
+            onAction() {
+              router.push(item.href)
+            },
+          }
 
           return <Item {...props}>{item.label}</Item>
         }}
@@ -114,21 +99,16 @@ function AboutNavMenu(): JSX.Element {
   const items = useAboutNavItems()
   const router = useRouter()
 
-  function onAction(key: Key) {
-    const item = items.find((item) => {
-      return item.id === key
-    })
-
-    if (item == null) return
-
-    router.push(item.href)
-  }
-
   return (
     <li className={css['nav-item']}>
-      <NavigationMenu label={t(['common', 'pages', 'about'])} items={items} onAction={onAction}>
+      <NavigationMenu label={t(['common', 'pages', 'about'])} items={items}>
         {(item) => {
-          const props = { href: item.href }
+          const props = {
+            href: item.href,
+            onAction() {
+              router.push(item.href)
+            },
+          }
 
           return <Item {...props}>{item.label}</Item>
         }}

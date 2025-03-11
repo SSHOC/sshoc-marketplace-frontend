@@ -8,7 +8,10 @@ export interface Matcher {
 }
 
 const isMatchingPathnames: Matcher = function isMatchingPathnames(href, route) {
-  return (typeof href === 'string' ? new URL(href).pathname : href.pathname) === route.pathname
+  return (
+    (typeof href === 'string' ? new URL(href, 'https://n').pathname : href.pathname) ===
+    route.pathname
+  )
 }
 
 export interface UseIsCurrentRouteArgs {
