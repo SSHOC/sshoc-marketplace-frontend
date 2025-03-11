@@ -8,7 +8,6 @@ import css from '@/components/home/ItemSearchForm.module.css'
 import type { ItemCategory } from '@/data/sshoc/api/item'
 import { useItemCategories } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { Item } from '@/lib/core/ui/Collection/Item'
 import { Select } from '@/lib/core/ui/Select/Select'
@@ -48,7 +47,7 @@ export function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
       noValidate
       role="search"
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
       onSubmit={onSubmit}
       aria-label={t(['common', 'home', 'search', 'search-items'])}
       className={css['container']}

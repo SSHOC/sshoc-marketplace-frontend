@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
@@ -19,7 +18,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { SpacedRow } from '@/lib/core/ui/SpacedRow/SpacedRow'
@@ -50,13 +48,13 @@ export default function ActorsPage(_props: ActorsPage.Props): JSX.Element {
   const title = t(['authenticated', 'pages', 'actors'])
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
     {
-      href: routes.AccountPage(),
+      href: `/account`,
       label: t(['authenticated', 'pages', 'account']),
     },
     {
-      href: routes.ActorsPage(),
+      href: `/account/actors`,
       label: t(['authenticated', 'pages', 'actors']),
     },
   ]

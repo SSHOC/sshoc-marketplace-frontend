@@ -12,7 +12,6 @@ import { useTrainingMaterialFormRecommendedFields } from '@/components/item-form
 import { useTrainingMaterialValidationSchema } from '@/components/item-form/useTrainingMaterialValidationSchema'
 import type { TrainingMaterialInput } from '@/data/sshoc/api/training-material'
 import { getApiErrorMessage } from '@/data/sshoc/utils/get-api-error-message'
-import { routes } from '@/lib/core/navigation/routes'
 
 export type CreateTrainingMaterialFormValues = ItemFormValues<TrainingMaterialInput>
 
@@ -50,11 +49,9 @@ export function TrainingMaterialCreateForm(): JSX.Element {
             window.scrollTo(0, 0)
             form.resumeValidation()
           } else if (trainingMaterial.status === 'approved') {
-            router.push(
-              routes.TrainingMaterialPage({ persistentId: trainingMaterial.persistentId }),
-            )
+            router.push(`/training-material/${trainingMaterial.persistentId}`)
           } else {
-            router.push(routes.SuccessPage())
+            router.push(`/success`)
           }
           done?.()
         },
@@ -69,7 +66,7 @@ export function TrainingMaterialCreateForm(): JSX.Element {
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(`/account`)
   }
 
   return (

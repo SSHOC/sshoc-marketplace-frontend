@@ -38,9 +38,6 @@ yarn-error.log*
 .stylelintcache
 *.tsbuildinfo
 
-# generated route manifest
-src/lib/core/navigation/routes.ts
-
 
 ## .dockerignore ##
 

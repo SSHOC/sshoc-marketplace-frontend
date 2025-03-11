@@ -9,7 +9,6 @@ import { Form } from '@/lib/core/form/Form'
 import { FormButton } from '@/lib/core/form/FormButton'
 import { FormTextField } from '@/lib/core/form/FormTextField'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { isNonEmptyString } from '@/lib/utils'
 
 export type SignInFormValues = SignInInput
@@ -91,7 +90,7 @@ export function SignInForm(): JSX.Element {
           {t(['common', 'auth', 'sign-in-helptext'], {
             components: {
               ContactLink(props) {
-                return <Link href={routes.ContactPage()}>{props.children}</Link>
+                return <Link href="/contact">{props.children}</Link>
               },
             },
           })}

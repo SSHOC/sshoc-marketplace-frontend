@@ -1,13 +1,12 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { sanitizeSearchParams } from '@/lib/utils'
 import type { ContributedItemsPage } from '@/pages/account/contributed-items.page'
 
 export interface UseContributedItemsSearchResult {
   getSearchContributedItemsLink: (query: ContributedItemsPage.SearchParamsInput) => {
-    href: Href
+    href: string
     shallow: boolean
     scroll: boolean
   }
@@ -20,7 +19,7 @@ export function useContributedItemsSearch(): UseContributedItemsSearchResult {
   function getSearchContributedItemsLink(query: ContributedItemsPage.SearchParamsInput) {
     /** Filter out empty values to avoid `key=` query parameters. */
     return {
-      href: routes.ContributedItemsPage(sanitizeSearchParams(query)),
+      href: `/account/contributed-items?${createUrlSearchParams(sanitizeSearchParams(query))}`,
       shallow: true,
       scroll: true,
     }

@@ -1,7 +1,5 @@
 import { useAuth } from '@/lib/core/auth/useAuth'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 
 interface MenuItemBase {
   id: string
@@ -11,7 +9,7 @@ interface MenuItemBase {
 
 interface MenuItemNavLink extends MenuItemBase {
   type: 'nav-link'
-  href: Href
+  href: string
 }
 
 interface MenuItemLink extends MenuItemBase {
@@ -35,7 +33,7 @@ export function useAccountMenuItems(): Array<MenuItem> {
       id: 'account',
       label: t(['common', 'pages', 'account']),
       type: 'nav-link',
-      href: routes.AccountPage(),
+      href: `/account`,
     },
     {
       id: 'sign-out',

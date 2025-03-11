@@ -16,7 +16,6 @@ import { keys } from '@/data/sshoc/hooks/tool-or-service'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 // FIXME: DRY up.
 // TODO: export ItemFormValues<WorkflowInput & ...> type here, and use it on the /new page.
@@ -264,9 +263,7 @@ export function useCreateOrUpdateWorkflow(
     {
       ...options,
       onSuccess(workflow, ...args) {
-        const pathname = routes.WorkflowPage({
-          persistentId: workflow.persistentId,
-        }).pathname
+        const pathname = `/workflow/${workflow.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

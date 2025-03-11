@@ -1,4 +1,4 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
+import { createUrlSearchParams } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -26,7 +26,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { QueryMetadata } from '@/lib/core/query/types'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
@@ -117,17 +116,17 @@ export default function PublicationHistoryPage(props: PublicationHistoryPage.Pro
   }
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
     {
-      href: routes.SearchPage({ categories: [category], order: ['label'] }),
+      href: `/search?${createUrlSearchParams({ categories: [category], order: ['label'] })}`,
       label: t(['common', 'item-categories', category, 'other']),
     },
     {
-      href: routes.PublicationPage({ persistentId }),
+      href: `/publication/${persistentId}`,
       label,
     },
     {
-      href: routes.PublicationHistoryPage({ persistentId }),
+      href: `/publication/${persistentId}/history`,
       label: t(['authenticated', 'pages', 'item-version-history']),
     },
   ]

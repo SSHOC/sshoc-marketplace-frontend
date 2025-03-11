@@ -14,7 +14,6 @@ import { keys } from '@/data/sshoc/hooks/training-material'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable-next-line @typescript-eslint/no-namespace */
 export namespace UseCreateOrUpdateTrainingMaterial {
@@ -85,9 +84,7 @@ export function useCreateOrUpdateTrainingMaterial(
     {
       ...options,
       onSuccess(trainingMaterial, ...args) {
-        const pathname = routes.TrainingMaterialPage({
-          persistentId: trainingMaterial.persistentId,
-        }).pathname
+        const pathname = `/training-material/${trainingMaterial.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 
 import css from '@/components/item-form/BackgroundImage.module.css'
 import Clouds from '~/public/assets/images/backgrounds/item-form@2x.png'

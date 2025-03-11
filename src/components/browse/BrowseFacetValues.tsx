@@ -1,4 +1,5 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useMemo } from 'react'
 
 import css from '@/components/browse/BrowseFacetValues.module.css'
@@ -7,7 +8,6 @@ import { SectionTitle } from '@/components/common/SectionTitle'
 import type { ItemFacet, ItemSearch } from '@/data/sshoc/api/item'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 
@@ -64,7 +64,7 @@ function FacetValues(props: FacetValuesProps): JSX.Element {
 
                 return (
                   <li key={value} className={css['list-item']}>
-                    <Link href={routes.SearchPage(query)}>
+                    <Link href={`/search?${createUrlSearchParams(query)}`}>
                       {value}
                       <span>{count}</span>
                     </Link>

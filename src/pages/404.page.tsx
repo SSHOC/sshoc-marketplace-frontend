@@ -1,4 +1,3 @@
-import type { StringParams } from '@stefanprobst/next-route-manifest'
 import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
 import { Fragment } from 'react'
 
@@ -15,7 +14,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 
 export namespace NotFoundPage {
@@ -54,7 +52,7 @@ export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
             <ScreenTitle>{title}</ScreenTitle>
             <ErrorMessage message={message} statusCode={404} />
             <div>
-              <LinkButton href={routes.HomePage()} color="secondary">
+              <LinkButton href="/" color="secondary">
                 {t(['common', 'go-to-main-page'])}
               </LinkButton>
             </div>

@@ -1,4 +1,3 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
 import type { FormApi, SubmissionErrors } from 'final-form'
 import type {
   GetStaticPathsContext,
@@ -37,7 +36,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import type { QueryMetadata } from '@/lib/core/query/types'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -173,9 +171,9 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
             })
             window.scrollTo(0, 0)
           } else if (workflow.status === 'approved') {
-            router.push(routes.WorkflowPage({ persistentId: workflow.persistentId }))
+            router.push(`/workflow/${workflow.persistentId}`)
           } else {
-            router.push(routes.SuccessPage())
+            router.push(`/success`)
           }
           done?.()
         },
@@ -191,7 +189,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
   }
 
   function onCancel() {
-    router.push(routes.AccountPage())
+    router.push(`/account`)
   }
 
   if (router.isFallback || workflow == null || (diff == null && !diffNotFound)) {

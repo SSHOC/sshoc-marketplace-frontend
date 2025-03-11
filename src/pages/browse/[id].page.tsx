@@ -1,4 +1,3 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -24,7 +23,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 
@@ -81,8 +79,8 @@ export default function BrowsePage(props: BrowsePage.Props): JSX.Element {
   })
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
-    { href: routes.BrowsePage({ id }), label: title },
+    { href: '/', label: t(['common', 'pages', 'home']) },
+    { href: `/browse/${id}`, label: title },
   ]
 
   return (

@@ -1,5 +1,4 @@
-import type { ParamsInput, StringParams } from '@stefanprobst/next-route-manifest'
-import { HttpError } from '@stefanprobst/request'
+import { createUrlSearchParams, HttpError } from '@stefanprobst/request'
 import type {
   GetStaticPathsContext,
   GetStaticPathsResult,
@@ -46,7 +45,6 @@ import { load } from '@/lib/core/i18n/load'
 import type { WithDictionaries } from '@/lib/core/i18n/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { routes } from '@/lib/core/navigation/routes'
 import { PageMainContent } from '@/lib/core/page/PageMainContent'
 import { Breadcrumbs } from '@/lib/core/ui/Breadcrumbs/Breadcrumbs'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
@@ -153,13 +151,13 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
   }
 
   const breadcrumbs = [
-    { href: routes.HomePage(), label: t(['common', 'pages', 'home']) },
+    { href: '/', label: t(['common', 'pages', 'home']) },
     {
-      href: routes.SearchPage({ categories: [trainingMaterial.category], order: ['label'] }),
+      href: `/search?${createUrlSearchParams({ categories: [trainingMaterial.category], order: ['label'] })}`,
       label: t(['common', 'item-categories', trainingMaterial.category, 'other']),
     },
     {
-      href: routes.TrainingMaterialPage({ persistentId }),
+      href: `/training-material/${persistentId}`,
       label,
     },
   ]

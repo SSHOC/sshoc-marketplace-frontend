@@ -8,7 +8,6 @@ import { useSearchItems } from '@/components/common/useSearchItems'
 import { ModalDialog } from '@/components/search/ModalDialog'
 import { useSearchFilters } from '@/components/search/useSearchFilters'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Button } from '@/lib/core/ui/Button/Button'
 import { CloseButton } from '@/lib/core/ui/CloseButton/CloseButton'
 import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDialogState'
@@ -95,7 +94,7 @@ function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
       noValidate
       role="search"
       method="get"
-      action={routes.SearchPage().pathname}
+      action="/search"
       onSubmit={onSubmit}
       aria-label={t(['common', 'search', 'search-items'])}
       className={css['form-container']}

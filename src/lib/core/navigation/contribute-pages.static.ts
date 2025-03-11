@@ -3,7 +3,6 @@ import { promises as fs } from 'fs'
 import * as path from 'path'
 
 import { collection } from '@/lib/cms/collections/contribute-pages'
-import { routes } from '@/lib/core/navigation/routes'
 
 interface ContributePageMetadata {
   title: string
@@ -44,7 +43,7 @@ export default async function load(): Promise<ValLoaderResult> {
 
         return {
           label: navigationMenu.title,
-          href: routes.ContributePage({ id }),
+          href: `/contribute/${id}`,
           position: navigationMenu.position,
         }
       }),

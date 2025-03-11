@@ -15,7 +15,6 @@ import {
 } from '@/data/sshoc/api/auth'
 import type { PageComponent } from '@/lib/core/app/types'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { useSearchParams } from '@/lib/core/navigation/useSearchParams'
 import type { MutationMetadata } from '@/lib/core/query/types'
 import { assert, createSiteUrl, isNonEmptyString } from '@/lib/utils'
@@ -74,7 +73,7 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
       if (isPageAccessible == null || isPageAccessible === true) {
         setSession({ status: 'signedOut', token: null })
       } else {
-        router.push(routes.HomePage()).then(() => {
+        router.push('/').then(() => {
           setSession({ status: 'signedOut', token: null })
         })
       }
@@ -86,10 +85,8 @@ export function useSession(args: UseSessionArgs): UseSessionResult {
         const next = searchParams?.get(nextPageKey)
         if (next != null) {
           router.replace(next)
-        } else if (
-          [routes.SignInPage().pathname, routes.SignUpPage().pathname].includes(router.pathname)
-        ) {
-          router.replace(routes.HomePage())
+        } else if ([`/auth/sign-in`, `/auth/sign-up`].includes(router.pathname)) {
+          router.replace('/')
         }
       } else {
         signOut()
@@ -260,7 +257,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       },
       onSuccess() {
         updateSessionState('awaitingRegistrationFormData')
-        // router.push(routes.SignUpPage())
+        // router.push(`/auth/sign-up`)
       },
       onError() {
         signOut()
@@ -319,7 +316,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
         signOut()
       },
       onSettled() {
-        router.replace(routes.HomePage())
+        router.replace('/')
       },
       meta: validateRegistrationDataMeta,
       useErrorBoundary(error) {
@@ -493,7 +490,7 @@ const redirectUrls = {
     searchParams: { [redirectSearchParamKey]: redirectSearchParamValues.success },
   }),
   registration: createSiteUrl({
-    pathname: routes.SignUpPage().pathname,
+    pathname: `/auth/sign-up`,
     searchParams: { [redirectSearchParamKey]: redirectSearchParamValues.registration },
   }),
   error: createSiteUrl({

@@ -1,13 +1,12 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { useRouter } from 'next/router'
 
-import { routes } from '@/lib/core/navigation/routes'
-import type { Href } from '@/lib/core/navigation/types'
 import { sanitizeSearchParams } from '@/lib/utils'
 import type { SourcesPage } from '@/pages/account/sources.page'
 
 export interface UseSourceSearchResult {
   getSearchSourcesLink: (query: SourcesPage.SearchParamsInput) => {
-    href: Href
+    href: string
     shallow: boolean
     scroll: boolean
   }
@@ -19,7 +18,11 @@ export function useSourceSearch(): UseSourceSearchResult {
 
   function getSearchSourcesLink(query: SourcesPage.SearchParamsInput) {
     /** Filter out empty values to avoid `key=` query parameters. */
-    return { href: routes.SourcesPage(sanitizeSearchParams(query)), shallow: true, scroll: true }
+    return {
+      href: `/account/sources?${createUrlSearchParams(sanitizeSearchParams(query))}`,
+      shallow: true,
+      scroll: true,
+    }
   }
 
   function searchSources(query: SourcesPage.SearchParamsInput) {

@@ -14,7 +14,6 @@ import { keys } from '@/data/sshoc/hooks/publication'
 import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable-next-line @typescript-eslint/no-namespace */
 export namespace UseCreateOrUpdatePublication {
@@ -85,9 +84,7 @@ export function useCreateOrUpdatePublication(
     {
       ...options,
       onSuccess(publication, ...args) {
-        const pathname = routes.PublicationPage({
-          persistentId: publication.persistentId,
-        }).pathname
+        const pathname = `/publication/${publication.persistentId}`
         revalidate({ pathname })
         queryClient.invalidateQueries(itemKeys.search())
         queryClient.invalidateQueries(itemKeys.drafts())

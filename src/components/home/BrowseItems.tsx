@@ -1,3 +1,4 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/common/Link'
@@ -9,7 +10,6 @@ import { SubSectionTitle } from '@/components/home/SubSectionTitle'
 import type { ItemFacet, ItemSearch } from '@/data/sshoc/api/item'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
-import { routes } from '@/lib/core/navigation/routes'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { length } from '@/lib/utils'
@@ -76,7 +76,7 @@ function BrowseLinks(props: BrowseLinksProps): JSX.Element {
           aria-label={t(['common', 'see-all-facets'], {
             values: { facet: t(['common', 'facets', facet, 'other']) },
           })}
-          href={routes.BrowsePage({ id: facet })}
+          href={`/browse/${facet}`}
         >
           {t(['common', 'see-all'])}
         </SubSectionHeaderLink>
@@ -93,7 +93,7 @@ function BrowseLinks(props: BrowseLinksProps): JSX.Element {
 
             return (
               <li key={value}>
-                <Link href={routes.SearchPage(query)} variant="tag">
+                <Link href={`/search?${createUrlSearchParams(query)}`} variant="tag">
                   <span>{value}</span>
                   <span className={css['item-count']}>({count})</span>
                 </Link>

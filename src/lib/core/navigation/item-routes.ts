@@ -1,105 +1,295 @@
+import { createUrlSearchParams } from '@stefanprobst/request'
+
 import type { ItemCategory } from '@/data/sshoc/api/item'
-import { routes } from '@/lib/core/navigation/routes'
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+function createHref({
+  pathname,
+  query,
+}: {
+  pathname: string
+  query?: Record<string, any>
+}): string {
+  if (query == null) {
+    return pathname
+  }
+
+  return pathname + '?' + String(createUrlSearchParams(query))
+}
 
 export const itemRoutes = {
   ItemPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.DatasetPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/dataset/${persistentId}`, query: searchParams })
+        }
       case 'publication':
-        return routes.PublicationPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/publication/${persistentId}`, query: searchParams })
+        }
       case 'tool-or-service':
-        return routes.ToolOrServicePage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/tool-or-service/${persistentId}`, query: searchParams })
+        }
       case 'training-material':
-        return routes.TrainingMaterialPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/training-material/${persistentId}`, query: searchParams })
+        }
       case 'workflow':
-        return routes.WorkflowPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/workflow/${persistentId}`, query: searchParams })
+        }
     }
   },
   ItemVersionPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.DatasetVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return createHref({
+            pathname: `/dataset/${persistentId}/version/${versionId}`,
+            query: searchParams,
+          })
+        }
       case 'publication':
-        return routes.PublicationVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/publication/${persistentId}/version/${versionId}`,
+            query: searchParams,
+          }
+        }
       case 'tool-or-service':
-        return routes.ToolOrServiceVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/tool-or-service/${persistentId}/version/${versionId}`,
+            query: searchParams,
+          }
+        }
       case 'training-material':
-        return routes.TrainingMaterialVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/training-material/${persistentId}/version/${versionId}`,
+            query: searchParams,
+          }
+        }
       case 'workflow':
-        return routes.WorkflowVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return createHref({
+            pathname: `/workflow/${persistentId}/version/${versionId}`,
+            query: searchParams,
+          })
+        }
     }
   },
   ItemHistoryPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.DatasetHistoryPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/dataset/${persistentId}/history`, query: searchParams })
+        }
       case 'publication':
-        return routes.PublicationHistoryPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({
+            pathname: `/publication/${persistentId}/history`,
+            query: searchParams,
+          })
+        }
       case 'tool-or-service':
-        return routes.ToolOrServiceHistoryPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({
+            pathname: `/tool-or-service/${persistentId}/history`,
+            query: searchParams,
+          })
+        }
       case 'training-material':
-        return routes.TrainingMaterialHistoryPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({
+            pathname: `/training-material/${persistentId}/history`,
+            query: searchParams,
+          })
+        }
       case 'workflow':
-        return routes.WorkflowHistoryPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/workflow/${persistentId}/history`, query: searchParams })
+        }
     }
   },
   ItemCreatePage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.CreateDatasetPage
+        return (searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/dataset/new`, query: searchParams })
+        }
       case 'publication':
-        return routes.CreatePublicationPage
+        return (searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/publication/new`, query: searchParams })
+        }
       case 'tool-or-service':
-        return routes.CreateToolOrServicePage
+        return (searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/tool-or-service/new`, query: searchParams })
+        }
       case 'training-material':
-        return routes.CreateTrainingMaterialPage
+        return (searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/training-material/new`, query: searchParams })
+        }
       case 'workflow':
-        return routes.CreateWorkflowPage
+        return (searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/workflow/new`, query: searchParams })
+        }
     }
   },
   ItemEditPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.EditDatasetPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/dataset/${persistentId}/edit`, query: searchParams })
+        }
       case 'publication':
-        return routes.EditPublicationPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/publication/${persistentId}/edit`, query: searchParams })
+        }
       case 'tool-or-service':
-        return routes.EditToolOrServicePage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({
+            pathname: `/tool-or-service/${persistentId}/edit`,
+            query: searchParams,
+          })
+        }
       case 'training-material':
-        return routes.EditTrainingMaterialPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({
+            pathname: `/training-material/${persistentId}/edit`,
+            query: searchParams,
+          })
+        }
       case 'workflow':
-        return routes.EditWorkflowPage
+        return ({ persistentId }: { persistentId: string }, searchParams?: Record<string, any>) => {
+          return createHref({ pathname: `/workflow/${persistentId}/edit`, query: searchParams })
+        }
     }
   },
   ItemEditVersionPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.EditDatasetVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/dataset/${persistentId}/version/${versionId}/edit`,
+            query: searchParams,
+          }
+        }
       case 'publication':
-        return routes.EditPublicationVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/publication/${persistentId}/version/${versionId}/edit`,
+            query: searchParams,
+          }
+        }
       case 'tool-or-service':
-        return routes.EditToolOrServiceVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/tool-or-service/${persistentId}/version/${versionId}/edit`,
+            query: searchParams,
+          }
+        }
       case 'training-material':
-        return routes.EditTrainingMaterialVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/training-material/${persistentId}/version/${versionId}/edit`,
+            query: searchParams,
+          }
+        }
       case 'workflow':
-        return routes.EditWorkflowVersionPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/workflow/${persistentId}/version/${versionId}/edit`,
+            query: searchParams,
+          }
+        }
     }
   },
   ItemReviewPage(category: ItemCategory) {
     switch (category) {
       case 'dataset':
-        return routes.ReviewDatasetPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/dataset/${persistentId}/version/${versionId}/review`,
+            query: searchParams,
+          }
+        }
       case 'publication':
-        return routes.ReviewPublicationPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/publication/${persistentId}/version/${versionId}/review`,
+            query: searchParams,
+          }
+        }
       case 'tool-or-service':
-        return routes.ReviewToolOrServicePage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/tool-or-service/${persistentId}/version/${versionId}/review`,
+            query: searchParams,
+          }
+        }
       case 'training-material':
-        return routes.ReviewTrainingMaterialPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/training-material/${persistentId}/version/${versionId}/review`,
+            query: searchParams,
+          }
+        }
       case 'workflow':
-        return routes.ReviewWorkflowPage
+        return (
+          { persistentId, versionId }: { persistentId: string; versionId: number },
+          searchParams?: Record<string, any>,
+        ) => {
+          return {
+            pathname: `/workflow/${persistentId}/version/${versionId}/review`,
+            query: searchParams,
+          }
+        }
     }
   },
 }
