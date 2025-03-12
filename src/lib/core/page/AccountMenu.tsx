@@ -49,20 +49,6 @@ export function AccountMenu(): JSX.Element {
     }
   }, [router, state.close])
 
-  function onAction(key: Key) {
-    const item = items.find((item) => {
-      return item.id === key
-    })
-
-    if (item == null) return
-
-    if (item.type === 'button') {
-      item.onPress()
-    } else {
-      router.push(item.href)
-    }
-  }
-
   if (!isSignedIn || currentUser.data == null) {
     return <Fragment />
   }
@@ -90,11 +76,20 @@ export function AccountMenu(): JSX.Element {
               autoFocus={state.focusStrategy}
               items={items}
               menuProps={menuProps}
-              onAction={onAction}
               onClose={state.close}
             >
               {(item) => {
-                const props = { type: item.type, href: item.href }
+                const props = {
+                  type: item.type,
+                  href: item.href,
+                  onAction() {
+                    if (item.type === 'button') {
+                      item.onPress()
+                    } else {
+                      router.push(item.href)
+                    }
+                  },
+                }
 
                 return <Item {...props}>{item.label}</Item>
               }}
@@ -126,7 +121,7 @@ function Menu<T extends object>(props: MenuProps<T>) {
             key={item.key}
             item={item}
             state={state}
-            onAction={props.onAction}
+            onAction={item.props.onAction}
             onClose={props.onClose}
           />
         )
@@ -138,7 +133,7 @@ function Menu<T extends object>(props: MenuProps<T>) {
 interface MenuItemProps<T> {
   item: Node<T>
   state: TreeState<T>
-  onAction?: (key: Key) => void
+  onAction?: () => void
   onClose?: () => void
 }
 
@@ -194,6 +189,7 @@ function MenuItem<T extends object>(props: MenuItemProps<T>) {
         ref={ref as RefObject<HTMLAnchorElement>}
         {...menuItemProps}
         href={item.props.href}
+        onPress={onAction}
         variant="nav-menu-link"
       >
         {item.rendered}
