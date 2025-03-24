@@ -1,46 +1,62 @@
-# sshoc-marketplace-frontend
+# sshoc marketplace frontend
 
-frontend application for the sshoc open marketplace.
+frontend for the social sciences and humanities open marketplace.
 
-## prerequisites
+## how to run
 
-- [node.js 16.x](https://nodejs.org/de/download)
-- [yarn 1.x](https://classic.yarnpkg.com)
+prerequisites:
 
-## how to run locally
+- [node.js v22](https://nodejs.org/en/download)
+- [pnpm v10](https://pnpm.io/installation)
+
+> [!TIP]
+>
+> you can use `pnpm` to install the required node.js version with `pnpm env use 22 --global`
+
+set required environment variables in `.env.local`:
+
+```bash
+cp .env.local.example .env.local
+```
+
+when adding new environment variables, don't forget to add them to
+[`.env.local.example`](./.env.local.example) and [`config/env.config.ts`](./config/env.config.ts),
+as well as the [validation](./.github/workflows/validate.yml) and
+[deployment](./.github/workflows/build-deploy.yml) github workflows. use
+["variables"](https://github.com/sshoc/sshoc-marketplace-frontend/settings/variables/actions) for
+every environment variable prefixed with `NEXT_PUBLIC_`, and
+["secrets"](https://github.com/sshoc/sshoc-marketplace-frontend/settings/secrets/actions) for all
+others.
 
 install dependencies:
 
 ```bash
-yarn install
+pnpm install
 ```
 
-if you don't plan to run a backend instance locally, create a `.env.development.local` file, and
-configure the api base url:
-
-```
-# .env.development.local
-NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
-```
-
-run a local development server on [http://localhost:3000](http://localhost:3000):
+run a development server on [http://localhost:3000](http://localhost:3000):
 
 ```bash
-yarn run dev
+pnpm run dev
 ```
 
-## how to deploy
+> [!TIP]
+>
+> this template supports developing in containers. when opening the project in your editor, you
+> should be prompted to re-open it in a devcontainer.
 
-every commit to the `main` branch will trigger a github action, which will create three deployments
-to the acdh cluster:
+## how to test
 
-- `production` on [https://marketplace.sshopencloud.eu](https://marketplace.sshopencloud.eu), using
-  the backend at [https://marketplace-api.sshopencloud.eu](https://marketplace-api.sshopencloud.eu)
-- `stage` on
-  [https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at](https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at)
-  using the backend at
-  [https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at](https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at)
-- `dev` on
-  [https://sshoc-marketplace.acdh-dev.oeaw.ac.at](https://sshoc-marketplace.acdh-dev.oeaw.ac.at)
-  using the backend at
-  [https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at](https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at)
+generate a production build and run end-to-end tests with:
+
+```bash
+pnpm run build
+pnpm run test:e2e
+```
+
+visual snapshot tests should be run in the template's devcontainer - or a comparable debian bookworm
+based linux environment -, and can be updated with:
+
+```bash
+pnpm run test:e2e:update-snapshots
+```

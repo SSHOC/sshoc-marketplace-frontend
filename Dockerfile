@@ -1,65 +1,80 @@
-# base
-FROM node:22-slim AS base
+# syntax=docker/dockerfile:1-labs
+# labs version is needed for `COPY --exclude`.
+# @see https://docs.docker.com/reference/dockerfile/#copy---exclude
+
+# using alpine base image to avoid `sharp` memory leaks.
+# @see https://sharp.pixelplumbing.com/install#linux-memory-allocator
+
+# build
+FROM node:22-alpine AS build
+
+RUN corepack enable
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
+COPY ./patches ./patches
 
-# cannot use `--ignore-scripts` for `sharp` to compile
-RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
+RUN pnpm fetch
 
-# build
-FROM base AS build
+COPY --chown=node:node ./ ./
 
-RUN yarn install --frozen-lockfile --ignore-scripts --silent --prefer-offline
+ARG NEXT_PUBLIC_API_BASE_URL
+ARG NEXT_PUBLIC_APP_BASE_URL
+ARG NEXT_PUBLIC_BOTS
+ARG NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+ARG NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER
+ARG NEXT_PUBLIC_KEYSTATIC_MODE
+ARG NEXT_PUBLIC_MATOMO_BASE_URL
+ARG NEXT_PUBLIC_MATOMO_ID
+ARG NEXT_PUBLIC_REDMINE_ID
+ARG NEXT_PUBLIC_SENTRY_DSN
+ARG NEXT_PUBLIC_SENTRY_ORG
+ARG NEXT_PUBLIC_SENTRY_PROJECT
 
-COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.mjs ./
-COPY --chown=node:node scripts ./scripts
-COPY --chown=node:node config ./config
-COPY --chown=node:node public ./public
-COPY --chown=node:node src ./src
+# disable validation for runtime environment variables
+ENV ENV_VALIDATION=public
 
+RUN pnpm install --frozen-lockfile --offline
+
+ENV BUILD_MODE=standalone
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ARG NEXT_PUBLIC_BASE_URL
-ARG NEXT_PUBLIC_SSHOC_API_BASE_URL
-ARG NEXT_PUBLIC_MOCK_API
-ARG NEXT_PUBLIC_BOTS
-ARG NEXT_PUBLIC_MATOMO_BASE_URL
-ARG NEXT_PUBLIC_MATOMO_APP_ID
-ARG NEXT_PUBLIC_GOOGLE_SITE_ID
-ARG NEXT_PUBLIC_LOCAL_CMS_BACKEND
-ARG NEXT_PUBLIC_GITHUB_REPOSITORY
-ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
-
-# @see https://docs.docker.com/build/ci/github-actions/examples/#secrets
-# docker buildkit currently cannot mount secrets directly to env vars
-# @see https://github.com/moby/buildkit/issues/2122
-USER root
-RUN --mount=type=secret,id=github_token \
-  export GITHUB_TOKEN="$(cat /run/secrets/github_token)" && \
-  yarn build && \
-  unset GITHUB_TOKEN
-USER node
+# to mount secrets which need to be available at build time
+# @see https://docs.docker.com/build/building/secrets/
+RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
+		--mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_SECRET,uid=1000 \
+		--mount=type=secret,id=KEYSTATIC_SECRET,uid=1000 \
+		KEYSTATIC_GITHUB_CLIENT_ID=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_ID) \
+		KEYSTATIC_GITHUB_CLIENT_SECRET=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_SECRET) \
+		KEYSTATIC_SECRET=$(cat /run/secrets/KEYSTATIC_SECRET) \
+		pnpm run build
 
 # serve
-FROM node:22-slim AS serve
+FROM node:22-alpine AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --from=build --chown=node:node /app/next.config.mjs ./
+COPY --from=build --chown=node:node /app/next.config.ts ./
 COPY --from=build --chown=node:node /app/public ./public
 COPY --from=build --chown=node:node /app/.next/standalone ./
 COPY --from=build --chown=node:node /app/.next/static ./.next/static
+# exclude assets which should have been optimized with `next/image`.
+COPY --from=build --chown=node:node --exclude=assets/content/assets/ /app/public ./public
+# content needs to be available at request time.
+COPY --from=build --chown=node:node /app/content ./content
 
-# Ensures folder is owned by node:node when mounted as volume.
+# ensure folder is owned by node:node when mounted as volume
 RUN mkdir -p /app/.next/cache/images
 
 ENV NODE_ENV=production

@@ -1,0 +1,15 @@
+{
+	"description": "Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.",
+	"title": "Social Sciences & Humanities Open Marketplace",
+	"manifest": {
+		"description": "Discover new resources for your research in Social Sciences and Humanities: tools, services, training materials and datasets, contextualised.",
+		"name": "Social Sciences & Humanities Open Marketplace",
+		"short-name": "SSHOC Marketplace"
+	},
+	"social": [
+		{
+			"kind": "twitter",
+			"href": "https://x.com/SSHOpenCloud"
+		}
+	]
+}

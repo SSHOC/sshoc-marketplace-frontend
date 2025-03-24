@@ -1,0 +1,70 @@
+{
+	"sendContactFormEmailAction": {
+		"error": "Failed to send message.",
+		"success": "Successfully sent message."
+	},
+	"AppGroupLayout": {
+		"skip-to-main-content": "Skip to main content"
+	},
+	"ContactForm": {
+		"email": "Email address",
+		"message": "Message",
+		"subject": "Subject",
+		"submit": "Submit"
+	},
+	"ContactPage": {
+		"lead": "For any questions related to the development of the SSH Open Marketplace, do not hesitate to contact us via the form below or directly at <email></email>.",
+		"meta": {
+			"title": "Contact"
+		},
+		"title": "Contact"
+	},
+	"IndexPage": {
+		"title": "Social Sciences & Humanities Open Marketplace",
+		"lead": "Discover new and contextualised resources for your research in Social Sciences and Humanities: tools, services, training materials, workflows and datasets. <link>Read more...</link>",
+		"form": {
+			"categories": {
+				"label": "Categories"
+			},
+			"search-input": {
+				"label": "Search"
+			},
+			"submit": "Search"
+		}
+	},
+	"PageHeader": {
+		"links": {
+			"about": "About",
+			"about-communication": "Communication kit",
+			"about-data": "About the data population",
+			"about-docs": "API documentation",
+			"about-eosc": "SSHOC and the EOSC",
+			"about-faq": "FAQ",
+			"about-implementation": "About the technical aspects",
+			"about-service": "About the service",
+			"about-team": "Who are we?",
+			"browse": "Browse",
+			"browse-activities": "Browse activities",
+			"browse-keywords": "Browse keywords",
+			"browse-languages": "Browse languages",
+			"browse-sources": "Browse sources",
+			"contribute": "Contribute",
+			"contribute-administrator": "Administrator guidelines",
+			"contribute-create": "Create an individual item",
+			"contribute-enrich": "Enrich an individual item",
+			"contribute-issue": "Report an issue",
+			"contribute-metadata": "Metadata guidelines",
+			"contribute-moderator": "Moderator guidelines",
+			"contribute-overview": "Help grow the SSH Open Marketplace",
+			"datasets": "Datasets",
+			"home": "Home",
+			"publications": "Publications",
+			"tools-services": "Tools & services",
+			"training-materials": "Training materials",
+			"workflows": "Workflows"
+		},
+		"navigation": {
+			"label": "Primary"
+		}
+	}
+}

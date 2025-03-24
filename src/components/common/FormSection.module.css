@@ -1,5 +1,0 @@
-.section {
-  display: grid;
-  gap: var(--space-6);
-  font-size: var(--font-size-3-75);
-}
