@@ -44,7 +44,7 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 
 function LeadLink(chunks: ReactNode): ReactNode {
 	return (
-		<Link className="text-primary-750 hover:text-primary-600 transition" href="/about/service">
+		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
 			{chunks}
 		</Link>
 	);

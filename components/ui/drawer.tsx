@@ -29,7 +29,7 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 			className={composeRenderProps(className, (className) => {
 				return cn(
 					// FIXME: h-(--visual-viewport-height) ?
-					"fixed inset-0 isolate z-10 grid min-h-full w-full overflow-y-auto bg-fill-overlay entering:animate-underlay-in exiting:animate-underlay-out",
+					"bg-fill-overlay entering:animate-underlay-in exiting:animate-underlay-out fixed inset-0 isolate z-10 grid min-h-full w-full overflow-y-auto",
 					className,
 				);
 			})}
@@ -40,14 +40,14 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 }
 
 const modalStyles = styles({
-	base: "h-full w-full overflow-hidden border border-stroke-weak bg-background-overlay shadow-overlay forced-colors:bg-[Canvas]",
+	base: "border-stroke-weak bg-background-overlay shadow-overlay h-full w-full overflow-hidden border forced-colors:bg-[Canvas]",
 	variants: {
 		placement: {
-			bottom: "mt-16 self-end entering:animate-slide-bottom-in exiting:animate-slide-bottom-out",
-			left: "mr-16 justify-self-start entering:animate-slide-left-in exiting:animate-slide-left-out",
+			bottom: "entering:animate-slide-bottom-in exiting:animate-slide-bottom-out mt-16 self-end",
+			left: "entering:animate-slide-left-in exiting:animate-slide-left-out mr-16 justify-self-start",
 			right:
-				"ml-16 justify-self-end entering:animate-slide-right-in exiting:animate-slide-right-out",
-			top: "mb-16 self-start entering:animate-slide-top-in exiting:animate-slide-top-out",
+				"entering:animate-slide-right-in exiting:animate-slide-right-out ml-16 justify-self-end",
+			top: "entering:animate-slide-top-in exiting:animate-slide-top-out mb-16 self-start",
 		},
 		size: {
 			small: "",
@@ -120,7 +120,7 @@ export function DrawerHeader(props: Readonly<DrawerHeaderProps>): ReactNode {
 		<header
 			{...rest}
 			className={cn(
-				"flex items-center justify-between gap-x-4 border-b border-stroke-weak px-8 py-6",
+				"border-stroke-weak flex items-center justify-between gap-x-4 border-b px-8 py-6",
 				className,
 			)}
 		>
@@ -166,7 +166,7 @@ export function DrawerFooter(props: Readonly<DrawerFooterProps>): ReactNode {
 		<footer
 			{...rest}
 			className={cn(
-				"grid content-start gap-4 border-t border-stroke-weak px-8 py-6 sm:flex sm:items-center",
+				"border-stroke-weak grid content-start gap-4 border-t px-8 py-6 sm:flex sm:items-center",
 				className,
 			)}
 		>

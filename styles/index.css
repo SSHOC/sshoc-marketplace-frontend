@@ -62,8 +62,6 @@
 	--color-negative-600: #da3125;
 	--color-negative-750: #ae271e;
 
-	/* linear-gradient(90deg, #1B9ADE 0%, #02558D 100%)); */
-
 	--shadow-*: initial;
 	--shadow: 0px 3px 6px 0px rgb(0 0 0 / 16%);
 

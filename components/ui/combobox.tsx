@@ -52,10 +52,10 @@ export function ComboBoxTrigger(props: Readonly<ComboBoxTriggerProps>): ReactNod
 				return (
 					<Fragment>
 						{children}
-						<AriaButton className="absolute top-0 right-3 bottom-0 isolate inline-grid size-8 shrink-0 place-content-center self-center rounded-1 transition">
+						<AriaButton className="rounded-1 absolute top-0 right-3 bottom-0 isolate inline-grid size-8 shrink-0 place-content-center self-center transition">
 							<ChevronDownIcon
 								aria-hidden={true}
-								className="size-6 h-full shrink-0 text-icon-neutral group-invalid:text-icon-error group-disabled:text-icon-disabled forced-colors:text-[ButtonText] forced-colors:group-disabled:text-[GrayText]"
+								className="text-icon-neutral group-invalid:text-icon-error group-disabled:text-icon-disabled size-6 h-full shrink-0 forced-colors:text-[ButtonText] forced-colors:group-disabled:text-[GrayText]"
 								data-slot="icon"
 							/>
 						</AriaButton>

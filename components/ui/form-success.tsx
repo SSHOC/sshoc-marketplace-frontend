@@ -13,7 +13,7 @@ export function FormSuccess(props: Readonly<FormSuccessProps>): ReactNode {
 		<FormSuccessMessage
 			{...rest}
 			className={cn(
-				"flex min-h-12 items-center gap-x-2 rounded-2 border border-stroke-success-weak bg-fill-success-weak px-4 py-2.5 text-small font-strong text-text-success",
+				"rounded-2 border-stroke-success-weak bg-fill-success-weak text-small font-strong text-text-success flex min-h-12 items-center gap-x-2 border px-4 py-2.5",
 				className,
 			)}
 		>
@@ -22,7 +22,7 @@ export function FormSuccess(props: Readonly<FormSuccessProps>): ReactNode {
 					<Fragment>
 						<CheckCircle2Icon
 							aria-hidden={true}
-							className="size-6 shrink-0 self-start text-icon-success"
+							className="text-icon-success size-6 shrink-0 self-start"
 							data-slot="icon"
 						/>
 						{state.message}

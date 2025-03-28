@@ -13,6 +13,9 @@
 	"AppGroupLayout": {
 		"skip-to-main-content": "Skip to main content"
 	},
+	"AuthMenu": {
+		"sign-in": "Sign in"
+	},
 	"ContactForm": {
 		"email": "Email address",
 		"message": "Message",
@@ -88,5 +91,15 @@
 		"navigation": {
 			"label": "Primary"
 		}
+	},
+	"ReportIssueLink": {
+		"label": "Report an issue",
+		"message": "I have found an issue on page {page}.\n\nPlease describe:\n\n"
+	},
+	"SignInPage": {
+		"meta": {
+			"title": "Sign in"
+		},
+		"title": "Sign in"
 	}
 }

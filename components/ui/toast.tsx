@@ -15,7 +15,7 @@ import {
 import { flushSync } from "react-dom";
 
 const toastStyles = styles({
-	base: "flex max-w-150 gap-x-3 rounded-2 border border-l-4 p-6 shadow-overlay focus-visible:focus-outline",
+	base: "rounded-2 shadow-overlay focus-visible:focus-outline flex max-w-150 gap-x-3 border border-l-4 p-6",
 	variants: {
 		tone: {
 			error: "border-stroke-error-weak border-l-stroke-error-strong bg-fill-error-weak",
@@ -26,9 +26,9 @@ const toastStyles = styles({
 			neutral: "border-stroke-neutral-weak border-l-stroke-neutral-strong bg-fill-neutral-weak",
 			brand: "border-stroke-brand-weak border-l-stroke-brand-strong bg-fill-brand-weak",
 			"inverse-neutral":
-				"border-transparent border-l-stroke-inverse-strong bg-background-inverse **:[slot=description]:text-text-inverse-weak **:[slot=title]:text-text-inverse-strong",
+				"border-l-stroke-inverse-strong bg-background-inverse **:[slot=description]:text-text-inverse-weak **:[slot=title]:text-text-inverse-strong border-transparent",
 			"inverse-brand":
-				"border-transparent border-l-stroke-inverse-strong bg-fill-brand-strong **:[slot=description]:text-text-inverse-weak **:[slot=title]:text-text-inverse-strong",
+				"border-l-stroke-inverse-strong bg-fill-brand-strong **:[slot=description]:text-text-inverse-weak **:[slot=title]:text-text-inverse-strong border-transparent",
 		},
 	},
 	defaults: {},
@@ -82,7 +82,7 @@ export function Toast(props: Readonly<ToastProps>): ReactNode {
 				</AriaText>
 			</AriaToastContent>
 			<AriaButton
-				className="interactive inline-grid shrink-0 place-content-center rounded-2 text-icon-neutral hover:hover-overlay focus-visible:focus-outline pressed:press-overlay"
+				className="interactive rounded-2 text-icon-neutral hover:hover-overlay focus-visible:focus-outline pressed:press-overlay inline-grid shrink-0 place-content-center"
 				slot="close"
 			>
 				<XIcon aria-hidden={true} className="size-6 shrink-0" data-slot="icon" />

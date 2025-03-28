@@ -29,7 +29,7 @@ export function ListBox<T extends object>(props: Readonly<ListBoxProps<T>>): Rea
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"group grid max-h-[inherit] overflow-auto py-2 text-small text-text-strong outline-hidden",
+					"group text-small text-text-strong grid max-h-[inherit] overflow-auto py-2 outline-hidden",
 					className,
 				);
 			})}
@@ -51,7 +51,7 @@ export function ListBoxItem<T extends object>(props: Readonly<ListBoxItemProps<T
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"interactive isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 transition will-change-transform forced-color-adjust-none select-none hover:hover-overlay focus-visible:focus-outline focus-visible:-focus-outline-offset-2 disabled:text-text-disabled *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-icon-neutral forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] pressed:press-overlay selected:select-overlay-left selected:bg-fill-brand-weak forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
+					"interactive hover:hover-overlay focus-visible:focus-outline focus-visible:-focus-outline-offset-2 disabled:text-text-disabled *:data-[slot=icon]:text-icon-neutral pressed:press-overlay selected:select-overlay-left selected:bg-fill-brand-weak isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 transition will-change-transform forced-color-adjust-none select-none *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
 					className,
 				);
 			})}
@@ -93,7 +93,7 @@ interface ListBoxSeparatorProps extends AriaSeparatorProps {}
 export function ListBoxSeparator(props: Readonly<ListBoxSeparatorProps>): ReactNode {
 	const { className, ...rest } = props;
 
-	return <AriaSeparator {...rest} className={cn("border-t border-stroke-weak", className)} />;
+	return <AriaSeparator {...rest} className={cn("border-stroke-weak border-t", className)} />;
 }
 
 interface ListBoxSectionProps<T extends object> extends AriaListBoxSectionProps<T> {
@@ -130,7 +130,7 @@ export function ListBoxEmptyState(props: Readonly<ListBoxEmptyStateProps>): Reac
 	const { children, className, ...rest } = props;
 
 	return (
-		<div {...rest} className={cn("text-center text-text-weak", className)}>
+		<div {...rest} className={cn("text-text-weak text-center", className)}>
 			{children}
 		</div>
 	);

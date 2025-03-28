@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 
 const loadingIndicatorStyles = styles({
-	base: "shrink-0 text-text-weak",
+	base: "text-text-weak shrink-0",
 	variants: {
 		size: {
 			small: "size-6",
@@ -46,7 +46,7 @@ export function LoadingIndicator(props: Readonly<LoadingIndicatorProps>): ReactN
 					<Fragment>
 						<Loader2Icon
 							aria-hidden={true}
-							className="size-full animate-loading-indicator-in"
+							className="animate-loading-indicator-in size-full"
 							data-slot="icon"
 						/>
 						{children}

@@ -1,6 +1,6 @@
 # sshoc marketplace frontend
 
-frontend for the social sciences and humanities open marketplace.
+frontend for the social sciences & humanities open marketplace.
 
 ## how to run
 

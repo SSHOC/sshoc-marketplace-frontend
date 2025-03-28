@@ -18,7 +18,7 @@ export function Label(props: Readonly<LabelProps>): ReactNode {
 		<AriaLabel
 			{...rest}
 			className={cn(
-				"inline-flex cursor-default gap-x-1 text-small text-text-strong group-disabled:text-text-disabled",
+				"inline-flex cursor-default gap-x-1 text-sm text-neutral-800 group-disabled:text-neutral-300",
 				className,
 			)}
 			data-slot="label"

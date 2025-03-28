@@ -10,6 +10,8 @@ import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { createHref } from "@/lib/navigation/create-href";
 import logo from "@/public/assets/images/logo-with-text.svg";
+import { ReportIssueLink } from "@/app/(app)/(default)/_components/report-issue-link";
+import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 
 interface PageHeaderProps {}
 
@@ -241,7 +243,11 @@ export function PageHeader(_props: Readonly<PageHeaderProps>): ReactNode {
 					<span className="sr-only">{navigation.home.label}</span>
 				</NavLink>
 
-				<div>
+				<div className="flex flex-col items-end">
+					<div className="flex">
+						<ReportIssueLink />
+						<AuthMenu />
+					</div>
 					<PageNavigation label={t("navigation.label")} navigation={navigation} />
 				</div>
 			</div>

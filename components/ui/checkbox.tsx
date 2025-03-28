@@ -11,7 +11,7 @@ import {
 } from "react-aria-components";
 
 const checkBoxStyles = styles({
-	base: "group inline-flex items-center gap-x-3 text-text-strong disabled:text-text-disabled forced-colors:disabled:text-[GrayText]",
+	base: "group text-text-strong disabled:text-text-disabled inline-flex items-center gap-x-3 forced-colors:disabled:text-[GrayText]",
 	variants: {
 		size: {
 			small: "text-tiny",
@@ -53,11 +53,11 @@ export function CheckBox(props: Readonly<CheckBoxProps>): ReactNode {
 }
 
 const checkBoxBoxStyles = styles({
-	base: "interactive isolate inline-grid shrink-0 place-content-center rounded-1 border border-stroke-strong bg-fill-inverse-strong text-fill-inverse-strong transition group-invalid:border-stroke-error-strong group-invalid:bg-fill-error-weak group-hover:hover-overlay group-focus-visible:focus-outline group-disabled:border-stroke-disabled group-pressed:press-overlay group-selected:border-transparent group-selected:bg-fill-brand-strong group-selected:group-invalid:bg-fill-error-strong group-selected:group-disabled:bg-fill-disabled forced-colors:group-invalid:text-[Mark] forced-colors:group-disabled:text-[GrayText] forced-colors:group-selected:text-[Highlight]",
+	base: "interactive rounded-1 border-stroke-strong bg-fill-inverse-strong text-fill-inverse-strong group-invalid:border-stroke-error-strong group-invalid:bg-fill-error-weak group-hover:hover-overlay group-focus-visible:focus-outline group-disabled:border-stroke-disabled group-pressed:press-overlay group-selected:bg-fill-brand-strong group-selected:group-invalid:bg-fill-error-strong group-selected:group-disabled:bg-fill-disabled isolate inline-grid shrink-0 place-content-center border transition group-selected:border-transparent forced-colors:group-invalid:text-[Mark] forced-colors:group-disabled:text-[GrayText] forced-colors:group-selected:text-[Highlight]",
 	variants: {
 		size: {
 			small: "size-6 rounded-[3px] p-1.5",
-			large: "size-8 rounded-1 p-2",
+			large: "rounded-1 size-8 p-2",
 		},
 	},
 	defaults: {
@@ -80,13 +80,13 @@ export function CheckBoxBox(props: Readonly<CheckBoxBoxProps>): ReactNode {
 			{isIndeterminate ? (
 				<MinusIcon
 					aria-hidden={true}
-					className="shrink-0 group-disabled:text-text-disabled forced-colors:text-[HighlightText]"
+					className="group-disabled:text-text-disabled shrink-0 forced-colors:text-[HighlightText]"
 					data-slot="icon"
 				/>
 			) : isSelected ? (
 				<CheckIcon
 					aria-hidden={true}
-					className="shrink-0 group-disabled:text-text-disabled forced-colors:text-[HighlightText]"
+					className="group-disabled:text-text-disabled shrink-0 forced-colors:text-[HighlightText]"
 					data-slot="icon"
 				/>
 			) : null}

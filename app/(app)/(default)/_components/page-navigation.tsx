@@ -15,13 +15,13 @@ import {
 	Separator,
 } from "react-aria-components";
 
-import { NavLink, type NavLinkProps } from "@/components/nav-link";
+import { NavLink } from "@/components/nav-link";
 import { usePathname, useRouter } from "@/lib/navigation/navigation";
 import { isCurrentPage } from "@/lib/navigation/use-nav-link";
 
 interface NavigationLink {
 	type: "link";
-	href: NonNullable<NavLinkProps["href"]>;
+	href: string;
 	label: string;
 }
 
@@ -60,7 +60,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 							return (
 								<li key={id}>
 									<NavLink
-										className="flex items-center gap-x-2 p-6 text-center text-sm text-primary-700 transition hover:bg-neutral-50 hover:text-primary-600 pressed:bg-primary-600 pressed:text-neutral-0"
+										className="flex items-center gap-x-2 p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0"
 										href={item.href}
 									>
 										{item.label}
@@ -87,7 +87,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 							return (
 								<li key={id}>
 									<MenuTrigger>
-										<Button className="flex items-center gap-x-2 p-6 text-center text-sm text-primary-700 transition hover:bg-neutral-50 hover:text-primary-600 pressed:bg-primary-600 pressed:text-neutral-0">
+										<Button className="flex items-center gap-x-2 p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0">
 											{item.label}
 											<ChevronDownIcon aria-hidden={true} className="-mr-1 size-4 shrink-0" />
 										</Button>
@@ -105,7 +105,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 															return (
 																<NavigationMenuItem
 																	key={id}
-																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-primary-700 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600"
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
 																	href={item.href}
 																	textValue={item.label}
 																>

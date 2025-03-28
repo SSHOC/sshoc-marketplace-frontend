@@ -13,7 +13,7 @@ export function FormError(props: Readonly<FormErrorProps>): ReactNode {
 		<FormErrorMessage
 			{...rest}
 			className={cn(
-				"flex min-h-12 items-center gap-x-2 rounded-2 border border-stroke-error-weak bg-fill-error-weak px-4 py-2.5 text-small font-strong text-text-error",
+				"rounded-2 border-stroke-error-weak bg-fill-error-weak text-small font-strong text-text-error flex min-h-12 items-center gap-x-2 border px-4 py-2.5",
 				className,
 			)}
 		>
@@ -22,7 +22,7 @@ export function FormError(props: Readonly<FormErrorProps>): ReactNode {
 					<Fragment>
 						<OctagonXIcon
 							aria-hidden={true}
-							className="size-6 shrink-0 self-start text-icon-error"
+							className="text-icon-error size-6 shrink-0 self-start"
 							data-slot="icon"
 						/>
 						{state.message}
