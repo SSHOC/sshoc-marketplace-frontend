@@ -6,7 +6,12 @@ import { ContactForm } from "@/app/(app)/(default)/contact/_components/contact-f
 import { MainContent } from "@/components/ui/main-content";
 import { env } from "@/config/env.config";
 
-export async function generateMetadata(_parent: ResolvingMetadata): Promise<Metadata> {
+interface ContactPageProps {}
+
+export async function generateMetadata(
+	_props: Readonly<ContactPageProps>,
+	_parent: ResolvingMetadata,
+): Promise<Metadata> {
 	const t = await getTranslations("ContactPage");
 
 	const metadata: Metadata = {
@@ -16,7 +21,7 @@ export async function generateMetadata(_parent: ResolvingMetadata): Promise<Meta
 	return metadata;
 }
 
-export default async function ContactPage(): Promise<ReactNode> {
+export default async function ContactPage(_props: Readonly<ContactPageProps>): Promise<ReactNode> {
 	const t = await getTranslations("ContactPage");
 
 	return (

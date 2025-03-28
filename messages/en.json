@@ -1,7 +1,14 @@
 {
-	"sendContactFormEmailAction": {
-		"error": "Failed to send message.",
-		"success": "Successfully sent message."
+	"actions": {
+		"sendContactFormEmailAction": {
+			"error": "Failed to send message.",
+			"success": "Successfully sent message."
+		}
+	},
+	"mdx": {
+		"footnote-back-label": "Back to reference {reference}",
+		"footnotes": "Footnotes",
+		"table-of-contents": "Table of contents"
 	},
 	"AppGroupLayout": {
 		"skip-to-main-content": "Skip to main content"
@@ -39,7 +46,13 @@
 		"title": "Page not found"
 	},
 	"PageFooter": {
-		"links": {}
+		"links": {
+			"about": "About",
+			"contact": "Contact",
+			"privacy-policy": "Privacy policy",
+			"imprint": "Imprint",
+			"terms-of-use": "Terms of use"
+		}
 	},
 	"PageHeader": {
 		"links": {

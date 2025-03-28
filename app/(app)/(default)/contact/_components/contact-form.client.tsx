@@ -22,7 +22,7 @@ interface ContactFormProps {
 	submitLabel: string;
 }
 
-export function ContactForm(props: ContactFormProps): ReactNode {
+export function ContactForm(props: Readonly<ContactFormProps>): ReactNode {
 	const { emailLabel, messageLabel, subjectLabel, submitLabel } = props;
 
 	const [state, action] = useActionState(sendContactFormEmailAction, createInitialActionState({}));

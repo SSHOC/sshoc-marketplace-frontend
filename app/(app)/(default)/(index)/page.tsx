@@ -1,4 +1,6 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { Link } from "@/components/link";
@@ -14,6 +16,24 @@ import { TextInput } from "@/components/ui/text-input";
 
 interface IndexPageProps {}
 
+export async function generateMetadata(
+	_props: Readonly<IndexPageProps>,
+	_parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const _t = await getTranslations("IndexPage");
+
+	const metadata: Metadata = {
+		/**
+		 * Fall back to `title.default` from `layout.tsx`.
+		 *
+		 * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#title
+		 */
+		// title: t("meta.title"),
+	};
+
+	return metadata;
+}
+
 export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	return (
 		<MainContent>
@@ -24,7 +44,7 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 
 function LeadLink(chunks: ReactNode): ReactNode {
 	return (
-		<Link className="text-primary-750 transition hover:text-primary-600" href="/about/service">
+		<Link className="text-primary-750 hover:text-primary-600 transition" href="/about/service">
 			{chunks}
 		</Link>
 	);

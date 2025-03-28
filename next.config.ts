@@ -47,6 +47,11 @@ const config: Config = {
 	redirects() {
 		const redirects: Awaited<ReturnType<NonNullable<Config["redirects"]>>> = [
 			{
+				source: "/admin",
+				destination: "/keystatic",
+				permanent: false,
+			},
+			{
 				source: "/dataset/:path*",
 				destination: "/datasets/:path*",
 				permanent: true,
