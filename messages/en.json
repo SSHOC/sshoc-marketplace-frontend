@@ -32,6 +32,15 @@
 			"submit": "Search"
 		}
 	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"PageFooter": {
+		"links": {}
+	},
 	"PageHeader": {
 		"links": {
 			"about": "About",

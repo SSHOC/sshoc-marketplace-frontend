@@ -1,14 +1,12 @@
 "use client";
 
-import { createUrl } from "@acdh-oeaw/lib";
+import { addTrailingSlash, createUrl } from "@acdh-oeaw/lib";
 import type { NextWebVitalsMetric } from "next/app";
 import Script from "next/script";
 import { useReportWebVitals } from "next/web-vitals";
-import { useLocale } from "next-intl";
 import { Fragment, type ReactNode, Suspense, useEffect } from "react";
 
 import { env } from "@/config/env.config";
-import type { IntlLocale } from "@/lib/i18n/locales";
 import { usePathname, useSearchParams } from "@/lib/navigation/navigation";
 
 declare global {
@@ -31,7 +29,7 @@ export function AnalyticsScript(props: AnalyticsProps): ReactNode {
 		<Fragment>
 			<Script
 				dangerouslySetInnerHTML={{
-					__html: `(${String(createAnalyticsScript)})("${baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`}", "${String(id)}");`,
+					__html: `(${String(createAnalyticsScript)})("${addTrailingSlash(baseUrl)}", "${String(id)}");`,
 				}}
 				id="analytics-script"
 			/>
@@ -58,14 +56,13 @@ function createAnalyticsScript(baseUrl: string, id: number): void {
 }
 
 function PageViewTracker(): ReactNode {
-	const locale = useLocale();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
 		const url = createUrl({ baseUrl: env.NEXT_PUBLIC_APP_BASE_URL, pathname, searchParams });
-		trackPageView(locale, url);
-	}, [locale, pathname, searchParams]);
+		trackPageView(url);
+	}, [pathname, searchParams]);
 
 	useReportWebVitals(reportWebVitals);
 
@@ -75,9 +72,8 @@ function PageViewTracker(): ReactNode {
 /**
  * Track urls without locale prefix, and separate custom event for locale.
  */
-function trackPageView(locale: IntlLocale, url: URL): void {
+function trackPageView(url: URL): void {
 	/** @see https://developer.matomo.org/guides/tracking-javascript-guide#custom-variables */
-	window._paq?.push(["setCustomVariable", 1, "Locale", locale, "page"]);
 	window._paq?.push(["setCustomUrl", url]);
 	window._paq?.push(["trackPageView"]);
 	window._paq?.push(["enableLinkTracking"]);
