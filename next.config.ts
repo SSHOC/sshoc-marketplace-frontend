@@ -35,6 +35,9 @@ const config: Config = {
 
 		return Promise.resolve(headers);
 	},
+	images: {
+		remotePatterns: [{ hostname: new URL(env.NEXT_PUBLIC_API_BASE_URL).hostname }],
+	},
 	logging: {
 		fetches: {
 			fullUrl: true,
