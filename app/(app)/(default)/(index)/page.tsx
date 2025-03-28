@@ -66,7 +66,7 @@ function HeroSection(): ReactNode {
 		<section>
 			<h1>{t("title")}</h1>
 			<div className="text-base text-neutral-800">{t.rich("lead", { link: LeadLink })}</div>
-			<SearchForm action="/search" className="flex gap-x-4">
+			<SearchForm action="/search" className="flex items-end gap-x-4">
 				<Select defaultSelectedKey="all" name="categories">
 					<Label>{t("form.categories.label")}</Label>
 					<SelectTrigger>

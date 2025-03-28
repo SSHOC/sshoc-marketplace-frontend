@@ -13,7 +13,7 @@ export function FormError(props: Readonly<FormErrorProps>): ReactNode {
 		<FormErrorMessage
 			{...rest}
 			className={cn(
-				"rounded-2 border-stroke-error-weak bg-fill-error-weak text-small font-strong text-text-error flex min-h-12 items-center gap-x-2 border px-4 py-2.5",
+				"flex min-h-12 items-center gap-x-2 rounded-sm border border-negative-600 bg-negative-100 px-4 py-2.5 text-sm font-medium text-negative-600",
 				className,
 			)}
 		>

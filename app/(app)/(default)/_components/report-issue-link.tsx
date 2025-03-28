@@ -1,10 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+
 import { Link } from "@/components/link";
 import { createHref } from "@/lib/navigation/create-href";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { usePathname } from "@/lib/navigation/navigation";
 
 export function ReportIssueLink(): ReactNode {
 	const t = useTranslations("ReportIssueLink");

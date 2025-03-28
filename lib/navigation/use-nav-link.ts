@@ -1,7 +1,11 @@
-import type { LinkProps } from "@/components/link";
+import type { ComponentPropsWithRef } from "react";
+
+import type { Link } from "@/components/link";
 import { env } from "@/config/env.config";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { usePathname } from "@/lib/navigation/navigation";
+
+type LinkProps = ComponentPropsWithRef<typeof Link>;
 
 interface UseNavLinkParams extends Pick<LinkProps, "aria-current" | "href"> {}
 

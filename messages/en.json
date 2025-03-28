@@ -3,7 +3,15 @@
 		"sendContactFormEmailAction": {
 			"error": "Failed to send message.",
 			"success": "Successfully sent message."
+		},
+		"signInAction": {
+			"invalid-username-password": "Invalid username or password"
 		}
+	},
+	"errors": {
+		"internal-server-error": "Internal server error.",
+		"invalid-form-fields": "Invalid or missing fields.",
+		"too-many-requests": "Too many requests."
 	},
 	"mdx": {
 		"footnote-back-label": "Back to reference {reference}",
@@ -95,6 +103,12 @@
 	"ReportIssueLink": {
 		"label": "Report an issue",
 		"message": "I have found an issue on page {page}.\n\nPlease describe:\n\n"
+	},
+	"SignInForm": {
+		"password": "Password",
+		"sign-in-eosc": "Sign in with EOSC",
+		"submit": "Sign in",
+		"username": "Username"
 	},
 	"SignInPage": {
 		"meta": {

@@ -27,7 +27,7 @@ export async function sendContactFormEmailAction(
 	formData: FormData,
 ): Promise<ActionState> {
 	const locale = await getLocale();
-	const t = await getTranslations("sendContactFormEmailAction");
+	const t = await getTranslations("actions.sendContactFormEmailAction");
 	const e = await getTranslations("errors");
 
 	try {

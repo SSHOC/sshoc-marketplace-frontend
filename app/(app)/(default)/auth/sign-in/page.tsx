@@ -2,8 +2,8 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
-import { MainContent } from "@/components/ui/main-content";
 import { SignInForm } from "@/app/(app)/(default)/auth/sign-in/_components/sign-in-form";
+import { MainContent } from "@/components/ui/main-content";
 
 interface SignInPageProps {}
 

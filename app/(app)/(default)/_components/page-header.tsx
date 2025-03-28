@@ -1,22 +1,25 @@
 import { createUrlSearchParams } from "@acdh-oeaw/lib";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 import {
 	type NavigationItem,
 	PageNavigation,
 } from "@/app/(app)/(default)/_components/page-navigation";
+import { ReportIssueLink } from "@/app/(app)/(default)/_components/report-issue-link";
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { createHref } from "@/lib/navigation/create-href";
+import { getSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
-import { ReportIssueLink } from "@/app/(app)/(default)/_components/report-issue-link";
-import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 
 interface PageHeaderProps {}
 
-export function PageHeader(_props: Readonly<PageHeaderProps>): ReactNode {
-	const t = useTranslations("PageHeader");
+export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<ReactNode> {
+	const t = await getTranslations("PageHeader");
+
+	const session = await getSession();
 
 	const navigation = {
 		home: {
@@ -238,13 +241,13 @@ export function PageHeader(_props: Readonly<PageHeaderProps>): ReactNode {
 	return (
 		<header className="border-b border-neutral-200">
 			<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
-				<NavLink className="shrink-0" href={navigation.home.href}>
+				<NavLink className="shrink-0 py-2" href={navigation.home.href}>
 					<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
 					<span className="sr-only">{navigation.home.label}</span>
 				</NavLink>
 
-				<div className="flex flex-col items-end">
-					<div className="flex">
+				<div className="hidden flex-col items-end 2xl:flex">
+					<div className="flex items-center gap-x-8">
 						<ReportIssueLink />
 						<AuthMenu />
 					</div>

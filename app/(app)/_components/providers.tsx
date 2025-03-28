@@ -1,8 +1,9 @@
+import { NextIntlClientProvider } from "next-intl";
+import type { ReactNode } from "react";
+
 import { AriaProviders } from "@/app/(app)/_components/aria-providers";
 import type { IntlLocale } from "@/lib/i18n/locales";
 import type { IntlMessages } from "@/lib/i18n/messages";
-import { NextIntlClientProvider } from "next-intl";
-import type { ReactNode } from "react";
 
 interface ProvidersProps {
 	children: ReactNode;

@@ -1,22 +1,23 @@
 "use client";
 
+import { createUrl, createUrlSearchParams } from "@acdh-oeaw/lib";
+import { useTranslations } from "next-intl";
+import { type ReactNode, useActionState, useTransition } from "react";
+
+import { signInAction } from "@/app/(app)/(default)/auth/sign-in/_actions/sign-in-action";
 import { FieldError } from "@/components/ui/field-error";
+import { FormError } from "@/components/ui/form-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { TextInput } from "@/components/ui/text-input";
 import { env } from "@/config/env.config";
 import { createInitialActionState } from "@/lib/server/actions";
-import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
-import { useActionState, type ReactNode } from "react";
 
 export function SignInForm(): ReactNode {
-	// const [state, action] = useActionState(signInAction, createInitialActionState({}));
-
-	const signInUrl = createUrl({
-		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: "/api/auth/sign-in",
-	});
+	const t = useTranslations("SignInForm");
+	const [state, action] = useActionState(signInAction, createInitialActionState({}));
+	const [isPending, startTransition] = useTransition();
 
 	const oauthUrl = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -46,35 +47,39 @@ export function SignInForm(): ReactNode {
 	return (
 		<div className="p-8">
 			<form
+				action={action}
 				className="flex flex-col gap-y-8"
-				// action={async (formData) => {
-				// 	const response = await request(signInUrl, { method: "post", body: formData });
-				// }}
-				onSubmit={async (event) => {
+				data-pending={isPending || undefined}
+				onSubmit={(event) => {
 					event.preventDefault();
 
 					const formData = new FormData(event.currentTarget);
-					const response = await request(signInUrl, { method: "post", body: formData });
+
+					startTransition(() => {
+						action(formData);
+					});
 				}}
 			>
-				<TextInput name="username" isRequired>
-					<Label>Username</Label>
+				<FormError state={state} />
+
+				<TextInput isRequired={true} name="username">
+					<Label>{t("username")}</Label>
 					<Input />
 					<FieldError />
 				</TextInput>
 
-				<TextInput name="password" isRequired type="password">
-					<Label>Password</Label>
+				<TextInput isRequired={true} name="password" type="password">
+					<Label>{t("password")}</Label>
 					<Input />
 					<FieldError />
 				</TextInput>
 
-				<SubmitButton>Submit</SubmitButton>
+				<SubmitButton>{t("submit")}</SubmitButton>
 			</form>
 
 			<hr />
 
-			<a href={String(oauthUrl)}>Sign in with EOSC</a>
+			<a href={String(oauthUrl)}>{t("sign-in-eosc")}</a>
 		</div>
 	);
 }

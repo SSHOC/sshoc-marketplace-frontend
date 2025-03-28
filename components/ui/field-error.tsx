@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@acdh-oeaw/style-variants";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import {
-	FieldError as AriaFieldError,
 	composeRenderProps,
+	FieldError as AriaFieldError,
 	type FieldErrorProps as AriaFieldErrorProps,
 } from "react-aria-components";
 
