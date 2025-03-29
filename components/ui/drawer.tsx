@@ -28,8 +28,7 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					// FIXME: h-(--visual-viewport-height) ?
-					"bg-fill-overlay entering:animate-underlay-in exiting:animate-underlay-out fixed inset-0 isolate z-10 grid min-h-full w-full overflow-y-auto",
+					"fixed inset-0 isolate z-10 grid min-h-full w-full overflow-y-auto bg-neutral-800/15 entering:animate-underlay-in exiting:animate-underlay-out",
 					className,
 				);
 			})}
@@ -40,14 +39,14 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 }
 
 const modalStyles = styles({
-	base: "border-stroke-weak bg-background-overlay shadow-overlay h-full w-full overflow-hidden border forced-colors:bg-[Canvas]",
+	base: "h-full w-full overflow-hidden border border-neutral-150 bg-neutral-0 shadow forced-colors:bg-[Canvas]",
 	variants: {
 		placement: {
-			bottom: "entering:animate-slide-bottom-in exiting:animate-slide-bottom-out mt-16 self-end",
-			left: "entering:animate-slide-left-in exiting:animate-slide-left-out mr-16 justify-self-start",
+			bottom: "mt-16 self-end entering:animate-slide-bottom-in exiting:animate-slide-bottom-out",
+			left: "mr-16 justify-self-start entering:animate-slide-left-in exiting:animate-slide-left-out",
 			right:
-				"entering:animate-slide-right-in exiting:animate-slide-right-out ml-16 justify-self-end",
-			top: "entering:animate-slide-top-in exiting:animate-slide-top-out mb-16 self-start",
+				"ml-16 justify-self-end entering:animate-slide-right-in exiting:animate-slide-right-out",
+			top: "mb-16 self-start entering:animate-slide-top-in exiting:animate-slide-top-out",
 		},
 		size: {
 			small: "",
@@ -56,16 +55,16 @@ const modalStyles = styles({
 	},
 	combinations: [
 		[{ placement: "bottom", size: "small" }, "max-h-96"],
-		[{ placement: "bottom", size: "large" }, "max-h-144"],
+		[{ placement: "bottom", size: "large" }, "max-h-128"],
 
 		[{ placement: "left", size: "small" }, "max-w-96"],
-		[{ placement: "left", size: "large" }, "max-w-144"],
+		[{ placement: "left", size: "large" }, "max-w-128"],
 
 		[{ placement: "right", size: "small" }, "max-w-96"],
-		[{ placement: "right", size: "large" }, "max-w-144"],
+		[{ placement: "right", size: "large" }, "max-w-128"],
 
 		[{ placement: "top", size: "small" }, "max-h-96"],
-		[{ placement: "top", size: "large" }, "max-h-144"],
+		[{ placement: "top", size: "large" }, "max-h-128"],
 	],
 	defaults: {
 		placement: "right",
@@ -120,7 +119,7 @@ export function DrawerHeader(props: Readonly<DrawerHeaderProps>): ReactNode {
 		<header
 			{...rest}
 			className={cn(
-				"border-stroke-weak flex items-center justify-between gap-x-4 border-b px-8 py-6",
+				"flex items-center justify-between gap-x-4 border-b border-neutral-150 px-6 py-4",
 				className,
 			)}
 		>

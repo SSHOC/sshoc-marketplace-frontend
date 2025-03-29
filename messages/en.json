@@ -98,11 +98,16 @@
 		},
 		"navigation": {
 			"label": "Primary"
+		},
+		"menu": {
+			"close": "Close",
+			"open": "Open",
+			"title": "Navigation"
+		},
+		"report-issue": {
+			"label": "Report an issue",
+			"message": "Describe the issue:\n\n"
 		}
-	},
-	"ReportIssueLink": {
-		"label": "Report an issue",
-		"message": "I have found an issue on page {page}.\n\nPlease describe:\n\n"
 	},
 	"SignInForm": {
 		"password": "Password",

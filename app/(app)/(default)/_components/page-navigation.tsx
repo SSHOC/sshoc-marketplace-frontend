@@ -1,12 +1,17 @@
 "use client";
 
-import { ChevronDownIcon, MenuIcon } from "lucide-react";
+import { Image } from "@/components/image";
+import logo from "@/public/assets/images/logo-with-text.svg";
+
+import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import type { ReactNode } from "react";
 import { chain } from "react-aria";
 import {
 	Button,
-	DialogTrigger,
+	Disclosure,
+	DisclosurePanel,
+	Heading,
 	Menu,
 	MenuItem,
 	type MenuItemProps,
@@ -18,6 +23,9 @@ import {
 import { NavLink } from "@/components/nav-link";
 import { usePathname, useRouter } from "@/lib/navigation/navigation";
 import { isCurrentPage } from "@/lib/navigation/use-nav-link";
+import { IconButton } from "@/components/ui/icon-button";
+import { TouchTarget } from "@/components/ui/touch-target";
+import { Drawer, DrawerHeader, DrawerTrigger, Modal, ModalOverlay } from "@/components/ui/drawer";
 
 interface NavigationLink {
 	type: "link";
@@ -39,7 +47,7 @@ export type NavigationItem = NavigationLink | NavigationSeparator | NavigationMe
 
 interface PageNavigationProps {
 	label: string;
-	navigation: Record<string, NavigationItem>;
+	navigation: Record<string, NavigationItem> & { home: NavigationLink };
 }
 
 export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode {
@@ -179,25 +187,126 @@ function NavigationMenuItem(props: Readonly<NavigationMenuItemProps>): ReactNode
 	);
 }
 
-interface AppNavigationMobileProps {
+interface PageNavigationMobileProps {
 	label: string;
 	menuCloseLabel: string;
 	menuOpenLabel: string;
 	menuTitleLabel: string;
-	navigation: Record<string, NavigationItem>;
+	navigation: Record<string, NavigationItem> & { home: NavigationLink };
 }
 
-export function AppNavigationMobile(props: Readonly<AppNavigationMobileProps>): ReactNode {
+export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>): ReactNode {
 	const { label, menuCloseLabel, menuOpenLabel, menuTitleLabel, navigation } = props;
 
 	return (
-		<DialogTrigger>
+		<DrawerTrigger>
 			<nav aria-label={label}>
-				<Button className="">
-					<MenuIcon aria-hidden={true} className="size-6 shrink-0" />
-					<span className="sr-only">{menuOpenLabel}</span>
-				</Button>
+				<IconButton kind="gradient" size="small" className="size-9" label={menuOpenLabel}>
+					<MenuIcon aria-hidden={true} className="shrink-0" data-slot="icon" />
+					<TouchTarget />
+				</IconButton>
 			</nav>
-		</DialogTrigger>
+			<ModalOverlay isDismissable>
+				<Modal size="large">
+					<Drawer className="bg-neutral-50" aria-label={menuTitleLabel}>
+						<DrawerHeader className="bg-neutral-75">
+							<NavLink className="shrink-0 rounded-sm" href={navigation.home.href}>
+								<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
+								<span className="sr-only">{navigation.home.label}</span>
+							</NavLink>
+
+							<IconButton kind="text" slot="close" label={menuCloseLabel}>
+								<XIcon aria-hidden className="size-8 shrink-0" />
+							</IconButton>
+						</DrawerHeader>
+						<div className="overflow-y-auto">
+							<ul role="link">
+								{Object.entries(navigation).map(([id, item]) => {
+									if (id === "home") {
+										return null;
+									}
+
+									switch (item.type) {
+										case "link": {
+											return (
+												<li key={id}>
+													<NavLink
+														className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+														href={item.href}
+													>
+														{item.label}
+													</NavLink>
+												</li>
+											);
+										}
+
+										case "menu": {
+											return (
+												<li key={id}>
+													<Disclosure className="group">
+														<Heading>
+															<Button
+																slot="trigger"
+																className="flex w-full justify-between border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition group-expanded:bg-brand-600 group-expanded:text-neutral-0 hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600 group-expanded:hover:bg-brand-600 group-expanded:hover:text-neutral-0"
+															>
+																{item.label}
+																<ChevronDownIcon
+																	aria-hidden
+																	data-slot="icon"
+																	className="size-4 shrink-0 transition group-expanded:rotate-180"
+																/>
+															</Button>
+														</Heading>
+														<DisclosurePanel className="bg-neutral-0">
+															<ul role="list">
+																{Object.entries(item.children).map(([id, item]) => {
+																	switch (item.type) {
+																		case "link": {
+																			return (
+																				<li key={id}>
+																					<NavLink
+																						className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																						href={item.href}
+																					>
+																						{item.label}
+																					</NavLink>
+																				</li>
+																			);
+																		}
+
+																		case "separator": {
+																			return (
+																				<li key={id}>
+																					<Separator
+																						key={id}
+																						className="my-1 w-full border-t border-neutral-150"
+																					/>
+																				</li>
+																			);
+																		}
+																	}
+																})}
+															</ul>
+														</DisclosurePanel>
+													</Disclosure>
+												</li>
+											);
+										}
+
+										case "separator": {
+											return (
+												<li key={id}>
+													<Separator key={id} className="my-1 w-full border-t border-neutral-150" />
+												</li>
+											);
+										}
+									}
+								})}
+							</ul>
+						</div>
+					</Drawer>
+				</Modal>
+			</ModalOverlay>
+		</DrawerTrigger>
 	);
 }

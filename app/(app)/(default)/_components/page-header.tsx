@@ -6,8 +6,8 @@ import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 import {
 	type NavigationItem,
 	PageNavigation,
+	PageNavigationMobile,
 } from "@/app/(app)/(default)/_components/page-navigation";
-import { ReportIssueLink } from "@/app/(app)/(default)/_components/report-issue-link";
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { createHref } from "@/lib/navigation/create-href";
@@ -238,20 +238,53 @@ export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<Rea
 		},
 	} satisfies Record<string, NavigationItem>;
 
+	const reportIssue = {
+		type: "link",
+		href: createHref({
+			pathname: "/contact",
+			searchParams: {
+				subject: t("report-issue.label"),
+				message: t("report-issue.message"),
+			},
+		}),
+		label: t("report-issue.label"),
+	} satisfies NavigationItem;
+
 	return (
-		<header className="border-b border-neutral-200">
+		<header className="border-b border-neutral-150">
 			<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
-				<NavLink className="shrink-0 py-2" href={navigation.home.href}>
+				<NavLink className="shrink-0 py-4" href={navigation.home.href}>
 					<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
 					<span className="sr-only">{navigation.home.label}</span>
 				</NavLink>
 
 				<div className="hidden flex-col items-end 2xl:flex">
 					<div className="flex items-center gap-x-8">
-						<ReportIssueLink />
+						<NavLink
+							className="text-sm text-neutral-600 transition hover:text-neutral-700"
+							href={reportIssue.href}
+						>
+							{reportIssue.label}
+						</NavLink>
 						<AuthMenu />
 					</div>
 					<PageNavigation label={t("navigation.label")} navigation={navigation} />
+				</div>
+
+				<div className="2xl:hidden">
+					<PageNavigationMobile
+						label={t("navigation.label")}
+						menuCloseLabel={t("menu.close")}
+						menuOpenLabel={t("menu.open")}
+						menuTitleLabel={t("menu.title")}
+						navigation={{
+							...navigation,
+							"separator-3": {
+								type: "separator",
+							},
+							"report-issue": reportIssue,
+						}}
+					/>
 				</div>
 			</div>
 		</header>

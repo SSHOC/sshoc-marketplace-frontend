@@ -5,6 +5,20 @@
 
 @plugin "tailwindcss-react-aria-components";
 
+@custom-variant aria-current-page (&[aria-current="page"]);
+
+@custom-variant pointer-coarse {
+	@media (pointer: coarse) {
+		@slot;
+	}
+}
+
+@custom-variant pointer-fine {
+	@media (pointer: fine) {
+		@slot;
+	}
+}
+
 @theme {
 	--breakpoint-xs: 30rem;
 	--breakpoint-sm: 40rem;
@@ -73,6 +87,21 @@
 
 	--text-base: 0.9375rem;
 
+	--animate-underlay-in: 300ms ease-out underlay-in;
+	--animate-underlay-out: 200ms ease-in underlay-out;
+
+	--animate-overlay-in: 300ms ease-out overlay-in;
+	--animate-overlay-out: 200ms ease-in overlay-out;
+
+	--animate-slide-left-in: 300ms ease-out slide-left-in;
+	--animate-slide-left-out: 200ms ease-in slide-left-out;
+	--animate-slide-right-in: 300ms ease-out slide-right-in;
+	--animate-slide-right-out: 200ms ease-in slide-right-out;
+	--animate-slide-top-in: 300ms ease-out slide-top-in;
+	--animate-slide-top-out: 200ms ease-in slide-top-out;
+	--animate-slide-bottom-in: 300ms ease-out slide-bottom-in;
+	--animate-slide-bottom-out: 200ms ease-in slide-bottom-out;
+
 	--animate-popover-left-in: 150ms ease-out popover-left-in;
 	--animate-popover-left-out: 100ms ease-in popover-left-out;
 	--animate-popover-right-in: 150ms ease-out popover-right-in;
@@ -81,6 +110,154 @@
 	--animate-popover-top-out: 100ms ease-in popover-top-out;
 	--animate-popover-bottom-in: 150ms ease-out popover-bottom-in;
 	--animate-popover-bottom-out: 100ms ease-in popover-bottom-out;
+
+	--animate-loading-indicator-in: 300ms ease-out 500ms both fade-in, 1000ms linear spin infinite;
+
+	@keyframes underlay-in {
+		from {
+			/** Work around for safari treating "transparent" as "transparent black". */
+			background-color: hsl(0deg 0 0 / 0%);
+		}
+
+		to {
+			background-color: color-mix(in oklab, var(--color-neutral-800) 15%, transparent);
+		}
+	}
+
+	@keyframes underlay-out {
+		from {
+			background-color: color-mix(in oklab, var(--color-neutral-800) 15%, transparent);
+		}
+
+		to {
+			/** Work around for safari treating "transparent" as "transparent black". */
+			background-color: hsl(0deg 0 0 / 0%);
+		}
+	}
+
+	@keyframes overlay-in {
+		from {
+			opacity: 0%;
+			scale: 0.95;
+		}
+
+		to {
+			opacity: 100%;
+			scale: 1;
+		}
+	}
+
+	@keyframes overlay-out {
+		from {
+			opacity: 100%;
+			scale: 1;
+		}
+
+		to {
+			opacity: 0%;
+			scale: 0.95;
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0%;
+		}
+
+		to {
+			opacity: 100%;
+		}
+	}
+
+	@keyframes fade-out {
+		from {
+			opacity: 100%;
+		}
+
+		to {
+			opacity: 0%;
+		}
+	}
+
+	@keyframes slide-left-in {
+		from {
+			translate: -100% 0;
+		}
+
+		to {
+			translate: 0 0;
+		}
+	}
+
+	@keyframes slide-left-out {
+		from {
+			translate: 0 0;
+		}
+
+		to {
+			translate: -100% 0;
+		}
+	}
+
+	@keyframes slide-right-in {
+		from {
+			translate: 100% 0;
+		}
+
+		to {
+			translate: 0 0;
+		}
+	}
+
+	@keyframes slide-right-out {
+		from {
+			translate: 0 0;
+		}
+
+		to {
+			translate: 100% 0;
+		}
+	}
+
+	@keyframes slide-top-in {
+		from {
+			translate: 0 -100%;
+		}
+
+		to {
+			translate: 0 0;
+		}
+	}
+
+	@keyframes slide-top-out {
+		from {
+			translate: 0 0;
+		}
+
+		to {
+			translate: 0 -100%;
+		}
+	}
+
+	@keyframes slide-bottom-in {
+		from {
+			translate: 0 100%;
+		}
+
+		to {
+			translate: 0 0;
+		}
+	}
+
+	@keyframes slide-bottom-out {
+		from {
+			translate: 0 0;
+		}
+
+		to {
+			translate: 0 100%;
+		}
+	}
 
 	@keyframes popover-left-in {
 		from {
@@ -180,6 +357,30 @@
 			translate: 0 -0.5rem;
 			scale: 0.95;
 		}
+	}
+}
+
+@layer base {
+	@keyframes toast-in {
+		from {
+			opacity: 0%;
+			translate: 100% 0;
+		}
+	}
+
+	@keyframes toast-out {
+		to {
+			opacity: 0%;
+			translate: 100% 0;
+		}
+	}
+
+	::view-transition-new(.toast):only-child {
+		animation: toast-in 300ms;
+	}
+
+	::view-transition-old(.toast):only-child {
+		animation: toast-out 200ms;
 	}
 }
 

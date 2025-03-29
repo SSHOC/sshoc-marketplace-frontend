@@ -13,24 +13,31 @@ import { Link } from "@/components/link";
 import { NavLink } from "@/components/nav-link";
 
 const buttonStyles = styles({
-	base: "*:data-[slot=icon]:first-child:-ml-1 *:data-[slot=icon]:last-child:-mr-1 isolate inline-flex items-center justify-center gap-x-2 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed *:data-[slot=icon]:shrink-0 forced-colors:disabled:text-[GrayText] pending:opacity-75",
+	base: "*:data-[slot=icon]:first-child:-ml-1 *:data-[slot=icon]:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed *:data-[slot=icon]:shrink-0 forced-colors:disabled:text-[GrayText] pending:opacity-75",
 	variants: {
 		kind: {
 			primary: "bg-brand-750 text-neutral-0 hover:bg-brand-600 disabled:bg-neutral-200",
 			sceondary: "bg-brand-600 text-neutral-0 disabled:bg-neutral-200",
 			gradient:
-				"bg-gradient-to-r from-brand-500 to-brand-800 text-neutral-0 disabled:bg-neutral-200",
-			text: "text-brand-750 hover:text-brand-700 disabled:text-neutral-500",
+				"bg-gradient-to-r from-brand-500 to-brand-800 bg-[length:125%] bg-left text-neutral-0 transition-all hover:bg-right disabled:bg-neutral-200",
+			text: "text-brand-750 hover:text-brand-600 disabled:text-neutral-500",
 		},
 		size: {
-			small: "min-h-9 rounded-sm px-4 text-[0.9375rem] font-medium",
-			medium: "min-h-12 rounded-sm px-4 text-[0.9375rem] font-medium",
+			small: "rounded-sm px-4 text-[0.9375rem] font-medium",
+			medium: "rounded-sm px-4 text-[0.9375rem] font-medium",
 		},
 		variant: {
 			default: "",
 			"icon-only": "",
 		},
 	},
+	combinations: [
+		[{ size: "small", variant: "default" }, "min-h-8 px-3 py-1 *:data-[slot=icon]:size-4"],
+		[{ size: "medium", variant: "default" }, "min-h-12 px-4 py-2.5 *:data-[slot=icon]:size-5"],
+
+		[{ size: "small", variant: "icon-only" }, "size-8 *:data-[slot=icon]:size-4"],
+		[{ size: "medium", variant: "icon-only" }, "size-12 *:data-[slot=icon]:size-6"],
+	],
 	defaults: {
 		kind: "primary",
 		size: "medium",
