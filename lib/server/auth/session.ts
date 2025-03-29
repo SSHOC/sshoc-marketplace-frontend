@@ -9,41 +9,34 @@ import { UnauthorizedError } from "@/lib/server/errors";
 
 const sessionCookieName = "sshoc";
 
-async function getSessionToken(): Promise<string | null> {
-	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-	return (await cookies()).get(sessionCookieName)?.value || null;
+function decode(token: string) {
+	try {
+		return decodeJwt(token);
+	} catch {
+		return null;
+	}
 }
 
-export async function setSessionTokenCookie(token: string): Promise<void> {
-	const decoded = decodeJwt(token);
+export async function createSession(token: string) {
+	const validated = validateSessionToken(token);
 
-	if (decoded.exp == null) {
+	if (validated == null) {
 		return;
 	}
 
-	const expires = decoded.exp * 1000;
-
-	if (Date.now() >= expires) {
-		return;
-	}
-
-	(await cookies()).set(sessionCookieName, token, {
+	(await cookies()).set(sessionCookieName, validated.token, {
 		httpOnly: true,
 		sameSite: "lax",
 		secure: env.NODE_ENV === "production",
-		expires,
+		expires: validated.expires,
 		path: "/",
 	});
 }
 
-export async function deleteSessionTokenCookie(): Promise<void> {
-	(await cookies()).delete(sessionCookieName);
-}
+export function validateSessionToken(token: string) {
+	const decoded = decode(token);
 
-function validateSessionToken(token: string): string | null {
-	const decoded = decodeJwt(token);
-
-	if (decoded.exp == null) {
+	if (decoded?.exp == null) {
 		return null;
 	}
 
@@ -53,23 +46,28 @@ function validateSessionToken(token: string): string | null {
 		return null;
 	}
 
-	return token;
+	return { token, expires };
 }
 
-export async function getCurrentSession(): Promise<string | null> {
-	const token = await getSessionToken();
+export async function invalidateSession() {
+	(await cookies()).delete(sessionCookieName);
+}
+
+export async function getSession() {
+	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+	const token = (await cookies()).get(sessionCookieName)?.value || null;
 
 	if (token == null) {
 		return null;
 	}
 
-	return validateSessionToken(token);
+	return validateSessionToken(token)?.token ?? null;
 }
 
-export async function assertCurrentSession(): Promise<string> {
-	const token = await getCurrentSession();
+export async function assertSession() {
+	const token = await getSession();
 
-	assert(token, () => {
+	assert(token != null, () => {
 		return new UnauthorizedError();
 	});
 

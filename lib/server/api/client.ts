@@ -3,7 +3,9 @@ import "server-only";
 import { createUrl, request } from "@acdh-oeaw/lib";
 
 import { env } from "@/config/env.config";
-import { assertCurrentSession } from "@/lib/server/auth/session";
+import { redirect } from "@/lib/navigation/navigation";
+import { assertSession, invalidateSession } from "@/lib/server/auth/session";
+import { isUnauthorizedError } from "@/lib/server/errors";
 
 interface UserAccount {
 	id: number;
@@ -17,17 +19,26 @@ interface UserAccount {
 }
 
 export async function getCurrentUser() {
-	const token = await assertCurrentSession();
+	try {
+		const token = await assertSession();
 
-	const url = createUrl({
-		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: "/api/auth/me",
-	});
+		const url = createUrl({
+			baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+			pathname: "/api/auth/me",
+		});
 
-	const data = (await request(url, {
-		headers: { authorization: token },
-		responseType: "json",
-	})) as UserAccount;
+		const data = (await request(url, {
+			headers: { authorization: token },
+			responseType: "json",
+		})) as UserAccount;
 
-	return data;
+		return data;
+	} catch (error) {
+		if (isUnauthorizedError(error)) {
+			// FIXME: only allowed in server action
+			// await invalidateSession();
+		}
+
+		redirect("/auth/sign-in");
+	}
 }

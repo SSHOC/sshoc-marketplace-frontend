@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 
-import { deleteSessionTokenCookie } from "@/lib/server/auth/session";
+import { invalidateSession } from "@/lib/server/auth/session";
 
 export async function signOutAction() {
-	await deleteSessionTokenCookie();
+	await invalidateSession();
 
 	revalidatePath("/");
 }
