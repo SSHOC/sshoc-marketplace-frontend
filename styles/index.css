@@ -85,6 +85,22 @@
 		"Segoe UI Symbol", "Noto Color Emoji";
 	--font-code: var(--_font-code, ui-monospace), monospace;
 
+	/**
+	 * Ubuntu variable font is significantly thinner than the original.
+   *
+	 * @see https://github.com/canonical/Ubuntu-Sans-fonts/issues/99
+	 */
+	--font-weight-factor: 1.1825;
+	--font-weight-thin: calc(100 * var(--font-weight-factor));
+	--font-weight-extralight: calc(200 * var(--font-weight-factor));
+	--font-weight-light: calc(300 * var(--font-weight-factor));
+	--font-weight-normal: calc(400 * var(--font-weight-factor));
+	--font-weight-medium: calc(500 * var(--font-weight-factor));
+	--font-weight-semibold: calc(600 * var(--font-weight-factor));
+	--font-weight-bold: calc(700 * var(--font-weight-factor));
+	--font-weight-extrabold: calc(800 * var(--font-weight-factor));
+	--font-weight-black: calc(900 * var(--font-weight-factor));
+
 	--text-base: 0.9375rem;
 
 	--animate-underlay-in: 300ms ease-out underlay-in;
