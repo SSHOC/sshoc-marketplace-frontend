@@ -12,13 +12,13 @@ import { NavLink } from "@/components/nav-link";
 import { ButtonNavLink } from "@/components/ui/button";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
-import { getSession } from "@/lib/server/auth/session";
+import { getCurrentSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
 export async function PageHeader(): Promise<ReactNode> {
 	const t = await getTranslations("PageHeader");
 
-	const session = await getSession();
+	const session = await getCurrentSession();
 
 	const navigation = {
 		home: {

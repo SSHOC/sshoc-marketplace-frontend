@@ -1,3 +1,11 @@
+export class ForbiddenError extends Error {
+	name = "ForbiddenError" as const;
+}
+
+export function isForbiddenError(error: unknown): error is ForbiddenError {
+	return error instanceof ForbiddenError;
+}
+
 export class HoneypotError extends Error {
 	name = "HoneypotError" as const;
 }
@@ -12,4 +20,12 @@ export class RateLimitError extends Error {
 
 export function isRateLimitError(error: unknown): error is RateLimitError {
 	return error instanceof RateLimitError;
+}
+
+export class UnauthorizedError extends Error {
+	name = "UnauthorizedError" as const;
+}
+
+export function isUnauthorizedError(error: unknown): error is UnauthorizedError {
+	return error instanceof UnauthorizedError;
 }
