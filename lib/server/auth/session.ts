@@ -9,11 +9,24 @@ import { UnauthorizedError } from "@/lib/server/errors";
 
 const sessionCookieName = "sshoc";
 
-export async function getSessionToken(): Promise<string | null> {
-	return (await cookies()).get(sessionCookieName)?.value ?? null;
+async function getSessionToken(): Promise<string | null> {
+	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+	return (await cookies()).get(sessionCookieName)?.value || null;
 }
 
-export async function setSessionTokenCookie(token: string, expires: number): Promise<void> {
+export async function setSessionTokenCookie(token: string): Promise<void> {
+	const decoded = decodeJwt(token);
+
+	if (decoded.exp == null) {
+		return;
+	}
+
+	const expires = decoded.exp * 1000;
+
+	if (Date.now() >= expires) {
+		return;
+	}
+
 	(await cookies()).set(sessionCookieName, token, {
 		httpOnly: true,
 		sameSite: "lax",
@@ -23,16 +36,20 @@ export async function setSessionTokenCookie(token: string, expires: number): Pro
 	});
 }
 
-export async function clearSessionTokenCookie(): Promise<void> {
+export async function deleteSessionTokenCookie(): Promise<void> {
 	(await cookies()).delete(sessionCookieName);
 }
 
-export async function validateSessionToken(token: string): Promise<string | null> {
+function validateSessionToken(token: string): string | null {
 	const decoded = decodeJwt(token);
 
-	if (decoded.exp == null || Date.now() >= decoded.exp) {
-		await clearSessionTokenCookie();
+	if (decoded.exp == null) {
+		return null;
+	}
 
+	const expires = decoded.exp * 1000;
+
+	if (Date.now() >= expires) {
 		return null;
 	}
 

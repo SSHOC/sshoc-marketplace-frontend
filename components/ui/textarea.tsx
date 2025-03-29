@@ -18,7 +18,7 @@ export function TextArea(props: Readonly<TextAreaProps>): ReactNode {
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"interactive rounded-2 border-stroke-strong bg-fill-inverse-strong text-small text-text-strong placeholder:text-text-weak invalid:border-stroke-error-strong invalid:bg-fill-error-weak hover:hover-overlay focus-visible:focus-outline disabled:border-stroke-disabled disabled:text-text-disabled pressed:press-overlay min-h-12 border px-4 py-3 transition invalid:border-2 forced-colors:border-[ButtonBorder] forced-colors:invalid:border-[Mark] forced-colors:focus:border-[Highlight] forced-colors:disabled:border-[GrayText]",
+					"min-h-12 rounded-sm border border-neutral-250 bg-neutral-50 px-4 text-[0.9375rem] text-neutral-800 transition placeholder:text-neutral-400 invalid:border-negative-600 invalid:bg-negative-100 hover:border-brand-600 hover:bg-neutral-0 hover:invalid:border-negative-600 focus:border-brand-600 focus:bg-brand-50 focus:outline-2 focus:outline-brand-600 focus:invalid:border-negative-600 focus:invalid:bg-negative-100 focus:invalid:outline-negative-600 disabled:cursor-not-allowed disabled:border-neutral-100 disabled:text-neutral-500 forced-colors:border-[ButtonBorder] forced-colors:invalid:border-[Mark] forced-colors:focus:border-[Highlight] forced-colors:disabled:border-[GrayText]",
 					className,
 				);
 			})}

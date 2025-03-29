@@ -1,17 +1,18 @@
 import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 
-import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 import {
 	PageNavigation,
 	PageNavigationMobile,
 } from "@/app/(app)/(default)/_components/page-navigation";
+import { UserAccountMenu } from "@/app/(app)/(default)/_components/user-account-menu";
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { ButtonNavLink } from "@/components/ui/button";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
+import { getCurrentUser } from "@/lib/server/api/client";
 import { getCurrentSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
@@ -258,24 +259,29 @@ export async function PageHeader(): Promise<ReactNode> {
 	return (
 		<header className="border-b border-neutral-150">
 			<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
-				<NavLink className="shrink-0 py-4" href={navigation.home.href}>
+				<NavLink
+					className="shrink-0 rounded-sm py-4 focus-visible:outline-2 focus-visible:outline-brand-600"
+					href={navigation.home.href}
+				>
 					<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
 					<span className="sr-only">{navigation.home.label}</span>
 				</NavLink>
 
 				<div className="hidden flex-col items-end gap-y-2 2xl:flex">
-					<div className="flex items-center gap-x-8">
+					<div className="flex items-center gap-x-12">
 						<NavLink
-							className="text-sm text-neutral-600 transition hover:text-neutral-700"
+							className="rounded-b-sm p-2 px-8 text-sm text-neutral-600 transition hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-brand-600"
 							href={reportIssueLink.href}
 						>
 							{reportIssueLink.label}
 						</NavLink>
-						{session ? (
-							<AuthMenu />
+						{session != null ? (
+							<Suspense>
+								<UserAccountMenu name={(await getCurrentUser()).displayName} />
+							</Suspense>
 						) : (
 							<ButtonNavLink
-								className="min-w-40 rounded-t-none"
+								className="min-h-9 rounded-t-none px-16"
 								href={signInLink.href}
 								size="small"
 							>

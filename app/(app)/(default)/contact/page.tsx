@@ -40,5 +40,9 @@ export default async function ContactPage(_props: Readonly<ContactPageProps>): P
 function ContactEmail() {
 	const email = env.EMAIL_ADDRESS;
 
-	return <a href={email}>{email}</a>;
+	return (
+		<a className="text-brand-750 transition hover:text-brand-600" href={email}>
+			{email}
+		</a>
+	);
 }

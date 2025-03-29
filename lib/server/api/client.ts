@@ -5,6 +5,17 @@ import { createUrl, request } from "@acdh-oeaw/lib";
 import { env } from "@/config/env.config";
 import { assertCurrentSession } from "@/lib/server/auth/session";
 
+interface UserAccount {
+	id: number;
+	username: string;
+	displayName: string;
+	status: "enabled";
+	registrationDate: string;
+	role: "administrator" | "moderator" | "contributor";
+	email: string;
+	config: true;
+}
+
 export async function getCurrentUser() {
 	const token = await assertCurrentSession();
 
@@ -13,10 +24,10 @@ export async function getCurrentUser() {
 		pathname: "/api/auth/me",
 	});
 
-	const response = await request(url, {
+	const data = (await request(url, {
 		headers: { authorization: token },
 		responseType: "json",
-	});
+	})) as UserAccount;
 
-	return response;
+	return data;
 }

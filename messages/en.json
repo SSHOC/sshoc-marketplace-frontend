@@ -21,7 +21,6 @@
 	"AppGroupLayout": {
 		"skip-to-main-content": "Skip to main content"
 	},
-	"AuthMenu": {},
 	"ContactForm": {
 		"email": "Email address",
 		"message": "Message",
@@ -128,5 +127,8 @@
 			"title": "Sign in"
 		},
 		"title": "Sign in"
+	},
+	"UserAccountMenu": {
+		"label": "Hi, {name}"
 	}
 }

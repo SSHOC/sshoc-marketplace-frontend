@@ -23,7 +23,7 @@ const buttonStyles = styles({
 			text: "text-brand-750 hover:text-brand-600 disabled:text-neutral-500",
 		},
 		size: {
-			small: "rounded-sm px-4 text-[0.9375rem] font-medium",
+			small: "rounded-sm px-4 text-sm font-medium",
 			medium: "rounded-sm px-4 text-[0.9375rem] font-medium",
 		},
 		variant: {

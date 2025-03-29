@@ -86,7 +86,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 											<ChevronDownIcon aria-hidden={true} className="-mr-1 size-4 shrink-0" />
 										</Button>
 										<Popover
-											className="min-w-(--trigger-width) rounded-sm border border-neutral-200 bg-neutral-0 shadow entering:animate-popover-bottom-in exiting:animate-popover-bottom-out"
+											className="min-w-(--trigger-width) rounded-sm border border-neutral-150 bg-neutral-0 shadow entering:animate-popover-bottom-in exiting:animate-popover-bottom-out"
 											placement="bottom right"
 										>
 											<Menu
@@ -200,7 +200,10 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 							return (
 								<Fragment>
 									<DrawerHeader className="bg-neutral-75">
-										<NavLink className="shrink-0 rounded-sm" href={navigation.home.href}>
+										<NavLink
+											className="shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-brand-600"
+											href={navigation.home.href}
+										>
 											<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
 											<span className="sr-only">{navigation.home.label}</span>
 										</NavLink>

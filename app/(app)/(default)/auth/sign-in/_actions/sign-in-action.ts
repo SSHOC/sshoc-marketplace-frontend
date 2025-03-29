@@ -7,7 +7,7 @@ import * as v from "valibot";
 import { env } from "@/config/env.config";
 import { redirect } from "@/lib/navigation/navigation";
 import { type ActionState, createErrorActionState } from "@/lib/server/actions";
-import { setSession } from "@/lib/server/auth/session";
+import { setSessionTokenCookie } from "@/lib/server/auth/session";
 import { isRateLimitError } from "@/lib/server/errors";
 import { assertGlobalPostRateLimit } from "@/lib/server/rate-limit/global-rate-limit";
 
@@ -43,7 +43,7 @@ export async function signInAction(state: ActionState, formData: FormData): Prom
 
 		assert(token);
 
-		await setSession(token);
+		await setSessionTokenCookie(token);
 	} catch (error) {
 		log.error(error);
 

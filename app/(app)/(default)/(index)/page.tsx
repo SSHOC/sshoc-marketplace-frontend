@@ -42,14 +42,6 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	);
 }
 
-function LeadLink(chunks: ReactNode): ReactNode {
-	return (
-		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
-			{chunks}
-		</Link>
-	);
-}
-
 function HeroSection(): ReactNode {
 	const t = useTranslations("IndexPage");
 
@@ -95,5 +87,13 @@ function HeroSection(): ReactNode {
 				</Button>
 			</SearchForm>
 		</section>
+	);
+}
+
+function LeadLink(chunks: ReactNode): ReactNode {
+	return (
+		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
+			{chunks}
+		</Link>
 	);
 }
