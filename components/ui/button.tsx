@@ -33,7 +33,7 @@ const buttonStyles = styles({
 	},
 	combinations: [
 		[{ size: "small", variant: "default" }, "min-h-8 px-3 py-1 *:data-[slot=icon]:size-4"],
-		[{ size: "medium", variant: "default" }, "min-h-12 px-4 py-2.5 *:data-[slot=icon]:size-5"],
+		[{ size: "medium", variant: "default" }, "min-h-12 px-10 py-2.5 *:data-[slot=icon]:size-5"],
 
 		[{ size: "small", variant: "icon-only" }, "size-8 *:data-[slot=icon]:size-4"],
 		[{ size: "medium", variant: "icon-only" }, "size-12 *:data-[slot=icon]:size-6"],

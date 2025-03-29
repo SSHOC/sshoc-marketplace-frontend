@@ -16,7 +16,7 @@ export function Separator(props: Readonly<SeparatorProps>): ReactNode {
 		<AriaSeparator
 			{...rest}
 			className={cn(
-				"border-stroke-weak orientation-horizontal:w-full orientation-horizontal:border-t orientation-vertical:h-full orientation-vertical:border-l",
+				"border-neutral-150 orientation-horizontal:w-full orientation-horizontal:border-t orientation-vertical:h-full orientation-vertical:border-l",
 				className,
 			)}
 		/>

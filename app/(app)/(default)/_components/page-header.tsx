@@ -10,6 +10,7 @@ import {
 } from "@/app/(app)/(default)/_components/page-navigation";
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
+import { ButtonNavLink } from "@/components/ui/button";
 import { createHref } from "@/lib/navigation/create-href";
 import { getSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
@@ -238,7 +239,13 @@ export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<Rea
 		},
 	} satisfies Record<string, NavigationItem>;
 
-	const reportIssue = {
+	const signInLink = {
+		type: "link",
+		href: createHref({ pathname: "/auth/sign-in" }),
+		label: t("links.sign-in"),
+	} satisfies NavigationItem;
+
+	const reportIssueLink = {
 		type: "link",
 		href: createHref({
 			pathname: "/contact",
@@ -262,11 +269,21 @@ export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<Rea
 					<div className="flex items-center gap-x-8">
 						<NavLink
 							className="text-sm text-neutral-600 transition hover:text-neutral-700"
-							href={reportIssue.href}
+							href={reportIssueLink.href}
 						>
-							{reportIssue.label}
+							{reportIssueLink.label}
 						</NavLink>
-						<AuthMenu />
+						{session ? (
+							<AuthMenu />
+						) : (
+							<ButtonNavLink
+								className="min-w-40 rounded-t-none"
+								href={signInLink.href}
+								size="small"
+							>
+								{signInLink.label}
+							</ButtonNavLink>
+						)}
 					</div>
 					<PageNavigation label={t("navigation.label")} navigation={navigation} />
 				</div>
@@ -278,11 +295,15 @@ export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<Rea
 						menuOpenLabel={t("menu.open")}
 						menuTitleLabel={t("menu.title")}
 						navigation={{
-							...navigation,
+							...(session ? {} : { "sign-in": signInLink }),
 							"separator-3": {
 								type: "separator",
 							},
-							"report-issue": reportIssue,
+							...navigation,
+							"separator-4": {
+								type: "separator",
+							},
+							"report-issue": reportIssueLink,
 						}}
 					/>
 				</div>

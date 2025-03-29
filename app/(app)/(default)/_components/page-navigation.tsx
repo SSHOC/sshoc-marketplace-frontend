@@ -1,11 +1,8 @@
 "use client";
 
-import { Image } from "@/components/image";
-import logo from "@/public/assets/images/logo-with-text.svg";
-
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
-import type { ReactNode } from "react";
+import { type ComponentPropsWithRef, Fragment, type ReactNode } from "react";
 import { chain } from "react-aria";
 import {
 	Button,
@@ -20,12 +17,14 @@ import {
 	Separator,
 } from "react-aria-components";
 
+import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
-import { usePathname, useRouter } from "@/lib/navigation/navigation";
-import { isCurrentPage } from "@/lib/navigation/use-nav-link";
+import { Drawer, DrawerHeader, DrawerTrigger, Modal, ModalOverlay } from "@/components/ui/drawer";
 import { IconButton } from "@/components/ui/icon-button";
 import { TouchTarget } from "@/components/ui/touch-target";
-import { Drawer, DrawerHeader, DrawerTrigger, Modal, ModalOverlay } from "@/components/ui/drawer";
+import { usePathname, useRouter } from "@/lib/navigation/navigation";
+import { isCurrentPage } from "@/lib/navigation/use-nav-link";
+import logo from "@/public/assets/images/logo-with-text.svg";
 
 interface NavigationLink {
 	type: "link";
@@ -201,112 +200,153 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 	return (
 		<DrawerTrigger>
 			<nav aria-label={label}>
-				<IconButton kind="gradient" size="small" className="size-9" label={menuOpenLabel}>
+				<IconButton className="size-9" kind="gradient" label={menuOpenLabel} size="small">
 					<MenuIcon aria-hidden={true} className="shrink-0" data-slot="icon" />
 					<TouchTarget />
 				</IconButton>
 			</nav>
-			<ModalOverlay isDismissable>
+
+			<ModalOverlay isDismissable={true}>
 				<Modal size="large">
-					<Drawer className="bg-neutral-50" aria-label={menuTitleLabel}>
-						<DrawerHeader className="bg-neutral-75">
-							<NavLink className="shrink-0 rounded-sm" href={navigation.home.href}>
-								<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
-								<span className="sr-only">{navigation.home.label}</span>
-							</NavLink>
+					<Drawer aria-label={menuTitleLabel} className="bg-neutral-50">
+						{({ close }) => {
+							return (
+								<Fragment>
+									<DrawerHeader className="bg-neutral-75">
+										<NavLink className="shrink-0 rounded-sm" href={navigation.home.href}>
+											<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
+											<span className="sr-only">{navigation.home.label}</span>
+										</NavLink>
 
-							<IconButton kind="text" slot="close" label={menuCloseLabel}>
-								<XIcon aria-hidden className="size-8 shrink-0" />
-							</IconButton>
-						</DrawerHeader>
-						<div className="overflow-y-auto">
-							<ul role="link">
-								{Object.entries(navigation).map(([id, item]) => {
-									if (id === "home") {
-										return null;
-									}
+										<IconButton kind="text" label={menuCloseLabel} slot="close">
+											<XIcon aria-hidden={true} className="size-8 shrink-0" />
+										</IconButton>
+									</DrawerHeader>
 
-									switch (item.type) {
-										case "link": {
-											return (
-												<li key={id}>
-													<NavLink
-														className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-														href={item.href}
-													>
-														{item.label}
-													</NavLink>
-												</li>
-											);
-										}
+									<div className="overflow-y-auto">
+										<ul role="list">
+											{Object.entries(navigation).map(([id, item]) => {
+												if (id === "home") {
+													return null;
+												}
 
-										case "menu": {
-											return (
-												<li key={id}>
-													<Disclosure className="group">
-														<Heading>
-															<Button
-																slot="trigger"
-																className="flex w-full justify-between border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition group-expanded:bg-brand-600 group-expanded:text-neutral-0 hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600 group-expanded:hover:bg-brand-600 group-expanded:hover:text-neutral-0"
-															>
-																{item.label}
-																<ChevronDownIcon
-																	aria-hidden
-																	data-slot="icon"
-																	className="size-4 shrink-0 transition group-expanded:rotate-180"
+												switch (item.type) {
+													case "link": {
+														return (
+															<li key={id}>
+																<NavLinkMobile
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																	close={close}
+																	href={item.href}
+																>
+																	{item.label}
+																</NavLinkMobile>
+															</li>
+														);
+													}
+
+													case "menu": {
+														return (
+															<li key={id}>
+																<Disclosure className="group">
+																	<Heading>
+																		<Button
+																			className="flex w-full justify-between border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition group-expanded:bg-brand-600 group-expanded:text-neutral-0 hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600 group-expanded:hover:bg-brand-600 group-expanded:hover:text-neutral-0"
+																			slot="trigger"
+																		>
+																			{item.label}
+																			<ChevronDownIcon
+																				aria-hidden={true}
+																				className="size-4 shrink-0 transition group-expanded:rotate-180"
+																				data-slot="icon"
+																			/>
+																		</Button>
+																	</Heading>
+																	<DisclosurePanel className="bg-neutral-0">
+																		<ul role="list">
+																			{Object.entries(item.children).map(([id, item]) => {
+																				switch (item.type) {
+																					case "link": {
+																						return (
+																							<li key={id}>
+																								<NavLinkMobile
+																									className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																									close={close}
+																									href={item.href}
+																								>
+																									{item.label}
+																								</NavLinkMobile>
+																							</li>
+																						);
+																					}
+
+																					case "separator": {
+																						return (
+																							<li key={id}>
+																								<Separator
+																									key={id}
+																									className="my-1 w-full border-t border-neutral-150"
+																								/>
+																							</li>
+																						);
+																					}
+																				}
+																			})}
+																		</ul>
+																	</DisclosurePanel>
+																</Disclosure>
+															</li>
+														);
+													}
+
+													case "separator": {
+														return (
+															<li key={id}>
+																<Separator
+																	key={id}
+																	className="my-1 w-full border-t border-neutral-150"
 																/>
-															</Button>
-														</Heading>
-														<DisclosurePanel className="bg-neutral-0">
-															<ul role="list">
-																{Object.entries(item.children).map(([id, item]) => {
-																	switch (item.type) {
-																		case "link": {
-																			return (
-																				<li key={id}>
-																					<NavLink
-																						className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-																						href={item.href}
-																					>
-																						{item.label}
-																					</NavLink>
-																				</li>
-																			);
-																		}
-
-																		case "separator": {
-																			return (
-																				<li key={id}>
-																					<Separator
-																						key={id}
-																						className="my-1 w-full border-t border-neutral-150"
-																					/>
-																				</li>
-																			);
-																		}
-																	}
-																})}
-															</ul>
-														</DisclosurePanel>
-													</Disclosure>
-												</li>
-											);
-										}
-
-										case "separator": {
-											return (
-												<li key={id}>
-													<Separator key={id} className="my-1 w-full border-t border-neutral-150" />
-												</li>
-											);
-										}
-									}
-								})}
-							</ul>
-						</div>
+															</li>
+														);
+													}
+												}
+											})}
+										</ul>
+									</div>
+								</Fragment>
+							);
+						}}
 					</Drawer>
 				</Modal>
 			</ModalOverlay>
 		</DrawerTrigger>
+	);
+}
+
+interface NavLinkMobileProps extends Omit<ComponentPropsWithRef<typeof NavLink>, "onPress"> {
+	close: () => void;
+}
+
+function NavLinkMobile(props: NavLinkMobileProps): ReactNode {
+	const { children, close, ...rest } = props;
+
+	return (
+		<NavLink
+			{...rest}
+			onPress={() => {
+				/**
+				 * `next/link` does not support pointer events, and `click`
+				 * fires after react aria components' `press` events, therefore
+				 * we delay closing the dialog so the navigation is guaranteed to
+				 * be triggered. practically, this seems only relevant for
+				 * firefox on touch devices.
+				 *
+				 * maybe unnecessary after @see https://github.com/adobe/react-spectrum/pull/7542
+				 */
+				requestAnimationFrame(close);
+			}}
+		>
+			{children}
+		</NavLink>
 	);
 }

@@ -21,9 +21,7 @@
 	"AppGroupLayout": {
 		"skip-to-main-content": "Skip to main content"
 	},
-	"AuthMenu": {
-		"sign-in": "Sign in"
-	},
+	"AuthMenu": {},
 	"ContactForm": {
 		"email": "Email address",
 		"message": "Message",
@@ -92,6 +90,7 @@
 			"datasets": "Datasets",
 			"home": "Home",
 			"publications": "Publications",
+			"sign-in": "Sign in",
 			"tools-services": "Tools & services",
 			"training-materials": "Training materials",
 			"workflows": "Workflows"
