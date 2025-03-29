@@ -22,27 +22,14 @@ import { NavLink } from "@/components/nav-link";
 import { Drawer, DrawerHeader, DrawerTrigger, Modal, ModalOverlay } from "@/components/ui/drawer";
 import { IconButton } from "@/components/ui/icon-button";
 import { TouchTarget } from "@/components/ui/touch-target";
-import { usePathname, useRouter } from "@/lib/navigation/navigation";
+import {
+	type NavigationItem,
+	type NavigationLink,
+	usePathname,
+	useRouter,
+} from "@/lib/navigation/navigation";
 import { isCurrentPage } from "@/lib/navigation/use-nav-link";
 import logo from "@/public/assets/images/logo-with-text.svg";
-
-interface NavigationLink {
-	type: "link";
-	href: string;
-	label: string;
-}
-
-interface NavigationSeparator {
-	type: "separator";
-}
-
-interface NavigationMenu {
-	type: "menu";
-	label: string;
-	children: Record<string, NavigationLink | NavigationSeparator>;
-}
-
-export type NavigationItem = NavigationLink | NavigationSeparator | NavigationMenu;
 
 interface PageNavigationProps {
 	label: string;
@@ -67,7 +54,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 							return (
 								<li key={id}>
 									<NavLink
-										className="flex items-center gap-x-2 p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0"
+										className="flex items-center gap-x-2 rounded-t-sm p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0"
 										href={item.href}
 									>
 										{item.label}
@@ -94,7 +81,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 							return (
 								<li key={id}>
 									<MenuTrigger>
-										<Button className="flex items-center gap-x-2 p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0">
+										<Button className="flex items-center gap-x-2 rounded-t-sm p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0">
 											{item.label}
 											<ChevronDownIcon aria-hidden={true} className="-mr-1 size-4 shrink-0" />
 										</Button>

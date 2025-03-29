@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 
 import { AuthMenu } from "@/app/(app)/(default)/_components/auth-menu";
 import {
-	type NavigationItem,
 	PageNavigation,
 	PageNavigationMobile,
 } from "@/app/(app)/(default)/_components/page-navigation";
@@ -12,12 +11,11 @@ import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { ButtonNavLink } from "@/components/ui/button";
 import { createHref } from "@/lib/navigation/create-href";
+import type { NavigationItem } from "@/lib/navigation/navigation";
 import { getSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
-interface PageHeaderProps {}
-
-export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<ReactNode> {
+export async function PageHeader(): Promise<ReactNode> {
 	const t = await getTranslations("PageHeader");
 
 	const session = await getSession();
@@ -265,7 +263,7 @@ export async function PageHeader(_props: Readonly<PageHeaderProps>): Promise<Rea
 					<span className="sr-only">{navigation.home.label}</span>
 				</NavLink>
 
-				<div className="hidden flex-col items-end 2xl:flex">
+				<div className="hidden flex-col items-end gap-y-2 2xl:flex">
 					<div className="flex items-center gap-x-8">
 						<NavLink
 							className="text-sm text-neutral-600 transition hover:text-neutral-700"

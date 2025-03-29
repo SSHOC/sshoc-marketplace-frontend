@@ -90,7 +90,9 @@ function HeroSection(): ReactNode {
 					<Input />
 				</TextInput>
 
-				<Button type="submit">{t("form.submit")}</Button>
+				<Button kind="gradient" type="submit">
+					{t("form.submit")}
+				</Button>
 			</SearchForm>
 		</section>
 	);

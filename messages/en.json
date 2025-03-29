@@ -61,6 +61,9 @@
 			"privacy-policy": "Privacy policy",
 			"imprint": "Imprint",
 			"terms-of-use": "Terms of use"
+		},
+		"navigation": {
+			"label": "Secondary"
 		}
 	},
 	"PageHeader": {
