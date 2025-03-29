@@ -13,6 +13,11 @@ export function PageFooter(): ReactNode {
 			href: "/about/service",
 			label: t("links.about"),
 		},
+		imprint: {
+			type: "link",
+			href: "/imprint",
+			label: t("links.imprint"),
+		},
 		"privacy-policy": {
 			type: "link",
 			href: "/privacy-policy",

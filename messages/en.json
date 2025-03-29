@@ -35,6 +35,12 @@
 		},
 		"title": "Contact"
 	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
 	"IndexPage": {
 		"title": "Social Sciences & Humanities Open Marketplace",
 		"lead": "Discover new and contextualised resources for your research in Social Sciences and Humanities: tools, services, training materials, workflows and datasets. <link>Read more...</link>",
