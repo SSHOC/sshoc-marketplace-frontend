@@ -350,10 +350,14 @@ export async function PageHeader(): Promise<ReactNode> {
 							navigation={{
 								...(authenticated
 									? {
+											kind: "authenticated",
 											"user-account": userAccountLink,
 											"sign-out": { label: t("links.sign-out") },
 										}
-									: { "sign-in": signInLink }),
+									: {
+											kind: "unauthenticated",
+											"sign-in": signInLink,
+										}),
 								"separator-3": {
 									type: "separator",
 								},

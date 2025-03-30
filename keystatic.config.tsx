@@ -2,10 +2,26 @@ import { config } from "@keystatic/core";
 
 import { Logo } from "@/components/logo";
 import { env } from "@/config/env.config";
+import {
+	createAboutPagesCollection,
+	createContributePagesCollection,
+} from "@/lib/keystatic/collections";
+import {
+	createMetadataSingleton,
+	createNavigationSingleton,
+	createPrivacyPolicyPageSingleton,
+} from "@/lib/keystatic/singletons";
 
 export default config({
-	collections: {},
-	singletons: {},
+	collections: {
+		aboutPages: createAboutPagesCollection(),
+		contributePages: createContributePagesCollection(),
+	},
+	singletons: {
+		metadata: createMetadataSingleton(),
+		navigation: createNavigationSingleton(),
+		privacyPolicyPage: createPrivacyPolicyPageSingleton(),
+	},
 	storage:
 		env.NEXT_PUBLIC_KEYSTATIC_MODE === "github" &&
 		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER &&
@@ -28,6 +44,9 @@ export default config({
 			},
 			name: "SSHOC",
 		},
-		// navigation: {},
+		navigation: {
+			Pages: ["aboutPages", "contributePages", "privacyPolicyPage"],
+			Settings: ["metadata", "navigation"],
+		},
 	},
 });

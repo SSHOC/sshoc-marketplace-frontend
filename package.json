@@ -52,6 +52,7 @@
 		"@react-aria/utils": "^3.28.1",
 		"@sentry/nextjs": "^9.10.0",
 		"@shikijs/rehype": "^3.2.1",
+		"@sindresorhus/slugify": "^2.2.1",
 		"@valibot/i18n": "^1.0.0",
 		"@vercel/otel": "^1.10.4",
 		"client-only": "^0.0.1",

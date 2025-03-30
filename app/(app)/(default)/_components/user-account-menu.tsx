@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "@/components/ui/menu";
 import { Popover } from "@/components/ui/popover";
 import { createHref } from "@/lib/navigation/create-href";
+import { type NavigationLink, usePathname } from "@/lib/navigation/navigation";
+import { isCurrentPage } from "@/lib/navigation/use-nav-link";
 
 interface UserAccountMenuProps {
 	name: string;
@@ -19,15 +21,41 @@ export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
 
 	const t = useTranslations("UserAccountMenu");
 
+	const pathname = usePathname();
+
 	const items = {
 		account: {
+			type: "link",
 			href: createHref({ pathname: "/account" }),
 			label: "My account",
 		},
 		"sign-out": {
+			type: "item",
+			onAction() {
+				startTransition(async () => {
+					await signOutAction();
+				});
+			},
 			label: "Sign out",
 		},
-	};
+	} satisfies Record<
+		string,
+		NavigationLink | { type: "item"; onAction: () => void; label: string }
+	>;
+
+	/**
+	 * Menu items are not announced as links, so we should use selection state
+	 * instead of `aria-current`. Unfortunately, we cannot set selection state
+	 * on individual menu items, but only on the menu itself.
+	 *
+	 * @see https://github.com/adobe/react-spectrum/issues/7587
+	 */
+	const selectedKeys = new Set<string>();
+	Object.entries(items).forEach(([id, item]) => {
+		if (item.type === "link" && isCurrentPage(item.href, pathname)) {
+			selectedKeys.add(id);
+		}
+	});
 
 	return (
 		<MenuTrigger>
@@ -40,7 +68,7 @@ export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
 			>
 				<Menu
 					className="flex max-h-[inherit] min-w-96 flex-col overflow-auto py-1"
-					// selectedKeys={selectedKeys}
+					selectedKeys={selectedKeys}
 				>
 					<MenuItem
 						className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"

@@ -58,6 +58,9 @@ importers:
       '@shikijs/rehype':
         specifier: ^3.2.1
         version: 3.2.1
+      '@sindresorhus/slugify':
+        specifier: ^2.2.1
+        version: 2.2.1
       '@valibot/i18n':
         specifier: ^1.0.0
         version: 1.0.0(valibot@1.0.0(typescript@5.8.2))
