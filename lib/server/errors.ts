@@ -1,3 +1,6 @@
+import { HttpError } from "@acdh-oeaw/lib";
+import { isValiError, ValiError } from "valibot";
+
 export class ForbiddenError extends Error {
 	name = "ForbiddenError" as const;
 }
@@ -12,6 +15,10 @@ export class HoneypotError extends Error {
 
 export function isHoneypotError(error: unknown): error is HoneypotError {
 	return error instanceof HoneypotError;
+}
+
+export function isHttpError(error: unknown): error is HttpError {
+	return error instanceof HttpError;
 }
 
 export class RateLimitError extends Error {
@@ -29,3 +36,5 @@ export class UnauthorizedError extends Error {
 export function isUnauthorizedError(error: unknown): error is UnauthorizedError {
 	return error instanceof UnauthorizedError;
 }
+
+export { isValiError as isValidationError, ValiError as ValidationError };

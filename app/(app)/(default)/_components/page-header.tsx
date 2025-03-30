@@ -13,13 +13,13 @@ import { ButtonNavLink } from "@/components/ui/button";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
 import { getCurrentUser } from "@/lib/server/api/client";
-import { getSession } from "@/lib/server/auth/session";
+import { isAuthenticated } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
 export async function PageHeader(): Promise<ReactNode> {
 	const t = await getTranslations("PageHeader");
 
-	const session = await getSession();
+	const authenticated = await isAuthenticated();
 
 	const navigation = {
 		home: {
@@ -238,12 +238,6 @@ export async function PageHeader(): Promise<ReactNode> {
 		},
 	} satisfies Record<string, NavigationItem>;
 
-	const signInLink = {
-		type: "link",
-		href: createHref({ pathname: "/auth/sign-in" }),
-		label: t("links.sign-in"),
-	} satisfies NavigationItem;
-
 	const reportIssueLink = {
 		type: "link",
 		href: createHref({
@@ -256,62 +250,145 @@ export async function PageHeader(): Promise<ReactNode> {
 		label: t("report-issue.label"),
 	} satisfies NavigationItem;
 
+	const signInLink = {
+		type: "link",
+		href: createHref({
+			pathname: "/auth/sign-in",
+		}),
+		label: t("links.sign-in"),
+	} satisfies NavigationItem;
+
+	const userAccountLink = {
+		type: "link",
+		href: createHref({
+			pathname: "/account",
+		}),
+		label: t("links.user-account"),
+	} satisfies NavigationItem;
+
+	const createItemsNavigation = {
+		"tools-services": {
+			type: "link",
+			label: t("links.create-tools-services"),
+			href: createHref({
+				pathname: "/tools-services/new",
+			}),
+		},
+		"training-materials": {
+			type: "link",
+			label: t("links.create-training-materials"),
+			href: createHref({
+				pathname: "/training-materials/new",
+			}),
+		},
+		publications: {
+			type: "link",
+			label: t("links.create-publications"),
+			href: createHref({
+				pathname: "/publications/new",
+			}),
+		},
+		datasets: {
+			type: "link",
+			label: t("links.create-datasets"),
+			href: createHref({
+				pathname: "/datasets/new",
+			}),
+		},
+		workflows: {
+			type: "link",
+			label: t("links.create-workflows"),
+			href: createHref({
+				pathname: "/workflows/new",
+			}),
+		},
+	} satisfies Record<string, NavigationItem>;
+
 	return (
-		<header className="border-b border-neutral-150">
-			<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
-				<NavLink
-					className="shrink-0 rounded-sm py-4 focus-visible:outline-2 focus-visible:outline-brand-600"
-					href={navigation.home.href}
-				>
-					<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
-					<span className="sr-only">{navigation.home.label}</span>
-				</NavLink>
+		<div>
+			<header className="border-b border-neutral-150">
+				<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
+					<NavLink
+						className="shrink-0 rounded-sm py-4 focus-visible:outline-2 focus-visible:outline-brand-600"
+						href={navigation.home.href}
+					>
+						<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
+						<span className="sr-only">{navigation.home.label}</span>
+					</NavLink>
 
-				<div className="hidden flex-col items-end gap-y-2 2xl:flex">
-					<div className="flex items-center gap-x-12">
-						<NavLink
-							className="rounded-b-sm p-2 px-8 text-sm text-neutral-600 transition hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-brand-600"
-							href={reportIssueLink.href}
-						>
-							{reportIssueLink.label}
-						</NavLink>
-						{session != null ? (
-							<Suspense>
-								<UserAccountMenu name={(await getCurrentUser()).displayName} />
-							</Suspense>
-						) : (
-							<ButtonNavLink
-								className="min-h-9 rounded-t-none px-16"
-								href={signInLink.href}
-								size="small"
+					<div className="hidden flex-col items-end gap-y-2 2xl:flex">
+						<div className="flex items-center gap-x-12">
+							<NavLink
+								className="rounded-b-sm p-2 px-8 text-sm text-neutral-600 transition hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-brand-600"
+								href={reportIssueLink.href}
 							>
-								{signInLink.label}
-							</ButtonNavLink>
-						)}
+								{reportIssueLink.label}
+							</NavLink>
+							{authenticated ? (
+								<Suspense>
+									<UserAccountMenu name={(await getCurrentUser()).displayName} />
+								</Suspense>
+							) : (
+								<ButtonNavLink
+									className="min-h-9 rounded-t-none px-16"
+									href={signInLink.href}
+									size="small"
+								>
+									{signInLink.label}
+								</ButtonNavLink>
+							)}
+						</div>
+						<PageNavigation label={t("navigation.primary")} navigation={navigation} />
 					</div>
-					<PageNavigation label={t("navigation.label")} navigation={navigation} />
-				</div>
 
-				<div className="2xl:hidden">
-					<PageNavigationMobile
-						label={t("navigation.label")}
-						menuCloseLabel={t("menu.close")}
-						menuOpenLabel={t("menu.open")}
-						menuTitleLabel={t("menu.title")}
-						navigation={{
-							...(session ? {} : { "sign-in": signInLink }),
-							"separator-3": {
-								type: "separator",
-							},
-							...navigation,
-							"separator-4": {
-								type: "separator",
-							},
-							"report-issue": reportIssueLink,
-						}}
-					/>
+					<div className="2xl:hidden">
+						<PageNavigationMobile
+							label={t("navigation.primary")}
+							menuCloseLabel={t("menu.close")}
+							menuOpenLabel={t("menu.open")}
+							menuTitleLabel={t("menu.title")}
+							navigation={{
+								...(authenticated
+									? {
+											"user-account": userAccountLink,
+											"sign-out": { label: t("links.sign-out") },
+										}
+									: { "sign-in": signInLink }),
+								"separator-3": {
+									type: "separator",
+								},
+								...navigation,
+								"separator-4": {
+									type: "separator",
+								},
+								"report-issue": reportIssueLink,
+							}}
+						/>
+					</div>
 				</div>
-			</div>
-		</header>
+			</header>
+
+			{authenticated ? (
+				<nav
+					aria-label={t("navigation.create-items")}
+					className="-mt-px hidden border-y border-brand-100 bg-brand-25 text-sm text-brand-750 2xl:block"
+				>
+					<ul className="mx-auto flex w-full max-w-[120rem] justify-end px-8" role="list">
+						{Object.entries(createItemsNavigation).map(([id, item]) => {
+							return (
+								<li key={id}>
+									<NavLink
+										className="inline-flex px-6 py-4 transition hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-brand-600"
+										href={item.href}
+									>
+										{item.label}
+									</NavLink>
+								</li>
+							);
+						})}
+					</ul>
+				</nav>
+			) : null}
+		</div>
 	);
 }

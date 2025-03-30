@@ -41,11 +41,17 @@ export function PageFooter(): ReactNode {
 				aria-label={t("navigation.label")}
 				className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8"
 			>
-				<ul className="flex text-[0.9375rem]" role="list">
+				<ul
+					className="flex flex-1 flex-col flex-wrap py-2 text-[0.9375rem] sm:flex-row sm:py-0"
+					role="list"
+				>
 					{Object.entries(navigation).map(([id, item]) => {
 						return (
 							<li key={id}>
-								<NavLink className="flex px-6 py-5 transition hover:bg-neutral-50" href={item.href}>
+								<NavLink
+									className="flex justify-center px-6 py-5 text-center transition hover:bg-neutral-50"
+									href={item.href}
+								>
 									{item.label}
 								</NavLink>
 							</li>

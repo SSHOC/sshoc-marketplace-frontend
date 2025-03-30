@@ -1,11 +1,24 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { log } from "@acdh-oeaw/lib";
+import { getTranslations } from "next-intl/server";
 
+import { redirect } from "@/lib/navigation/navigation";
+import { type ActionState, createErrorActionState } from "@/lib/server/actions";
 import { invalidateSession } from "@/lib/server/auth/session";
 
-export async function signOutAction() {
-	await invalidateSession();
+export async function signOutAction(): Promise<ActionState> {
+	const e = await getTranslations("errors");
 
-	revalidatePath("/");
+	try {
+		await invalidateSession();
+	} catch (error) {
+		log.error(error);
+
+		// TODO: don't return error message but display server toast
+
+		return createErrorActionState({ message: e("internal-server-error") });
+	}
+
+	redirect("/auth/sign-in");
 }

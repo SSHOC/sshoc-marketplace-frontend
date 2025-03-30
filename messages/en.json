@@ -1,11 +1,14 @@
 {
 	"actions": {
+		"callbackAction": {
+			"invalid-token": "Invalid token."
+		},
 		"sendContactFormEmailAction": {
 			"error": "Failed to send message.",
 			"success": "Successfully sent message."
 		},
 		"signInAction": {
-			"invalid-username-password": "Invalid username or password"
+			"invalid-username-password": "Invalid username or password."
 		}
 	},
 	"errors": {
@@ -95,16 +98,24 @@
 			"contribute-metadata": "Metadata guidelines",
 			"contribute-moderator": "Moderator guidelines",
 			"contribute-overview": "Help grow the SSH Open Marketplace",
+			"create-datasets": "Create dataset",
+			"create-publications": "Create publication",
+			"create-tools-services": "Create tool or service",
+			"create-training-materials": "Create training material",
+			"create-workflows": "Create workflow",
 			"datasets": "Datasets",
 			"home": "Home",
 			"publications": "Publications",
 			"sign-in": "Sign in",
+			"sign-out": "Sign out",
 			"tools-services": "Tools & services",
 			"training-materials": "Training materials",
+			"user-account": "My account",
 			"workflows": "Workflows"
 		},
 		"navigation": {
-			"label": "Primary"
+			"primary": "Primary",
+			"create-items": "Create new items"
 		},
 		"menu": {
 			"close": "Close",
@@ -117,8 +128,13 @@
 		}
 	},
 	"SignInForm": {
+		"messages": {
+			"alternate": "or, alternatively",
+			"auth": "Sign in with a local account is used by maintainers to manage the website.",
+			"oauth": "Sign in with MyAccessID using existing accounts such as <em>Google</em>, <em>ORCID</em>, <em>DARIAH</em>, <em>eduTEAMS</em> and multiple academic accounts."
+		},
 		"password": "Password",
-		"sign-in-eosc": "Sign in with EOSC",
+		"sign-in-my-access-id": "Sign in with MyAccessID",
 		"submit": "Sign in",
 		"username": "Username"
 	},

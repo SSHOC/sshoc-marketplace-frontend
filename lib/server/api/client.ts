@@ -4,7 +4,7 @@ import { createUrl, request } from "@acdh-oeaw/lib";
 
 import { env } from "@/config/env.config";
 import { redirect } from "@/lib/navigation/navigation";
-import { assertSession, invalidateSession } from "@/lib/server/auth/session";
+import { assertSession } from "@/lib/server/auth/session";
 import { isUnauthorizedError } from "@/lib/server/errors";
 
 interface UserAccount {

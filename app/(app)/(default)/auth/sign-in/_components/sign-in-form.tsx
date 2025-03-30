@@ -5,14 +5,17 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useActionState, useTransition } from "react";
 
 import { signInAction } from "@/app/(app)/(default)/auth/sign-in/_actions/sign-in-action";
+import { Image } from "@/components/image";
 import { FieldError } from "@/components/ui/field-error";
 import { FormError } from "@/components/ui/form-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { TextInput } from "@/components/ui/text-input";
 import { env } from "@/config/env.config";
 import { createInitialActionState } from "@/lib/server/actions";
+import logo from "@/public/assets/images/logo-my-access-id.png";
 
 export function SignInForm(): ReactNode {
 	const t = useTranslations("SignInForm");
@@ -26,7 +29,7 @@ export function SignInForm(): ReactNode {
 			"success-redirect-url": String(
 				createUrl({
 					baseUrl: env.NEXT_PUBLIC_APP_BASE_URL,
-					pathname: "/auth/sign-in",
+					pathname: "/auth/callback",
 				}),
 			),
 			"registration-redirect-url": String(
@@ -45,10 +48,27 @@ export function SignInForm(): ReactNode {
 	});
 
 	return (
-		<div className="p-8">
+		<div className="flex max-w-xl flex-col gap-y-8 p-8">
+			<p>{t.rich("messages.oauth", { em: AccountName })}</p>
+
+			<a
+				className="relative flex items-center justify-center rounded-sm bg-neutral-75 p-4 text-center text-[0.9375rem] font-medium text-brand-700 shadow transition hover:bg-neutral-100"
+				href={String(oauthUrl)}
+			>
+				<Image alt="" className="absolute left-4 size-10 shrink-0 rounded-full" src={logo} />
+				{t("sign-in-my-access-id")}
+			</a>
+
+			<div className="my-8 flex items-baseline gap-x-4">
+				<p className="font-medium">{t("messages.alternate")}</p>
+				<Separator className="flex-1" />
+			</div>
+
+			<p>{t("messages.auth")}</p>
+
 			<form
 				action={action}
-				className="flex flex-col gap-y-8"
+				className="flex flex-col gap-y-6"
 				data-pending={isPending || undefined}
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -74,12 +94,12 @@ export function SignInForm(): ReactNode {
 					<FieldError />
 				</TextInput>
 
-				<SubmitButton>{t("submit")}</SubmitButton>
+				<SubmitButton className="self-end">{t("submit")}</SubmitButton>
 			</form>
-
-			<hr />
-
-			<a href={String(oauthUrl)}>{t("sign-in-eosc")}</a>
 		</div>
 	);
+}
+
+function AccountName(chunks: ReactNode): ReactNode {
+	return <em className="font-medium not-italic">{chunks}</em>;
 }

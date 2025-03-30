@@ -11,32 +11,33 @@ import { createSession } from "@/lib/server/auth/session";
 import { isHttpError, isRateLimitError, isValidationError } from "@/lib/server/errors";
 import { assertGlobalPostRateLimit } from "@/lib/server/rate-limit/global-rate-limit";
 
-const SignInSchema = v.object({
-	username: v.pipe(v.string(), v.nonEmpty()),
-	password: v.pipe(v.string(), v.nonEmpty()),
+const CallbackSchema = v.object({
+	token: v.pipe(v.string(), v.nonEmpty()),
 });
 
-export async function signInAction(state: ActionState, formData: FormData): Promise<ActionState> {
-	const t = await getTranslations("actions.signInAction");
+export async function callbackAction(formData: FormData): Promise<ActionState> {
+	const t = await getTranslations("actions.callbackAction");
 	const e = await getTranslations("errors");
 
 	try {
 		await assertGlobalPostRateLimit();
 
-		const payload = await v.parseAsync(SignInSchema, {
-			username: formData.get("username"),
-			password: formData.get("password"),
+		const payload = await v.parseAsync(CallbackSchema, {
+			token: formData.get("token"),
 		});
 
 		const url = createUrl({
 			baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-			pathname: "/api/auth/sign-in",
+			pathname: "/api/oauth/token",
 		});
 
 		// FIXME: move to api client
 		const response = await request(url, {
-			method: "post",
-			body: payload,
+			method: "put",
+			body: {
+				...payload,
+				registration: false,
+			},
 			responseType: "raw",
 		});
 
@@ -48,27 +49,25 @@ export async function signInAction(state: ActionState, formData: FormData): Prom
 	} catch (error) {
 		log.error(error);
 
+		// TODO: don't return error message but redirect back to sign-in page with server toast
+
 		if (isRateLimitError(error)) {
 			return createErrorActionState({ message: e("too-many-requests"), formData });
 		}
 
-		if (isValidationError<typeof SignInSchema>(error)) {
-			return createErrorActionState({
-				message: e("invalid-form-fields"),
-				errors: v.flatten<typeof SignInSchema>(error.issues).nested,
-				formData,
-			});
+		if (isValidationError<typeof CallbackSchema>(error)) {
+			return createErrorActionState({ message: t("invalid-token") });
 		}
 
 		if (isHttpError(error)) {
 			switch (error.response.status) {
 				case 401: {
-					return createErrorActionState({ message: t("invalid-username-password"), formData });
+					return createErrorActionState({ message: t("invalid-token") });
 				}
 			}
 		}
 
-		return createErrorActionState({ message: e("internal-server-error"), formData });
+		return createErrorActionState({ message: e("internal-server-error") });
 	}
 
 	redirect("/");

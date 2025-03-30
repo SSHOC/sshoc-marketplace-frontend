@@ -83,7 +83,7 @@ export default async function AppGroupLayout(
 			className={cn(
 				fonts.body.variable,
 				fonts.mono.variable,
-				"bg-background-base text-text-strong font-body font-normal antialiased",
+				"bg-neutral-0 font-body font-normal text-neutral-700 antialiased",
 			)}
 			lang={locale}
 			/**
