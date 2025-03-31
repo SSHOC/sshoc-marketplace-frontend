@@ -2,6 +2,10 @@ import type { Collection, ComponentSchema, Singleton } from "@keystatic/core";
 import type { ContentComponent } from "@keystatic/core/content-components";
 import slugify from "@sindresorhus/slugify";
 
+import { defaultLocale, getIntlLanguage } from "@/lib/i18n/locales";
+
+const language = getIntlLanguage(defaultLocale);
+
 export function createPaths<TPath extends `/${string}/`>(path: TPath) {
 	return {
 		assetPath: `/content/assets/${path}`,
@@ -14,14 +18,14 @@ export type Paths<TPath extends `/${string}/`> = ReturnType<typeof createPaths<T
 export function createCollectionPaths<TPath extends `/${string}/`>(path: TPath) {
 	return {
 		...createPaths(path),
-		contentPath: `./content/${path}*/`,
+		contentPath: `./content/${language}${path}*/`,
 	} as const;
 }
 
 export function createSingletonPaths<TPath extends `/${string}/`>(path: TPath) {
 	return {
 		...createPaths(path),
-		contentPath: `./content/${path}`,
+		contentPath: `./content/${language}${path}`,
 	} as const;
 }
 

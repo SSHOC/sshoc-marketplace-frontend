@@ -1,0 +1,165 @@
+---
+title: Moderator Guidelines
+---
+The Moderation of the SSH Open Marketplace can be considered in two ways, the first being the
+**moderation and approval** of newly submitted items, and the second being the **sustained curation
+and assurance of data quality** for already-existing items in the Marketplace.
+
+Once logged in to the SSH Open Marketplace, moderators can perform their editorial tasks via the "My
+account" dashboard, and especially via the "My items to moderate" section.
+
+![My moderator account - screenshot](/assets/cms/images/moderator-account.png)
+
+## Moderating suggested items
+
+The approval of new Marketplace items revolves around ensuring that the suggested items are up to
+the standards of the Marketplace described in the guidelines. At a minimum, this means ensuring that
+all required fields are properly filled out in a standard way and that they are relevant to the
+source material.
+
+Suggested items should be evaluated based on the quality criteria described in the "Inclusion
+criteria" section. As well, Moderators should make sure that metadata fields are as fully described
+as possible, especially those that are recommended. See
+[metadata guidelines](/contribute/metadata-guidelines) section.
+
+### Suggested items by contributors
+
+1. By selecting the "suggested" status only in the list of items to moderate, moderators can see the
+   list of items waiting for approval/rejection.
+
+   ![Items to moderate - screenshot](/assets/cms/images/items-to-moderate.png)
+2. By clicking on the "Edit" button, a moderator can access the edit form of a suggested item and
+   check the metadata
+3. Approve or reject a suggested version of an item.
+
+   - Approving: makes the suggested version "approved",
+   - Rejecting: makes the suggested version rejected and the last approved version remains
+     "approved". (If this was a newly suggested item, it will become deprecated and won't be visible
+     to normal users at all).
+
+### Suggested items by system importer (= via the ingest pipeline)
+
+Though not an everyday occurrence, at times Moderators will, in concert with the SSH Open
+Marketplace Administrators, choose and approve newly-ingested materials. In such cases, moderators
+will have to firstly assess the quality and pertinence of the data source before its ingestion and
+once this is complete, perform "mass validation" of (meta)data before the Marketplace population.
+See Ingest pipeline workflow in the [Administrator Guidelines](/contribute/administrator-guidelines)
+for more details.
+
+## Continuously improving (meta)data quality
+
+The continued control of existing Marketplace items revolves around ensuring that the information is
+still valid and up to date, as well as encouraging the enrichment of items by adding properties that
+are recommended. Moderators complete these tasks with both automatic and manual checks.
+
+**Quality criteria for SSH Open Marketplace items**
+
+1. **General Entry Requirements**: research requirements, technical aspects, contextualisation and
+   legal/ethical requirements are considered here.
+2. **Non-redundancy**: the same entity should only be referenced once in the SSH Open Marketplace.
+   Duplicate items are merged to ensure the coherence of the items showcased in the portal.
+3. **Completeness of item description**. This criterion concerns the number of metadata filled out
+   to describe an item and answer to the question of how an entity is described comprehensively.
+4. **Verification of conformity and relevance** of metadata. Information value checks depend on the
+   type of content expected.
+
+- if a verbose description is expected, quality criteria revolves around correctness,
+  understandability and concision (i.e. length),
+- while for URLs based fields, the quality criteria relate to the link accessibility.
+- In order to support discoverability of the Marketplace content, a lot of fields are also (re)using
+  controlled vocabularies, thus the validation checks of vocabulary concepts is also supported by
+  the Marketplace.
+- Quality of the media objects is yet another dimension, e.g. ensuring a good picture quality.
+
+5. **Interlinking**. To ensure serendipity and reinforce the browsing experience of the Marketplace,
+   the quality of the links between items is an important criterion. The number of related items for
+   a given entry, and the pertinence of the links are some of the checks performed to ensure that
+   this criterion is met (e.g. whether the link goes to a resource internal or external to the
+   Marketplace).
+
+Based on the quality criteria defined above, some quality metrics have been established (e.g. media
+quality for images or number of characters in a description) and are automatically checked. These
+checks are run via a series of Python notebooks. Results of the checks are recorded in a set of
+metadata specially created for curation purposes - the curation flags - and only visible for
+moderators.
+
+Nevertheless, because we should never trust a computer (!), moderators should, every few months, do
+a random selection of pre-existing and non-flagged entries to ensure that these are up to
+Marketplace quality criteria, as described above.
+
+### Curation flags
+
+These fields are hidden from users and contributors but are available for logged in moderators. The
+"curation-" metadata are informed by the curation notebooks and can be used to filter the "items to
+moderate" in the dashboard. As well, when examining a flagged entry, Moderators should briefly look
+over the other metadata fields to ensure that they are correct.
+
+| Field's name              | Quality checks: what moderators should know                                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| curation-detail           | hidden property of type string that contains all curation issues in a human readable structured format. For example, this field describes when the curation-flag-url is TRUE where the url has problems and the http status code as a json, e.g. `{"AccessibleAt": "404"}` |
+| curation-flag-url         | hidden property of type boolean, is "TRUE" when an error on at least one of the URL-based fields of an item has been identified                                                                                                                                            |
+| curation-flag-description | hidden property of type boolean, is "TRUE" when there is a problem with the description of an item (for example when the description is "no description provided" and should be changed).                                                                                  |
+| curation-flag-coverage    | hidden property of type boolean, is "TRUE" when coverage ratio of recommended properties is lesser as expected                                                                                                                                                             |
+| curation-flag-relations   | hidden property of type boolean, is "TRUE" when the contextualisation quality is low (based on interlinked items)                                                                                                                                                          |
+| curation-flag-merged      | hidden property, marks an item that is the result of a merge command and should be curated                                                                                                                                                                                 |
+
+### Python notebooks
+
+In order to gain an overview of the SSH Open Marketplace data and to perform some analysis to
+prioritise the curation tasks and improve the Marketplace data quality,
+[a Python library and a set of Jupyter notebooks](https://github.com/SSHOC/marketplace-curation)
+have been created by Cesare Concordia (CNR). These flexible scripts allow moderators and
+administrators to query the SSH Open Marketplace with advanced parameters and filters and, in some
+cases, to write back to the system to flag some items for curation in the editorial dashboard.
+
+A dedicated Python library and a set of notebooks are available. For some of the notebooks, specific
+authorisations (=credentials) are needed.
+
+1. Ingest review notebook (to be developed)
+2. Data analysis notebook including some Items provenance analysis, providing a non-redundancy
+   overview, performing some completeness checks (overview of null values; description length), and
+   checking the detailed coverage of given fields.
+3. Automatic checks notebooks = curation-flags.
+
+- 3.1 curation-flag-URL
+- 3.2 curation-flag-description
+- 3.3 Curation-flag-relations (to be completed)
+- 3.4 curation-flag-coverage
+
+4. Mass analysis and/or corrections notebooks
+
+- 4.1 Duplicates & merging
+- 4.2 Actors curation
+- 4.3 Vocabulary management (to be developed)
+
+### Vocabulary management
+
+Some of the metadata fields used in the Marketplace are
+[using (controlled) vocabularies](/contribute/moderator-guidelines#vocabulary-management), meaning that contributors can select concepts among a pre-existing list. For some fields this list is open
+and new terms can be added (i.e. keywords) if they don't appear yet, for some others no new concepts
+can be added (i.e activity is using the TaDIRAH taxonomy that is developed and maintained outside of
+the Marketplace).
+
+One of the central roles the moderators have is vocabulary management in the SSH Open Marketplace:
+they are responsible for the vocabularies coherence and update. When a contributor suggests a new
+concept to a vocabulary, a moderator should decide, if the new term indeed represents a new concept,
+or if it is just a different lexical representation (alternative label) for an existing concept, or
+even if the term should not become part of vocabulary for given field at all and should be
+discarded.
+
+While the functionality for basic curation of the vocabularies is integrated as part of the curation
+dashboard, it remains possible to effect major vocabulary management changes. The chosen vocabulary
+can be exported in SKOS format, imported into a separate vocabulary management tool, where the
+curation is performed and the new version of the vocabulary is again exported in SKOS and reimported
+into MP via the API. Similarly, if there is an update of the closed (external) vocabularies
+introduced by the authorities managing these vocabularies, this new version can be introduced to MP
+via SKOS import. This specific curation task will be further described in a dedicated vocabulary
+curation notebook.
+
+### Actors management
+
+Moderators ensure the consistency of the actors' database and a specific notebook can help to
+identify the main issues (duplication of actors, wrong URLs or disambiguation of names and
+affiliations are the most frequent issues). Because any contributor can enrich the actor records,
+regular checks should be performed by moderators to continuously ensure the quality of the
+Marketplace actors.

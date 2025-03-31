@@ -14,13 +14,13 @@ import {
 
 export default config({
 	collections: {
-		aboutPages: createAboutPagesCollection(),
-		contributePages: createContributePagesCollection(),
+		"about-pages": createAboutPagesCollection(),
+		"contribute-pages": createContributePagesCollection(),
 	},
 	singletons: {
 		metadata: createMetadataSingleton(),
 		navigation: createNavigationSingleton(),
-		privacyPolicyPage: createPrivacyPolicyPageSingleton(),
+		"privacy-policy-page": createPrivacyPolicyPageSingleton(),
 	},
 	storage:
 		env.NEXT_PUBLIC_KEYSTATIC_MODE === "github" &&
@@ -45,7 +45,7 @@ export default config({
 			name: "SSHOC",
 		},
 		navigation: {
-			Pages: ["aboutPages", "contributePages", "privacyPolicyPage"],
+			Pages: ["about-pages", "contribute-pages", "privacy-policy-page"],
 			Settings: ["metadata", "navigation"],
 		},
 	},

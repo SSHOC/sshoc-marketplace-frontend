@@ -76,13 +76,13 @@ export const createNavigationSingleton = createSingleton("/navigation/", (paths)
 			about: fields.object(
 				{
 					links: fields.multiRelationship({
-						label: "About page",
+						label: "Page",
 						validation: { length: { min: 1 } },
-						collection: "aboutPages",
+						collection: "about-pages",
 					}),
 				},
 				{
-					label: "About page",
+					label: "About pages",
 				},
 			),
 			contribute: fields.object(
@@ -90,7 +90,7 @@ export const createNavigationSingleton = createSingleton("/navigation/", (paths)
 					links: fields.multiRelationship({
 						label: "Page",
 						validation: { length: { min: 1 } },
-						collection: "contributePages",
+						collection: "contribute-pages",
 					}),
 				},
 				{
@@ -106,7 +106,7 @@ export const createPrivacyPolicyPageSingleton = createSingleton("/privacy-policy
 		label: "Privacy policy page",
 		path: paths.contentPath,
 		format: { contentField: "content" },
-		entryLayout: "content",
+		entryLayout: "form",
 		previewUrl: createPreviewUrl("/privacy-policy"),
 		schema: {
 			title: fields.text({

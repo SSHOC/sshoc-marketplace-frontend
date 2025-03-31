@@ -1,0 +1,25 @@
+{
+  "about": {
+    "links": [
+      "service",
+      "sshoc-eosc",
+      "data-population",
+      "team",
+      "api-documentation",
+      "implementation",
+      "frequently-asked-questions",
+      "communication-kit"
+    ]
+  },
+  "contribute": {
+    "links": [
+      "overview",
+      "create-an-individual-item",
+      "enrich-an-individual-item",
+      "report-an-issue",
+      "moderator-guidelines",
+      "administrator-guidelines",
+      "metadata-guidelines"
+    ]
+  }
+}

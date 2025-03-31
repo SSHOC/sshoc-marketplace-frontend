@@ -10,7 +10,7 @@ export const createAboutPagesCollection = createCollection("/about/", (paths) =>
 		format: { contentField: "content" },
 		slugField: "title",
 		columns: ["title"],
-		entryLayout: "content",
+		entryLayout: "form",
 		previewUrl: createPreviewUrl("/about/{slug}"),
 		schema: {
 			title: fields.slug({
@@ -35,7 +35,7 @@ export const createContributePagesCollection = createCollection("/contribute/", 
 		format: { contentField: "content" },
 		slugField: "title",
 		columns: ["title"],
-		entryLayout: "content",
+		entryLayout: "form",
 		previewUrl: createPreviewUrl("/contribute/{slug}"),
 		schema: {
 			title: fields.slug({
