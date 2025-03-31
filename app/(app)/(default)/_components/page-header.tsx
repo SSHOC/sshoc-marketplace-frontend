@@ -2,6 +2,7 @@ import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 
+import { signOut } from "@/app/(app)/(default)/_client-actions/navigation";
 import {
 	PageNavigation,
 	PageNavigationMobile,
@@ -27,7 +28,7 @@ export async function PageHeader(): Promise<ReactNode> {
 			href: createHref({
 				pathname: "/",
 			}),
-			label: t("links.home"),
+			label: t("navigation.items.home"),
 		},
 		"tools-services": {
 			type: "link",
@@ -37,7 +38,7 @@ export async function PageHeader(): Promise<ReactNode> {
 					categories: ["tool-or-service"],
 				}),
 			}),
-			label: t("links.tools-services"),
+			label: t("navigation.items.tools-services"),
 		},
 		"training-materials": {
 			type: "link",
@@ -47,7 +48,7 @@ export async function PageHeader(): Promise<ReactNode> {
 					categories: ["training-material"],
 				}),
 			}),
-			label: t("links.training-materials"),
+			label: t("navigation.items.training-materials"),
 		},
 		publications: {
 			type: "link",
@@ -57,7 +58,7 @@ export async function PageHeader(): Promise<ReactNode> {
 					categories: ["publication"],
 				}),
 			}),
-			label: t("links.publications"),
+			label: t("navigation.items.publications"),
 		},
 		datasets: {
 			type: "link",
@@ -67,7 +68,7 @@ export async function PageHeader(): Promise<ReactNode> {
 					categories: ["dataset"],
 				}),
 			}),
-			label: t("links.datasets"),
+			label: t("navigation.items.datasets"),
 		},
 		workflows: {
 			type: "link",
@@ -77,42 +78,42 @@ export async function PageHeader(): Promise<ReactNode> {
 					categories: ["workflow"],
 				}),
 			}),
-			label: t("links.workflows"),
+			label: t("navigation.items.workflows"),
 		},
 		"separator-1": {
 			type: "separator",
 		},
 		browse: {
 			type: "menu",
-			label: t("links.browse"),
+			label: t("navigation.items.browse"),
 			children: {
 				activities: {
 					type: "link",
 					href: createHref({
 						pathname: "/browse/activities",
 					}),
-					label: t("links.browse-activities"),
+					label: t("navigation.items.browse-activities"),
 				},
 				keywords: {
 					type: "link",
 					href: createHref({
 						pathname: "/browse/keywords",
 					}),
-					label: t("links.browse-keywords"),
+					label: t("navigation.items.browse-keywords"),
 				},
 				sources: {
 					type: "link",
 					href: createHref({
 						pathname: "/browse/sources",
 					}),
-					label: t("links.browse-sources"),
+					label: t("navigation.items.browse-sources"),
 				},
 				languages: {
 					type: "link",
 					href: createHref({
 						pathname: "/browse/languages",
 					}),
-					label: t("links.browse-languages"),
+					label: t("navigation.items.browse-languages"),
 				},
 			},
 		},
@@ -121,118 +122,118 @@ export async function PageHeader(): Promise<ReactNode> {
 		},
 		contribute: {
 			type: "menu",
-			label: t("links.contribute"),
+			label: t("navigation.items.contribute"),
 			children: {
 				overview: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/overview",
 					}),
-					label: t("links.contribute-overview"),
+					label: t("navigation.items.contribute-overview"),
 				},
 				create: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/create-an-individual-item",
 					}),
-					label: t("links.contribute-create"),
+					label: t("navigation.items.contribute-create"),
 				},
 				enrich: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/enrich-an-individual-item",
 					}),
-					label: t("links.contribute-enrich"),
+					label: t("navigation.items.contribute-enrich"),
 				},
 				issue: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/report-an-issue",
 					}),
-					label: t("links.contribute-issue"),
+					label: t("navigation.items.contribute-issue"),
 				},
 				moderator: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/moderator-guidelines",
 					}),
-					label: t("links.contribute-moderator"),
+					label: t("navigation.items.contribute-moderator"),
 				},
 				administrator: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/administrator-guidelines",
 					}),
-					label: t("links.contribute-administrator"),
+					label: t("navigation.items.contribute-administrator"),
 				},
 				metadata: {
 					type: "link",
 					href: createHref({
 						pathname: "/contribute/metadata-guidelines",
 					}),
-					label: t("links.contribute-metadata"),
+					label: t("navigation.items.contribute-metadata"),
 				},
 			},
 		},
 		about: {
 			type: "menu",
-			label: t("links.about"),
+			label: t("navigation.items.about"),
 			children: {
 				service: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/service",
 					}),
-					label: t("links.about-service"),
+					label: t("navigation.items.about-service"),
 				},
 				eosc: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/sshoc-eosc",
 					}),
-					label: t("links.about-eosc"),
+					label: t("navigation.items.about-eosc"),
 				},
 				data: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/data-population",
 					}),
-					label: t("links.about-data"),
+					label: t("navigation.items.about-data"),
 				},
 				team: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/team",
 					}),
-					label: t("links.about-team"),
+					label: t("navigation.items.about-team"),
 				},
 				docs: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/api-documentation",
 					}),
-					label: t("links.about-docs"),
+					label: t("navigation.items.about-docs"),
 				},
 				implementation: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/implementation",
 					}),
-					label: t("links.about-implementation"),
+					label: t("navigation.items.about-implementation"),
 				},
 				faq: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/frequently-asked-questions",
 					}),
-					label: t("links.about-faq"),
+					label: t("navigation.items.about-faq"),
 				},
 				communication: {
 					type: "link",
 					href: createHref({
 						pathname: "/about/communication-kit",
 					}),
-					label: t("links.about-communication"),
+					label: t("navigation.items.about-communication"),
 				},
 			},
 		},
@@ -243,11 +244,11 @@ export async function PageHeader(): Promise<ReactNode> {
 		href: createHref({
 			pathname: "/contact",
 			searchParams: {
-				subject: t("report-issue.label"),
-				message: t("report-issue.message"),
+				subject: t("navigation.report-issue.label"),
+				message: t("navigation.report-issue.message"),
 			},
 		}),
-		label: t("report-issue.label"),
+		label: t("navigation.report-issue.label"),
 	} satisfies NavigationItem;
 
 	const signInLink = {
@@ -255,49 +256,60 @@ export async function PageHeader(): Promise<ReactNode> {
 		href: createHref({
 			pathname: "/auth/sign-in",
 		}),
-		label: t("links.sign-in"),
+		label: t("navigation.items.sign-in"),
 	} satisfies NavigationItem;
 
-	const userAccountLink = {
-		type: "link",
-		href: createHref({
-			pathname: "/account",
-		}),
-		label: t("links.user-account"),
+	const userAccountItems = {
+		type: "menu",
+		label: "Hi, User",
+		children: {
+			"user-account": {
+				type: "link",
+				href: createHref({
+					pathname: "/account",
+				}),
+				label: t("navigation.items.user-account"),
+			},
+			"sign-out": {
+				type: "action",
+				onAction: signOut,
+				label: t("navigation.items.sign-out"),
+			},
+		},
 	} satisfies NavigationItem;
 
 	const createItemsNavigation = {
 		"tools-services": {
 			type: "link",
-			label: t("links.create-tools-services"),
+			label: t("navigation-create-items.items.create-tools-services"),
 			href: createHref({
 				pathname: "/tools-services/new",
 			}),
 		},
 		"training-materials": {
 			type: "link",
-			label: t("links.create-training-materials"),
+			label: t("navigation-create-items.items.create-training-materials"),
 			href: createHref({
 				pathname: "/training-materials/new",
 			}),
 		},
 		publications: {
 			type: "link",
-			label: t("links.create-publications"),
+			label: t("navigation-create-items.items.create-publications"),
 			href: createHref({
 				pathname: "/publications/new",
 			}),
 		},
 		datasets: {
 			type: "link",
-			label: t("links.create-datasets"),
+			label: t("navigation-create-items.items.create-datasets"),
 			href: createHref({
 				pathname: "/datasets/new",
 			}),
 		},
 		workflows: {
 			type: "link",
-			label: t("links.create-workflows"),
+			label: t("navigation-create-items.items.create-workflows"),
 			href: createHref({
 				pathname: "/workflows/new",
 			}),
@@ -338,24 +350,19 @@ export async function PageHeader(): Promise<ReactNode> {
 								</ButtonNavLink>
 							)}
 						</div>
-						<PageNavigation label={t("navigation.primary")} navigation={navigation} />
+						<PageNavigation label={t("navigation.label")} navigation={navigation} />
 					</div>
 
 					<div className="2xl:hidden">
 						<PageNavigationMobile
-							label={t("navigation.primary")}
-							menuCloseLabel={t("menu.close")}
-							menuOpenLabel={t("menu.open")}
-							menuTitleLabel={t("menu.title")}
+							drawerCloseLabel={t("navigation.drawer.close")}
+							drawerLabel={t("navigation.drawer.title")}
+							drawerOpenLabel={t("navigation.drawer.open")}
+							label={t("navigation.label")}
 							navigation={{
 								...(authenticated
-									? {
-											kind: "authenticated",
-											"user-account": userAccountLink,
-											"sign-out": { label: t("links.sign-out") },
-										}
+									? userAccountItems
 									: {
-											kind: "unauthenticated",
 											"sign-in": signInLink,
 										}),
 								"separator-3": {
@@ -374,7 +381,7 @@ export async function PageHeader(): Promise<ReactNode> {
 
 			{authenticated ? (
 				<nav
-					aria-label={t("navigation.create-items")}
+					aria-label={t("navigation-create-items.label")}
 					className="-mt-px hidden border-y border-brand-100 bg-brand-25 text-sm text-brand-750 2xl:block"
 				>
 					<ul className="mx-auto flex w-full max-w-[120rem] justify-end px-8" role="list">

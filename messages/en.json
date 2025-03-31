@@ -1,6 +1,9 @@
 {
 	"actions": {
-		"callbackAction": {
+		"callbackRegistrationAction": {
+			"invalid-token": "Invalid token."
+		},
+		"callbackSuccessAction": {
 			"invalid-token": "Invalid token."
 		},
 		"sendContactFormEmailAction": {
@@ -9,6 +12,9 @@
 		},
 		"signInAction": {
 			"invalid-username-password": "Invalid username or password."
+		},
+		"signUpAction": {
+			"invalid-token": "Invalid token."
 		}
 	},
 	"errors": {
@@ -23,6 +29,26 @@
 	},
 	"AppGroupLayout": {
 		"skip-to-main-content": "Skip to main content"
+	},
+	"CallbackErrorPage": {
+		"meta": {
+			"title": "Error"
+		},
+		"message": "Something went wrong!",
+		"title": "Error",
+		"try-again": "Try again"
+	},
+	"CallbackRegistrationPage": {
+		"meta": {
+			"title": "Sign up"
+		},
+		"title": "Sign up"
+	},
+	"CallbackSuccessPage": {
+		"meta": {
+			"title": "Sign in"
+		},
+		"title": "Sign in"
 	},
 	"ContactForm": {
 		"email": "Email address",
@@ -63,68 +89,72 @@
 		"title": "Page not found"
 	},
 	"PageFooter": {
-		"links": {
-			"about": "About",
-			"contact": "Contact",
-			"privacy-policy": "Privacy policy",
-			"imprint": "Imprint",
-			"terms-of-use": "Terms of use"
-		},
 		"navigation": {
+			"items": {
+				"about": "About",
+				"contact": "Contact",
+				"privacy-policy": "Privacy policy",
+				"imprint": "Imprint",
+				"terms-of-use": "Terms of use"
+			},
 			"label": "Secondary"
 		}
 	},
 	"PageHeader": {
-		"links": {
-			"about": "About",
-			"about-communication": "Communication kit",
-			"about-data": "About the data population",
-			"about-docs": "API documentation",
-			"about-eosc": "SSHOC and the EOSC",
-			"about-faq": "FAQ",
-			"about-implementation": "About the technical aspects",
-			"about-service": "About the service",
-			"about-team": "Who are we?",
-			"browse": "Browse",
-			"browse-activities": "Browse activities",
-			"browse-keywords": "Browse keywords",
-			"browse-languages": "Browse languages",
-			"browse-sources": "Browse sources",
-			"contribute": "Contribute",
-			"contribute-administrator": "Administrator guidelines",
-			"contribute-create": "Create an individual item",
-			"contribute-enrich": "Enrich an individual item",
-			"contribute-issue": "Report an issue",
-			"contribute-metadata": "Metadata guidelines",
-			"contribute-moderator": "Moderator guidelines",
-			"contribute-overview": "Help grow the SSH Open Marketplace",
-			"create-datasets": "Create dataset",
-			"create-publications": "Create publication",
-			"create-tools-services": "Create tool or service",
-			"create-training-materials": "Create training material",
-			"create-workflows": "Create workflow",
-			"datasets": "Datasets",
-			"home": "Home",
-			"publications": "Publications",
-			"sign-in": "Sign in",
-			"sign-out": "Sign out",
-			"tools-services": "Tools & services",
-			"training-materials": "Training materials",
-			"user-account": "My account",
-			"workflows": "Workflows"
-		},
 		"navigation": {
-			"primary": "Primary",
-			"create-items": "Create new items"
+			"drawer": {
+				"close": "Close",
+				"open": "Open",
+				"title": "Navigation menu"
+			},
+			"report-issue": {
+				"label": "Report an issue",
+				"message": "Describe the issue:\n\n"
+			},
+			"items": {
+				"about": "About",
+				"about-communication": "Communication kit",
+				"about-data": "About the data population",
+				"about-docs": "API documentation",
+				"about-eosc": "SSHOC and the EOSC",
+				"about-faq": "FAQ",
+				"about-implementation": "About the technical aspects",
+				"about-service": "About the service",
+				"about-team": "Who are we?",
+				"browse": "Browse",
+				"browse-activities": "Browse activities",
+				"browse-keywords": "Browse keywords",
+				"browse-languages": "Browse languages",
+				"browse-sources": "Browse sources",
+				"contribute": "Contribute",
+				"contribute-administrator": "Administrator guidelines",
+				"contribute-create": "Create an individual item",
+				"contribute-enrich": "Enrich an individual item",
+				"contribute-issue": "Report an issue",
+				"contribute-metadata": "Metadata guidelines",
+				"contribute-moderator": "Moderator guidelines",
+				"contribute-overview": "Help grow the SSH Open Marketplace",
+				"datasets": "Datasets",
+				"home": "Home",
+				"publications": "Publications",
+				"sign-in": "Sign in",
+				"sign-out": "Sign out",
+				"tools-services": "Tools & services",
+				"training-materials": "Training materials",
+				"user-account": "My account",
+				"workflows": "Workflows"
+			},
+			"label": "Primary"
 		},
-		"menu": {
-			"close": "Close",
-			"open": "Open",
-			"title": "Navigation"
-		},
-		"report-issue": {
-			"label": "Report an issue",
-			"message": "Describe the issue:\n\n"
+		"navigation-create-items": {
+			"items": {
+				"create-datasets": "Create dataset",
+				"create-publications": "Create publication",
+				"create-tools-services": "Create tool or service",
+				"create-training-materials": "Create training material",
+				"create-workflows": "Create workflow"
+			},
+			"label": "Create new items"
 		}
 	},
 	"SignInForm": {
@@ -143,6 +173,17 @@
 			"title": "Sign in"
 		},
 		"title": "Sign in"
+	},
+	"SignUpForm": {
+		"email": "Email address",
+		"name": "Name",
+		"submit": "Sign up"
+	},
+	"SignUpPage": {
+		"meta": {
+			"title": "Sign up"
+		},
+		"title": "Sign up"
 	},
 	"UserAccountMenu": {
 		"label": "Hi, {name}"

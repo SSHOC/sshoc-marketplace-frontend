@@ -11,27 +11,27 @@ export function PageFooter(): ReactNode {
 		about: {
 			type: "link",
 			href: "/about/service",
-			label: t("links.about"),
+			label: t("navigation.items.about"),
 		},
 		imprint: {
 			type: "link",
 			href: "/imprint",
-			label: t("links.imprint"),
+			label: t("navigation.items.imprint"),
 		},
 		"privacy-policy": {
 			type: "link",
 			href: "/privacy-policy",
-			label: t("links.privacy-policy"),
+			label: t("navigation.items.privacy-policy"),
 		},
 		"terms-of-use": {
 			type: "link",
 			href: "/terms-of-use",
-			label: t("links.terms-of-use"),
+			label: t("navigation.items.terms-of-use"),
 		},
 		contact: {
 			type: "link",
 			href: "/contact",
-			label: t("links.contact"),
+			label: t("navigation.items.contact"),
 		},
 	} satisfies Record<string, NavigationLink>;
 

@@ -11,18 +11,18 @@ import { createSession } from "@/lib/server/auth/session";
 import { isHttpError, isRateLimitError, isValidationError } from "@/lib/server/errors";
 import { assertGlobalPostRateLimit } from "@/lib/server/rate-limit/global-rate-limit";
 
-const CallbackSchema = v.object({
+const CallbackSuccessSchema = v.object({
 	token: v.pipe(v.string(), v.nonEmpty()),
 });
 
-export async function callbackAction(formData: FormData): Promise<ActionState> {
-	const t = await getTranslations("actions.callbackAction");
+export async function callbackSuccessAction(formData: FormData): Promise<ActionState> {
+	const t = await getTranslations("actions.callbackSuccessAction");
 	const e = await getTranslations("errors");
 
 	try {
 		await assertGlobalPostRateLimit();
 
-		const payload = await v.parseAsync(CallbackSchema, {
+		const payload = await v.parseAsync(CallbackSuccessSchema, {
 			token: formData.get("token"),
 		});
 
@@ -55,7 +55,7 @@ export async function callbackAction(formData: FormData): Promise<ActionState> {
 			return createErrorActionState({ message: e("too-many-requests"), formData });
 		}
 
-		if (isValidationError<typeof CallbackSchema>(error)) {
+		if (isValidationError<typeof CallbackSuccessSchema>(error)) {
 			return createErrorActionState({ message: t("invalid-token") });
 		}
 

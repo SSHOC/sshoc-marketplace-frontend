@@ -1,38 +1,62 @@
-"use client";
+import type { Metadata, ResolvingMetadata } from "next";
+import { getTranslations } from "next-intl/server";
+import type { ReactNode } from "react";
+import * as v from "valibot";
 
-import { type ReactNode, startTransition, useEffect } from "react";
-
-import { callbackAction } from "@/app/(app)/(default)/auth/callback/_actions/callback-action";
-import { LoadingIndicator } from "@/components/ui/loading-indicator";
+import { SignUpForm } from "@/app/(app)/(default)/auth/sign-up/_components/sign-up-form";
 import { MainContent } from "@/components/ui/main-content";
 import { redirect } from "@/lib/navigation/navigation";
+import { getRegistrationSession } from "@/lib/server/auth/registration";
 
-/**
- * Callback for oauth flow (registration case). Needs to be a client component because the backend
- * sends the token via url fragment. That's also the reason why we cannot use an api route
- * as the callback url.
- */
-export default function SignUpPage(): ReactNode {
-	useEffect(() => {
-		const hash = window.location.hash;
+const SearchParamsSchema = v.object({
+	id: v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
+	displayName: v.pipe(v.string(), v.nonEmpty()),
+	email: v.pipe(v.string(), v.email()),
+});
 
-		if (!hash) {
-			redirect("/auth/sign-in");
-		}
+interface SignUpPageProps {
+	searchParams: Promise<SearchParams>;
+}
 
-		const token = hash.slice(1);
+export async function generateMetadata(
+	_props: Readonly<SignUpPageProps>,
+	_parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const t = await getTranslations("SignUpPage");
 
-		const formData = new FormData();
-		formData.set("token", token);
+	const metadata: Metadata = {
+		title: t("meta.title"),
+	};
 
-		startTransition(async () => {
-			await callbackAction(formData);
-		});
-	}, []);
+	return metadata;
+}
+
+export default async function SignUpPage(props: Readonly<SignUpPageProps>): Promise<ReactNode> {
+	const { searchParams } = props;
+
+	const t = await getTranslations("SignUpPage");
+
+	const registering = await getRegistrationSession();
+
+	if (!registering) {
+		redirect("/auth/sign-in");
+	}
+
+	const result = await v.safeParseAsync(SearchParamsSchema, await searchParams);
+
+	if (!result.success) {
+		redirect("/auth/sign-in");
+	}
+
+	const { displayName, email, id } = result.output;
 
 	return (
-		<MainContent className="grid place-content-center">
-			<LoadingIndicator />
+		<MainContent>
+			<section>
+				<h1>{t("title")}</h1>
+			</section>
+
+			<SignUpForm displayName={displayName} email={email} id={id} />
 		</MainContent>
 	);
 }

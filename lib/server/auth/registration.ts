@@ -8,7 +8,7 @@ import { cache } from "react";
 import { env } from "@/config/env.config";
 import { UnauthorizedError } from "@/lib/server/errors";
 
-const sessionCookieName = "sshoc";
+const sessionCookieName = "sshoc-sign-up";
 
 function decode(token: string): JWTPayload | null {
 	try {
@@ -18,8 +18,8 @@ function decode(token: string): JWTPayload | null {
 	}
 }
 
-export async function createSession(token: string): Promise<boolean> {
-	const validated = validateSessionToken(token);
+export async function createRegistrationSession(token: string): Promise<boolean> {
+	const validated = validateRegistrationSessionToken(token);
 
 	if (validated == null) {
 		return false;
@@ -36,7 +36,9 @@ export async function createSession(token: string): Promise<boolean> {
 	return true;
 }
 
-export function validateSessionToken(token: string): { token: string; expires: number } | null {
+export function validateRegistrationSessionToken(
+	token: string,
+): { token: string; expires: number } | null {
 	const decoded = decode(token);
 
 	if (decoded?.exp == null) {
@@ -52,11 +54,13 @@ export function validateSessionToken(token: string): { token: string; expires: n
 	return { token, expires };
 }
 
-export async function invalidateSession(): Promise<void> {
+export async function invalidateRegistrationSession(): Promise<void> {
 	(await cookies()).delete(sessionCookieName);
 }
 
-export const getSession = cache(async function getSession(): Promise<string | null> {
+export const getRegistrationSession = cache(async function getRegistrationSession(): Promise<
+	string | null
+> {
 	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 	const token = (await cookies()).get(sessionCookieName)?.value || null;
 
@@ -64,11 +68,11 @@ export const getSession = cache(async function getSession(): Promise<string | nu
 		return null;
 	}
 
-	return validateSessionToken(token)?.token ?? null;
+	return validateRegistrationSessionToken(token)?.token ?? null;
 });
 
-export async function assertSession(): Promise<string> {
-	const token = await getSession();
+export async function assertRegistrationSession(): Promise<string> {
+	const token = await getRegistrationSession();
 
 	assert(token != null, () => {
 		return new UnauthorizedError();
@@ -76,15 +80,3 @@ export async function assertSession(): Promise<string> {
 
 	return token;
 }
-
-export async function isAuthenticated(): Promise<boolean> {
-	const token = await getSession();
-
-	return token != null;
-}
-
-// export async function assertAuthenticated(): Promise<void> {
-// 	const token = await getSession();
-
-// 	assert(token != null);
-// }

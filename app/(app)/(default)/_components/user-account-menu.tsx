@@ -1,47 +1,28 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { type ReactNode, startTransition } from "react";
+import type { ReactNode } from "react";
 import { MenuItem, MenuTrigger } from "react-aria-components";
 
-import { signOutAction } from "@/app/(app)/(default)/_actions/sign-out-action";
 import { Button } from "@/components/ui/button";
 import { Menu } from "@/components/ui/menu";
 import { Popover } from "@/components/ui/popover";
-import { createHref } from "@/lib/navigation/create-href";
-import { type NavigationLink, usePathname } from "@/lib/navigation/navigation";
+import { Separator } from "@/components/ui/separator";
+import { type NavigationMenuItem, usePathname } from "@/lib/navigation/navigation";
 import { isCurrentPage } from "@/lib/navigation/use-nav-link";
 
 interface UserAccountMenuProps {
+	items: Record<string, NavigationMenuItem>;
+	label: string;
 	name: string;
 }
 
 export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
-	const { name } = props;
+	const { items, label, name } = props;
 
 	const t = useTranslations("UserAccountMenu");
 
 	const pathname = usePathname();
-
-	const items = {
-		account: {
-			type: "link",
-			href: createHref({ pathname: "/account" }),
-			label: "My account",
-		},
-		"sign-out": {
-			type: "item",
-			onAction() {
-				startTransition(async () => {
-					await signOutAction();
-				});
-			},
-			label: "Sign out",
-		},
-	} satisfies Record<
-		string,
-		NavigationLink | { type: "item"; onAction: () => void; label: string }
-	>;
 
 	/**
 	 * Menu items are not announced as links, so we should use selection state
@@ -69,25 +50,43 @@ export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
 				<Menu
 					className="flex max-h-[inherit] min-w-96 flex-col overflow-auto py-1"
 					selectedKeys={selectedKeys}
+					selectionMode="single"
 				>
-					<MenuItem
-						className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-						href={items.account.href}
-						textValue={items.account.label}
-					>
-						{items.account.label}
-					</MenuItem>
-					<MenuItem
-						className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-						onAction={() => {
-							startTransition(async () => {
-								await signOutAction();
-							});
-						}}
-						textValue={items["sign-out"].label}
-					>
-						{items["sign-out"].label}
-					</MenuItem>
+					{Object.entries(items).map(([id, item]) => {
+						switch (item.type) {
+							case "action": {
+								return (
+									<MenuItem
+										key={id}
+										className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+										id={id}
+										onAction={item.onAction}
+										textValue={item.label}
+									>
+										{item.label}
+									</MenuItem>
+								);
+							}
+
+							case "link": {
+								return (
+									<MenuItem
+										key={id}
+										className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+										href={item.href}
+										id={id}
+										textValue={item.label}
+									>
+										{item.label}
+									</MenuItem>
+								);
+							}
+
+							case "separator": {
+								return <Separator key={id} className="my-1" id={id} />;
+							}
+						}
+					})}
 				</Menu>
 			</Popover>
 		</MenuTrigger>

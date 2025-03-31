@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
-import { type ComponentPropsWithRef, Fragment, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { chain } from "react-aria";
 import {
 	Button,
@@ -50,6 +50,19 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 					}
 
 					switch (item.type) {
+						case "action": {
+							return (
+								<li key={id}>
+									<Button
+										className="flex items-center gap-x-2 rounded-t-sm p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0"
+										onPress={item.onAction}
+									>
+										{item.label}
+									</Button>
+								</li>
+							);
+						}
+
 						case "link": {
 							return (
 								<li key={id}>
@@ -92,19 +105,35 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 											<Menu
 												className="flex max-h-[inherit] min-w-96 flex-col overflow-auto py-1"
 												selectedKeys={selectedKeys}
+												selectionMode="single"
 											>
 												{Object.entries(item.children).map(([id, item]) => {
 													switch (item.type) {
-														case "link": {
+														case "action": {
 															return (
-																<NavigationMenuItem
+																<MenuItem
 																	key={id}
 																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-																	href={item.href}
+																	id={id}
+																	onAction={item.onAction}
 																	textValue={item.label}
 																>
 																	{item.label}
-																</NavigationMenuItem>
+																</MenuItem>
+															);
+														}
+
+														case "link": {
+															return (
+																<MenuLink
+																	key={id}
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																	href={item.href}
+																	id={id}
+																	textValue={item.label}
+																>
+																	{item.label}
+																</MenuLink>
 															);
 														}
 
@@ -113,6 +142,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 																<Separator
 																	key={id}
 																	className="my-1 w-full border-b border-neutral-200"
+																	id={id}
 																/>
 															);
 														}
@@ -142,11 +172,11 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 	);
 }
 
-interface NavigationMenuItemProps extends MenuItemProps {
+interface MenuLinkProps extends MenuItemProps {
 	href: string;
 }
 
-function NavigationMenuItem(props: Readonly<NavigationMenuItemProps>): ReactNode {
+function MenuLink(props: Readonly<MenuLinkProps>): ReactNode {
 	const { href, onHoverStart } = props;
 
 	const router = useRouter();
@@ -174,20 +204,20 @@ function NavigationMenuItem(props: Readonly<NavigationMenuItemProps>): ReactNode
 }
 
 interface PageNavigationMobileProps {
+	drawerCloseLabel: string;
+	drawerLabel: string;
+	drawerOpenLabel: string;
 	label: string;
-	menuCloseLabel: string;
-	menuOpenLabel: string;
-	menuTitleLabel: string;
 	navigation: Record<string, NavigationItem> & { home: NavigationLink };
 }
 
 export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>): ReactNode {
-	const { label, menuCloseLabel, menuOpenLabel, menuTitleLabel, navigation } = props;
+	const { drawerCloseLabel, drawerLabel, drawerOpenLabel, label, navigation } = props;
 
 	return (
 		<DrawerTrigger>
 			<nav aria-label={label}>
-				<IconButton className="size-9" kind="gradient" label={menuOpenLabel} size="small">
+				<IconButton className="size-9" kind="gradient" label={drawerOpenLabel} size="small">
 					<MenuIcon aria-hidden={true} className="shrink-0" data-slot="icon" />
 					<TouchTarget />
 				</IconButton>
@@ -195,8 +225,21 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 
 			<ModalOverlay isDismissable={true}>
 				<Modal size="large">
-					<Drawer aria-label={menuTitleLabel} className="bg-neutral-50">
-						{({ close }) => {
+					<Drawer aria-label={drawerLabel} className="bg-neutral-50">
+						{({ close: _close }) => {
+							function close() {
+								/**
+								 * `next/link` does not support pointer events, and `click`
+								 * fires after react aria components' `press` events, therefore
+								 * we delay closing the dialog so the navigation is guaranteed to
+								 * be triggered. practically, this seems only relevant for
+								 * firefox on touch devices.
+								 *
+								 * maybe unnecessary after @see https://github.com/adobe/react-spectrum/pull/7542
+								 */
+								requestAnimationFrame(_close);
+							}
+
 							return (
 								<Fragment>
 									<DrawerHeader className="bg-neutral-75">
@@ -208,7 +251,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 											<span className="sr-only">{navigation.home.label}</span>
 										</NavLink>
 
-										<IconButton kind="text" label={menuCloseLabel} slot="close">
+										<IconButton kind="text" label={drawerCloseLabel} slot="close">
 											<XIcon aria-hidden={true} className="size-8 shrink-0" />
 										</IconButton>
 									</DrawerHeader>
@@ -221,16 +264,29 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 												}
 
 												switch (item.type) {
+													case "action": {
+														return (
+															<li key={id}>
+																<Button
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																	onPress={chain(close, item.onAction)}
+																>
+																	{item.label}
+																</Button>
+															</li>
+														);
+													}
+
 													case "link": {
 														return (
 															<li key={id}>
-																<NavLinkMobile
+																<NavLink
 																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-																	close={close}
 																	href={item.href}
+																	onPress={close}
 																>
 																	{item.label}
-																</NavLinkMobile>
+																</NavLink>
 															</li>
 														);
 													}
@@ -256,16 +312,29 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 																		<ul role="list">
 																			{Object.entries(item.children).map(([id, item]) => {
 																				switch (item.type) {
+																					case "action": {
+																						return (
+																							<li key={id}>
+																								<Button
+																									className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																									onPress={chain(close, item.onAction)}
+																								>
+																									{item.label}
+																								</Button>
+																							</li>
+																						);
+																					}
+
 																					case "link": {
 																						return (
 																							<li key={id}>
-																								<NavLinkMobile
+																								<NavLink
 																									className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
-																									close={close}
 																									href={item.href}
+																									onPress={close}
 																								>
 																									{item.label}
-																								</NavLinkMobile>
+																								</NavLink>
 																							</li>
 																						);
 																					}
@@ -310,33 +379,5 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 				</Modal>
 			</ModalOverlay>
 		</DrawerTrigger>
-	);
-}
-
-interface NavLinkMobileProps extends Omit<ComponentPropsWithRef<typeof NavLink>, "onPress"> {
-	close: () => void;
-}
-
-function NavLinkMobile(props: NavLinkMobileProps): ReactNode {
-	const { children, close, ...rest } = props;
-
-	return (
-		<NavLink
-			{...rest}
-			onPress={() => {
-				/**
-				 * `next/link` does not support pointer events, and `click`
-				 * fires after react aria components' `press` events, therefore
-				 * we delay closing the dialog so the navigation is guaranteed to
-				 * be triggered. practically, this seems only relevant for
-				 * firefox on touch devices.
-				 *
-				 * maybe unnecessary after @see https://github.com/adobe/react-spectrum/pull/7542
-				 */
-				requestAnimationFrame(close);
-			}}
-		>
-			{children}
-		</NavLink>
 	);
 }
