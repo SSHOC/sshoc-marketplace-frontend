@@ -316,7 +316,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 																						return (
 																							<li key={id}>
 																								<Button
-																									className="flex border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
+																									className="flex w-full border-l-4 border-neutral-200 px-8 py-6 text-sm text-brand-700 transition hover:border-brand-600 hover:bg-neutral-50 hover:text-brand-600"
 																									onPress={chain(close, item.onAction)}
 																								>
 																									{item.label}

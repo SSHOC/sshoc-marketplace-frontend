@@ -107,10 +107,6 @@
 				"open": "Open",
 				"title": "Navigation menu"
 			},
-			"report-issue": {
-				"label": "Report an issue",
-				"message": "Describe the issue:\n\n"
-			},
 			"items": {
 				"about": "About",
 				"about-communication": "Communication kit",
@@ -137,11 +133,10 @@
 				"datasets": "Datasets",
 				"home": "Home",
 				"publications": "Publications",
+				"report-issue": "Report an issue",
 				"sign-in": "Sign in",
-				"sign-out": "Sign out",
 				"tools-services": "Tools & services",
 				"training-materials": "Training materials",
-				"user-account": "My account",
 				"workflows": "Workflows"
 			},
 			"label": "Primary"
@@ -155,7 +150,16 @@
 				"create-workflows": "Create workflow"
 			},
 			"label": "Create new items"
-		}
+		},
+		"navigation-user-account": {
+			"items": {
+				"sign-out": "Sign out",
+				"user-account": "My account"
+			},
+			"label": "User account",
+			"label-named": "Hi, {name}"
+		},
+		"report-issue-message": "Describe the issue:\n\n"
 	},
 	"SignInForm": {
 		"messages": {
@@ -184,8 +188,5 @@
 			"title": "Sign up"
 		},
 		"title": "Sign up"
-	},
-	"UserAccountMenu": {
-		"label": "Hi, {name}"
 	}
 }

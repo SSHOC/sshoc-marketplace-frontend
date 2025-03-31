@@ -29,19 +29,19 @@ export function SignInForm(): ReactNode {
 			"success-redirect-url": String(
 				createUrl({
 					baseUrl: env.NEXT_PUBLIC_APP_BASE_URL,
-					pathname: "/auth/callback",
+					pathname: "/auth/callback-success",
 				}),
 			),
 			"registration-redirect-url": String(
 				createUrl({
 					baseUrl: env.NEXT_PUBLIC_APP_BASE_URL,
-					pathname: "/auth/sign-up",
+					pathname: "/auth/callback-registration",
 				}),
 			),
 			"failure-redirect-url": String(
 				createUrl({
 					baseUrl: env.NEXT_PUBLIC_APP_BASE_URL,
-					pathname: "/auth/error",
+					pathname: "/auth/callback-error",
 				}),
 			),
 		}),

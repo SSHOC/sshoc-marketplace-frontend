@@ -244,11 +244,11 @@ export async function PageHeader(): Promise<ReactNode> {
 		href: createHref({
 			pathname: "/contact",
 			searchParams: {
-				subject: t("navigation.report-issue.label"),
-				message: t("navigation.report-issue.message"),
+				subject: t("navigation.items.report-issue"),
+				message: t("report-issue-message"),
 			},
 		}),
-		label: t("navigation.report-issue.label"),
+		label: t("navigation.items.report-issue"),
 	} satisfies NavigationItem;
 
 	const signInLink = {
@@ -261,19 +261,19 @@ export async function PageHeader(): Promise<ReactNode> {
 
 	const userAccountItems = {
 		type: "menu",
-		label: "Hi, User",
+		label: t("navigation-user-account.label"),
 		children: {
 			"user-account": {
 				type: "link",
 				href: createHref({
 					pathname: "/account",
 				}),
-				label: t("navigation.items.user-account"),
+				label: t("navigation-user-account.items.user-account"),
 			},
 			"sign-out": {
 				type: "action",
 				onAction: signOut,
-				label: t("navigation.items.sign-out"),
+				label: t("navigation-user-account.items.sign-out"),
 			},
 		},
 	} satisfies NavigationItem;
@@ -337,8 +337,20 @@ export async function PageHeader(): Promise<ReactNode> {
 								{reportIssueLink.label}
 							</NavLink>
 							{authenticated ? (
-								<Suspense>
-									<UserAccountMenu name={(await getCurrentUser()).displayName} />
+								<Suspense
+									fallback={
+										<UserAccountMenu
+											items={userAccountItems.children}
+											label={userAccountItems.label}
+										/>
+									}
+								>
+									<UserAccountMenu
+										items={userAccountItems.children}
+										label={t("navigation-user-account.label-named", {
+											name: (await getCurrentUser()).displayName,
+										})}
+									/>
 								</Suspense>
 							) : (
 								<ButtonNavLink
@@ -361,10 +373,8 @@ export async function PageHeader(): Promise<ReactNode> {
 							label={t("navigation.label")}
 							navigation={{
 								...(authenticated
-									? userAccountItems
-									: {
-											"sign-in": signInLink,
-										}),
+									? { "user-account": userAccountItems }
+									: { "sign-in": signInLink }),
 								"separator-3": {
 									type: "separator",
 								},

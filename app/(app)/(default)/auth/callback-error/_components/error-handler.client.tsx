@@ -1,4 +1,4 @@
-import "client-only";
+"use client";
 
 import { type ReactNode, useEffect } from "react";
 

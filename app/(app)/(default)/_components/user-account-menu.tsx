@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { MenuItem, MenuTrigger } from "react-aria-components";
 
@@ -14,13 +13,10 @@ import { isCurrentPage } from "@/lib/navigation/use-nav-link";
 interface UserAccountMenuProps {
 	items: Record<string, NavigationMenuItem>;
 	label: string;
-	name: string;
 }
 
 export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
-	const { items, label, name } = props;
-
-	const t = useTranslations("UserAccountMenu");
+	const { items, label } = props;
 
 	const pathname = usePathname();
 
@@ -41,7 +37,7 @@ export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
 	return (
 		<MenuTrigger>
 			<Button className="min-h-9 rounded-t-none px-16" size="small">
-				{t("label", { name })}
+				{label}
 			</Button>
 			<Popover
 				className="min-w-(--trigger-width) rounded-sm border border-neutral-150 bg-neutral-0 shadow entering:animate-popover-bottom-in exiting:animate-popover-bottom-out"
