@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 import { Link } from "@/components/link";
 import { SearchForm } from "@/components/search-form";
+import { ServerImage as Image } from "@/components/server-image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,8 @@ import { MainContent } from "@/components/ui/main-content";
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TextInput } from "@/components/ui/text-input";
+import bg from "@/public/assets/images/backgrounds/home@2x.png";
+import people from "@/public/assets/images/backgrounds/home-people.svg";
 
 interface IndexPageProps {}
 
@@ -36,7 +39,9 @@ export async function generateMetadata(
 
 export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	return (
-		<MainContent className="mx-auto w-full max-w-[120rem] px-8">
+		<MainContent className="relative mx-auto w-full max-w-[120rem] px-8">
+			<Image alt="" className="absolute w-full object-cover" src={bg} />
+			<Image alt="" className="absolute w-full object-cover" src={people} />
 			<HeroSection />
 		</MainContent>
 	);
@@ -55,7 +60,7 @@ function HeroSection(): ReactNode {
 	};
 
 	return (
-		<section>
+		<section className="relative">
 			<h1>{t("title")}</h1>
 			<div className="text-base text-neutral-800">{t.rich("lead", { link: LeadLink })}</div>
 			<SearchForm action="/search" className="flex items-end gap-x-4">
