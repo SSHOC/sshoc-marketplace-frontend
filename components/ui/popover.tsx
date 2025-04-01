@@ -27,7 +27,7 @@ export function Popover(props: Readonly<PopoverProps>): ReactNode {
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"rounded-2 border-stroke-weak bg-background-overlay shadow-overlay min-w-(--trigger-width) border forced-colors:bg-[Canvas] entering:placement-left:animate-popover-left-in entering:placement-right:animate-popover-right-in entering:placement-top:animate-popover-top-in entering:placement-bottom:animate-popover-bottom-in exiting:placement-left:animate-popover-left-out exiting:placement-right:animate-popover-right-out exiting:placement-top:animate-popover-top-out exiting:placement-bottom:animate-popover-bottom-out",
+					"min-w-(--trigger-width) rounded-sm border border-neutral-250 bg-neutral-0 shadow forced-colors:bg-[Canvas] entering:placement-left:animate-popover-left-in entering:placement-right:animate-popover-right-in entering:placement-top:animate-popover-top-in entering:placement-bottom:animate-popover-bottom-in exiting:placement-left:animate-popover-left-out exiting:placement-right:animate-popover-right-out exiting:placement-top:animate-popover-top-out exiting:placement-bottom:animate-popover-bottom-out",
 					className,
 				);
 			})}
@@ -50,7 +50,7 @@ function OverlayArrow(_props: Readonly<OverlayArrowProps>): ReactNode {
 	return (
 		<AriaOverlayArrow className="group">
 			<svg
-				className="fill-background-overlay stroke-stroke-weak block stroke-1 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 forced-colors:fill-[Canvas] forced-colors:stroke-[ButtonBorder]"
+				className="block fill-neutral-0 stroke-neutral-250 stroke-1 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180 forced-colors:fill-[Canvas] forced-colors:stroke-[ButtonBorder]"
 				height={12}
 				viewBox="0 0 12 12"
 				width={12}

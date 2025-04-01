@@ -11,7 +11,7 @@ import {
 } from "react-aria-components";
 
 const checkBoxStyles = styles({
-	base: "group text-text-strong disabled:text-text-disabled inline-flex items-center gap-x-3 forced-colors:disabled:text-[GrayText]",
+	base: "group inline-flex items-center gap-x-3 text-neutral-800 disabled:text-neutral-300 forced-colors:disabled:text-[GrayText]",
 	variants: {
 		size: {
 			small: "text-tiny",
@@ -53,11 +53,11 @@ export function CheckBox(props: Readonly<CheckBoxProps>): ReactNode {
 }
 
 const checkBoxBoxStyles = styles({
-	base: "interactive rounded-1 border-stroke-strong bg-fill-inverse-strong text-fill-inverse-strong group-invalid:border-stroke-error-strong group-invalid:bg-fill-error-weak group-hover:hover-overlay group-focus-visible:focus-outline group-disabled:border-stroke-disabled group-pressed:press-overlay group-selected:bg-fill-brand-strong group-selected:group-invalid:bg-fill-error-strong group-selected:group-disabled:bg-fill-disabled isolate inline-grid shrink-0 place-content-center border transition group-selected:border-transparent forced-colors:group-invalid:text-[Mark] forced-colors:group-disabled:text-[GrayText] forced-colors:group-selected:text-[Highlight]",
+	base: "relative isolate inline-grid shrink-0 place-content-center rounded-sm border border-neutral-250 bg-neutral-0 text-neutral-800 transition group-invalid:border-negative-600 group-invalid:bg-negative-100 group-focus-visible:outline-2 group-focus-visible:outline-brand-600 group-disabled:border-neutral-200 group-selected:border-transparent group-selected:bg-brand-600 group-selected:group-invalid:bg-negative-100 group-selected:group-disabled:bg-neutral-200 forced-colors:group-invalid:text-[Mark] forced-colors:group-disabled:text-[GrayText] forced-colors:group-selected:text-[Highlight]",
 	variants: {
 		size: {
 			small: "size-6 rounded-[3px] p-1.5",
-			large: "rounded-1 size-8 p-2",
+			large: "size-8 rounded-[2px] p-2",
 		},
 	},
 	defaults: {
@@ -80,13 +80,13 @@ export function CheckBoxBox(props: Readonly<CheckBoxBoxProps>): ReactNode {
 			{isIndeterminate ? (
 				<MinusIcon
 					aria-hidden={true}
-					className="group-disabled:text-text-disabled shrink-0 forced-colors:text-[HighlightText]"
+					className="shrink-0 group-disabled:text-neutral-200 forced-colors:text-[HighlightText]"
 					data-slot="icon"
 				/>
 			) : isSelected ? (
 				<CheckIcon
 					aria-hidden={true}
-					className="group-disabled:text-text-disabled shrink-0 forced-colors:text-[HighlightText]"
+					className="shrink-0 group-disabled:text-neutral-200 forced-colors:text-[HighlightText]"
 					data-slot="icon"
 				/>
 			) : null}

@@ -36,7 +36,7 @@ export async function generateMetadata(
 
 export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	return (
-		<MainContent>
+		<MainContent className="mx-auto w-full max-w-[120rem] px-8">
 			<HeroSection />
 		</MainContent>
 	);
