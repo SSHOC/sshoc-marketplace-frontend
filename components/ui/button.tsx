@@ -1,7 +1,6 @@
 "use client";
 
 import { type GetVariantProps, styles } from "@acdh-oeaw/style-variants";
-import { Loader2Icon } from "lucide-react";
 import { type ComponentPropsWithRef, Fragment, type ReactNode } from "react";
 import {
 	Button as AriaButton,
@@ -11,9 +10,10 @@ import {
 
 import { Link } from "@/components/link";
 import { NavLink } from "@/components/nav-link";
+import { LoadingIndicator } from "@/components/ui/loading-indicator";
 
 const buttonStyles = styles({
-	base: "*:data-[slot=icon]:first-child:-ml-1 *:data-[slot=icon]:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed *:data-[slot=icon]:shrink-0 forced-colors:disabled:text-[GrayText] pending:opacity-75",
+	base: "*:data-[slot=icon]:first-child:-ml-1 *:data-[slot=icon]:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed *:data-[slot=icon]:shrink-0 forced-colors:disabled:text-[GrayText] pending:cursor-not-allowed",
 	variants: {
 		kind: {
 			primary: "bg-brand-750 text-neutral-0 hover:bg-brand-600 disabled:bg-neutral-200",
@@ -59,12 +59,12 @@ export function Button(props: Readonly<ButtonProps>): ReactNode {
 				return buttonStyles({ className, kind, size, variant });
 			})}
 		>
-			{composeRenderProps(children, (children) => {
+			{composeRenderProps(children, (children, renderProps) => {
+				const { isPending } = renderProps;
+
 				return (
 					<Fragment>
-						{props.isPending ? (
-							<Loader2Icon aria-hidden={true} className="animate-spin" data-slot="icon" />
-						) : null}
+						{isPending ? <LoadingIndicator aria-hidden={true} data-slot="icon" /> : null}
 						{children}
 					</Fragment>
 				);
