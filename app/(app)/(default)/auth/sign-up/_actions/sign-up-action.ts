@@ -7,9 +7,17 @@ import * as v from "valibot";
 import { env } from "@/config/env.config";
 import { redirect } from "@/lib/navigation/navigation";
 import { type ActionState, createErrorActionState } from "@/lib/server/actions";
-import { invalidateRegistrationSession } from "@/lib/server/auth/registration";
+import {
+	assertRegistrationSession,
+	invalidateRegistrationSession,
+} from "@/lib/server/auth/registration";
 import { createSession } from "@/lib/server/auth/session";
-import { isHttpError, isRateLimitError, isValidationError } from "@/lib/server/errors";
+import {
+	isHttpError,
+	isRateLimitError,
+	isUnauthorizedError,
+	isValidationError,
+} from "@/lib/server/errors";
 import { assertGlobalPostRateLimit } from "@/lib/server/rate-limit/global-rate-limit";
 
 const SignUpSchema = v.object({
@@ -31,6 +39,8 @@ export async function signUpAction(state: ActionState, formData: FormData): Prom
 	try {
 		await assertGlobalPostRateLimit();
 
+		const session = await assertRegistrationSession();
+
 		const payload = await v.parseAsync(SignUpSchema, {
 			acceptedRegulations: formData.get("acceptedRegulations"),
 			displayName: formData.get("displayName"),
@@ -47,6 +57,7 @@ export async function signUpAction(state: ActionState, formData: FormData): Prom
 		const response = await request(url, {
 			method: "put",
 			body: payload,
+			headers: { authorization: session },
 			responseType: "raw",
 		});
 
@@ -63,6 +74,11 @@ export async function signUpAction(state: ActionState, formData: FormData): Prom
 			return createErrorActionState({ message: e("too-many-requests"), formData });
 		}
 
+		if (isUnauthorizedError(error)) {
+			// FIXME: this means the registration token is invalid. should redirect to sign in page
+			return createErrorActionState({ message: t("invalid-token"), formData });
+		}
+
 		if (isValidationError<typeof SignUpSchema>(error)) {
 			return createErrorActionState({
 				message: e("invalid-form-fields"),
@@ -72,8 +88,13 @@ export async function signUpAction(state: ActionState, formData: FormData): Prom
 		}
 
 		if (isHttpError(error)) {
+			// FIXME: redirect to sign in page
 			switch (error.response.status) {
 				case 401: {
+					return createErrorActionState({ message: t("invalid-token"), formData });
+				}
+
+				case 403: {
 					return createErrorActionState({ message: t("invalid-token"), formData });
 				}
 			}

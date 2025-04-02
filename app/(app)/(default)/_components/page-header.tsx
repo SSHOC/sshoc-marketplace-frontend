@@ -11,9 +11,9 @@ import { UserAccountMenu } from "@/app/(app)/(default)/_components/user-account-
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { ButtonNavLink } from "@/components/ui/button";
+import { getCurrentUser } from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
-import { getCurrentUser } from "@/lib/server/api/client";
 import { isAuthenticated } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
@@ -317,8 +317,8 @@ export async function PageHeader(): Promise<ReactNode> {
 	} satisfies Record<string, NavigationItem>;
 
 	return (
-		<div>
-			<header className="border-b border-neutral-150">
+		<div className="isolate">
+			<header className="isolate border-b border-neutral-150">
 				<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
 					<NavLink
 						className="shrink-0 rounded-sm py-4 focus-visible:outline-2 focus-visible:outline-brand-600"
@@ -392,7 +392,7 @@ export async function PageHeader(): Promise<ReactNode> {
 			{authenticated ? (
 				<nav
 					aria-label={t("navigation-create-items.label")}
-					className="-mt-px hidden border-y border-brand-100 bg-brand-25 text-sm text-brand-750 2xl:block"
+					className="isolate -mt-px hidden border-y border-brand-100 bg-brand-25 text-sm text-brand-750 2xl:block"
 				>
 					<ul className="mx-auto flex w-full max-w-[120rem] justify-end px-8" role="list">
 						{Object.entries(createItemsNavigation).map(([id, item]) => {

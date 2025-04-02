@@ -49,6 +49,9 @@ out/
 /playwright-report/
 /test-results/
 
+# generated api client
+/lib/api/sshoc/
+
 
 ## .dockerignore ##
 

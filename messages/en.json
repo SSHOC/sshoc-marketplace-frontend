@@ -70,9 +70,11 @@
 		"title": "Imprint"
 	},
 	"IndexPage": {
-		"title": "Social Sciences & Humanities Open Marketplace",
-		"lead": "Discover new and contextualised resources for your research in Social Sciences and Humanities: tools, services, training materials, workflows and datasets. <link>Read more...</link>",
-		"form": {
+		"hero": {
+			"title": "Social Sciences & Humanities Open Marketplace",
+			"lead": "Discover new and contextualised resources for your research in Social Sciences and Humanities: tools, services, training materials, workflows and datasets. <link>Read more...</link>"
+		},
+		"search-form": {
 			"categories": {
 				"label": "Categories"
 			},
@@ -80,7 +82,28 @@
 				"label": "Search"
 			},
 			"submit": "Search"
-		}
+		},
+		"section-browse": {
+			"title": "Browse",
+			"by-activity": "Browse by activity",
+			"by-keyword": "Browse by keyword"
+		},
+		"section-recommended": {
+			"title": "Recommended",
+			"tools-services": "Tools & services",
+			"training-materials": "Training materials",
+			"publications": "Publications",
+			"datasets": "Datasets",
+			"workflows": "Workflows"
+		},
+		"section-last-updated": {
+			"title": "Last updated",
+			"lead": "See what's new"
+		},
+		"see-all": "See all",
+		"read-more": "Read more",
+		"activities": "Activities",
+		"keywords": "Keywords"
 	},
 	"NotFoundPage": {
 		"meta": {
@@ -179,6 +202,7 @@
 		"title": "Sign in"
 	},
 	"SignUpForm": {
+		"accept-terms-of-service": "I have read and understood the <link>privacy policy</link> and I accept it.",
 		"email": "Email address",
 		"name": "Name",
 		"submit": "Sign up"

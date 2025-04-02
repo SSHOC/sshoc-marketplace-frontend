@@ -36,7 +36,7 @@ export function PageFooter(): ReactNode {
 	} satisfies Record<string, NavigationLink>;
 
 	return (
-		<footer className="border-t border-neutral-150 bg-neutral-100 text-neutral-700">
+		<footer className="isolate border-t border-neutral-150 bg-neutral-100 text-neutral-700">
 			<nav
 				aria-label={t("navigation.label")}
 				className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8"
