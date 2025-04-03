@@ -32,7 +32,13 @@ async function generate() {
 		},
 	});
 
-	const contents = astToString(ast);
+	let contents = astToString(ast);
+
+	/** @see  */
+	contents = contents.replace(
+		/ReadonlyArray<(paths.*?\["query"\])/g,
+		"ReadonlyArray<NonNullable<$1>",
+	);
 
 	const outputFilePath = join(process.cwd(), "lib", "api", "schema.ts");
 
