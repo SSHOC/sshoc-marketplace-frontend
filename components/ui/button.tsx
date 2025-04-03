@@ -24,7 +24,7 @@ const buttonStyles = styles({
 		},
 		size: {
 			small: "rounded-sm px-4 text-sm font-medium",
-			medium: "rounded-sm px-4 text-[0.9375rem] font-medium",
+			medium: "rounded-sm px-4 text-base font-medium",
 		},
 		variant: {
 			default: "",

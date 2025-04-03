@@ -8,7 +8,11 @@ import {
 } from "@acdh-oeaw/lib";
 
 import { env } from "@/config/env.config";
-import { itemBasicDtoCategoryValues, type paths } from "@/lib/api/schema";
+import {
+	itemBasicDtoCategoryValues,
+	type paths,
+	pathsApiItemSearchGetParametersQueryOrderValues,
+} from "@/lib/api/schema";
 import { redirect } from "@/lib/navigation/navigation";
 import { assertSession, getSession } from "@/lib/server/auth/session";
 import { isUnauthorizedError } from "@/lib/server/errors";
@@ -76,16 +80,52 @@ export async function getCurrentUser(): Promise<GetCurrentUser.Response> {
 }
 
 /**
- * Items.
+ * Util.
  * ================================================================================================
  */
 
 export const itemCategories = itemBasicDtoCategoryValues;
+
 export type ItemCategory = (typeof itemCategories)[number];
 
-//
+export type ItemFacet = "activity" | "source" | "keyword" | "language";
 
-type ItemFacet = "activity" | "source" | "keyword" | "language";
+/** Frontend uses pluralized pathnames. */
+export const pluralize = {
+	categories(category: ItemCategory) {
+		switch (category) {
+			case "dataset":
+				return "datasets";
+			case "publication":
+				return "publications";
+			case "step":
+				return "steps";
+			case "tool-or-service":
+				return "tools-services";
+			case "training-material":
+				return "training-materials";
+			case "workflow":
+				return "workflows";
+		}
+	},
+	facets(facet: ItemFacet) {
+		switch (facet) {
+			case "activity":
+				return "activities";
+			case "keyword":
+				return "keywords";
+			case "language":
+				return "languages";
+			case "source":
+				return "sources";
+		}
+	},
+};
+
+/**
+ * Items.
+ * ================================================================================================
+ */
 
 declare namespace SearchItems {
 	export type SearchParams = paths["/api/item-search"]["get"]["parameters"]["query"] &
@@ -109,5 +149,7 @@ export async function searchItems(
 
 	return (await request(url, { responseType: "json" })) as SearchItems.Response;
 }
+
+export const searchItemsOrders = pathsApiItemSearchGetParametersQueryOrderValues;
 
 //

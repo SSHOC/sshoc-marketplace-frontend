@@ -102,6 +102,7 @@
 	--font-weight-black: calc(900 * var(--font-weight-factor));
 
 	--text-base: 0.9375rem;
+	--text-regular: 1rem;
 
 	--animate-underlay-in: 300ms ease-out underlay-in;
 	--animate-underlay-out: 200ms ease-in underlay-out;

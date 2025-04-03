@@ -11,7 +11,7 @@ import { UserAccountMenu } from "@/app/(app)/(default)/_components/user-account-
 import { Image } from "@/components/image";
 import { NavLink } from "@/components/nav-link";
 import { ButtonNavLink } from "@/components/ui/button";
-import { getCurrentUser } from "@/lib/api/client";
+import { getCurrentUser, pluralize } from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
 import { isAuthenticated } from "@/lib/server/auth/session";
@@ -90,28 +90,28 @@ export async function PageHeader(): Promise<ReactNode> {
 				activities: {
 					type: "link",
 					href: createHref({
-						pathname: "/browse/activities",
+						pathname: `/browse/${pluralize.facets("activity")}`,
 					}),
 					label: t("navigation.items.browse-activities"),
 				},
 				keywords: {
 					type: "link",
 					href: createHref({
-						pathname: "/browse/keywords",
+						pathname: `/browse/${pluralize.facets("keyword")}`,
 					}),
 					label: t("navigation.items.browse-keywords"),
 				},
 				sources: {
 					type: "link",
 					href: createHref({
-						pathname: "/browse/sources",
+						pathname: `/browse/${pluralize.facets("source")}`,
 					}),
 					label: t("navigation.items.browse-sources"),
 				},
 				languages: {
 					type: "link",
 					href: createHref({
-						pathname: "/browse/languages",
+						pathname: `/browse/${pluralize.facets("language")}`,
 					}),
 					label: t("navigation.items.browse-languages"),
 				},
@@ -283,35 +283,35 @@ export async function PageHeader(): Promise<ReactNode> {
 			type: "link",
 			label: t("navigation-create-items.items.create-tools-services"),
 			href: createHref({
-				pathname: "/tools-services/new",
+				pathname: `/${pluralize.categories("tool-or-service")}/new`,
 			}),
 		},
 		"training-materials": {
 			type: "link",
 			label: t("navigation-create-items.items.create-training-materials"),
 			href: createHref({
-				pathname: "/training-materials/new",
+				pathname: `/${pluralize.categories("training-material")}/new`,
 			}),
 		},
 		publications: {
 			type: "link",
 			label: t("navigation-create-items.items.create-publications"),
 			href: createHref({
-				pathname: "/publications/new",
+				pathname: `/${pluralize.categories("publication")}/new`,
 			}),
 		},
 		datasets: {
 			type: "link",
 			label: t("navigation-create-items.items.create-datasets"),
 			href: createHref({
-				pathname: "/datasets/new",
+				pathname: `/${pluralize.categories("dataset")}/new`,
 			}),
 		},
 		workflows: {
 			type: "link",
 			label: t("navigation-create-items.items.create-workflows"),
 			href: createHref({
-				pathname: "/workflows/new",
+				pathname: `/${pluralize.categories("workflow")}/new`,
 			}),
 		},
 	} satisfies Record<string, NavigationItem>;

@@ -52,7 +52,7 @@ export function SignInForm(): ReactNode {
 			<p>{t.rich("messages.oauth", { em: AccountName })}</p>
 
 			<a
-				className="relative flex items-center justify-center rounded-sm bg-neutral-75 p-4 text-center text-[0.9375rem] font-medium text-brand-700 shadow transition hover:bg-neutral-100"
+				className="relative flex items-center justify-center rounded-sm bg-neutral-75 p-4 text-center text-base font-medium text-brand-700 shadow transition hover:bg-neutral-100"
 				href={String(oauthUrl)}
 			>
 				<Image alt="" className="absolute left-4 size-10 shrink-0 rounded-full" src={logo} />

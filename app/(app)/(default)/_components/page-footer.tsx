@@ -42,7 +42,7 @@ export function PageFooter(): ReactNode {
 				className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8"
 			>
 				<ul
-					className="flex flex-1 flex-col flex-wrap py-2 text-[0.9375rem] sm:flex-row sm:py-0"
+					className="flex flex-1 flex-col flex-wrap py-2 text-base sm:flex-row sm:py-0"
 					role="list"
 				>
 					{Object.entries(navigation).map(([id, item]) => {

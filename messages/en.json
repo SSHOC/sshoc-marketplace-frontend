@@ -184,6 +184,12 @@
 		},
 		"report-issue-message": "Describe the issue:\n\n"
 	},
+	"SearchPage": {
+		"meta": {
+			"title": "Search"
+		},
+		"title": "Search"
+	},
 	"SignInForm": {
 		"messages": {
 			"alternate": "or, alternatively",

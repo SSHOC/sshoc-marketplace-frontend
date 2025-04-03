@@ -17,10 +17,12 @@ import { MainContent } from "@/components/ui/main-content";
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TextInput } from "@/components/ui/text-input";
-import { type ItemCategory, searchItems } from "@/lib/api/client";
+import { type ItemCategory, type ItemFacet, pluralize, searchItems } from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import bg from "@/public/assets/images/backgrounds/home@2x.png";
 import people from "@/public/assets/images/backgrounds/home-people.svg";
+
+// TODO: sync search form to url search params
 
 interface IndexPageProps {}
 
@@ -46,17 +48,19 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	return (
 		<MainContent className="relative isolate mx-auto flex w-full max-w-[120rem] flex-col px-8">
 			<HeroSection />
-			<Suspense
-				fallback={
-					<div className="grid flex-1 place-content-center">
-						<LoadingIndicator />
-					</div>
-				}
-			>
-				<BrowseSection />
-				<RecommendedSection />
-				<LastUpdatedSection />
-			</Suspense>
+			<div className="mx-auto w-full max-w-[100rem]">
+				<Suspense
+					fallback={
+						<div className="grid flex-1 place-content-center">
+							<LoadingIndicator />
+						</div>
+					}
+				>
+					<BrowseSection />
+					<RecommendedSection />
+					<LastUpdatedSection />
+				</Suspense>
+			</div>
 		</MainContent>
 	);
 }
@@ -140,6 +144,26 @@ function LeadLink(chunks: ReactNode): ReactNode {
 	);
 }
 
+interface SectionTitleProps {
+	children: ReactNode;
+}
+
+function SectionTitle(props: SectionTitleProps): ReactNode {
+	const { children } = props;
+
+	return <h2 className="text-[1.625rem] font-medium text-neutral-800">{children}</h2>;
+}
+
+interface SubSectionTitleProps {
+	children: ReactNode;
+}
+
+function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
+	const { children } = props;
+
+	return <h3 className="text-xl font-medium text-neutral-800">{children}</h3>;
+}
+
 async function BrowseSection(): Promise<ReactNode> {
 	const t = await getTranslations("IndexPage");
 
@@ -154,40 +178,60 @@ async function BrowseSection(): Promise<ReactNode> {
 
 	const { activity, keyword } = items.facets;
 
-	const sections = [
+	const maxItems = 20;
+
+	const sections: Array<{
+		id: ItemFacet;
+		title: string;
+		items: Record<string, { checked: boolean; count: string }>;
+	}> = [
 		{ id: "activity", title: t("section-browse.by-activity"), items: activity },
 		{ id: "keyword", title: t("section-browse.by-keyword"), items: keyword },
 	];
 
 	return (
-		<section>
-			<h2>{t("section-browse.title")}</h2>
+		<section className="flex flex-col gap-y-8 py-16">
+			<SectionTitle>{t("section-browse.title")}</SectionTitle>
 
 			{sections.map((section) => {
 				const { id: facet, items, title } = section;
 
 				return (
-					<section key={facet}>
-						<h3>{title}</h3>
-						<ul role="list">
-							{Object.entries(items).map(([id, item]) => {
-								return (
-									<li key={id}>
-										<Link
-											href={createHref({
-												pathname: "/search",
-												// FIXME: no need to leak backend shape
-												searchParams: createUrlSearchParams({
-													[`f.${facet}`]: id,
-												}),
-											})}
-										>
-											{id}
-											<span>({item.count})</span>
-										</Link>
-									</li>
-								);
-							})}
+					<section key={facet} className="flex flex-col gap-y-6">
+						<div className="flex items-baseline justify-between border-b border-neutral-150 py-4">
+							<SubSectionTitle>{title}</SubSectionTitle>
+							<Link
+								className="text-base text-brand-750 transition hover:text-brand-600"
+								href={createHref({
+									pathname: `/browse/${pluralize.facets(facet)}`,
+								})}
+							>
+								{t("see-all")}
+							</Link>
+						</div>
+
+						<ul className="flex flex-wrap gap-x-6 gap-y-3" role="list">
+							{Object.entries(items)
+								.slice(0, maxItems)
+								.map(([id, item]) => {
+									return (
+										<li key={id}>
+											<Link
+												className="inline-flex gap-x-1 text-regular text-brand-750 transition hover:text-brand-600"
+												href={createHref({
+													pathname: "/search",
+													// FIXME: typecheck
+													searchParams: createUrlSearchParams({
+														[`f.${facet}`]: [id],
+													}),
+												})}
+											>
+												{id}
+												<span className="text-neutral-600">({item.count})</span>
+											</Link>
+										</li>
+									);
+								})}
 						</ul>
 					</section>
 				);
@@ -221,36 +265,89 @@ async function RecommendedSection(): Promise<ReactNode> {
 	);
 
 	return (
-		<section>
-			<h2>{t("section-recommended.title")}</h2>
+		<section className="flex flex-col gap-y-8 py-16">
+			<SectionTitle>{t("section-recommended.title")}</SectionTitle>
 
 			{sections.map((section) => {
 				const { id, items, title } = section;
 
+				if (items.length === 0) {
+					return null;
+				}
+
 				return (
-					<section key={id}>
-						<h3>{title}</h3>
-						<ul role="list">
+					<section key={id} className="flex flex-col gap-y-6">
+						<div className="flex items-baseline justify-between border-b border-neutral-150 py-4">
+							<SubSectionTitle>{title}</SubSectionTitle>
+							<Link
+								className="text-base text-brand-750 transition hover:text-brand-600"
+								href={createHref({
+									pathname: "/search",
+									// FIXME: typecheck
+									searchParams: createUrlSearchParams({
+										categories: [id],
+										order: ["label"],
+									}),
+								})}
+							>
+								{t("see-all")}
+							</Link>
+						</div>
+
+						<ul
+							className="grid grid-cols-[repeat(auto-fill,minmax(min(18rem,100%),1fr))] gap-16"
+							role="list"
+						>
 							{Object.entries(items).map(([id, item]) => {
-								const { category, label, persistentId } = item;
+								const { category, description, label, persistentId, properties } = item;
+
+								const pathname = `/${pluralize.categories(category)}/${persistentId}`;
+
+								const activities = properties.filter((property) => {
+									return property.type.code === "activity";
+								});
+								const keywords = properties.filter((property) => {
+									return property.type.code === "keyword";
+								});
 
 								return (
 									<li key={id}>
-										<article>
-											<h4>
+										<article className="flex flex-col gap-y-4">
+											<h4 className="inline-flex items-center gap-x-3">
+												<ItemCategoryIcon
+													category={category}
+													className="size-10 shrink-0"
+													data-slot="icon"
+												/>
 												<Link
-													href={createHref({
-														pathname: `/${category}s/${persistentId}`,
-													})}
+													className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
+													href={createHref({ pathname })}
 												>
-													<ItemCategoryIcon
-														category={category}
-														className="size-6 shrink-0"
-														data-slot="icon"
-													/>
 													{label}
 												</Link>
 											</h4>
+
+											<dl className="flex flex-col gap-y-1 text-xs">
+												<div className="flex gap-x-2">
+													<dt className="text-neutral-600">{t("activities")}</dt>
+													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">{}</dd>
+												</div>
+												<div className="flex gap-x-2">
+													<dt className="text-neutral-600">{t("keywords")}</dt>
+													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">{}</dd>
+												</div>
+											</dl>
+
+											<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">
+												{description}
+											</div>
+
+											<Link
+												className="self-end text-sm text-brand-750 transition hover:text-brand-600"
+												href={createHref({ pathname })}
+											>
+												{t("read-more")}
+											</Link>
 										</article>
 									</li>
 								);
@@ -273,7 +370,7 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 
 	return (
 		<section>
-			<h2>{t("section-last-updated.title")}</h2>
+			<SectionTitle>{t("section-last-updated.title")}</SectionTitle>
 
 			<h3>{t("section-last-updated.lead")}</h3>
 
@@ -286,7 +383,7 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 							<h4>
 								<Link
 									href={createHref({
-										pathname: `/${category}s/${persistentId}`,
+										pathname: `/${pluralize.categories(category)}/${persistentId}`,
 									})}
 								>
 									<ItemCategoryIcon
