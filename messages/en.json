@@ -100,10 +100,36 @@
 			"title": "Last updated",
 			"lead": "See what's new"
 		},
-		"see-all": "See all",
-		"read-more": "Read more",
 		"activities": "Activities",
-		"keywords": "Keywords"
+		"keywords": "Keywords",
+		"read-more": "Read more",
+		"read-more-about": "Read more about \"{item}\"",
+		"see-all": {
+			"label": "See all",
+			"recent-changes": "See all recent changes",
+			"activity": "See all activities",
+			"keyword": "See all keywords",
+			"language": "See all languages",
+			"source": "See all sources",
+			"dataset": "See all datasets",
+			"publication": "See all publications",
+			"step": "See all steps",
+			"tool-or-service": "See all tools and services",
+			"training-material": "See all training materials",
+			"workflow": "See all workflows"
+		}
+	},
+	"ItemCategoryIcon": {
+		"dataset": "Dataset",
+		"publication": "Publication",
+		"step": "Workflow step",
+		"tool-or-service": "Tool or service",
+		"training-material": "Training material",
+		"workflow": "Workflow"
+	},
+	"MaintenanceNotice": {
+		"message": "The SSH Open Marketplace is maintained and will be further developed by three European Research Infrastructures - DARIAH, CLARIN and CESSDA - and their national partners. It was developed as part of the \"Social Sciences and Humanities Open Cloud\" SSHOC project, European Union's Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.",
+		"title": "Maintenance"
 	},
 	"NotFoundPage": {
 		"meta": {

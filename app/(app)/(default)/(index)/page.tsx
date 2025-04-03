@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 
+import { MaintenanceNotice } from "@/app/(app)/(default)/_components/maintenance-notice";
 import { ItemCategoryIcon } from "@/components/item-category-icon";
 import { Link } from "@/components/link";
 import { SearchForm } from "@/components/search-form";
@@ -21,6 +22,11 @@ import { type ItemCategory, type ItemFacet, pluralize, searchItems } from "@/lib
 import { createHref } from "@/lib/navigation/create-href";
 import bg from "@/public/assets/images/backgrounds/home@2x.png";
 import people from "@/public/assets/images/backgrounds/home-people.svg";
+
+const maxBrowseFacetValues = 20;
+const maxItemFacetValues = 5;
+const maxLastAddedItems = 5;
+const numRecommendedItems = 2;
 
 // TODO: sync search form to url search params
 
@@ -48,6 +54,7 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	return (
 		<MainContent className="relative isolate mx-auto flex w-full max-w-[120rem] flex-col px-8">
 			<HeroSection />
+
 			<div className="mx-auto w-full max-w-[100rem]">
 				<Suspense
 					fallback={
@@ -61,6 +68,8 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 					<LastUpdatedSection />
 				</Suspense>
 			</div>
+
+			<MaintenanceNotice />
 		</MainContent>
 	);
 }
@@ -89,13 +98,17 @@ function HeroSection(): ReactNode {
 			</div>
 
 			<section className="relative mx-auto flex w-full max-w-[72rem] flex-col gap-y-8 py-32">
-				<h1 className="text-[1.75rem] font-bold text-neutral-800">{t("hero.title")}</h1>
-				<div className="text-base text-neutral-800">{t.rich("hero.lead", { link: LeadLink })}</div>
+				<h1 className="text-[1.75rem] leading-[1.25] font-bold text-neutral-800">
+					{t("hero.title")}
+				</h1>
+				<div className="text-base leading-[1.75] text-neutral-800">
+					{t.rich("hero.lead", { link: LeadLink })}
+				</div>
 				<SearchForm
 					action="/search"
-					className="flex items-end gap-x-4 rounded-md border border-neutral-150 bg-neutral-0 px-6 py-2 shadow"
+					className="flex items-end gap-1.5 rounded-md border border-neutral-150 bg-neutral-0 p-2.5 shadow sm:px-8"
 				>
-					<Select className="min-w-55" defaultSelectedKey="all" name="categories">
+					<Select className="md:min-w-56" defaultSelectedKey="all" name="categories">
 						<Label className="sr-only">{t("search-form.categories.label")}</Label>
 						<SelectTrigger>
 							<SelectValue className="flex items-center gap-x-3" />
@@ -112,6 +125,7 @@ function HeroSection(): ReactNode {
 													data-slot="icon"
 												/>
 											) : (
+												// FIXME: should not be visible in SelectValue
 												<div className="size-5 shrink-0" />
 											)}
 											{category.label}
@@ -127,6 +141,7 @@ function HeroSection(): ReactNode {
 						<Input />
 					</TextInput>
 
+					{/* TODO: SubmitButton? */}
 					<Button kind="gradient" type="submit">
 						{t("search-form.submit")}
 					</Button>
@@ -136,49 +151,19 @@ function HeroSection(): ReactNode {
 	);
 }
 
-function LeadLink(chunks: ReactNode): ReactNode {
-	return (
-		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
-			{chunks}
-		</Link>
-	);
-}
-
-interface SectionTitleProps {
-	children: ReactNode;
-}
-
-function SectionTitle(props: SectionTitleProps): ReactNode {
-	const { children } = props;
-
-	return <h2 className="text-[1.625rem] font-medium text-neutral-800">{children}</h2>;
-}
-
-interface SubSectionTitleProps {
-	children: ReactNode;
-}
-
-function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
-	const { children } = props;
-
-	return <h3 className="text-xl font-medium text-neutral-800">{children}</h3>;
-}
-
 async function BrowseSection(): Promise<ReactNode> {
 	const t = await getTranslations("IndexPage");
 
 	/**
-	 * Same request as in `<LastUpdatedSection>`, so it can be de-duplicated.
-	 * Here we only need the facet values and counts.
+	 * Match the request from `<LastUpdatedSection>` so it can be deduplicated.
+	 * Here we only need the list of facet values.
 	 */
 	const items = await searchItems({
 		order: ["modified-on"],
-		perpage: 5,
+		perpage: maxLastAddedItems,
 	});
 
 	const { activity, keyword } = items.facets;
-
-	const maxItems = 20;
 
 	const sections: Array<{
 		id: ItemFacet;
@@ -198,21 +183,22 @@ async function BrowseSection(): Promise<ReactNode> {
 
 				return (
 					<section key={facet} className="flex flex-col gap-y-6">
-						<div className="flex items-baseline justify-between border-b border-neutral-150 py-4">
+						<SubSectionHeader>
 							<SubSectionTitle>{title}</SubSectionTitle>
 							<Link
+								aria-label={t(`see-all.${facet}`)}
 								className="text-base text-brand-750 transition hover:text-brand-600"
 								href={createHref({
 									pathname: `/browse/${pluralize.facets(facet)}`,
 								})}
 							>
-								{t("see-all")}
+								{t("see-all.label")}
 							</Link>
-						</div>
+						</SubSectionHeader>
 
 						<ul className="flex flex-wrap gap-x-6 gap-y-3" role="list">
 							{Object.entries(items)
-								.slice(0, maxItems)
+								.slice(0, maxBrowseFacetValues)
 								.map(([id, item]) => {
 									return (
 										<li key={id}>
@@ -257,7 +243,7 @@ async function RecommendedSection(): Promise<ReactNode> {
 				categories: [category.id],
 				"f.keyword": ["recommended"],
 				order: ["modified-on"],
-				perpage: 2,
+				perpage: numRecommendedItems,
 			});
 
 			return { ...category, items };
@@ -277,9 +263,10 @@ async function RecommendedSection(): Promise<ReactNode> {
 
 				return (
 					<section key={id} className="flex flex-col gap-y-6">
-						<div className="flex items-baseline justify-between border-b border-neutral-150 py-4">
+						<SubSectionHeader>
 							<SubSectionTitle>{title}</SubSectionTitle>
 							<Link
+								aria-label={t(`see-all.${id}`)}
 								className="text-base text-brand-750 transition hover:text-brand-600"
 								href={createHref({
 									pathname: "/search",
@@ -290,28 +277,40 @@ async function RecommendedSection(): Promise<ReactNode> {
 									}),
 								})}
 							>
-								{t("see-all")}
+								{t("see-all.label")}
 							</Link>
-						</div>
+						</SubSectionHeader>
 
 						<ul
 							className="grid grid-cols-[repeat(auto-fill,minmax(min(18rem,100%),1fr))] gap-16"
 							role="list"
 						>
-							{Object.entries(items).map(([id, item]) => {
+							{items.map((item) => {
+								// return <li key={persistentId}><ItemPreview item={item} /></li>; // FIXME:
+
 								const { category, description, label, persistentId, properties } = item;
 
 								const pathname = `/${pluralize.categories(category)}/${persistentId}`;
 
-								const activities = properties.filter((property) => {
-									return property.type.code === "activity";
-								});
-								const keywords = properties.filter((property) => {
-									return property.type.code === "keyword";
-								});
+								const activities = properties
+									.filter((property) => {
+										return property.type.code === "activity";
+									})
+									.slice(0, maxItemFacetValues);
+
+								const keywords = properties
+									.filter((property) => {
+										return property.type.code === "keyword";
+									})
+									.slice(0, maxItemFacetValues);
+
+								const metadata = [
+									{ id: "activity", label: t("activities"), properties: activities },
+									{ id: "keyword", label: t("keywords"), properties: keywords },
+								];
 
 								return (
-									<li key={id}>
+									<li key={persistentId}>
 										<article className="flex flex-col gap-y-4">
 											<h4 className="inline-flex items-center gap-x-3">
 												<ItemCategoryIcon
@@ -328,21 +327,44 @@ async function RecommendedSection(): Promise<ReactNode> {
 											</h4>
 
 											<dl className="flex flex-col gap-y-1 text-xs">
-												<div className="flex gap-x-2">
-													<dt className="text-neutral-600">{t("activities")}</dt>
-													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">{}</dd>
-												</div>
-												<div className="flex gap-x-2">
-													<dt className="text-neutral-600">{t("keywords")}</dt>
-													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">{}</dd>
-												</div>
+												{metadata.map(({ id, label, properties }) => {
+													if (properties.length === 0) {
+														return null;
+													}
+
+													return (
+														<div key={id} className="flex gap-x-2">
+															<dt className="text-neutral-600">{label}</dt>
+															<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
+																{properties.map((property) => {
+																	return (
+																		<Link
+																			key={property.concept.code}
+																			className="transition hover:text-brand-600"
+																			href={createHref({
+																				pathname: "/search",
+																				searchParams: createUrlSearchParams({
+																					[`f.${id}`]: [property.concept.label],
+																				}),
+																			})}
+																		>
+																			{property.concept.label}
+																		</Link>
+																	);
+																})}
+															</dd>
+														</div>
+													);
+												})}
 											</dl>
 
+											{/* TODO: usePlaintext */}
 											<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">
 												{description}
 											</div>
 
 											<Link
+												aria-label={t("read-more-about", { item: label })}
 												className="self-end text-sm text-brand-750 transition hover:text-brand-600"
 												href={createHref({ pathname })}
 											>
@@ -365,39 +387,222 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 
 	const { items } = await searchItems({
 		order: ["modified-on"],
-		perpage: 5,
+		perpage: maxLastAddedItems,
 	});
 
 	return (
-		<section>
+		<section className="flex flex-col gap-y-8 py-16">
 			<SectionTitle>{t("section-last-updated.title")}</SectionTitle>
 
-			<h3>{t("section-last-updated.lead")}</h3>
+			<section>
+				<SubSectionHeader>
+					<SubSectionTitle>{t("section-last-updated.lead")}</SubSectionTitle>
+					<Link
+						aria-label={t("see-all.recent-changes")}
+						className="text-base text-brand-750 transition hover:text-brand-600"
+						href={createHref({
+							pathname: "/search",
+							// FIXME: typecheck
+							searchParams: createUrlSearchParams({
+								order: ["modified-on"],
+							}),
+						})}
+					>
+						{t("see-all.label")}
+					</Link>
+				</SubSectionHeader>
 
-			<ul role="list">
-				{items.map((item) => {
-					const { category, label, persistentId } = item;
+				<ul className="flex flex-col gap-y-16" role="list">
+					{items.map((item) => {
+						// return <li key={persistentId}><ItemPreview item={item} /></li>; // FIXME:
+
+						const { category, description, label, persistentId, properties } = item;
+
+						const pathname = `/${pluralize.categories(category)}/${persistentId}`;
+
+						const activities = properties
+							.filter((property) => {
+								return property.type.code === "activity";
+							})
+							.slice(0, maxItemFacetValues);
+
+						const keywords = properties
+							.filter((property) => {
+								return property.type.code === "keyword";
+							})
+							.slice(0, maxItemFacetValues);
+
+						const metadata = [
+							{ id: "activity", label: t("activities"), properties: activities },
+							{ id: "keyword", label: t("keywords"), properties: keywords },
+						];
+
+						return (
+							<li key={persistentId}>
+								<article className="flex flex-col gap-y-4">
+									<h4 className="inline-flex items-center gap-x-3">
+										<ItemCategoryIcon category={category} className="size-10 shrink-0" />
+										<Link
+											className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
+											href={createHref({ pathname })}
+										>
+											{label}
+										</Link>
+									</h4>
+
+									<dl className="flex flex-col gap-y-1 text-xs">
+										{metadata.map(({ id, label, properties }) => {
+											if (properties.length === 0) {
+												return null;
+											}
+
+											return (
+												<div key={id} className="flex gap-x-2">
+													<dt className="text-neutral-600">{label}</dt>
+													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
+														{properties.map((property) => {
+															return (
+																<Link
+																	key={property.concept.code}
+																	className="transition hover:text-brand-600"
+																	href={createHref({
+																		pathname: "/search",
+																		searchParams: createUrlSearchParams({
+																			[`f.${id}`]: [property.concept.label],
+																		}),
+																	})}
+																>
+																	{property.concept.label}
+																</Link>
+															);
+														})}
+													</dd>
+												</div>
+											);
+										})}
+									</dl>
+
+									{/* TODO: usePlaintext */}
+									<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">
+										{description}
+									</div>
+
+									<Link
+										aria-label={t("read-more-about", { item: label })}
+										className="self-end text-sm text-brand-750 transition hover:text-brand-600"
+										href={createHref({ pathname })}
+									>
+										{t("read-more")}
+									</Link>
+								</article>
+							</li>
+						);
+					})}
+				</ul>
+			</section>
+		</section>
+	);
+}
+
+function LeadLink(chunks: ReactNode): ReactNode {
+	return (
+		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
+			{chunks}
+		</Link>
+	);
+}
+
+interface SectionTitleProps {
+	children: ReactNode;
+}
+
+function SectionTitle(props: SectionTitleProps): ReactNode {
+	const { children } = props;
+
+	return <h2 className="text-[1.625rem] font-medium text-neutral-800">{children}</h2>;
+}
+
+interface SubSectionHeaderProps {
+	children: ReactNode;
+}
+
+function SubSectionHeader(props: SubSectionHeaderProps): ReactNode {
+	const { children } = props;
+
+	return (
+		<div className="flex items-baseline justify-between border-b border-neutral-150 py-4">
+			{children}
+		</div>
+	);
+}
+
+interface SubSectionTitleProps {
+	children: ReactNode;
+}
+
+function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
+	const { children } = props;
+
+	return <h3 className="text-xl font-medium text-neutral-800">{children}</h3>;
+}
+
+function ItemPreview(): ReactNode {
+	const t = useTranslations("IndexPage");
+
+	return (
+		<article className="flex flex-col gap-y-4">
+			<h4 className="inline-flex items-center gap-x-3">
+				<ItemCategoryIcon category={category} className="size-10 shrink-0" />
+				<Link
+					className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
+					href={createHref({ pathname })}
+				>
+					{label}
+				</Link>
+			</h4>
+
+			<dl className="flex flex-col gap-y-1 text-xs">
+				{metadata.map(({ id, label, properties }) => {
+					if (properties.length === 0) {
+						return null;
+					}
 
 					return (
-						<article key={persistentId}>
-							<h4>
-								<Link
-									href={createHref({
-										pathname: `/${pluralize.categories(category)}/${persistentId}`,
-									})}
-								>
-									<ItemCategoryIcon
-										category={category}
-										className="size-6 shrink-0"
-										data-slot="icon"
-									/>
-									{label}
-								</Link>
-							</h4>
-						</article>
+						<div key={id} className="flex gap-x-2">
+							<dt className="text-neutral-600">{label}</dt>
+							<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
+								{properties.map((property) => {
+									return (
+										<Link
+											key={property.concept.code}
+											className="transition hover:text-brand-600"
+											href={createHref({
+												pathname: "/search",
+												searchParams: createUrlSearchParams({
+													[`f.${id}`]: [property.concept.label],
+												}),
+											})}
+										>
+											{property.concept.label}
+										</Link>
+									);
+								})}
+							</dd>
+						</div>
 					);
 				})}
-			</ul>
-		</section>
+			</dl>
+
+			{/* TODO: usePlaintext */}
+			<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">{description}</div>
+
+			<Link
+				aria-label={t("read-more-about", { item: label })}
+				className="self-end text-sm text-brand-750 transition hover:text-brand-600"
+				href={createHref({ pathname })}
+			>
+				{t("read-more")}
+			</Link>
+		</article>
 	);
 }

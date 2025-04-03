@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Image } from "@/components/image";
@@ -34,8 +35,10 @@ interface ItemCategoryIconProps {
 export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
 	const { category, ...rest } = props;
 
+	const t = useTranslations("ItemCategoryIcon");
+
+	const label = t(category);
 	const src = categories[category];
 
-	debugger;
-	return <img alt="" {...rest} src={src.src} />;
+	return <img alt="" aria-label={label} title={label} {...rest} data-slot="icon" src={src.src} />;
 }

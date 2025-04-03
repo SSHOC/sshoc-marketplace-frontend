@@ -34,7 +34,7 @@ async function generate() {
 
 	let contents = astToString(ast);
 
-	/** @see  */
+	/** @see https://github.com/openapi-ts/openapi-typescript/issues/2138 */
 	contents = contents.replace(
 		/ReadonlyArray<(paths.*?\["query"\])/g,
 		"ReadonlyArray<NonNullable<$1>",
