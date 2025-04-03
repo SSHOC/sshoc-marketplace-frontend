@@ -50,7 +50,7 @@ out/
 /test-results/
 
 # generated api client
-/lib/api/sshoc/
+/lib/api/schema.ts
 
 
 ## .dockerignore ##

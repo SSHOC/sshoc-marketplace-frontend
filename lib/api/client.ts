@@ -8,12 +8,7 @@ import {
 } from "@acdh-oeaw/lib";
 
 import { env } from "@/config/env.config";
-import type {
-	SearchItem,
-	SearchItemsData,
-	SearchItemsResponse,
-	UserDto,
-} from "@/lib/api/sshoc/types.gen";
+import { itemBasicDtoCategoryValues, type paths } from "@/lib/api/schema";
 import { redirect } from "@/lib/navigation/navigation";
 import { assertSession, getSession } from "@/lib/server/auth/session";
 import { isUnauthorizedError } from "@/lib/server/errors";
@@ -58,25 +53,13 @@ async function request<TData = unknown, TResponseType extends ResponseType = Res
 }
 
 /**
- * Utilities.
- * ================================================================================================
- */
-
-// type PaginatedResponse<T> = T & {
-// 	hits: number;
-// 	count: number;
-// 	page: number;
-// 	perpage: number;
-// 	pages: number;
-// };
-
-/**
  * Auth.
  * ================================================================================================
  */
 
 declare namespace GetCurrentUser {
-	export type Response = Required<UserDto>;
+	export type Response =
+		paths["/api/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
 }
 
 export async function getCurrentUser(): Promise<GetCurrentUser.Response> {
@@ -97,23 +80,22 @@ export async function getCurrentUser(): Promise<GetCurrentUser.Response> {
  * ================================================================================================
  */
 
-export type ItemCategory = NonNullable<SearchItem["category"]>;
+export const itemCategories = itemBasicDtoCategoryValues;
+export type ItemCategory = (typeof itemCategories)[number];
+
+//
 
 type ItemFacet = "activity" | "source" | "keyword" | "language";
 
-// type ItemStatus = NonNullable<SearchItem["status"]>;
-
-// type ItemSortOrder = NonNullable<NonNullable<SearchItemsData["query"]>["order"]>;
-
 declare namespace SearchItems {
-	export type SearchParams = SearchItemsData["query"] &
+	export type SearchParams = paths["/api/item-search"]["get"]["parameters"]["query"] &
 		Partial<Record<`f.${ItemFacet}`, Array<string>>>;
 
-	export type Response = Required<Omit<SearchItemsResponse, "items">> & {
-		items: Array<Required<SearchItem>>;
-		categories: Record<ItemCategory, { checked: boolean; count: string; label: string }>;
-		facets: Record<ItemFacet, Record<string, { checked: boolean; count: string }>>;
-	};
+	export type Response =
+		paths["/api/item-search"]["get"]["responses"]["200"]["content"]["application/json"] & {
+			categories: Record<ItemCategory, { checked: boolean; count: string; label: string }>;
+			facets: Record<ItemFacet, Record<string, { checked: boolean; count: string }>>;
+		};
 }
 
 export async function searchItems(
@@ -122,7 +104,7 @@ export async function searchItems(
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
 		pathname: "/api/item-search",
-		searchParams: createUrlSearchParams({ ...searchParams }),
+		searchParams: createUrlSearchParams(searchParams),
 	});
 
 	return (await request(url, { responseType: "json" })) as SearchItems.Response;

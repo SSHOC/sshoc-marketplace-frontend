@@ -1,27 +1,42 @@
+import { writeFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { createUrl, log } from "@acdh-oeaw/lib";
-import { createClient } from "@hey-api/openapi-ts";
+import openapiTS, { astToString } from "openapi-typescript";
+import * as ts from "typescript";
 
 import { env } from "@/config/env.config";
 
+const BLOB = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Blob")); // `Blob`
+const NULL = ts.factory.createLiteralTypeNode(ts.factory.createNull()); // `null`
+
 async function generate() {
-	await createClient({
-		input: {
-			path: String(createUrl({ baseUrl: env.NEXT_PUBLIC_API_BASE_URL, pathname: "/v3/api-docs" })),
-			exclude: "^#/paths/api/oai-pmh/.+$",
+	const url = createUrl({ baseUrl: env.NEXT_PUBLIC_API_BASE_URL, pathname: "/v3/api-docs" });
+
+	const ast = await openapiTS(url, {
+		alphabetize: true,
+		arrayLength: true,
+		defaultNonNullable: true,
+		propertiesRequiredByDefault: true,
+		enumValues: true,
+		exportType: false,
+		immutable: false,
+		pathParamsAsTypes: false, // TODO: try enabling
+		rootTypes: false,
+		transform(schemaObject, _metadata) {
+			if (schemaObject.format === "binary") {
+				return schemaObject.nullable ? ts.factory.createUnionTypeNode([BLOB, NULL]) : BLOB;
+			}
+
+			return undefined;
 		},
-		output: {
-			format: "prettier",
-			lint: false,
-			path: "./lib/api/sshoc",
-		},
-		plugins: [
-			{
-				name: "@hey-api/client-fetch",
-				baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-				throwOnError: true,
-			},
-		],
 	});
+
+	const contents = astToString(ast);
+
+	const outputFilePath = join(process.cwd(), "lib", "api", "schema.ts");
+
+	await writeFile(outputFilePath, contents, { encoding: "utf-8" });
 }
 
 generate()
