@@ -2,7 +2,7 @@
 
 import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
 import { useTranslations } from "next-intl";
-import { type ReactNode, startTransition, useOptimistic } from "react";
+import { type ReactNode, startTransition, useOptimistic, useRef } from "react";
 import useQuery from "swr";
 
 import type { SearchParamsSchema } from "@/app/(app)/(default)/(index)/_lib/validation";
@@ -49,8 +49,11 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 		return request(url, { responseType: "json" }) as Promise<AutocompleteItems.Response>;
 	});
 
+	const formRef = useRef<HTMLFormElement | null>(null);
+
 	return (
 		<SearchForm
+			ref={formRef}
 			action="/search"
 			className="flex items-end gap-1.5 rounded-md border border-neutral-150 bg-neutral-0 p-2.5 shadow sm:px-8"
 		>
@@ -112,6 +115,9 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 						setOptimisticSearchParams(searchParams);
 						router.push(`?${createUrlSearchParams(searchParams)}`);
 					});
+				}}
+				onSelectionChange={() => {
+					formRef.current?.requestSubmit();
 				}}
 			>
 				<Label className="sr-only">{t("search-form.search-input.label")}</Label>
