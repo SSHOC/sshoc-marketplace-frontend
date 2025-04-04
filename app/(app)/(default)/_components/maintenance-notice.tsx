@@ -11,17 +11,19 @@ export function MaintenanceNotice(): ReactNode {
 	const t = useTranslations("MaintenanceNotice");
 
 	return (
-		<section className="max-w-[64rem] gap-6 border-t border-neutral-150 py-24">
-			<h2 className="sr-only">{t("title")}</h2>
+		<section className="flex max-w-[42rem] flex-col gap-6 border-t border-neutral-150 py-24">
+			<div className="flex items-start gap-x-6">
+				<h2 className="sr-only">{t("title")}</h2>
 
-			<Image alt="" className="w-10" src={eu} />
+				<Image alt="" className="mt-1 w-10 shrink-0" src={eu} />
 
-			<p className="text-xs leading-[1.75] text-neutral-600">{t("message")}</p>
+				<p className="text-xs leading-[1.75] text-neutral-600">{t("message")}</p>
+			</div>
 
-			<div className="flex gap-x-2">
-				<Image alt="" className="w-20" src={cessda} />
-				<Image alt="" className="w-20" src={clarin} />
-				<Image alt="" className="w-20" src={dariah} />
+			<div className="flex items-center gap-x-2">
+				<Image alt="" className="w-20 shrink-0" src={cessda} />
+				<Image alt="" className="w-20 shrink-0" src={clarin} />
+				<Image alt="" className="w-20 shrink-0" src={dariah} />
 			</div>
 		</section>
 	);

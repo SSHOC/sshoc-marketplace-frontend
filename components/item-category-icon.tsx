@@ -1,5 +1,4 @@
 import type { StaticImageData } from "next/image";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Image } from "@/components/image";
@@ -30,15 +29,13 @@ const categories: Record<ItemCategory, StaticImageData> = {
 interface ItemCategoryIconProps {
 	category: ItemCategory;
 	className?: string;
+	title?: string; // FIXME: should be Tooltip
 }
 
 export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
 	const { category, ...rest } = props;
 
-	const t = useTranslations("ItemCategoryIcon");
-
-	const label = t(category);
 	const src = categories[category];
 
-	return <img alt="" aria-label={label} title={label} {...rest} data-slot="icon" src={src.src} />;
+	return <Image alt="" {...rest} data-slot="icon" src={src} />;
 }

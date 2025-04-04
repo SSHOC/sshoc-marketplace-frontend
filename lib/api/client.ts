@@ -61,7 +61,7 @@ async function request<TData = unknown, TResponseType extends ResponseType = Res
  * ================================================================================================
  */
 
-declare namespace GetCurrentUser {
+export declare namespace GetCurrentUser {
 	export type Response =
 		paths["/api/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
 }
@@ -127,7 +127,7 @@ export const pluralize = {
  * ================================================================================================
  */
 
-declare namespace SearchItems {
+export declare namespace SearchItems {
 	export type SearchParams = paths["/api/item-search"]["get"]["parameters"]["query"] &
 		Partial<Record<`f.${ItemFacet}`, Array<string>>>;
 
@@ -151,5 +151,26 @@ export async function searchItems(
 }
 
 export const searchItemsOrders = pathsApiItemSearchGetParametersQueryOrderValues;
+
+//
+
+export declare namespace AutocompleteItems {
+	export type SearchParams = paths["/api/item-search/autocomplete"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/item-search/autocomplete"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function autocompleteItems(
+	searchParams: AutocompleteItems.SearchParams,
+): Promise<AutocompleteItems.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: "/api/item-search/autocomplete",
+		searchParams: createUrlSearchParams(searchParams),
+	});
+
+	return (await request(url, { responseType: "json" })) as AutocompleteItems.Response;
+}
 
 //

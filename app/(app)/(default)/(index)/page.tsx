@@ -5,32 +5,37 @@ import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 
 import { MaintenanceNotice } from "@/app/(app)/(default)/_components/maintenance-notice";
+import { ItemSearchForm } from "@/app/(app)/(default)/(index)/_components/item-search-form";
+import {
+	maxBrowseFacetValues,
+	maxItemFacetValues,
+	maxLastAddedItems,
+	numRecommendedItems,
+} from "@/app/(app)/(default)/(index)/_lib/config";
+import {
+	type SearchParamsInputSchema,
+	validateSearchParams,
+} from "@/app/(app)/(default)/(index)/_lib/validation";
+import type { SearchParamsInputSchema as SearchPageSearchParamsInputSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ItemCategoryIcon } from "@/components/item-category-icon";
 import { Link } from "@/components/link";
-import { SearchForm } from "@/components/search-form";
 import { ServerImage as Image } from "@/components/server-image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ListBox, ListBoxItem } from "@/components/ui/listbox";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
 import { MainContent } from "@/components/ui/main-content";
-import { Popover } from "@/components/ui/popover";
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TextInput } from "@/components/ui/text-input";
-import { type ItemCategory, type ItemFacet, pluralize, searchItems } from "@/lib/api/client";
+import {
+	type ItemCategory,
+	type ItemFacet,
+	pluralize,
+	type SearchItems,
+	searchItems,
+} from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import bg from "@/public/assets/images/backgrounds/home@2x.png";
 import people from "@/public/assets/images/backgrounds/home-people.svg";
 
-const maxBrowseFacetValues = 20;
-const maxItemFacetValues = 5;
-const maxLastAddedItems = 5;
-const numRecommendedItems = 2;
-
-// TODO: sync search form to url search params
-
-interface IndexPageProps {}
+interface IndexPageProps {
+	searchParams: Promise<SearchParams>;
+}
 
 export async function generateMetadata(
 	_props: Readonly<IndexPageProps>,
@@ -50,15 +55,19 @@ export async function generateMetadata(
 	return metadata;
 }
 
-export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
+export default async function IndexPage(props: Readonly<IndexPageProps>): Promise<ReactNode> {
+	const { searchParams } = props;
+
+	const validatedSearchParams = await validateSearchParams(await searchParams);
+
 	return (
 		<MainContent className="relative isolate mx-auto flex w-full max-w-[120rem] flex-col px-8">
-			<HeroSection />
+			<HeroSection searchParams={validatedSearchParams} />
 
 			<div className="mx-auto w-full max-w-[100rem]">
 				<Suspense
 					fallback={
-						<div className="grid flex-1 place-content-center">
+						<div className="grid flex-1 place-content-center py-16 text-neutral-700">
 							<LoadingIndicator />
 						</div>
 					}
@@ -74,16 +83,40 @@ export default function IndexPage(_props: Readonly<IndexPageProps>): ReactNode {
 	);
 }
 
-function HeroSection(): ReactNode {
+interface HeroSectionProps {
+	searchParams: SearchParamsInputSchema;
+}
+
+function HeroSection(props: HeroSectionProps): ReactNode {
+	const { searchParams } = props;
+
 	const t = useTranslations("IndexPage");
 
 	const categories = {
-		all: { id: "all", label: "All categories" },
-		"tools-services": { id: "tool-or-service", label: "Tools & services" },
-		"training-materials": { id: "training-material", label: "Training materials" },
-		datasets: { id: "dataset", label: "Datasets" },
-		publications: { id: "publication", label: "Publications" },
-		workflows: { id: "workflow", label: "Workflows" },
+		all: {
+			id: "all",
+			label: t("search-form.categories.all"),
+		},
+		"tools-services": {
+			id: "tool-or-service",
+			label: t("search-form.categories.tool-or-service"),
+		},
+		"training-materials": {
+			id: "training-material",
+			label: t("search-form.categories.training-material"),
+		},
+		datasets: {
+			id: "dataset",
+			label: t("search-form.categories.dataset"),
+		},
+		publications: {
+			id: "publication",
+			label: t("search-form.categories.publication"),
+		},
+		workflows: {
+			id: "workflow",
+			label: t("search-form.categories.workflow"),
+		},
 	} as const;
 
 	return (
@@ -104,48 +137,8 @@ function HeroSection(): ReactNode {
 				<div className="text-base leading-[1.75] text-neutral-800">
 					{t.rich("hero.lead", { link: LeadLink })}
 				</div>
-				<SearchForm
-					action="/search"
-					className="flex items-end gap-1.5 rounded-md border border-neutral-150 bg-neutral-0 p-2.5 shadow sm:px-8"
-				>
-					<Select className="md:min-w-56" defaultSelectedKey="all" name="categories">
-						<Label className="sr-only">{t("search-form.categories.label")}</Label>
-						<SelectTrigger>
-							<SelectValue className="flex items-center gap-x-3" />
-						</SelectTrigger>
-						<Popover>
-							<ListBox>
-								{Object.entries(categories).map(([key, category]) => {
-									return (
-										<ListBoxItem key={key} id={category.id} textValue={category.label}>
-											{category.id !== "all" ? (
-												<ItemCategoryIcon
-													category={category.id}
-													className="size-5 shrink-0"
-													data-slot="icon"
-												/>
-											) : (
-												// FIXME: should not be visible in SelectValue
-												<div className="size-5 shrink-0" />
-											)}
-											{category.label}
-										</ListBoxItem>
-									);
-								})}
-							</ListBox>
-						</Popover>
-					</Select>
 
-					<TextInput className="flex-1" name="q" type="search">
-						<Label className="sr-only">{t("search-form.search-input.label")}</Label>
-						<Input />
-					</TextInput>
-
-					{/* TODO: SubmitButton? */}
-					<Button kind="gradient" type="submit">
-						{t("search-form.submit")}
-					</Button>
-				</SearchForm>
+				<ItemSearchForm categories={categories} searchParams={searchParams} />
 			</section>
 		</div>
 	);
@@ -206,10 +199,9 @@ async function BrowseSection(): Promise<ReactNode> {
 												className="inline-flex gap-x-1 text-regular text-brand-750 transition hover:text-brand-600"
 												href={createHref({
 													pathname: "/search",
-													// FIXME: typecheck
 													searchParams: createUrlSearchParams({
 														[`f.${facet}`]: [id],
-													}),
+													} satisfies SearchPageSearchParamsInputSchema),
 												})}
 											>
 												{id}
@@ -270,11 +262,10 @@ async function RecommendedSection(): Promise<ReactNode> {
 								className="text-base text-brand-750 transition hover:text-brand-600"
 								href={createHref({
 									pathname: "/search",
-									// FIXME: typecheck
 									searchParams: createUrlSearchParams({
 										categories: [id],
-										order: ["label"],
-									}),
+										order: "label",
+									} satisfies SearchPageSearchParamsInputSchema),
 								})}
 							>
 								{t("see-all.label")}
@@ -286,91 +277,9 @@ async function RecommendedSection(): Promise<ReactNode> {
 							role="list"
 						>
 							{items.map((item) => {
-								// return <li key={persistentId}><ItemPreview item={item} /></li>; // FIXME:
-
-								const { category, description, label, persistentId, properties } = item;
-
-								const pathname = `/${pluralize.categories(category)}/${persistentId}`;
-
-								const activities = properties
-									.filter((property) => {
-										return property.type.code === "activity";
-									})
-									.slice(0, maxItemFacetValues);
-
-								const keywords = properties
-									.filter((property) => {
-										return property.type.code === "keyword";
-									})
-									.slice(0, maxItemFacetValues);
-
-								const metadata = [
-									{ id: "activity", label: t("activities"), properties: activities },
-									{ id: "keyword", label: t("keywords"), properties: keywords },
-								];
-
 								return (
-									<li key={persistentId}>
-										<article className="flex flex-col gap-y-4">
-											<h4 className="inline-flex items-center gap-x-3">
-												<ItemCategoryIcon
-													category={category}
-													className="size-10 shrink-0"
-													data-slot="icon"
-												/>
-												<Link
-													className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
-													href={createHref({ pathname })}
-												>
-													{label}
-												</Link>
-											</h4>
-
-											<dl className="flex flex-col gap-y-1 text-xs">
-												{metadata.map(({ id, label, properties }) => {
-													if (properties.length === 0) {
-														return null;
-													}
-
-													return (
-														<div key={id} className="flex gap-x-2">
-															<dt className="text-neutral-600">{label}</dt>
-															<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
-																{properties.map((property) => {
-																	return (
-																		<Link
-																			key={property.concept.code}
-																			className="transition hover:text-brand-600"
-																			href={createHref({
-																				pathname: "/search",
-																				searchParams: createUrlSearchParams({
-																					[`f.${id}`]: [property.concept.label],
-																				}),
-																			})}
-																		>
-																			{property.concept.label}
-																		</Link>
-																	);
-																})}
-															</dd>
-														</div>
-													);
-												})}
-											</dl>
-
-											{/* TODO: usePlaintext */}
-											<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">
-												{description}
-											</div>
-
-											<Link
-												aria-label={t("read-more-about", { item: label })}
-												className="self-end text-sm text-brand-750 transition hover:text-brand-600"
-												href={createHref({ pathname })}
-											>
-												{t("read-more")}
-											</Link>
-										</article>
+									<li key={item.persistentId}>
+										<ItemPreview item={item} />
 									</li>
 								);
 							})}
@@ -394,7 +303,7 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 		<section className="flex flex-col gap-y-8 py-16">
 			<SectionTitle>{t("section-last-updated.title")}</SectionTitle>
 
-			<section>
+			<section className="flex flex-col gap-y-6">
 				<SubSectionHeader>
 					<SubSectionTitle>{t("section-last-updated.lead")}</SubSectionTitle>
 					<Link
@@ -402,10 +311,9 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 						className="text-base text-brand-750 transition hover:text-brand-600"
 						href={createHref({
 							pathname: "/search",
-							// FIXME: typecheck
 							searchParams: createUrlSearchParams({
-								order: ["modified-on"],
-							}),
+								order: "modified-on",
+							} satisfies SearchPageSearchParamsInputSchema),
 						})}
 					>
 						{t("see-all.label")}
@@ -414,87 +322,9 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 
 				<ul className="flex flex-col gap-y-16" role="list">
 					{items.map((item) => {
-						// return <li key={persistentId}><ItemPreview item={item} /></li>; // FIXME:
-
-						const { category, description, label, persistentId, properties } = item;
-
-						const pathname = `/${pluralize.categories(category)}/${persistentId}`;
-
-						const activities = properties
-							.filter((property) => {
-								return property.type.code === "activity";
-							})
-							.slice(0, maxItemFacetValues);
-
-						const keywords = properties
-							.filter((property) => {
-								return property.type.code === "keyword";
-							})
-							.slice(0, maxItemFacetValues);
-
-						const metadata = [
-							{ id: "activity", label: t("activities"), properties: activities },
-							{ id: "keyword", label: t("keywords"), properties: keywords },
-						];
-
 						return (
-							<li key={persistentId}>
-								<article className="flex flex-col gap-y-4">
-									<h4 className="inline-flex items-center gap-x-3">
-										<ItemCategoryIcon category={category} className="size-10 shrink-0" />
-										<Link
-											className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
-											href={createHref({ pathname })}
-										>
-											{label}
-										</Link>
-									</h4>
-
-									<dl className="flex flex-col gap-y-1 text-xs">
-										{metadata.map(({ id, label, properties }) => {
-											if (properties.length === 0) {
-												return null;
-											}
-
-											return (
-												<div key={id} className="flex gap-x-2">
-													<dt className="text-neutral-600">{label}</dt>
-													<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
-														{properties.map((property) => {
-															return (
-																<Link
-																	key={property.concept.code}
-																	className="transition hover:text-brand-600"
-																	href={createHref({
-																		pathname: "/search",
-																		searchParams: createUrlSearchParams({
-																			[`f.${id}`]: [property.concept.label],
-																		}),
-																	})}
-																>
-																	{property.concept.label}
-																</Link>
-															);
-														})}
-													</dd>
-												</div>
-											);
-										})}
-									</dl>
-
-									{/* TODO: usePlaintext */}
-									<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">
-										{description}
-									</div>
-
-									<Link
-										aria-label={t("read-more-about", { item: label })}
-										className="self-end text-sm text-brand-750 transition hover:text-brand-600"
-										href={createHref({ pathname })}
-									>
-										{t("read-more")}
-									</Link>
-								</article>
+							<li key={item.persistentId}>
+								<ItemPreview item={item} />
 							</li>
 						);
 					})}
@@ -546,13 +376,44 @@ function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
 	return <h3 className="text-xl font-medium text-neutral-800">{children}</h3>;
 }
 
-function ItemPreview(): ReactNode {
+interface ItemPreviewProps {
+	item: SearchItems.Response["items"][number];
+}
+
+function ItemPreview(props: ItemPreviewProps): ReactNode {
+	const { item } = props;
+
 	const t = useTranslations("IndexPage");
+
+	const { category, description, label, persistentId, properties } = item;
+
+	const pathname = `/${pluralize.categories(category)}/${persistentId}`;
+
+	const activities = properties
+		.filter((property) => {
+			return property.type.code === "activity";
+		})
+		.slice(0, maxItemFacetValues);
+
+	const keywords = properties
+		.filter((property) => {
+			return property.type.code === "keyword";
+		})
+		.slice(0, maxItemFacetValues);
+
+	const metadata = [
+		{ id: "activity", label: t("facets.activities"), properties: activities },
+		{ id: "keyword", label: t("facets.keywords"), properties: keywords },
+	];
 
 	return (
 		<article className="flex flex-col gap-y-4">
 			<h4 className="inline-flex items-center gap-x-3">
-				<ItemCategoryIcon category={category} className="size-10 shrink-0" />
+				<ItemCategoryIcon
+					category={category}
+					className="size-10 shrink-0"
+					title={t(`categories.${category}`)}
+				/>
 				<Link
 					className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
 					href={createHref({ pathname })}
@@ -580,7 +441,7 @@ function ItemPreview(): ReactNode {
 												pathname: "/search",
 												searchParams: createUrlSearchParams({
 													[`f.${id}`]: [property.concept.label],
-												}),
+												} satisfies SearchPageSearchParamsInputSchema),
 											})}
 										>
 											{property.concept.label}

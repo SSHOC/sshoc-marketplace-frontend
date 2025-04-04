@@ -76,7 +76,14 @@
 		},
 		"search-form": {
 			"categories": {
-				"label": "Categories"
+				"label": "Categories",
+				"all": "All categories",
+				"dataset": "Datasets",
+				"publication": "Publications",
+				"step": "Workflow steps",
+				"tool-or-service": "Tools and services",
+				"training-material": "Training materials",
+				"workflow": "Workflows"
 			},
 			"search-input": {
 				"label": "Search"
@@ -100,8 +107,20 @@
 			"title": "Last updated",
 			"lead": "See what's new"
 		},
-		"activities": "Activities",
-		"keywords": "Keywords",
+		"categories": {
+			"dataset": "Dataset",
+			"publication": "Publication",
+			"step": "Workflow step",
+			"tool-or-service": "Tool or service",
+			"training-material": "Training material",
+			"workflow": "Workflow"
+		},
+		"facets": {
+			"activities": "Activities",
+			"keywords": "Keywords",
+			"language": "Languages",
+			"source": "Sources"
+		},
 		"read-more": "Read more",
 		"read-more-about": "Read more about \"{item}\"",
 		"see-all": {
@@ -118,14 +137,6 @@
 			"training-material": "See all training materials",
 			"workflow": "See all workflows"
 		}
-	},
-	"ItemCategoryIcon": {
-		"dataset": "Dataset",
-		"publication": "Publication",
-		"step": "Workflow step",
-		"tool-or-service": "Tool or service",
-		"training-material": "Training material",
-		"workflow": "Workflow"
 	},
 	"MaintenanceNotice": {
 		"message": "The SSH Open Marketplace is maintained and will be further developed by three European Research Infrastructures - DARIAH, CLARIN and CESSDA - and their national partners. It was developed as part of the \"Social Sciences and Humanities Open Cloud\" SSHOC project, European Union's Horizon 2020 project call H2020-INFRAEOSC-04-2018, grant agreement #823782.",
