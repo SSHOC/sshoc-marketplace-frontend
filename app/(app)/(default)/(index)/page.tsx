@@ -16,7 +16,7 @@ import {
 	type SearchParamsSchema,
 	validateSearchParams,
 } from "@/app/(app)/(default)/(index)/_lib/validation";
-import type { SearchParamsInputSchema as SearchPageSearchParamsInputSchema } from "@/app/(app)/(default)/search/_lib/validation";
+import type { SearchParamsSchema as SearchPageSearchParamsSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ItemCategoryIcon } from "@/components/item-category-icon";
 import { Link } from "@/components/link";
 import { ServerImage as Image } from "@/components/server-image";
@@ -201,7 +201,7 @@ async function BrowseSection(): Promise<ReactNode> {
 													pathname: "/search",
 													searchParams: createUrlSearchParams({
 														[`f.${facet}`]: [id],
-													} satisfies SearchPageSearchParamsInputSchema),
+													} satisfies Partial<SearchPageSearchParamsSchema>),
 												})}
 											>
 												{id}
@@ -265,7 +265,7 @@ async function RecommendedSection(): Promise<ReactNode> {
 									searchParams: createUrlSearchParams({
 										categories: [id],
 										order: "label",
-									} satisfies SearchPageSearchParamsInputSchema),
+									} satisfies Partial<SearchPageSearchParamsSchema>),
 								})}
 							>
 								{t("see-all.label")}
@@ -313,7 +313,7 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 							pathname: "/search",
 							searchParams: createUrlSearchParams({
 								order: "modified-on",
-							} satisfies SearchPageSearchParamsInputSchema),
+							} satisfies Partial<SearchPageSearchParamsSchema>),
 						})}
 					>
 						{t("see-all.label")}
@@ -441,7 +441,7 @@ function ItemPreview(props: ItemPreviewProps): ReactNode {
 												pathname: "/search",
 												searchParams: createUrlSearchParams({
 													[`f.${id}`]: [property.concept.label],
-												} satisfies SearchPageSearchParamsInputSchema),
+												} satisfies Partial<SearchPageSearchParamsSchema>),
 											})}
 										>
 											{property.concept.label}

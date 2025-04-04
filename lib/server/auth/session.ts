@@ -77,14 +77,14 @@ export async function assertSession(): Promise<string> {
 	return token;
 }
 
-export async function isAuthenticated(): Promise<boolean> {
+export async function getIsAuthenticated(): Promise<boolean> {
 	const token = await getSession();
 
 	return token != null;
 }
 
-// export async function assertAuthenticated(): Promise<void> {
-// 	const token = await getSession();
+export async function assertIsAuthenticated(): Promise<void> {
+	const token = await getSession();
 
-// 	assert(token != null);
-// }
+	assert(token != null);
+}

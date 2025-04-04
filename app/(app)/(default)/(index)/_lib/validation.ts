@@ -9,8 +9,6 @@ export const searchParamsSchema = v.object({
 
 export type SearchParamsSchema = v.InferOutput<typeof searchParamsSchema>;
 
-export type SearchParamsInputSchema = Partial<v.InferOutput<typeof searchParamsSchema>>;
-
 export async function validateSearchParams(
 	searchParams: SearchParams,
 ): Promise<SearchParamsSchema> {

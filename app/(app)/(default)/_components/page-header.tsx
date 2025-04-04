@@ -14,13 +14,13 @@ import { ButtonNavLink } from "@/components/ui/button";
 import { getCurrentUser, pluralize } from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
-import { isAuthenticated } from "@/lib/server/auth/session";
+import { getIsAuthenticated } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
 export async function PageHeader(): Promise<ReactNode> {
 	const t = await getTranslations("PageHeader");
 
-	const authenticated = await isAuthenticated();
+	const isAuthenticated = await getIsAuthenticated();
 
 	const navigation = {
 		home: {
@@ -336,7 +336,7 @@ export async function PageHeader(): Promise<ReactNode> {
 							>
 								{reportIssueLink.label}
 							</NavLink>
-							{authenticated ? (
+							{isAuthenticated ? (
 								<Suspense
 									fallback={
 										<UserAccountMenu
@@ -372,7 +372,7 @@ export async function PageHeader(): Promise<ReactNode> {
 							drawerOpenLabel={t("navigation.drawer.open")}
 							label={t("navigation.label")}
 							navigation={{
-								...(authenticated
+								...(isAuthenticated
 									? { "user-account": userAccountItems }
 									: { "sign-in": signInLink }),
 								"separator-3": {
@@ -389,7 +389,7 @@ export async function PageHeader(): Promise<ReactNode> {
 				</div>
 			</header>
 
-			{authenticated ? (
+			{isAuthenticated ? (
 				<nav
 					aria-label={t("navigation-create-items.label")}
 					className="isolate -mt-px hidden border-y border-brand-100 bg-brand-25 text-sm text-brand-750 2xl:block"

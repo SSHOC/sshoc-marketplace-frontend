@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { SignInForm } from "@/app/(app)/(default)/auth/sign-in/_components/sign-in-form";
 import { MainContent } from "@/components/ui/main-content";
 import { redirect } from "@/lib/navigation/navigation";
-import { isAuthenticated } from "@/lib/server/auth/session";
+import { getIsAuthenticated } from "@/lib/server/auth/session";
 
 interface SignInPageProps {}
 
@@ -25,9 +25,9 @@ export async function generateMetadata(
 export default async function SignInPage(_props: Readonly<SignInPageProps>): Promise<ReactNode> {
 	const t = await getTranslations("SignInPage");
 
-	const authenticated = await isAuthenticated();
+	const isAuthenticated = await getIsAuthenticated();
 
-	if (authenticated) {
+	if (isAuthenticated) {
 		redirect("/");
 	}
 
