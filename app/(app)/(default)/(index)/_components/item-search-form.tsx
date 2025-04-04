@@ -16,7 +16,7 @@ import { ListBox, ListBoxItem } from "@/components/ui/listbox";
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { env } from "@/config/env.config";
-import { type AutocompleteItems, autocompleteItems, type ItemCategory } from "@/lib/api/client";
+import type { AutocompleteItems, ItemCategory } from "@/lib/api/client";
 import { useRouter } from "@/lib/navigation/navigation";
 
 interface ItemSearchFormProps {
@@ -37,6 +37,10 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 			optimisticSearchParams.categories !== "all" ? optimisticSearchParams.categories : undefined;
 		const q = optimisticSearchParams.q;
 		const searchParams = { category, q };
+
+		if (q.length === 0) {
+			return { suggestions: [] };
+		}
 
 		// return autocompleteItems(searchParams);
 
@@ -117,14 +121,18 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 					});
 				}}
 				onSelectionChange={() => {
-					formRef.current?.requestSubmit();
+					startTransition(() => {
+						requestAnimationFrame(() => {
+							formRef.current?.requestSubmit();
+						});
+					});
 				}}
 			>
 				<Label className="sr-only">{t("search-form.search-input.label")}</Label>
 				<ComboBoxTrigger>
 					<Input type="search" />
 				</ComboBoxTrigger>
-				<Popover>
+				<Popover className="w-(--trigger-width)">
 					<ListBox>
 						{data?.suggestions.map((item) => {
 							return (

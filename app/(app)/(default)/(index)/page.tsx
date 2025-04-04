@@ -13,7 +13,7 @@ import {
 	numRecommendedItems,
 } from "@/app/(app)/(default)/(index)/_lib/config";
 import {
-	type SearchParamsInputSchema,
+	type SearchParamsSchema,
 	validateSearchParams,
 } from "@/app/(app)/(default)/(index)/_lib/validation";
 import type { SearchParamsInputSchema as SearchPageSearchParamsInputSchema } from "@/app/(app)/(default)/search/_lib/validation";
@@ -84,7 +84,7 @@ export default async function IndexPage(props: Readonly<IndexPageProps>): Promis
 }
 
 interface HeroSectionProps {
-	searchParams: SearchParamsInputSchema;
+	searchParams: SearchParamsSchema;
 }
 
 function HeroSection(props: HeroSectionProps): ReactNode {
