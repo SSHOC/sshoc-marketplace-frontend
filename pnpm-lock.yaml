@@ -85,6 +85,9 @@ importers:
       lucide-react:
         specifier: ^0.484.0
         version: 0.484.0(react@19.1.0)
+      mdast-util-to-markdown:
+        specifier: ^2.1.2
+        version: 2.1.2
       next:
         specifier: canary
         version: 15.3.0-canary.33(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -124,6 +127,9 @@ importers:
       remark-mdx-frontmatter:
         specifier: ^5.1.0
         version: 5.1.0
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
       remark-smartypants:
         specifier: ^3.0.2
         version: 3.0.2
@@ -136,9 +142,15 @@ importers:
       shiki:
         specifier: ^3.2.1
         version: 3.2.1
+      strip-markdown:
+        specifier: ^6.0.0
+        version: 6.0.0
       swr:
         specifier: ^2.3.3
         version: 2.3.3(react@19.1.0)
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
       valibot:
         specifier: ^1.0.0
         version: 1.0.0(typescript@5.8.2)
@@ -188,6 +200,9 @@ importers:
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
@@ -5390,6 +5405,9 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  strip-markdown@6.0.0:
+    resolution: {integrity: sha512-mSa8FtUoX3ExJYDkjPUTC14xaBAn4Ik5GPQD45G5E2egAmeV3kHgVSTfIoSDggbF6Pk9stahVgqsLCNExv6jHw==}
 
   style-to-js@1.1.16:
     resolution: {integrity: sha512-/Q6ld50hKYPH3d/r6nr117TZkHR0w0kGGIVfpG9N6D8NymRPM9RqCUv4pRpJ62E5DqOYx2AFpbZMyCPnjQCnOw==}
@@ -12620,6 +12638,10 @@ snapshots:
   strip-final-newline@3.0.0: {}
 
   strip-json-comments@3.1.1: {}
+
+  strip-markdown@6.0.0:
+    dependencies:
+      '@types/mdast': 4.0.4
 
   style-to-js@1.1.16:
     dependencies:

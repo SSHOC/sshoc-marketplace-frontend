@@ -22,6 +22,7 @@ import { Link } from "@/components/link";
 import { ServerImage as Image } from "@/components/server-image";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
 import { MainContent } from "@/components/ui/main-content";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import {
 	type ItemCategory,
 	type ItemFacet,
@@ -29,6 +30,7 @@ import {
 	type SearchItems,
 	searchItems,
 } from "@/lib/api/client";
+import { toPlaintext } from "@/lib/markdown/to-plaintext";
 import { createHref } from "@/lib/navigation/create-href";
 import bg from "@/public/assets/images/backgrounds/home@2x.png";
 import people from "@/public/assets/images/backgrounds/home-people.svg";
@@ -380,12 +382,13 @@ interface ItemPreviewProps {
 	item: SearchItems.Response["items"][number];
 }
 
-function ItemPreview(props: ItemPreviewProps): ReactNode {
+async function ItemPreview(props: ItemPreviewProps): Promise<ReactNode> {
 	const { item } = props;
 
-	const t = useTranslations("IndexPage");
+	const t = await getTranslations("IndexPage");
 
-	const { category, description, label, persistentId, properties } = item;
+	const { category, description: _description, label, persistentId, properties } = item;
+	const description = await toPlaintext(_description);
 
 	const pathname = `/${pluralize.categories(category)}/${persistentId}`;
 
@@ -408,18 +411,18 @@ function ItemPreview(props: ItemPreviewProps): ReactNode {
 
 	return (
 		<article className="flex flex-col gap-y-4">
-			<h4 className="inline-flex items-center gap-x-3">
-				<ItemCategoryIcon
-					category={category}
-					className="size-10 shrink-0"
-					title={t(`categories.${category}`)}
-				/>
-				<Link
-					className="text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
-					href={createHref({ pathname })}
-				>
-					{label}
-				</Link>
+			<h4>
+				<TooltipTrigger>
+					<Link
+						className="inline-flex items-center gap-x-3 text-[1.0625rem] font-medium text-neutral-800 transition hover:text-brand-750"
+						href={createHref({ pathname })}
+					>
+						<ItemCategoryIcon category={category} className="size-10 shrink-0" />
+
+						{label}
+					</Link>
+					<Tooltip>{t(`categories.${category}`)}</Tooltip>
+				</TooltipTrigger>
 			</h4>
 
 			<dl className="flex flex-col gap-y-1 text-xs">
@@ -433,18 +436,26 @@ function ItemPreview(props: ItemPreviewProps): ReactNode {
 							<dt className="text-neutral-600">{label}</dt>
 							<dd className="flex flex-wrap gap-x-1.5 gap-y-1 text-brand-750">
 								{properties.map((property) => {
+									/**
+									 * Both `activity` and `keyword` values should be concepts, i.e. vocabulary-based,
+									 * but they are not in the backend's initial development data.
+									 */
+									const isConcept = property.type.type === "concept";
+									const label = isConcept ? property.concept.label : property.value;
+									const id = isConcept ? property.concept.code : property.value;
+
 									return (
 										<Link
-											key={property.concept.code}
+											key={id}
 											className="transition hover:text-brand-600"
 											href={createHref({
 												pathname: "/search",
 												searchParams: createUrlSearchParams({
-													[`f.${id}`]: [property.concept.label],
+													[`f.${id}`]: [label],
 												} satisfies Partial<SearchPageSearchParamsSchema>),
 											})}
 										>
-											{property.concept.label}
+											{label}
 										</Link>
 									);
 								})}
@@ -454,7 +465,6 @@ function ItemPreview(props: ItemPreviewProps): ReactNode {
 				})}
 			</dl>
 
-			{/* TODO: usePlaintext */}
 			<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">{description}</div>
 
 			<Link

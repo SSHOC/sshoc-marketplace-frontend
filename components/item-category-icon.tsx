@@ -29,7 +29,6 @@ const categories: Record<ItemCategory, StaticImageData> = {
 interface ItemCategoryIconProps {
 	category: ItemCategory;
 	className?: string;
-	title?: string; // FIXME: should be Tooltip
 }
 
 export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
