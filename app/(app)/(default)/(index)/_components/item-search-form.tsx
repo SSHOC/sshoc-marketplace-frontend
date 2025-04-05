@@ -32,6 +32,13 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const router = useRouter();
 	const [optimisticSearchParams, setOptimisticSearchParams] = useOptimistic(searchParams);
 
+	function updateSearchParams(searchParams: SearchParamsSchema) {
+		startTransition(() => {
+			setOptimisticSearchParams(searchParams);
+			router.push(`?${createUrlSearchParams(searchParams)}`);
+		});
+	}
+
 	const { data } = useQuery(["autocomplete-items", optimisticSearchParams], async () => {
 		const category =
 			optimisticSearchParams.categories !== "all" ? optimisticSearchParams.categories : undefined;
@@ -65,14 +72,9 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 				className="md:min-w-58"
 				name="categories"
 				onSelectionChange={(value) => {
-					startTransition(() => {
-						const searchParams: SearchParamsSchema = {
-							...optimisticSearchParams,
-							categories: value as SearchParamsSchema["categories"],
-						};
-
-						setOptimisticSearchParams(searchParams);
-						router.push(`?${createUrlSearchParams(searchParams)}`);
+					updateSearchParams({
+						...optimisticSearchParams,
+						categories: value as SearchParamsSchema["categories"],
 					});
 				}}
 				selectedKey={optimisticSearchParams.categories}
@@ -110,14 +112,9 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 				inputValue={optimisticSearchParams.q}
 				name="q"
 				onInputChange={(value) => {
-					startTransition(() => {
-						const searchParams: SearchParamsSchema = {
-							...optimisticSearchParams,
-							q: value,
-						};
-
-						setOptimisticSearchParams(searchParams);
-						router.push(`?${createUrlSearchParams(searchParams)}`);
+					updateSearchParams({
+						...optimisticSearchParams,
+						q: value,
 					});
 				}}
 				onSelectionChange={() => {
