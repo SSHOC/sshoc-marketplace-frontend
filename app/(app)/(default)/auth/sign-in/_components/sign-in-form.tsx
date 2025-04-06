@@ -100,6 +100,6 @@ export function SignInForm(): ReactNode {
 	);
 }
 
-function AccountName(chunks: ReactNode): ReactNode {
+function AccountName(chunks: Readonly<ReactNode>): ReactNode {
 	return <em className="font-medium not-italic">{chunks}</em>;
 }

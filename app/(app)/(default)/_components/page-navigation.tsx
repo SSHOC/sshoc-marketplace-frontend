@@ -94,9 +94,13 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 							return (
 								<li key={id}>
 									<MenuTrigger>
-										<Button className="flex items-center gap-x-2 rounded-t-sm p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0">
+										<Button className="group flex items-center gap-x-2 rounded-t-sm p-6 text-center text-sm text-brand-700 transition hover:bg-neutral-50 hover:text-brand-600 pressed:bg-brand-600 pressed:text-neutral-0">
 											{item.label}
-											<ChevronDownIcon aria-hidden={true} className="-mr-1 size-4 shrink-0" />
+											<ChevronDownIcon
+												aria-hidden={true}
+												className="-mr-1 size-4 shrink-0 transition group-aria-expanded:rotate-x-180"
+												data-slot="icon"
+											/>
 										</Button>
 										<Popover
 											className="min-w-(--trigger-width) rounded-sm border border-neutral-150 bg-neutral-0 shadow entering:animate-popover-bottom-in exiting:animate-popover-bottom-out"
@@ -303,7 +307,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 																			{item.label}
 																			<ChevronDownIcon
 																				aria-hidden={true}
-																				className="size-4 shrink-0 transition group-expanded:rotate-180"
+																				className="size-4 shrink-0 transition group-expanded:rotate-x-180"
 																				data-slot="icon"
 																			/>
 																		</Button>

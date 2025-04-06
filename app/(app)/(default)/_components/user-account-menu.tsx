@@ -15,7 +15,7 @@ interface UserAccountMenuProps {
 	label: string;
 }
 
-export function UserAccountMenu(props: UserAccountMenuProps): ReactNode {
+export function UserAccountMenu(props: Readonly<UserAccountMenuProps>): ReactNode {
 	const { items, label } = props;
 
 	const pathname = usePathname();

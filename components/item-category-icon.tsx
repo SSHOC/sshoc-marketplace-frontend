@@ -31,7 +31,7 @@ interface ItemCategoryIconProps {
 	className?: string;
 }
 
-export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
+export function ItemCategoryIcon(props: Readonly<ItemCategoryIconProps>): ReactNode {
 	const { category, ...rest } = props;
 
 	const src = categories[category];

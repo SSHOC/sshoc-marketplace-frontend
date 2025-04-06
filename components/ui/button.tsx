@@ -64,7 +64,9 @@ export function Button(props: Readonly<ButtonProps>): ReactNode {
 
 				return (
 					<Fragment>
-						{isPending ? <LoadingIndicator aria-hidden={true} data-slot="icon" /> : null}
+						{isPending ? (
+							<LoadingIndicator aria-hidden={true} data-slot="icon" delay="none" />
+						) : null}
 						{children}
 					</Fragment>
 				);
@@ -75,7 +77,7 @@ export function Button(props: Readonly<ButtonProps>): ReactNode {
 
 interface ButtonLinkProps extends ComponentPropsWithRef<typeof Link>, ButtonStyleProps {}
 
-export function ButtonLink(props: ButtonLinkProps): ReactNode {
+export function ButtonLink(props: Readonly<ButtonLinkProps>): ReactNode {
 	const { children, className, kind, size, variant, ...rest } = props;
 
 	return (
@@ -92,7 +94,7 @@ export function ButtonLink(props: ButtonLinkProps): ReactNode {
 
 interface ButtonNavLinkProps extends ComponentPropsWithRef<typeof NavLink>, ButtonStyleProps {}
 
-export function ButtonNavLink(props: ButtonNavLinkProps): ReactNode {
+export function ButtonNavLink(props: Readonly<ButtonNavLinkProps>): ReactNode {
 	const { children, className, kind, size, variant, ...rest } = props;
 
 	return (

@@ -70,7 +70,7 @@ export function SignUpForm(props: Readonly<SignUpFormProps>): ReactNode {
 	);
 }
 
-function PrivacyPolicyLink(chunks: ReactNode): ReactNode {
+function PrivacyPolicyLink(chunks: Readonly<ReactNode>): ReactNode {
 	return (
 		<Link
 			className="underline hover:no-underline"
