@@ -24,7 +24,7 @@ interface ItemSearchFormProps {
 	searchParams: SearchParamsSchema;
 }
 
-export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
+export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode {
 	const { categories, searchParams } = props;
 
 	const t = useTranslations("IndexPage"); // FIXME:

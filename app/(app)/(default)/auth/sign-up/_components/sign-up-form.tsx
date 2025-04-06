@@ -21,7 +21,7 @@ interface SignUpFormProps {
 	id: number;
 }
 
-export function SignUpForm(props: SignUpFormProps): ReactNode {
+export function SignUpForm(props: Readonly<SignUpFormProps>): ReactNode {
 	const { displayName, email, id } = props;
 
 	const t = useTranslations("SignUpForm");

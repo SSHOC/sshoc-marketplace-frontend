@@ -89,7 +89,7 @@ interface HeroSectionProps {
 	searchParams: SearchParamsSchema;
 }
 
-function HeroSection(props: HeroSectionProps): ReactNode {
+function HeroSection(props: Readonly<HeroSectionProps>): ReactNode {
 	const { searchParams } = props;
 
 	const t = useTranslations("IndexPage");
@@ -336,7 +336,7 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 	);
 }
 
-function LeadLink(chunks: ReactNode): ReactNode {
+function LeadLink(chunks: Readonly<ReactNode>): ReactNode {
 	return (
 		<Link className="text-brand-750 transition hover:text-brand-600" href="/about/service">
 			{chunks}
@@ -348,7 +348,7 @@ interface SectionTitleProps {
 	children: ReactNode;
 }
 
-function SectionTitle(props: SectionTitleProps): ReactNode {
+function SectionTitle(props: Readonly<SectionTitleProps>): ReactNode {
 	const { children } = props;
 
 	return <h2 className="text-[1.625rem] font-medium text-neutral-800">{children}</h2>;
@@ -358,7 +358,7 @@ interface SubSectionHeaderProps {
 	children: ReactNode;
 }
 
-function SubSectionHeader(props: SubSectionHeaderProps): ReactNode {
+function SubSectionHeader(props: Readonly<SubSectionHeaderProps>): ReactNode {
 	const { children } = props;
 
 	return (
@@ -372,7 +372,7 @@ interface SubSectionTitleProps {
 	children: ReactNode;
 }
 
-function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
+function SubSectionTitle(props: Readonly<SubSectionTitleProps>): ReactNode {
 	const { children } = props;
 
 	return <h3 className="text-xl font-medium text-neutral-800">{children}</h3>;
@@ -382,7 +382,7 @@ interface ItemPreviewProps {
 	item: SearchItems.Response["items"][number];
 }
 
-async function ItemPreview(props: ItemPreviewProps): Promise<ReactNode> {
+async function ItemPreview(props: Readonly<ItemPreviewProps>): Promise<ReactNode> {
 	const { item } = props;
 
 	const t = await getTranslations("IndexPage");

@@ -23,7 +23,7 @@ export async function generateMetadata(
 	return metadata;
 }
 
-export default function CallbackErrorPage(_props: CallbackErrorPageProps): ReactNode {
+export default function CallbackErrorPage(_props: Readonly<CallbackErrorPageProps>): ReactNode {
 	const t = useTranslations("CallbackErrorPage");
 
 	return (

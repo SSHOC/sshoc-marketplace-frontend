@@ -21,7 +21,9 @@ export async function generateMetadata(
 	return metadata;
 }
 
-export default function CallbackRegistrationPage(_props: CallbackRegistrationPageProps): ReactNode {
+export default function CallbackRegistrationPage(
+	_props: Readonly<CallbackRegistrationPageProps>,
+): ReactNode {
 	return (
 		<MainContent className="grid place-content-center place-items-center">
 			<LoadingIndicator />
