@@ -19,7 +19,7 @@ export function CheckBoxGroup(props: Readonly<CheckBoxGroupProps>): ReactNode {
 		<AriaCheckBoxGroup
 			{...rest}
 			className={composeRenderProps(className, (className) => {
-				return cn("grid content-start gap-y-7", className);
+				return cn("grid content-start gap-y-4", className);
 			})}
 			data-slot="fieldset"
 		>
@@ -36,7 +36,7 @@ export function CheckBoxList(props: Readonly<CheckBoxListProps>): ReactNode {
 	const { children, className, ...rest } = props;
 
 	return (
-		<div {...rest} className={cn("grid content-start gap-y-4", className)}>
+		<div {...rest} className={cn("grid content-start gap-y-1", className)}>
 			{children}
 		</div>
 	);

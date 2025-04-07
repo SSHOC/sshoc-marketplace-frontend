@@ -1,8 +1,9 @@
 "use client";
 
 import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
+import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { type ReactNode, startTransition, useOptimistic, useRef } from "react";
+import { type ReactNode, startTransition, useOptimistic, useRef, useState } from "react";
 import useQuery from "swr";
 
 import type { SearchParamsSchema } from "@/app/(app)/(default)/(index)/_lib/validation";
@@ -29,14 +30,18 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 
 	const t = useTranslations("IndexPage"); // FIXME:
 
-	const router = useRouter();
-	const [optimisticSearchParams, setOptimisticSearchParams] = useOptimistic(searchParams);
+	// const router = useRouter();
+	// const [optimisticSearchParams, setOptimisticSearchParams] = useOptimistic(searchParams);
+	const [optimisticSearchParams, setOptimisticSearchParams] = useState(searchParams);
 
 	function updateSearchParams(searchParams: SearchParamsSchema) {
-		startTransition(() => {
-			setOptimisticSearchParams(searchParams);
-			router.push(`?${createUrlSearchParams(searchParams)}`);
-		});
+		setOptimisticSearchParams(searchParams);
+		window.history.pushState(null, "", `?${createUrlSearchParams(searchParams)}`);
+
+		// startTransition(() => {
+		// 	setOptimisticSearchParams(searchParams);
+		// 	router.push(`?${createUrlSearchParams(searchParams)}`);
+		// });
 	}
 
 	const { data } = useQuery(["autocomplete-items", optimisticSearchParams], async () => {
@@ -90,9 +95,9 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 								<ListBoxItem key={key} id={category.id} textValue={category.label}>
 									{category.id !== "all" ? (
 										<ItemCategoryIcon
+											aria-hidden={true}
 											category={category.id}
 											className="size-5 shrink-0"
-											data-slot="icon"
 										/>
 									) : (
 										// FIXME: should not be visible in SelectValue
@@ -127,7 +132,12 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 			>
 				<Label className="sr-only">{t("search-form.search-input.label")}</Label>
 				<ComboBoxTrigger>
-					<Input type="search" />
+					<SearchIcon
+						aria-hidden={true}
+						className="absolute left-4 size-5 shrink-0 text-neutral-700"
+						data-slot="icon"
+					/>
+					<Input className="pl-12" kind="search" type="search" />
 				</ComboBoxTrigger>
 				<Popover className="w-(--trigger-width)">
 					<ListBox>

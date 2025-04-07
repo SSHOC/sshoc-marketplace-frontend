@@ -98,7 +98,7 @@ export function PageNavigation(props: Readonly<PageNavigationProps>): ReactNode 
 											{item.label}
 											<ChevronDownIcon
 												aria-hidden={true}
-												className="-mr-1 size-4 shrink-0 transition group-aria-expanded:rotate-x-180"
+												className="-mr-1 size-4 shrink-0 transition group-aria-expanded:rotate-180"
 												data-slot="icon"
 											/>
 										</Button>
@@ -307,7 +307,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 																			{item.label}
 																			<ChevronDownIcon
 																				aria-hidden={true}
-																				className="size-4 shrink-0 transition group-expanded:rotate-x-180"
+																				className="size-4 shrink-0 transition group-expanded:rotate-180"
 																				data-slot="icon"
 																			/>
 																		</Button>

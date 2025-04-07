@@ -131,11 +131,13 @@ export declare namespace SearchItems {
 	export type SearchParams = paths["/api/item-search"]["get"]["parameters"]["query"] &
 		Partial<Record<`f.${ItemFacet}`, Array<string>>>;
 
-	export type Response =
-		paths["/api/item-search"]["get"]["responses"]["200"]["content"]["application/json"] & {
-			categories: Record<ItemCategory, { checked: boolean; count: string; label: string }>;
-			facets: Record<ItemFacet, Record<string, { checked: boolean; count: string }>>;
-		};
+	export type Response = Omit<
+		paths["/api/item-search"]["get"]["responses"]["200"]["content"]["application/json"],
+		"categories" | "facets"
+	> & {
+		categories: Record<ItemCategory, { checked: boolean; count: number; label: string }>;
+		facets: Record<ItemFacet, Record<string, { checked: boolean; count: number }>>;
+	};
 }
 
 export async function searchItems(

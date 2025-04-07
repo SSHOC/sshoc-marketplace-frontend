@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@acdh-oeaw/style-variants";
-// import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 import { type ComponentPropsWithRef, Fragment, type ReactNode } from "react";
 import {
 	Collection as AriaCollection,
@@ -29,7 +29,7 @@ export function ListBox<T extends object>(props: Readonly<ListBoxProps<T>>): Rea
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"group text-small text-text-strong grid max-h-[inherit] overflow-auto py-2 outline-hidden",
+					"group grid max-h-[inherit] overflow-auto py-2 text-base text-neutral-800 outline-hidden",
 					className,
 				);
 			})}
@@ -51,24 +51,24 @@ export function ListBoxItem<T extends object>(props: Readonly<ListBoxItemProps<T
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"interactive hover:hover-overlay focus-visible:focus-outline focus-visible:-focus-outline-offset-2 disabled:text-text-disabled *:data-[slot=icon]:text-icon-neutral pressed:press-overlay selected:select-overlay-left selected:bg-fill-brand-weak isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 transition will-change-transform forced-color-adjust-none select-none *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
+					"isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 transition will-change-transform forced-color-adjust-none select-none hover:bg-neutral-50 hover:text-brand-750 focus-visible:bg-neutral-50 focus-visible:text-brand-750 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600 disabled:text-neutral-300 *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-neutral-700 forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] selected:bg-neutral-50 selected:text-brand-750 forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
 					className,
 				);
 			})}
 		>
-			{composeRenderProps(children, (children, _renderProps) => {
-				// const { isSelected } = renderProps;
+			{composeRenderProps(children, (children, renderProps) => {
+				const { isSelected } = renderProps;
 
 				return (
 					<Fragment>
 						{children}
-						{/* {isSelected ? (
+						{isSelected ? (
 							<CheckIcon
 								aria-hidden={true}
-								className="absolute right-4 size-6 h-full shrink-0 text-icon-brand"
-								data-slot="icon"
+								className="absolute right-4 size-5 h-full shrink-0 text-brand-750"
+								// data-slot="icon"
 							/>
-						) : null} */}
+						) : null}
 					</Fragment>
 				);
 			})}

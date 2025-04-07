@@ -10,7 +10,7 @@ import {
 	maxBrowseFacetValues,
 	maxItemFacetValues,
 	maxLastAddedItems,
-	numRecommendedItems,
+	recommendedItemsCount,
 } from "@/app/(app)/(default)/(index)/_lib/config";
 import {
 	type SearchParamsSchema,
@@ -163,7 +163,7 @@ async function BrowseSection(): Promise<ReactNode> {
 	const sections: Array<{
 		id: ItemFacet;
 		title: string;
-		items: Record<string, { checked: boolean; count: string }>;
+		items: Record<string, { checked: boolean; count: number }>;
 	}> = [
 		{ id: "activity", title: t("section-browse.by-activity"), items: activity },
 		{ id: "keyword", title: t("section-browse.by-keyword"), items: keyword },
@@ -237,7 +237,7 @@ async function RecommendedSection(): Promise<ReactNode> {
 				categories: [category.id],
 				"f.keyword": ["recommended"],
 				order: ["modified-on"],
-				perpage: numRecommendedItems,
+				perpage: recommendedItemsCount,
 			});
 
 			return { ...category, items };
