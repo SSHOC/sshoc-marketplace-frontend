@@ -8,7 +8,7 @@ export const collection: CmsCollection = {
   extension: 'page.mdx',
   folder: 'src/pages/about',
   /** Disallow creating new pages to ensure sensible route pathnames. */
-  create: true,
+  create: false,
   delete: false,
   fields: [
     {
