@@ -4,7 +4,7 @@ frontend application for the sshoc open marketplace.
 
 ## prerequisites
 
-- [node.js 16.x](https://nodejs.org/de/download)
+- [node.js 22.x](https://nodejs.org/de/download)
 - [yarn 1.x](https://classic.yarnpkg.com)
 
 ## how to run locally
