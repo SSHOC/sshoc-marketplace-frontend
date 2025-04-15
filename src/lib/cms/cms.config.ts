@@ -35,6 +35,7 @@ export const config: CmsConfig = {
   public_folder: '/assets/cms/images',
   site_url: siteUrl,
   logo_url: logo,
+  publish_mode: "editorial_workflow",
   editor: {
     preview: false,
   },
