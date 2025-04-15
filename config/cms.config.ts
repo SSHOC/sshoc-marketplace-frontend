@@ -15,6 +15,7 @@ export const backend = {
     apiBaseUrl,
     endpoint: '/api/oauth/authorize',
   },
+  squash_merges: true,
 }
 
 export const logo = '/assets/images/logo-with-text.svg'
