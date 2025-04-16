@@ -1,3 +1,4 @@
+import { createUrl } from "@acdh-oeaw/lib";
 import createBundleAnalyzerPlugin from "@next/bundle-analyzer";
 import localesPlugin from "@react-aria/optimize-locales-plugin";
 import { withSentryConfig } from "@sentry/nextjs";
@@ -36,7 +37,7 @@ const config: Config = {
 		return Promise.resolve(headers);
 	},
 	images: {
-		remotePatterns: [{ hostname: new URL(env.NEXT_PUBLIC_API_BASE_URL).hostname }],
+		remotePatterns: [createUrl({ pathname: "/**", baseUrl: env.NEXT_PUBLIC_API_BASE_URL })],
 	},
 	logging: {
 		fetches: {
@@ -134,7 +135,7 @@ const plugins: Array<(config: Config) => Config> = [
 			reactComponentAnnotation: {
 				enabled: true,
 			},
-			silent: !env.CI,
+			silent: env.CI === true,
 			/**
 			 * Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent
 			 * ad-blockers.

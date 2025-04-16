@@ -5,6 +5,8 @@ pnpm-lock.yaml
 # @see https://github.com/prettier/prettier/issues/12209
 *.mdx
 
-# content folder is managed by cms
+# content
 /content
-/public/assets/content
+
+# public assets
+/public

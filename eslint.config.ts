@@ -5,11 +5,10 @@ import playwrightConfig from "@acdh-oeaw/eslint-config-playwright";
 import reactConfig from "@acdh-oeaw/eslint-config-react";
 // import tailwindcssConfig from "@acdh-oeaw/eslint-config-tailwindcss";
 import gitignore from "eslint-config-flat-gitignore";
-// @ts-expect-error Missing type declaration.
 import checkFilePlugin from "eslint-plugin-check-file";
-import type { Config } from "typescript-eslint";
+import { config } from "typescript-eslint";
 
-const config: Config = [
+export default config([
 	gitignore({ strict: false }),
 	...baseConfig,
 	...reactConfig,
@@ -18,7 +17,6 @@ const config: Config = [
 	...playwrightConfig,
 	{
 		plugins: {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			"check-file": checkFilePlugin,
 		},
 		rules: {
@@ -75,7 +73,7 @@ const config: Config = [
 					message: "Please use `@/config/env.config` instead.",
 				},
 			],
-			// "@typescript-eslint/explicit-module-boundary-types": "error",
+			"@typescript-eslint/explicit-module-boundary-types": "error",
 			"@typescript-eslint/require-array-sort-compare": "error",
 			/** Avoid hardcoded, non-translated strings. */
 			"react/jsx-no-literals": [
@@ -106,7 +104,7 @@ const config: Config = [
 					],
 				},
 			],
-			// "@typescript-eslint/strict-boolean-expressions": "error",
+			"@typescript-eslint/strict-boolean-expressions": "error",
 			"react/jsx-sort-props": ["error", { reservedFirst: true }],
 			"react-x/prefer-read-only-props": "error",
 		},
@@ -117,6 +115,4 @@ const config: Config = [
 			...config,
 		};
 	}),
-];
-
-export default config;
+]);

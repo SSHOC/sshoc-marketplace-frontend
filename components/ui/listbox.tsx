@@ -130,7 +130,13 @@ export function ListBoxEmptyState(props: Readonly<ListBoxEmptyStateProps>): Reac
 	const { children, className, ...rest } = props;
 
 	return (
-		<div {...rest} className={cn("text-text-weak text-center", className)}>
+		<div
+			{...rest}
+			className={cn(
+				"text-text-weak relative inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 italic transition will-change-transform forced-color-adjust-none select-none *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-neutral-700",
+				className,
+			)}
+		>
 			{children}
 		</div>
 	);

@@ -86,7 +86,9 @@
 				"workflow": "Workflows"
 			},
 			"search-input": {
-				"label": "Search"
+				"label": "Search",
+				"loading": "Loading...",
+				"nothing-found": "No results found"
 			},
 			"submit": "Search"
 		},

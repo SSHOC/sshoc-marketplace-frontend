@@ -465,7 +465,9 @@ async function ItemPreview(props: Readonly<ItemPreviewProps>): Promise<ReactNode
 				})}
 			</dl>
 
-			<div className="line-clamp-3 text-base leading-[1.75] text-neutral-700">{description}</div>
+			<div className="line-clamp-3 max-w-[56rem] text-base leading-[1.75] text-neutral-700">
+				{description}
+			</div>
 
 			<Link
 				aria-label={t("read-more-about", { item: label })}

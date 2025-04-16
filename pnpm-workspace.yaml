@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - "@sentry/cli"
+  - esbuild
+  - sharp
+  - simple-git-hooks
+
+patchedDependencies:
+  next: "patches/next.patch"
