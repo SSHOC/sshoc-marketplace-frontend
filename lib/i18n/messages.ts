@@ -6,6 +6,7 @@ type Messages = typeof messages;
 type Metadata = typeof metadata;
 type SocialMediaKind = Metadata["social"][number]["kind"];
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getIntlMessages(locale: IntlLocale) {
 	const language = getIntlLanguage(locale);
 

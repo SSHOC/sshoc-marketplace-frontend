@@ -13,7 +13,7 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
 
 	const branch = params.get("branch");
 	const to = params.get("to");
-	if (!branch || !to) {
+	if (branch == null || to == null) {
 		return new NextResponse("Missing `branch` or `to` params", { status: 400 });
 	}
 

@@ -4,7 +4,7 @@ import { OTLPHttpJsonTraceExporter, registerOTel } from "@vercel/otel";
 
 import { env } from "@/config/env.config";
 
-export async function register() {
+export async function register(): Promise<void> {
 	if (env.NEXT_RUNTIME === "nodejs") {
 		await import("@/sentry.server.config");
 	}

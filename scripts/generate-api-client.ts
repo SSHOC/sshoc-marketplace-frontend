@@ -7,8 +7,8 @@ import * as ts from "typescript";
 
 import { env } from "@/config/env.config";
 
-const BLOB = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Blob")); // `Blob`
-const NULL = ts.factory.createLiteralTypeNode(ts.factory.createNull()); // `null`
+const BLOB = ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Blob"));
+const NULL = ts.factory.createLiteralTypeNode(ts.factory.createNull());
 
 async function generate() {
 	const url = createUrl({ baseUrl: env.NEXT_PUBLIC_API_BASE_URL, pathname: "/v3/api-docs" });
@@ -25,7 +25,7 @@ async function generate() {
 		rootTypes: false,
 		transform(schemaObject, _metadata) {
 			if (schemaObject.format === "binary") {
-				return schemaObject.nullable ? ts.factory.createUnionTypeNode([BLOB, NULL]) : BLOB;
+				return schemaObject.nullable === true ? ts.factory.createUnionTypeNode([BLOB, NULL]) : BLOB;
 			}
 
 			return undefined;

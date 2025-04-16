@@ -57,7 +57,7 @@ export async function invalidateSession(): Promise<void> {
 }
 
 export const getSession = cache(async function getSession(): Promise<string | null> {
-	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/strict-boolean-expressions
 	const token = (await cookies()).get(sessionCookieName)?.value || null;
 
 	if (token == null) {

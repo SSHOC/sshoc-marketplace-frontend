@@ -32,7 +32,7 @@ export function Label(props: Readonly<LabelProps>): ReactNode {
 	return (
 		<AriaLabel {...rest} className={labelStyles({ className, kind })} data-slot="label">
 			{children}
-			{status?.isRequired ? <RequiredIndicator /> : null}
+			{status?.isRequired === true ? <RequiredIndicator /> : null}
 		</AriaLabel>
 	);
 }

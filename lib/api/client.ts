@@ -42,7 +42,7 @@ async function request<TData = unknown, TResponseType extends ResponseType = Res
 
 		return await _request<TData, TResponseType>(
 			url,
-			token ? { ...config, headers: { authorization: token } } : config,
+			token != null ? { ...config, headers: { authorization: token } } : config,
 		);
 	} catch (error) {
 		if (isUnauthorizedError(error)) {
@@ -92,6 +92,7 @@ export type ItemFacet = "activity" | "source" | "keyword" | "language";
 
 /** Frontend uses pluralized pathnames. */
 export const pluralize = {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	categories(category: ItemCategory) {
 		switch (category) {
 			case "dataset":
@@ -108,6 +109,7 @@ export const pluralize = {
 				return "workflows";
 		}
 	},
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	facets(facet: ItemFacet) {
 		switch (facet) {
 			case "activity":

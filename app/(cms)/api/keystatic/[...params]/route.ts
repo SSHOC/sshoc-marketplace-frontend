@@ -5,10 +5,10 @@ import { rewriteUrl } from "@/lib/keystatic/rewrite-url";
 
 const { GET: _GET, POST: _POST } = makeRouteHandler({ config });
 
-export function GET(request: Request) {
+export function GET(request: Request): Promise<Response> {
 	return _GET(rewriteUrl(request));
 }
 
-export function POST(request: Request) {
+export function POST(request: Request): Promise<Response> {
 	return _POST(rewriteUrl(request));
 }

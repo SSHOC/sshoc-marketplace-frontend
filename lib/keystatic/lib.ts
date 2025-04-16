@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import type { Collection, ComponentSchema, Singleton } from "@keystatic/core";
 import type { ContentComponent } from "@keystatic/core/content-components";
 import slugify from "@sindresorhus/slugify";

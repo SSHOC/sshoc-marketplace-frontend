@@ -13,7 +13,7 @@ interface CallbackErrorPageProps {}
 export async function generateMetadata(
 	_props: Readonly<CallbackErrorPageProps>,
 	_parent: ResolvingMetadata,
-) {
+): Promise<Metadata> {
 	const t = await getTranslations("CallbackErrorPage");
 
 	const metadata: Metadata = {

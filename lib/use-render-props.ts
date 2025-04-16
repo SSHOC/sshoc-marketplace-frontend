@@ -25,6 +25,7 @@ interface RenderPropsHookOptions<T> extends RenderProps<T>, SharedDOMProps, Aria
 	defaultStyle?: CSSProperties;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
 	const {
 		className,

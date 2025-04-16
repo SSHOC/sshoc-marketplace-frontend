@@ -21,7 +21,7 @@ const processor = unified()
 		};
 	});
 
-export async function toPlaintext(markdown: string) {
+export async function toPlaintext(markdown: string): Promise<string> {
 	const vfile = await processor.process(markdown);
 	return String(vfile).replace(/\n+/g, " ").trim();
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import type { Locator, Page } from "@playwright/test";
 
 import type { I18n } from "@/e2e/lib/fixtures/i18n";

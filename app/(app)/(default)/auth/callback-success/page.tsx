@@ -11,7 +11,7 @@ interface CallbackSuccessPageProps {}
 export async function generateMetadata(
 	_props: Readonly<CallbackSuccessPageProps>,
 	_parent: ResolvingMetadata,
-) {
+): Promise<Metadata> {
 	const t = await getTranslations("CallbackSuccessPage");
 
 	const metadata: Metadata = {

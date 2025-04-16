@@ -38,7 +38,7 @@ export default async function SignUpPage(props: Readonly<SignUpPageProps>): Prom
 
 	const registering = await getRegistrationSession();
 
-	if (!registering) {
+	if (registering == null) {
 		redirect("/auth/sign-in");
 	}
 

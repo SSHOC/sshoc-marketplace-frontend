@@ -24,8 +24,8 @@ export default config({
 	},
 	storage:
 		env.NEXT_PUBLIC_KEYSTATIC_MODE === "github" &&
-		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER &&
-		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME
+		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER != null &&
+		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME != null
 			? {
 					kind: "github",
 					repo: {

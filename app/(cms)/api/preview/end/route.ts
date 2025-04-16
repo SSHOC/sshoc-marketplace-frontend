@@ -11,7 +11,7 @@ export async function POST(_request: NextRequest): Promise<NextResponse> {
 	}
 
 	const referrer = request.headers.get("Referer");
-	if (!referrer) {
+	if (referrer == null) {
 		return new NextResponse("Missing referer", { status: 400 });
 	}
 

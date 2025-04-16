@@ -19,6 +19,7 @@ export async function getImageDimensions(
 
 		const contentType = response.headers.get("content-type");
 
+		// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 		if (!contentType?.startsWith("image/")) return null;
 
 		const dimensions =

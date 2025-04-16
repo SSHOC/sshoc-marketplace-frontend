@@ -11,7 +11,7 @@ interface CallbackRegistrationPageProps {}
 export async function generateMetadata(
 	_props: Readonly<CallbackRegistrationPageProps>,
 	_parent: ResolvingMetadata,
-) {
+): Promise<Metadata> {
 	const t = await getTranslations("CallbackRegistrationPage");
 
 	const metadata: Metadata = {
