@@ -248,7 +248,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 								<Fragment>
 									<DrawerHeader className="bg-neutral-75">
 										<NavLink
-											className="shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-brand-600"
+											className="shrink-0 rounded-sm outline-transparent focus-visible:outline-2 focus-visible:outline-brand-600"
 											href={navigation.home.href}
 										>
 											<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />

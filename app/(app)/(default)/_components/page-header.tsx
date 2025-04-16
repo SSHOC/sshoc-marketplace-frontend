@@ -321,7 +321,7 @@ export async function PageHeader(): Promise<ReactNode> {
 			<header className="isolate border-b border-neutral-150">
 				<div className="mx-auto flex w-full max-w-[120rem] items-center justify-between gap-x-8 px-8">
 					<NavLink
-						className="shrink-0 rounded-sm py-4 focus-visible:outline-2 focus-visible:outline-brand-600"
+						className="shrink-0 rounded-sm py-4 outline-transparent focus-visible:outline-2 focus-visible:outline-brand-600"
 						href={navigation.home.href}
 					>
 						<Image alt="" className="h-16 w-auto shrink-0" priority={true} src={logo} />
@@ -331,7 +331,7 @@ export async function PageHeader(): Promise<ReactNode> {
 					<div className="hidden flex-col items-end gap-y-2 2xl:flex">
 						<div className="flex items-center gap-x-12">
 							<NavLink
-								className="rounded-b-sm p-2 px-8 text-sm text-neutral-600 transition hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-brand-600"
+								className="rounded-b-sm p-2 px-8 text-sm text-neutral-600 outline-transparent transition hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-brand-600"
 								href={reportIssueLink.href}
 							>
 								{reportIssueLink.label}
@@ -399,7 +399,7 @@ export async function PageHeader(): Promise<ReactNode> {
 							return (
 								<li key={id}>
 									<NavLink
-										className="inline-flex px-6 py-4 transition hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-brand-600"
+										className="inline-flex px-6 py-4 outline-transparent transition hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-brand-600"
 										href={item.href}
 									>
 										{item.label}

@@ -15,7 +15,7 @@ import {
 import { flushSync } from "react-dom";
 
 const toastStyles = styles({
-	base: "rounded-2 shadow-overlay focus-visible:focus-outline flex max-w-150 gap-x-3 border border-l-4 p-6",
+	base: "rounded-2 shadow-overlay focus-visible:focus-outline flex max-w-150 gap-x-3 border border-l-4 p-6 outline-transparent",
 	variants: {
 		tone: {
 			error: "border-stroke-error-weak border-l-stroke-error-strong bg-fill-error-weak",
@@ -82,7 +82,7 @@ export function Toast(props: Readonly<ToastProps>): ReactNode {
 				</AriaText>
 			</AriaToastContent>
 			<AriaButton
-				className="interactive rounded-2 text-icon-neutral hover:hover-overlay focus-visible:focus-outline pressed:press-overlay inline-grid shrink-0 place-content-center"
+				className="interactive rounded-2 text-icon-neutral hover:hover-overlay focus-visible:focus-outline pressed:press-overlay inline-grid shrink-0 place-content-center outline-transparent"
 				slot="close"
 			>
 				<XIcon aria-hidden={true} className="size-6 shrink-0" data-slot="icon" />

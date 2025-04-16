@@ -63,6 +63,7 @@
 		},
 		"title": "Contact"
 	},
+	"DatasetPage": {},
 	"ImprintPage": {
 		"meta": {
 			"title": "Imprint"
@@ -223,6 +224,7 @@
 		},
 		"report-issue-message": "Describe the issue:\n\n"
 	},
+	"PublicationPage": {},
 	"SearchPage": {
 		"meta": {
 			"title": "Search"
@@ -257,5 +259,8 @@
 			"title": "Sign up"
 		},
 		"title": "Sign up"
-	}
+	},
+	"ToolOrServicePage": {},
+	"TrainingMaterialPage": {},
+	"WorkflowPage": {}
 }

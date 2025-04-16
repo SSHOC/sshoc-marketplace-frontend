@@ -177,4 +177,130 @@ export async function autocompleteItems(
 	return (await request(url, { responseType: "json" })) as AutocompleteItems.Response;
 }
 
-//
+/**
+ * Datasets.
+ * ================================================================================================
+ */
+
+export declare namespace GetDataset {
+	export type SearchParams = paths["/api/datasets/{persistentId}"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/datasets/{persistentId}"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function getDataset(
+	persistentId: string,
+	searchParams?: GetDataset.SearchParams,
+): Promise<GetDataset.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/datasets/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request(url, { responseType: "json" })) as GetDataset.Response;
+}
+
+/**
+ * Publications.
+ * ================================================================================================
+ */
+
+export declare namespace GetPublication {
+	export type SearchParams =
+		paths["/api/publications/{persistentId}"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/publications/{persistentId}"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function getPublication(
+	persistentId: string,
+	searchParams?: GetPublication.SearchParams,
+): Promise<GetPublication.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/publications/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request(url, { responseType: "json" })) as GetPublication.Response;
+}
+
+/**
+ * Tools & services.
+ * ================================================================================================
+ */
+
+export declare namespace GetToolOrService {
+	export type SearchParams =
+		paths["/api/tools-services/{persistentId}"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/tools-services/{persistentId}"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function getToolOrService(
+	persistentId: string,
+	searchParams?: GetToolOrService.SearchParams,
+): Promise<GetToolOrService.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/tools-services/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request(url, { responseType: "json" })) as GetToolOrService.Response;
+}
+
+/**
+ * Training materials.
+ * ================================================================================================
+ */
+
+export declare namespace GetTrainingMaterial {
+	export type SearchParams =
+		paths["/api/training-materials/{persistentId}"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/training-materials/{persistentId}"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function getTrainingMaterial(
+	persistentId: string,
+	searchParams?: GetTrainingMaterial.SearchParams,
+): Promise<GetTrainingMaterial.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/training-materials/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request(url, { responseType: "json" })) as GetTrainingMaterial.Response;
+}
+
+/**
+ * Workflows.
+ * ================================================================================================
+ */
+
+export declare namespace GetWorkflow {
+	export type SearchParams = paths["/api/workflows/{persistentId}"]["get"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/workflows/{persistentId}"]["get"]["responses"]["200"]["content"]["application/json"];
+}
+
+export async function getWorkflow(
+	persistentId: string,
+	searchParams?: GetWorkflow.SearchParams,
+): Promise<GetWorkflow.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/workflows/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request(url, { responseType: "json" })) as GetWorkflow.Response;
+}

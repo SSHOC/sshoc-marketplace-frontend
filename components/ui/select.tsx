@@ -43,7 +43,7 @@ export function SelectTrigger(props: Readonly<SelectTriggerProps>): ReactNode {
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"relative isolate inline-flex min-h-12 items-center gap-x-2 rounded-sm border border-neutral-250 bg-neutral-0 pr-12 pl-4 text-left text-base whitespace-nowrap transition group-invalid:border-2 group-invalid:border-negative-600 group-invalid:bg-negative-100 hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-brand-600 disabled:border-neutral-200 forced-colors:group-invalid:border-[Mark] forced-colors:disabled:border-[GrayText] forced-colors:disabled:text-[GrayText]",
+					"relative isolate inline-flex min-h-12 items-center gap-x-2 rounded-sm border border-neutral-250 bg-neutral-0 pr-12 pl-4 text-left text-base whitespace-nowrap outline-transparent transition group-invalid:border-2 group-invalid:border-negative-600 group-invalid:bg-negative-100 hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-brand-600 disabled:border-neutral-200 forced-colors:group-invalid:border-[Mark] forced-colors:disabled:border-[GrayText] forced-colors:disabled:text-[GrayText]",
 					className,
 				);
 			})}

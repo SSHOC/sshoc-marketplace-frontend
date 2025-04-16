@@ -7,18 +7,6 @@
 
 @custom-variant aria-current-page (&[aria-current="page"]);
 
-@custom-variant pointer-coarse {
-	@media (pointer: coarse) {
-		@slot;
-	}
-}
-
-@custom-variant pointer-fine {
-	@media (pointer: fine) {
-		@slot;
-	}
-}
-
 @theme {
 	--breakpoint-xs: 30rem;
 	--breakpoint-sm: 40rem;

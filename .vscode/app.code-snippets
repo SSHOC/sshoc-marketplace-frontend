@@ -52,7 +52,7 @@
 			"interface ${1:Name}PageProps {",
 			"\tparams: Promise<{",
 			"\t\tid: string;",
-			"\t};",
+			"\t}>;",
 			"}",
 			"",
 			"export const dynamicParams = false;",

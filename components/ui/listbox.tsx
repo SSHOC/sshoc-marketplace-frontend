@@ -51,7 +51,7 @@ export function ListBoxItem<T extends object>(props: Readonly<ListBoxItemProps<T
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 transition will-change-transform forced-color-adjust-none select-none hover:bg-neutral-50 hover:text-brand-750 focus-visible:bg-neutral-50 focus-visible:text-brand-750 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600 disabled:text-neutral-300 *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-neutral-700 forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] selected:bg-neutral-50 selected:text-brand-750 forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
+					"isolate inline-flex cursor-default items-center gap-x-3 py-3 pr-12 pl-4 outline-transparent transition will-change-transform forced-color-adjust-none select-none hover:bg-neutral-50 hover:text-brand-750 focus-visible:bg-neutral-50 focus-visible:text-brand-750 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand-600 disabled:text-neutral-300 *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-neutral-700 forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText] forced-colors:disabled:text-[GrayText] selected:bg-neutral-50 selected:text-brand-750 forced-colors:selected:bg-[Highlight] forced-colors:selected:text-[HighlightText]",
 					className,
 				);
 			})}
