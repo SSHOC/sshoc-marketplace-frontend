@@ -1,10 +1,18 @@
 "use client";
 
-import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
+import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { type ReactNode, startTransition, useRef, useState } from "react";
-import useQuery from "swr";
+import debounce from "p-debounce";
+import {
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	useTransition,
+} from "react";
 
 import type { SearchParamsSchema } from "@/app/(app)/(default)/(index)/_lib/validation";
 import { ItemCategoryIcon } from "@/components/item-category-icon";
@@ -16,53 +24,57 @@ import { Label } from "@/components/ui/label";
 import { ListBox, ListBoxEmptyState, ListBoxItem } from "@/components/ui/listbox";
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { env } from "@/config/env.config";
-import type { AutocompleteItems, ItemCategory } from "@/lib/api/client";
+import type { ItemCategory } from "@/lib/api/client";
+import { useRouter } from "@/lib/navigation/navigation";
 
 interface ItemSearchFormProps {
 	categories: Record<string, { id: ItemCategory | "all"; label: string }>;
 	searchParams: SearchParamsSchema;
+	suggestions: Array<{ persistentId: string; phrase: string }>;
 }
 
 export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode {
-	const { categories, searchParams } = props;
+	const { categories, searchParams, suggestions } = props;
 
 	const t = useTranslations("IndexPage"); // FIXME:
 
+	// eslint-disable-next-line @typescript-eslint/unbound-method
+	const { replace: navigate } = useRouter();
+	const [isPending, startTransition] = useTransition();
+
+	/**
+	 * This *should* work with `useOptimistic` as well, but currently has glitches
+	 * when replaying state updates on the passthrough value, so we use plain `useState`.
+	 */
 	const [optimisticSearchParams, setOptimisticSearchParams] = useState(searchParams);
 
-	function updateSearchParams(searchParams: SearchParamsSchema) {
-		setOptimisticSearchParams(searchParams);
-		window.history.pushState(null, "", `?${createUrlSearchParams(searchParams)}`);
-	}
-
-	const { data, isLoading } = useQuery(
-		["autocomplete-items", optimisticSearchParams],
-		async (): Promise<AutocompleteItems.Response> => {
-			const category =
-				optimisticSearchParams.categories !== "all" ? optimisticSearchParams.categories : undefined;
-			const q = optimisticSearchParams.q;
-			const searchParams = { category, q };
-
-			if (q.length === 0) {
-				return { phrase: "", suggestions: [] };
-			}
-
-			// return autocompleteItems(searchParams);
-
-			const url = createUrl({
-				baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-				pathname: "/api/item-search/autocomplete",
-				searchParams: createUrlSearchParams(searchParams),
-			});
-
-			return request(url, { responseType: "json" }) as Promise<AutocompleteItems.Response>;
+	const setSearchParams = useCallback(
+		(searchParams: SearchParamsSchema) => {
+			navigate(`?${createUrlSearchParams(searchParams)}`);
 		},
+		[navigate],
 	);
 
-	const formRef = useRef<HTMLFormElement | null>(null);
+	/**
+	 * The debounce function needs to return a promise which is pending while the timeout runs,
+	 * and only resolves when the callback function resolves. This is because only async functions
+	 * can be wrapped with `startTransition` to become actions, which we need to be able to track
+	 * the pending state.
+	 */
+	const debouncedSetSearchParams = useMemo(() => {
+		return debounce(setSearchParams, 150);
+	}, [setSearchParams]);
 
-	const suggestions = data?.suggestions ?? [];
+	// useEffect(() => {
+	// 	return () => {
+	// 		debouncedUpdateSearchParams.cancel()
+	// 	}
+	// }, [debouncedUpdateSearchParams])
+
+	const items = optimisticSearchParams.q.trim().length === 0 ? [] : suggestions;
+	const inputValue = isPending ? optimisticSearchParams.q : searchParams.q;
+
+	const formRef = useRef<HTMLFormElement | null>(null);
 
 	return (
 		<SearchForm
@@ -74,10 +86,14 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 				className="md:min-w-58"
 				name="categories"
 				onSelectionChange={(value) => {
-					updateSearchParams({
+					const updatedSearchParams = {
 						...optimisticSearchParams,
 						categories: value as SearchParamsSchema["categories"],
-					});
+					};
+
+					setOptimisticSearchParams(updatedSearchParams);
+
+					setSearchParams(updatedSearchParams);
 				}}
 				selectedKey={optimisticSearchParams.categories}
 			>
@@ -112,13 +128,19 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 				allowsCustomValue={true}
 				allowsEmptyCollection={true}
 				className="flex-1"
-				inputValue={optimisticSearchParams.q}
-				items={suggestions}
+				inputValue={inputValue}
+				items={items}
 				name="q"
 				onInputChange={(value) => {
-					updateSearchParams({
+					const updatedSearchParams = {
 						...optimisticSearchParams,
 						q: value,
+					};
+
+					setOptimisticSearchParams(updatedSearchParams);
+
+					startTransition(async () => {
+						await debouncedSetSearchParams(updatedSearchParams);
 					});
 				}}
 				onSelectionChange={() => {
@@ -143,7 +165,7 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 						renderEmptyState={() => {
 							return (
 								<ListBoxEmptyState>
-									{isLoading
+									{isPending && inputValue.length > 0
 										? t("search-form.search-input.loading")
 										: t("search-form.search-input.nothing-found")}
 								</ListBoxEmptyState>

@@ -1,6 +1,5 @@
 import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import type { Metadata, ResolvingMetadata } from "next";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 
@@ -24,6 +23,7 @@ import { LoadingIndicator } from "@/components/ui/loading-indicator";
 import { MainContent } from "@/components/ui/main-content";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import {
+	autocompleteItems,
 	type ItemCategory,
 	type ItemFacet,
 	pluralize,
@@ -89,10 +89,10 @@ interface HeroSectionProps {
 	searchParams: SearchParamsSchema;
 }
 
-function HeroSection(props: Readonly<HeroSectionProps>): ReactNode {
+async function HeroSection(props: Readonly<HeroSectionProps>): Promise<ReactNode> {
 	const { searchParams } = props;
 
-	const t = useTranslations("IndexPage");
+	const t = await getTranslations("IndexPage");
 
 	const categories = {
 		all: {
@@ -121,6 +121,8 @@ function HeroSection(props: Readonly<HeroSectionProps>): ReactNode {
 		},
 	} as const;
 
+	const { suggestions } = await autocompleteItems(searchParams);
+
 	return (
 		<div className="relative">
 			<div className="absolute inset-x-0 top-0 size-full overflow-hidden">
@@ -140,7 +142,11 @@ function HeroSection(props: Readonly<HeroSectionProps>): ReactNode {
 					{t.rich("hero.lead", { link: LeadLink })}
 				</div>
 
-				<ItemSearchForm categories={categories} searchParams={searchParams} />
+				<ItemSearchForm
+					categories={categories}
+					searchParams={searchParams}
+					suggestions={suggestions}
+				/>
 			</section>
 		</div>
 	);
