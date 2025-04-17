@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useFieldArray } from 'react-final-form-arrays'
 
 import { FormFieldArray } from '@/components/common/FormFieldArray'
@@ -21,6 +22,12 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
   const { t } = useI18n<'authenticated' | 'common'>()
   const fieldArray = useFieldArray<string | undefined>(field.name, { subscription: {} })
 
+  useEffect(() => {
+    if (field.isRequired && fieldArray.fields.length === 0) {
+      fieldArray.fields.push(undefined)
+    }
+  }, [field.isRequired, fieldArray.fields])
+
   function onAdd() {
     fieldArray.fields.push(undefined)
   }
@@ -35,17 +42,19 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
 
           return (
             <FormFieldListItem key={name}>
-              <FormTextField {...field} name={name} />
-              <FormFieldListItemControls>
-                <FormRecordRemoveButton
-                  aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                    values: { field: field.itemLabel },
-                  })}
-                  onPress={onRemove}
-                >
-                  {t(['authenticated', 'controls', 'delete'])}
-                </FormRecordRemoveButton>
-              </FormFieldListItemControls>
+              <FormTextField {...field} name={name} isRequired={index === 0} />
+              {index !== 0 && (
+                <FormFieldListItemControls>
+                  <FormRecordRemoveButton
+                    aria-label={t(['authenticated', 'forms', 'remove-field'], {
+                      values: { field: field.itemLabel },
+                    })}
+                    onPress={onRemove}
+                  >
+                    {t(['authenticated', 'controls', 'delete'])}
+                  </FormRecordRemoveButton>
+                </FormFieldListItemControls>
+              )}
             </FormFieldListItem>
           )
         })}
