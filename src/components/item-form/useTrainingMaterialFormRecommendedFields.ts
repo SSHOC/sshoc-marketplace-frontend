@@ -19,13 +19,10 @@ const recommendedProperties = [
   'keyword',
   'discipline',
   'language',
-  'object-format',
-  'extent',
   'intended-audience',
   'see-also',
   'license',
   'standard',
-  'terms-of-use-url',
   'year',
   'resource-category',
 ]

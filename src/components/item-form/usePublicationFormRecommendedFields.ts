@@ -19,7 +19,6 @@ const recommendedProperties = [
   'keyword',
   'discipline',
   'language',
-  'extent',
   'intended-audience',
   'see-also',
   'license',
