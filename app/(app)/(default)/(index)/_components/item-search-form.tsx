@@ -3,16 +3,7 @@
 import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import debounce from "p-debounce";
-import {
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-	useTransition,
-} from "react";
+import { type ReactNode, useCallback, useMemo, useRef, useState, useTransition } from "react";
 
 import type { SearchParamsSchema } from "@/app/(app)/(default)/(index)/_lib/validation";
 import { ItemCategoryIcon } from "@/components/item-category-icon";
@@ -25,6 +16,7 @@ import { ListBox, ListBoxEmptyState, ListBoxItem } from "@/components/ui/listbox
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { ItemCategory } from "@/lib/api/client";
+import { debounce } from "@/lib/debounce";
 import { useRouter } from "@/lib/navigation/navigation";
 
 interface ItemSearchFormProps {

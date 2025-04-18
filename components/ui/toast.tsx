@@ -74,15 +74,15 @@ export function Toast(props: Readonly<ToastProps>): ReactNode {
 			toast={toast}
 		>
 			<AriaToastContent className="flex min-w-0 flex-1 flex-col gap-y-1">
-				<AriaText className="text-heading-4 font-strong text-text-strong" slot="title">
+				<AriaText className="text-neutral-950 text-lg font-semibold" slot="title">
 					{toast.content.title}
 				</AriaText>
-				<AriaText className="text-small text-text-weak empty:hidden" slot="description">
+				<AriaText className="text-base text-neutral-700 empty:hidden" slot="description">
 					{toast.content.description}
 				</AriaText>
 			</AriaToastContent>
 			<AriaButton
-				className="interactive rounded-2 text-icon-neutral hover:hover-overlay focus-visible:focus-outline pressed:press-overlay inline-grid shrink-0 place-content-center outline-transparent"
+				className="inline-grid shrink-0 place-content-center rounded-md text-neutral-600 outline-transparent focus-visible:outline-2 focus-visible:outline-brand-600"
 				slot="close"
 			>
 				<XIcon aria-hidden={true} className="size-6 shrink-0" data-slot="icon" />

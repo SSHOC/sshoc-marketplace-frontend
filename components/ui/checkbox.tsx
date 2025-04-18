@@ -11,7 +11,7 @@ import {
 } from "react-aria-components";
 
 const checkBoxStyles = styles({
-	base: "group inline-flex items-center gap-x-3 text-neutral-800 disabled:text-neutral-300 forced-colors:disabled:text-[GrayText]",
+	base: "group relative inline-flex items-center gap-x-3 text-neutral-800 disabled:text-neutral-300 forced-colors:disabled:text-[GrayText]",
 	variants: {
 		size: {
 			small: "text-base",

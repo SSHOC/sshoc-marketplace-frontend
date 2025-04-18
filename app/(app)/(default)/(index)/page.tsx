@@ -60,6 +60,7 @@ export async function generateMetadata(
 export default async function IndexPage(props: Readonly<IndexPageProps>): Promise<ReactNode> {
 	const { searchParams } = props;
 
+	// TODO: move awaiting search params into ItemSearchForm, and wrap it in Suspense
 	const validatedSearchParams = await validateSearchParams(await searchParams);
 
 	return (
@@ -121,7 +122,12 @@ async function HeroSection(props: Readonly<HeroSectionProps>): Promise<ReactNode
 		},
 	} as const;
 
-	const { suggestions } = await autocompleteItems(searchParams);
+	const { suggestions } =
+		searchParams.q.length > 0
+			? await autocompleteItems(searchParams).catch(() => {
+					return { suggestions: [] };
+				})
+			: { suggestions: [] };
 
 	return (
 		<div className="relative">

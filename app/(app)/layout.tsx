@@ -2,7 +2,7 @@
 import { cn } from "@acdh-oeaw/style-variants";
 import type { Metadata, ResolvingMetadata } from "next";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 import { LocalizedStringProvider as Translations } from "react-aria-components/i18n";
 import { jsonLdScriptProps } from "react-schemaorg";
 
@@ -16,7 +16,6 @@ import { env } from "@/config/env.config";
 import { AnalyticsScript } from "@/lib/analytics-script";
 import * as fonts from "@/lib/fonts";
 import { getMetadata } from "@/lib/i18n/metadata";
-import { getToastCookie } from "@/lib/server/toast";
 
 interface AppGroupLayoutProps {
 	children: ReactNode;
@@ -76,8 +75,6 @@ export default async function AppGroupLayout(
 	// const clientMessages = pick(messages, ["Error"]);
 	const clientMessages = messages;
 
-	const toast = await getToastCookie();
-
 	return (
 		<html
 			className={cn(
@@ -109,6 +106,18 @@ export default async function AppGroupLayout(
 				 *
 				 * @see https://react-spectrum.adobe.com/react-aria/ssr.html#advanced-optimization
 				 */}
+				{/**
+				 * NOTE: When error stack traces point to `LocalizedStringProvider`, it is most probably
+				 * because a server error was thrown. When a server error happens, react will skip
+				 * server-rendering up to the nearest suspense boundary and re-try rendering client-side.
+				 * When a root `loading.tsx` suspense boundary exists, `LocalizedStringProvider` will not
+				 * show up in the error stack trace. However, when no suspense boundary exists, react will
+				 * try to render the whole page client-side, but cannot run the `<script>` added by
+				 * `LocalizedStringProvider`, so this will crash because the translations strings never
+				 * get populated.
+				 *
+				 * @see https://github.com/reactjs/rfcs/blob/main/text/0215-server-errors-in-react-18.md
+				 */}
 				<Translations locale={locale} />
 
 				<Providers locale={locale} messages={clientMessages}>
@@ -118,7 +127,9 @@ export default async function AppGroupLayout(
 					/>
 
 					<ToastRegion />
-					{toast != null ? <ServerToast toast={toast} /> : null}
+					<Suspense>
+						<ServerToast />
+					</Suspense>
 
 					<SkipLink targetId={id}>{t("skip-to-main-content")}</SkipLink>
 

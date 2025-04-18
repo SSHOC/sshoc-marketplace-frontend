@@ -3,7 +3,7 @@ import * as v from "valibot";
 import { itemCategories } from "@/lib/api/client";
 
 export const searchParamsSchema = v.object({
-	q: v.fallback(v.string(), ""),
+	q: v.fallback(v.pipe(v.string(), v.trim()), ""),
 	categories: v.fallback(v.optional(v.picklist([...itemCategories, "all"])), "all"),
 });
 
