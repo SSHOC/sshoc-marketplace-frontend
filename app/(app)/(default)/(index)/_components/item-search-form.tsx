@@ -43,7 +43,8 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 	/**
 	 * To immediately update url search params, without waiting for the `router.replace` transition
 	 * server roundtrip to complete, we could additionally use the html5 history api, which
-	 * integrates with `useSearchParams`.
+	 * integrates with `useSearchParams`. We would however need to throttle it because browsers
+	 * rate-limit updates to the history stack.
 	 */
 	const setSearchParams = useCallback(
 		(searchParams: SearchParamsSchema) => {
