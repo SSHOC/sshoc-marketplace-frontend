@@ -14,7 +14,6 @@ import {
 	pathsApiItemSearchGetParametersQueryOrderValues,
 } from "@/lib/api/schema";
 import { redirect } from "@/lib/navigation/navigation";
-import { assertSession, getSession } from "@/lib/server/auth/session";
 import { isUnauthorizedError } from "@/lib/server/errors";
 
 type ResponseType =
@@ -30,16 +29,9 @@ type ResponseType =
 async function request<TData = unknown, TResponseType extends ResponseType = ResponseType>(
 	url: URL,
 	config: RequestConfig<TResponseType>,
-	authentication: "none" | "optional" | "required" = "optional",
+	token?: string | null,
 ) {
 	try {
-		const token =
-			authentication === "optional"
-				? await getSession()
-				: authentication === "required"
-					? await assertSession()
-					: null;
-
 		return await _request<TData, TResponseType>(
 			url,
 			token != null ? { ...config, headers: { authorization: token } } : config,
@@ -66,15 +58,19 @@ export declare namespace GetCurrentUser {
 		paths["/api/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
 }
 
-export async function getCurrentUser(): Promise<GetCurrentUser.Response> {
+export async function getCurrentUser(token: string): Promise<GetCurrentUser.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
 		pathname: "/api/auth/me",
 	});
 
-	const data = (await request(url, {
-		responseType: "json",
-	})) as GetCurrentUser.Response;
+	const data = (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetCurrentUser.Response;
 
 	return data;
 }
@@ -144,6 +140,7 @@ export declare namespace SearchItems {
 
 export async function searchItems(
 	searchParams: SearchItems.SearchParams,
+	token?: string | null,
 ): Promise<SearchItems.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -151,7 +148,13 @@ export async function searchItems(
 		searchParams: createUrlSearchParams(searchParams),
 	});
 
-	return (await request(url, { responseType: "json" })) as SearchItems.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as SearchItems.Response;
 }
 
 export const searchItemsOrders = pathsApiItemSearchGetParametersQueryOrderValues;
@@ -167,6 +170,7 @@ export declare namespace AutocompleteItems {
 
 export async function autocompleteItems(
 	searchParams: AutocompleteItems.SearchParams,
+	token?: string | null,
 ): Promise<AutocompleteItems.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -174,7 +178,13 @@ export async function autocompleteItems(
 		searchParams: createUrlSearchParams(searchParams),
 	});
 
-	return (await request(url, { responseType: "json" })) as AutocompleteItems.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as AutocompleteItems.Response;
 }
 
 /**
@@ -192,6 +202,7 @@ export declare namespace GetDataset {
 export async function getDataset(
 	persistentId: string,
 	searchParams?: GetDataset.SearchParams,
+	token?: string | null,
 ): Promise<GetDataset.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -199,7 +210,13 @@ export async function getDataset(
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, { responseType: "json" })) as GetDataset.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetDataset.Response;
 }
 
 /**
@@ -218,6 +235,7 @@ export declare namespace GetPublication {
 export async function getPublication(
 	persistentId: string,
 	searchParams?: GetPublication.SearchParams,
+	token?: string | null,
 ): Promise<GetPublication.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -225,7 +243,13 @@ export async function getPublication(
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, { responseType: "json" })) as GetPublication.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetPublication.Response;
 }
 
 /**
@@ -244,6 +268,7 @@ export declare namespace GetToolOrService {
 export async function getToolOrService(
 	persistentId: string,
 	searchParams?: GetToolOrService.SearchParams,
+	token?: string | null,
 ): Promise<GetToolOrService.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -251,7 +276,13 @@ export async function getToolOrService(
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, { responseType: "json" })) as GetToolOrService.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetToolOrService.Response;
 }
 
 /**
@@ -270,6 +301,7 @@ export declare namespace GetTrainingMaterial {
 export async function getTrainingMaterial(
 	persistentId: string,
 	searchParams?: GetTrainingMaterial.SearchParams,
+	token?: string | null,
 ): Promise<GetTrainingMaterial.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -277,7 +309,13 @@ export async function getTrainingMaterial(
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, { responseType: "json" })) as GetTrainingMaterial.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetTrainingMaterial.Response;
 }
 
 /**
@@ -295,6 +333,7 @@ export declare namespace GetWorkflow {
 export async function getWorkflow(
 	persistentId: string,
 	searchParams?: GetWorkflow.SearchParams,
+	token?: string | null,
 ): Promise<GetWorkflow.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
@@ -302,5 +341,11 @@ export async function getWorkflow(
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, { responseType: "json" })) as GetWorkflow.Response;
+	return (await request(
+		url,
+		{
+			responseType: "json",
+		},
+		token,
+	)) as GetWorkflow.Response;
 }

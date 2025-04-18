@@ -40,9 +40,14 @@ export function ItemSearchForm(props: Readonly<ItemSearchFormProps>): ReactNode 
 	 */
 	const [optimisticSearchParams, setOptimisticSearchParams] = useState(searchParams);
 
+	/**
+	 * To immediately update url search params, without waiting for the `router.replace` transition
+	 * server roundtrip to complete, we could additionally use the html5 history api, which
+	 * integrates with `useSearchParams`.
+	 */
 	const setSearchParams = useCallback(
 		(searchParams: SearchParamsSchema) => {
-			navigate(`?${createUrlSearchParams(searchParams)}`);
+			navigate(`?${createUrlSearchParams(searchParams)}`, { scroll: false });
 		},
 		[navigate],
 	);

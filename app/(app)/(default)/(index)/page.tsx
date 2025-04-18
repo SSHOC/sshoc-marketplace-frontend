@@ -35,6 +35,8 @@ import { createHref } from "@/lib/navigation/create-href";
 import bg from "@/public/assets/images/backgrounds/home@2x.png";
 import people from "@/public/assets/images/backgrounds/home-people.svg";
 
+// TODO: cache api requests
+
 interface IndexPageProps {
 	searchParams: Promise<SearchParams>;
 }
@@ -124,9 +126,14 @@ async function HeroSection(props: Readonly<HeroSectionProps>): Promise<ReactNode
 
 	const { suggestions } =
 		searchParams.q.length > 0
-			? await autocompleteItems(searchParams).catch(() => {
-					return { suggestions: [] };
+			? await autocompleteItems({
+					q: searchParams.q,
+					category: searchParams.categories === "all" ? undefined : searchParams.categories,
 				})
+					// FIXME: what should happen if this request fails?
+					.catch(() => {
+						return { suggestions: [] };
+					})
 			: { suggestions: [] };
 
 	return (
@@ -159,6 +166,8 @@ async function HeroSection(props: Readonly<HeroSectionProps>): Promise<ReactNode
 }
 
 async function BrowseSection(): Promise<ReactNode> {
+	"use cache";
+
 	const t = await getTranslations("IndexPage");
 
 	/**
@@ -233,6 +242,8 @@ async function BrowseSection(): Promise<ReactNode> {
 }
 
 async function RecommendedSection(): Promise<ReactNode> {
+	"use cache";
+
 	const t = await getTranslations("IndexPage");
 
 	const categories: Array<{ id: ItemCategory; title: string }> = [
@@ -306,6 +317,8 @@ async function RecommendedSection(): Promise<ReactNode> {
 }
 
 async function LastUpdatedSection(): Promise<ReactNode> {
+	"use cache";
+
 	const t = await getTranslations("IndexPage");
 
 	const { items } = await searchItems({
