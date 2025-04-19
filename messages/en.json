@@ -63,7 +63,17 @@
 		},
 		"title": "Contact"
 	},
-	"DatasetPage": {},
+	"DatasetPage": {
+		"breadcrumbs": {
+			"items": {
+				"home": "Home",
+				"datasets": "Datasets"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"go-to-dataset": "Go to dataset"
+	},
 	"ImprintPage": {
 		"meta": {
 			"title": "Imprint"

@@ -349,3 +349,15 @@ export async function getWorkflow(
 		token,
 	)) as GetWorkflow.Response;
 }
+
+/**
+ * Media thumbnails.
+ * ================================================================================================
+ */
+
+export function getMediaThumbnailUrl(mediaId: string): URL {
+	return createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/media/thumbnail/${mediaId}`,
+	});
+}

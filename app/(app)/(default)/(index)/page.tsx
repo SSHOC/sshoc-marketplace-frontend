@@ -191,7 +191,7 @@ async function BrowseSection(): Promise<ReactNode> {
 	];
 
 	return (
-		<section className="flex flex-col gap-y-8 py-16">
+		<section className="relative flex flex-col gap-y-8 py-16">
 			<SectionTitle>{t("section-browse.title")}</SectionTitle>
 
 			{sections.map((section) => {
@@ -268,7 +268,7 @@ async function RecommendedSection(): Promise<ReactNode> {
 	);
 
 	return (
-		<section className="flex flex-col gap-y-8 py-16">
+		<section className="relative flex flex-col gap-y-8 py-16">
 			<SectionTitle>{t("section-recommended.title")}</SectionTitle>
 
 			{sections.map((section) => {
@@ -327,10 +327,10 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 	});
 
 	return (
-		<section className="flex flex-col gap-y-8 py-16">
+		<section className="relative flex flex-col gap-y-8 py-16">
 			<SectionTitle>{t("section-last-updated.title")}</SectionTitle>
 
-			<section className="flex flex-col gap-y-6">
+			<section className="relative flex flex-col gap-y-6">
 				<SubSectionHeader>
 					<SubSectionTitle>{t("section-last-updated.lead")}</SubSectionTitle>
 					<Link

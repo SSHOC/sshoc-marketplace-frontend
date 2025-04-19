@@ -65,9 +65,11 @@ export function Button(props: Readonly<ButtonProps>): ReactNode {
 				return (
 					<Fragment>
 						{isPending ? (
-							<LoadingIndicator aria-hidden={true} data-slot="icon" delay="none" />
+							<LoadingIndicator className="absolute left-3" data-slot="icon" delay="none" />
 						) : null}
-						{children}
+						<span className="inline-flex items-center justify-center gap-x-2 px-3 text-center transition group-pending:translate-x-3">
+							{children}
+						</span>
 					</Fragment>
 				);
 			})}
