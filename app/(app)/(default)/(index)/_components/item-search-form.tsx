@@ -1,6 +1,6 @@
 "use client";
 
-import { createUrlSearchParams } from "@acdh-oeaw/lib";
+import { createUrlSearchParams, debounce } from "@acdh-oeaw/lib";
 import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useCallback, useMemo, useRef, useState, useTransition } from "react";
@@ -16,7 +16,6 @@ import { ListBox, ListBoxEmptyState, ListBoxItem } from "@/components/ui/listbox
 import { Popover } from "@/components/ui/popover";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { ItemCategory } from "@/lib/api/client";
-import { debounce } from "@/lib/debounce";
 import { useRouter } from "@/lib/navigation/navigation";
 
 interface ItemSearchFormProps {
