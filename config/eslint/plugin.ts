@@ -1,5 +1,6 @@
-import { TSESLint } from "@typescript-eslint/utils";
-import { rule } from "@/config/eslint/rules/icons";
+import type { TSESLint } from "@typescript-eslint/utils";
+
+import { rule } from "./rules/icons";
 
 const plugin = {
 	meta: {

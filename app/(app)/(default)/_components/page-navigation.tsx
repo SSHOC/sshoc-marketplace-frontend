@@ -256,7 +256,7 @@ export function PageNavigationMobile(props: Readonly<PageNavigationMobileProps>)
 										</NavLink>
 
 										<IconButton kind="text" label={drawerCloseLabel} slot="close">
-											<XIcon aria-hidden={true} className="size-8 shrink-0" />
+											<XIcon aria-hidden={true} className="size-8 shrink-0" data-slot="icon" />
 										</IconButton>
 									</DrawerHeader>
 

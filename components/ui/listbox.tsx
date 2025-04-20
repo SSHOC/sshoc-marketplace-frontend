@@ -66,7 +66,7 @@ export function ListBoxItem<T extends object>(props: Readonly<ListBoxItemProps<T
 							<CheckIcon
 								aria-hidden={true}
 								className="absolute right-4 size-5 h-full shrink-0 text-brand-750"
-								// data-slot="icon"
+								data-slot="icon"
 							/>
 						) : null}
 					</Fragment>

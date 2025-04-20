@@ -8,7 +8,7 @@ import gitignore from "eslint-config-flat-gitignore";
 import checkFilePlugin from "eslint-plugin-check-file";
 import { config } from "typescript-eslint";
 
-import plugin from "@/config/eslint/plugin";
+import plugin from "./config/eslint/plugin";
 
 export default config(
 	gitignore({ strict: false }),

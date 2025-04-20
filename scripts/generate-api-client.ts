@@ -36,8 +36,6 @@ async function generate() {
 				return schemaObject.nullable === true ? ts.factory.createUnionTypeNode([BLOB, NULL]) : BLOB;
 			}
 
-			debugger;
-
 			return undefined;
 		},
 	});

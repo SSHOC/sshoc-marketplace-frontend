@@ -1,4 +1,4 @@
-import { ESLintUtils } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, ESLintUtils } from "@typescript-eslint/utils";
 
 /** @see https://typescript-eslint.io/developers/custom-rules/ */
 export const rule = ESLintUtils.RuleCreator.withoutDocs({
@@ -29,7 +29,7 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
 				});
 			},
 			JSXOpeningElement(node): void {
-				if (node.name.type !== "JSXIdentifier") {
+				if (node.name.type !== AST_NODE_TYPES.JSXIdentifier) {
 					return;
 				}
 				if (!components.has(node.name.name)) {
@@ -38,11 +38,11 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
 
 				function hasAttribute(name: string) {
 					return node.attributes.some((attribute) => {
-						return attribute.type === "JSXAttribute" && attribute.name.name === name;
+						return attribute.type === AST_NODE_TYPES.JSXAttribute && attribute.name.name === name;
 					});
 				}
 
-				const attributes: string[] = [];
+				const attributes: Array<string> = [];
 
 				if (!hasAttribute("aria-hidden")) {
 					attributes.push(" aria-hidden={true}");
@@ -58,7 +58,7 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
 						messageId: "icon-props",
 						fix(fixer) {
 							return fixer.insertTextAfterRange(
-								[node.name.range[1], node.range[1]],
+								[node.name.range[1], node.attributes.at(-1)?.range[1] ?? node.name.range[1]],
 								attributes.join(""),
 							);
 						},
