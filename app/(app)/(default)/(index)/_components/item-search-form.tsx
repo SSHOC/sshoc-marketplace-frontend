@@ -1,8 +1,9 @@
 "use client";
 
-import { createUrlSearchParams, debounce } from "@acdh-oeaw/lib";
+import { createUrlSearchParams } from "@acdh-oeaw/lib";
 import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import debounce from "p-debounce";
 import { type ReactNode, useCallback, useMemo, useRef, useState, useTransition } from "react";
 
 import type { SearchParamsSchema } from "@/app/(app)/(default)/(index)/_lib/validation";
