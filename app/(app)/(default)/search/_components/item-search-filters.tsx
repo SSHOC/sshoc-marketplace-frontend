@@ -57,7 +57,7 @@ export function ItemSearchFilters(props: Readonly<ItemSearchFiltersProps>): Reac
 						return (
 							<CheckBox
 								key={id}
-								className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 *:data-[slot=label]:inline-flex *:data-[slot=label]:w-full *:data-[slot=label]:min-w-0 *:data-[slot=label]:justify-between *:data-[slot=label]:gap-x-3"
+								className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 slot-label:inline-flex slot-label:w-full slot-label:min-w-0 slot-label:justify-between slot-label:gap-x-3"
 								size="small"
 								value={id}
 							>
@@ -100,7 +100,7 @@ export function ItemSearchFilters(props: Readonly<ItemSearchFiltersProps>): Reac
 							return (
 								<CheckBox
 									key={id}
-									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 *:data-[slot=label]:inline-flex *:data-[slot=label]:w-full *:data-[slot=label]:min-w-0 *:data-[slot=label]:justify-between *:data-[slot=label]:gap-x-3"
+									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 slot-label:inline-flex slot-label:w-full slot-label:min-w-0 slot-label:justify-between slot-label:gap-x-3"
 									size="small"
 									value={id}
 								>
@@ -136,7 +136,7 @@ export function ItemSearchFilters(props: Readonly<ItemSearchFiltersProps>): Reac
 							return (
 								<CheckBox
 									key={id}
-									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 *:data-[slot=label]:inline-flex *:data-[slot=label]:w-full *:data-[slot=label]:min-w-0 *:data-[slot=label]:justify-between *:data-[slot=label]:gap-x-3"
+									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 slot-label:inline-flex slot-label:w-full slot-label:min-w-0 slot-label:justify-between slot-label:gap-x-3"
 									size="small"
 									value={id}
 								>
@@ -172,7 +172,7 @@ export function ItemSearchFilters(props: Readonly<ItemSearchFiltersProps>): Reac
 							return (
 								<CheckBox
 									key={id}
-									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 *:data-[slot=label]:inline-flex *:data-[slot=label]:w-full *:data-[slot=label]:min-w-0 *:data-[slot=label]:justify-between *:data-[slot=label]:gap-x-3"
+									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 slot-label:inline-flex slot-label:w-full slot-label:min-w-0 slot-label:justify-between slot-label:gap-x-3"
 									size="small"
 									value={id}
 								>
@@ -208,7 +208,7 @@ export function ItemSearchFilters(props: Readonly<ItemSearchFiltersProps>): Reac
 							return (
 								<CheckBox
 									key={id}
-									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 *:data-[slot=label]:inline-flex *:data-[slot=label]:w-full *:data-[slot=label]:min-w-0 *:data-[slot=label]:justify-between *:data-[slot=label]:gap-x-3"
+									className="min-w-0 rounded-sm px-2 py-0.5 text-neutral-700 hover:bg-neutral-50 slot-label:inline-flex slot-label:w-full slot-label:min-w-0 slot-label:justify-between slot-label:gap-x-3"
 									size="small"
 									value={id}
 								>

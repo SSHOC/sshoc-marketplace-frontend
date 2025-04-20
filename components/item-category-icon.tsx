@@ -1,7 +1,7 @@
 import type { StaticImageData } from "next/image";
-import type { ReactNode } from "react";
+import type { ComponentPropsWithRef, ReactNode } from "react";
 
-import { Image } from "@/components/image";
+import { ServerImage as Image } from "@/components/server-image";
 import dataset from "@/public/assets/images/categories/dataset.svg";
 import publication from "@/public/assets/images/categories/publication.svg";
 import step from "@/public/assets/images/categories/step.svg";
@@ -26,9 +26,8 @@ const categories: Record<ItemCategory, StaticImageData> = {
 	workflow,
 };
 
-interface ItemCategoryIconProps {
+interface ItemCategoryIconProps extends Omit<ComponentPropsWithRef<typeof Image>, "alt" | "src"> {
 	category: ItemCategory;
-	className?: string;
 }
 
 export function ItemCategoryIcon(props: Readonly<ItemCategoryIconProps>): ReactNode {

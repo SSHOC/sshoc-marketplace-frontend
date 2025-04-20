@@ -13,6 +13,7 @@ export function FieldDescription(props: Readonly<FieldDescriptionProps>): ReactN
 		<AriaText
 			{...rest}
 			className={cn("text-tiny text-text-weak group-disabled:text-text-disabled", className)}
+			data-slot="description"
 			slot="description"
 		>
 			{children}

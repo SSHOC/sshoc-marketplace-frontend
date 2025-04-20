@@ -14,13 +14,16 @@ import { ButtonNavLink } from "@/components/ui/button";
 import { getCurrentUser, pluralize } from "@/lib/api/client";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationItem } from "@/lib/navigation/navigation";
-import { getIsAuthenticated } from "@/lib/server/auth/session";
+import { getIsAuthenticated, getSession } from "@/lib/server/auth/session";
 import logo from "@/public/assets/images/logo-with-text.svg";
 
 export async function PageHeader(): Promise<ReactNode> {
 	const t = await getTranslations("PageHeader");
 
 	const isAuthenticated = await getIsAuthenticated();
+	// TODO: move below a Suspense boundary
+	const token = await getSession();
+	const user = token != null ? await getCurrentUser(token) : null;
 
 	const navigation = {
 		home: {
@@ -269,6 +272,8 @@ export async function PageHeader(): Promise<ReactNode> {
 					pathname: "/account",
 				}),
 				label: t("navigation-user-account.items.user-account"),
+				// TODO:
+				// label: t("navigation-user-account.label-named", { name: user!.displayName })
 			},
 			"sign-out": {
 				type: "action",
@@ -347,9 +352,7 @@ export async function PageHeader(): Promise<ReactNode> {
 								>
 									<UserAccountMenu
 										items={userAccountItems.children}
-										label={t("navigation-user-account.label-named", {
-											name: (await getCurrentUser()).displayName,
-										})}
+										label={t("navigation-user-account.label-named", { name: user!.displayName })}
 									/>
 								</Suspense>
 							) : (

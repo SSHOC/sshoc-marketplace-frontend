@@ -234,7 +234,17 @@
 		},
 		"report-issue-message": "Describe the issue:\n\n"
 	},
-	"PublicationPage": {},
+	"PublicationPage": {
+		"breadcrumbs": {
+			"items": {
+				"home": "Home",
+				"publications": "Publications"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"go-to-publication": "Go to publication"
+	},
 	"SearchPage": {
 		"meta": {
 			"title": "Search"
@@ -270,7 +280,37 @@
 		},
 		"title": "Sign up"
 	},
-	"ToolOrServicePage": {},
-	"TrainingMaterialPage": {},
-	"WorkflowPage": {}
+	"ToolOrServicePage": {
+		"breadcrumbs": {
+			"items": {
+				"home": "Home",
+				"tools-services": "Tools & services"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"go-to-tool-or-service": "Go to tool or service"
+	},
+	"TrainingMaterialPage": {
+		"breadcrumbs": {
+			"items": {
+				"home": "Home",
+				"training-materials": "Training materials"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"go-to-training-material": "Go to training material"
+	},
+	"WorkflowPage": {
+		"breadcrumbs": {
+			"items": {
+				"home": "Home",
+				"workflows": "Workflows"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"go-to-workflow": "Go to workflow"
+	}
 }

@@ -13,7 +13,7 @@ import { NavLink } from "@/components/nav-link";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
 
 const buttonStyles = styles({
-	base: "*:data-[slot=icon]:first-child:-ml-1 *:data-[slot=icon]:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 text-center outline-transparent transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed *:data-[slot=icon]:shrink-0 forced-colors:disabled:text-[GrayText] pending:cursor-not-allowed",
+	base: "slot-icon:first-child:-ml-1 slot-icon:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 text-center outline-transparent transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed forced-colors:disabled:text-[GrayText] pending:cursor-not-allowed slot-icon:shrink-0",
 	variants: {
 		kind: {
 			primary: "bg-brand-750 text-neutral-0 hover:bg-brand-600 disabled:bg-neutral-200",
@@ -32,11 +32,11 @@ const buttonStyles = styles({
 		},
 	},
 	combinations: [
-		[{ size: "small", variant: "default" }, "min-h-8 px-3 py-1 *:data-[slot=icon]:size-4"],
-		[{ size: "medium", variant: "default" }, "min-h-12 px-10 py-2.5 *:data-[slot=icon]:size-5"],
+		[{ size: "small", variant: "default" }, "min-h-8 px-3 py-1 slot-icon:size-4"],
+		[{ size: "medium", variant: "default" }, "min-h-12 px-10 py-2.5 slot-icon:size-5"],
 
-		[{ size: "small", variant: "icon-only" }, "size-8 *:data-[slot=icon]:size-4"],
-		[{ size: "medium", variant: "icon-only" }, "size-12 *:data-[slot=icon]:size-6"],
+		[{ size: "small", variant: "icon-only" }, "size-8 slot-icon:size-4"],
+		[{ size: "medium", variant: "icon-only" }, "size-12 slot-icon:size-6"],
 	],
 	defaults: {
 		kind: "primary",

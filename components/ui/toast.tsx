@@ -74,10 +74,14 @@ export function Toast(props: Readonly<ToastProps>): ReactNode {
 			toast={toast}
 		>
 			<AriaToastContent className="flex min-w-0 flex-1 flex-col gap-y-1">
-				<AriaText className="text-lg font-semibold text-neutral-800" slot="title">
+				<AriaText className="text-lg font-semibold text-neutral-800" data-slot="title" slot="title">
 					{toast.content.title}
 				</AriaText>
-				<AriaText className="text-base text-neutral-700 empty:hidden" slot="description">
+				<AriaText
+					className="text-base text-neutral-700 empty:hidden"
+					data-slot="description"
+					slot="description"
+				>
 					{toast.content.description}
 				</AriaText>
 			</AriaToastContent>

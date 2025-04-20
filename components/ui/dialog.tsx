@@ -28,7 +28,7 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 			{...rest}
 			className={composeRenderProps(className, (className) => {
 				return cn(
-					"bg-fill-overlay entering:animate-underlay-in exiting:animate-underlay-out fixed inset-0 isolate z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 xs:items-center",
+					"bg-fill-overlay fixed inset-0 isolate z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 xs:items-center entering:animate-underlay-in exiting:animate-underlay-out",
 					className,
 				);
 			})}
@@ -39,7 +39,7 @@ export function ModalOverlay(props: Readonly<ModalOverlayProps>): ReactNode {
 }
 
 const modalStyles = styles({
-	base: "rounded-4 border-stroke-weak bg-background-overlay shadow-overlay entering:animate-overlay-in exiting:animate-overlay-out w-full overflow-hidden border p-8 forced-colors:bg-[Canvas]",
+	base: "rounded-4 border-stroke-weak bg-background-overlay shadow-overlay w-full overflow-hidden border p-8 forced-colors:bg-[Canvas] entering:animate-overlay-in exiting:animate-overlay-out",
 	variants: {
 		size: {
 			small: "max-w-128",
@@ -93,10 +93,7 @@ export function DialogHeader(props: Readonly<DialogHeaderProps>): ReactNode {
 	return (
 		<header
 			{...rest}
-			className={cn(
-				"grid content-start gap-y-2 *:data-[slot=icon]:mb-2 *:data-[slot=icon]:size-12",
-				className,
-			)}
+			className={cn("grid content-start gap-y-2 slot-icon:mb-2 slot-icon:size-12", className)}
 		>
 			{children}
 		</header>
@@ -112,6 +109,7 @@ export function DialogTitle(props: Readonly<DialogTitleProps>): ReactNode {
 		<AriaHeading
 			{...rest}
 			className={cn("text-heading-3 font-strong text-text-strong", className)}
+			data-slot="title"
 			slot="title"
 		>
 			{children}

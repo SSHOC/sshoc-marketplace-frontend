@@ -18,6 +18,6 @@
 	"exclude": ["node_modules", "out"],
 	"mdx": {
 		"checkMdx": false,
-		"plugins": ["remark-frontmatter", "remark-gfm"]
+		"plugins": ["remark-frontmatter", "remark-mdx-frontmatter", "remark-gfm"]
 	}
 }
