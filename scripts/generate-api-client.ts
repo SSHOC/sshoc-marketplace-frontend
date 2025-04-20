@@ -17,16 +17,26 @@ async function generate() {
 		alphabetize: true,
 		arrayLength: true,
 		defaultNonNullable: true,
-		propertiesRequiredByDefault: true,
 		enumValues: true,
 		exportType: false,
 		immutable: false,
 		pathParamsAsTypes: false, // TODO: try enabling
+		/**
+		 * In openapi, all properties are optional by default, which means properties, which are
+		 * required or guaranteed to be present need to be explicitly marked as such, which the
+		 * sshoc api does not do.
+		 *
+		 * Marking all properties as required is correct most of the time - we apply some fixes in
+		 * `transform` below.
+		 */
+		propertiesRequiredByDefault: true,
 		rootTypes: false,
 		transform(schemaObject, _metadata) {
 			if (schemaObject.format === "binary") {
 				return schemaObject.nullable === true ? ts.factory.createUnionTypeNode([BLOB, NULL]) : BLOB;
 			}
+
+			debugger;
 
 			return undefined;
 		},
