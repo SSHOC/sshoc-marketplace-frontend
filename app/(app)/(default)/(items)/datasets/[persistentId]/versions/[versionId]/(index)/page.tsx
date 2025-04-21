@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { Breadcrumbs } from "@/app/(app)/(default)/(items)/_components/breadcrumbs";
 import { CopyLinkButton } from "@/app/(app)/(default)/(items)/_components/copy-link-button";
 import { ItemThumbnail } from "@/app/(app)/(default)/(items)/_components/item-thumbnail";
+import { deleteDatasetVersion } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/versions/[versionId]/(index)/_lib/delete-dataset-version";
 import { getDatasetVersion } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/versions/[versionId]/(index)/_lib/get-dataset-version";
 import type { SearchParamsSchema as SearchPageSearchParamsSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ServerImage as Image } from "@/components/server-image";
@@ -17,11 +18,10 @@ import { getCurrentUser } from "@/lib/api/client";
 import { toJsx } from "@/lib/markdown/to-jsx";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { createHref } from "@/lib/navigation/create-href";
+import { redirect } from "@/lib/navigation/navigation";
 import { can } from "@/lib/server/auth/permissions";
 import { assertSession } from "@/lib/server/auth/session";
 import bg from "@/public/assets/images/backgrounds/item@2x.png";
-import { deleteDatasetVersion } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/versions/[versionId]/(index)/_lib/delete-dataset-version";
-import { redirect } from "@/lib/navigation/navigation";
 
 interface DatasetVersionPageProps {
 	params: Promise<{
@@ -36,7 +36,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	const { params } = props;
 
-	const { data: token, error } = await promise(() => assertSession());
+	const { data: token, error } = await promise(() => {
+		return assertSession();
+	});
 
 	if (error != null) {
 		redirect("/auth/sign-in");
@@ -61,7 +63,13 @@ export default async function DatasetVersionPage(
 ): Promise<ReactNode> {
 	const { params } = props;
 
-	const token = await assertSession();
+	const { data: token, error } = await promise(() => {
+		return assertSession();
+	});
+
+	if (error != null) {
+		redirect("/auth/sign-in");
+	}
 
 	const { persistentId: _persistentId, versionId: _versionId } = await params;
 	const persistentId = decodeURIComponent(_persistentId);
@@ -143,49 +151,53 @@ export default async function DatasetVersionPage(
 				</div>
 			</section>
 
-			<div className="flex gap-x-4">
-				{canEdit ? (
-					<ButtonLink
-						href={createHref({
-							pathname: `/datasets/${item.persistentId}/versions/${String(item.id)}/edit`,
-						})}
-						kind="negative"
-						size="small"
-					>
-						{t("controls.edit")}
-					</ButtonLink>
-				) : null}
-				{canDelete ? (
-					<DialogTrigger>
-						<Button kind="negative" size="small">
-							{t("controls.delete")}
-						</Button>
-						<Dialog>
-							<DialogTitle>{t("dialogs.delete.title")}</DialogTitle>
-							<DialogFooter>
-								<Button
-									kind="negative"
-									onPress={async () => {
-										"use server";
+			{/* FIXME: when does it make sense to actually show these controls? */}
+			{canEdit || canDelete ? (
+				<div className="flex gap-x-4">
+					{canEdit ? (
+						<ButtonLink
+							href={createHref({
+								pathname: `/datasets/${item.persistentId}/versions/${String(item.id)}/edit`,
+							})}
+							kind="negative"
+							size="small"
+						>
+							{t("controls.edit")}
+						</ButtonLink>
+					) : null}
+					{canDelete ? (
+						<DialogTrigger>
+							<Button kind="negative" size="small">
+								{t("controls.delete")}
+							</Button>
+							<Dialog>
+								<DialogTitle>{t("dialogs.delete.title")}</DialogTitle>
+								<DialogFooter>
+									<Button
+										kind="negative"
+										// eslint-disable-next-line @typescript-eslint/no-misused-promises
+										onPress={async () => {
+											"use server";
 
-										await deleteDatasetVersion({
-											persistentId: item.persistentId,
-											versionId: item.id,
-											token,
-										});
-									}}
-									slot="close"
-								>
-									{t("dialogs.delete.submit")}
-								</Button>
-								<Button kind="sceondary" slot="close">
-									{t("dialogs.delete.cancel")}
-								</Button>
-							</DialogFooter>
-						</Dialog>
-					</DialogTrigger>
-				) : null}
-			</div>
+											await deleteDatasetVersion({
+												persistentId: item.persistentId,
+												versionId: item.id,
+												token,
+											});
+										}}
+										slot="close"
+									>
+										{t("dialogs.delete.submit")}
+									</Button>
+									<Button kind="sceondary" slot="close">
+										{t("dialogs.delete.cancel")}
+									</Button>
+								</DialogFooter>
+							</Dialog>
+						</DialogTrigger>
+					) : null}
+				</div>
+			) : null}
 
 			<section className="relative flex flex-col gap-y-8 py-16">
 				<div className="prose">{description}</div>

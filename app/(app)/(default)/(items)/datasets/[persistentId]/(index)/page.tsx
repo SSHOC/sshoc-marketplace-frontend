@@ -7,14 +7,23 @@ import { Breadcrumbs } from "@/app/(app)/(default)/(items)/_components/breadcrum
 import { CopyLinkButton } from "@/app/(app)/(default)/(items)/_components/copy-link-button";
 import { ItemThumbnail } from "@/app/(app)/(default)/(items)/_components/item-thumbnail";
 import { SchemaOrgMetadata } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_components/schema-org-metadata";
-import { getDataset } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/get-dataset";
+import { deleteDataset } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/delete-dataset";
+import {
+	getDataset,
+	getDatasetDraft,
+	getDatasetSuggestion,
+} from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/get-dataset";
 import type { SearchParamsSchema as SearchPageSearchParamsSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ServerImage as Image } from "@/components/server-image";
-import { ButtonLink } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
+import { Dialog, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MainContent } from "@/components/ui/main-content";
+import { getCurrentUser } from "@/lib/api/client";
 import { toJsx } from "@/lib/markdown/to-jsx";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { createHref } from "@/lib/navigation/create-href";
+import { can } from "@/lib/server/auth/permissions";
+import { getSession } from "@/lib/server/auth/session";
 import bg from "@/public/assets/images/backgrounds/item@2x.png";
 
 interface DatasetPageProps {
@@ -45,12 +54,20 @@ export async function generateMetadata(
 export default async function DatasetPage(props: Readonly<DatasetPageProps>): Promise<ReactNode> {
 	const { params } = props;
 
+	const token = await getSession();
+
 	const { persistentId: _persistentId } = await params;
 	const persistentId = decodeURIComponent(_persistentId);
 
 	const t = await getTranslations("DatasetPage");
 
 	const item = await getDataset({ persistentId });
+	const suggestedItem = token != null ? await getDatasetSuggestion({ persistentId, token }) : null;
+	const draftItem = token != null ? await getDatasetDraft({ persistentId, token }) : null;
+
+	const user = token != null ? await getCurrentUser({ token }) : null;
+	const canDelete = user != null && can(user, item.category, "delete");
+	const canEdit = user != null && can(user, item.category, "edit");
 
 	const breadcrumbs = [
 		{
@@ -108,6 +125,75 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 					</CopyLinkButton>
 				</div>
 			</section>
+
+			{canEdit || canDelete ? (
+				<div className="flex gap-x-4">
+					{canEdit ? (
+						<ButtonLink
+							href={createHref({
+								pathname: `/datasets/${item.persistentId}/edit`,
+							})}
+							kind="negative"
+							size="small"
+						>
+							{t("controls.edit")}
+						</ButtonLink>
+					) : null}
+					{canEdit && draftItem != null && draftItem.status === "draft" ? (
+						<ButtonLink
+							href={createHref({
+								pathname: `/datasets/${item.persistentId}/edit`,
+								searchParams: { draft: true }, // FIXME: how do we want to deal with draft items
+							})}
+							kind="negative"
+							size="small"
+						>
+							{t("controls.edit")}
+						</ButtonLink>
+					) : null}
+					{canEdit && suggestedItem != null && suggestedItem.status === "suggested" ? (
+						<ButtonLink
+							href={createHref({
+								pathname: `/datasets/${item.persistentId}/versions/${String(suggestedItem.id)}/edit`,
+							})}
+							kind="negative"
+							size="small"
+						>
+							{t("controls.edit")}
+						</ButtonLink>
+					) : null}
+					{canDelete && token != null ? (
+						<DialogTrigger>
+							<Button kind="negative" size="small">
+								{t("controls.delete")}
+							</Button>
+							<Dialog>
+								<DialogTitle>{t("dialogs.delete.title")}</DialogTitle>
+								<DialogFooter>
+									<Button
+										kind="negative"
+										// eslint-disable-next-line @typescript-eslint/no-misused-promises
+										onPress={async () => {
+											"use server";
+
+											await deleteDataset({
+												persistentId: item.persistentId,
+												token,
+											});
+										}}
+										slot="close"
+									>
+										{t("dialogs.delete.submit")}
+									</Button>
+									<Button kind="sceondary" slot="close">
+										{t("dialogs.delete.cancel")}
+									</Button>
+								</DialogFooter>
+							</Dialog>
+						</DialogTrigger>
+					) : null}
+				</div>
+			) : null}
 
 			<section className="relative flex flex-col gap-y-8 py-16">
 				<div className="prose">{description}</div>

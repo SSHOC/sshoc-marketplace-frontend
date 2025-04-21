@@ -3,7 +3,7 @@ import type { GetCurrentUser, ItemCategory } from "@/lib/api/client";
 export function can(
 	user: GetCurrentUser.Response,
 	resource: ItemCategory,
-	action: "delete" | "edit",
+	action: "delete" | "edit" | "publish",
 ): boolean {
 	switch (resource) {
 		case "dataset":
@@ -19,6 +19,10 @@ export function can(
 
 				case "edit": {
 					return ["administrator", "contributor", "moderator"].includes(user.role);
+				}
+
+				case "publish": {
+					return ["administrator"].includes(user.role);
 				}
 			}
 		}

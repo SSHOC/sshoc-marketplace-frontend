@@ -1,3 +1,4 @@
+import { promise } from "@acdh-oeaw/lib";
 import type { Metadata, ResolvingMetadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -10,10 +11,9 @@ import { ServerImage as Image } from "@/components/server-image";
 import { Button } from "@/components/ui/button";
 import { MainContent } from "@/components/ui/main-content";
 import { createHref } from "@/lib/navigation/create-href";
+import { redirect } from "@/lib/navigation/navigation";
 import { assertSession } from "@/lib/server/auth/session";
 import bg from "@/public/assets/images/backgrounds/item@2x.png";
-import { promise } from "@acdh-oeaw/lib";
-import { redirect } from "@/lib/navigation/navigation";
 
 interface DatasetVersionsPageProps {
 	params: Promise<{
@@ -27,7 +27,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	const { params } = props;
 
-	const { data: token, error } = await promise(() => assertSession());
+	const { data: token, error } = await promise(() => {
+		return assertSession();
+	});
 
 	if (error != null) {
 		redirect("/auth/sign-in");
@@ -51,7 +53,13 @@ export default async function DatasetVersionsPage(
 ): Promise<ReactNode> {
 	const { params } = props;
 
-	const token = await assertSession();
+	const { data: token, error } = await promise(() => {
+		return assertSession();
+	});
+
+	if (error != null) {
+		redirect("/auth/sign-in");
+	}
 
 	const { persistentId: _persistentId } = await params;
 	const persistentId = decodeURIComponent(_persistentId);
@@ -126,6 +134,7 @@ export default async function DatasetVersionsPage(
 										</Link>
 									) : (
 										<Button
+											// eslint-disable-next-line @typescript-eslint/no-misused-promises
 											onPress={async () => {
 												"use server";
 

@@ -2,6 +2,7 @@ import "server-only";
 
 import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
 import createClient from "openapi-fetch";
+
 import { env } from "@/config/env.config";
 import {
 	itemBasicDtoCategoryValues,
@@ -186,6 +187,37 @@ export async function getDataset({
 
 //
 
+export declare namespace DeleteDataset {
+	export type SearchParams = paths["/api/datasets/{persistentId}"]["delete"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/datasets/{persistentId}"]["delete"]["responses"]["200"]["content"];
+}
+
+export async function deleteDataset({
+	persistentId,
+	searchParams,
+	token,
+}: {
+	persistentId: string;
+	searchParams?: DeleteDataset.SearchParams;
+	token?: string | null;
+}): Promise<DeleteDataset.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/datasets/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request<undefined>(url, {
+		method: "delete",
+		headers: token != null ? { authorization: token } : undefined,
+		responseType: "void",
+	})) as DeleteDataset.Response;
+}
+
+//
+
 export declare namespace GetDatasetVersion {
 	export type SearchParams =
 		paths["/api/datasets/{persistentId}/versions/{versionId}"]["get"]["parameters"]["query"];
@@ -207,7 +239,7 @@ export async function getDatasetVersion({
 }): Promise<GetDatasetVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/datasets/${persistentId}/versions/${versionId}`,
+		pathname: `/api/datasets/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
@@ -241,16 +273,16 @@ export async function deleteDatasetVersion({
 }): Promise<DeleteDatasetVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/datasets/${persistentId}/versions/${versionId}`,
+		pathname: `/api/datasets/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, {
+	return (await request<undefined>(url, {
 		method: "delete",
 		headers: { authorization: token },
 		responseType: "void",
-	})) as unknown as DeleteDatasetVersion.Response;
+	})) as DeleteDatasetVersion.Response;
 }
 
 //
@@ -320,6 +352,38 @@ export async function getPublication({
 
 //
 
+export declare namespace DeletePublication {
+	export type SearchParams =
+		paths["/api/publications/{persistentId}"]["delete"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/publications/{persistentId}"]["delete"]["responses"]["200"]["content"];
+}
+
+export async function deletePublication({
+	persistentId,
+	searchParams,
+	token,
+}: {
+	persistentId: string;
+	searchParams?: DeletePublication.SearchParams;
+	token?: string | null;
+}): Promise<DeletePublication.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/publications/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request<undefined>(url, {
+		method: "delete",
+		headers: token != null ? { authorization: token } : undefined,
+		responseType: "void",
+	})) as DeletePublication.Response;
+}
+
+//
+
 export declare namespace GetPublicationVersion {
 	export type SearchParams =
 		paths["/api/publications/{persistentId}/versions/{versionId}"]["get"]["parameters"]["query"];
@@ -341,7 +405,7 @@ export async function getPublicationVersion({
 }): Promise<GetPublicationVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/publications/${persistentId}/versions/${versionId}`,
+		pathname: `/api/publications/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
@@ -375,16 +439,16 @@ export async function deletePublicationVersion({
 }): Promise<DeletePublicationVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/publications/${persistentId}/versions/${versionId}`,
+		pathname: `/api/publications/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, {
+	return (await request<undefined>(url, {
 		method: "delete",
 		headers: { authorization: token },
 		responseType: "void",
-	})) as unknown as DeletePublicationVersion.Response;
+	})) as DeletePublicationVersion.Response;
 }
 
 //
@@ -454,6 +518,38 @@ export async function getToolOrService({
 
 //
 
+export declare namespace DeleteToolOrService {
+	export type SearchParams =
+		paths["/api/tools-services/{persistentId}"]["delete"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/tools-services/{persistentId}"]["delete"]["responses"]["200"]["content"];
+}
+
+export async function deleteToolOrService({
+	persistentId,
+	searchParams,
+	token,
+}: {
+	persistentId: string;
+	searchParams?: DeleteToolOrService.SearchParams;
+	token?: string | null;
+}): Promise<DeleteToolOrService.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/tools-services/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request<undefined>(url, {
+		method: "delete",
+		headers: token != null ? { authorization: token } : undefined,
+		responseType: "void",
+	})) as DeleteToolOrService.Response;
+}
+
+//
+
 export declare namespace GetToolOrServiceVersion {
 	export type SearchParams =
 		paths["/api/tools-services/{persistentId}/versions/{versionId}"]["get"]["parameters"]["query"];
@@ -475,7 +571,7 @@ export async function getToolOrServiceVersion({
 }): Promise<GetToolOrServiceVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/tools-services/${persistentId}/versions/${versionId}`,
+		pathname: `/api/tools-services/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
@@ -509,16 +605,16 @@ export async function deleteToolOrServiceVersion({
 }): Promise<DeleteToolOrServiceVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/tools-services/${persistentId}/versions/${versionId}`,
+		pathname: `/api/tools-services/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, {
+	return (await request<undefined>(url, {
 		method: "delete",
 		headers: { authorization: token },
 		responseType: "void",
-	})) as unknown as DeleteToolOrServiceVersion.Response;
+	})) as DeleteToolOrServiceVersion.Response;
 }
 
 //
@@ -588,6 +684,38 @@ export async function getTrainingMaterial({
 
 //
 
+export declare namespace DeleteTrainingMaterial {
+	export type SearchParams =
+		paths["/api/training-materials/{persistentId}"]["delete"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/training-materials/{persistentId}"]["delete"]["responses"]["200"]["content"];
+}
+
+export async function deleteTrainingMaterial({
+	persistentId,
+	searchParams,
+	token,
+}: {
+	persistentId: string;
+	searchParams?: DeleteTrainingMaterial.SearchParams;
+	token?: string | null;
+}): Promise<DeleteTrainingMaterial.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/training-materials/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request<undefined>(url, {
+		method: "delete",
+		headers: token != null ? { authorization: token } : undefined,
+		responseType: "void",
+	})) as DeleteTrainingMaterial.Response;
+}
+
+//
+
 export declare namespace GetTrainingMaterialVersion {
 	export type SearchParams =
 		paths["/api/training-materials/{persistentId}/versions/{versionId}"]["get"]["parameters"]["query"];
@@ -609,7 +737,7 @@ export async function getTrainingMaterialVersion({
 }): Promise<GetTrainingMaterialVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/training-materials/${persistentId}/versions/${versionId}`,
+		pathname: `/api/training-materials/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
@@ -643,16 +771,16 @@ export async function deleteTrainingMaterialVersion({
 }): Promise<DeleteTrainingMaterialVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/training-materials/${persistentId}/versions/${versionId}`,
+		pathname: `/api/training-materials/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, {
+	return (await request<undefined>(url, {
 		method: "delete",
 		headers: { authorization: token },
 		responseType: "void",
-	})) as unknown as DeleteTrainingMaterialVersion.Response;
+	})) as DeleteTrainingMaterialVersion.Response;
 }
 
 //
@@ -721,6 +849,38 @@ export async function getWorkflow({
 
 //
 
+export declare namespace DeleteWorkflow {
+	export type SearchParams =
+		paths["/api/workflows/{persistentId}"]["delete"]["parameters"]["query"];
+
+	export type Response =
+		paths["/api/workflows/{persistentId}"]["delete"]["responses"]["200"]["content"];
+}
+
+export async function deleteWorkflow({
+	persistentId,
+	searchParams,
+	token,
+}: {
+	persistentId: string;
+	searchParams?: DeleteWorkflow.SearchParams;
+	token?: string | null;
+}): Promise<DeleteWorkflow.Response> {
+	const url = createUrl({
+		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+		pathname: `/api/workflows/${persistentId}`,
+		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
+	});
+
+	return (await request<undefined>(url, {
+		method: "delete",
+		headers: token != null ? { authorization: token } : undefined,
+		responseType: "void",
+	})) as DeleteWorkflow.Response;
+}
+
+//
+
 export declare namespace GetWorkflowVersion {
 	export type SearchParams =
 		paths["/api/workflows/{persistentId}/versions/{versionId}"]["get"]["parameters"]["query"];
@@ -742,7 +902,7 @@ export async function getWorkflowVersion({
 }): Promise<GetWorkflowVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/workflows/${persistentId}/versions/${versionId}`,
+		pathname: `/api/workflows/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
@@ -776,16 +936,16 @@ export async function deleteWorkflowVersion({
 }): Promise<DeleteWorkflowVersion.Response> {
 	const url = createUrl({
 		baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
-		pathname: `/api/workflows/${persistentId}/versions/${versionId}`,
+		pathname: `/api/workflows/${persistentId}/versions/${String(versionId)}`,
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/strict-boolean-expressions
 		searchParams: searchParams ? createUrlSearchParams(searchParams) : undefined,
 	});
 
-	return (await request(url, {
+	return (await request<undefined>(url, {
 		method: "delete",
 		headers: { authorization: token },
 		responseType: "void",
-	})) as unknown as DeleteWorkflowVersion.Response;
+	})) as DeleteWorkflowVersion.Response;
 }
 
 //

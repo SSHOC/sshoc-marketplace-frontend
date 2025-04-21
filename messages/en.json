@@ -71,7 +71,20 @@
 			},
 			"label": "Breadcrumbs"
 		},
+		"controls": {
+			"delete": "Delete",
+			"edit": "Edit",
+			"edit-draft": "Edit current draft",
+			"edit-suggestion": "Edit last suggestion"
+		},
 		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete item"
+			}
+		},
 		"go-to-dataset": "Go to dataset"
 	},
 	"DatasetVersionPage": {
@@ -290,7 +303,20 @@
 			},
 			"label": "Breadcrumbs"
 		},
+		"controls": {
+			"delete": "Delete",
+			"edit": "Edit",
+			"edit-draft": "Edit current draft",
+			"edit-suggestion": "Edit last suggestion"
+		},
 		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete item"
+			}
+		},
 		"go-to-publication": "Go to publication"
 	},
 	"PublicationVersionPage": {
@@ -380,7 +406,20 @@
 			},
 			"label": "Breadcrumbs"
 		},
+		"controls": {
+			"delete": "Delete",
+			"edit": "Edit",
+			"edit-draft": "Edit current draft",
+			"edit-suggestion": "Edit last suggestion"
+		},
 		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete item"
+			}
+		},
 		"go-to-tool-or-service": "Go to tool or service"
 	},
 	"ToolOrServiceVersionPage": {
@@ -435,7 +474,20 @@
 			},
 			"label": "Breadcrumbs"
 		},
+		"controls": {
+			"delete": "Delete",
+			"edit": "Edit",
+			"edit-draft": "Edit current draft",
+			"edit-suggestion": "Edit last suggestion"
+		},
 		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete item"
+			}
+		},
 		"go-to-training-material": "Go to training material"
 	},
 	"TrainingMaterialVersionPage": {
@@ -490,7 +542,20 @@
 			},
 			"label": "Breadcrumbs"
 		},
+		"controls": {
+			"delete": "Delete",
+			"edit": "Edit",
+			"edit-draft": "Edit current draft",
+			"edit-suggestion": "Edit last suggestion"
+		},
 		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete item"
+			}
+		},
 		"go-to-workflow": "Go to workflow"
 	},
 	"WorkflowVersionPage": {
