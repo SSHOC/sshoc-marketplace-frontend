@@ -52,8 +52,10 @@ export default async function SearchPage(props: Readonly<SearchPageProps>): Prom
 	const validatedSearchParams = await v.parseAsync(searchParamsSchema, await searchParams);
 
 	const searchResults = await searchItems({
-		...validatedSearchParams,
-		order: [validatedSearchParams.order],
+		searchParams: {
+			...validatedSearchParams,
+			order: [validatedSearchParams.order],
+		},
 	});
 
 	return (

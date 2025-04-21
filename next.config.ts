@@ -135,7 +135,7 @@ const plugins: Array<(config: Config) => Config> = [
 			reactComponentAnnotation: {
 				enabled: true,
 			},
-			silent: env.CI === true,
+			silent: env.CI !== true,
 			/**
 			 * Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent
 			 * ad-blockers.

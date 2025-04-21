@@ -127,8 +127,10 @@ async function HeroSection(props: Readonly<HeroSectionProps>): Promise<ReactNode
 	const { suggestions } =
 		searchParams.q.length > 0
 			? await autocompleteItems({
-					q: searchParams.q,
-					category: searchParams.categories === "all" ? undefined : searchParams.categories,
+					searchParams: {
+						category: searchParams.categories === "all" ? undefined : searchParams.categories,
+						q: searchParams.q,
+					},
 				})
 					// FIXME: what should happen if this request fails?
 					.catch(() => {
@@ -175,8 +177,10 @@ async function BrowseSection(): Promise<ReactNode> {
 	 * Here we only need the list of facet values.
 	 */
 	const items = await searchItems({
-		order: ["modified-on"],
-		perpage: maxLastAddedItems,
+		searchParams: {
+			order: ["modified-on"],
+			perpage: maxLastAddedItems,
+		},
 	});
 
 	const { activity, keyword } = items.facets;
@@ -257,10 +261,12 @@ async function RecommendedSection(): Promise<ReactNode> {
 	const sections = await Promise.all(
 		categories.map(async (category) => {
 			const { items } = await searchItems({
-				categories: [category.id],
-				"f.keyword": ["recommended"],
-				order: ["modified-on"],
-				perpage: recommendedItemsCount,
+				searchParams: {
+					categories: [category.id],
+					"f.keyword": ["recommended"],
+					order: ["modified-on"],
+					perpage: recommendedItemsCount,
+				},
 			});
 
 			return { ...category, items };
@@ -322,8 +328,10 @@ async function LastUpdatedSection(): Promise<ReactNode> {
 	const t = await getTranslations("IndexPage");
 
 	const { items } = await searchItems({
-		order: ["modified-on"],
-		perpage: maxLastAddedItems,
+		searchParams: {
+			order: ["modified-on"],
+			perpage: maxLastAddedItems,
+		},
 	});
 
 	return (

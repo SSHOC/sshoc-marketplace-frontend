@@ -1,8 +1,9 @@
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { createUrl, log } from "@acdh-oeaw/lib";
-import openapiTS, { astToString } from "openapi-typescript";
+import { createUrl, log, request } from "@acdh-oeaw/lib";
+// import { bundle } from "@redocly/openapi-core";
+import openapiTS, { astToString, type OpenAPI3 } from "openapi-typescript";
 import * as ts from "typescript";
 
 import { env } from "@/config/env.config";
@@ -13,14 +14,18 @@ const NULL = ts.factory.createLiteralTypeNode(ts.factory.createNull());
 async function generate() {
 	const url = createUrl({ baseUrl: env.NEXT_PUBLIC_API_BASE_URL, pathname: "/v3/api-docs" });
 
-	const ast = await openapiTS(url, {
+	const schema = (await request(url, { responseType: "json" })) as OpenAPI3;
+
+	// TODO: use redocly to fix some schema issues before generating types
+
+	const ast = await openapiTS(schema, {
 		alphabetize: true,
 		arrayLength: true,
 		defaultNonNullable: true,
 		enumValues: true,
 		exportType: false,
 		immutable: false,
-		pathParamsAsTypes: false, // TODO: try enabling
+		pathParamsAsTypes: false,
 		/**
 		 * In openapi, all properties are optional by default, which means properties, which are
 		 * required or guaranteed to be present need to be explicitly marked as such, which the
@@ -40,13 +45,16 @@ async function generate() {
 		},
 	});
 
-	let contents = astToString(ast);
-
-	/** @see https://github.com/openapi-ts/openapi-typescript/issues/2138 */
-	contents = contents.replace(
-		/ReadonlyArray<(paths.*?\["query"\])/g,
-		"ReadonlyArray<NonNullable<$1>",
-	);
+	const contents = astToString(ast)
+		/** @see https://github.com/openapi-ts/openapi-typescript/issues/2138 */
+		.replace(/ReadonlyArray<(paths.*?\["query"\])/g, "ReadonlyArray<NonNullable<$1>")
+		/** Schema has incorrect `category` types. */
+		.replace(/(DatasetDto: \{(?:.|\n)*?category:).*?;/, '$1 "dataset";')
+		.replace(/(PublicationDto: \{(?:.|\n)*?category:).*?;/, '$1 "publication";')
+		.replace(/(StepDto: \{(?:.|\n)*?category:).*?;/, '$1 "step";')
+		.replace(/(ToolDto: \{(?:.|\n)*?category:).*?;/, '$1 "tool-or-service";')
+		.replace(/(TrainingMaterialDto: \{(?:.|\n)*?category:).*?;/, '$1 "training-material";')
+		.replace(/(WorkflowDto: \{(?:.|\n)*?category:).*?;/, '$1 "workflow";');
 
 	const outputFilePath = join(process.cwd(), "lib", "api", "schema.ts");
 

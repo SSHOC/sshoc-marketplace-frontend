@@ -66,13 +66,61 @@
 	"DatasetPage": {
 		"breadcrumbs": {
 			"items": {
-				"home": "Home",
-				"datasets": "Datasets"
+				"datasets": "Datasets",
+				"home": "Home"
 			},
 			"label": "Breadcrumbs"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"go-to-dataset": "Go to dataset"
+	},
+	"DatasetVersionPage": {
+		"alert": "You are currently viewing a dataset with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
+		"breadcrumbs": {
+			"items": {
+				"datasets": "Datasets",
+				"history": "History",
+				"home": "Home",
+				"version": "Version"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"delete": "Delete this version",
+			"edit": "Edit this version"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete this version"
+			}
+		},
+		"go-to-dataset": "Go to dataset"
+	},
+	"DatasetVersionsPage": {
+		"breadcrumbs": {
+			"items": {
+				"datasets": "Datasets",
+				"history": "History",
+				"home": "Home"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"edit": "Edit",
+			"revert": "Revert"
+		},
+		"status": {
+			"approved": "approved",
+			"deprecated": "deprecated",
+			"disapproved": "disapproved",
+			"draft": "draft",
+			"ingested": "ingested",
+			"suggested": "suggested"
+		},
+		"title": "History"
 	},
 	"ImprintPage": {
 		"meta": {
@@ -245,6 +293,50 @@
 		"copy-to-clipboard": "Copy to clipboard",
 		"go-to-publication": "Go to publication"
 	},
+	"PublicationVersionPage": {
+		"alert": "You are currently viewing a publication with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"publications": "Publications",
+				"version": "Version"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete this version"
+			}
+		},
+		"go-to-publication": "Go to publication"
+	},
+	"PublicationVersionsPage": {
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"publications": "Publications"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"edit": "Edit",
+			"revert": "Revert"
+		},
+		"status": {
+			"approved": "approved",
+			"deprecated": "deprecated",
+			"disapproved": "disapproved",
+			"draft": "draft",
+			"ingested": "ingested",
+			"suggested": "suggested"
+		},
+		"title": "History"
+	},
 	"SearchPage": {
 		"meta": {
 			"title": "Search"
@@ -291,6 +383,50 @@
 		"copy-to-clipboard": "Copy to clipboard",
 		"go-to-tool-or-service": "Go to tool or service"
 	},
+	"ToolOrServiceVersionPage": {
+		"alert": "You are currently viewing a tool or service with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"tools-services": "Tools & services",
+				"version": "Version"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete this version"
+			}
+		},
+		"go-to-tool-or-service": "Go to tool or service"
+	},
+	"ToolOrServiceVersionsPage": {
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"tools-services": "Tools & services"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"edit": "Edit",
+			"revert": "Revert"
+		},
+		"status": {
+			"approved": "approved",
+			"deprecated": "deprecated",
+			"disapproved": "disapproved",
+			"draft": "draft",
+			"ingested": "ingested",
+			"suggested": "suggested"
+		},
+		"title": "History"
+	},
 	"TrainingMaterialPage": {
 		"breadcrumbs": {
 			"items": {
@@ -302,6 +438,50 @@
 		"copy-to-clipboard": "Copy to clipboard",
 		"go-to-training-material": "Go to training material"
 	},
+	"TrainingMaterialVersionPage": {
+		"alert": "You are currently viewing a training material with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"training-materials": "Training materials",
+				"version": "Version"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete this version"
+			}
+		},
+		"go-to-training-material": "Go to training material"
+	},
+	"TrainingMaterialVersionsPage": {
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"training-materials": "Training materials"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"edit": "Edit",
+			"revert": "Revert"
+		},
+		"status": {
+			"approved": "approved",
+			"deprecated": "deprecated",
+			"disapproved": "disapproved",
+			"draft": "draft",
+			"ingested": "ingested",
+			"suggested": "suggested"
+		},
+		"title": "History"
+	},
 	"WorkflowPage": {
 		"breadcrumbs": {
 			"items": {
@@ -312,5 +492,49 @@
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"go-to-workflow": "Go to workflow"
+	},
+	"WorkflowVersionPage": {
+		"alert": "You are currently viewing a workflow with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"workflows": "Workflows",
+				"version": "Version"
+			},
+			"label": "Breadcrumbs"
+		},
+		"copy-to-clipboard": "Copy to clipboard",
+		"dialogs": {
+			"delete": {
+				"cancel": "Cancel",
+				"submit": "Delete",
+				"title": "Delete this version"
+			}
+		},
+		"go-to-workflow": "Go to workflow"
+	},
+	"WorkflowVersionsPage": {
+		"breadcrumbs": {
+			"items": {
+				"history": "History",
+				"home": "Home",
+				"workflows": "Workflows"
+			},
+			"label": "Breadcrumbs"
+		},
+		"controls": {
+			"edit": "Edit",
+			"revert": "Revert"
+		},
+		"status": {
+			"approved": "approved",
+			"deprecated": "deprecated",
+			"disapproved": "disapproved",
+			"draft": "draft",
+			"ingested": "ingested",
+			"suggested": "suggested"
+		},
+		"title": "History"
 	}
 }

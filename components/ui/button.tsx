@@ -20,6 +20,7 @@ const buttonStyles = styles({
 			sceondary: "bg-brand-600 text-neutral-0 disabled:bg-neutral-200",
 			gradient:
 				"bg-gradient-to-r from-brand-500 to-brand-800 bg-[length:125%] bg-left text-neutral-0 transition-all hover:bg-right disabled:bg-neutral-200",
+			negative: "bg-negative-600 text-neutral-0 hover:bg-negative-500 disabled:bg-neutral-200",
 			text: "text-brand-750 hover:text-brand-600 disabled:text-neutral-500",
 		},
 		size: {

@@ -32,7 +32,7 @@ export async function generateMetadata(
 	const { persistentId: _persistentId } = await params;
 	const persistentId = decodeURIComponent(_persistentId);
 
-	const item = await getDataset(persistentId);
+	const item = await getDataset({ persistentId });
 
 	const metadata: Metadata = {
 		title: item.label,
@@ -50,7 +50,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 
 	const t = await getTranslations("DatasetPage");
 
-	const item = await getDataset(persistentId);
+	const item = await getDataset({ persistentId });
 
 	const breadcrumbs = [
 		{

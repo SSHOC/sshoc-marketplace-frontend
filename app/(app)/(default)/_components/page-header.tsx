@@ -23,7 +23,7 @@ export async function PageHeader(): Promise<ReactNode> {
 	const isAuthenticated = await getIsAuthenticated();
 	// TODO: move below a Suspense boundary
 	const token = await getSession();
-	const user = token != null ? await getCurrentUser(token) : null;
+	const user = token != null ? await getCurrentUser({ token }) : null;
 
 	const navigation = {
 		home: {
