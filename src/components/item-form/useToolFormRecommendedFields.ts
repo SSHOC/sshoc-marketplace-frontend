@@ -10,7 +10,7 @@ const recommendedFields = {
   // description: '',
   // version: '',
   contributors: [{ role: { code: undefined }, actor: { id: undefined } }],
-  // accessibleAt: [undefined],
+  accessibleAt: [''],
   externalIds: [{ identifier: undefined, identifierService: { code: undefined } }],
   relatedItems: [{ relation: { code: undefined }, persistentId: undefined }],
 }
