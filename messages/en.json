@@ -87,6 +87,12 @@
 		},
 		"go-to-dataset": "Go to dataset"
 	},
+	"DatasetEditPage": {
+		"meta": {
+			"title": "Edit dataset"
+		},
+		"title": "Edit dataset"
+	},
 	"DatasetVersionPage": {
 		"alert": "You are currently viewing a dataset with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
 		"breadcrumbs": {
@@ -319,6 +325,12 @@
 		},
 		"go-to-publication": "Go to publication"
 	},
+	"PublicationEditPage": {
+		"meta": {
+			"title": "Edit publication"
+		},
+		"title": "Edit publication"
+	},
 	"PublicationVersionPage": {
 		"alert": "You are currently viewing a publication with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
 		"breadcrumbs": {
@@ -443,6 +455,12 @@
 		},
 		"go-to-tool-or-service": "Go to tool or service"
 	},
+	"ToolOrServiceEditPage": {
+		"meta": {
+			"title": "Edit tool or service"
+		},
+		"title": "Edit tool or service"
+	},
 	"ToolOrServiceVersionsPage": {
 		"breadcrumbs": {
 			"items": {
@@ -489,6 +507,12 @@
 			}
 		},
 		"go-to-training-material": "Go to training material"
+	},
+	"TrainingMaterialEditPage": {
+		"meta": {
+			"title": "Edit training material"
+		},
+		"title": "Edit training material"
 	},
 	"TrainingMaterialVersionPage": {
 		"alert": "You are currently viewing a training material with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",
@@ -557,6 +581,12 @@
 			}
 		},
 		"go-to-workflow": "Go to workflow"
+	},
+	"WorkflowEditPage": {
+		"meta": {
+			"title": "Edit workflow"
+		},
+		"title": "Edit workflow"
 	},
 	"WorkflowVersionPage": {
 		"alert": "You are currently viewing a workflow with status {status, select, approved {approved} deprecated {deprecated} disapproved {disapproved} draft {draft} ingested {ingested} suggested {suggested}}.",

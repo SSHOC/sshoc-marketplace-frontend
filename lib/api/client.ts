@@ -5,12 +5,17 @@ import createClient from "openapi-fetch";
 
 import { env } from "@/config/env.config";
 import {
+	type components,
 	itemBasicDtoCategoryValues,
 	type paths,
 	pathsApiItemSearchGetParametersQueryOrderValues,
 } from "@/lib/api/schema";
 
+// TODO:
 const client = createClient<paths>({ baseUrl: env.NEXT_PUBLIC_API_BASE_URL });
+
+// TODO:
+// wrap in react cache
 
 /**
  * Auth.
@@ -50,6 +55,8 @@ export const itemCategories = itemBasicDtoCategoryValues;
 export type ItemCategory = (typeof itemCategories)[number];
 
 export type ItemFacet = "activity" | "source" | "keyword" | "language";
+
+export type ItemStatus = components["schemas"]["ItemDto"]["status"];
 
 /** Frontend uses pluralized pathnames. */
 export const pluralize = {

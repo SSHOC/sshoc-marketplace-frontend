@@ -15,11 +15,12 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { Dialog, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MainContent } from "@/components/ui/main-content";
 import { getCurrentUser } from "@/lib/api/client";
+import { can } from "@/lib/items/can";
+import { is } from "@/lib/items/is";
 import { toJsx } from "@/lib/markdown/to-jsx";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { createHref } from "@/lib/navigation/create-href";
 import { redirect } from "@/lib/navigation/navigation";
-import { can } from "@/lib/server/auth/permissions";
 import { assertSession } from "@/lib/server/auth/session";
 import bg from "@/public/assets/images/backgrounds/item@2x.png";
 
@@ -78,11 +79,15 @@ export default async function DatasetVersionPage(
 	const t = await getTranslations("DatasetVersionPage");
 
 	// FIXME: the current marketplace also handles draft versions here
-	const item = await getDatasetVersion({ persistentId, versionId, token });
+	const [item, user] = await Promise.all([
+		getDatasetVersion({ persistentId, versionId, token }),
+		getCurrentUser({ token }),
+	]);
 
-	const user = await getCurrentUser({ token });
-	const canDelete = can(user, item.category, "delete");
-	const canEdit = can(user, item.category, "edit");
+	const isEditable = is(item.status, "editable");
+	const isDeletable = is(item.status, "deletable");
+	const canDelete = isDeletable && can(user, item.category, "delete");
+	const canEdit = isEditable && can(user, item.category, "edit");
 
 	const breadcrumbs = [
 		{

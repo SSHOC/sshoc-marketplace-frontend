@@ -17,6 +17,7 @@ const config: Config = {
 	experimental: {
 		// dynamicIO: true,
 		// ppr: true,
+		reactCompiler: true,
 		useCache: true,
 		viewTransition: true,
 	},

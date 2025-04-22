@@ -13,16 +13,18 @@ import {
 	getDatasetDraft,
 	getDatasetSuggestion,
 } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/get-dataset";
+import type { SearchParamsSchema as DatasetEditPageSearchParamsSchema } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/edit/_lib/validation";
 import type { SearchParamsSchema as SearchPageSearchParamsSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ServerImage as Image } from "@/components/server-image";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Dialog, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { MainContent } from "@/components/ui/main-content";
 import { getCurrentUser } from "@/lib/api/client";
+import { can } from "@/lib/items/can";
+import { is } from "@/lib/items/is";
 import { toJsx } from "@/lib/markdown/to-jsx";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { createHref } from "@/lib/navigation/create-href";
-import { can } from "@/lib/server/auth/permissions";
 import { getSession } from "@/lib/server/auth/session";
 import bg from "@/public/assets/images/backgrounds/item@2x.png";
 
@@ -61,13 +63,19 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 
 	const t = await getTranslations("DatasetPage");
 
-	const item = await getDataset({ persistentId });
-	const suggestedItem = token != null ? await getDatasetSuggestion({ persistentId, token }) : null;
-	const draftItem = token != null ? await getDatasetDraft({ persistentId, token }) : null;
+	const [item, suggestedItem, draftItem, user] = await Promise.all([
+		getDataset({ persistentId }),
+		token != null ? getDatasetSuggestion({ persistentId, token }) : null,
+		token != null ? getDatasetDraft({ persistentId, token }) : null,
+		token != null ? getCurrentUser({ token }) : null,
+	]);
 
-	const user = token != null ? await getCurrentUser({ token }) : null;
-	const canDelete = user != null && can(user, item.category, "delete");
-	const canEdit = user != null && can(user, item.category, "edit");
+	const hasSuggestion = suggestedItem != null && suggestedItem.status === "suggested";
+	const hasDraft = draftItem != null && draftItem.status === "draft";
+	const isEditable = is(item.status, "editable");
+	const isDeletable = is(item.status, "deletable");
+	const canDelete = isDeletable && user != null && can(user, item.category, "delete");
+	const canEdit = isEditable && user != null && can(user, item.category, "edit");
 
 	const breadcrumbs = [
 		{
@@ -126,6 +134,8 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 				</div>
 			</section>
 
+			{/* FIXME: when does it make sense to actually show these controls? */}
+			{/* FIXME: should we automatically load a draft if it exists, and a suggestion if not approved? */}
 			{canEdit || canDelete ? (
 				<div className="flex gap-x-4">
 					{canEdit ? (
@@ -139,11 +149,13 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 							{t("controls.edit")}
 						</ButtonLink>
 					) : null}
-					{canEdit && draftItem != null && draftItem.status === "draft" ? (
+					{canEdit && hasDraft ? (
 						<ButtonLink
 							href={createHref({
 								pathname: `/datasets/${item.persistentId}/edit`,
-								searchParams: { draft: true }, // FIXME: how do we want to deal with draft items
+								searchParams: {
+									initial: "draft",
+								} satisfies Partial<DatasetEditPageSearchParamsSchema>,
 							})}
 							kind="negative"
 							size="small"
@@ -151,7 +163,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 							{t("controls.edit")}
 						</ButtonLink>
 					) : null}
-					{canEdit && suggestedItem != null && suggestedItem.status === "suggested" ? (
+					{canEdit && hasSuggestion ? (
 						<ButtonLink
 							href={createHref({
 								pathname: `/datasets/${item.persistentId}/versions/${String(suggestedItem.id)}/edit`,
@@ -162,7 +174,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 							{t("controls.edit")}
 						</ButtonLink>
 					) : null}
-					{canDelete && token != null ? (
+					{canDelete ? (
 						<DialogTrigger>
 							<Button kind="negative" size="small">
 								{t("controls.delete")}
@@ -178,7 +190,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 
 											await deleteDataset({
 												persistentId: item.persistentId,
-												token,
+												token: token!,
 											});
 										}}
 										slot="close"
