@@ -35,17 +35,19 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
 
           return (
             <FormFieldListItem key={name}>
-              <FormTextField {...field} name={name} />
-              <FormFieldListItemControls>
-                <FormRecordRemoveButton
-                  aria-label={t(['authenticated', 'forms', 'remove-field'], {
-                    values: { field: field.itemLabel },
-                  })}
-                  onPress={onRemove}
-                >
-                  {t(['authenticated', 'controls', 'delete'])}
-                </FormRecordRemoveButton>
-              </FormFieldListItemControls>
+              <FormTextField {...field} name={name} isRequired={field.isRequired && index === 0} />
+              {(!field.isRequired || index > 0) && (
+                <FormFieldListItemControls>
+                  <FormRecordRemoveButton
+                    aria-label={t(['authenticated', 'forms', 'remove-field'], {
+                      values: { field: field.itemLabel },
+                    })}
+                    onPress={onRemove}
+                  >
+                    {t(['authenticated', 'controls', 'delete'])}
+                  </FormRecordRemoveButton>
+                </FormFieldListItemControls>
+              )}
             </FormFieldListItem>
           )
         })}

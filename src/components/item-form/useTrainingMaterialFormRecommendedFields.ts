@@ -9,7 +9,7 @@ const recommendedFields = {
   // label: '',
   // description: '',
   contributors: [{ role: { code: undefined }, actor: { id: undefined } }],
-  accessibleAt: [undefined],
+  accessibleAt: [''],
   externalIds: [{ identifier: undefined, identifierService: { code: undefined } }],
   relatedItems: [{ relation: { code: undefined }, persistentId: undefined }],
 }
@@ -19,13 +19,10 @@ const recommendedProperties = [
   'keyword',
   'discipline',
   'language',
-  'object-format',
-  'extent',
   'intended-audience',
   'see-also',
   'license',
   'standard',
-  'terms-of-use-url',
   'year',
   'resource-category',
 ]

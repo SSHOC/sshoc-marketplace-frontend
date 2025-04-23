@@ -22,7 +22,6 @@ const recommendedProperties = [
   'standard',
   'resource-category',
   'see-also',
-  'license',
 ]
 
 const properties: Array<

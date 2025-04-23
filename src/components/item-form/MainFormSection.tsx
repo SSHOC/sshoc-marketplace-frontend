@@ -24,9 +24,9 @@ export function MainFormSection(props: MainFormSectionProps): JSX.Element {
         <FormSectionTitle>{t(['authenticated', 'forms', 'main-section'])}</FormSectionTitle>
       </VisuallyHidden>
       <FormTextField {...fields.label} />
-      <FormTextField {...fields.version} />
       <FormTextArea {...fields.description} rows={6} />
       <AccessibleAtFormFieldArray field={fields.accessibleAt} />
+      <FormTextField {...fields.version} />
       <ExternalIdsFormFieldArray field={fields.externalIds} />
     </FormSection>
   )

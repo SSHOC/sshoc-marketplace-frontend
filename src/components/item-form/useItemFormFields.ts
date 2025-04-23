@@ -36,11 +36,6 @@ export function useItemFormFields(prefix = '') {
         description: t(['authenticated', 'fields', 'label', 'description']),
         isRequired: true,
       },
-      version: {
-        name: `${prefix}version`,
-        label: t(['authenticated', 'fields', 'version', 'label']),
-        description: t(['authenticated', 'fields', 'version', 'description']),
-      },
       description: {
         name: `${prefix}description`,
         label: t(['authenticated', 'fields', 'description', 'label']),
@@ -52,6 +47,12 @@ export function useItemFormFields(prefix = '') {
         label: t(['authenticated', 'fields', 'accessibleAt', 'label', 'other']),
         itemLabel: t(['authenticated', 'fields', 'accessibleAt', 'label', 'one']),
         description: t(['authenticated', 'fields', 'accessibleAt', 'description']),
+        isRequired: true,
+      },
+      version: {
+        name: `${prefix}version`,
+        label: t(['authenticated', 'fields', 'version', 'label']),
+        description: t(['authenticated', 'fields', 'version', 'description']),
       },
       externalIds: {
         name: `${prefix}externalIds`,
