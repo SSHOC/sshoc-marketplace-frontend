@@ -67,6 +67,8 @@ export default async function DatasetVersionsPage(
 	const t = await getTranslations("DatasetVersionsPage");
 	const format = await getFormatter();
 
+	// FIXME: should the history page include draft and suggested items?
+	// const versions = await getDatasetVersions({ persistentId, searchParams: { draft: true, approved: false }, token });
 	const versions = await getDatasetVersions({ persistentId, token });
 	const item = versions.at(0)!;
 

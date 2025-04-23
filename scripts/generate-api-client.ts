@@ -15,8 +15,45 @@ async function generate() {
 
 	const schema = (await request(url, { responseType: "json" })) as OpenAPI3;
 
+	/**
+	 * In openapi schemas, object properties are optional by default - but the schema document
+	 * provided by the backend does not correctly mark `required` fields.
+	 */
 	Object.entries(schema.components!.schemas!).forEach(([name, def]) => {
 		switch (name) {
+			case "ActorDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ActorRoleDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ActorSourceDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
 			case "DatasetDto": {
 				assert(def.type === "object" && def.properties != null);
 
@@ -24,7 +61,62 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["dataset"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemContributorDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemExternalIdDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemMediaDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PropertyDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -39,7 +131,29 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["publication"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "RelatedItemDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "SourceBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -54,7 +168,7 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["step"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -69,7 +183,7 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["tool-or-service"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -84,7 +198,7 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["training-material"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -99,7 +213,7 @@ async function generate() {
 				assert(category != null && "type" in category && category.type === "string");
 				category.enum = ["workflow"];
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = ["thumbnail"];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -107,10 +221,21 @@ async function generate() {
 				break;
 			}
 
-			case "ItemDto": {
+			case "UserDto": {
 				assert(def.type === "object" && def.properties != null);
 
-				const optional = ["thumbnail"];
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "VocabularyBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});

@@ -75,7 +75,8 @@
 			"delete": "Delete",
 			"edit": "Edit",
 			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion"
+			"edit-suggestion": "Edit last suggestion",
+			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"dialogs": {
@@ -313,7 +314,8 @@
 			"delete": "Delete",
 			"edit": "Edit",
 			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion"
+			"edit-suggestion": "Edit last suggestion",
+			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"dialogs": {
@@ -422,7 +424,8 @@
 			"delete": "Delete",
 			"edit": "Edit",
 			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion"
+			"edit-suggestion": "Edit last suggestion",
+			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"dialogs": {
@@ -496,7 +499,8 @@
 			"delete": "Delete",
 			"edit": "Edit",
 			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion"
+			"edit-suggestion": "Edit last suggestion",
+			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"dialogs": {
@@ -570,7 +574,8 @@
 			"delete": "Delete",
 			"edit": "Edit",
 			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion"
+			"edit-suggestion": "Edit last suggestion",
+			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
 		"dialogs": {

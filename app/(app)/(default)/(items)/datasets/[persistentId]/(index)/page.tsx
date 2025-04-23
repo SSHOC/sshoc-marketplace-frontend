@@ -76,6 +76,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 	const isDeletable = is(item.status, "deletable");
 	const canDelete = isDeletable && user != null && can(user, item.category, "delete");
 	const canEdit = isEditable && user != null && can(user, item.category, "edit");
+	const canViewVersionHistory = token != null;
 
 	const breadcrumbs = [
 		{
@@ -118,7 +119,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 					<ItemThumbnail
 						category={item.category}
 						// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-						mediaId={item.thumbnail?.info.mediaId}
+						mediaId={item.thumbnail?.info?.mediaId}
 					/>
 					<h1 className="py-1 text-[2rem] leading-[1.25] font-medium text-neutral-800">
 						{item.label}
@@ -136,14 +137,25 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 
 			{/* FIXME: when does it make sense to actually show these controls? */}
 			{/* FIXME: should we automatically load a draft if it exists, and a suggestion if not approved? */}
-			{canEdit || canDelete ? (
+			{canViewVersionHistory || canEdit || canDelete ? (
 				<div className="flex gap-x-4">
+					{canViewVersionHistory ? (
+						<ButtonLink
+							href={createHref({
+								pathname: `/datasets/${item.persistentId}/versions`,
+							})}
+							kind="secondary"
+							size="small"
+						>
+							{t("controls.history")}
+						</ButtonLink>
+					) : null}
 					{canEdit ? (
 						<ButtonLink
 							href={createHref({
 								pathname: `/datasets/${item.persistentId}/edit`,
 							})}
-							kind="negative"
+							kind="secondary"
 							size="small"
 						>
 							{t("controls.edit")}
@@ -157,10 +169,10 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 									initial: "draft",
 								} satisfies Partial<DatasetEditPageSearchParamsSchema>,
 							})}
-							kind="negative"
+							kind="secondary"
 							size="small"
 						>
-							{t("controls.edit")}
+							{t("controls.edit-draft")}
 						</ButtonLink>
 					) : null}
 					{canEdit && hasSuggestion ? (
@@ -168,10 +180,10 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 							href={createHref({
 								pathname: `/datasets/${item.persistentId}/versions/${String(suggestedItem.id)}/edit`,
 							})}
-							kind="negative"
+							kind="secondary"
 							size="small"
 						>
-							{t("controls.edit")}
+							{t("controls.edit-suggestion")}
 						</ButtonLink>
 					) : null}
 					{canDelete ? (
@@ -197,7 +209,7 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 									>
 										{t("dialogs.delete.submit")}
 									</Button>
-									<Button kind="sceondary" slot="close">
+									<Button kind="secondary" slot="close">
 										{t("dialogs.delete.cancel")}
 									</Button>
 								</DialogFooter>

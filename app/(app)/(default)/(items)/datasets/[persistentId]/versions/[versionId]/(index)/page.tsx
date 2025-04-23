@@ -157,6 +157,7 @@ export default async function DatasetVersionPage(
 			</section>
 
 			{/* FIXME: when does it make sense to actually show these controls? */}
+			{/* FIXME: should we just *not* show any controls here? the only usecase would be continuing to edit a version in suggested state, but we should link there from the user account page, and also maybe from the item-details page directly */}
 			{canEdit || canDelete ? (
 				<div className="flex gap-x-4">
 					{canEdit ? (

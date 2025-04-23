@@ -2,6 +2,7 @@ import "server-only";
 
 import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
 import createClient from "openapi-fetch";
+import { cache } from "react";
 
 import { env } from "@/config/env.config";
 import {
@@ -27,7 +28,7 @@ export declare namespace GetCurrentUser {
 		paths["/api/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
 }
 
-export async function getCurrentUser({
+export const getCurrentUser = cache(async function getCurrentUser({
 	token,
 }: {
 	token: string;
@@ -43,7 +44,7 @@ export async function getCurrentUser({
 	})) as GetCurrentUser.Response;
 
 	return data;
-}
+});
 
 /**
  * Util.
@@ -177,6 +178,7 @@ export async function getDataset({
 	token,
 }: {
 	persistentId: string;
+	/** Note that `draft` takes precedence over `approved`. */
 	searchParams?: GetDataset.SearchParams;
 	token?: string | null;
 }): Promise<GetDataset.Response> {
@@ -342,6 +344,7 @@ export async function getPublication({
 	token,
 }: {
 	persistentId: string;
+	/** Note that `draft` takes precedence over `approved`. */
 	searchParams?: GetPublication.SearchParams;
 	token?: string | null;
 }): Promise<GetPublication.Response> {
@@ -508,6 +511,7 @@ export async function getToolOrService({
 	token,
 }: {
 	persistentId: string;
+	/** Note that `draft` takes precedence over `approved`. */
 	searchParams?: GetToolOrService.SearchParams;
 	token?: string | null;
 }): Promise<GetToolOrService.Response> {
@@ -674,6 +678,7 @@ export async function getTrainingMaterial({
 	token,
 }: {
 	persistentId: string;
+	/** Note that `draft` takes precedence over `approved`. */
 	searchParams?: GetTrainingMaterial.SearchParams;
 	token?: string | null;
 }): Promise<GetTrainingMaterial.Response> {
@@ -839,6 +844,7 @@ export async function getWorkflow({
 	token,
 }: {
 	persistentId: string;
+	/** Note that `draft` takes precedence over `approved`. */
 	searchParams?: GetWorkflow.SearchParams;
 	token?: string | null;
 }): Promise<GetWorkflow.Response> {

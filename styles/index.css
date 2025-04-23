@@ -409,6 +409,11 @@
 		block-size: 100%;
 	}
 
+	:root {
+		/** @see https://github.com/adobe/react-spectrum/issues/8086 */
+		touch-action: pan-x pan-y pinch-zoom;
+	}
+
 	::selection {
 		background-color: var(--color-brand-600);
 		color: var(--color-neutral-0);
