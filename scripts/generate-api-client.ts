@@ -1,8 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { createUrl, log, request } from "@acdh-oeaw/lib";
-// import { bundle } from "@redocly/openapi-core";
+import { assert, createUrl, log, request } from "@acdh-oeaw/lib";
 import openapiTS, { astToString, type OpenAPI3 } from "openapi-typescript";
 import * as ts from "typescript";
 
@@ -16,7 +15,112 @@ async function generate() {
 
 	const schema = (await request(url, { responseType: "json" })) as OpenAPI3;
 
-	// TODO: use redocly to fix some schema issues before generating types
+	Object.entries(schema.components!.schemas!).forEach(([name, def]) => {
+		switch (name) {
+			case "DatasetDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["dataset"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PublicationDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["publication"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "StepDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["step"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ToolDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["tool-or-service"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "TrainingMaterialDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["training-material"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "WorkflowDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const category = def.properties.category;
+				assert(category != null && "type" in category && category.type === "string");
+				category.enum = ["workflow"];
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			default:
+		}
+	});
 
 	const ast = await openapiTS(schema, {
 		alphabetize: true,
@@ -26,15 +130,6 @@ async function generate() {
 		exportType: false,
 		immutable: false,
 		pathParamsAsTypes: false,
-		/**
-		 * In openapi, all properties are optional by default, which means properties, which are
-		 * required or guaranteed to be present need to be explicitly marked as such, which the
-		 * sshoc api does not do.
-		 *
-		 * Marking all properties as required is correct most of the time - we apply some fixes in
-		 * `transform` below.
-		 */
-		propertiesRequiredByDefault: true,
 		rootTypes: false,
 		transform(schemaObject, _metadata) {
 			if (schemaObject.format === "binary") {
@@ -47,14 +142,7 @@ async function generate() {
 
 	const contents = astToString(ast)
 		/** @see https://github.com/openapi-ts/openapi-typescript/issues/2138 */
-		.replace(/ReadonlyArray<(paths.*?\["query"\])/g, "ReadonlyArray<NonNullable<$1>")
-		/** Schema has incorrect `category` types. */
-		.replace(/(DatasetDto: \{(?:.|\n)*?category:).*?;/, '$1 "dataset";')
-		.replace(/(PublicationDto: \{(?:.|\n)*?category:).*?;/, '$1 "publication";')
-		.replace(/(StepDto: \{(?:.|\n)*?category:).*?;/, '$1 "step";')
-		.replace(/(ToolDto: \{(?:.|\n)*?category:).*?;/, '$1 "tool-or-service";')
-		.replace(/(TrainingMaterialDto: \{(?:.|\n)*?category:).*?;/, '$1 "training-material";')
-		.replace(/(WorkflowDto: \{(?:.|\n)*?category:).*?;/, '$1 "workflow";');
+		.replace(/ReadonlyArray<(paths.*?\["query"\])/g, "ReadonlyArray<NonNullable<$1>");
 
 	const outputFilePath = join(process.cwd(), "lib", "api", "schema.ts");
 
