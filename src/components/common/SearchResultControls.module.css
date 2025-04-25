@@ -3,8 +3,7 @@
   flex-wrap: wrap;
   grid-area: controls;
   gap: var(--space-3);
-  align-self: end;
-  justify-self: end;
+  place-self: end end;
   font-size: var(--font-size-3-5);
   text-align: end;
 }

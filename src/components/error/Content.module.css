@@ -2,8 +2,7 @@
   display: grid;
   grid-area: content;
   row-gap: var(--space-8);
-  align-content: center;
+  place-content: center start;
   align-self: stretch;
-  justify-content: start;
   max-width: var(--size-192);
 }

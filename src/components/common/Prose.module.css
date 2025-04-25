@@ -246,7 +246,6 @@
     }
   }
 
-  /* stylelint-disable-next-line no-descending-specificity, selector-pseudo-class-no-unknown */
   & :global(.footnotes) {
     font-size: var(--font-size-3);
   }
