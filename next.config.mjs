@@ -34,14 +34,6 @@ import { defaultLocale, locales } from "./config/i18n.config.mjs";
 /** @typedef {import('@stefanprobst/remark-mdx-page').Options} MdxPageOptions */
 /** @typedef {import('hast').Element} HastElement */
 
-// TODO:
-const _ContentSecurityPolicy = `
-  default-src 'self';
-  img-src *;
-  media-src *;
-  script-src 'self' matomo.acdh.oeaw.ac.at;
-`;
-
 /** @type {NextConfig} */
 const config = {
 	eslint: {
@@ -57,10 +49,6 @@ const config = {
 						key: "X-DNS-Prefetch-Control",
 						value: "on",
 					},
-					// {
-					//   key: 'Content-Security-Policy',
-					//   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-					// },
 				],
 			},
 			{
