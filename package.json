@@ -147,7 +147,8 @@
     "zod": "^3.14.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.1",
+    "@acdh-oeaw/commitlint-config": "^2.0.0",
+    "@commitlint/cli": "^19.8.0",
     "@faker-js/faker": "^6.1.1",
     "@mswjs/data": "^0.9.2",
     "@next/eslint-plugin-next": "^15.3.1",
@@ -162,7 +163,6 @@
     "@react-types/select": "^3.9.9",
     "@react-types/shared": "^3.27.0",
     "@react-types/textfield": "^3.11.0",
-    "@stefanprobst/commitlint-config": "^1.0.2",
     "@stefanprobst/eslint-config-next": "^5.0.2",
     "@stefanprobst/next-image-loader": "^1.0.3",
     "@stefanprobst/prettier-config": "^2.0.1",
@@ -219,7 +219,7 @@
     ]
   },
   "commitlint": {
-    "extends": "@stefanprobst/commitlint-config"
+    "extends": "@acdh-oeaw/commitlint-config"
   },
   "eslintConfig": {
     "extends": "@stefanprobst/eslint-config-next",
