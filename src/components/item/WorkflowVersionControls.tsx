@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemVersionControls } from "@/components/item/ItemVersionControls";
 import type { ItemStatus } from "@/data/sshoc/api/item";
 import type { Workflow } from "@/data/sshoc/api/workflow";
@@ -8,7 +10,7 @@ export interface WorkflowVersionControlsProps {
 	versionId: Workflow["id"];
 }
 
-export function WorkflowVersionControls(props: WorkflowVersionControlsProps): JSX.Element {
+export function WorkflowVersionControls(props: WorkflowVersionControlsProps): ReactNode {
 	const { persistentId, status, versionId } = props;
 
 	return (

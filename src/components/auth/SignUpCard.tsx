@@ -7,7 +7,7 @@ export interface SignUpCardProps {
 	children?: ReactNode;
 }
 
-export function SignUpCard(props: SignUpCardProps): JSX.Element {
+export function SignUpCard(props: SignUpCardProps): ReactNode {
 	return (
 		<div className={css["container"]}>
 			<Card>{props.children}</Card>

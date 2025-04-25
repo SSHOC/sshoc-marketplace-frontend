@@ -77,9 +77,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ToolOrServiceHistoryPage(
-	props: ToolOrServiceHistoryPage.Props,
-): JSX.Element {
+export default function ToolOrServiceHistoryPage(props: ToolOrServiceHistoryPage.Props): ReactNode {
 	const { persistentId } = props.params;
 
 	const meta: QueryMetadata = {

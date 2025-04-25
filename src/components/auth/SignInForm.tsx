@@ -1,5 +1,5 @@
 import { useButton } from "@react-aria/button";
-import { useRef } from "react";
+import { type ReactNode, useRef } from "react";
 
 import css from "@/components/auth/SignInForm.module.css";
 import { Link } from "@/components/common/Link";
@@ -13,7 +13,7 @@ import { isNonEmptyString } from "@/lib/utils";
 
 export type SignInFormValues = SignInInput;
 
-export function SignInForm(): JSX.Element {
+export function SignInForm(): ReactNode {
 	const { t } = useI18n<"common">();
 	const { signInWithBasicAuth, signInWithOAuth, isSignedOut } = useAuth();
 

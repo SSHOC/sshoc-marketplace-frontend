@@ -6,7 +6,7 @@ import { ToastContainer as ToastifyContainer } from "react-toastify";
 
 import { toastAutoCloseDelay } from "~/config/site.config";
 
-export function ToastContainer(): JSX.Element {
+export function ToastContainer(): ReactNode {
 	// const { theme } = useTheme()
 
 	return (

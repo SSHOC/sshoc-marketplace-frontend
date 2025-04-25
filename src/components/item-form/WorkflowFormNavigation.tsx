@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 
 import type { WorkflowFormPage } from "@/components/item-form/useWorkflowFormPage";
@@ -13,7 +14,7 @@ export interface WorkflowFormNavigationProps {
 	setPage: (page: WorkflowFormPage) => void;
 }
 
-export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): JSX.Element | null {
+export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): ReactNode {
 	const { page, setPage } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

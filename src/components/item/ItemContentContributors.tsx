@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/item/ItemMetadata.module.css";
 import type { User } from "@/data/sshoc/api/user";
 import { useI18n } from "@/lib/core/i18n/useI18n";
@@ -7,7 +9,7 @@ export interface ItemContentContributorsProps {
 	contentContributors: Array<User> | undefined;
 }
 
-export function ItemContentContributors(props: ItemContentContributorsProps): JSX.Element | null {
+export function ItemContentContributors(props: ItemContentContributorsProps): ReactNode {
 	const { contentContributors } = props;
 
 	const { t } = useI18n<"common">();

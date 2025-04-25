@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import type { ReactNode } from "react";
 
 import { FormSections } from "@/components/common/FormSections";
 import { ActorReviewFormSection } from "@/components/item-form/ActorReviewFormSection";
@@ -33,7 +34,7 @@ export interface ItemReviewFormProps<T extends ItemInput> extends FormProps<T> {
 
 export function ItemReviewForm<T extends ItemReviewFormValues<ItemInput>>(
 	props: ItemReviewFormProps<T>,
-): JSX.Element {
+): ReactNode {
 	const { diff, formFields, initialValues, name, onCancel, onReject, onSubmit, validate } = props;
 
 	// FIXME: Make ItemsDiff generic, fix initialValues type

@@ -43,7 +43,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ModerateItemsPage(_props: ModerateItemsPage.Props): JSX.Element {
+export default function ModerateItemsPage(_props: ModerateItemsPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const title = t(["authenticated", "pages", "moderate-items"]);

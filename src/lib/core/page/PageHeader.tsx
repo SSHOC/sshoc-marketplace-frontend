@@ -11,7 +11,7 @@ import css from "@/lib/core/page/PageHeader.module.css";
 import { PageNavigation } from "@/lib/core/page/PageNavigation";
 import Logo from "~/public/assets/images/logo-with-text.svg";
 
-export function PageHeader(): JSX.Element {
+export function PageHeader(): ReactNode {
 	const { t } = useI18n<"common">();
 	const pathname = usePathname();
 	const currentUser = useCurrentUser();

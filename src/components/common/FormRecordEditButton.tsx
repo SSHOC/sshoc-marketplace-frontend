@@ -1,4 +1,4 @@
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import type { FormButtonLinkProps } from "@/lib/core/form/FormButtonLink";
@@ -11,7 +11,7 @@ export type FormRecordEditButtonProps = FormButtonLinkProps;
 export const FormRecordEditButton = forwardRef(function FormRecordEditButton(
 	props: FormRecordEditButtonProps,
 	forwardeRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { children } = props;
 
 	return (

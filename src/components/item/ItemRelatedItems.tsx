@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
 import { ItemsCount } from "@/components/common/ItemsCount";
@@ -16,7 +16,7 @@ export interface ItemRelatedItemsProps {
 	headingLevel?: 2 | 3 | 4;
 }
 
-export function ItemRelatedItems(props: ItemRelatedItemsProps): JSX.Element | null {
+export function ItemRelatedItems(props: ItemRelatedItemsProps): ReactNode {
 	const { items, headingLevel = 2 } = props;
 
 	const { t } = useI18n<"common">();

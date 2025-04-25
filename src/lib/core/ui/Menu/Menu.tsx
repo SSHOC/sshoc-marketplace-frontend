@@ -27,7 +27,7 @@ export interface MenuProps<T extends object> extends AriaMenuProps<T> {
 export const Menu = forwardRef(function Menu<T extends object>(
 	props: MenuProps<T>,
 	forwardedRef: ForwardedRef<HTMLUListElement>,
-): JSX.Element {
+): ReactNode {
 	const { variant = "primary" } = props;
 
 	const contextProps = useMenuContext();

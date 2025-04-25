@@ -21,7 +21,7 @@ export interface ModalDialogProps extends AriaOverlayProps, AriaDialogProps {
 	title?: ReactNode;
 }
 
-export function ModalDialog(props: ModalDialogProps): JSX.Element {
+export function ModalDialog(props: ModalDialogProps): ReactNode {
 	const { children, isDismissable = false, isOpen, onClose, style, title } = props;
 
 	const ref = useRef<HTMLDivElement>(null);

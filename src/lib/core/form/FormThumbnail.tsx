@@ -10,7 +10,7 @@ export interface FormThumbnailProps extends Omit<ThumbnailProps, "value"> {
 	name: string;
 }
 
-export function FormThumbnail(props: FormThumbnailProps): JSX.Element {
+export function FormThumbnail(props: FormThumbnailProps): ReactNode {
 	const { input, meta } = useField(props.name, {
 		allowNull: true,
 		parse: identity,

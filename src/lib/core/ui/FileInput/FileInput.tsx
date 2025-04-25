@@ -27,7 +27,7 @@ export interface FileInputProps extends Omit<AriaTextFieldProps, "onChange" | "v
 export const FileInput = forwardRef(function FileInput(
 	props: FileInputProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const { t } = useI18n<"common">();
 	const [fileList, setFileList] = useState<FileList | null>(null);
 

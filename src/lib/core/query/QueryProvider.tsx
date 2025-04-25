@@ -10,7 +10,7 @@ interface QueryProviderProps {
 	state: DehydratedState | undefined;
 }
 
-export function QueryProvider(props: QueryProviderProps): JSX.Element {
+export function QueryProvider(props: QueryProviderProps): ReactNode {
 	const { client, state } = props;
 
 	return (

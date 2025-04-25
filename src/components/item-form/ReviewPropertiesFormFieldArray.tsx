@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, type ReactNode, useMemo } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -27,7 +27,7 @@ export interface ReviewPropertiesFormFieldArrayProps {
 
 export function ReviewPropertiesFormFieldArray(
 	props: ReviewPropertiesFormFieldArrayProps,
-): JSX.Element {
+): ReactNode {
 	const { field } = props;
 
 	const { t, createCollator } = useI18n<"authenticated" | "common">();

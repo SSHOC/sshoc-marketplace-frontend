@@ -26,7 +26,7 @@ export interface ClearButtonProps<T extends ElementType = "button"> extends Aria
 export const ClearButton = forwardRef(function ClearButton<T extends ElementType = "button">(
 	props: ClearButtonProps<T>,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const defaultIcon = <Icon icon={CrossIcon} width="0.5em" />;
 
 	const { t } = useI18n<"common">();

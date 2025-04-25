@@ -27,7 +27,7 @@ export interface ApiEndpointProps {
 	title: ReactNode;
 }
 
-export function ApiEndpoint(props: ApiEndpointProps): JSX.Element {
+export function ApiEndpoint(props: ApiEndpointProps): ReactNode {
 	const { children, endpoint, title } = props;
 
 	/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */

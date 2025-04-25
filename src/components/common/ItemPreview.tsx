@@ -17,7 +17,7 @@ export interface ItemPreviewProps {
 	headingLevel?: 2 | 3 | 4 | 5;
 }
 
-export function ItemPreview(props: ItemPreviewProps): JSX.Element {
+export function ItemPreview(props: ItemPreviewProps): ReactNode {
 	const { controls = null, item, headingLevel = 2 } = props;
 
 	const { t } = useI18n<"common">();

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import { useActorRoles } from "@/data/sshoc/hooks/actor";
 import { FormSelect } from "@/lib/core/form/FormSelect";
@@ -7,7 +9,7 @@ export interface ActorRoleSelectProps {
 	field: ItemFormFields["fields"]["contributors"]["fields"]["role"];
 }
 
-export function ActorRoleSelect(props: ActorRoleSelectProps): JSX.Element {
+export function ActorRoleSelect(props: ActorRoleSelectProps): ReactNode {
 	const { field } = props;
 
 	const actorRoles = useActorRoles();

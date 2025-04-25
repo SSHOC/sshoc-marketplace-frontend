@@ -8,7 +8,7 @@ export interface BreadcrumbsProps {
 	links: Array<{ href: string; label: string; isCurrent?: boolean; isDisabled?: boolean }>;
 }
 
-export function Breadcrumbs(props: BreadcrumbsProps): JSX.Element {
+export function Breadcrumbs(props: BreadcrumbsProps): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (

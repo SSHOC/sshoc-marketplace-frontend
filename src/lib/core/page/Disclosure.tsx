@@ -18,7 +18,7 @@ export interface DisclosureProps {
 export const Disclosure = forwardRef(function Disclosure(
 	props: DisclosureProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const state = useDisclosureState(props);
 	// FIXME: ref for what? also solved by using separate components for button and content
 	const buttonRef = useObjectRef(forwardedRef);

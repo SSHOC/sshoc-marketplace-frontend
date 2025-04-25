@@ -58,7 +58,7 @@ export interface LinkProps extends AriaLinkProps {
 export const Link = forwardRef(function Link(
 	props: LinkProps,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		"aria-current": ariaCurrent,
 		children,

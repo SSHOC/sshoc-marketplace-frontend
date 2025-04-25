@@ -52,7 +52,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): JSX.Element {
+export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "privacy-policy"]);

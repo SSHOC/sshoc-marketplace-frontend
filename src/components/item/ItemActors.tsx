@@ -1,5 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import css from "@/components/item/ItemMetadata.module.css";
 import type { Actor } from "@/data/sshoc/api/actor";
@@ -11,7 +11,7 @@ export interface ItemActorsProps {
 	actors: Item["contributors"];
 }
 
-export function ItemActors(props: ItemActorsProps): JSX.Element | null {
+export function ItemActors(props: ItemActorsProps): ReactNode {
 	const { actors } = props;
 
 	const { t } = useI18n<"common">();
@@ -112,7 +112,7 @@ interface ActorAffiliationsProps {
 	affiliations: Actor["affiliations"];
 }
 
-function ActorAffiliations(props: ActorAffiliationsProps): JSX.Element | null {
+function ActorAffiliations(props: ActorAffiliationsProps): ReactNode {
 	const { affiliations } = props;
 
 	if (affiliations.length === 0) {
@@ -134,7 +134,7 @@ interface ActorEmailProps {
 	email: Actor["email"];
 }
 
-function ActorEmail(props: ActorEmailProps): JSX.Element | null {
+function ActorEmail(props: ActorEmailProps): ReactNode {
 	const { email } = props;
 
 	if (email == null) {
@@ -154,7 +154,7 @@ interface ActorWebsiteProps {
 	website: Actor["website"];
 }
 
-function ActorWebsite(props: ActorWebsiteProps): JSX.Element | null {
+function ActorWebsite(props: ActorWebsiteProps): ReactNode {
 	const { website } = props;
 
 	if (website == null) {
@@ -174,7 +174,7 @@ interface ActorExternalIdsProps {
 	externalIds: Actor["externalIds"];
 }
 
-function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element | null {
+function ActorExternalIds(props: ActorExternalIdsProps): ReactNode {
 	const { externalIds } = props;
 
 	if (externalIds.length === 0) {

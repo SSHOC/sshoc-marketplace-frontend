@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import css from "@/components/common/ItemPreviewMetadata.module.css";
 import { Link } from "@/components/common/Link";
@@ -18,7 +18,7 @@ export interface ItemPreviewMetadataProps {
 	item: ItemSearchResult | ItemWithWorkflowStep | RelatedItem;
 }
 
-export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): JSX.Element | null {
+export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode {
 	const { item } = props;
 
 	const { t } = useI18n<"common">();
@@ -77,9 +77,7 @@ interface ItemPreviewMetadataValueListProps {
 	facet: ItemFacet;
 }
 
-function ItemPreviewMetadataValueList(
-	props: ItemPreviewMetadataValueListProps,
-): JSX.Element | null {
+function ItemPreviewMetadataValueList(props: ItemPreviewMetadataValueListProps): ReactNode {
 	const { label, properties, facet } = props;
 
 	const { getSearchItemsLink } = useSearchItems();

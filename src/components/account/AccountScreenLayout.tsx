@@ -6,6 +6,6 @@ export interface AccountScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function AccountScreenLayout(props: AccountScreenLayoutProps): JSX.Element {
+export function AccountScreenLayout(props: AccountScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

@@ -7,7 +7,7 @@ export interface PageMainContentProps {
 	children?: ReactNode;
 }
 
-export function PageMainContent(props: PageMainContentProps): JSX.Element {
+export function PageMainContent(props: PageMainContentProps): ReactNode {
 	const { pageLoadingIndicator, skipToMainContent } = usePage();
 
 	return (

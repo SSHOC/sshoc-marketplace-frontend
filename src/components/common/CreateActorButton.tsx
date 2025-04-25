@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import type { ActorFormValues } from "@/components/common/ActorForm";
 import { ActorForm } from "@/components/common/ActorForm";
@@ -16,7 +16,7 @@ export interface CreateActorButtonProps {
 	variant?: "button-link" | "button";
 }
 
-export function CreateActorButton(props: CreateActorButtonProps): JSX.Element {
+export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 	const { variant = "button" } = props;
 
 	const dialog = useModalDialogTriggerState({});

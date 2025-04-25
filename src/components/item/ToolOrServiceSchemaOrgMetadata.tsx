@@ -1,4 +1,5 @@
 import { SchemaOrg } from "@stefanprobst/next-page-metadata";
+import type { ReactNode } from "react";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Tool } from "@/data/sshoc/api/tool-or-service";
@@ -9,7 +10,7 @@ export interface ToolOrServiceSchemaOrgMetadataProps {
 
 export function ToolOrServiceSchemaOrgMetadata(
 	props: ToolOrServiceSchemaOrgMetadataProps,
-): JSX.Element {
+): ReactNode {
 	const { toolOrService: tool } = props;
 
 	const conceptBasedProperties = tool.properties.filter(isPropertyConcept);

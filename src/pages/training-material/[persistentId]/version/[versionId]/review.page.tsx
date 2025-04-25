@@ -93,7 +93,7 @@ export async function getStaticProps(
 
 export default function ReviewTrainingMaterialPage(
 	props: ReviewTrainingMaterialPage.Props,
-): JSX.Element {
+): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

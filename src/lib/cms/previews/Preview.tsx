@@ -13,7 +13,7 @@ export interface PreviewProps {
 	children?: ReactNode;
 }
 
-export function Preview(props: PreviewProps): JSX.Element {
+export function Preview(props: PreviewProps): ReactNode {
 	return (
 		<RouterContext.Provider value={mockRouter}>
 			<ErrorBoundary fallback={ErrorFallback}>

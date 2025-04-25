@@ -9,7 +9,7 @@ export interface ItemMetadataProps {
 	children?: ReactNode;
 }
 
-export function ItemMetadata(props: ItemMetadataProps): JSX.Element {
+export function ItemMetadata(props: ItemMetadataProps): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (

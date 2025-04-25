@@ -6,6 +6,6 @@ export interface SignUpScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function SignUpScreenLayout(props: SignUpScreenLayoutProps): JSX.Element {
+export function SignUpScreenLayout(props: SignUpScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

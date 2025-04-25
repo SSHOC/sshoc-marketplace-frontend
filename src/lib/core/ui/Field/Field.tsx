@@ -21,7 +21,7 @@ export interface FieldProps extends Omit<LabelProps, "elementType">, HelpTextPro
 export const Field = forwardRef(function Field(
 	props: FieldProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		children,
 		description,

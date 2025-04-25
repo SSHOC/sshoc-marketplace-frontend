@@ -20,7 +20,7 @@ export interface LabelProps extends AriaLabelProps, DOMProps {
 export const Label = forwardRef(function Label(
 	props: LabelProps,
 	forwardedRef: ForwardedRef<HTMLLabelElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		children,
 		elementType: ElementType = "label",

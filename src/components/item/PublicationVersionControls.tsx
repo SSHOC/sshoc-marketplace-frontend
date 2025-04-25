@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemVersionControls } from "@/components/item/ItemVersionControls";
 import type { ItemStatus } from "@/data/sshoc/api/item";
 import type { Publication } from "@/data/sshoc/api/publication";
@@ -8,7 +10,7 @@ export interface PublicationVersionControlsProps {
 	versionId: Publication["id"];
 }
 
-export function PublicationVersionControls(props: PublicationVersionControlsProps): JSX.Element {
+export function PublicationVersionControls(props: PublicationVersionControlsProps): ReactNode {
 	const { persistentId, status, versionId } = props;
 
 	return (

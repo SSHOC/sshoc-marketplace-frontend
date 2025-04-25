@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useUserSearch } from "@/components/account/useUserSearch";
 import { useUserSearchFilters } from "@/components/account/useUserSearchFilters";
 import { useUserSearchResults } from "@/components/account/useUserSearchResults";
@@ -10,7 +12,7 @@ export interface UserSearchResultsPageNavigationProps {
 
 export function UserSearchResultsPageNavigation(
 	props: UserSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useUserSearchResults();
 	const searchFilters = useUserSearchFilters();
 	const { getSearchUsersLink, searchUsers } = useUserSearch();

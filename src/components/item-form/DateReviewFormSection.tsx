@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { ReviewField } from "@/components/item-form/ReviewField";
@@ -11,7 +13,7 @@ export interface DateReviewFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.Element | null {
+export function DateReviewFormSection(props: DateReviewFormSectionProps): ReactNode {
 	const { category, fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

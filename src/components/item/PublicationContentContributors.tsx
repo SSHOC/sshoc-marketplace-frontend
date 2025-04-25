@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemContentContributors } from "@/components/item/ItemContentContributors";
 import type { Item } from "@/data/sshoc/api/item";
 import { usePublicationVersionInformationContributors } from "@/data/sshoc/hooks/publication";
@@ -9,7 +11,7 @@ export interface PublicationContentContributorsProps {
 
 export function PublicationContentContributors(
 	props: PublicationContentContributorsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId, versionId } = props;
 
 	const contentContributors = usePublicationVersionInformationContributors({

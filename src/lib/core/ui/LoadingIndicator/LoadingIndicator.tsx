@@ -18,7 +18,7 @@ export interface LoadingIndicatorProps extends DOMProps, AriaLabelingProps {
 export const LoadingIndicator = forwardRef(function LoadingIndicator(
 	props: LoadingIndicatorProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, size = "md", style } = props;
 
 	const { t } = useI18n<"common">();

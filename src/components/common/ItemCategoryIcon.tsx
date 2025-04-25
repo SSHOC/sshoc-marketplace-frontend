@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemCategoryWithWorkflowStep } from "@/data/sshoc/api/item";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import DatasetIcon from "~/public/assets/images/categories/dataset.svg?symbol-icon";
@@ -11,7 +13,7 @@ export interface ItemCategoryIconProps {
 	category: ItemCategoryWithWorkflowStep;
 }
 
-export function ItemCategoryIcon(props: ItemCategoryIconProps): JSX.Element {
+export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const label = t(["common", "item-categories", props.category, "one"]);

@@ -6,6 +6,6 @@ export interface ItemSearchFormPanelProps {
 	children?: ReactNode;
 }
 
-export function ItemSearchFormPanel(props: ItemSearchFormPanelProps): JSX.Element {
+export function ItemSearchFormPanel(props: ItemSearchFormPanelProps): ReactNode {
 	return <div className={css["container"]}>{props.children}</div>;
 }

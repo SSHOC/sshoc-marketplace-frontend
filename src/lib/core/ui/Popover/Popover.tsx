@@ -17,7 +17,7 @@ export interface PopoverProps extends AriaPopoverProps {
 export const Popover = forwardRef(function Popover(
 	props: PopoverProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		arrowProps,
 		children,
@@ -130,7 +130,7 @@ interface ArrowProps {
 	direction: Axis;
 }
 
-function Arrow(props: ArrowProps): JSX.Element {
+function Arrow(props: ArrowProps): ReactNode {
 	const [size, setSize] = useState(20);
 	const [borderWidth, setBorderWidth] = useState(1);
 	const ref = useRef<SVGSVGElement>(null);

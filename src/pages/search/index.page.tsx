@@ -44,7 +44,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function SearchPage(_props: SearchPage.Props): JSX.Element {
+export default function SearchPage(_props: SearchPage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "search"]);

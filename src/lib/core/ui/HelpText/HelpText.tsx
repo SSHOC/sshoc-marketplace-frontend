@@ -16,7 +16,7 @@ export interface HelpTextProps extends AriaHelpTextProps, Validation {
 export const HelpText = forwardRef(function HelpText(
 	props: HelpTextProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		description,
 		errorMessage,

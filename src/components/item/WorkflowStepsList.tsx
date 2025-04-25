@@ -1,5 +1,5 @@
 import { useButton } from "@react-aria/button";
-import { useRef } from "react";
+import { type ReactNode, useRef } from "react";
 
 import { ItemPreviewMetadata } from "@/components/common/ItemPreviewMetadata";
 import { ItemsCount } from "@/components/common/ItemsCount";
@@ -19,7 +19,7 @@ export interface WorkflowStepsListProps {
 	steps: Workflow["composedOf"];
 }
 
-export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element | null {
+export function WorkflowStepsList(props: WorkflowStepsListProps): ReactNode {
 	const { steps } = props;
 
 	const { t } = useI18n<"common">();
@@ -56,7 +56,7 @@ interface WorkflowStepProps {
 	step: Workflow["composedOf"][number];
 }
 
-function WorkflowStep(props: WorkflowStepProps): JSX.Element {
+function WorkflowStep(props: WorkflowStepProps): ReactNode {
 	const { index, step } = props;
 
 	const { t } = useI18n<"common">();

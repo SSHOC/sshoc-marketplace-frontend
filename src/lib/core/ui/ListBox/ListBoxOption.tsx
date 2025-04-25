@@ -20,7 +20,7 @@ export interface ListBoxOptionProps<T extends object> {
 export const ListBoxOption = forwardRef(function ListBoxOption<T extends object>(
 	props: ListBoxOptionProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const { item, shouldFocusOnHover, shouldSelectOnPressUp, shouldUseVirtualFocus } = props;
 
 	const { rendered, key } = item;

@@ -37,7 +37,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function CreateDatasetPage(_props: CreateDatasetPage.Props): JSX.Element {
+export default function CreateDatasetPage(_props: CreateDatasetPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const category = "dataset";

@@ -74,7 +74,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ContributePage(props: ContributePage.TemplateProps): JSX.Element {
+export default function ContributePage(props: ContributePage.TemplateProps): ReactNode {
 	const { id } = props.params;
 
 	const { t } = useI18n<"common">();

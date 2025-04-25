@@ -25,7 +25,7 @@ export interface MenuTriggerProps
 export const MenuTrigger = forwardRef(function MenuTrigger(
 	props: MenuTriggerProps,
 	forwardedRef: ForwardedRef<HTMLElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		children,
 		align = "start",

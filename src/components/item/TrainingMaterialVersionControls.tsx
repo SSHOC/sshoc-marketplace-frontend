@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemVersionControls } from "@/components/item/ItemVersionControls";
 import type { ItemStatus } from "@/data/sshoc/api/item";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
@@ -10,7 +12,7 @@ export interface TrainingMaterialVersionControlsProps {
 
 export function TrainingMaterialVersionControls(
 	props: TrainingMaterialVersionControlsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId, status, versionId } = props;
 
 	return (

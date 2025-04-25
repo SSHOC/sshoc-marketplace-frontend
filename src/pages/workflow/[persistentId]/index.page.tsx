@@ -115,7 +115,7 @@ export async function getStaticProps(
 	}
 }
 
-export default function WorkflowPage(props: WorkflowPage.Props): JSX.Element {
+export default function WorkflowPage(props: WorkflowPage.Props): ReactNode {
 	const { persistentId } = props.params;
 	const queryClient = useQueryClient();
 	const _workflow = useWorkflow({ persistentId }, undefined, {

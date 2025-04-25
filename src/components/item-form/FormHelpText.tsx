@@ -1,8 +1,9 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import css from "@/components/item-form/FormHelpText.module.css";
 
-export function FormHelpText(): JSX.Element {
+export function FormHelpText(): ReactNode {
 	return (
 		<p className={css["text"]}>
 			If you need more details on metadata fields, please consult{" "}

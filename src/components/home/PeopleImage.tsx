@@ -1,9 +1,10 @@
 import Image from "next/legacy/image";
+import type { ReactNode } from "react";
 
 import css from "@/components/home/PeopleImage.module.css";
 import People from "~/public/assets/images/backgrounds/home-people.svg";
 
-export function PeopleImage(): JSX.Element {
+export function PeopleImage(): ReactNode {
 	return (
 		<div className={css["container"]}>
 			<Image src={People} alt="" layout="fill" objectFit="contain" objectPosition="bottom" />

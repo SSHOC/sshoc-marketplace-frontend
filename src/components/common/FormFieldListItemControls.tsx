@@ -6,7 +6,7 @@ export interface FormFieldListItemControlsProps {
 	children?: ReactNode;
 }
 
-export function FormFieldListItemControls(props: FormFieldListItemControlsProps): JSX.Element {
+export function FormFieldListItemControls(props: FormFieldListItemControlsProps): ReactNode {
 	const { children } = props;
 
 	return <div className={css["container"]}>{children}</div>;

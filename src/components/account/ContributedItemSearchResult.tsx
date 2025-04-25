@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemLink } from "@/components/common/ItemLink";
 import { Link } from "@/components/common/Link";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -17,9 +19,7 @@ export interface ContributedItemSearchResultProps {
 	item: ContributedItem;
 }
 
-export function ContributedItemSearchResult(
-	props: ContributedItemSearchResultProps,
-): JSX.Element | null {
+export function ContributedItemSearchResult(props: ContributedItemSearchResultProps): ReactNode {
 	const { item } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

@@ -6,6 +6,6 @@ export interface ItemScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function ItemScreenLayout(props: ItemScreenLayoutProps): JSX.Element {
+export function ItemScreenLayout(props: ItemScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

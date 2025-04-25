@@ -30,7 +30,7 @@ export interface NavigationMenuProps<T extends object> extends MenuTriggerProps 
  * @see https://w3c.github.io/aria-practices/examples/disclosure/disclosure-navigation.html
  * @see https://www.evinced.com/blog/a11y-nav-menus/
  */
-export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>): JSX.Element {
+export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>): ReactNode {
 	const state = useMenuTriggerState(props);
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { menuProps, menuTriggerProps } = useMenuTrigger({ type: "menu" }, state, buttonRef);

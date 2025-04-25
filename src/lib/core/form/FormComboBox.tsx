@@ -9,7 +9,7 @@ export interface FormComboBoxProps<T extends object> extends Omit<ComboBoxProps<
 	name: string;
 }
 
-export function FormComboBox<T extends object>(props: FormComboBoxProps<T>): JSX.Element {
+export function FormComboBox<T extends object>(props: FormComboBoxProps<T>): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

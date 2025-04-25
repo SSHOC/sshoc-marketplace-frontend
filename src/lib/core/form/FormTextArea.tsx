@@ -9,7 +9,7 @@ export interface FormTextAreaProps extends Omit<TextAreaProps, "value"> {
 	name: string;
 }
 
-export function FormTextArea(props: FormTextAreaProps): JSX.Element {
+export function FormTextArea(props: FormTextAreaProps): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

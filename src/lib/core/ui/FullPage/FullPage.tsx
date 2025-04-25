@@ -6,7 +6,7 @@ export interface FullPageProps {
 	children?: ReactNode;
 }
 
-export function FullPage(props: FullPageProps): JSX.Element {
+export function FullPage(props: FullPageProps): ReactNode {
 	return (
 		<main id="main" tabIndex={-1} className={css["container"]}>
 			{props.children}

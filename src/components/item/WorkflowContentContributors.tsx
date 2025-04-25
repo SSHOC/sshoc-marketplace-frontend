@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemContentContributors } from "@/components/item/ItemContentContributors";
 import type { Item } from "@/data/sshoc/api/item";
 import { useWorkflowVersionInformationContributors } from "@/data/sshoc/hooks/workflow";
@@ -7,7 +9,7 @@ export interface WorkflowContentContributorsProps {
 	versionId: Item["id"];
 }
 
-export function WorkflowContentContributors(props: WorkflowContentContributorsProps): JSX.Element {
+export function WorkflowContentContributors(props: WorkflowContentContributorsProps): ReactNode {
 	const { persistentId, versionId } = props;
 
 	const contentContributors = useWorkflowVersionInformationContributors({

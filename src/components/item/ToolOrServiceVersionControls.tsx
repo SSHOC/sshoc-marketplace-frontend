@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemVersionControls } from "@/components/item/ItemVersionControls";
 import type { ItemStatus } from "@/data/sshoc/api/item";
 import type { Tool } from "@/data/sshoc/api/tool-or-service";
@@ -8,9 +10,7 @@ export interface ToolOrServiceVersionControlsProps {
 	versionId: Tool["id"];
 }
 
-export function ToolOrServiceVersionControls(
-	props: ToolOrServiceVersionControlsProps,
-): JSX.Element {
+export function ToolOrServiceVersionControls(props: ToolOrServiceVersionControlsProps): ReactNode {
 	const { persistentId, status, versionId } = props;
 
 	return (

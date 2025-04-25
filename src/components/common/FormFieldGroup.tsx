@@ -6,7 +6,7 @@ export interface FormFieldGroupProps {
 	children?: ReactNode;
 }
 
-export function FormFieldGroup(props: FormFieldGroupProps): JSX.Element {
+export function FormFieldGroup(props: FormFieldGroupProps): ReactNode {
 	const { children } = props;
 
 	return (

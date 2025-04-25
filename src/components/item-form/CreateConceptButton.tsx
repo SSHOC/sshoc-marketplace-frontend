@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { SuggestConceptButton } from "@/components/common/SuggestConceptButton";
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { PropertyType } from "@/data/sshoc/api/property";
@@ -8,7 +10,7 @@ export interface CreateConceptButtonProps {
 	propertyTypesMap: Map<PropertyType["code"], PropertyType>;
 }
 
-export function CreateConceptButton(props: CreateConceptButtonProps): JSX.Element | null {
+export function CreateConceptButton(props: CreateConceptButtonProps): ReactNode {
 	const { fieldGroup, propertyTypesMap } = props;
 
 	const selectedPropertyTypeId = useFieldState<PropertyType["code"] | undefined>(

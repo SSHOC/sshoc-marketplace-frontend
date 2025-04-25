@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { ThumbnailFormField } from "@/components/item-form/ThumbnailFormField";
@@ -8,7 +10,7 @@ export interface ThumbnailFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function ThumbnailFormSection(props: ThumbnailFormSectionProps): JSX.Element {
+export function ThumbnailFormSection(props: ThumbnailFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

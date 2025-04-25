@@ -6,7 +6,7 @@ export interface FormFieldArrayControlsProps {
 	children?: ReactNode;
 }
 
-export function FormFieldArrayControls(props: FormFieldArrayControlsProps): JSX.Element {
+export function FormFieldArrayControls(props: FormFieldArrayControlsProps): ReactNode {
 	const { children } = props;
 
 	return <div className={css["container"]}>{children}</div>;

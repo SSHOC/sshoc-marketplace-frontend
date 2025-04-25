@@ -42,7 +42,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function SourcesPage(_props: SourcesPage.Props): JSX.Element {
+export default function SourcesPage(_props: SourcesPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const title = t(["authenticated", "pages", "sources"]);

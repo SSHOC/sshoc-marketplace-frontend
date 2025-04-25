@@ -6,6 +6,6 @@ export interface ContributeScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function ContributeScreenLayout(props: ContributeScreenLayoutProps): JSX.Element {
+export function ContributeScreenLayout(props: ContributeScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

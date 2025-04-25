@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 
 import { LinkButton } from "@/components/common/LinkButton";
 import css from "@/components/item/ItemVersionControls.module.css";
@@ -21,7 +22,7 @@ export interface ItemVersionControlsProps {
 	versionId: Item["id"];
 }
 
-export function ItemVersionControls(props: ItemVersionControlsProps): JSX.Element {
+export function ItemVersionControls(props: ItemVersionControlsProps): ReactNode {
 	const { category, persistentId, status, versionId } = props;
 
 	const { t } = useI18n<"common">();
@@ -65,7 +66,7 @@ interface DeleteItemButtonProps {
 	versionId: Item["id"];
 }
 
-function DeleteItemVersionButton(props: DeleteItemButtonProps): JSX.Element {
+function DeleteItemVersionButton(props: DeleteItemButtonProps): ReactNode {
 	const { category, persistentId, versionId } = props;
 
 	const { t } = useI18n<"common">();

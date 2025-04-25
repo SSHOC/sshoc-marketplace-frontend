@@ -36,7 +36,7 @@ export interface TextFieldProps extends AriaTextFieldProps, LabelableProps {
 export const TextField = forwardRef(function TextField(
 	props: TextFieldProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { descriptionProps, errorMessageProps, inputProps, labelProps } = useTextField(
 		props,

@@ -5,7 +5,7 @@ import { PreloadData } from "@/lib/core/app/PreloadData";
 import { isNonEmptyString } from "@/lib/utils";
 import { googleSiteId } from "~/config/site.config";
 
-export default function Document(): JSX.Element {
+export default function Document(): ReactNode {
 	return (
 		<Html>
 			<Head>

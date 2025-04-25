@@ -1,6 +1,6 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import css from "@/components/contact/ContactForm.module.css";
 import type { SubmitContactForm } from "@/components/contact/useSubmitContactForm";
@@ -35,7 +35,7 @@ function useInitialContactFormValues(): Partial<ContactFormValues> {
 	return initialContactFormValues;
 }
 
-export function ContactForm(): JSX.Element {
+export function ContactForm(): ReactNode {
 	const { t } = useI18n<"common">();
 	const router = useRouter();
 	const initialContactFormValues = useInitialContactFormValues();

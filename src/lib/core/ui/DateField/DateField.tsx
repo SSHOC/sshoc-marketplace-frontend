@@ -30,7 +30,7 @@ export interface DateFieldProps extends AriaTextFieldProps, LabelableProps {
 export const DateField = forwardRef(function DateField(
 	props: DateFieldProps,
 	forwardedRef: ForwardedRef<HTMLInputElement>,
-): JSX.Element {
+): ReactNode {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { labelProps, inputProps, descriptionProps, errorMessageProps } = useTextField(
 		props,

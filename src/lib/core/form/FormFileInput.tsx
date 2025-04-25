@@ -9,7 +9,7 @@ export interface FormFileInputProps extends Omit<FileInputProps, "value"> {
 	name: string;
 }
 
-export function FormFileInput(props: FormFileInputProps): JSX.Element {
+export function FormFileInput(props: FormFileInputProps): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

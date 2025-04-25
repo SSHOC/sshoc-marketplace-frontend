@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useDraftItemsSearch } from "@/components/account/useDraftItemsSearch";
 import { useDraftItemsSearchFilters } from "@/components/account/useDraftItemsSearchFilters";
 import { useDraftItemsSearchResults } from "@/components/account/useDraftItemsSearchResults";
@@ -10,7 +12,7 @@ export interface DraftItemSearchResultsPageNavigationProps {
 
 export function DraftItemSearchResultsPageNavigation(
 	props: DraftItemSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useDraftItemsSearchResults();
 	const searchFilters = useDraftItemsSearchFilters();
 	const { getSearchDraftItemsLink, searchDraftItems } = useDraftItemsSearch();

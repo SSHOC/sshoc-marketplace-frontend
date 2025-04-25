@@ -9,7 +9,7 @@ export interface FormSelectProps<T extends object> extends Omit<SelectProps<T>, 
 	name: string;
 }
 
-export function FormSelect<T extends object>(props: FormSelectProps<T>): JSX.Element {
+export function FormSelect<T extends object>(props: FormSelectProps<T>): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

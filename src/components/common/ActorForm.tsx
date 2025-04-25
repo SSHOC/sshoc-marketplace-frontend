@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { ActorComboBox } from "@/components/common/ActorComboBox";
@@ -28,7 +28,7 @@ export interface ActorFormProps {
 	onSubmit: (actor: ActorFormValues) => void;
 }
 
-export function ActorForm(props: ActorFormProps): JSX.Element {
+export function ActorForm(props: ActorFormProps): ReactNode {
 	const { initialValues, name, onCancel, onSubmit } = props;
 
 	const fields = useActorFormFields();
@@ -57,7 +57,7 @@ export interface ActorExternalIdsFieldArrayProps {
 	field: ActorFormFields["externalIds"];
 }
 
-export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProps): JSX.Element {
+export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -128,9 +128,7 @@ export interface ActorIdentifierServiceSelectProps {
 	field: ActorFormFields["externalIds"]["fields"]["identifierService"];
 }
 
-export function ActorIdentifierServiceSelect(
-	props: ActorIdentifierServiceSelectProps,
-): JSX.Element {
+export function ActorIdentifierServiceSelect(props: ActorIdentifierServiceSelectProps): ReactNode {
 	const { field } = props;
 
 	const actorSources = useActorSources();
@@ -149,7 +147,7 @@ export interface ActorAffiliationsFieldArrayProps {
 	field: ActorFormFields["affiliations"];
 }
 
-export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayProps): JSX.Element {
+export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -208,7 +206,7 @@ export interface ActorIdentifierFieldProps {
 	identifierServiceFieldName: string;
 }
 
-export function ActorIdentifierField(props: ActorIdentifierFieldProps): JSX.Element {
+export function ActorIdentifierField(props: ActorIdentifierFieldProps): ReactNode {
 	const { field, identifierServiceFieldName } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

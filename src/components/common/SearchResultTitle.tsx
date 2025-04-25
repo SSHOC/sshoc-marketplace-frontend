@@ -8,7 +8,7 @@ export interface SearchResultTitleProps {
 	headingLevel?: 3 | 4 | 5;
 }
 
-export function SearchResultTitle(props: SearchResultTitleProps): JSX.Element {
+export function SearchResultTitle(props: SearchResultTitleProps): ReactNode {
 	const { children, headingLevel = 3 } = props;
 
 	const ElementType = `h${headingLevel}` as const;

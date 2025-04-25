@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/auth/SignUpForm.module.css";
 import { Link } from "@/components/common/Link";
 import type { OAuthRegistrationInput } from "@/data/sshoc/api/auth";
@@ -14,7 +16,7 @@ import { isEmail, isNonEmptyString } from "@/lib/utils";
 
 export type SignUpFormValues = OAuthRegistrationInput;
 
-export function SignUpForm(): JSX.Element {
+export function SignUpForm(): ReactNode {
 	const { t } = useI18n<"common">();
 	const { registrationData, validateRegistrationData, session } = useAuth();
 

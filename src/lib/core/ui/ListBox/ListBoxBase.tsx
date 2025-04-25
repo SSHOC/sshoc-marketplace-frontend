@@ -67,7 +67,7 @@ export interface ListBoxBaseProps<T extends object> extends AriaListBoxOptions<T
 export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 	props: ListBoxBaseProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		color = "primary",
 		domProps = {},

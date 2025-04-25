@@ -1,5 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { Fragment } from "react";
 import type { UseQueryResult } from "react-query";
 
@@ -24,7 +24,7 @@ export interface PaginationProps<TResults, TFilters> {
 export function Pagination<
 	TResults extends UseQueryResult<{ pages: number; page: number }>,
 	TFilters extends { page: number },
->(props: PaginationProps<TResults, TFilters>): JSX.Element | null {
+>(props: PaginationProps<TResults, TFilters>): ReactNode {
 	const { searchResults, searchFilters, searchItems, getSearchItemsLink } = props;
 
 	const { t } = useI18n<"common">();
@@ -97,7 +97,7 @@ interface PageInputProps<TResults, TFilters> {
 
 function PageInput<TResults, TFilters extends { page: number }>(
 	props: PageInputProps<TResults, TFilters>,
-): JSX.Element {
+): ReactNode {
 	const { page, pages, searchFilters, searchItems } = props;
 
 	const { t } = useI18n<"common">();
@@ -166,7 +166,7 @@ interface PageLinksProps<TResults, TFilters> {
 
 function PageLinks<TResults, TFilters extends { page: number }>(
 	props: PageLinksProps<TResults, TFilters>,
-): JSX.Element {
+): ReactNode {
 	const { page, pages, searchFilters, getSearchItemsLink } = props;
 
 	const items = usePagination({ page, pages });

@@ -5,7 +5,7 @@ import { usePageTitleTemplate } from "@/lib/core/metadata/usePageTitleTemplate";
 
 export type PageMetadataProps = NextPageMetadataProps;
 
-export function PageMetadata(props: PageMetadataProps): JSX.Element {
+export function PageMetadata(props: PageMetadataProps): ReactNode {
 	const titleTemplate = usePageTitleTemplate();
 
 	return <NextPageMetadata titleTemplate={titleTemplate} {...props} />;

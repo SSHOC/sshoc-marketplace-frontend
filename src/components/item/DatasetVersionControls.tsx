@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemVersionControls } from "@/components/item/ItemVersionControls";
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import type { ItemStatus } from "@/data/sshoc/api/item";
@@ -8,7 +10,7 @@ export interface DatasetVersionControlsProps {
 	versionId: Dataset["id"];
 }
 
-export function DatasetVersionControls(props: DatasetVersionControlsProps): JSX.Element {
+export function DatasetVersionControls(props: DatasetVersionControlsProps): ReactNode {
 	const { persistentId, status, versionId } = props;
 
 	return (

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useApiParams } from "@/components/documentation/useApiParams";
 import type { TextFieldProps } from "@/lib/core/ui/TextField/TextField";
 import { TextField } from "@/lib/core/ui/TextField/TextField";
@@ -7,7 +9,7 @@ export interface ApiParamTextFieldProps
 	param: string;
 }
 
-export function ApiParamTextField(props: ApiParamTextFieldProps): JSX.Element {
+export function ApiParamTextField(props: ApiParamTextFieldProps): ReactNode {
 	const { param } = props;
 
 	const { params, setParams } = useApiParams();

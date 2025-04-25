@@ -25,7 +25,7 @@ import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDi
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import Logo from "~/public/assets/images/logo-with-text.svg";
 
-export function MobileNavigationMenu(): JSX.Element {
+export function MobileNavigationMenu(): ReactNode {
 	return (
 		<nav className={css["container"]}>
 			<NavigationMenu />
@@ -33,7 +33,7 @@ export function MobileNavigationMenu(): JSX.Element {
 	);
 }
 
-function NavigationMenu(): JSX.Element {
+function NavigationMenu(): ReactNode {
 	const { t } = useI18n<"common">();
 	const { isSignedIn } = useAuth();
 	const state = useModalDialogTriggerState({});
@@ -133,7 +133,7 @@ interface AuthLinksProps {
 	onClose: () => void;
 }
 
-function AuthLinks(props: AuthLinksProps): JSX.Element {
+function AuthLinks(props: AuthLinksProps): ReactNode {
 	const { onClose } = props;
 
 	const { t } = useI18n<"common">();
@@ -190,7 +190,7 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
 	);
 }
 
-function ItemCategoryNavLinks(): JSX.Element | null {
+function ItemCategoryNavLinks(): ReactNode {
 	const items = useItemCategoryNavItems();
 
 	if (items == null) {
@@ -212,7 +212,7 @@ function ItemCategoryNavLinks(): JSX.Element | null {
 	);
 }
 
-function BrowseNavLinks(): JSX.Element {
+function BrowseNavLinks(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useBrowseNavItems();
 
@@ -238,7 +238,7 @@ function BrowseNavLinks(): JSX.Element {
 	);
 }
 
-function ContributeNavLinks(): JSX.Element {
+function ContributeNavLinks(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useContributeNavItems();
 
@@ -264,7 +264,7 @@ function ContributeNavLinks(): JSX.Element {
 	);
 }
 
-function AboutNavLinks(): JSX.Element {
+function AboutNavLinks(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useAboutNavItems();
 
@@ -290,7 +290,7 @@ function AboutNavLinks(): JSX.Element {
 	);
 }
 
-function CreateItemLinks(): JSX.Element | null {
+function CreateItemLinks(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useCreateItemLinks();
 
@@ -320,6 +320,6 @@ function CreateItemLinks(): JSX.Element | null {
 	);
 }
 
-function Separator(): JSX.Element {
+function Separator(): ReactNode {
 	return <li role="separator" className={css["nav-separator"]} />;
 }

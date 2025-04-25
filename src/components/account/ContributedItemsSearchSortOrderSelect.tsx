@@ -1,5 +1,5 @@
 import { Item } from "@react-stately/collections";
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 
 import { useContributedItemsSearch } from "@/components/account/useContributedItemsSearch";
 import { useContributedItemsSearchFilters } from "@/components/account/useContributedItemsSearchFilters";
@@ -8,7 +8,7 @@ import { Select } from "@/lib/core/ui/Select/Select";
 import type { ContributedItemSortOrder } from "~/config/sshoc.config";
 import { contributedItemsSortOrder } from "~/config/sshoc.config";
 
-export function ContributedItemsSearchSortOrderSelect(): JSX.Element {
+export function ContributedItemsSearchSortOrderSelect(): ReactNode {
 	const { t } = useI18n<"common">();
 	const searchFilters = useContributedItemsSearchFilters();
 	const sortOrder = searchFilters.order;

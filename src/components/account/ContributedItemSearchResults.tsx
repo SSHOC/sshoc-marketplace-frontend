@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ContributedItemSearchResult } from "@/components/account/ContributedItemSearchResult";
 import css from "@/components/account/ContributedItemSearchResults.module.css";
 import { useContributedItemsSearchResults } from "@/components/account/useContributedItemsSearchResults";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function ContributedItemSearchResults(): JSX.Element {
+export function ContributedItemSearchResults(): ReactNode {
 	const contributedItemSearch = useContributedItemsSearchResults();
 
 	if (contributedItemSearch.data == null) {

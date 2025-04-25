@@ -1,4 +1,4 @@
-import type { FormEvent, Key } from "react";
+import type { FormEvent, Key, ReactNode } from "react";
 import { useMemo, useState } from "react";
 
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
@@ -21,7 +21,7 @@ export interface ItemSearchFormProps {
 	initialItemSearchTerm?: string;
 }
 
-export function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
+export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const { initialItemSearchTerm } = props;
 
 	const { t } = useI18n<"common">();
@@ -106,7 +106,7 @@ interface ItemCategorySelectProps {
 	onSelectItemCategory: (category: ItemCategoryOptionId) => void;
 }
 
-function ItemCategorySelect(props: ItemCategorySelectProps): JSX.Element {
+function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 	const { selectedItemCategory, onSelectItemCategory } = props;
 
 	const { t } = useI18n<"common">();

@@ -1,4 +1,5 @@
 import type { FormApi, SubmissionErrors } from "final-form";
+import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 import { useFieldArray } from "react-final-form-arrays";
 
@@ -49,7 +50,7 @@ export interface WorkflowFormProps extends FormProps<WorkflowFormValues> {
 	setPage: (page: WorkflowFormPage | ((page: WorkflowFormPage) => WorkflowFormPage)) => void;
 }
 
-export function WorkflowForm(props: WorkflowFormProps): JSX.Element {
+export function WorkflowForm(props: WorkflowFormProps): ReactNode {
 	const { initialValues, name, onCancel, onSubmit, validate, page, setPage } = props;
 
 	function onBeforeSaveAsDraft(form: FormApi<WorkflowFormValues>) {
@@ -130,7 +131,7 @@ interface WorkflowFormSectionsProps {
 	onCancel: () => void;
 }
 
-function WorkflowFormSections(props: WorkflowFormSectionsProps): JSX.Element {
+function WorkflowFormSections(props: WorkflowFormSectionsProps): ReactNode {
 	const { onCancel } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -176,7 +177,7 @@ interface WorkflowStepsFormSectionProps {
 	setPage: WorkflowFormProps["setPage"];
 }
 
-function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Element {
+function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): ReactNode {
 	const { setPage } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -265,7 +266,7 @@ interface WorkflowStepFormSectionsProps {
 	onCancel: () => void;
 }
 
-function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): JSX.Element {
+function WorkflowStepFormSections(props: WorkflowStepFormSectionsProps): ReactNode {
 	const { index, onCancel } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

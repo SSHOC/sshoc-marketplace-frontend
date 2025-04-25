@@ -89,7 +89,7 @@ export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, 
 export const TextFieldBase = forwardRef(function TextFieldBase(
 	props: TextFieldBaseProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const defaultLoadingIndicator = <ProgressSpinner size="sm" />;
 
 	const {

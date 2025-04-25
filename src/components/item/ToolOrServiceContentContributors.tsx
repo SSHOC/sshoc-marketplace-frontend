@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemContentContributors } from "@/components/item/ItemContentContributors";
 import type { Item } from "@/data/sshoc/api/item";
 import { useToolVersionInformationContributors } from "@/data/sshoc/hooks/tool-or-service";
@@ -9,7 +11,7 @@ export interface ToolOrServiceContentContributorsProps {
 
 export function ToolOrServiceContentContributors(
 	props: ToolOrServiceContentContributorsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId, versionId } = props;
 
 	const contentContributors = useToolVersionInformationContributors({

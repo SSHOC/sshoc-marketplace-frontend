@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useVocabularySearch } from "@/components/account/useVocabularySearch";
 import { useVocabularySearchFilters } from "@/components/account/useVocabularySearchFilters";
 import { useVocabularySearchResults } from "@/components/account/useVocabularySearchResults";
@@ -10,7 +12,7 @@ export interface VocabularySearchResultsPageNavigationProps {
 
 export function VocabularySearchResultsPageNavigation(
 	props: VocabularySearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useVocabularySearchResults();
 	const searchFilters = useVocabularySearchFilters();
 	const { getSearchVocabulariesLink, searchVocabularies } = useVocabularySearch();

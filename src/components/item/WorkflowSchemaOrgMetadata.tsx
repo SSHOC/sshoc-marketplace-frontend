@@ -1,4 +1,5 @@
 import { SchemaOrg } from "@stefanprobst/next-page-metadata";
+import type { ReactNode } from "react";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Workflow } from "@/data/sshoc/api/workflow";
@@ -7,7 +8,7 @@ export interface WorkflowSchemaOrgMetadataProps {
 	workflow: Workflow;
 }
 
-export function WorkflowSchemaOrgMetadata(props: WorkflowSchemaOrgMetadataProps): JSX.Element {
+export function WorkflowSchemaOrgMetadata(props: WorkflowSchemaOrgMetadataProps): ReactNode {
 	const { workflow } = props;
 
 	const conceptBasedProperties = workflow.properties.filter(isPropertyConcept);

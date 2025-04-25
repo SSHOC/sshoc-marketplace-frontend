@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 
 import { FormControls } from "@/components/common/FormControls";
@@ -13,7 +14,7 @@ export interface ItemReviewFormControlsProps<T> {
 	onReject: (form: FormApi<T>) => void;
 }
 
-export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>): JSX.Element {
+export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const form = useForm<T>();
 

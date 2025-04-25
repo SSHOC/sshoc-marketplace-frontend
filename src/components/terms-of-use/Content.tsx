@@ -6,6 +6,6 @@ export interface ContentProps {
 	children?: ReactNode;
 }
 
-export function Content(props: ContentProps): JSX.Element {
+export function Content(props: ContentProps): ReactNode {
 	return <div className={css["container"]}>{props.children}</div>;
 }

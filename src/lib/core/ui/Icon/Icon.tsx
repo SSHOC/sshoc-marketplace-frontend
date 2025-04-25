@@ -24,7 +24,7 @@ export interface IconProps
 export const Icon = forwardRef(function Icon(
 	props: IconProps,
 	forwardedRef: ForwardedRef<SVGSVGElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		"aria-label": ariaLabel,
 		"aria-labelledby": ariaLabelledby,

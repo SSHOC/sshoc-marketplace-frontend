@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { PropertyType } from "@/data/sshoc/api/property";
 import type { FormSelectProps } from "@/lib/core/form/FormSelect";
@@ -9,7 +11,7 @@ export interface PropertyTypeSelectProps
 	field: ItemFormFields["fields"]["properties"]["fields"]["type"];
 }
 
-export function PropertyTypeSelect(props: PropertyTypeSelectProps): JSX.Element {
+export function PropertyTypeSelect(props: PropertyTypeSelectProps): ReactNode {
 	const { field, items, loadingState, onSelectionChange } = props;
 
 	return (

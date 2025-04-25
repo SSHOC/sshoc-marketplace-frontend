@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { DraftItemSearchResult } from "@/components/account/DraftItemSearchResult";
 import css from "@/components/account/DraftItemSearchResults.module.css";
 import { useDraftItemsSearchResults } from "@/components/account/useDraftItemsSearchResults";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function DraftItemSearchResults(): JSX.Element {
+export function DraftItemSearchResults(): ReactNode {
 	const draftItemSearch = useDraftItemsSearchResults();
 
 	if (draftItemSearch.data == null) {

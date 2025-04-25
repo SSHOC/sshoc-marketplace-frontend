@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-final-form";
 import type { UseQueryResult } from "react-query";
@@ -17,7 +17,7 @@ export interface ItemPropertyProps {
 	propertyTypesMap: Map<PropertyType["code"], PropertyType>;
 }
 
-export function ItemProperty(props: ItemPropertyProps): JSX.Element {
+export function ItemProperty(props: ItemPropertyProps): ReactNode {
 	const { fieldGroup, propertyTypes, propertyTypesMap } = props;
 
 	const form = useForm();

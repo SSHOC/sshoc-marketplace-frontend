@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemContentContributors } from "@/components/item/ItemContentContributors";
 import type { Item } from "@/data/sshoc/api/item";
 import { useTrainingMaterialVersionInformationContributors } from "@/data/sshoc/hooks/training-material";
@@ -9,7 +11,7 @@ export interface TrainingMaterialContentContributorsProps {
 
 export function TrainingMaterialContentContributors(
 	props: TrainingMaterialContentContributorsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId, versionId } = props;
 
 	const contentContributors = useTrainingMaterialVersionInformationContributors({

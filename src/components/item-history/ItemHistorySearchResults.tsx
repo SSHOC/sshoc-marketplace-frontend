@@ -1,4 +1,5 @@
 import { HttpError } from "@stefanprobst/request";
+import type { ReactNode } from "react";
 import type { UseQueryResult } from "react-query";
 
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
@@ -12,7 +13,7 @@ export interface ItemHistorySearchResultsProps {
 	items: UseQueryResult<Array<ItemHistoryEntry>, Error>;
 }
 
-export function ItemHistorySearchResults(props: ItemHistorySearchResultsProps): JSX.Element {
+export function ItemHistorySearchResults(props: ItemHistorySearchResultsProps): ReactNode {
 	const { items } = props;
 
 	if (items.isError && items.error instanceof HttpError && items.error.response.status === 404) {

@@ -1,5 +1,5 @@
 import { Item } from "@react-stately/collections";
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 
 import { useUserSearch } from "@/components/account/useUserSearch";
 import { useUserSearchFilters } from "@/components/account/useUserSearchFilters";
@@ -8,7 +8,7 @@ import { userSortOrders } from "@/data/sshoc/api/user";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Select } from "@/lib/core/ui/Select/Select";
 
-export function UsersSearchSortOrderSelect(): JSX.Element {
+export function UsersSearchSortOrderSelect(): ReactNode {
 	const { t } = useI18n<"authenticated">();
 	const searchFilters = useUserSearchFilters();
 	const sortOrder = searchFilters.order;

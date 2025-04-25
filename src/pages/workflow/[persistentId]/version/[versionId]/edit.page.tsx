@@ -87,7 +87,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.Props): JSX.Element {
+export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

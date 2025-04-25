@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import { SourceForm } from "@/components/account/SourceForm";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -22,7 +22,7 @@ export interface SourceSearchResultProps {
 	source: GetSources.Response["sources"][number];
 }
 
-export function SourceSearchResult(props: SourceSearchResultProps): JSX.Element {
+export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	const { source } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

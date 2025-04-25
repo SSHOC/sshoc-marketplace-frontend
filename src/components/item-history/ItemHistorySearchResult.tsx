@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemLink } from "@/components/common/ItemLink";
 import { Link } from "@/components/common/Link";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -26,7 +28,7 @@ export interface ItemHistorySearchResultProps {
 	item: ItemHistoryEntry & { category: ItemCategory };
 }
 
-export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): JSX.Element {
+export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): ReactNode {
 	const { item } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -80,7 +82,7 @@ interface RevertButtonProps {
 	item: ItemHistorySearchResultProps["item"];
 }
 
-function RevertButton(props: RevertButtonProps): JSX.Element {
+function RevertButton(props: RevertButtonProps): ReactNode {
 	const { item } = props;
 	const { category, persistentId, id: versionId } = item;
 

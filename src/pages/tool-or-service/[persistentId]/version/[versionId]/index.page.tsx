@@ -95,9 +95,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ToolOrServiceVersionPage(
-	props: ToolOrServiceVersionPage.Props,
-): JSX.Element {
+export default function ToolOrServiceVersionPage(props: ToolOrServiceVersionPage.Props): ReactNode {
 	const router = useRouter();
 	const { persistentId, versionId: _versionId } = props.params;
 	const versionId = Number(_versionId);

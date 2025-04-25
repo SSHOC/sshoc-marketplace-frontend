@@ -14,7 +14,7 @@ export interface PageLayoutProps {
 	pageProps: SharedPageProps;
 }
 
-export function PageLayout(props: PageLayoutProps): JSX.Element {
+export function PageLayout(props: PageLayoutProps): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (

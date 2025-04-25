@@ -1,4 +1,5 @@
 import { SchemaOrg } from "@stefanprobst/next-page-metadata";
+import type { ReactNode } from "react";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
@@ -9,7 +10,7 @@ export interface TrainingMaterialSchemaOrgMetadataProps {
 
 export function TrainingMaterialSchemaOrgMetadata(
 	props: TrainingMaterialSchemaOrgMetadataProps,
-): JSX.Element {
+): ReactNode {
 	const { trainingMaterial } = props;
 
 	const conceptBasedProperties = trainingMaterial.properties.filter(isPropertyConcept);

@@ -9,6 +9,6 @@ export interface LinkProps extends Omit<NextLinkProps, "as" | "locale"> {
 	children?: ReactNode;
 }
 
-export function Link(props: LinkProps): JSX.Element {
+export function Link(props: LinkProps): ReactNode {
 	return <NextLink legacyBehavior {...props} />;
 }

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemHistorySearchResults } from "@/components/item-history/ItemHistorySearchResults";
 import type { Workflow } from "@/data/sshoc/api/workflow";
 import { useWorkflowHistory } from "@/data/sshoc/hooks/workflow";
@@ -8,9 +10,7 @@ export interface WorkflowHistorySearchResultsProps {
 	persistentId: Workflow["persistentId"];
 }
 
-export function WorkflowHistorySearchResults(
-	props: WorkflowHistorySearchResultsProps,
-): JSX.Element {
+export function WorkflowHistorySearchResults(props: WorkflowHistorySearchResultsProps): ReactNode {
 	const { persistentId } = props;
 
 	const meta: QueryMetadata = {

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useContributedItemsSearch } from "@/components/account/useContributedItemsSearch";
 import { useContributedItemsSearchFilters } from "@/components/account/useContributedItemsSearchFilters";
 import { useContributedItemsSearchResults } from "@/components/account/useContributedItemsSearchResults";
@@ -10,7 +12,7 @@ export interface ContributedItemSearchResultsPageNavigationProps {
 
 export function ContributedItemSearchResultsPageNavigation(
 	props: ContributedItemSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useContributedItemsSearchResults();
 	const searchFilters = useContributedItemsSearchFilters();
 	const { getSearchContributedItemsLink, searchContributedItems } = useContributedItemsSearch();

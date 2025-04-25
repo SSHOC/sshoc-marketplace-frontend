@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import { useItemRelations } from "@/data/sshoc/hooks/item";
 import { FormSelect } from "@/lib/core/form/FormSelect";
@@ -7,7 +9,7 @@ export interface ItemRelationSelectProps {
 	field: ItemFormFields["fields"]["relatedItems"]["fields"]["relation"];
 }
 
-export function ItemRelationSelect(props: ItemRelationSelectProps): JSX.Element {
+export function ItemRelationSelect(props: ItemRelationSelectProps): ReactNode {
 	const { field } = props;
 
 	const itemRelations = useItemRelations({ perpage: 100 });

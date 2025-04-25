@@ -12,7 +12,7 @@ export interface SearchFacetsOverlay {
 	triggerProps: HTMLAttributes<HTMLElement>;
 }
 
-export function SearchFacetsOverlay(props: SearchFacetsOverlay): JSX.Element {
+export function SearchFacetsOverlay(props: SearchFacetsOverlay): ReactNode {
 	const { title, onClose, triggerProps } = props;
 
 	const { t } = useI18n<"common">();

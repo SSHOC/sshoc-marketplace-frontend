@@ -1,4 +1,5 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
+import type { ReactNode } from "react";
 
 import { Link } from "@/components/common/Link";
 import { SectionTitle } from "@/components/common/SectionTitle";
@@ -14,7 +15,7 @@ import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicato
 import { length } from "@/lib/utils";
 import { maxBrowseFacets, maxLastAddedItems } from "~/config/sshoc.config";
 
-export function BrowseItems(): JSX.Element {
+export function BrowseItems(): ReactNode {
 	const { t } = useI18n<"common">();
 	/** Match the request from `LastUpdatedItems` so it can be deduplicated. Here we only need the list of facet values. */
 	const itemSearch = useItemSearch({ order: ["modified-on"], perpage: maxLastAddedItems });
@@ -58,7 +59,7 @@ interface BrowseLinksProps {
 	facet: ItemFacet;
 }
 
-function BrowseLinks(props: BrowseLinksProps): JSX.Element | null {
+function BrowseLinks(props: BrowseLinksProps): ReactNode {
 	const { title, values, facet } = props;
 
 	const { t } = useI18n<"common">();

@@ -69,7 +69,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function BrowsePage(props: BrowsePage.Props): JSX.Element {
+export default function BrowsePage(props: BrowsePage.Props): ReactNode {
 	const id = props.params.id as ItemFacet;
 
 	const { t } = useI18n<"common">();

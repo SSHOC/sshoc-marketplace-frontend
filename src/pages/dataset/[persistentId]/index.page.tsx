@@ -113,7 +113,7 @@ export async function getStaticProps(
 	}
 }
 
-export default function DatasetPage(props: DatasetPage.Props): JSX.Element {
+export default function DatasetPage(props: DatasetPage.Props): ReactNode {
 	const { persistentId } = props.params;
 	const queryClient = useQueryClient();
 	const _dataset = useDataset({ persistentId }, undefined, {

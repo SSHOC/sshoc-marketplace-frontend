@@ -6,6 +6,6 @@ export interface ContactScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function ContactScreenLayout(props: ContactScreenLayoutProps): JSX.Element {
+export function ContactScreenLayout(props: ContactScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

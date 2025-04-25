@@ -6,6 +6,6 @@ export interface ItemInfoProps {
 	children?: ReactNode;
 }
 
-export function ItemInfo(props: ItemInfoProps): JSX.Element {
+export function ItemInfo(props: ItemInfoProps): ReactNode {
 	return <aside className={css["container"]}>{props.children}</aside>;
 }

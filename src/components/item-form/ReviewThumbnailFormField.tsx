@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 import { useForm } from "react-final-form";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -25,7 +25,7 @@ export interface ReviewThumbnailFormFieldProps {
 	field: ItemFormFields["fields"]["thumbnail"];
 }
 
-export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): JSX.Element {
+export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

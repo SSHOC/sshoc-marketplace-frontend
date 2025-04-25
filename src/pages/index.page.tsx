@@ -41,7 +41,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function HomePage(_props: HomePage.Props): JSX.Element {
+export default function HomePage(_props: HomePage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "home"]);

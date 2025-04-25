@@ -9,7 +9,7 @@ import { AuthorizationError } from "@/lib/core/error/AuthorizationError";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { FullPage } from "@/lib/core/ui/FullPage/FullPage";
 
-export function RootErrorFallback(): JSX.Element {
+export function RootErrorFallback(): ReactNode {
 	const router = useRouter();
 	const { error, onReset } = useError();
 	const { t } = useI18n<"common">();

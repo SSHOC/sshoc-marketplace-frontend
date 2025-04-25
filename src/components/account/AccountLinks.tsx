@@ -1,8 +1,10 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/account/AccountLinks.module.css";
 import { useAccountLinks } from "@/components/account/useAccountLinks";
 import { Link } from "@/components/common/Link";
 
-export function AccountLinks(): JSX.Element {
+export function AccountLinks(): ReactNode {
 	const accountLinks = useAccountLinks();
 
 	return (

@@ -6,6 +6,6 @@ export interface SignInScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function SignInScreenLayout(props: SignInScreenLayoutProps): JSX.Element {
+export function SignInScreenLayout(props: SignInScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

@@ -6,6 +6,6 @@ export interface ItemHeaderProps {
 	children?: ReactNode;
 }
 
-export function ItemHeader(props: ItemHeaderProps): JSX.Element {
+export function ItemHeader(props: ItemHeaderProps): ReactNode {
 	return <header className={css["container"]}>{props.children}</header>;
 }

@@ -113,7 +113,7 @@ export async function getStaticProps(
 	}
 }
 
-export default function TrainingMaterialPage(props: TrainingMaterialPage.Props): JSX.Element {
+export default function TrainingMaterialPage(props: TrainingMaterialPage.Props): ReactNode {
 	const { persistentId } = props.params;
 	const queryClient = useQueryClient();
 	const _trainingMaterial = useTrainingMaterial({ persistentId }, undefined, {

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { Timestamp } from "@/components/common/Timestamp";
 import css from "@/components/item/ItemMetadata.module.css";
 import type { IsoDateString } from "@/data/sshoc/lib/types";
@@ -7,7 +9,7 @@ export interface ItemDateCreatedProps {
 	dateTime?: IsoDateString;
 }
 
-export function ItemDateCreated(props: ItemDateCreatedProps): JSX.Element | null {
+export function ItemDateCreated(props: ItemDateCreatedProps): ReactNode {
 	const { dateTime } = props;
 
 	const { t } = useI18n<"common">();

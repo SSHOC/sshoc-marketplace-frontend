@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -21,7 +21,7 @@ export interface ExternalIdsFormFieldArrayProps {
 	field: ItemFormFields["fields"]["externalIds"];
 }
 
-export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps): JSX.Element {
+export function ExternalIdsFormFieldArray(props: ExternalIdsFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -93,7 +93,7 @@ export interface ItemIdentifierFieldProps {
 	identifierServiceFieldName: string;
 }
 
-export function ItemIdentifierField(props: ItemIdentifierFieldProps): JSX.Element {
+export function ItemIdentifierField(props: ItemIdentifierFieldProps): ReactNode {
 	const { field, identifierServiceFieldName } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

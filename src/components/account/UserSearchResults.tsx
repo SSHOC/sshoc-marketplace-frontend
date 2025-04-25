@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { UserSearchResult } from "@/components/account/UserSearchResult";
 import css from "@/components/account/UserSearchResults.module.css";
 import { useUserSearchResults } from "@/components/account/useUserSearchResults";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function UserSearchResults(): JSX.Element {
+export function UserSearchResults(): ReactNode {
 	const userSearch = useUserSearchResults();
 
 	if (userSearch.data == null) {

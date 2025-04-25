@@ -1,6 +1,7 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { removeEmptyItemFieldsOnSubmit } from "@/components/item-form/removeEmptyItemFieldsOnSubmit";
@@ -24,7 +25,7 @@ export interface WorkflowCreateFormProps {
 	setPage: (page: WorkflowFormPage) => void;
 }
 
-export function WorkflowCreateForm(props: WorkflowCreateFormProps): JSX.Element {
+export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 	const { page, setPage } = props;
 
 	const category = "workflow";

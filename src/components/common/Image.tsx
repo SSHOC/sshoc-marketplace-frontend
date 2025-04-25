@@ -1,9 +1,10 @@
 import type { ImageProps as NextImageProps, StaticImageData } from "next/legacy/image";
 import NextImage from "next/legacy/image";
+import type { ReactNode } from "react";
 
 export type ImageProps = NextImageProps;
 
-export function Image(props: ImageProps): JSX.Element {
+export function Image(props: ImageProps): ReactNode {
 	const showPlaceholder =
 		typeof props.src === "string"
 			? props.blurDataURL != null

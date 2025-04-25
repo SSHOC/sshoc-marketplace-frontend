@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { PropertyType } from "@/data/sshoc/api/property";
@@ -10,7 +10,7 @@ export interface ValueTextFieldProps {
 	propertyTypeId: PropertyType["code"];
 }
 
-export function ValueTextField(props: ValueTextFieldProps): JSX.Element {
+export function ValueTextField(props: ValueTextFieldProps): ReactNode {
 	const { field, propertyTypeId } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

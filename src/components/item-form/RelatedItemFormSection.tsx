@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { RelatedItemsFormFieldArray } from "@/components/item-form/RelatedItemsFormFieldArray";
@@ -8,7 +10,7 @@ export interface RelatedItemFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function RelatedItemFormSection(props: RelatedItemFormSectionProps): JSX.Element {
+export function RelatedItemFormSection(props: RelatedItemFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

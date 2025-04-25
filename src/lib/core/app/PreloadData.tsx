@@ -1,6 +1,6 @@
 import { createUrl } from "@/data/sshoc/lib/client";
 
-export function PreloadData(): JSX.Element {
+export function PreloadData(): ReactNode {
 	return (
 		<link
 			rel="preload"

@@ -5,7 +5,7 @@ export interface MdxProps {
 	mdx: string;
 }
 
-export function Mdx(props: MdxProps): JSX.Element {
+export function Mdx(props: MdxProps): ReactNode {
 	const { mdx } = props;
 
 	const [element, setElement] = useState<ReactNode>(null);

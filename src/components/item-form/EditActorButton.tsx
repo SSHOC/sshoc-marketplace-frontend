@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import type { ActorFormValues } from "@/components/common/ActorForm";
 import { ActorForm } from "@/components/common/ActorForm";
@@ -17,7 +17,7 @@ export interface EditActorButtonProps {
 	field: ItemFormFields["fields"]["contributors"]["fields"]["actor"];
 }
 
-export function EditActorButton(props: EditActorButtonProps): JSX.Element | null {
+export function EditActorButton(props: EditActorButtonProps): ReactNode {
 	const { field } = props;
 
 	const actorId = useFieldState<ActorRef["id"] | undefined>(field.name).input.value;
@@ -38,7 +38,7 @@ interface EditActorDialogTriggerProps {
 	actor: Actor;
 }
 
-function EditActorDialogTrigger(props: EditActorDialogTriggerProps): JSX.Element {
+function EditActorDialogTrigger(props: EditActorDialogTriggerProps): ReactNode {
 	const { actor, field } = props;
 
 	const dialog = useModalDialogTriggerState({});

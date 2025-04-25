@@ -1,5 +1,5 @@
 import { Item } from "@react-stately/collections";
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
 import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
@@ -8,7 +8,7 @@ import { Select } from "@/lib/core/ui/Select/Select";
 import type { ModerateItemSortOrder } from "~/config/sshoc.config";
 import { moderateItemsSortOrder } from "~/config/sshoc.config";
 
-export function ModerateItemsSearchSortOrderSelect(): JSX.Element {
+export function ModerateItemsSearchSortOrderSelect(): ReactNode {
 	const { t } = useI18n<"common">();
 	const searchFilters = useModerateItemsSearchFilters();
 	const sortOrder = searchFilters.order[0];

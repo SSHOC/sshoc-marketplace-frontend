@@ -26,7 +26,7 @@ export interface CloseButtonProps extends AriaButtonProps {
 export const CloseButton = forwardRef(function CloseButton(
 	props: CloseButtonProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { size = "md", style } = props;
 
 	const { t } = useI18n<"common">();

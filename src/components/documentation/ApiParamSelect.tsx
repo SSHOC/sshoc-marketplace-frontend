@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 
 import { useApiParams } from "@/components/documentation/useApiParams";
 import type { SelectProps } from "@/lib/core/ui/Select/Select";
@@ -10,7 +10,7 @@ export interface ApiParamSelectProps<T extends object>
 	children: Array<JSX.Element> | JSX.Element;
 }
 
-export function ApiParamSelect<T extends object>(props: ApiParamSelectProps<T>): JSX.Element {
+export function ApiParamSelect<T extends object>(props: ApiParamSelectProps<T>): ReactNode {
 	const { param } = props;
 
 	const { params, setParams } = useApiParams();

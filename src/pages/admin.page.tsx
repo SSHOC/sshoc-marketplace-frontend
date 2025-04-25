@@ -72,7 +72,7 @@ export namespace AdminPage {
 	export type Props = Record<string, never>;
 }
 
-export default function AdminPage(_props: AdminPage.Props): JSX.Element {
+export default function AdminPage(_props: AdminPage.Props): ReactNode {
 	return (
 		<Fragment>
 			<PageMetadata nofollow noindex title="CMS" openGraph={{}} twitter={{}} />

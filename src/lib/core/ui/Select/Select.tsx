@@ -50,7 +50,7 @@ export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 
 export const Select = forwardRef(function Select<T extends object>(
 	props: SelectProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	// const isMobile = useIsMobileDevice()
 
 	// if (isMobile) {
@@ -67,7 +67,7 @@ export const Select = forwardRef(function Select<T extends object>(
 const SelectBase = forwardRef(function SelectBase<T extends object>(
 	props: SelectProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		color = "primary",
 		align = "start",

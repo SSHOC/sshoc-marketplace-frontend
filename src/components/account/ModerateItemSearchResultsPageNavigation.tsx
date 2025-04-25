@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
 import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
 import { useModerateItemsSearchResults } from "@/components/account/useModerateItemsSearchResults";
@@ -10,7 +12,7 @@ export interface ModerateItemSearchResultsPageNavigationProps {
 
 export function ModerateItemSearchResultsPageNavigation(
 	props: ModerateItemSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useModerateItemsSearchResults();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { getSearchModerateItemsLink, searchModerateItems } = useModerateItemsSearch();

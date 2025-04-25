@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { MetadataLabel } from "@/components/common/MetadataLabel";
 import { MetadataValue } from "@/components/common/MetadataValue";
@@ -21,7 +21,7 @@ export interface VocabularySearchResultProps {
 	concept: SearchConcepts.Response["concepts"][number];
 }
 
-export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.Element {
+export function VocabularySearchResult(props: VocabularySearchResultProps): ReactNode {
 	const { concept } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

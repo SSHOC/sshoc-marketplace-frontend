@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemLink } from "@/components/common/ItemLink";
 import { Link } from "@/components/common/Link";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -23,7 +25,7 @@ export interface DraftItemSearchResultProps {
 	item: GetDraftItems.Response["items"][number] & { category: ItemCategory };
 }
 
-export function DraftItemSearchResult(props: DraftItemSearchResultProps): JSX.Element {
+export function DraftItemSearchResult(props: DraftItemSearchResultProps): ReactNode {
 	const { item } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

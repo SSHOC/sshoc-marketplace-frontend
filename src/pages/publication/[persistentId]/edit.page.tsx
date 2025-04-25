@@ -82,7 +82,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function EditPublicationPage(props: EditPublicationPage.Props): JSX.Element {
+export default function EditPublicationPage(props: EditPublicationPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

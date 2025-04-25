@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -21,7 +21,7 @@ export interface ReviewAccessibleAtFormFieldArrayProps {
 
 export function ReviewAccessibleAtFormFieldArray(
 	props: ReviewAccessibleAtFormFieldArrayProps,
-): JSX.Element {
+): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

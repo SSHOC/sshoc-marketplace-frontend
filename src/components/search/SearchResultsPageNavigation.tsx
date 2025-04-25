@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { Pagination } from "@/components/common/Pagination";
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { useSearchFilters } from "@/components/search/useSearchFilters";
@@ -8,7 +10,7 @@ export interface SearchResultsPageNavigationProps {
 	variant?: "input" | "primary";
 }
 
-export function SearchResultsPageNavigation(props: SearchResultsPageNavigationProps): JSX.Element {
+export function SearchResultsPageNavigation(props: SearchResultsPageNavigationProps): ReactNode {
 	const searchResults = useSearchResults();
 	const searchFilters = useSearchFilters();
 	const { getSearchItemsLink, searchItems } = useSearchItems();

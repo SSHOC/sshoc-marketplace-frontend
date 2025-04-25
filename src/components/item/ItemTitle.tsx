@@ -13,7 +13,7 @@ export interface ItemTitleProps {
 	children?: ReactNode;
 }
 
-export function ItemTitle(props: ItemTitleProps): JSX.Element {
+export function ItemTitle(props: ItemTitleProps): ReactNode {
 	const { category, thumbnail } = props;
 
 	const pathname = usePathname();

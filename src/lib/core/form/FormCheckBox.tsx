@@ -9,7 +9,7 @@ export interface FormCheckBoxProps extends Omit<CheckBoxProps, "isSelected"> {
 	name: string;
 }
 
-export function FormCheckBox(props: FormCheckBoxProps): JSX.Element {
+export function FormCheckBox(props: FormCheckBoxProps): ReactNode {
 	const { input, meta } = useField(props.name, { type: "checkbox" });
 	const validation = useFormFieldValidationState(meta);
 

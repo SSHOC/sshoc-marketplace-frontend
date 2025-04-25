@@ -1,6 +1,6 @@
 import { useButton } from "@react-aria/button";
 import { useObjectRef } from "@react-aria/utils";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import css from "@/components/item/CopyLinkToClipboardButton.module.css";
@@ -19,7 +19,7 @@ export interface CopyLinkToClipboardButtonProps {
 export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboardButton(
 	props: CopyLinkToClipboardButtonProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { pathname } = props.href;
 
 	const { t } = useI18n<"common">();

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { CreateActorButton } from "@/components/common/CreateActorButton";
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
@@ -10,7 +12,7 @@ export interface ActorReviewFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function ActorReviewFormSection(props: ActorReviewFormSectionProps): JSX.Element {
+export function ActorReviewFormSection(props: ActorReviewFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

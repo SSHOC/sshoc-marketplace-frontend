@@ -8,7 +8,7 @@ export interface AlertProps {
 	color?: "negative" | "notice" | "positive";
 }
 
-export function Alert(props: AlertProps): JSX.Element {
+export function Alert(props: AlertProps): ReactNode {
 	const { children, color } = props;
 
 	return (

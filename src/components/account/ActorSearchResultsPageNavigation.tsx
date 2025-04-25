@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useActorSearch } from "@/components/account/useActorSearch";
 import { useActorSearchFilters } from "@/components/account/useActorSearchFilters";
 import { useActorSearchResults } from "@/components/account/useActorSearchResults";
@@ -10,7 +12,7 @@ export interface ActorSearchResultsPageNavigationProps {
 
 export function ActorSearchResultsPageNavigation(
 	props: ActorSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useActorSearchResults();
 	const searchFilters = useActorSearchFilters();
 	const { getSearchActorsLink, searchActors } = useActorSearch();

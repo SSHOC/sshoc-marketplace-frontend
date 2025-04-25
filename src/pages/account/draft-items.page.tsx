@@ -42,7 +42,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function DraftItemsPage(_props: DraftItemsPage.Props): JSX.Element {
+export default function DraftItemsPage(_props: DraftItemsPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const title = t(["authenticated", "pages", "draft-items"]);

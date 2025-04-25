@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { SourceSearchResult } from "@/components/account/SourceSearchResult";
 import css from "@/components/account/SourceSearchResults.module.css";
 import { useSourceSearchResults } from "@/components/account/useSourceSearchResults";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function SourceSearchResults(): JSX.Element {
+export function SourceSearchResults(): ReactNode {
 	const sourceSearch = useSourceSearchResults();
 
 	if (sourceSearch.data == null) {

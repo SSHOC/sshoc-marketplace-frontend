@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { z } from "zod";
 
 import { FormSection } from "@/components/common/FormSection";
@@ -28,7 +29,7 @@ export interface MediaUploadFormProps extends Pick<FormFileInputProps, "fileType
 	onSubmit: (media: MediaUploadFormValues) => void;
 }
 
-export function MediaUploadForm(props: MediaUploadFormProps): JSX.Element {
+export function MediaUploadForm(props: MediaUploadFormProps): ReactNode {
 	const { fileTypes, initialValues, multiple, name, onCancel, onSubmit } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -80,7 +81,7 @@ interface LicenceComboBoxProps {
 	field: MediaUploadFormFields["licence"];
 }
 
-function LicenceComboBox(props: LicenceComboBoxProps): JSX.Element {
+function LicenceComboBox(props: LicenceComboBoxProps): ReactNode {
 	const { field } = props;
 
 	const licences = useConceptSearchInfinite({ types: ["license"] });

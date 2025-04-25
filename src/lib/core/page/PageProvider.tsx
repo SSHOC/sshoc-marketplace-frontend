@@ -26,7 +26,7 @@ export interface PageProviderProps {
 	children?: ReactNode;
 }
 
-export function PageProvider(props: PageProviderProps): JSX.Element {
+export function PageProvider(props: PageProviderProps): ReactNode {
 	const pageLoadingIndicator = usePageLoadingIndicator();
 	const skipToMainContent = useSkipToMainContent();
 

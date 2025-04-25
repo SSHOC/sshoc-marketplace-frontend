@@ -1,7 +1,7 @@
 import { useButton } from "@react-aria/button";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import type { AriaButtonProps } from "@react-types/button";
-import { useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
 import css from "@/components/item/ItemMedia.module.css";
 import type { Item } from "@/data/sshoc/api/item";
@@ -15,7 +15,7 @@ export interface ItemMediaProps {
 	media: Item["media"];
 }
 
-export function ItemMedia(props: ItemMediaProps): JSX.Element | null {
+export function ItemMedia(props: ItemMediaProps): ReactNode {
 	const { media } = props;
 
 	const { t } = useI18n<"common">();
@@ -88,7 +88,7 @@ interface ItemMediaPreviewsProps {
 	onSelect: (index: number) => void;
 }
 
-function ItemMediaPreviews(props: ItemMediaPreviewsProps): JSX.Element {
+function ItemMediaPreviews(props: ItemMediaPreviewsProps): ReactNode {
 	const { media, onSelect } = props;
 
 	const { t } = useI18n<"common">();
@@ -131,7 +131,7 @@ interface MediaProps {
 	media: Item["media"][number];
 }
 
-function Media(props: MediaProps): JSX.Element | null {
+function Media(props: MediaProps): ReactNode {
 	const { media } = props;
 	const { info, caption } = media;
 	const url = isMediaDetailsUrl(info)
@@ -176,7 +176,7 @@ interface MediaCaptionProps {
 	media: Item["media"][number];
 }
 
-function MediaCaption(props: MediaCaptionProps): JSX.Element | null {
+function MediaCaption(props: MediaCaptionProps): ReactNode {
 	const { media } = props;
 	const caption = media.caption;
 	const license = media.concept?.label;
@@ -196,7 +196,7 @@ function MediaCaption(props: MediaCaptionProps): JSX.Element | null {
 type ButtonProps = AriaButtonProps;
 
 // TODO: <Button variant="ghost" />
-function Button(props: ButtonProps): JSX.Element {
+function Button(props: ButtonProps): ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { buttonProps } = useButton(props, buttonRef);
 

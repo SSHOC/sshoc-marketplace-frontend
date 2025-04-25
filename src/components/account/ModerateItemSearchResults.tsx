@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ModerateItemSearchResult } from "@/components/account/ModerateItemSearchResult";
 import css from "@/components/account/ModerateItemSearchResults.module.css";
 import { useModerateItemsSearchResults } from "@/components/account/useModerateItemsSearchResults";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function ModerateItemSearchResults(): JSX.Element {
+export function ModerateItemSearchResults(): ReactNode {
 	const moderateItemSearch = useModerateItemsSearchResults();
 
 	if (moderateItemSearch.data == null) {

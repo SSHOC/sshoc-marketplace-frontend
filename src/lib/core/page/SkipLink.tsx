@@ -7,7 +7,7 @@ export interface SkipLinkProps {
 	children?: ReactNode;
 }
 
-export function SkipLink(props: SkipLinkProps): JSX.Element {
+export function SkipLink(props: SkipLinkProps): ReactNode {
 	const { skipToMainContent } = usePage();
 
 	return (

@@ -38,7 +38,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function AccountPage(_props: AccountPage.Props): JSX.Element {
+export default function AccountPage(_props: AccountPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const title = t(["authenticated", "pages", "account"]);

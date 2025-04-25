@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { useState } from "react";
 
 import css from "@/components/common/ItemSearchBar.module.css";
@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { isNonEmptyString } from "@/lib/utils";
 
-export function ItemSearchBar(): JSX.Element {
+export function ItemSearchBar(): ReactNode {
 	const searchFilters = useSearchFilters();
 
 	return <ItemSearchForm initialItemSearchTerm={searchFilters.q} key={searchFilters.q} />;
@@ -19,7 +19,7 @@ interface ItemSearchFormProps {
 	initialItemSearchTerm?: string;
 }
 
-function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
+function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const { initialItemSearchTerm } = props;
 
 	const { t } = useI18n<"common">();

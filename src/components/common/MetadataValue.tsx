@@ -8,7 +8,7 @@ export interface MetadataValueProps {
 	size?: "md" | "sm" | "xs";
 }
 
-export function MetadataValue(props: MetadataValueProps): JSX.Element {
+export function MetadataValue(props: MetadataValueProps): ReactNode {
 	const { children, size = "md" } = props;
 
 	return (

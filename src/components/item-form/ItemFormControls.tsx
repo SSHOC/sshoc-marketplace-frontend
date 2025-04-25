@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 
 import { FormControls } from "@/components/common/FormControls";
@@ -14,7 +15,7 @@ export interface ItemFormControlsProps<T> {
 	onCancel: (form: FormApi<T>) => void;
 }
 
-export function ItemFormControls<T>(props: ItemFormControlsProps<T>): JSX.Element {
+export function ItemFormControls<T>(props: ItemFormControlsProps<T>): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const hasPublishPermissions = usePublishPermission();
 	const form = useForm<T>();

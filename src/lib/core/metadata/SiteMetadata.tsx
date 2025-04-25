@@ -9,7 +9,7 @@ import { useSiteMetadata } from "@/lib/core/metadata/useSiteMetadata";
 import { createFaviconLink } from "@/lib/utils";
 import { openGraphImageName, webManifest } from "~/config/site.config";
 
-export function SiteMetadata(): JSX.Element {
+export function SiteMetadata(): ReactNode {
 	const { locale, title, description, image, twitter } = useSiteMetadata();
 	const canonicalUrl = useCanonicalUrl();
 	const alternateLocaleUrls = useAlternateLocaleUrls();

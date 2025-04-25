@@ -1,4 +1,5 @@
 import { SchemaOrg } from "@stefanprobst/next-page-metadata";
+import type { ReactNode } from "react";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Publication } from "@/data/sshoc/api/publication";
@@ -7,9 +8,7 @@ export interface PublicationSchemaOrgMetadataProps {
 	publication: Publication;
 }
 
-export function PublicationSchemaOrgMetadata(
-	props: PublicationSchemaOrgMetadataProps,
-): JSX.Element {
+export function PublicationSchemaOrgMetadata(props: PublicationSchemaOrgMetadataProps): ReactNode {
 	const { publication } = props;
 
 	const conceptBasedProperties = publication.properties.filter(isPropertyConcept);

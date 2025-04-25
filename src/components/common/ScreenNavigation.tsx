@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { NavLink } from "@/components/common/NavLink";
 import css from "@/components/common/ScreenNavigation.module.css";
 import type { NavItems } from "@/lib/core/page/types";
@@ -9,7 +11,7 @@ export interface ScreenNavigationProps {
 	items: NavItems;
 }
 
-export function ScreenNavigation(props: ScreenNavigationProps): JSX.Element {
+export function ScreenNavigation(props: ScreenNavigationProps): ReactNode {
 	const { label, items } = props;
 
 	return (

@@ -15,7 +15,7 @@ export interface ApiParamsProvider {
 	value: ApiParamsContextValue;
 }
 
-export function ApiParamsProvider(props: ApiParamsProvider): JSX.Element {
+export function ApiParamsProvider(props: ApiParamsProvider): ReactNode {
 	const { children, value } = props;
 
 	return <ApiParamsContext.Provider value={value}>{children}</ApiParamsContext.Provider>;

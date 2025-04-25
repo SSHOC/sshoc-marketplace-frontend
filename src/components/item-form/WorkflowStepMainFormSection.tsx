@@ -1,4 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import type { ReactNode } from "react";
 
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
@@ -11,7 +12,7 @@ export interface WorkflowStepMainFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function WorkflowStepMainFormSection(props: WorkflowStepMainFormSectionProps): JSX.Element {
+export function WorkflowStepMainFormSection(props: WorkflowStepMainFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

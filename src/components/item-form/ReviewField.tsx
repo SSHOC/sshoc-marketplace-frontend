@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ReviewControls } from "@/components/item-form/ReviewControls";
 import css from "@/components/item-form/ReviewField.module.css";
 import type { Status } from "@/components/item-form/useItemDiffFormFieldsMetadata";
@@ -15,7 +17,7 @@ export interface ReviewFieldProps<T> {
 	}) => JSX.Element;
 }
 
-export function ReviewField<T>(props: ReviewFieldProps<T>): JSX.Element {
+export function ReviewField<T>(props: ReviewFieldProps<T>): ReactNode {
 	const { children, name, review } = props;
 
 	const meta = useReviewFieldMetadata<T>({ name });

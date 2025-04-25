@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemHistorySearchResults } from "@/components/item-history/ItemHistorySearchResults";
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import { useDatasetHistory } from "@/data/sshoc/hooks/dataset";
@@ -8,7 +10,7 @@ export interface DatasetHistorySearchResultsProps {
 	persistentId: Dataset["persistentId"];
 }
 
-export function DatasetHistorySearchResults(props: DatasetHistorySearchResultsProps): JSX.Element {
+export function DatasetHistorySearchResults(props: DatasetHistorySearchResultsProps): ReactNode {
 	const { persistentId } = props;
 
 	const meta: QueryMetadata = {

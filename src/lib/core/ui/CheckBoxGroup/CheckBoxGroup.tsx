@@ -19,7 +19,7 @@ export interface CheckBoxGroupProps extends AriaCheckboxGroupProps, Validation {
 	variant?: "facet" | "primary";
 }
 
-export function CheckBoxGroup(props: CheckBoxGroupProps): JSX.Element {
+export function CheckBoxGroup(props: CheckBoxGroupProps): ReactNode {
 	const state = useCheckboxGroupState(props);
 	const { groupProps, labelProps } = useCheckboxGroup(props, state);
 
@@ -52,7 +52,7 @@ export interface CheckBoxGroupItemProps extends AriaCheckboxGroupItemProps {
 	variant?: "facet" | "primary";
 }
 
-export function CheckBoxGroupItem(props: CheckBoxGroupItemProps): JSX.Element {
+export function CheckBoxGroupItem(props: CheckBoxGroupItemProps): ReactNode {
 	const ref = useRef<HTMLInputElement>(null);
 
 	const state = props.state!;

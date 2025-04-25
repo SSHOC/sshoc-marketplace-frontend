@@ -88,7 +88,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function EditDatasetVersionPage(props: EditDatasetVersionPage.Props): JSX.Element {
+export default function EditDatasetVersionPage(props: EditDatasetVersionPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

@@ -26,7 +26,7 @@ export interface CheckBoxBaseProps extends CheckBoxProps {
 export const CheckBoxBase = forwardRef(function CheckBoxBase(
 	props: CheckBoxBaseProps,
 	forwardedRef: ForwardedRef<HTMLInputElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		inputProps,
 		isDisabled = false,

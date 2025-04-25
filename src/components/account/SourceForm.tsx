@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { SourceFormControls } from "@/components/account/SourceFormControls";
 import { useSourceFormFields } from "@/components/account/useSourceFormFields";
 import { FormSection } from "@/components/common/FormSection";
@@ -16,7 +18,7 @@ export interface SourceFormProps {
 	onSubmit: (source: SourceFormValues) => void;
 }
 
-export function SourceForm(props: SourceFormProps): JSX.Element {
+export function SourceForm(props: SourceFormProps): ReactNode {
 	const { initialValues, name, onCancel, onSubmit } = props;
 
 	const fields = useSourceFormFields();

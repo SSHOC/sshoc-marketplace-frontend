@@ -1,4 +1,4 @@
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import type { LinkProps } from "@/components/common/Link";
@@ -11,7 +11,7 @@ export interface NavLinkProps extends LinkProps, UseIsCurrentRouteArgs {}
 export const NavLink = forwardRef(function NavLink(
 	props: NavLinkProps,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
-): JSX.Element {
+): ReactNode {
 	const { href, isCurrent, ...linkProps } = props;
 
 	const isCurrentRoute = useIsCurrentRoute({ href, isCurrent });

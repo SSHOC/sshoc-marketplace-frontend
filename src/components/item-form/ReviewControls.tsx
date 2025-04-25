@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/item-form/ReviewControls.module.css";
 import type { DiffFieldMetadata } from "@/components/item-form/useItemDiffFormFieldsMetadata";
 import { useI18n } from "@/lib/core/i18n/useI18n";
@@ -12,7 +14,7 @@ export interface ReviewControlsProps {
 	onReject: () => void;
 }
 
-export function ReviewControls(props: ReviewControlsProps): JSX.Element {
+export function ReviewControls(props: ReviewControlsProps): ReactNode {
 	const { metadata, onApprove, onReject } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

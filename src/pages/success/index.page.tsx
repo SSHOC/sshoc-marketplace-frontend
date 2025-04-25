@@ -37,7 +37,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function SuccessPage(_props: SuccessPage.Props): JSX.Element {
+export default function SuccessPage(_props: SuccessPage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "success"]);

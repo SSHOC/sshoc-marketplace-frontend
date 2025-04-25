@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -18,7 +19,7 @@ export interface RelatedItemsFormFieldArrayProps {
 	field: ItemFormFields["fields"]["relatedItems"];
 }
 
-export function RelatedItemsFormFieldArray(props: RelatedItemsFormFieldArrayProps): JSX.Element {
+export function RelatedItemsFormFieldArray(props: RelatedItemsFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

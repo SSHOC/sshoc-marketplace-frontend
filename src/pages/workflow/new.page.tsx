@@ -38,7 +38,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): JSX.Element {
+export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const { page, setPage } = useWorkflowFormPage();

@@ -1,4 +1,4 @@
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import type { LinkProps as WrapperProps } from "@/lib/core/navigation/Link";
@@ -13,7 +13,7 @@ export interface LinkButtonProps
 export const LinkButton = forwardRef(function LinkButton(
 	props: LinkButtonProps,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
-): JSX.Element {
+): ReactNode {
 	const { href, replace, scroll, shallow, prefetch, locale, children, ...anchorProps } = props;
 
 	/** `NextLink` types currently don't work well with `exactOptionalPropertyTypes`. */

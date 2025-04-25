@@ -1,7 +1,9 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/account/VocabularySearchResultsFooter.module.css";
 import { VocabularySearchResultsPageNavigation } from "@/components/account/VocabularySearchResultsPageNavigation";
 
-export function VocabularySearchResultsFooter(): JSX.Element {
+export function VocabularySearchResultsFooter(): ReactNode {
 	return (
 		<aside className={css["container"]}>
 			<div className={css["input"]}>

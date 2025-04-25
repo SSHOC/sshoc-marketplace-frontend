@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-final-form";
 
@@ -20,7 +20,7 @@ export interface ActorComboBoxProps {
 		| (ActorFormFields["affiliations"]["fields"]["actor"] & { _root: string });
 }
 
-export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
+export function ActorComboBox(props: ActorComboBoxProps): ReactNode {
 	const { field } = props;
 
 	const form = useForm();

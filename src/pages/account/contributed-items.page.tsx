@@ -42,7 +42,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ContributedItemsPage(_props: ContributedItemsPage.Props): JSX.Element {
+export default function ContributedItemsPage(_props: ContributedItemsPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const title = t(["authenticated", "pages", "contributed-items"]);

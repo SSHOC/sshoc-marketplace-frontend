@@ -1,4 +1,5 @@
 import { SchemaOrg } from "@stefanprobst/next-page-metadata";
+import type { ReactNode } from "react";
 
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import { isPropertyConcept } from "@/data/sshoc/api/property";
@@ -7,7 +8,7 @@ export interface DatasetSchemaOrgMetadataProps {
 	dataset: Dataset;
 }
 
-export function DatasetSchemaOrgMetadata(props: DatasetSchemaOrgMetadataProps): JSX.Element {
+export function DatasetSchemaOrgMetadata(props: DatasetSchemaOrgMetadataProps): ReactNode {
 	const { dataset } = props;
 
 	const conceptBasedProperties = dataset.properties.filter(isPropertyConcept);

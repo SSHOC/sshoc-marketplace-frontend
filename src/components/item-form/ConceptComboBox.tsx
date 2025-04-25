@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 import { Fragment, useMemo } from "react";
 import { useForm } from "react-final-form";
 
@@ -22,7 +22,7 @@ export interface ConceptComboBoxProps {
 	allowedVocabularies: PropertyType["allowedVocabularies"];
 }
 
-export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
+export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 	const { conceptSearchTerm, field, propertyTypeId, allowedVocabularies, setConceptSearchTerm } =
 		props;
 

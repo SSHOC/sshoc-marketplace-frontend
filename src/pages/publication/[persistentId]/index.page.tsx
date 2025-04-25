@@ -113,7 +113,7 @@ export async function getStaticProps(
 	}
 }
 
-export default function PublicationPage(props: PublicationPage.Props): JSX.Element {
+export default function PublicationPage(props: PublicationPage.Props): ReactNode {
 	const { persistentId } = props.params;
 	const queryClient = useQueryClient();
 	const _publication = usePublication({ persistentId }, undefined, {

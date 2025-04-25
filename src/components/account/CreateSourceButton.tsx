@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import type { SourceFormValues } from "@/components/account/SourceForm";
 import { SourceForm } from "@/components/account/SourceForm";
@@ -16,7 +16,7 @@ export interface CreateSourceButtonProps {
 	variant?: "button-link" | "button";
 }
 
-export function CreateSourceButton(props: CreateSourceButtonProps): JSX.Element {
+export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 	const { variant = "button" } = props;
 
 	const dialog = useModalDialogTriggerState({});

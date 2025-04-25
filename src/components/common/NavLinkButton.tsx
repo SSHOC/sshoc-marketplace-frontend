@@ -1,4 +1,4 @@
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import type { LinkButtonProps } from "@/components/common/LinkButton";
@@ -11,7 +11,7 @@ export interface NavLinkButtonProps extends LinkButtonProps, UseIsCurrentRouteAr
 export const NavLinkButton = forwardRef(function NavLinkButton(
 	props: NavLinkButtonProps,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
-): JSX.Element {
+): ReactNode {
 	const { href, isCurrent, ...linkProps } = props;
 
 	const isCurrentRoute = useIsCurrentRoute({ href, isCurrent });

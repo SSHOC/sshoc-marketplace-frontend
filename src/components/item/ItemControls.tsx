@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { LinkButton } from "@/components/common/LinkButton";
 import css from "@/components/item/ItemControls.module.css";
@@ -24,7 +24,7 @@ export interface ItemControlProps {
 	persistentId: Item["persistentId"];
 }
 
-export function ItemControls(props: ItemControlProps): JSX.Element {
+export function ItemControls(props: ItemControlProps): ReactNode {
 	const { category, persistentId } = props;
 
 	const { t } = useI18n<"common">();
@@ -53,7 +53,7 @@ interface EditItemMenuButtonProps {
 	persistentId: Item["persistentId"];
 }
 
-function EditItemMenuButton(props: EditItemMenuButtonProps): JSX.Element {
+function EditItemMenuButton(props: EditItemMenuButtonProps): ReactNode {
 	const { category, persistentId } = props;
 
 	const { t } = useI18n<"common">();
@@ -116,7 +116,7 @@ interface DeleteItemButtonProps {
 	persistentId: Item["persistentId"];
 }
 
-function DeleteItemButton(props: DeleteItemButtonProps): JSX.Element {
+function DeleteItemButton(props: DeleteItemButtonProps): ReactNode {
 	const { category, persistentId } = props;
 
 	const { t } = useI18n<"common">();

@@ -13,7 +13,7 @@ export interface ListBoxProps<T extends object> extends AriaListBoxProps<T>, Asy
 export const ListBox = forwardRef(function ListBox<T extends object>(
 	props: ListBoxProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const state = useListState<T>(props);
 	const layout = useListBoxLayout<T>(state);
 	const ref = useObjectRef(forwardedRef);

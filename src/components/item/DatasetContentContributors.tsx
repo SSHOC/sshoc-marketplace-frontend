@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemContentContributors } from "@/components/item/ItemContentContributors";
 import type { Item } from "@/data/sshoc/api/item";
 import { useDatasetVersionInformationContributors } from "@/data/sshoc/hooks/dataset";
@@ -7,7 +9,7 @@ export interface DatasetContentContributorsProps {
 	versionId: Item["id"];
 }
 
-export function DatasetContentContributors(props: DatasetContentContributorsProps): JSX.Element {
+export function DatasetContentContributors(props: DatasetContentContributorsProps): ReactNode {
 	const { persistentId, versionId } = props;
 
 	const contentContributors = useDatasetVersionInformationContributors({

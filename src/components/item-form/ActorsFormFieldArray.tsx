@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { ActorComboBox } from "@/components/common/ActorComboBox";
@@ -19,7 +20,7 @@ export interface ActorsFormFieldArrayProps {
 	field: ItemFormFields["fields"]["contributors"];
 }
 
-export function ActorsFormFieldArray(props: ActorsFormFieldArrayProps): JSX.Element {
+export function ActorsFormFieldArray(props: ActorsFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

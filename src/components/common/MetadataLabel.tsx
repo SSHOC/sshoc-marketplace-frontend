@@ -8,7 +8,7 @@ export interface MetadataLabelProps {
 	size?: "md" | "sm" | "xs";
 }
 
-export function MetadataLabel(props: MetadataLabelProps): JSX.Element {
+export function MetadataLabel(props: MetadataLabelProps): ReactNode {
 	const { children, size = "md" } = props;
 
 	return (

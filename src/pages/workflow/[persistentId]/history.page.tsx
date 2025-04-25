@@ -77,7 +77,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): JSX.Element {
+export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): ReactNode {
 	const { persistentId } = props.params;
 
 	const meta: QueryMetadata = {

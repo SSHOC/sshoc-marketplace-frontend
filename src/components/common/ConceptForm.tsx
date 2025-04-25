@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { z } from "zod";
 
 import { ConceptFormControls } from "@/components/common/ConceptFormControls";
@@ -25,7 +26,7 @@ export interface ConceptFormProps {
 	onSubmit: (concept: ConceptFormValues) => void;
 }
 
-export function ConceptForm(props: ConceptFormProps): JSX.Element {
+export function ConceptForm(props: ConceptFormProps): ReactNode {
 	const { initialValues, name, onCancel, onSubmit, propertyType } = props;
 
 	const fields = useConceptFormFields();

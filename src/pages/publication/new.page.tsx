@@ -41,7 +41,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function CreatePublicationPage(_props: CreatePublicationPage.Props): JSX.Element {
+export default function CreatePublicationPage(_props: CreatePublicationPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const category = "publication";

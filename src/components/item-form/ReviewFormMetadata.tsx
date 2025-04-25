@@ -9,7 +9,7 @@ export interface ReviewFormMetadataProps {
 	diff: ItemsDiff | undefined;
 }
 
-export function ReviewFormMetadata(props: ReviewFormMetadataProps): JSX.Element {
+export function ReviewFormMetadata(props: ReviewFormMetadataProps): ReactNode {
 	const { children, diff } = props;
 
 	/**

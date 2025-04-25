@@ -6,6 +6,6 @@ export interface ScreenTitleProps {
 	children?: ReactNode;
 }
 
-export function ScreenTitle(props: ScreenTitleProps): JSX.Element {
+export function ScreenTitle(props: ScreenTitleProps): ReactNode {
 	return <h1 className={css["heading"]}>{props.children}</h1>;
 }

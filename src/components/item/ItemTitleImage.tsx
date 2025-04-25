@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
 import { ItemThumbnail } from "@/components/item/ItemThumbnail";
 import type { Item } from "@/data/sshoc/api/item";
@@ -7,7 +9,7 @@ export interface ItemTitleImageProps {
 	thumbnail: Item["thumbnail"];
 }
 
-export function ItemTitleImage(props: ItemTitleImageProps): JSX.Element {
+export function ItemTitleImage(props: ItemTitleImageProps): ReactNode {
 	const { category, thumbnail } = props;
 
 	return thumbnail != null ? (

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { type ReactNode, useRef } from "react";
 import { useForm } from "react-final-form";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -23,7 +23,7 @@ export interface ThumbnailFormFieldProps {
 	field: ItemFormFields["fields"]["thumbnail"];
 }
 
-export function ThumbnailFormField(props: ThumbnailFormFieldProps): JSX.Element {
+export function ThumbnailFormField(props: ThumbnailFormFieldProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

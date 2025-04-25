@@ -26,7 +26,7 @@ export interface FormProps<T>
 	children?: ReactNode;
 }
 
-export function Form<T>(props: FormProps<T>): JSX.Element {
+export function Form<T>(props: FormProps<T>): ReactNode {
 	const {
 		action,
 		id,

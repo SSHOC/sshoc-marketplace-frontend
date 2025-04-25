@@ -77,7 +77,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): JSX.Element {
+export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): ReactNode {
 	const { persistentId } = props.params;
 
 	const meta: QueryMetadata = {

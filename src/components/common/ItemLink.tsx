@@ -12,7 +12,7 @@ export interface ItemLinkProps {
 	versionId: Item["id"];
 }
 
-export function ItemLink(props: ItemLinkProps): JSX.Element {
+export function ItemLink(props: ItemLinkProps): ReactNode {
 	const { children, category, persistentId, status, versionId } = props;
 
 	const href =

@@ -8,7 +8,7 @@ export interface FormFieldListProps {
 	variant?: "primary" | "thumbnails";
 }
 
-export function FormFieldList(props: FormFieldListProps): JSX.Element {
+export function FormFieldList(props: FormFieldListProps): ReactNode {
 	const { children, variant = "primary" } = props;
 
 	return (

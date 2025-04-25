@@ -14,7 +14,7 @@ export interface FormSearchAutocompleteProps<T extends object>
 
 export function FormSearchAutocomplete<T extends object>(
 	props: FormSearchAutocompleteProps<T>,
-): JSX.Element {
+): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

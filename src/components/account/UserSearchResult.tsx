@@ -1,4 +1,4 @@
-import type { FormEvent, Key } from "react";
+import type { FormEvent, Key, ReactNode } from "react";
 
 // import { useQueryClient } from 'react-query'
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -35,7 +35,7 @@ export interface UserSearchResultProps {
 	user: GetUsers.Response["users"][number];
 }
 
-export function UserSearchResult(props: UserSearchResultProps): JSX.Element {
+export function UserSearchResult(props: UserSearchResultProps): ReactNode {
 	const { user } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -69,7 +69,7 @@ interface UserRoleSelectProps {
 	user: User;
 }
 
-function UserRoleSelect(props: UserRoleSelectProps): JSX.Element {
+function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 	const { user } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -156,7 +156,7 @@ interface UserStatusSelectProps {
 	user: User;
 }
 
-function UserStatusSelect(props: UserStatusSelectProps): JSX.Element {
+function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 	const { user } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

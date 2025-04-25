@@ -11,7 +11,7 @@ import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
 import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 import { useItemCategoryNavItems } from "@/lib/core/page/useItemCategoryNavItems";
 
-export function PageNavigation(): JSX.Element {
+export function PageNavigation(): ReactNode {
 	return (
 		<nav className={css["main-nav"]}>
 			<ul className={css["nav-items"]} role="list">
@@ -26,7 +26,7 @@ export function PageNavigation(): JSX.Element {
 	);
 }
 
-function ItemCategoryNavLinks(): JSX.Element | null {
+function ItemCategoryNavLinks(): ReactNode {
 	const items = useItemCategoryNavItems();
 
 	if (items == null) {
@@ -48,7 +48,7 @@ function ItemCategoryNavLinks(): JSX.Element | null {
 	);
 }
 
-function BrowseNavMenu(): JSX.Element {
+function BrowseNavMenu(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useBrowseNavItems();
 	const router = useRouter();
@@ -71,7 +71,7 @@ function BrowseNavMenu(): JSX.Element {
 	);
 }
 
-function ContributeNavMenu(): JSX.Element {
+function ContributeNavMenu(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useContributeNavItems();
 	const router = useRouter();
@@ -94,7 +94,7 @@ function ContributeNavMenu(): JSX.Element {
 	);
 }
 
-function AboutNavMenu(): JSX.Element {
+function AboutNavMenu(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useAboutNavItems();
 	const router = useRouter();
@@ -117,6 +117,6 @@ function AboutNavMenu(): JSX.Element {
 	);
 }
 
-function Separator(): JSX.Element {
+function Separator(): ReactNode {
 	return <li role="separator" className={css["nav-separator"]} />;
 }

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useVocabularySearchResults } from "@/components/account/useVocabularySearchResults";
 import { VocabularySearchResult } from "@/components/account/VocabularySearchResult";
 import css from "@/components/account/VocabularySearchResults.module.css";
@@ -5,7 +7,7 @@ import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function VocabularySearchResults(): JSX.Element {
+export function VocabularySearchResults(): ReactNode {
 	const vocabularySearch = useVocabularySearchResults();
 
 	if (vocabularySearch.data == null) {

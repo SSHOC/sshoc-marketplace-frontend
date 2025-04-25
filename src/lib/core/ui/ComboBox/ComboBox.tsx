@@ -62,7 +62,7 @@ export interface ComboBoxProps<T extends object>
 export const ComboBox = forwardRef(function ComboBox<T extends object>(
 	props: ComboBoxProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	// const isMobile = useIsMobileDevice()
 
 	// if (isMobile) {
@@ -79,7 +79,7 @@ export const ComboBox = forwardRef(function ComboBox<T extends object>(
 const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 	props: ComboBoxProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		color = "primary",
 		direction = "bottom",
@@ -253,7 +253,7 @@ interface ComboBoxInputProps<T extends object> extends AriaComboBoxProps<T> {
 const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(
 	props: ComboBoxInputProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		color = "primary",
 		inputProps,

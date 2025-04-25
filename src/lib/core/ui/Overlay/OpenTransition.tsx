@@ -26,7 +26,7 @@ export interface OpenTransitionProps
 	nodeRef: Ref<HTMLElement>;
 }
 
-export function OpenTransition(props: OpenTransitionProps): JSX.Element {
+export function OpenTransition(props: OpenTransitionProps): ReactNode {
 	const { children, nodeRef } = props;
 
 	return (

@@ -6,6 +6,6 @@ export interface WorkflowScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function WorkflowScreenLayout(props: WorkflowScreenLayoutProps): JSX.Element {
+export function WorkflowScreenLayout(props: WorkflowScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

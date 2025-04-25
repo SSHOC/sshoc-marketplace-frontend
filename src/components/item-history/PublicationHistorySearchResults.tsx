@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemHistorySearchResults } from "@/components/item-history/ItemHistorySearchResults";
 import type { Publication } from "@/data/sshoc/api/publication";
 import { usePublicationHistory } from "@/data/sshoc/hooks/publication";
@@ -10,7 +12,7 @@ export interface PublicationHistorySearchResultsProps {
 
 export function PublicationHistorySearchResults(
 	props: PublicationHistorySearchResultsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId } = props;
 
 	const meta: QueryMetadata = {

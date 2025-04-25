@@ -11,7 +11,7 @@ export interface SpacedRowProps {
 	style?: SpacedRowStyleProps;
 }
 
-export function SpacedRow(props: SpacedRowProps): JSX.Element {
+export function SpacedRow(props: SpacedRowProps): ReactNode {
 	const { children, style } = props;
 
 	return (

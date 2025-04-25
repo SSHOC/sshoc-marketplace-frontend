@@ -54,7 +54,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function TemplatePage(_props: TemplatePage.Props): JSX.Element {
+export default function TemplatePage(_props: TemplatePage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "home"]);

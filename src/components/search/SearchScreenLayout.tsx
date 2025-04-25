@@ -6,6 +6,6 @@ export interface SearchScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function SearchScreenLayout(props: SearchScreenLayoutProps): JSX.Element {
+export function SearchScreenLayout(props: SearchScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

@@ -6,7 +6,7 @@ export interface SearchResultContentProps {
 	children?: ReactNode;
 }
 
-export function SearchResultContent(props: SearchResultContentProps): JSX.Element {
+export function SearchResultContent(props: SearchResultContentProps): ReactNode {
 	const { children } = props;
 
 	return <div className={css["content"]}>{children}</div>;

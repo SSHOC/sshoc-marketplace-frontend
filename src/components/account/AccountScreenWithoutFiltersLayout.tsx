@@ -8,6 +8,6 @@ export interface AccountScreenWithoutFiltersLayoutProps {
 
 export function AccountScreenWithoutFiltersLayout(
 	props: AccountScreenWithoutFiltersLayoutProps,
-): JSX.Element {
+): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

@@ -6,6 +6,6 @@ export interface TermsOfUseScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function TermsOfUseScreenLayout(props: TermsOfUseScreenLayoutProps): JSX.Element {
+export function TermsOfUseScreenLayout(props: TermsOfUseScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

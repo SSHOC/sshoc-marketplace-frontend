@@ -57,7 +57,7 @@ export interface ButtonProps<T extends ElementType = "button"> extends AriaButto
 export const Button = forwardRef(function Button<T extends ElementType = "button">(
 	props: ButtonProps<T>,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		color = "primary",
 		children,

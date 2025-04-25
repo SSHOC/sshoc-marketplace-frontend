@@ -1,4 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import type { ReactNode } from "react";
 
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { SectionTitle } from "@/components/common/SectionTitle";
@@ -14,7 +15,7 @@ export interface ItemCommentsProps {
 	persistentId: Item["persistentId"];
 }
 
-export function ItemComments(props: ItemCommentsProps): JSX.Element | null {
+export function ItemComments(props: ItemCommentsProps): ReactNode {
 	const { persistentId } = props;
 
 	const { t } = useI18n<"common">();
@@ -54,7 +55,7 @@ interface CommentProps {
 	comment: ItemComment;
 }
 
-function Comment(props: CommentProps): JSX.Element {
+function Comment(props: CommentProps): ReactNode {
 	const { comment } = props;
 
 	const { t } = useI18n<"common">();

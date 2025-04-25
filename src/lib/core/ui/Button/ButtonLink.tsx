@@ -22,7 +22,7 @@ export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, "style
 export const ButtonLink = forwardRef(function ButtonLink(
 	props: ButtonLinkProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { children, isPressed = false, style, trigger } = props;
 
 	const buttonRef = useRef<HTMLButtonElement>(null);

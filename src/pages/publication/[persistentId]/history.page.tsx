@@ -77,7 +77,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function PublicationHistoryPage(props: PublicationHistoryPage.Props): JSX.Element {
+export default function PublicationHistoryPage(props: PublicationHistoryPage.Props): ReactNode {
 	const { persistentId } = props.params;
 
 	const meta: QueryMetadata = {

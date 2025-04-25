@@ -91,7 +91,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): JSX.Element {
+export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

@@ -8,7 +8,7 @@ export interface RootErrorBoundaryProps {
 	children?: ReactNode;
 }
 
-export function RootErrorBoundary(props: RootErrorBoundaryProps): JSX.Element {
+export function RootErrorBoundary(props: RootErrorBoundaryProps): ReactNode {
 	const { reset } = useQueryErrorResetBoundary();
 
 	return (

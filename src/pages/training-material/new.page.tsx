@@ -43,7 +43,7 @@ export async function getStaticProps(
 
 export default function CreateTrainingMaterialPage(
 	_props: CreateTrainingMaterialPage.Props,
-): JSX.Element {
+): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const category = "training-material";

@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-final-form";
 
@@ -18,7 +18,7 @@ export interface RelatedItemComboBoxProps {
 	field: ItemFormFields["fields"]["relatedItems"]["fields"]["item"] & { _root: string };
 }
 
-export function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Element {
+export function RelatedItemComboBox(props: RelatedItemComboBoxProps): ReactNode {
 	const { field } = props;
 
 	const form = useForm();

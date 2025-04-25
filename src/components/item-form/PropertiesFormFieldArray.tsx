@@ -24,7 +24,7 @@ export interface PropertiesFormFieldArrayProps {
 	field: ItemFormFields["fields"]["properties"];
 }
 
-export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): JSX.Element {
+export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t, createCollator } = useI18n<"authenticated" | "common">();
@@ -132,7 +132,7 @@ interface ItemPropertyAccessControlProps {
 	propertyTypesMap: Map<PropertyType["code"], PropertyType>;
 }
 
-function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): JSX.Element | null {
+function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): ReactNode {
 	const { children, name, propertyTypesMap } = props;
 
 	const hasPublishPermission = usePublishPermission();

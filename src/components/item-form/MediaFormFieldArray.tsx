@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useRef } from "react";
+import { Fragment, type ReactNode, useMemo, useRef } from "react";
 import { useField } from "react-final-form";
 import { useFieldArray } from "react-final-form-arrays";
 
@@ -25,7 +25,7 @@ export interface MediaFormFieldArrayProps {
 	field: ItemFormFields["fields"]["media"];
 }
 
-export function MediaFormFieldArray(props: MediaFormFieldArrayProps): JSX.Element {
+export function MediaFormFieldArray(props: MediaFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -141,7 +141,7 @@ interface MediaEditButtonProps {
 	onEdit: (data: ItemMediaInput) => void;
 }
 
-function MediaEditButton(props: MediaEditButtonProps): JSX.Element {
+function MediaEditButton(props: MediaEditButtonProps): ReactNode {
 	const { field, onEdit, name } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

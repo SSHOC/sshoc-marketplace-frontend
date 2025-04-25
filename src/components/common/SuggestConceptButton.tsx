@@ -1,5 +1,5 @@
 import { camelCase } from "change-case";
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import type { ConceptFormValues } from "@/components/common/ConceptForm";
 import { ConceptForm } from "@/components/common/ConceptForm";
@@ -20,7 +20,7 @@ export interface SuggestConceptButtonProps {
 	variant?: "button-link" | "button";
 }
 
-export function SuggestConceptButton(props: SuggestConceptButtonProps): JSX.Element {
+export function SuggestConceptButton(props: SuggestConceptButtonProps): ReactNode {
 	const { propertyType, variant = "button" } = props;
 
 	const dialog = useModalDialogTriggerState({});

@@ -1,9 +1,10 @@
 import Image from "next/legacy/image";
+import type { ReactNode } from "react";
 
 import css from "@/components/contact/BackgroundImage.module.css";
 import Clouds from "~/public/assets/images/backgrounds/contact@2x.png";
 
-export function BackgroundImage(): JSX.Element {
+export function BackgroundImage(): ReactNode {
 	return (
 		<div className={css["container"]}>
 			<Image

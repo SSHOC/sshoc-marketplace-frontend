@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { useSourceSearch } from "@/components/account/useSourceSearch";
 import { useSourceSearchFilters } from "@/components/account/useSourceSearchFilters";
 import { useSourceSearchResults } from "@/components/account/useSourceSearchResults";
@@ -10,7 +12,7 @@ export interface SourceSearchResultsPageNavigationProps {
 
 export function SourceSearchResultsPageNavigation(
 	props: SourceSearchResultsPageNavigationProps,
-): JSX.Element {
+): ReactNode {
 	const searchResults = useSourceSearchResults();
 	const searchFilters = useSourceSearchFilters();
 	const { getSearchSourcesLink, searchSources } = useSourceSearch();

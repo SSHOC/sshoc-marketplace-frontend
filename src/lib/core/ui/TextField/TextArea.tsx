@@ -37,7 +37,7 @@ export interface TextAreaProps extends Omit<AriaTextFieldProps, "type">, Labelab
 export const TextArea = forwardRef(function TextArea(
 	props: TextAreaProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const inputRef = useRef<HTMLTextAreaElement>(null);
 	const { descriptionProps, errorMessageProps, inputProps, labelProps } = useTextField<"textarea">(
 		props,

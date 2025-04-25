@@ -1,6 +1,6 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { createUrlSearchParams } from "@stefanprobst/request";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 
 import css from "@/components/browse/BrowseFacetValues.module.css";
 import { Link } from "@/components/common/Link";
@@ -14,7 +14,7 @@ import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicato
 export interface BrowseFacetValuesProps {
 	facet: ItemFacet;
 }
-export function BrowseFacetValues(props: BrowseFacetValuesProps): JSX.Element {
+export function BrowseFacetValues(props: BrowseFacetValuesProps): ReactNode {
 	const { facet } = props;
 
 	const itemSearch = useItemSearch({});
@@ -35,7 +35,7 @@ interface FacetValuesProps {
 	values: ItemSearch.Response["facets"][ItemFacet];
 }
 
-function FacetValues(props: FacetValuesProps): JSX.Element {
+function FacetValues(props: FacetValuesProps): ReactNode {
 	const { facet, values } = props;
 
 	const { t } = useI18n<"common">();

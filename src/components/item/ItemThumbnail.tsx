@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/item/ItemThumbnail.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl } from "@/data/sshoc/api/media";
@@ -5,7 +7,7 @@ import { getMediaThumbnailUrl } from "@/data/sshoc/api/media";
 export interface ItemThumbnailProps {
 	thumbnail: Exclude<Item["thumbnail"], undefined>;
 }
-export function ItemThumbnail(props: ItemThumbnailProps): JSX.Element {
+export function ItemThumbnail(props: ItemThumbnailProps): ReactNode {
 	const mediaId = props.thumbnail.info.mediaId;
 
 	return (

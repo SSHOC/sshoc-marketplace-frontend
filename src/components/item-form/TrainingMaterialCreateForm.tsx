@@ -1,6 +1,7 @@
 import type { FormApi, SubmissionErrors } from "final-form";
 import { FORM_ERROR } from "final-form";
 import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { ItemForm } from "@/components/item-form/ItemForm";
@@ -15,7 +16,7 @@ import { getApiErrorMessage } from "@/data/sshoc/utils/get-api-error-message";
 
 export type CreateTrainingMaterialFormValues = ItemFormValues<TrainingMaterialInput>;
 
-export function TrainingMaterialCreateForm(): JSX.Element {
+export function TrainingMaterialCreateForm(): ReactNode {
 	const category = "training-material";
 
 	const router = useRouter();

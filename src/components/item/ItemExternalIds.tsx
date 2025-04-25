@@ -1,4 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import type { ReactNode } from "react";
 
 import css from "@/components/item/ItemMetadata.module.css";
 import type { Item } from "@/data/sshoc/api/item";
@@ -9,7 +10,7 @@ export interface ItemExternalIdsProps {
 	ids: Item["externalIds"];
 }
 
-export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element | null {
+export function ItemExternalIds(props: ItemExternalIdsProps): ReactNode {
 	const { ids } = props;
 
 	const { t } = useI18n<"common">();

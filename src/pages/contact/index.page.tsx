@@ -43,7 +43,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ContactPage(_props: ContactPage.Props): JSX.Element {
+export default function ContactPage(_props: ContactPage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "contact"]);

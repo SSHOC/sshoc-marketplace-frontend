@@ -21,7 +21,7 @@ export interface ContextProvidersProps {
 	isPageAccessible?: PageComponent["isPageAccessible"];
 }
 
-export function ContextProviders(props: ContextProvidersProps): JSX.Element {
+export function ContextProviders(props: ContextProvidersProps): ReactNode {
 	const [queryClient] = useState(() => {
 		return createQueryClient({
 			query: {
@@ -60,7 +60,7 @@ export interface ProvidersProps extends KeysAllowUndefined<SharedPageProps> {
 	queryClient: QueryClient;
 }
 
-export function Providers(props: ProvidersProps): JSX.Element {
+export function Providers(props: ProvidersProps): ReactNode {
 	const { dictionaries = {}, initialQueryState, isPageAccessible, queryClient } = props;
 
 	const { locale } = useLocale();

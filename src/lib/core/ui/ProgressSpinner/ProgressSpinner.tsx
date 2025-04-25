@@ -19,7 +19,7 @@ export interface ProgressSpinnerProps extends DOMProps, AriaLabelingProps {
 export const ProgressSpinner = forwardRef(function ProgressSpinner(
 	props: ProgressSpinnerProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, size = "md", style } = props;
 
 	const { t } = useI18n<"common">();

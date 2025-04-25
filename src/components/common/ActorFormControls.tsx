@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormControls } from "@/components/common/FormControls";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
@@ -8,7 +10,7 @@ export interface ActorFormControlsProps {
 	onCancel: () => void;
 }
 
-export function ActorFormControls(props: ActorFormControlsProps): JSX.Element {
+export function ActorFormControls(props: ActorFormControlsProps): ReactNode {
 	const { form, onCancel } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { ActorComboBox } from "@/components/common/ActorComboBox";
@@ -22,7 +22,7 @@ export interface ReviewActorsFormFieldArrayProps {
 	field: ItemFormFields["fields"]["contributors"];
 }
 
-export function ReviewActorsFormFieldArray(props: ReviewActorsFormFieldArrayProps): JSX.Element {
+export function ReviewActorsFormFieldArray(props: ReviewActorsFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

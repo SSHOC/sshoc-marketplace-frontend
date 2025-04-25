@@ -41,9 +41,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function CreateToolOrServicePage(
-	_props: CreateToolOrServicePage.Props,
-): JSX.Element {
+export default function CreateToolOrServicePage(_props: CreateToolOrServicePage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	const category = "tool-or-service";

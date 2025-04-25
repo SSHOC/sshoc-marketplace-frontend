@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormRecordEditButton } from "@/components/common/FormRecordEditButton";
 import { FormRecordRemoveButton } from "@/components/common/FormRecordRemoveButton";
 import { SearchResult } from "@/components/common/SearchResult";
@@ -21,7 +23,7 @@ export interface WorkflowStepPreviewProps {
 	isLast: boolean;
 }
 
-export function WorkflowStepPreview(props: WorkflowStepPreviewProps): JSX.Element {
+export function WorkflowStepPreview(props: WorkflowStepPreviewProps): ReactNode {
 	const { name, index, onEdit, onRemove, onMoveUp, onMoveDown, isFirst, isLast } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

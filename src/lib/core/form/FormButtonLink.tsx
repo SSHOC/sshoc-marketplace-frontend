@@ -13,7 +13,7 @@ export type FormButtonLinkProps = Pick<
 export const FormButtonLink = forwardRef(function FormButtonLink(
 	props: FormButtonLinkProps,
 	forwardeRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { children, isDisabled } = props;
 
 	const form = useFormState();

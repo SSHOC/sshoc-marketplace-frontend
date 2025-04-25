@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { FieldArrayRenderProps } from "react-final-form-arrays";
 
 import { ReviewControls } from "@/components/item-form/ReviewControls";
@@ -18,7 +19,7 @@ export interface ReviewFieldListItemProps<T> {
 	}) => JSX.Element;
 }
 
-export function ReviewFieldListItem<T>(props: ReviewFieldListItemProps<T>): JSX.Element {
+export function ReviewFieldListItem<T>(props: ReviewFieldListItemProps<T>): ReactNode {
 	const { children, name, fields, index, review } = props;
 
 	const meta = useReviewFieldListItemMetadata<T>({ name, fields, index });

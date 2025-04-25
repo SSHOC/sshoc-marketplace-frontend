@@ -14,7 +14,7 @@ export interface ItemPropertiesProps {
 	properties: Item["properties"];
 }
 
-export function ItemProperties(props: ItemPropertiesProps): JSX.Element | null {
+export function ItemProperties(props: ItemPropertiesProps): ReactNode {
 	const { properties } = props;
 
 	const { t } = useI18n<"common">();

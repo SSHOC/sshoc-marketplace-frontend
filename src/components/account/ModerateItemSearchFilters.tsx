@@ -38,7 +38,7 @@ import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogT
 import { entries, length, mapBy } from "@/lib/utils";
 import { maxItemSearchFacetValues, queryableItemStatus } from "~/config/sshoc.config";
 
-export function ModerateItemSearchFilters(): JSX.Element {
+export function ModerateItemSearchFilters(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	return (
@@ -67,7 +67,7 @@ export function ModerateItemSearchFilters(): JSX.Element {
 	);
 }
 
-function SearchFacetsDialog(): JSX.Element {
+function SearchFacetsDialog(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const state = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -119,7 +119,7 @@ function SearchFacetsDialog(): JSX.Element {
 	);
 }
 
-function ActiveSearchFacets(): JSX.Element {
+function ActiveSearchFacets(): ReactNode {
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const activeFilters = [searchFilters["d.status"]];
@@ -150,7 +150,7 @@ interface RemoveFacetValueButtonProps {
 	label: ReactNode;
 }
 
-function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element {
+function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 	const { name, value, label } = props;
 
 	const searchFilters = useModerateItemsSearchFilters();
@@ -191,7 +191,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
 	);
 }
 
-function ActiveCurationFacets() {
+function ActiveCurationFacets(): ReactNode {
 	const name = "d.curation";
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -231,7 +231,7 @@ function ActiveCurationFacets() {
 	);
 }
 
-function ActiveItemStatusFacets() {
+function ActiveItemStatusFacets(): ReactNode {
 	const name = "d.status";
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -269,7 +269,7 @@ function ActiveItemStatusFacets() {
 	);
 }
 
-function ActiveItemCategoryFacets() {
+function ActiveItemCategoryFacets(): ReactNode {
 	const facet = "item-category";
 	const name = "categories";
 
@@ -308,7 +308,7 @@ function ActiveItemCategoryFacets() {
 	);
 }
 
-function ActiveSourceFacets() {
+function ActiveSourceFacets(): ReactNode {
 	const facet = "source";
 	const name = "f.source";
 
@@ -347,7 +347,7 @@ function ActiveSourceFacets() {
 	);
 }
 
-function ActiveInformationContributorFacets() {
+function ActiveInformationContributorFacets(): ReactNode {
 	const name = "d.owner";
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -387,7 +387,7 @@ function ActiveInformationContributorFacets() {
 	);
 }
 
-function ActiveOtherFacets() {
+function ActiveOtherFacets(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const searchFilters = useModerateItemsSearchFilters();
 
@@ -475,7 +475,7 @@ function ActiveOtherFacets() {
 	);
 }
 
-function SearchFacetsForm(): JSX.Element {
+function SearchFacetsForm(): ReactNode {
 	const searchFilters = useModerateItemsSearchFilters();
 
 	function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -502,7 +502,7 @@ function SearchFacetsForm(): JSX.Element {
 	);
 }
 
-function CurationFacets(): JSX.Element {
+function CurationFacets(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
@@ -535,7 +535,7 @@ function CurationFacets(): JSX.Element {
 }
 
 // FIXME: Duplicate in ContributedItemsSearchFilters
-function ItemStatusFacets(): JSX.Element {
+function ItemStatusFacets(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
@@ -568,7 +568,7 @@ function ItemStatusFacets(): JSX.Element {
 }
 
 // FIXME: Duplicate in SearchFilters
-function ItemCategoryFacets(): JSX.Element {
+function ItemCategoryFacets(): ReactNode {
 	const facet = "item-category";
 	const name = "categories";
 
@@ -639,7 +639,7 @@ function ItemCategoryFacets(): JSX.Element {
 }
 
 // FIXME: Duplicate in SearchFilters
-function SourceFacets(): JSX.Element {
+function SourceFacets(): ReactNode {
 	const facet = "source";
 	const name = "f.source";
 
@@ -735,7 +735,7 @@ function SourceFacets(): JSX.Element {
 	);
 }
 
-function InformationContributorFacets(): JSX.Element {
+function InformationContributorFacets(): ReactNode {
 	const name = "d.owner";
 
 	const { t } = useI18n<"authenticated" | "common">();
@@ -862,7 +862,7 @@ function InformationContributorFacets(): JSX.Element {
 	);
 }
 
-function OtherFacets(): JSX.Element {
+function OtherFacets(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();

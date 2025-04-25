@@ -6,7 +6,7 @@ export interface FormSectionProps {
 	children?: ReactNode;
 }
 
-export function FormSection(props: FormSectionProps): JSX.Element {
+export function FormSection(props: FormSectionProps): ReactNode {
 	const { children } = props;
 
 	return <section className={css["section"]}>{children}</section>;

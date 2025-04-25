@@ -1,4 +1,5 @@
 import type { Toc } from "@stefanprobst/rehype-extract-toc";
+import type { ReactNode } from "react";
 
 import css from "@/components/common/TableOfContents.module.css";
 import { useI18n } from "@/lib/core/i18n/useI18n";
@@ -9,7 +10,7 @@ export interface TableOfContentsProps {
 	tableOfContents: Toc;
 }
 
-export function TableOfContents(props: TableOfContentsProps): JSX.Element {
+export function TableOfContents(props: TableOfContentsProps): ReactNode {
 	const { maxDepth = 2, tableOfContents } = props;
 
 	const { t } = useI18n<"common">();
@@ -28,7 +29,7 @@ interface LevelProps {
 	maxDepth: number;
 }
 
-function Level(props: LevelProps): JSX.Element | null {
+function Level(props: LevelProps): ReactNode {
 	const { depth, entries, maxDepth } = props;
 
 	if (entries == null || entries.length === 0 || depth > maxDepth) {

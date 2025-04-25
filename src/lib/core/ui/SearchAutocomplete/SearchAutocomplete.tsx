@@ -44,7 +44,7 @@ export interface SearchAutocompleteProps<T extends object> extends AriaSearchAut
 export const SearchAutocomplete = forwardRef(function SearchAutocomplete<T extends object>(
 	props: SearchAutocompleteProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	// const isMobile = useIsMobileDevice()
 
 	// if (isMobile) {
@@ -61,7 +61,7 @@ export const SearchAutocomplete = forwardRef(function SearchAutocomplete<T exten
 const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T extends object>(
 	props: SearchAutocompleteProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		direction = "bottom",
 		layout: _layout,
@@ -217,7 +217,7 @@ interface SearchAutocompleteInputProps<T extends object> extends SearchAutocompl
 const SearchAutocompleteInput = forwardRef(function SearchAutocompleteInput<T extends object>(
 	props: SearchAutocompleteInputProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		clearButtonProps,
 		isDisabled,

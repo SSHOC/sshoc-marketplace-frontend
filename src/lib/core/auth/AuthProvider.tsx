@@ -137,7 +137,7 @@ export interface AuthProviderProps {
 	isPageAccessible?: PageComponent["isPageAccessible"];
 }
 
-export function AuthProvider(props: AuthProviderProps): JSX.Element {
+export function AuthProvider(props: AuthProviderProps): ReactNode {
 	const { onSignIn, onSignOut, isPageAccessible } = props;
 
 	const { t } = useI18n<"common">();

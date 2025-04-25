@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormControls } from "@/components/common/FormControls";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
@@ -8,7 +10,7 @@ export interface MediaUploadFormControlsProps {
 	onCancel: () => void;
 }
 
-export function MediaUploadFormControls(props: MediaUploadFormControlsProps): JSX.Element {
+export function MediaUploadFormControls(props: MediaUploadFormControlsProps): ReactNode {
 	const { form, onCancel } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

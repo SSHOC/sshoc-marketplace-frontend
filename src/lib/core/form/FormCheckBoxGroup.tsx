@@ -9,7 +9,7 @@ export interface FormCheckBoxGroupProps extends Omit<CheckBoxGroupProps, "value"
 	name: string;
 }
 
-export function FormCheckBoxGroup(props: FormCheckBoxGroupProps): JSX.Element {
+export function FormCheckBoxGroup(props: FormCheckBoxGroupProps): ReactNode {
 	const { input, meta } = useField(props.name);
 	const validation = useFormFieldValidationState(meta);
 

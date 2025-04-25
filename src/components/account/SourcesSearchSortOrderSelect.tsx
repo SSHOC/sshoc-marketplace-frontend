@@ -1,5 +1,5 @@
 import { Item } from "@react-stately/collections";
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 
 import { useSourceSearch } from "@/components/account/useSourceSearch";
 import { useSourceSearchFilters } from "@/components/account/useSourceSearchFilters";
@@ -8,7 +8,7 @@ import { sourceSortOrders } from "@/data/sshoc/api/source";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Select } from "@/lib/core/ui/Select/Select";
 
-export function SourcesSearchSortOrderSelect(): JSX.Element {
+export function SourcesSearchSortOrderSelect(): ReactNode {
 	const { t } = useI18n<"authenticated">();
 	const searchFilters = useSourceSearchFilters();
 	const sortOrder = searchFilters.order;

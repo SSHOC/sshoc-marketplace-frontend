@@ -6,6 +6,6 @@ export interface SectionHeaderProps {
 	children?: ReactNode;
 }
 
-export function SectionHeader(props: SectionHeaderProps): JSX.Element {
+export function SectionHeader(props: SectionHeaderProps): ReactNode {
 	return <div className={css["container"]}>{props.children}</div>;
 }

@@ -1,8 +1,10 @@
+import type { ReactNode } from "react";
+
 import css from "@/components/common/NoSearchResultsFound.module.css";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import NothingFoundImage from "~/public/assets/images/search/nothing-found.svg?symbol-icon";
 
-export function NoSearchResultsFound(): JSX.Element {
+export function NoSearchResultsFound(): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (

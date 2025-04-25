@@ -6,6 +6,6 @@ export interface SuccessScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function SuccessScreenLayout(props: SuccessScreenLayoutProps): JSX.Element {
+export function SuccessScreenLayout(props: SuccessScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

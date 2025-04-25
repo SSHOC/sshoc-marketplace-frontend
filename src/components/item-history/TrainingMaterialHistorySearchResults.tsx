@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemHistorySearchResults } from "@/components/item-history/ItemHistorySearchResults";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
 import { useTrainingMaterialHistory } from "@/data/sshoc/hooks/training-material";
@@ -10,7 +12,7 @@ export interface TrainingMaterialHistorySearchResultsProps {
 
 export function TrainingMaterialHistorySearchResults(
 	props: TrainingMaterialHistorySearchResultsProps,
-): JSX.Element {
+): ReactNode {
 	const { persistentId } = props;
 
 	const meta: QueryMetadata = {

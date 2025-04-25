@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -24,7 +24,7 @@ export interface ReviewMediaFormFieldArrayProps {
 	field: ItemFormFields["fields"]["media"];
 }
 
-export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps): JSX.Element {
+export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

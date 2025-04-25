@@ -82,9 +82,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function EditTrainingMaterialPage(
-	props: EditTrainingMaterialPage.Props,
-): JSX.Element {
+export default function EditTrainingMaterialPage(props: EditTrainingMaterialPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

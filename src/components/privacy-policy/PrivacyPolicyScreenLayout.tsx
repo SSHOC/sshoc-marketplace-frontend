@@ -6,6 +6,6 @@ export interface PrivacyPolicyScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function PrivacyPolicyScreenLayout(props: PrivacyPolicyScreenLayoutProps): JSX.Element {
+export function PrivacyPolicyScreenLayout(props: PrivacyPolicyScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

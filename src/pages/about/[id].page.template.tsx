@@ -74,7 +74,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function AboutPage(props: AboutPage.TemplateProps): JSX.Element {
+export default function AboutPage(props: AboutPage.TemplateProps): ReactNode {
 	const { id } = props.params;
 
 	const { t } = useI18n<"common">();

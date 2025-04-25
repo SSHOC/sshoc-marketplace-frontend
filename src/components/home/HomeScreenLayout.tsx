@@ -6,6 +6,6 @@ export interface HomeScreenLayoutProps {
 	children?: ReactNode;
 }
 
-export function HomeScreenLayout(props: HomeScreenLayoutProps): JSX.Element {
+export function HomeScreenLayout(props: HomeScreenLayoutProps): ReactNode {
 	return <div className={css["layout"]}>{props.children}</div>;
 }

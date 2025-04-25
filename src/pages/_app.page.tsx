@@ -23,7 +23,7 @@ if (process.env["NEXT_PUBLIC_MOCK_API"] === "enabled") {
 	});
 }
 
-export default function App(props: AppProps): JSX.Element {
+export default function App(props: AppProps): ReactNode {
 	const { Component, pageProps } = props;
 
 	const getLayout = Component.getLayout ?? getDefaultLayout;

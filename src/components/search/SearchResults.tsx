@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { ItemPreview } from "@/components/common/ItemPreview";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { CopyLinkToClipboardButton } from "@/components/search/CopyLinkToClipboardButton";
@@ -7,7 +9,7 @@ import { itemRoutes as routes } from "@/lib/core/navigation/item-routes";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function SearchResults(): JSX.Element {
+export function SearchResults(): ReactNode {
 	const itemSearch = useSearchResults();
 
 	if (itemSearch.data == null) {

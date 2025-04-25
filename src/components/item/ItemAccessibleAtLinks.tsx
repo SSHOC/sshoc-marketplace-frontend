@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { LinkButton } from "@/components/common/LinkButton";
 import css from "@/components/item/ItemAccessibleAtLinks.module.css";
@@ -16,7 +16,7 @@ export interface ItemAccessibleAtLinksProps {
 	links: Item["accessibleAt"];
 }
 
-export function ItemAccessibleAtLinks(props: ItemAccessibleAtLinksProps): JSX.Element | null {
+export function ItemAccessibleAtLinks(props: ItemAccessibleAtLinksProps): ReactNode {
 	const { category, links } = props;
 
 	const { t } = useI18n<"common">();
@@ -43,7 +43,7 @@ export function ItemAccessibleAtLinks(props: ItemAccessibleAtLinksProps): JSX.El
 	return <ItemAccessibleAtLinksMenuButton category={category} links={links} />;
 }
 
-function ItemAccessibleAtLinksMenuButton(props: ItemAccessibleAtLinksProps): JSX.Element {
+function ItemAccessibleAtLinksMenuButton(props: ItemAccessibleAtLinksProps): ReactNode {
 	const { category, links } = props;
 
 	const { t } = useI18n<"common">();

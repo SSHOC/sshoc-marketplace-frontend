@@ -6,6 +6,6 @@ export interface SubSectionHeaderProps {
 	children?: ReactNode;
 }
 
-export function SubSectionHeader(props: SubSectionHeaderProps): JSX.Element {
+export function SubSectionHeader(props: SubSectionHeaderProps): ReactNode {
 	return <div className={css["container"]}>{props.children}</div>;
 }

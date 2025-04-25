@@ -23,7 +23,7 @@ export interface SearchFieldProps extends AriaSearchFieldProps {
 export const SearchField = forwardRef(function SearchField(
 	props: SearchFieldProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const defaultIcon = <Icon icon={MagnifierIcon} />;
 
 	const { icon = defaultIcon, isDisabled, ...otherProps } = props;

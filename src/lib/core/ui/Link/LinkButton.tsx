@@ -33,7 +33,7 @@ export interface LinkButtonProps
 export const LinkButton = forwardRef(function LinkButton(
 	props: LinkButtonProps,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
-): JSX.Element {
+): ReactNode {
 	const {
 		"aria-current": ariaCurrent,
 		color = "primary",

@@ -79,7 +79,7 @@ export async function getStaticProps(
 
 export default function TrainingMaterialHistoryPage(
 	props: TrainingMaterialHistoryPage.Props,
-): JSX.Element {
+): ReactNode {
 	const { persistentId } = props.params;
 
 	const meta: QueryMetadata = {

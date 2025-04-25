@@ -7,7 +7,7 @@ export interface SuccessCardProps {
 	children?: ReactNode;
 }
 
-export function SuccessCard(props: SuccessCardProps): JSX.Element {
+export function SuccessCard(props: SuccessCardProps): ReactNode {
 	return (
 		<div className={css["container"]}>
 			<Card>{props.children}</Card>

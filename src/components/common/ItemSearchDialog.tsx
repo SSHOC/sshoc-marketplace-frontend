@@ -1,5 +1,5 @@
 import { useId } from "@react-aria/utils";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef, useState } from "react";
 
 import css from "@/components/common/ItemSearchDialog.module.css";
@@ -14,7 +14,7 @@ import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDi
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { isNonEmptyString } from "@/lib/utils";
 
-export function ItemSearchDialog(): JSX.Element {
+export function ItemSearchDialog(): ReactNode {
 	const { t } = useI18n<"common">();
 	const searchFilters = useSearchFilters();
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -72,7 +72,7 @@ interface ItemSearchFormProps {
 	onClose?: () => void;
 }
 
-function ItemSearchForm(props: ItemSearchFormProps): JSX.Element {
+function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const { initialItemSearchTerm, onClose } = props;
 
 	const { t } = useI18n<"common">();

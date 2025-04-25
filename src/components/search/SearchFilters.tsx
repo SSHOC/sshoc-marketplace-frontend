@@ -32,7 +32,7 @@ import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDi
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { entries, length } from "@/lib/utils";
 
-export function SearchFilters(): JSX.Element | null {
+export function SearchFilters(): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (
@@ -62,7 +62,7 @@ export function SearchFilters(): JSX.Element | null {
 	);
 }
 
-function SearchFacetsDialog(): JSX.Element {
+function SearchFacetsDialog(): ReactNode {
 	const { t } = useI18n<"common">();
 	const state = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -114,7 +114,7 @@ function SearchFacetsDialog(): JSX.Element {
 	);
 }
 
-function ActiveSearchFacets(): JSX.Element | null {
+function ActiveSearchFacets(): ReactNode {
 	const searchFilters = useSearchFilters();
 
 	const activeFilters = [
@@ -150,7 +150,7 @@ interface RemoveFacetValueButtonProps {
 	label: ReactNode;
 }
 
-function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element {
+function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 	const { name, value, label } = props;
 
 	const searchFilters = useSearchFilters();
@@ -361,7 +361,7 @@ function ActiveSourceFacets() {
 	);
 }
 
-function SearchFacetsForm(): JSX.Element {
+function SearchFacetsForm(): ReactNode {
 	const searchFilters = useSearchFilters();
 
 	function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -382,7 +382,7 @@ function SearchFacetsForm(): JSX.Element {
 	);
 }
 
-function ItemCategoryFacets(): JSX.Element | null {
+function ItemCategoryFacets(): ReactNode {
 	const facet = "item-category";
 	const name = "categories";
 
@@ -464,7 +464,7 @@ function ItemCategoryFacets(): JSX.Element | null {
 	);
 }
 
-function ActivityFacets(): JSX.Element | null {
+function ActivityFacets(): ReactNode {
 	const facet = "activity";
 	const name = "f.activity";
 
@@ -560,7 +560,7 @@ function ActivityFacets(): JSX.Element | null {
 	);
 }
 
-function KeywordFacets(): JSX.Element | null {
+function KeywordFacets(): ReactNode {
 	const facet = "keyword";
 	const name = "f.keyword";
 
@@ -656,7 +656,7 @@ function KeywordFacets(): JSX.Element | null {
 	);
 }
 
-function LanguageFacets(): JSX.Element | null {
+function LanguageFacets(): ReactNode {
 	const facet = "language";
 	const name = "f.language";
 
@@ -752,7 +752,7 @@ function LanguageFacets(): JSX.Element | null {
 	);
 }
 
-function SourceFacets(): JSX.Element | null {
+function SourceFacets(): ReactNode {
 	const facet = "source";
 	const name = "f.source";
 

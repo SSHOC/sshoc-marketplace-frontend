@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { ItemLink } from "@/components/common/ItemLink";
 import { Link } from "@/components/common/Link";
@@ -32,7 +32,7 @@ export interface ModerateItemSearchResultProps {
 	item: ItemSearch.Response["items"][number] & { category: ItemCategory };
 }
 
-export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): JSX.Element {
+export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): ReactNode {
 	const { item } = props;
 	const { category, persistentId, id: versionId } = item;
 

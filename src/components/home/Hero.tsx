@@ -8,7 +8,7 @@ export interface HeroProps {
 	children?: ReactNode;
 }
 
-export function Hero(props: HeroProps): JSX.Element {
+export function Hero(props: HeroProps): ReactNode {
 	const { t } = useI18n<"common">();
 
 	return (

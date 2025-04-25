@@ -14,7 +14,7 @@ export interface CheckBoxProps extends AriaCheckboxProps {
 	variant?: "facet" | "primary";
 }
 
-export function CheckBox(props: CheckBoxProps): JSX.Element {
+export function CheckBox(props: CheckBoxProps): ReactNode {
 	const ref = useRef<HTMLInputElement>(null);
 	const state = useToggleState(props);
 	const { inputProps } = useCheckbox(props, state, ref);

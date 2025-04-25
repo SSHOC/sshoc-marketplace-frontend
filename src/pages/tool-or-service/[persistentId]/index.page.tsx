@@ -111,7 +111,7 @@ export async function getStaticProps(
 	}
 }
 
-export default function ToolOrServicePage(props: ToolOrServicePage.Props): JSX.Element {
+export default function ToolOrServicePage(props: ToolOrServicePage.Props): ReactNode {
 	const { persistentId } = props.params;
 	const queryClient = useQueryClient();
 	const _toolOrService = useTool({ persistentId }, undefined, {

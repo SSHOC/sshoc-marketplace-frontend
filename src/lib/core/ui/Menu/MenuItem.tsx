@@ -26,7 +26,7 @@ export interface MenuItemProps<T extends object> {
 export const MenuItem = forwardRef(function MenuItem<T extends object>(
 	props: MenuItemProps<T>,
 	forwardedRef: ForwardedRef<HTMLLIElement>,
-): JSX.Element {
+): ReactNode {
 	const { item, state, isVirtualized, onAction, variant = "primary" } = props;
 
 	const { onClose, closeOnSelect } = useMenuContext();

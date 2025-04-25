@@ -20,7 +20,7 @@ export interface MenuSectionProps<T extends object> {
 export const MenuSection = forwardRef(function MenuSection<T extends object>(
 	props: MenuSectionProps<T>,
 	_forwardedRef: ForwardedRef<HTMLElement>,
-): JSX.Element {
+): ReactNode {
 	const { item, state, onAction, variant } = props;
 
 	const { itemProps, headingProps, groupProps } = useMenuSection({

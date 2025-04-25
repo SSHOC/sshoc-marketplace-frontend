@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { ReviewMediaFormFieldArray } from "@/components/item-form/ReviewMediaFormFieldArray";
@@ -8,7 +10,7 @@ export interface MediaReviewFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function MediaReviewFormSection(props: MediaReviewFormSectionProps): JSX.Element {
+export function MediaReviewFormSection(props: MediaReviewFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

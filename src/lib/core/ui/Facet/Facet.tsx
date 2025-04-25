@@ -23,7 +23,7 @@ export interface FacetProps extends CheckBoxGroupProps {
 	controls?: ReactNode;
 }
 
-export function Facet(props: FacetProps): JSX.Element {
+export function Facet(props: FacetProps): ReactNode {
 	const { controls, headingLevel = 3, label, ...checkBoxGroupProps } = props;
 
 	const state = useDisclosureState(props);
@@ -50,7 +50,7 @@ export interface FacetDisclosureProps extends Pick<FacetProps, "headingLevel" | 
 	triggerProps: DisclosureAria["triggerProps"];
 }
 
-export function FacetDisclosure(props: FacetDisclosureProps): JSX.Element {
+export function FacetDisclosure(props: FacetDisclosureProps): ReactNode {
 	const { children, headingLevel = 3, label, state, triggerProps } = props;
 
 	const ElementType = `h${headingLevel}` as const;

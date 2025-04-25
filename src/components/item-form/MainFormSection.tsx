@@ -1,4 +1,5 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import type { ReactNode } from "react";
 
 import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
@@ -13,7 +14,7 @@ export interface MainFormSectionProps {
 	formFields: ItemFormFields;
 }
 
-export function MainFormSection(props: MainFormSectionProps): JSX.Element {
+export function MainFormSection(props: MainFormSectionProps): ReactNode {
 	const { fields } = props.formFields;
 
 	const { t } = useI18n<"authenticated" | "common">();

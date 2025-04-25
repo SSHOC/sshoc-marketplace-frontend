@@ -7,7 +7,7 @@ export interface FormSectionTitleProps {
 	/** @default 3 */
 	headingLevel?: 3 | 4 | 5;
 }
-export function FormSectionTitle(props: FormSectionTitleProps): JSX.Element {
+export function FormSectionTitle(props: FormSectionTitleProps): ReactNode {
 	const { children, headingLevel = 2 } = props;
 
 	const ElementType = `h${headingLevel}` as const;

@@ -29,7 +29,7 @@ import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDi
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { length } from "@/lib/utils";
 
-export function VocabularySearchFilters(): JSX.Element {
+export function VocabularySearchFilters(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 
 	return (
@@ -58,7 +58,7 @@ export function VocabularySearchFilters(): JSX.Element {
 	);
 }
 
-function SearchFacetsDialog(): JSX.Element {
+function SearchFacetsDialog(): ReactNode {
 	const { t } = useI18n<"common">();
 	const state = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -110,7 +110,7 @@ function SearchFacetsDialog(): JSX.Element {
 	);
 }
 
-function ActiveSearchFacets(): JSX.Element | null {
+function ActiveSearchFacets(): ReactNode {
 	const searchFilters = useVocabularySearchFilters();
 
 	const activeFilters = [searchFilters["types"]];
@@ -137,7 +137,7 @@ interface RemoveFacetValueButtonProps {
 	label: ReactNode;
 }
 
-function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element {
+function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 	const { name, value, label } = props;
 
 	const searchFilters = useVocabularySearchFilters();
@@ -246,7 +246,7 @@ function ActivePropertyTypesFacets() {
 	);
 }
 
-function SearchFacetsForm(): JSX.Element {
+function SearchFacetsForm(): ReactNode {
 	const searchFilters = useVocabularySearchFilters();
 
 	function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -264,7 +264,7 @@ function SearchFacetsForm(): JSX.Element {
 	);
 }
 
-function ConceptStatusFacets(): JSX.Element {
+function ConceptStatusFacets(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const { searchVocabularies } = useVocabularySearch();
 	const filters = useVocabularySearchFilters();
@@ -301,7 +301,7 @@ function ConceptStatusFacets(): JSX.Element {
 	);
 }
 
-function PropertyTypesFacets(): JSX.Element | null {
+function PropertyTypesFacets(): ReactNode {
 	const name = "types";
 
 	const { t } = useI18n<"authenticated" | "common">();

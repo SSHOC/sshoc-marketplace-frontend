@@ -91,7 +91,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.Props): JSX.Element {
+export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

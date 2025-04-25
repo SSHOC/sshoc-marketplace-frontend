@@ -14,7 +14,7 @@ export interface PageAccessControlProps {
 	children?: ReactNode;
 }
 
-export function PageAccessControl(props: PageAccessControlProps): JSX.Element {
+export function PageAccessControl(props: PageAccessControlProps): ReactNode {
 	const { t } = useI18n<"common">();
 	const { isPageAccessible, isInitialising, isValidating, isSignedIn } = useAuth();
 	const currentUser = useCurrentUser();

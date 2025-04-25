@@ -92,7 +92,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX.Element {
+export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const router = useRouter();
 

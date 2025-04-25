@@ -23,7 +23,7 @@ export interface ListBoxSectionProps<T extends object>
 export const ListBoxSection = forwardRef(function ListBoxSection<T extends object>(
 	props: ListBoxSectionProps<T>,
 	_forwardedRef: ForwardedRef<HTMLDivElement>,
-): JSX.Element {
+): ReactNode {
 	const { children, layoutInfo, headerLayoutInfo, virtualizer, item } = props;
 	const { headingProps, groupProps } = useListBoxSection({
 		"aria-label": item["aria-label"],

@@ -1,4 +1,4 @@
-import type { Key } from "react";
+import type { Key, ReactNode } from "react";
 import { useMemo } from "react";
 
 import { useSearchItems } from "@/components/common/useSearchItems";
@@ -21,7 +21,7 @@ export interface ItemSearchAutocompleteProps {
 	size?: "md" | "sm";
 }
 
-export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): JSX.Element {
+export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): ReactNode {
 	const { itemCategory, itemSearchTerm, onChangeItemSearchTerm, onSubmit, size } = props;
 
 	const { t } = useI18n<"common">();

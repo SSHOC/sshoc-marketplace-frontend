@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -15,7 +16,7 @@ export interface AccessibleAtFormFieldArrayProps {
 	field: ItemFormFields["fields"]["accessibleAt"];
 }
 
-export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProps): JSX.Element {
+export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

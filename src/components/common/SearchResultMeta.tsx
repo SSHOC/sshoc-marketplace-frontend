@@ -6,7 +6,7 @@ export interface SearchResultMetaProps {
 	children?: ReactNode;
 }
 
-export function SearchResultMeta(props: SearchResultMetaProps): JSX.Element {
+export function SearchResultMeta(props: SearchResultMetaProps): ReactNode {
 	const { children } = props;
 
 	return <div className={css["meta"]}>{children}</div>;

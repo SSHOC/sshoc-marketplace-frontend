@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import type { ReactNode } from "react";
 
 import { FormSections } from "@/components/common/FormSections";
 import { ActorFormSection } from "@/components/item-form/ActorFormSection";
@@ -28,9 +29,7 @@ export interface ItemFormProps<T extends ItemInput> extends FormProps<T> {
 	formFields: ItemFormFields;
 }
 
-export function ItemForm<T extends ItemFormValues<ItemInput>>(
-	props: ItemFormProps<T>,
-): JSX.Element {
+export function ItemForm<T extends ItemFormValues<ItemInput>>(props: ItemFormProps<T>): ReactNode {
 	const { formFields, initialValues, name, onCancel, onSubmit, validate } = props;
 
 	function onBeforeSaveAsDraft(form: FormApi<T>) {

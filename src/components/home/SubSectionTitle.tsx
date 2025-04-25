@@ -8,7 +8,7 @@ export interface SubSectionTitleProps {
 	headingLevel?: 3 | 4 | 5;
 }
 
-export function SubSectionTitle(props: SubSectionTitleProps): JSX.Element {
+export function SubSectionTitle(props: SubSectionTitleProps): ReactNode {
 	const { headingLevel = 3 } = props;
 
 	const ElementType = `h${headingLevel}` as const;

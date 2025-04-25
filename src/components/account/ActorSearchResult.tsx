@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import { ActorForm } from "@/components/common/ActorForm";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -22,7 +22,7 @@ export interface ActorSearchResultProps {
 	actor: SearchActors.Response["actors"][number];
 }
 
-export function ActorSearchResult(props: ActorSearchResultProps): JSX.Element {
+export function ActorSearchResult(props: ActorSearchResultProps): ReactNode {
 	const { actor } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

@@ -36,7 +36,7 @@ export async function getStaticProps(
 	};
 }
 
-export default function NotFoundPage(_props: NotFoundPage.Props): JSX.Element {
+export default function NotFoundPage(_props: NotFoundPage.Props): ReactNode {
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "page-not-found"]);

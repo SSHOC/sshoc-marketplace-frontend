@@ -11,7 +11,7 @@ export interface FormDateFieldProps extends Omit<DateFieldProps, "value"> {
 	name: string;
 }
 
-export function FormDateField(props: FormDateFieldProps): JSX.Element {
+export function FormDateField(props: FormDateFieldProps): ReactNode {
 	const { input, meta } = useField(props.name, {
 		format(value: IsoDateString | undefined) {
 			if (value == null) {

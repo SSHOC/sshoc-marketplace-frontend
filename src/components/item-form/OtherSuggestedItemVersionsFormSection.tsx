@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useFormState } from "react-final-form";
 
 import { FormSection } from "@/components/common/FormSection";
@@ -16,7 +17,7 @@ import { useI18n } from "@/lib/core/i18n/useI18n";
 import { itemRoutes } from "@/lib/core/navigation/item-routes";
 import type { QueryMetadata } from "@/lib/core/query/types";
 
-export function OtherSuggestedItemVersionsFormSection(): JSX.Element | null {
+export function OtherSuggestedItemVersionsFormSection(): ReactNode {
 	const { t } = useI18n<"authenticated" | "common">();
 	const item = useFormState().initialValues as Item;
 

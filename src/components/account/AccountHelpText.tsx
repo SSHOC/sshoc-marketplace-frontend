@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import css from "@/components/account/AccountHelpText.module.css";
 import { Link } from "@/components/common/Link";
@@ -39,7 +39,7 @@ const texts: Record<NonSystemUserRole, JSX.Element> = {
 	),
 };
 
-export function AccountHelpText(): JSX.Element {
+export function AccountHelpText(): ReactNode {
 	const currentUser = useCurrentUser();
 
 	const role = currentUser.data?.role;

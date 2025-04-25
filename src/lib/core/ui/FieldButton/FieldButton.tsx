@@ -48,7 +48,7 @@ export interface FieldButtonProps extends ButtonProps, DOMProps {
 export const FieldButton = forwardRef(function FieldButton(
 	props: FieldButtonProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): JSX.Element {
+): ReactNode {
 	const { children, color = "primary", isActive = false, style, validationState } = props;
 
 	const ref = useObjectRef(forwardedRef);
