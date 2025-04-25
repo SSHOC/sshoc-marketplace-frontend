@@ -15,8 +15,8 @@
     "format:check": "prettier . --cache --cache-location ./.prettiercache --check",
     "format:fix": "yarn run format:check --write",
     "lint:check": "run-p \"lint:*:check\"",
-    "lint:fix": "run-p lint:*:fix\"",
-    "lint:code:check": "next lint --dir . --ignore-path .gitignore",
+    "lint:fix": "run-p \"lint:*:fix\"",
+    "lint:code:check": "eslint . --cache",
     "lint:code:fix": "yarn run lint:code:check --fix",
     "lint:md:check": "remark . --ext md --quiet --frail",
     "lint:md:fix": "yarn run lint:md:check --output",
@@ -148,6 +148,7 @@
   },
   "devDependencies": {
     "@acdh-oeaw/commitlint-config": "^2.0.0",
+    "@acdh-oeaw/eslint-config": "^2.0.9",
     "@acdh-oeaw/stylelint-config": "^2.1.2",
     "@acdh-oeaw/tsconfig": "^1.5.1",
     "@commitlint/cli": "^19.8.0",
@@ -165,7 +166,6 @@
     "@react-types/select": "^3.9.9",
     "@react-types/shared": "^3.27.0",
     "@react-types/textfield": "^3.11.0",
-    "@stefanprobst/eslint-config-next": "^5.0.2",
     "@stefanprobst/next-image-loader": "^1.0.3",
     "@stefanprobst/prettier-config": "^2.0.1",
     "@stefanprobst/ts-script": "^1.0.2",
@@ -181,7 +181,9 @@
     "@types/react-dom": "^18.3.6",
     "autoprefixer": "^10.4.2",
     "cross-env": "^7.0.3",
-    "eslint": "^8.9.0",
+    "eslint": "^9.25.1",
+    "eslint-config-flat-gitignore": "^2.1.0",
+    "globals": "^16.0.0",
     "jose": "^4.3.8",
     "lint-staged": "^15.5.1",
     "match-sorter": "^6.3.1",
@@ -198,7 +200,8 @@
     "simple-git-hooks": "^2.13.0",
     "strip-indent": "^4.0.0",
     "stylelint": "^16.19.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
   },
   "resolutions": {
     "webpack": "5.x",
@@ -220,47 +223,13 @@
   "commitlint": {
     "extends": "@acdh-oeaw/commitlint-config"
   },
-  "eslintConfig": {
-    "extends": "@stefanprobst/eslint-config-next",
-    "overrides": [
-      {
-        "files": [
-          "**/*.cjs"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "src/data/**/api/*.ts",
-          "src/data/**/hooks/*.ts",
-          "src/__templates__/**/page.tsx",
-          "src/pages/**/*.page.tsx",
-          "src/pages/**/*.page.template.tsx"
-        ],
-        "rules": {
-          "@typescript-eslint/no-namespace": "off"
-        }
-      },
-      {
-        "files": [
-          "src/data/**/hooks/*.ts"
-        ],
-        "rules": {
-          "@typescript-eslint/explicit-module-boundary-types": "off"
-        }
-      }
-    ],
-    "ignorePatterns": "public/mockServiceWorker.js"
-  },
   "lint-staged": {
     "*.@(js|mjs|ts|tsx)": [
-      "eslint --fix --cache --cache-location .next/cache/eslint/",
+      "eslint --fix --cache",
       "prettier --write"
     ],
     "*.css": [
-      "stylelint --cache --cache-location .next/cache/stylelint/ --fix",
+      "stylelint --cache --fix",
       "prettier --write"
     ],
     "*.!(css|js|mdx|mjs|ts|tsx)": [
