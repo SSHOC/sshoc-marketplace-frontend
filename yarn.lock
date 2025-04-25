@@ -2231,11 +2231,6 @@
   resolved "https://registry.npmjs.org/@stefanprobst/is-absolute-url/-/is-absolute-url-1.0.2.tgz#f69e36e6c395259dae0e3c812f111b055b1e3083"
   integrity sha512-wG6ZSuBvXJeEAYTW93rCD9om7Epps8p8cWSnArpEN9ffLuZ0kefK12xV+FJFqPvoaaVkgfEK19ATAO8Aa1s4Lw==
 
-"@stefanprobst/is-nonempty-array@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@stefanprobst/is-nonempty-array/-/is-nonempty-array-1.0.1.tgz#e058b5d66478758320a144a9cbbbab156122731f"
-  integrity sha512-REvsmLrVWL/IxXVpi7DmFoxqNLg5tEFXFB+Mji8/HJ9or97fPDWdXTZWx76UQVemMHpbUHXY1OUb2aouWMwA8A==
-
 "@stefanprobst/is-nonempty-string@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@stefanprobst/is-nonempty-string/-/is-nonempty-string-1.0.1.tgz#1edf251d195c5ac12d0e4a7996b2f02924d7129d"
