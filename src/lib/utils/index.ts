@@ -23,6 +23,7 @@ export { toPositiveInteger } from "@/lib/utils/to-positive-integer";
 export {
 	assert,
 	capitalize,
+	isUrl as isAbsoluteUrl,
 	isNonEmptyArray,
 	isNonEmptyString,
 	log,
@@ -30,4 +31,3 @@ export {
 	range,
 	times,
 } from "@acdh-oeaw/lib";
-export { isAbsoluteUrl } from "@stefanprobst/is-absolute-url";
