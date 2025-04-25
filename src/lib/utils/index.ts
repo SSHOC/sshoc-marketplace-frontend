@@ -9,7 +9,6 @@ export { isEmail } from "@/lib/utils/is-email";
 export { isEmptyArray } from "@/lib/utils/is-empty-array";
 export { isEmptyFileList } from "@/lib/utils/is-empty-filelist";
 export { isEmptyString } from "@/lib/utils/is-empty-string";
-export { isNotNullish } from "@/lib/utils/is-not-nullish";
 export { keys } from "@/lib/utils/keys";
 export { length } from "@/lib/utils/length";
 export { removeTrailingSlash } from "@/lib/utils/remove-trailing-slash";
@@ -24,6 +23,7 @@ export {
 	isUrl as isAbsoluteUrl,
 	isNonEmptyArray,
 	isNonEmptyString,
+	isNonNullable as isNotNullish,
 	log,
 	keyBy as mapBy,
 	noop,
