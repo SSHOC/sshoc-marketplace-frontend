@@ -73,7 +73,6 @@
 		"@react-stately/tree": "^3.8.7",
 		"@react-stately/virtualizer": "^3.7.1",
 		"@stefanprobst/assert": "^1.0.3",
-		"@stefanprobst/capitalize": "^1.0.2",
 		"@stefanprobst/is-absolute-url": "^1.0.2",
 		"@stefanprobst/netlify-cms-oauth-client": "^0.1.3",
 		"@stefanprobst/next-error-boundary": "legacy",
