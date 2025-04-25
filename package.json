@@ -149,6 +149,7 @@
   "devDependencies": {
     "@acdh-oeaw/commitlint-config": "^2.0.0",
     "@acdh-oeaw/eslint-config": "^2.0.9",
+    "@acdh-oeaw/prettier-config": "^2.0.1",
     "@acdh-oeaw/stylelint-config": "^2.1.2",
     "@acdh-oeaw/tsconfig": "^1.5.1",
     "@commitlint/cli": "^19.8.0",
@@ -167,7 +168,6 @@
     "@react-types/shared": "^3.27.0",
     "@react-types/textfield": "^3.11.0",
     "@stefanprobst/next-image-loader": "^1.0.3",
-    "@stefanprobst/prettier-config": "^2.0.1",
     "@stefanprobst/ts-script": "^1.0.2",
     "@types/final-form-focus": "^1.1.2",
     "@types/final-form-set-field-data": "^1.0.0",
@@ -246,7 +246,7 @@
       "autoprefixer": {}
     }
   },
-  "prettier": "@stefanprobst/prettier-config",
+  "prettier": "@acdh-oeaw/prettier-config",
   "remarkConfig": {
     "plugins": [
       "frontmatter",
