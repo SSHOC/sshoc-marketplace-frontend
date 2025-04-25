@@ -12,7 +12,7 @@
     "build": "next build",
     "cms:server": "netlify-cms-proxy-server",
     "dev": "next dev",
-    "format:check": "prettier . \"!**/*.mdx\" --list-different",
+    "format:check": "prettier . --cache --cache-location ./.prettiercache --check",
     "format:fix": "yarn run format:check --write",
     "lint:check": "run-p \"lint:*:check\"",
     "lint:fix": "run-p lint:*:fix\"",
