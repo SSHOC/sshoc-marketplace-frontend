@@ -1,4 +1,5 @@
 import type { NecessityIndicator } from "@react-types/shared";
+import type { ReactNode } from "react";
 
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
@@ -11,7 +12,7 @@ export interface RequiredIndicatorProps {
 	includeNecessityIndicatorInAccessibilityName?: boolean;
 }
 
-export function RequiredIndicator(props: RequiredIndicatorProps): JSX.Element | null {
+export function RequiredIndicator(props: RequiredIndicatorProps): ReactNode {
 	const {
 		isRequired = false,
 		necessityIndicator = isRequired ? "icon" : null,

@@ -10,6 +10,7 @@ export { isEmptyFileList } from "@/lib/utils/is-empty-filelist";
 export { isEmptyString } from "@/lib/utils/is-empty-string";
 export { keys } from "@/lib/utils/keys";
 export { length } from "@/lib/utils/length";
+export { mapBy } from "@/lib/utils/map-by";
 export { safestring } from "@/lib/utils/safestring";
 export { sanitizeSearchParams } from "@/lib/utils/sanitize-search-params";
 export { toPositiveInteger } from "@/lib/utils/to-positive-integer";
@@ -24,7 +25,6 @@ export {
 	isNonEmptyString,
 	isNonNullable as isNotNullish,
 	log,
-	keyBy as mapBy,
 	noop,
 	pick,
 	range,

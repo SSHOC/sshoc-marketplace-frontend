@@ -1,8 +1,9 @@
 import Script from "next/script";
+import type { ReactNode } from "react";
 
 import { appId, baseUrl } from "~/config/analytics.config";
 
-export function AnalyticsScript(): JSX.Element | null {
+export function AnalyticsScript(): ReactNode {
 	if (baseUrl == null || appId == null) {
 		return null;
 	}

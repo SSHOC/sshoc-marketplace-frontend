@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemMediaInput } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl } from "@/data/sshoc/api/media";
 import css from "@/lib/core/ui/Thumbnail/Thumbnail.module.css";
@@ -8,7 +10,7 @@ export interface ThumbnailProps {
 	value?: ItemMediaInput;
 }
 
-export function Thumbnail(props: ThumbnailProps): JSX.Element | null {
+export function Thumbnail(props: ThumbnailProps): ReactNode {
 	const { color = "primary", value } = props;
 
 	if (value == null) {

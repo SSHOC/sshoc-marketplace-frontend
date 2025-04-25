@@ -11,7 +11,7 @@ import { useTreeState } from "@react-stately/tree";
 import type { AriaMenuProps } from "@react-types/menu";
 import type { Node } from "@react-types/shared";
 import { useRouter } from "next/router";
-import type { HTMLAttributes, RefObject } from "react";
+import type { HTMLAttributes, ReactNode, RefObject } from "react";
 import { useEffect, useRef } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
@@ -24,7 +24,7 @@ import { Popover } from "@/lib/core/page/Popover";
 import { useAccountMenuItems } from "@/lib/core/page/useAccountMenuItems";
 import { Button } from "@/lib/core/ui/Button/Button";
 
-export function AccountMenu(): JSX.Element | null {
+export function AccountMenu(): ReactNode {
 	const { t } = useI18n<"common">();
 	const { isSignedIn } = useAuth();
 	const currentUser = useCurrentUser();

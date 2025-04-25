@@ -9,7 +9,7 @@ export interface AccessControlProps {
 	roles?: Array<UserRole>;
 }
 
-export function AccessControl(props: AccessControlProps): JSX.Element | null {
+export function AccessControl(props: AccessControlProps): ReactNode {
 	const { children, roles } = props;
 
 	const currentUser = useCurrentUser();

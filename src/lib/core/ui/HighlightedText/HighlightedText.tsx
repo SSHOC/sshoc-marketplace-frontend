@@ -1,5 +1,5 @@
 import { findAll } from "highlight-words-core";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import css from "@/lib/core/ui/HighlightedText/HighlightedText.module.css";
 
@@ -8,7 +8,7 @@ export interface HighlightedTextProps {
 	text: string;
 }
 
-export function HighlightedText(props: HighlightedTextProps): JSX.Element | null {
+export function HighlightedText(props: HighlightedTextProps): ReactNode {
 	const { text, searchPhrase } = props;
 
 	const searchWords = searchPhrase.split(/\s+/);

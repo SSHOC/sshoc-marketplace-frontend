@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 import { NavLink } from "@/components/common/NavLink";
 import { useAuth } from "@/lib/core/auth/useAuth";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import css from "@/lib/core/page/AuthHeader.module.css";
 import { useCreateItemLinks } from "@/lib/core/page/useCreateItemLinks";
 
-export function AuthHeader(): JSX.Element | null {
+export function AuthHeader(): ReactNode {
 	const { t } = useI18n<"common">();
 	const items = useCreateItemLinks();
 	const { isSignedIn } = useAuth();
