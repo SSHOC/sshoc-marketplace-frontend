@@ -2287,11 +2287,6 @@
   dependencies:
     "@stefanprobst/assert" "^1.0.2"
 
-"@stefanprobst/range@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@stefanprobst/range/-/range-1.1.1.tgz#5d7cae2fc10d27f35d5940755dbbf4eb5638901b"
-  integrity sha512-2iu8gJpBBXlDkNM6wnGs3LbjwvLym2w9uV8m05Lc/sDMUC2Hif1YBVZrLRSaGXUNDN2TFNeN1cFDzQSs0Gj6ow==
-
 "@stefanprobst/rehype-extract-toc@^2.1.3":
   version "2.1.3"
   resolved "https://registry.npmjs.org/@stefanprobst/rehype-extract-toc/-/rehype-extract-toc-2.1.3.tgz#3e97ed48d899a68d34d5c89468b681541811ae60"
