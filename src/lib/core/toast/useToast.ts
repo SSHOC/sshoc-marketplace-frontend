@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 
 export function useToast(): typeof toast {
-  return toast
+	return toast;
 }

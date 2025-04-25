@@ -1,1 +1,1 @@
-export { I18nProvider } from '@stefanprobst/next-i18n'
+export { I18nProvider } from "@stefanprobst/next-i18n";

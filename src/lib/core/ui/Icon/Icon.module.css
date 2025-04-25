@@ -1,22 +1,22 @@
 .icon {
-  flex-shrink: 0;
-  width: var(--icon-width);
-  height: var(--icon-height);
-  color: var(--icon-color);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
-  transform: rotate(var(--icon-rotation));
+	flex-shrink: 0;
+	width: var(--icon-width);
+	height: var(--icon-height);
+	color: var(--icon-color);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
+	transform: rotate(var(--icon-rotation));
 }
 
-.icon[data-rotation='quarter'] {
-  transform: rotate(90deg);
+.icon[data-rotation="quarter"] {
+	transform: rotate(90deg);
 }
 
-.icon[data-rotation='half'] {
-  transform: rotate(180deg);
+.icon[data-rotation="half"] {
+	transform: rotate(180deg);
 }
 
-.icon[data-rotation='three-quarters'] {
-  transform: rotate(270deg);
+.icon[data-rotation="three-quarters"] {
+	transform: rotate(270deg);
 }

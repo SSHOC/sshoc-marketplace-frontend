@@ -1,8 +1,8 @@
 .container {
-  display: grid;
-  gap: var(--space-1-5);
+	display: grid;
+	gap: var(--space-1-5);
 
-  @media (/* --screen-md */ min-width: 48rem) {
-    grid-template-columns: minmax(var(--size-56), auto) 1fr auto;
-  }
+	@media (/* --screen-md */ min-width: 48rem) {
+		grid-template-columns: minmax(var(--size-56), auto) 1fr auto;
+	}
 }

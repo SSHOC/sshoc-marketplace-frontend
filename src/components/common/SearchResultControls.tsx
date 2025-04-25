@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/SearchResultControls.module.css'
+import css from "@/components/common/SearchResultControls.module.css";
 
 export interface SearchResultControlsProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function SearchResultControls(props: SearchResultControlsProps): JSX.Element {
-  const { children } = props
+	const { children } = props;
 
-  return <div className={css['container']}>{children}</div>
+	return <div className={css["container"]}>{children}</div>;
 }

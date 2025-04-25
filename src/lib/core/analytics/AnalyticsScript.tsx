@@ -1,13 +1,13 @@
-import Script from 'next/script'
+import Script from "next/script";
 
-import { appId, baseUrl } from '~/config/analytics.config'
+import { appId, baseUrl } from "~/config/analytics.config";
 
 export function AnalyticsScript(): JSX.Element | null {
-  if (baseUrl == null || appId == null) {
-    return null
-  }
+	if (baseUrl == null || appId == null) {
+		return null;
+	}
 
-  return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />
+	return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />;
 }
 
 const matomoScript = `
@@ -28,4 +28,4 @@ _paq.push(['enableHeartBeatTimer'])
   g.src = u + 'matomo.js'
   s.parentNode.insertBefore(g, s)
 })()
-`
+`;

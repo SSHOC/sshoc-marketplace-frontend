@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/home/HomeScreenLayout.module.css'
+import css from "@/components/home/HomeScreenLayout.module.css";
 
 export interface HomeScreenLayoutProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function HomeScreenLayout(props: HomeScreenLayoutProps): JSX.Element {
-  return <div className={css['layout']}>{props.children}</div>
+	return <div className={css["layout"]}>{props.children}</div>;
 }

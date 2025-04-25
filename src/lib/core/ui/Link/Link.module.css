@@ -1,220 +1,220 @@
 .link {
-  padding: 0;
-  border-style: none;
-  background-color: transparent;
-  color: var(--link-color, var(--color-primary-750));
-  font: inherit;
-  text-decoration: var(--link-text-decoration, none);
-  cursor: var(--link-cursor, pointer);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	padding: 0;
+	border-style: none;
+	background-color: transparent;
+	color: var(--link-color, var(--color-primary-750));
+	font: inherit;
+	text-decoration: var(--link-text-decoration, none);
+	cursor: var(--link-cursor, pointer);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 
-  &[data-hovered] {
-    color: var(--link-color-hover, var(--color-primary-600));
-  }
+	&[data-hovered] {
+		color: var(--link-color-hover, var(--color-primary-600));
+	}
 
-  &[data-focused] {
-    color: var(--link-color-focus, var(--color-primary-600));
-    outline: 2px solid
-      var(--link-color-focus-ring, var(--link-color-focus, var(--color-primary-600)));
-    outline-offset: 2px;
-  }
+	&[data-focused] {
+		color: var(--link-color-focus, var(--color-primary-600));
+		outline: 2px solid
+			var(--link-color-focus-ring, var(--link-color-focus, var(--color-primary-600)));
+		outline-offset: 2px;
+	}
 
-  &[data-active] {
-    color: var(--link-color-active, var(--color-primary-500));
-  }
+	&[data-active] {
+		color: var(--link-color-active, var(--color-primary-500));
+	}
 
-  &:disabled,
-  &[aria-disabled] {
-    color: var(--link-color-disabled, var(--color-neutral-600));
-    pointer-events: none;
-  }
+	&:disabled,
+	&[aria-disabled] {
+		color: var(--link-color-disabled, var(--color-neutral-600));
+		pointer-events: none;
+	}
 }
 
 .link-button {
-  --button-cursor: pointer;
+	--button-cursor: pointer;
 
-  text-decoration: none;
+	text-decoration: none;
 }
 
-.link[data-variant='heading'],
-.link[data-variant='text'] {
-  --link-color: var(--color-heading);
-  --link-color-hover: var(--color-primary-750);
-  --link-color-focus: var(--color-primary-750);
-  --link-color-active: var(--color-primary-750);
+.link[data-variant="heading"],
+.link[data-variant="text"] {
+	--link-color: var(--color-heading);
+	--link-color-hover: var(--color-primary-750);
+	--link-color-focus: var(--color-primary-750);
+	--link-color-active: var(--color-primary-750);
 }
 
-.link[data-variant='skip-link'] {
-  position: absolute;
-  z-index: var(--z-index-skip-link);
-  margin: var(--space-2);
-  padding: var(--space-4) var(--space-4);
-  border-radius: var(--border-radius-md);
-  background-color: var(--color-background);
-  box-shadow: var(--box-shadow);
-  transition: none;
-  transform: translateY(-100vh);
+.link[data-variant="skip-link"] {
+	position: absolute;
+	z-index: var(--z-index-skip-link);
+	margin: var(--space-2);
+	padding: var(--space-4) var(--space-4);
+	border-radius: var(--border-radius-md);
+	background-color: var(--color-background);
+	box-shadow: var(--box-shadow);
+	transition: none;
+	transform: translateY(-100vh);
 
-  &:focus-visible {
-    transform: translateY(0);
-  }
+	&:focus-visible {
+		transform: translateY(0);
+	}
 }
 
-.link[data-variant='nav-link-header'] {
-  display: inline-flex;
-  align-items: center;
-  padding-block: var(--space-6);
-  padding-inline: var(--space-6);
-  border-top-left-radius: var(--border-radius-md);
-  border-top-right-radius: var(--border-radius-md);
-  color: var(--color-link-text);
+.link[data-variant="nav-link-header"] {
+	display: inline-flex;
+	align-items: center;
+	padding-block: var(--space-6);
+	padding-inline: var(--space-6);
+	border-top-left-radius: var(--border-radius-md);
+	border-top-right-radius: var(--border-radius-md);
+	color: var(--color-link-text);
 
-  @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
-    padding-inline: var(--space-7);
-  }
+	@media (/* --page-navigation-font-size */ min-width: 98.25rem) {
+		padding-inline: var(--space-7);
+	}
 
-  &[data-hovered] {
-    background-color: var(--color-background-muted);
-    color: var(--color-link-text-hover);
-  }
+	&[data-hovered] {
+		background-color: var(--color-background-muted);
+		color: var(--color-link-text-hover);
+	}
 
-  &[data-focused] {
-    background-color: var(--color-background-muted);
-    color: var(--color-link-text-hover);
-  }
+	&[data-focused] {
+		background-color: var(--color-background-muted);
+		color: var(--color-link-text-hover);
+	}
 
-  &[aria-current='page'] {
-    /* Current page. */
-  }
+	&[aria-current="page"] {
+		/* Current page. */
+	}
 }
 
-.link[data-variant='nav-link-footer'] {
-  display: flex;
-  justify-content: center;
-  padding-block: var(--space-5);
-  padding-inline: var(--space-6);
-  color: var(--color-text);
+.link[data-variant="nav-link-footer"] {
+	display: flex;
+	justify-content: center;
+	padding-block: var(--space-5);
+	padding-inline: var(--space-6);
+	color: var(--color-text);
 
-  &[data-hovered] {
-    background-color: var(--color-neutral-50);
-  }
+	&[data-hovered] {
+		background-color: var(--color-neutral-50);
+	}
 
-  &[data-focused] {
-    background-color: var(--color-neutral-50);
-  }
+	&[data-focused] {
+		background-color: var(--color-neutral-50);
+	}
 }
 
-.link[data-variant='nav-menu-link'] {
-  display: flex;
-  padding-block: var(--space-6);
-  padding-inline: var(--space-8);
-  border-left: var(--size-1) solid var(--color-border);
-  color: var(--color-link-text);
-  text-decoration: none;
+.link[data-variant="nav-menu-link"] {
+	display: flex;
+	padding-block: var(--space-6);
+	padding-inline: var(--space-8);
+	border-left: var(--size-1) solid var(--color-border);
+	color: var(--color-link-text);
+	text-decoration: none;
 
-  &[aria-current='page'] {
-    /* Current page. */
-  }
+	&[aria-current="page"] {
+		/* Current page. */
+	}
 
-  &[data-hovered] {
-    border-left-color: var(--color-primary-600);
-    background-color: var(--color-neutral-50);
-    color: var(--color-link-text-hover);
-  }
+	&[data-hovered] {
+		border-left-color: var(--color-primary-600);
+		background-color: var(--color-neutral-50);
+		color: var(--color-link-text-hover);
+	}
 
-  &[data-focused] {
-    border-left-color: var(--color-primary-600);
-    background-color: var(--color-neutral-50);
-    color: var(--color-link-text-hover);
-  }
+	&[data-focused] {
+		border-left-color: var(--color-primary-600);
+		background-color: var(--color-neutral-50);
+		color: var(--color-link-text-hover);
+	}
 }
 
-.link[data-variant='nav-mobile-menu-link-secondary'] {
-  background-color: var(--color-neutral-0);
+.link[data-variant="nav-mobile-menu-link-secondary"] {
+	background-color: var(--color-neutral-0);
 }
 
-.link[data-variant='nav-mobile-menu-link'],
-.link[data-variant='nav-mobile-menu-link-secondary'] {
-  display: flex;
-  padding-block: var(--space-6);
-  padding-inline: var(--space-8);
-  border: none;
-  border-left: var(--size-1) solid var(--color-border);
-  color: var(--color-link-text);
-  outline-offset: 0;
-  line-height: var(--line-height-5-5);
-  text-decoration: none;
+.link[data-variant="nav-mobile-menu-link"],
+.link[data-variant="nav-mobile-menu-link-secondary"] {
+	display: flex;
+	padding-block: var(--space-6);
+	padding-inline: var(--space-8);
+	border: none;
+	border-left: var(--size-1) solid var(--color-border);
+	color: var(--color-link-text);
+	outline-offset: 0;
+	line-height: var(--line-height-5-5);
+	text-decoration: none;
 
-  &[data-variant='secondary'] {
-    background-color: var(--color-neutral-0);
-  }
+	&[data-variant="secondary"] {
+		background-color: var(--color-neutral-0);
+	}
 
-  &[aria-current='page'] {
-    /* Current page. */
-  }
+	&[aria-current="page"] {
+		/* Current page. */
+	}
 
-  &[data-hovered] {
-    border-left-color: var(--color-primary-600);
-    background-color: var(--color-neutral-50);
-    color: var(--color-link-text-hover);
-  }
+	&[data-hovered] {
+		border-left-color: var(--color-primary-600);
+		background-color: var(--color-neutral-50);
+		color: var(--color-link-text-hover);
+	}
 
-  &[data-focused] {
-    border-left-color: var(--color-primary-600);
-    background-color: var(--color-neutral-50);
-    color: var(--color-link-text-hover);
-  }
+	&[data-focused] {
+		border-left-color: var(--color-primary-600);
+		background-color: var(--color-neutral-50);
+		color: var(--color-link-text-hover);
+	}
 }
 
-.link[data-variant='tag'] {
-  display: inline-flex;
-  gap: var(--space-1);
+.link[data-variant="tag"] {
+	display: inline-flex;
+	gap: var(--space-1);
 }
 
-.link[data-variant='breadcrumb'] {
-  &[aria-current='page'] {
-    color: var(--color-text-muted);
-    pointer-events: none;
-  }
+.link[data-variant="breadcrumb"] {
+	&[aria-current="page"] {
+		color: var(--color-text-muted);
+		pointer-events: none;
+	}
 }
 
-.link[data-variant='pagination'] {
-  display: flex;
-  gap: var(--space-1);
-  align-items: center;
-  color: var(--color-link-text);
-  text-decoration: none;
+.link[data-variant="pagination"] {
+	display: flex;
+	gap: var(--space-1);
+	align-items: center;
+	color: var(--color-link-text);
+	text-decoration: none;
 
-  &[data-hovered] {
-    color: var(--color-link-text-hover);
-  }
+	&[data-hovered] {
+		color: var(--color-link-text-hover);
+	}
 
-  &[data-focused] {
-    color: var(--color-link-text-hover);
-  }
+	&[data-focused] {
+		color: var(--color-link-text-hover);
+	}
 
-  &[aria-disabled='true'] {
-    color: var(--color-text-muted);
-  }
+	&[aria-disabled="true"] {
+		color: var(--color-text-muted);
+	}
 
-  &[aria-current='page'] {
-    color: var(--color-text);
-    text-decoration: underline;
-    pointer-events: none;
-  }
+	&[aria-current="page"] {
+		color: var(--color-text);
+		text-decoration: underline;
+		pointer-events: none;
+	}
 
-  & > svg {
-    width: var(--size-2-5);
-    height: var(--size-2-5);
-  }
+	& > svg {
+		width: var(--size-2-5);
+		height: var(--size-2-5);
+	}
 
-  &[rel='prev'] > svg {
-    transform: rotate(90deg);
-  }
+	&[rel="prev"] > svg {
+		transform: rotate(90deg);
+	}
 
-  &[rel='next'] > svg {
-    transform: rotate(-90deg);
-  }
+	&[rel="next"] > svg {
+		transform: rotate(-90deg);
+	}
 }

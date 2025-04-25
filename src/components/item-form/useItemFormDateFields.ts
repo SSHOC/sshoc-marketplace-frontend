@@ -1,29 +1,28 @@
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { useI18n } from "@/lib/core/i18n/useI18n";
 
-export type ItemFormDateFields = ReturnType<typeof useItemFormDateFields>
+export type ItemFormDateFields = ReturnType<typeof useItemFormDateFields>;
 
- 
-export function useItemFormDateFields(prefix = '') {
-  const { t } = useI18n<'authenticated'>()
+export function useItemFormDateFields(prefix = "") {
+	const { t } = useI18n<"authenticated">();
 
-  const fields = useMemo(() => {
-    const fields = {
-      dateCreated: {
-        name: `${prefix}dateCreated`,
-        label: t(['authenticated', 'fields', 'dateCreated', 'label']),
-        description: t(['authenticated', 'fields', 'dateCreated', 'description']),
-      },
-      dateLastUpdated: {
-        name: `${prefix}dateLastUpdated`,
-        label: t(['authenticated', 'fields', 'dateLastUpdated', 'label']),
-        description: t(['authenticated', 'fields', 'dateLastUpdated', 'description']),
-      },
-    }
+	const fields = useMemo(() => {
+		const fields = {
+			dateCreated: {
+				name: `${prefix}dateCreated`,
+				label: t(["authenticated", "fields", "dateCreated", "label"]),
+				description: t(["authenticated", "fields", "dateCreated", "description"]),
+			},
+			dateLastUpdated: {
+				name: `${prefix}dateLastUpdated`,
+				label: t(["authenticated", "fields", "dateLastUpdated", "label"]),
+				description: t(["authenticated", "fields", "dateLastUpdated", "description"]),
+			},
+		};
 
-    return fields
-  }, [prefix, t])
+		return fields;
+	}, [prefix, t]);
 
-  return fields
+	return fields;
 }

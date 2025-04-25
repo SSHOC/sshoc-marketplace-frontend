@@ -1,29 +1,29 @@
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	justify-content: flex-end;
 }
 
 .status {
-  padding-block: var(--space-2);
-  padding-inline: var(--space-8);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--color-primary-150);
-  border-radius: var(--border-radius-md);
-  background-color: var(--color-primary-75);
-  color: var(--color-neutral-650);
-  font-size: var(--font-size-3-5);
-  line-height: var(--line-height-5);
-  text-align: center;
-  user-select: none;
+	padding-block: var(--space-2);
+	padding-inline: var(--space-8);
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--color-primary-150);
+	border-radius: var(--border-radius-md);
+	background-color: var(--color-primary-75);
+	color: var(--color-neutral-650);
+	font-size: var(--font-size-3-5);
+	line-height: var(--line-height-5);
+	text-align: center;
+	user-select: none;
 }
 
 .approve-button:hover {
-  --icon-color: var(--color-positive-500);
+	--icon-color: var(--color-positive-500);
 }
 
 .reject-button:hover {
-  --icon-color: var(--color-negative-500);
+	--icon-color: var(--color-negative-500);
 }

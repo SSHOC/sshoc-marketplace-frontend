@@ -1,12 +1,12 @@
-import { useActorSearchResults } from '@/components/account/useActorSearchResults'
-import { ItemsCount } from '@/components/common/ItemsCount'
+import { useActorSearchResults } from "@/components/account/useActorSearchResults";
+import { ItemsCount } from "@/components/common/ItemsCount";
 
 export function ActorsSearchResultsCount(): JSX.Element | null {
-  const searchResults = useActorSearchResults()
+	const searchResults = useActorSearchResults();
 
-  if (searchResults.data == null || searchResults.data.hits === 0 || searchResults.isFetching) {
-    return null
-  }
+	if (searchResults.data == null || searchResults.data.hits === 0 || searchResults.isFetching) {
+		return null;
+	}
 
-  return <ItemsCount count={searchResults.data.hits} />
+	return <ItemsCount count={searchResults.data.hits} />;
 }

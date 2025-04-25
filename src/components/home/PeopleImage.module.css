@@ -1,12 +1,12 @@
 .container {
-  position: relative;
-  z-index: var(--z-index-background-image);
-  grid-row: hero;
-  grid-column: 1 / -1;
-  align-self: stretch;
-  margin-block-end: var(--space-8);
+	position: relative;
+	z-index: var(--z-index-background-image);
+	grid-row: hero;
+	grid-column: 1 / -1;
+	align-self: stretch;
+	margin-block-end: var(--space-8);
 
-  @media (/* --screen-xs */ min-width: 30rem) {
-    grid-column: 3 / -3;
-  }
+	@media (/* --screen-xs */ min-width: 30rem) {
+		grid-column: 3 / -3;
+	}
 }

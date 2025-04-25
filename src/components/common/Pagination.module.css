@@ -2,32 +2,32 @@
 }
 
 .nav-items {
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
-  font-size: var(--font-size-ui-base);
+	display: flex;
+	gap: var(--space-4);
+	align-items: center;
+	font-size: var(--font-size-ui-base);
 }
 
 .nav-item {
-  display: flex;
-  gap: var(--space-4);
+	display: flex;
+	gap: var(--space-4);
 }
 
 .nav-link-ellipsis {
-  user-select: none;
+	user-select: none;
 }
 
 .page-number-input {
-  display: flex;
-  gap: var(--space-1);
-  align-items: center;
-  color: var(--color-text);
+	display: flex;
+	gap: var(--space-1);
+	align-items: center;
+	color: var(--color-text);
 
-  & input {
-    max-width: 3em;
-    border: none;
-    border-bottom: 1px solid var(--color-text);
-    background-color: transparent;
-    color: var(--color-neutral-800);
-  }
+	& input {
+		max-width: 3em;
+		border: none;
+		border-bottom: 1px solid var(--color-text);
+		background-color: transparent;
+		color: var(--color-neutral-800);
+	}
 }

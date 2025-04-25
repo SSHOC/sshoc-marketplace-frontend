@@ -1,20 +1,20 @@
 .underlay {
-  position: fixed;
-  z-index: var(--z-index-underlay);
-  background-color: var(--color-backdrop-muted);
-  inset: 0;
+	position: fixed;
+	z-index: var(--z-index-underlay);
+	background-color: var(--color-backdrop-muted);
+	inset: 0;
 }
 
-.underlay[data-open='true'] {
-  animation: fade-in forwards var(--animation-duration);
+.underlay[data-open="true"] {
+	animation: fade-in forwards var(--animation-duration);
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0%;
-  }
+	from {
+		opacity: 0%;
+	}
 
-  to {
-    opacity: 100%;
-  }
+	to {
+		opacity: 100%;
+	}
 }

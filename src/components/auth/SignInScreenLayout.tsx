@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/auth/SignInScreenLayout.module.css'
+import css from "@/components/auth/SignInScreenLayout.module.css";
 
 export interface SignInScreenLayoutProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function SignInScreenLayout(props: SignInScreenLayoutProps): JSX.Element {
-  return <div className={css['layout']}>{props.children}</div>
+	return <div className={css["layout"]}>{props.children}</div>;
 }

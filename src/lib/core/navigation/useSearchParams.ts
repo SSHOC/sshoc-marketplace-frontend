@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
-import { useRoute } from '@/lib/core/navigation/useRoute'
+import { useRoute } from "@/lib/core/navigation/useRoute";
 
 export function useSearchParams(): URLSearchParams | null {
-  const router = useRouter()
-  const route = useRoute()
+	const router = useRouter();
+	const route = useRoute();
 
-  if (!router.isReady) {return null}
+	if (!router.isReady) {
+		return null;
+	}
 
-  return route.searchParams
+	return route.searchParams;
 }

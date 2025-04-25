@@ -1,14 +1,14 @@
-import type { ElementType, ReactNode } from 'react'
+import type { ElementType, ReactNode } from "react";
 
-import css from '@/lib/core/ui/Centered/Centered.module.css'
+import css from "@/lib/core/ui/Centered/Centered.module.css";
 
 export interface CenteredProps {
-  elementType?: ElementType
-  children?: ReactNode
+	elementType?: ElementType;
+	children?: ReactNode;
 }
 
 export function Centered(props: CenteredProps): JSX.Element {
-  const ElementType = props.elementType ?? 'div'
+	const ElementType = props.elementType ?? "div";
 
-  return <ElementType className={css['container']}>{props.children}</ElementType>
+	return <ElementType className={css["container"]}>{props.children}</ElementType>;
 }

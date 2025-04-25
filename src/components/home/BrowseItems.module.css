@@ -1,22 +1,22 @@
 .container {
-  display: grid;
-  grid-area: browse-items;
-  gap: var(--space-8);
-  align-content: start;
-  padding-block: var(--space-16);
+	display: grid;
+	grid-area: browse-items;
+	gap: var(--space-8);
+	align-content: start;
+	padding-block: var(--space-16);
 }
 
 .section {
-  display: grid;
-  gap: var(--space-6);
+	display: grid;
+	gap: var(--space-6);
 }
 
 .items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-6);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3) var(--space-6);
 }
 
 .item-count {
-  color: var(--color-text-muted);
+	color: var(--color-text-muted);
 }

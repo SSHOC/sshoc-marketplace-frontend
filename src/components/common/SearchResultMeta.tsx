@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/SearchResultMeta.module.css'
+import css from "@/components/common/SearchResultMeta.module.css";
 
 export interface SearchResultMetaProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function SearchResultMeta(props: SearchResultMetaProps): JSX.Element {
-  const { children } = props
+	const { children } = props;
 
-  return <div className={css['meta']}>{children}</div>
+	return <div className={css["meta"]}>{children}</div>;
 }

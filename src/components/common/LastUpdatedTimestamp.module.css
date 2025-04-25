@@ -1,5 +1,5 @@
 .container {
-  display: flex;
-  margin-block: var(--space-8);
-  font-size: var(--font-size-ui-sm);
+	display: flex;
+	margin-block: var(--space-8);
+	font-size: var(--font-size-ui-sm);
 }

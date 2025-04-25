@@ -1,8 +1,8 @@
 .container {
-  display: grid;
-  grid-area: content;
-  row-gap: var(--space-8);
-  place-content: center start;
-  align-self: stretch;
-  max-width: var(--size-192);
+	display: grid;
+	grid-area: content;
+	row-gap: var(--space-8);
+	place-content: center start;
+	align-self: stretch;
+	max-width: var(--size-192);
 }

@@ -1,15 +1,15 @@
 .text {
-  /**
+	/**
   * Ensure `-webkit` prefixes because of missing `autoprefixer` support.
   *
   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp
   * @see https://github.com/postcss/autoprefixer/issues/1322
   */
-  display: -webkit-box;
-  overflow: hidden;
-  color: var(--color-text);
-  font-size: var(--font-size-ui-base);
-  line-height: var(--line-height-relaxed);
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+	color: var(--color-text);
+	font-size: var(--font-size-ui-base);
+	line-height: var(--line-height-relaxed);
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }

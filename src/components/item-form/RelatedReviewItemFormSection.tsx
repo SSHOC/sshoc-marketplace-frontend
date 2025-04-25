@@ -1,24 +1,24 @@
-import { FormSection } from '@/components/common/FormSection'
-import { FormSectionTitle } from '@/components/common/FormSectionTitle'
-import { ReviewRelatedItemsFormFieldArray } from '@/components/item-form/ReviewRelatedItemsFormFieldArray'
-import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
-import { useI18n } from '@/lib/core/i18n/useI18n'
+import { FormSection } from "@/components/common/FormSection";
+import { FormSectionTitle } from "@/components/common/FormSectionTitle";
+import { ReviewRelatedItemsFormFieldArray } from "@/components/item-form/ReviewRelatedItemsFormFieldArray";
+import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
+import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface RelatedReviewItemFormSectionProps {
-  formFields: ItemFormFields
+	formFields: ItemFormFields;
 }
 
 export function RelatedReviewItemFormSection(
-  props: RelatedReviewItemFormSectionProps,
+	props: RelatedReviewItemFormSectionProps,
 ): JSX.Element {
-  const { fields } = props.formFields
+	const { fields } = props.formFields;
 
-  const { t } = useI18n<'authenticated' | 'common'>()
+	const { t } = useI18n<"authenticated" | "common">();
 
-  return (
-    <FormSection>
-      <FormSectionTitle>{t(['authenticated', 'forms', 'related-items-section'])}</FormSectionTitle>
-      <ReviewRelatedItemsFormFieldArray field={fields.relatedItems} />
-    </FormSection>
-  )
+	return (
+		<FormSection>
+			<FormSectionTitle>{t(["authenticated", "forms", "related-items-section"])}</FormSectionTitle>
+			<ReviewRelatedItemsFormFieldArray field={fields.relatedItems} />
+		</FormSection>
+	);
 }

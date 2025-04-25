@@ -1,26 +1,28 @@
-import { ItemHistorySearchResults } from '@/components/item-history/ItemHistorySearchResults'
-import type { Dataset } from '@/data/sshoc/api/dataset'
-import { useDatasetHistory } from '@/data/sshoc/hooks/dataset'
-import { isNotFoundError } from '@/data/sshoc/utils/isNotFoundError'
-import type { QueryMetadata } from '@/lib/core/query/types'
+import { ItemHistorySearchResults } from "@/components/item-history/ItemHistorySearchResults";
+import type { Dataset } from "@/data/sshoc/api/dataset";
+import { useDatasetHistory } from "@/data/sshoc/hooks/dataset";
+import { isNotFoundError } from "@/data/sshoc/utils/isNotFoundError";
+import type { QueryMetadata } from "@/lib/core/query/types";
 
 export interface DatasetHistorySearchResultsProps {
-  persistentId: Dataset['persistentId']
+	persistentId: Dataset["persistentId"];
 }
 
 export function DatasetHistorySearchResults(props: DatasetHistorySearchResultsProps): JSX.Element {
-  const { persistentId } = props
+	const { persistentId } = props;
 
-  const meta: QueryMetadata = {
-    messages: {
-      error(error) {
-        if (isNotFoundError(error)) {return false}
-        return undefined
-      },
-    },
-  }
+	const meta: QueryMetadata = {
+		messages: {
+			error(error) {
+				if (isNotFoundError(error)) {
+					return false;
+				}
+				return undefined;
+			},
+		},
+	};
 
-  const items = useDatasetHistory({ persistentId }, undefined, { meta })
+	const items = useDatasetHistory({ persistentId }, undefined, { meta });
 
-  return <ItemHistorySearchResults items={items} />
+	return <ItemHistorySearchResults items={items} />;
 }

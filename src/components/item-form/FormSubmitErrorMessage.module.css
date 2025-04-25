@@ -1,6 +1,6 @@
 .message {
-  display: flex;
-  justify-content: flex-end;
-  color: var(--color-negative-600);
-  font-size: var(--font-size-3-75);
+	display: flex;
+	justify-content: flex-end;
+	color: var(--color-negative-600);
+	font-size: var(--font-size-3-75);
 }

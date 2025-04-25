@@ -1,5 +1,5 @@
 .container {
-  position: relative;
-  display: grid;
-  gap: var(--space-4);
+	position: relative;
+	display: grid;
+	gap: var(--space-4);
 }

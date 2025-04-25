@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/ScreenHeader.module.css'
+import css from "@/components/common/ScreenHeader.module.css";
 
 export interface ScreenHeaderProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function ScreenHeader(props: ScreenHeaderProps): JSX.Element {
-  return <header className={css['container']}>{props.children}</header>
+	return <header className={css["container"]}>{props.children}</header>;
 }

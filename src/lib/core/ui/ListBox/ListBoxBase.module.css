@@ -1,117 +1,117 @@
 .listbox {
-  padding-block: var(--listbox-padding-block, var(--space-4));
-  padding-inline: var(--listbox-padding-inline);
-  border-width: var(--listbox-border-width, 1px);
-  border-style: solid;
-  border-color: var(--listbox-border-color, var(--color-neutral-200));
-  border-radius: var(--listbox-border-radius, var(--border-radius-md));
-  background-color: var(--listbox-background-color, var(--color-neutral-0));
-  color: var(--listbox-color, var(--color-neutral-800));
-  box-shadow: var(--box-shadow);
-  outline: 2px solid transparent;
-  outline-offset: 0;
-  font-weight: var(--listbox-font-weight);
-  font-size: var(--listbox-font-size, var(--font-size-3-75));
-  user-select: none;
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	padding-block: var(--listbox-padding-block, var(--space-4));
+	padding-inline: var(--listbox-padding-inline);
+	border-width: var(--listbox-border-width, 1px);
+	border-style: solid;
+	border-color: var(--listbox-border-color, var(--color-neutral-200));
+	border-radius: var(--listbox-border-radius, var(--border-radius-md));
+	background-color: var(--listbox-background-color, var(--color-neutral-0));
+	color: var(--listbox-color, var(--color-neutral-800));
+	box-shadow: var(--box-shadow);
+	outline: 2px solid transparent;
+	outline-offset: 0;
+	font-weight: var(--listbox-font-weight);
+	font-size: var(--listbox-font-size, var(--font-size-3-75));
+	user-select: none;
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 }
 
 .listbox-section {
-  padding-block: var(--listbox-section-padding-block, var(--space-1));
-  padding-inline: var(--listbox-section-padding-inline, var(--space-4));
-  background-color: var(--listbox-section-background-color);
-  color: var(--listbox-section-color);
-  font-weight: var(--listbox-section-font-weight);
-  font-size: var(--listbox-section-font-size);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	padding-block: var(--listbox-section-padding-block, var(--space-1));
+	padding-inline: var(--listbox-section-padding-inline, var(--space-4));
+	background-color: var(--listbox-section-background-color);
+	color: var(--listbox-section-color);
+	font-weight: var(--listbox-section-font-weight);
+	font-size: var(--listbox-section-font-size);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 }
 
 .listbox-option {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: var(--listbox-option-padding-block, var(--space-1-5));
-  padding-inline: var(--listbox-option-padding-inline, var(--space-4));
-  background-color: var(--listbox-option-background-color);
-  color: var(--listbox-option-color);
-  font-weight: var(--listbox-option-font-weight);
-  font-size: var(--listbox-option-font-size);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	justify-content: space-between;
+	padding-block: var(--listbox-option-padding-block, var(--space-1-5));
+	padding-inline: var(--listbox-option-padding-inline, var(--space-4));
+	background-color: var(--listbox-option-background-color);
+	color: var(--listbox-option-color);
+	font-weight: var(--listbox-option-font-weight);
+	font-size: var(--listbox-option-font-size);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 
-  &:hover,
-  &[data-hovered] {
-    background-color: var(--listbox-option-background-color-hover);
-    color: var(--listbox-option-color-hover);
-  }
+	&:hover,
+	&[data-hovered] {
+		background-color: var(--listbox-option-background-color-hover);
+		color: var(--listbox-option-color-hover);
+	}
 
-  &:focus-visible,
-  &[data-focused] {
-    background-color: var(--listbox-option-background-color-focus);
-    color: var(--listbox-option-color-focus);
-  }
+	&:focus-visible,
+	&[data-focused] {
+		background-color: var(--listbox-option-background-color-focus);
+		color: var(--listbox-option-color-focus);
+	}
 
-  &:focus-visible {
-    outline: 2px solid transparent;
-  }
+	&:focus-visible {
+		outline: 2px solid transparent;
+	}
 
-  &[data-focused] {
-    outline: 2px solid var(--color-primary-600);
-    outline-offset: -2px;
-  }
+	&[data-focused] {
+		outline: 2px solid var(--color-primary-600);
+		outline-offset: -2px;
+	}
 
-  &[aria-selected='true'] {
-    background-color: var(--listbox-option-background-color-selected);
-    color: var(--listbox-option-color-selected);
-  }
+	&[aria-selected="true"] {
+		background-color: var(--listbox-option-background-color-selected);
+		color: var(--listbox-option-color-selected);
+	}
 
-  &[aria-disabled='true'] {
-    background-color: var(--listbox-option-background-color-disabled);
-    color: var(--listbox-option-color-disabled);
-  }
+	&[aria-disabled="true"] {
+		background-color: var(--listbox-option-background-color-disabled);
+		color: var(--listbox-option-color-disabled);
+	}
 }
 
-.listbox[data-color='primary'] {
-  --listbox-background-color: var(--color-neutral-0);
-  --listbox-border-color: var(--color-neutral-200);
-  --listbox-padding-block: var(--space-2);
-  --listbox-option-background-color-hover: var(--color-neutral-50);
-  --listbox-option-background-color-focus: var(--color-neutral-50);
-  --listbox-option-background-color-selected: var(--color-neutral-50);
-  --listbox-option-color-hover: var(--color-primary-750);
-  --listbox-option-color-selected: var(--color-primary-750);
-  --listbox-option-checkmark-color: var(--color-primary-600);
+.listbox[data-color="primary"] {
+	--listbox-background-color: var(--color-neutral-0);
+	--listbox-border-color: var(--color-neutral-200);
+	--listbox-padding-block: var(--space-2);
+	--listbox-option-background-color-hover: var(--color-neutral-50);
+	--listbox-option-background-color-focus: var(--color-neutral-50);
+	--listbox-option-background-color-selected: var(--color-neutral-50);
+	--listbox-option-color-hover: var(--color-primary-750);
+	--listbox-option-color-selected: var(--color-primary-750);
+	--listbox-option-checkmark-color: var(--color-primary-600);
 }
 
-.listbox[data-color='form'] {
-  --listbox-background-color: var(--color-neutral-0);
-  --listbox-border-color: var(--color-neutral-250);
-  --listbox-border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
-  --listbox-padding-block: var(--space-2);
-  --listbox-option-background-color-hover: var(--color-neutral-50);
-  --listbox-option-background-color-focus: var(--color-neutral-50);
-  --listbox-option-background-color-selected: var(--color-neutral-50);
-  --listbox-option-color-hover: var(--color-primary-750);
-  --listbox-option-checkmark-color: var(--color-primary-600);
+.listbox[data-color="form"] {
+	--listbox-background-color: var(--color-neutral-0);
+	--listbox-border-color: var(--color-neutral-250);
+	--listbox-border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+	--listbox-padding-block: var(--space-2);
+	--listbox-option-background-color-hover: var(--color-neutral-50);
+	--listbox-option-background-color-focus: var(--color-neutral-50);
+	--listbox-option-background-color-selected: var(--color-neutral-50);
+	--listbox-option-color-hover: var(--color-primary-750);
+	--listbox-option-checkmark-color: var(--color-primary-600);
 }
 
 .listbox-progress-spinner-container {
-  display: grid;
-  height: 100%;
-  place-items: center;
+	display: grid;
+	height: 100%;
+	place-items: center;
 }
 
 .listbox-option-empty-state {
-  display: grid;
-  align-items: center;
-  padding-block: var(--listbox-option-padding-block, var(--space-1-5));
-  padding-inline: var(--listbox-option-padding-inline, var(--space-4));
-  color: var(--color-neutral-600);
-  font-style: italic;
+	display: grid;
+	align-items: center;
+	padding-block: var(--listbox-option-padding-block, var(--space-1-5));
+	padding-inline: var(--listbox-option-padding-inline, var(--space-4));
+	color: var(--color-neutral-600);
+	font-style: italic;
 }

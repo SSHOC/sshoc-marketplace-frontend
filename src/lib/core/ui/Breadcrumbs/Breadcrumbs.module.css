@@ -1,11 +1,11 @@
 .nav-items {
-  display: flex;
-  gap: var(--space-2);
-  font-size: var(--font-size-ui-base);
-  overflow-wrap: initial;
+	display: flex;
+	gap: var(--space-2);
+	font-size: var(--font-size-ui-base);
+	overflow-wrap: initial;
 }
 
 .nav-separator {
-  margin-inline: var(--space-1);
-  color: var(--color-separator);
+	margin-inline: var(--space-1);
+	color: var(--color-separator);
 }

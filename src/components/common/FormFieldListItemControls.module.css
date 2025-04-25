@@ -1,8 +1,8 @@
 .container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	gap: var(--space-4);
+	align-items: center;
 }

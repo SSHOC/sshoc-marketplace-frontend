@@ -1,3 +1,3 @@
-import { context, createResponseComposition } from 'msw'
+import { context, createResponseComposition } from "msw";
 
-export const delayedResponse = createResponseComposition(undefined, [context.delay('real')])
+export const delayedResponse = createResponseComposition(undefined, [context.delay("real")]);

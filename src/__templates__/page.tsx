@@ -1,25 +1,25 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
-import { Fragment } from 'react'
+import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { Fragment } from "react";
 
-import type { PageComponent } from '@/lib/core/app/types'
-import { getLocale } from '@/lib/core/i18n/getLocale'
-import { load } from '@/lib/core/i18n/load'
-import type { WithDictionaries } from '@/lib/core/i18n/types'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { PageMetadata } from '@/lib/core/metadata/PageMetadata'
-import { PageMainContent } from '@/lib/core/page/PageMainContent'
+import type { PageComponent } from "@/lib/core/app/types";
+import { getLocale } from "@/lib/core/i18n/getLocale";
+import { load } from "@/lib/core/i18n/load";
+import type { WithDictionaries } from "@/lib/core/i18n/types";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
+import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export namespace TemplatePage {
-  export type PathParamsInput = never
-  // export interface PathParamsInput extends ParamsInput {
-  //   id: string
-  // }
-  export type PathParams = StringParams<PathParamsInput>
-  export type SearchParamsInput = never
-  export type Props = WithDictionaries<'common'>
-  // export interface Props extends WithDictionaries<'common'> {
-  //   params: PathParams
-  // }
+	export type PathParamsInput = never;
+	// export interface PathParamsInput extends ParamsInput {
+	//   id: string
+	// }
+	export type PathParams = StringParams<PathParamsInput>;
+	export type SearchParamsInput = never;
+	export type Props = WithDictionaries<"common">;
+	// export interface Props extends WithDictionaries<'common'> {
+	//   params: PathParams
+	// }
 }
 
 // import type { GetStaticPathsContext, GetStaticPathsResult } from 'next'
@@ -40,35 +40,35 @@ export namespace TemplatePage {
 // }
 
 export async function getStaticProps(
-  context: GetStaticPropsContext<TemplatePage.PathParams>,
+	context: GetStaticPropsContext<TemplatePage.PathParams>,
 ): Promise<GetStaticPropsResult<TemplatePage.Props>> {
-  const locale = getLocale(context)
-  // const params = context.params as TemplatePage.PathParams
-  const dictionaries = await load(locale, ['common'])
+	const locale = getLocale(context);
+	// const params = context.params as TemplatePage.PathParams
+	const dictionaries = await load(locale, ["common"]);
 
-  return {
-    props: {
-      dictionaries,
-      // params,
-    },
-  }
+	return {
+		props: {
+			dictionaries,
+			// params,
+		},
+	};
 }
 
 export default function TemplatePage(_props: TemplatePage.Props): JSX.Element {
-  const { t } = useI18n<'common'>()
+	const { t } = useI18n<"common">();
 
-  const title = t(['common', 'pages', 'home'])
+	const title = t(["common", "pages", "home"]);
 
-  return (
-    <Fragment>
-      <PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
-      <PageMainContent>
-        <h1>{title}</h1>
-      </PageMainContent>
-    </Fragment>
-  )
+	return (
+		<Fragment>
+			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMainContent>
+				<h1>{title}</h1>
+			</PageMainContent>
+		</Fragment>
+	);
 }
 
-const Page: PageComponent<TemplatePage.Props> = TemplatePage
+const Page: PageComponent<TemplatePage.Props> = TemplatePage;
 
-Page.getLayout = undefined
+Page.getLayout = undefined;

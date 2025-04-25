@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/ScreenTitle.module.css'
+import css from "@/components/common/ScreenTitle.module.css";
 
 export interface ScreenTitleProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function ScreenTitle(props: ScreenTitleProps): JSX.Element {
-  return <h1 className={css['heading']}>{props.children}</h1>
+	return <h1 className={css["heading"]}>{props.children}</h1>;
 }

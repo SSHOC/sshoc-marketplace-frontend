@@ -1,6 +1,6 @@
 .container {
-  display: grid;
-  grid-area: item-info;
-  gap: var(--space-16);
-  padding-block-end: var(--space-16);
+	display: grid;
+	grid-area: item-info;
+	gap: var(--space-16);
+	padding-block-end: var(--space-16);
 }

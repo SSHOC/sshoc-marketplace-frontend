@@ -1,10 +1,10 @@
 {
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
-    "esbenp.prettier-vscode",
-    "mikestead.dotenv",
-    "stylelint.vscode-stylelint",
-    "unifiedjs.vscode-mdx"
-  ]
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"editorconfig.editorconfig",
+		"esbenp.prettier-vscode",
+		"mikestead.dotenv",
+		"stylelint.vscode-stylelint",
+		"unifiedjs.vscode-mdx"
+	]
 }
