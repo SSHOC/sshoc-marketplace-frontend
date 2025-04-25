@@ -20,7 +20,6 @@ export { removeTrailingSlash } from "@/lib/utils/remove-trailing-slash";
 export { safestring } from "@/lib/utils/safestring";
 export { sanitizeSearchParams } from "@/lib/utils/sanitize-search-params";
 export { toPositiveInteger } from "@/lib/utils/to-positive-integer";
-export { assert, capitalize, isNonEmptyArray, isNonEmptyString, log } from "@acdh-oeaw/lib";
+export { assert, capitalize, isNonEmptyArray, isNonEmptyString, log, pick } from "@acdh-oeaw/lib";
 export { isAbsoluteUrl } from "@stefanprobst/is-absolute-url";
-export { pick } from "@stefanprobst/pick";
 export { range, times } from "@stefanprobst/range";

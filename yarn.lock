@@ -2216,15 +2216,10 @@
     "@react-types/overlays" "^3.8.12"
     "@react-types/shared" "^3.27.0"
 
-"@stefanprobst/assert@^1.0.1", "@stefanprobst/assert@^1.0.2", "@stefanprobst/assert@^1.0.3":
+"@stefanprobst/assert@^1.0.1", "@stefanprobst/assert@^1.0.2":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@stefanprobst/assert/-/assert-1.0.3.tgz#a60e49dbdd7280582950120f54aad76cfdab93cf"
   integrity sha512-3FkU7sHtfCpgO3+YqNWDRc3b220LO/ZtdxUtiVhP0+2xqZ+E9LNe3hXaiFeVCeSUmi3y8V333L4+x6ME2vzpHg==
-
-"@stefanprobst/capitalize@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@stefanprobst/capitalize/-/capitalize-1.0.2.tgz#2c92c2fe23b6ebcf790c73932398e6923718d85c"
-  integrity sha512-5puCNhSg0jIUL4w4pQFdR6NwE6itcATLXnjUwE9sE5cYgT0Y+S/EO0E/YuGoHhG2GfFMXY0x7UjzJ9cLYDnAMA==
 
 "@stefanprobst/is-absolute-url@^1.0.0", "@stefanprobst/is-absolute-url@^1.0.1", "@stefanprobst/is-absolute-url@^1.0.2":
   version "1.0.2"
@@ -2291,11 +2286,6 @@
   integrity sha512-5TNs5a5Axua04zNf+splGHtwPJEKa8/ewNLg7v6joRrogueX5dV7/PMXd76oIQj7RyASD95gRV8I1OGgiUbjSg==
   dependencies:
     "@stefanprobst/assert" "^1.0.2"
-
-"@stefanprobst/pick@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@stefanprobst/pick/-/pick-1.0.3.tgz#e7368548807408140f56bf808459dd3747b675d8"
-  integrity sha512-eqVC6/iPGz4SZTp/r+ogl0i+KkOQRRl14pPSjrrp6sAthAw3MzSHU0pxC6fLgrW6mzd1ZoLS6BpsSml3yhL9Vw==
 
 "@stefanprobst/range@^1.1.1":
   version "1.1.1"
