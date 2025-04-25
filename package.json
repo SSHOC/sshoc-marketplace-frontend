@@ -14,21 +14,19 @@
     "dev": "next dev",
     "format:check": "prettier . --cache --cache-location ./.prettiercache --check",
     "format:fix": "yarn run format:check --write",
-    "lint:check": "run-p \"lint:*:check\"",
-    "lint:fix": "run-p \"lint:*:fix\"",
+    "lint:check": "run-p --continue-on-error \"lint:*:check\"",
+    "lint:fix": "run-p --continue-on-error \"lint:*:fix\"",
     "lint:code:check": "eslint . --cache",
     "lint:code:fix": "yarn run lint:code:check --fix",
-    "lint:md:check": "remark . --ext md --quiet --frail",
-    "lint:md:fix": "yarn run lint:md:check --output",
-    "lint:mdx:check": "remark . --ext mdx --use mdx --quiet --frail",
-    "lint:mdx:fix": "yarn run lint:mdx:check --output",
-    "lint:styles:check": "stylelint \"**/*.css\" --cache --ignore-path .gitignore",
+    "lint:styles:check": "stylelint \"./**/*.css\" --cache --ignore-path ./.gitignore",
     "lint:styles:fix": "yarn run lint:styles:check --fix",
+    "preinstall": "npx only-allow yarn",
     "postinstall": "patch-package",
-    "prepare": "simple-git-hooks || true",
+    "prepare": "run-s setup",
+    "setup": "is-ci || simple-git-hooks",
     "start": "next start",
     "types:check": "tsc --noEmit",
-    "validate": "yarn run format:check && yarn run lint:check && yarn run types:check"
+    "validate": "run-s format:check lint:check types:check"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.0",
@@ -219,17 +217,15 @@
     "extends": "@acdh-oeaw/commitlint-config"
   },
   "lint-staged": {
-    "*.@(js|mjs|ts|tsx)": [
-      "eslint --fix --cache",
-      "prettier --write"
+    "*.@(js|ts|tsx)": [
+      "eslint --cache --fix",
+      "prettier --cache --cache-location ./.prettiercache --write"
     ],
-    "*.css": [
+    "*.@(css)": [
       "stylelint --cache --fix",
-      "prettier --write"
+      "prettier --cache --cache-location ./.prettiercache --write"
     ],
-    "*.!(css|js|mdx|mjs|ts|tsx)": [
-      "prettier --ignore-unknown --write"
-    ]
+    "*.!(css|js|ts|tsx)": "prettier --cache --cache-location ./.prettiercache --ignore-unknown --write"
   },
   "msw": {
     "workerDirectory": "public"
