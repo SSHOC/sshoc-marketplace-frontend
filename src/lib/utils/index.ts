@@ -3,7 +3,6 @@ export { createSiteUrl } from "@/lib/utils/create-site-url";
 export { entries } from "@/lib/utils/entries";
 export { enumerate } from "@/lib/utils/enumerate";
 export { groupAlphabetically } from "@/lib/utils/group-alphabetically";
-export { groupBy } from "@/lib/utils/group-by";
 export { identity } from "@/lib/utils/identity";
 export { includes } from "@/lib/utils/includes";
 export { isDate } from "@/lib/utils/is-date";
@@ -22,6 +21,7 @@ export { toPositiveInteger } from "@/lib/utils/to-positive-integer";
 export {
 	assert,
 	capitalize,
+	groupBy,
 	isUrl as isAbsoluteUrl,
 	isNonEmptyArray,
 	isNonEmptyString,
