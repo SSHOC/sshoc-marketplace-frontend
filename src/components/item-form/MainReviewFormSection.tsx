@@ -30,6 +30,7 @@ export function MainReviewFormSection(props: MainReviewFormSectionProps): JSX.El
 
       <ReviewField<ItemsDiff['item']['label']>
         name={fields.label.name}
+        // eslint-disable-next-line react/no-unstable-nested-components
         review={({ createLabel, status, value }) => {
           return (
             <TextField
@@ -47,6 +48,7 @@ export function MainReviewFormSection(props: MainReviewFormSectionProps): JSX.El
 
       <ReviewField<ItemsDiff['item']['version']>
         name={fields.version.name}
+        // eslint-disable-next-line react/no-unstable-nested-components
         review={({ createLabel, status, value }) => {
           return (
             <TextField
@@ -63,6 +65,7 @@ export function MainReviewFormSection(props: MainReviewFormSectionProps): JSX.El
 
       <ReviewField<ItemsDiff['item']['description']>
         name={fields.description.name}
+        // eslint-disable-next-line react/no-unstable-nested-components
         review={({ createLabel, status, value }) => {
           return (
             <TextArea

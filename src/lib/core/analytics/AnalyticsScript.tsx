@@ -1,10 +1,11 @@
 import Script from 'next/script'
-import { Fragment } from 'react'
 
 import { appId, baseUrl } from '~/config/analytics.config'
 
-export function AnalyticsScript(): JSX.Element {
-  if (baseUrl == null || appId == null) {return <Fragment />}
+export function AnalyticsScript(): JSX.Element | null {
+  if (baseUrl == null || appId == null) {
+    return null
+  }
 
   return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />
 }

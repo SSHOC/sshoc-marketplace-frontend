@@ -24,7 +24,7 @@ export interface PaginationProps<TResults, TFilters> {
 export function Pagination<
   TResults extends UseQueryResult<{ pages: number; page: number }>,
   TFilters extends { page: number },
->(props: PaginationProps<TResults, TFilters>): JSX.Element {
+>(props: PaginationProps<TResults, TFilters>): JSX.Element | null {
   const { searchResults, searchFilters, searchItems, getSearchItemsLink } = props
 
   const { t } = useI18n<'common'>()
@@ -35,7 +35,7 @@ export function Pagination<
   const page = Math.min(searchFilters.page, pages)
 
   if (pages <= 1) {
-    return <Fragment />
+    return null
   }
 
   const hasPreviousPage = page > 1

@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { ReviewControls } from '@/components/item-form/ReviewControls'
 import css from '@/components/item-form/ReviewField.module.css'
 import type { Status } from '@/components/item-form/useItemDiffFormFieldsMetadata'
@@ -31,8 +29,7 @@ export function ReviewField<T>(props: ReviewFieldProps<T>): JSX.Element {
           onApprove={meta.onApprove}
           onReject={meta.onReject}
         />
-        <Fragment>
-          {review({
+        {review({
             createLabel: labels.suggested,
             status: meta.metadata.status,
             value:
@@ -45,7 +42,6 @@ export function ReviewField<T>(props: ReviewFieldProps<T>): JSX.Element {
                 value: meta.metadata.current,
               })
             : null}
-        </Fragment>
       </div>
     )
   }

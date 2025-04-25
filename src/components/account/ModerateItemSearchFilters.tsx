@@ -129,7 +129,7 @@ function ActiveSearchFacets(): JSX.Element {
       return facet.length === 0
     })
   ) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -184,7 +184,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
   )
 
   return (
-    <button {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
+    <button type='button' {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
       <VisuallyHidden>{label}</VisuallyHidden>
       <Icon icon={CrossIcon} />
     </button>
@@ -200,7 +200,7 @@ function ActiveCurationFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -240,7 +240,7 @@ function ActiveItemStatusFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -279,7 +279,7 @@ function ActiveItemCategoryFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -318,7 +318,7 @@ function ActiveSourceFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -356,7 +356,7 @@ function ActiveInformationContributorFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -414,7 +414,7 @@ function ActiveOtherFacets() {
     fields.deprecatedAtSource.value !== true &&
     fields.conflictAtSource.value !== true
   ) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -589,7 +589,7 @@ function ItemCategoryFacets(): JSX.Element {
   const values = searchResults.data[name]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const items = entries(values).filter(([category, { count }]) => {
@@ -599,7 +599,7 @@ function ItemCategoryFacets(): JSX.Element {
   })
 
   if (items.length === 0) {
-    return <Fragment />
+    return null
   }
 
   function onChange(keys: Array<string>) {
@@ -649,13 +649,13 @@ function SourceFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.facets[facet]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)
@@ -744,7 +744,7 @@ function InformationContributorFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (users.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = users.data.pages.flatMap((page) => {
@@ -752,7 +752,7 @@ function InformationContributorFacets(): JSX.Element {
   })
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const valuesByUsername = mapBy(values, 'username')

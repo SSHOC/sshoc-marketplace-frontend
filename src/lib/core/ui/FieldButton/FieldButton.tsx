@@ -59,6 +59,7 @@ export const FieldButton = forwardRef(function FieldButton(
   return (
     <button
       ref={ref}
+      type='button'
       {...mergeProps(buttonProps, focusProps, hoverProps)}
       className={css['button']}
       data-color={color}

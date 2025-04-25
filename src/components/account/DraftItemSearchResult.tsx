@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { ItemLink } from '@/components/common/ItemLink'
 import { Link } from '@/components/common/Link'
 import { MetadataLabel } from '@/components/common/MetadataLabel'
@@ -54,8 +52,7 @@ export function DraftItemSearchResult(props: DraftItemSearchResultProps): JSX.El
   }
 
   return (
-    <Fragment>
-      <SearchResult>
+    <SearchResult>
         <SearchResultTitle>
           <ItemLink
             category={item.category}
@@ -105,7 +102,6 @@ export function DraftItemSearchResult(props: DraftItemSearchResultProps): JSX.El
           </Link>
         </SearchResultControls>
       </SearchResult>
-    </Fragment>
   )
 }
 

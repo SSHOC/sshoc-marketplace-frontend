@@ -94,6 +94,7 @@ export function ApiEndpoint(props: ApiEndpointProps): JSX.Element {
       <div className={css['url']}>
         <pre>{String(url)}</pre>
         <button
+          type='button'
           aria-label="Copy to clipboard"
           onClick={onCopy}
           title={isCopiedToClipboard ? 'Copied' : 'Copy to clipboard'}

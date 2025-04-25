@@ -35,6 +35,7 @@ export function AccessibleAtFormFieldArray(props: AccessibleAtFormFieldArrayProp
 
           return (
             <FormFieldListItem key={name}>
+              {/* eslint-disable-next-line react/jsx-no-leaked-render */}
               <FormTextField {...field} name={name} isRequired={field.isRequired && index === 0} />
               {(!field.isRequired || index > 0) && (
                 <FormFieldListItemControls>

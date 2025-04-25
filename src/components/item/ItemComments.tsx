@@ -1,5 +1,4 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
-import { Fragment } from 'react'
 
 import { SectionHeader } from '@/components/common/SectionHeader'
 import { SectionTitle } from '@/components/common/SectionTitle'
@@ -15,7 +14,7 @@ export interface ItemCommentsProps {
   persistentId: Item['persistentId']
 }
 
-export function ItemComments(props: ItemCommentsProps): JSX.Element {
+export function ItemComments(props: ItemCommentsProps): JSX.Element | null {
   const { persistentId } = props
 
   const { t } = useI18n<'common'>()
@@ -30,7 +29,7 @@ export function ItemComments(props: ItemCommentsProps): JSX.Element {
   }
 
   if (comments.data.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

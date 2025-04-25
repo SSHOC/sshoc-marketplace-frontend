@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { ItemLink } from '@/components/common/ItemLink'
 import { Link } from '@/components/common/Link'
 import { MetadataLabel } from '@/components/common/MetadataLabel'
@@ -19,14 +17,13 @@ export interface ContributedItemSearchResultProps {
   item: ContributedItem
 }
 
-export function ContributedItemSearchResult(props: ContributedItemSearchResultProps): JSX.Element {
+export function ContributedItemSearchResult(props: ContributedItemSearchResultProps): JSX.Element | null {
   const { item } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
 
   return (
-    <Fragment>
-      <SearchResult>
+    <SearchResult>
         <SearchResultTitle>
           <ItemLink
             category={item.category}
@@ -83,6 +80,5 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
           ) : null}
         </SearchResultControls>
       </SearchResult>
-    </Fragment>
   )
 }

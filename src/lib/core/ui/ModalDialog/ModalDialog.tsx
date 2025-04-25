@@ -5,7 +5,7 @@ import { OverlayContainer, useModal, useOverlay, usePreventScroll } from '@react
 import { mergeProps } from '@react-aria/utils'
 import type { AriaDialogProps } from '@react-types/dialog'
 import type { CSSProperties, ReactNode } from 'react'
-import { Fragment, useRef } from 'react'
+import { useRef } from 'react'
 
 import { CloseButton } from '@/lib/core/ui/CloseButton/CloseButton'
 import css from '@/lib/core/ui/ModalDialog/ModalDialog.module.css'
@@ -34,32 +34,30 @@ export function ModalDialog(props: ModalDialogProps): JSX.Element {
   // if (!isOpen) return null
 
   return (
-    <Fragment>
-      <OverlayContainer>
-        <Underlay {...underlayProps} isOpen={isOpen} />
-        <div className={css['container']}>
-          <FocusScope contain restoreFocus autoFocus>
-            <section
-              ref={ref}
-              {...mergeProps(overlayProps, dialogProps, modalProps)}
-              className={css['dialog']}
-              style={style as CSSProperties}
-            >
-              <header className={css['dialog-header']}>
-                <h2 {...titleProps} className={css['dialog-title']} data-dialog-title>
-                  {title}
-                </h2>
-                {isDismissable ? (
-                  <div className={css['close-button']}>
-                    <CloseButton onPress={onClose} />
-                  </div>
-                ) : null}
-              </header>
-              {children}
-            </section>
-          </FocusScope>
-        </div>
-      </OverlayContainer>
-    </Fragment>
+    <OverlayContainer>
+      <Underlay {...underlayProps} isOpen={isOpen} />
+      <div className={css['container']}>
+        <FocusScope contain restoreFocus autoFocus>
+          <section
+            ref={ref}
+            {...mergeProps(overlayProps, dialogProps, modalProps)}
+            className={css['dialog']}
+            style={style as CSSProperties}
+          >
+            <header className={css['dialog-header']}>
+              <h2 {...titleProps} className={css['dialog-title']} data-dialog-title>
+                {title}
+              </h2>
+              {isDismissable ? (
+                <div className={css['close-button']}>
+                  <CloseButton onPress={onClose} />
+                </div>
+              ) : null}
+            </header>
+            {children}
+          </section>
+        </FocusScope>
+      </div>
+    </OverlayContainer>
   )
 }

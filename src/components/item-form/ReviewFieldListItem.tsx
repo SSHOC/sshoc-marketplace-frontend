@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import type { FieldArrayRenderProps } from 'react-final-form-arrays'
 
 import { ReviewControls } from '@/components/item-form/ReviewControls'
@@ -33,8 +32,7 @@ export function ReviewFieldListItem<T>(props: ReviewFieldListItemProps<T>): JSX.
           onApprove={meta.onApprove}
           onReject={meta.onReject}
         />
-        <Fragment>
-          {review({
+        {review({
             createLabel: labels.suggested,
             status: meta.metadata.status,
             value:
@@ -47,7 +45,6 @@ export function ReviewFieldListItem<T>(props: ReviewFieldListItemProps<T>): JSX.
                 value: meta.metadata.current,
               })
             : null}
-        </Fragment>
       </div>
     )
   }

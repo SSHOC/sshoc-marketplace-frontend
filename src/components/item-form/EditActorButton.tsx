@@ -17,17 +17,17 @@ export interface EditActorButtonProps {
   field: ItemFormFields['fields']['contributors']['fields']['actor']
 }
 
-export function EditActorButton(props: EditActorButtonProps): JSX.Element {
+export function EditActorButton(props: EditActorButtonProps): JSX.Element | null {
   const { field } = props
 
   const actorId = useFieldState<ActorRef['id'] | undefined>(field.name).input.value
   // TODO: Reuse initialValues / actor search result. Need to save full actor search result
   // in form state in ActorComboBox#onSelectionChange; then get it from useField(actorField._root)
-   
+
   const actor = useActor({ id: actorId! }, undefined, { enabled: actorId != null })
 
   if (actorId == null || actor.data == null) {
-    return <Fragment />
+    return null
   }
 
   return <EditActorDialogTrigger actor={actor.data} field={field} />

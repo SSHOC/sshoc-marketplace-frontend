@@ -190,11 +190,11 @@ function AuthLinks(props: AuthLinksProps): JSX.Element {
   )
 }
 
-function ItemCategoryNavLinks(): JSX.Element {
+function ItemCategoryNavLinks(): JSX.Element | null {
   const items = useItemCategoryNavItems()
 
   if (items == null) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -290,12 +290,12 @@ function AboutNavLinks(): JSX.Element {
   )
 }
 
-function CreateItemLinks(): JSX.Element {
+function CreateItemLinks(): JSX.Element | null {
   const { t } = useI18n<'common'>()
   const items = useCreateItemLinks()
 
   if (items == null) {
-    return <Fragment />
+    return null
   }
 
   return (

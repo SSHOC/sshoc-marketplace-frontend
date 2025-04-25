@@ -12,7 +12,7 @@ import type { AriaMenuProps } from '@react-types/menu'
 import type { Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
 import type { HTMLAttributes, RefObject } from 'react'
-import { Fragment, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
 import { useCurrentUser } from '@/data/sshoc/hooks/auth'
@@ -24,7 +24,7 @@ import { Popover } from '@/lib/core/page/Popover'
 import { useAccountMenuItems } from '@/lib/core/page/useAccountMenuItems'
 import { Button } from '@/lib/core/ui/Button/Button'
 
-export function AccountMenu(): JSX.Element {
+export function AccountMenu(): JSX.Element | null {
   const { t } = useI18n<'common'>()
   const { isSignedIn } = useAuth()
   const currentUser = useCurrentUser()
@@ -50,13 +50,14 @@ export function AccountMenu(): JSX.Element {
   }, [router, state.close])
 
   if (!isSignedIn || currentUser.data == null) {
-    return <Fragment />
+    return null
   }
 
   return (
     <div className={css['container']}>
       <button
         ref={buttonRef}
+        type='button'
         {...mergeProps(focusProps, hoverProps, buttonProps)}
         className={css['menu-button']}
         data-focused={isFocusVisible ? '' : undefined}

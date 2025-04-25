@@ -90,7 +90,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     defaultFilter: contains,
     defaultSelectedKey: undefined,
     onSelectionChange(key) {
-       
+
       if (key != null) {
         // @ts-expect-error Error in upstream type definitions.
         onSubmit?.(null, key)
@@ -289,6 +289,7 @@ const SearchAutocompleteInput = forwardRef(function SearchAutocompleteInput<T ex
         inputRef={inputRef}
         isDisabled={isDisabled}
         isLoading={
+          // eslint-disable-next-line react/jsx-no-leaked-render
           showLoading && (isOpen === true || menuTrigger === 'manual' || loadingState === 'loading')
         }
         loadingIndicator={loadingState != null ? loadingCircle : undefined}

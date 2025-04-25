@@ -16,19 +16,19 @@ export interface ItemAccessibleAtLinksProps {
   links: Item['accessibleAt']
 }
 
-export function ItemAccessibleAtLinks(props: ItemAccessibleAtLinksProps): JSX.Element {
+export function ItemAccessibleAtLinks(props: ItemAccessibleAtLinksProps): JSX.Element | null {
   const { category, links } = props
 
   const { t } = useI18n<'common'>()
 
   if (links.length === 0) {
-    return <Fragment />
+    return null
   }
 
   if (links.length === 1) {
     return (
       <div className={css['link-button']}>
-        <LinkButton href={links[0]} target="_blank" rel="noreferrer">
+        <LinkButton href={links[0]!} target="_blank" rel="noreferrer">
           {t(['common', 'item', 'go-to-item'], {
             values: {
               item: t(['common', 'item-categories', category, 'one']),

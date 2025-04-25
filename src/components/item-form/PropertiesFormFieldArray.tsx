@@ -130,7 +130,7 @@ interface ItemPropertyAccessControlProps {
   propertyTypesMap: Map<PropertyType['code'], PropertyType>
 }
 
-function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): JSX.Element {
+function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): JSX.Element | null {
   const { children, name, propertyTypesMap } = props
 
   const hasPublishPermission = usePublishPermission()
@@ -140,8 +140,9 @@ function ItemPropertyAccessControl(props: ItemPropertyAccessControlProps): JSX.E
   const isHidden = propertyType?.hidden === true
 
   if (isHidden && !hasPublishPermission) {
-    return <Fragment />
+    return null
   }
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <Fragment>{children}</Fragment>
 }

@@ -77,7 +77,7 @@ function DisclosureButton(props: DisclosureButtonProps) {
   const { buttonProps } = useButton(props, buttonRef)
 
   return (
-    <button {...buttonProps} ref={buttonRef} className={css['button']}>
+    <button type='button' {...buttonProps} ref={buttonRef} className={css['button']}>
       {props.children}
     </button>
   )

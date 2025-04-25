@@ -1,5 +1,5 @@
 import { useButton } from '@react-aria/button'
-import { Fragment, useRef } from 'react'
+import { useRef } from 'react'
 
 import { ItemPreviewMetadata } from '@/components/common/ItemPreviewMetadata'
 import { ItemsCount } from '@/components/common/ItemsCount'
@@ -19,7 +19,7 @@ export interface WorkflowStepsListProps {
   steps: Workflow['composedOf']
 }
 
-export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element {
+export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element | null {
   const { steps } = props
 
   const { t } = useI18n<'common'>()
@@ -27,7 +27,7 @@ export function WorkflowStepsList(props: WorkflowStepsListProps): JSX.Element {
   const category = 'step'
 
   if (steps.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -82,6 +82,7 @@ function WorkflowStep(props: WorkflowStepProps): JSX.Element {
           <span className={css['item-index']}>{index + 1}</span> {step.label}
         </h3>
         <button
+          type='button'
           {...buttonProps}
           className={css['accordion-button']}
           data-state={state.isOpen ? 'expanded' : 'collapsed'}

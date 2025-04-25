@@ -62,6 +62,7 @@ export function ReviewExternalIdsFormFieldArray(
                 name={name}
                 fields={fieldArray.fields}
                 index={index}
+                // eslint-disable-next-line react/no-unstable-nested-components
                 review={({ createLabel, status, value }) => {
                   return (
                     <FormFieldGroup>

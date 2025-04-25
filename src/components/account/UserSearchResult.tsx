@@ -1,5 +1,4 @@
 import type { FormEvent, Key } from 'react'
-import { Fragment } from 'react'
 
 // import { useQueryClient } from 'react-query'
 import { MetadataLabel } from '@/components/common/MetadataLabel'
@@ -42,8 +41,7 @@ export function UserSearchResult(props: UserSearchResultProps): JSX.Element {
   const { t } = useI18n<'authenticated' | 'common'>()
 
   return (
-    <Fragment>
-      <SearchResult>
+    <SearchResult>
         <SearchResultTitle>{user.displayName}</SearchResultTitle>
         <SearchResultMeta>
           <MetadataValue size="sm">
@@ -64,7 +62,6 @@ export function UserSearchResult(props: UserSearchResultProps): JSX.Element {
           <UserStatusSelect user={user} />
         </SearchResultControls>
       </SearchResult>
-    </Fragment>
   )
 }
 

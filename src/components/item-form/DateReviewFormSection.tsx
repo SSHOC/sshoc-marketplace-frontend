@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { FormSection } from '@/components/common/FormSection'
 import { FormSectionTitle } from '@/components/common/FormSectionTitle'
 import { ReviewField } from '@/components/item-form/ReviewField'
@@ -13,7 +11,7 @@ export interface DateReviewFormSectionProps {
   formFields: ItemFormFields
 }
 
-export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.Element {
+export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.Element | null {
   const { category, fields } = props.formFields
 
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -25,6 +23,7 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.El
 
         <ReviewField<ItemsDiff['item']['dateCreated']>
           name={fields.label.name}
+          // eslint-disable-next-line react/no-unstable-nested-components
           review={({ createLabel, status, value }) => {
             return (
               <DateField
@@ -41,6 +40,7 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.El
 
         <ReviewField<ItemsDiff['item']['dateLastUpdated']>
           name={fields.label.name}
+          // eslint-disable-next-line react/no-unstable-nested-components
           review={({ createLabel, status, value }) => {
             return (
               <DateField
@@ -58,5 +58,5 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): JSX.El
     )
   }
 
-  return <Fragment />
+  return null
 }

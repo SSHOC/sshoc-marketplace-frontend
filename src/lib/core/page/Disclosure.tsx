@@ -36,6 +36,7 @@ export const Disclosure = forwardRef(function Disclosure(
   return (
     <Fragment>
       <button
+        type='button'
         {...buttonProps}
         className={props.className}
         data-state={state.isOpen ? 'expanded' : 'collapsed'}

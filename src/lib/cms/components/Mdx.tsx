@@ -31,5 +31,6 @@ export function Mdx(props: MdxProps): JSX.Element {
     }
   }, [mdx])
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <Fragment>{element}</Fragment>
 }

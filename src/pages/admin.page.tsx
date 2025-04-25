@@ -44,11 +44,11 @@ const Cms = dynamic(
       const message =
         error != null ? (
           <div>
-            Failed to load CMS! <button onClick={retry}>Retry</button>
+            Failed to load CMS! <button onClick={retry} type='button'>Retry</button>
           </div>
         ) : timedOut === true ? (
           <div>
-            Taking a long time to load CMS&hellip; <button onClick={retry}>Retry</button>
+            Taking a long time to load CMS&hellip; <button onClick={retry} type='button'>Retry</button>
           </div>
         ) : pastDelay === true ? (
           <div>Loading CMS&hellip;</div>

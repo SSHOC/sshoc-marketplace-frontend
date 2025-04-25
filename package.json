@@ -147,6 +147,7 @@
 	"devDependencies": {
 		"@acdh-oeaw/commitlint-config": "^2.0.0",
 		"@acdh-oeaw/eslint-config": "^2.0.9",
+		"@acdh-oeaw/eslint-config-react": "^2.0.13",
 		"@acdh-oeaw/prettier-config": "^2.0.1",
 		"@acdh-oeaw/stylelint-config": "^2.1.2",
 		"@acdh-oeaw/tsconfig": "^1.5.1",

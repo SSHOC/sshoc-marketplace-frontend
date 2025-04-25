@@ -1,5 +1,4 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
-import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
 import { SectionTitle } from '@/components/common/SectionTitle'
@@ -47,7 +46,7 @@ interface RecommendedItemsForCategoryProps {
   category: ItemCategory
 }
 
-function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): JSX.Element {
+function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): JSX.Element | null {
   const { category } = props
 
   const { t } = useI18n<'common'>()
@@ -69,7 +68,7 @@ function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): J
   const recommendedItems = itemSearch.data.items
 
   if (recommendedItems.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

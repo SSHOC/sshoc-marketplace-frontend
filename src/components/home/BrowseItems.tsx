@@ -1,5 +1,4 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
-import { Fragment } from 'react'
 
 import { Link } from '@/components/common/Link'
 import { SectionTitle } from '@/components/common/SectionTitle'
@@ -59,13 +58,13 @@ interface BrowseLinksProps {
   facet: ItemFacet
 }
 
-function BrowseLinks(props: BrowseLinksProps): JSX.Element {
+function BrowseLinks(props: BrowseLinksProps): JSX.Element | null {
   const { title, values, facet } = props
 
   const { t } = useI18n<'common'>()
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

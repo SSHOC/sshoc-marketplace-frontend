@@ -1,5 +1,4 @@
 import { createUrlSearchParams } from '@stefanprobst/request'
-import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
 import { SectionTitle } from '@/components/common/SectionTitle'
@@ -13,7 +12,7 @@ import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { maxLastAddedItems } from '~/config/sshoc.config'
 
-export function LastUpdatedItems(): JSX.Element {
+export function LastUpdatedItems(): JSX.Element | null {
   const { t } = useI18n<'common'>()
   const itemSearch = useItemSearch({ order: ['modified-on'], perpage: maxLastAddedItems })
 
@@ -30,7 +29,7 @@ export function LastUpdatedItems(): JSX.Element {
   const lastUpdatedItems = itemSearch.data.items
 
   if (lastUpdatedItems.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

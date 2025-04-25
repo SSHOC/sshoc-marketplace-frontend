@@ -18,7 +18,7 @@ export interface ItemPreviewMetadataProps {
   item: ItemSearchResult | ItemWithWorkflowStep | RelatedItem
 }
 
-export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): JSX.Element {
+export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): JSX.Element | null {
   const { item } = props
 
   const { t } = useI18n<'common'>()
@@ -28,7 +28,7 @@ export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): JSX.Elemen
   })
 
   if (activities.length === 0 && keywords.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -77,13 +77,13 @@ interface ItemPreviewMetadataValueListProps {
   facet: ItemFacet
 }
 
-function ItemPreviewMetadataValueList(props: ItemPreviewMetadataValueListProps): JSX.Element {
+function ItemPreviewMetadataValueList(props: ItemPreviewMetadataValueListProps): JSX.Element | null {
   const { label, properties, facet } = props
 
   const { getSearchItemsLink } = useSearchItems()
 
   if (properties.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

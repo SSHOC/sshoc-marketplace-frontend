@@ -37,7 +37,7 @@ export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboard
   const label = t(['common', 'search', 'copy-to-clipboard'])
 
   return (
-    <button {...buttonProps} className={css['button']} ref={buttonRef}>
+    <button type='button' {...buttonProps} className={css['button']} ref={buttonRef}>
       <Icon icon={LinkIcon} />
       {label}
     </button>

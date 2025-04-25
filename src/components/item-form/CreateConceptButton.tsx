@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { SuggestConceptButton } from '@/components/common/SuggestConceptButton'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { PropertyType } from '@/data/sshoc/api/property'
@@ -10,7 +8,7 @@ export interface CreateConceptButtonProps {
   propertyTypesMap: Map<PropertyType['code'], PropertyType>
 }
 
-export function CreateConceptButton(props: CreateConceptButtonProps): JSX.Element {
+export function CreateConceptButton(props: CreateConceptButtonProps): JSX.Element | null {
   const { fieldGroup, propertyTypesMap } = props
 
   const selectedPropertyTypeId = useFieldState<PropertyType['code'] | undefined>(
@@ -25,7 +23,7 @@ export function CreateConceptButton(props: CreateConceptButtonProps): JSX.Elemen
       return vocabulary.closed
     })
   ) {
-    return <Fragment />
+    return null
   }
 
   return <SuggestConceptButton propertyType={selectedPropertyType} variant="button-link" />

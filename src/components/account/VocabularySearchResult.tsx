@@ -75,8 +75,7 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.
   const isCandidateConcept = concept.candidate === true
 
   return (
-    <Fragment>
-      <SearchResult>
+    <SearchResult>
         <SearchResultTitle>{concept.label}</SearchResultTitle>
         <SearchResultMeta>
           {isCandidateConcept ? (
@@ -130,6 +129,5 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): JSX.
           ) : null}
         </SearchResultControls>
       </SearchResult>
-    </Fragment>
   )
 }

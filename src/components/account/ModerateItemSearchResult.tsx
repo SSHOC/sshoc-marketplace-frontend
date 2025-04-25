@@ -56,8 +56,7 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
   }
 
   return (
-    <Fragment>
-      <SearchResult>
+    <SearchResult>
         <SearchResultTitle>
           <ItemLink
             category={item.category}
@@ -112,7 +111,6 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
           ) : null}
         </SearchResultControls>
       </SearchResult>
-    </Fragment>
   )
 }
 

@@ -110,7 +110,7 @@ function SearchFacetsDialog(): JSX.Element {
   )
 }
 
-function ActiveSearchFacets(): JSX.Element {
+function ActiveSearchFacets(): JSX.Element | null {
   const searchFilters = useVocabularySearchFilters()
 
   const activeFilters = [searchFilters['types']]
@@ -120,7 +120,7 @@ function ActiveSearchFacets(): JSX.Element {
       return facet.length === 0
     })
   ) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -158,7 +158,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
   )
 
   return (
-    <button {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
+    <button type='button' {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
       <VisuallyHidden>{label}</VisuallyHidden>
       <Icon icon={CrossIcon} />
     </button>
@@ -174,7 +174,7 @@ function ActiveConceptStatusFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -213,7 +213,7 @@ function ActivePropertyTypesFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -300,7 +300,7 @@ function ConceptStatusFacets(): JSX.Element {
   )
 }
 
-function PropertyTypesFacets(): JSX.Element {
+function PropertyTypesFacets(): JSX.Element | null {
   const name = 'types'
 
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -313,13 +313,13 @@ function PropertyTypesFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.types
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)

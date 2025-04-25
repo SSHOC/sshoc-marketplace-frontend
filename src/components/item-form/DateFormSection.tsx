@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { FormSection } from '@/components/common/FormSection'
 import { FormSectionTitle } from '@/components/common/FormSectionTitle'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
@@ -10,7 +8,7 @@ export interface DateFormSectionProps {
   formFields: ItemFormFields
 }
 
-export function DateFormSection(props: DateFormSectionProps): JSX.Element {
+export function DateFormSection(props: DateFormSectionProps): JSX.Element | null {
   const { category, fields } = props.formFields
 
   const { t } = useI18n<'authenticated' | 'common'>()
@@ -25,5 +23,5 @@ export function DateFormSection(props: DateFormSectionProps): JSX.Element {
     )
   }
 
-  return <Fragment />
+  return null
 }

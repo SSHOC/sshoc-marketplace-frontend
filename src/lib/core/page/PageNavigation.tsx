@@ -26,11 +26,11 @@ export function PageNavigation(): JSX.Element {
   )
 }
 
-function ItemCategoryNavLinks(): JSX.Element {
+function ItemCategoryNavLinks(): JSX.Element | null {
   const items = useItemCategoryNavItems()
 
   if (items == null) {
-    return <Fragment />
+    return null
   }
 
   return (

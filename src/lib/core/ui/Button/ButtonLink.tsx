@@ -35,6 +35,7 @@ export const ButtonLink = forwardRef(function ButtonLink(
   return (
     <button
       ref={ref}
+      type='button'
       {...mergeProps(buttonProps, focusProps, hoverProps)}
       className={cx(css['link'], buttonCss['button-link'])}
       data-active={isPressed || isActive ? '' : undefined}

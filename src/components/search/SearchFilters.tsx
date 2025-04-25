@@ -32,7 +32,7 @@ import { useModalDialogTriggerState } from '@/lib/core/ui/ModalDialog/useModalDi
 import { useModalDialogTrigger } from '@/lib/core/ui/ModalDialog/useModalDialogTrigger'
 import { entries, length } from '@/lib/utils'
 
-export function SearchFilters(): JSX.Element {
+export function SearchFilters(): JSX.Element | null {
   const { t } = useI18n<'common'>()
 
   return (
@@ -114,7 +114,7 @@ function SearchFacetsDialog(): JSX.Element {
   )
 }
 
-function ActiveSearchFacets(): JSX.Element {
+function ActiveSearchFacets(): JSX.Element | null {
   const searchFilters = useSearchFilters()
 
   const activeFilters = [
@@ -130,7 +130,7 @@ function ActiveSearchFacets(): JSX.Element {
       return facet.length === 0
     })
   ) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -171,7 +171,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): JSX.Element
   )
 
   return (
-    <button {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
+    <button type='button' {...buttonProps} ref={ref} className={css['remove-facet-value-button']}>
       <VisuallyHidden>{label}</VisuallyHidden>
       <Icon icon={CrossIcon} />
     </button>
@@ -188,7 +188,7 @@ function ActiveItemCategoryFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -227,7 +227,7 @@ function ActiveActivityFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -263,7 +263,7 @@ function ActiveKeywordFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -299,7 +299,7 @@ function ActiveLanguageFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -335,7 +335,7 @@ function ActiveSourceFacets() {
   const values = searchFilters[name]
 
   if (values.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -382,7 +382,7 @@ function SearchFacetsForm(): JSX.Element {
   )
 }
 
-function ItemCategoryFacets(): JSX.Element {
+function ItemCategoryFacets(): JSX.Element | null {
   const facet = 'item-category'
   const name = 'categories'
 
@@ -403,7 +403,7 @@ function ItemCategoryFacets(): JSX.Element {
   const values = searchResults.data[name]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const items = entries(values).filter(([category, { count }]) => {
@@ -413,7 +413,7 @@ function ItemCategoryFacets(): JSX.Element {
   })
 
   if (items.length === 0) {
-    return <Fragment />
+    return null
   }
 
   function onChange(keys: Array<string>) {
@@ -460,7 +460,7 @@ function ItemCategoryFacets(): JSX.Element {
   )
 }
 
-function ActivityFacets(): JSX.Element {
+function ActivityFacets(): JSX.Element | null {
   const facet = 'activity'
   const name = 'f.activity'
 
@@ -474,13 +474,13 @@ function ActivityFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.facets[facet]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)
@@ -556,7 +556,7 @@ function ActivityFacets(): JSX.Element {
   )
 }
 
-function KeywordFacets(): JSX.Element {
+function KeywordFacets(): JSX.Element | null {
   const facet = 'keyword'
   const name = 'f.keyword'
 
@@ -570,13 +570,13 @@ function KeywordFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.facets[facet]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)
@@ -652,7 +652,7 @@ function KeywordFacets(): JSX.Element {
   )
 }
 
-function LanguageFacets(): JSX.Element {
+function LanguageFacets(): JSX.Element | null {
   const facet = 'language'
   const name = 'f.language'
 
@@ -666,13 +666,13 @@ function LanguageFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.facets[facet]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)
@@ -748,7 +748,7 @@ function LanguageFacets(): JSX.Element {
   )
 }
 
-function SourceFacets(): JSX.Element {
+function SourceFacets(): JSX.Element | null {
   const facet = 'source'
   const name = 'f.source'
 
@@ -762,13 +762,13 @@ function SourceFacets(): JSX.Element {
   const { contentProps, triggerProps } = useDisclosure(overlay)
 
   if (searchResults.data == null) {
-    return <Fragment />
+    return null
   }
 
   const values = searchResults.data.facets[facet]
 
   if (length(values) === 0) {
-    return <Fragment />
+    return null
   }
 
   const { items, hasMoreItems, all } = getTopFacetValues(values, selectedKeys)

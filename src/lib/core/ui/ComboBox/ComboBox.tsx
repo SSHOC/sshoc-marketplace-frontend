@@ -323,6 +323,7 @@ const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(
         inputRef={inputRef}
         isDisabled={isDisabled}
         isLoading={
+          // eslint-disable-next-line react/jsx-no-leaked-render
           showLoading && (isOpen === true || menuTrigger === 'manual' || loadingState === 'loading')
         }
         loadingIndicator={loadingState != null ? loadingCircle : undefined}

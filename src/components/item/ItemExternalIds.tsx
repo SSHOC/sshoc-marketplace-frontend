@@ -1,5 +1,4 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
-import { Fragment } from 'react'
 
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
@@ -10,13 +9,13 @@ export interface ItemExternalIdsProps {
   ids: Item['externalIds']
 }
 
-export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element {
+export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element | null {
   const { ids } = props
 
   const { t } = useI18n<'common'>()
 
   if (ids.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

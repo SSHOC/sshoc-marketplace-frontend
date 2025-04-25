@@ -40,7 +40,7 @@ export const ListBoxSection = forwardRef(function ListBoxSection<T extends objec
 
   return (
     <Fragment>
-      {headerLayoutInfo && (
+      {headerLayoutInfo ? (
         <div
           className={css['listbox-section']}
           role="presentation"
@@ -51,7 +51,7 @@ export const ListBoxSection = forwardRef(function ListBoxSection<T extends objec
           { }
           {item.rendered ? <div {...headingProps}>{item.rendered}</div> : null}
         </div>
-      )}
+      ) : null}
       <div {...groupProps} style={layoutInfoToStyle(layoutInfo, direction)}>
         {children}
       </div>

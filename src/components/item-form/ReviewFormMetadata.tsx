@@ -17,5 +17,6 @@ export function ReviewFormMetadata(props: ReviewFormMetadataProps): JSX.Element 
    */
   useItemDiffFormFieldsMetadata(diff)
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <Fragment>{children}</Fragment>
 }

@@ -1,4 +1,7 @@
 import baseConfig from "@acdh-oeaw/eslint-config";
+import reactConfig from "@acdh-oeaw/eslint-config-react"
+// @ts-expect-error Missing type declaration.
+import nextPlugin from "@next/eslint-plugin-next"
 import gitignore from "eslint-config-flat-gitignore";
 import { config } from "typescript-eslint";
 
@@ -6,6 +9,8 @@ export default config(
 	gitignore({ strict: false }),
 	{ ignores: ["content/**", "public/**"] },
 	baseConfig,
+  reactConfig,
+  nextPlugin.flatConfig.coreWebVitals,
 	{
 		files: ["**/*.cjs", "**/*.js"],
 		rules: {
@@ -36,6 +41,7 @@ export default config(
 			"@typescript-eslint/switch-exhaustiveness-check": "off",
 			"@typescript-eslint/unbound-method": "off",
 			"import-x/no-duplicates": "off",
+      "react/jsx-boolean-value": "off",
 		},
 	},
 );

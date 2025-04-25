@@ -54,13 +54,14 @@ export function SignInForm(): JSX.Element {
       <p>
         {t(['common', 'auth', 'sign-in-message-oauth'], {
           components: {
+            // eslint-disable-next-line react/no-unstable-nested-components
             Provider(props) {
               return <span className={css['provider']}>{props.children}</span>
             },
           },
         })}
       </p>
-      <button {...buttonProps} ref={buttonRef} className={css['oauth-button']}>
+      <button type='button' {...buttonProps} ref={buttonRef} className={css['oauth-button']}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/assets/images/logo-my-access-id.png" alt="" />
         Sign in with MyAccessID
@@ -89,6 +90,7 @@ export function SignInForm(): JSX.Element {
         <small className={css['helptext']}>
           {t(['common', 'auth', 'sign-in-helptext'], {
             components: {
+              // eslint-disable-next-line react/no-unstable-nested-components
               ContactLink(props) {
                 return <Link href="/contact">{props.children}</Link>
               },

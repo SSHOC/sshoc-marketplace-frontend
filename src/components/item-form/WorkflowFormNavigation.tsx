@@ -1,5 +1,4 @@
 import type { FormApi } from 'final-form'
-import { Fragment } from 'react'
 import { useForm } from 'react-final-form'
 
 import type { WorkflowFormPage } from '@/components/item-form/useWorkflowFormPage'
@@ -14,14 +13,14 @@ export interface WorkflowFormNavigationProps {
   setPage: (page: WorkflowFormPage) => void
 }
 
-export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): JSX.Element {
+export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): JSX.Element | null {
   const { page, setPage } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const form = useForm<WorkflowFormValues>()
 
   if (page.type === 'step') {
-    return <Fragment />
+    return null
   }
 
   function onBeforeSubmit() {

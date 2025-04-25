@@ -65,8 +65,8 @@ export function ThumbnailFormField(props: ThumbnailFormFieldProps): JSX.Element 
 
   return (
     <FormFieldArray>
-      <div css={formFieldListCss['list']} data-variant="thumbnails">
-        <div css={formFieldListItemCss['list-item']}>
+      <div className={formFieldListCss['list']} data-variant="thumbnails">
+        <div className={formFieldListItemCss['list-item']}>
           <FormThumbnail {...field} />
           <FormFieldListItemControls>
             {thumbnail != null ? (

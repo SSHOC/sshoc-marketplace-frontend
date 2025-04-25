@@ -1,5 +1,5 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
-import { Fragment, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Actor } from '@/data/sshoc/api/actor'
@@ -11,14 +11,14 @@ export interface ItemActorsProps {
   actors: Item['contributors']
 }
 
-export function ItemActors(props: ItemActorsProps): JSX.Element {
+export function ItemActors(props: ItemActorsProps): JSX.Element | null {
   const { actors } = props
 
   const { t } = useI18n<'common'>()
   const roles = useGroupedActors({ actors })
 
   if (roles.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -77,7 +77,7 @@ function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[str
       if (!roles.has(roleLabel)) {
         roles.set(roleLabel, new Map())
       }
-       
+
       const role = roles.get(roleLabel)!
 
       if (!role.has(name)) {
@@ -112,11 +112,11 @@ interface ActorAffiliationsProps {
   affiliations: Actor['affiliations']
 }
 
-function ActorAffiliations(props: ActorAffiliationsProps): JSX.Element {
+function ActorAffiliations(props: ActorAffiliationsProps): JSX.Element | null {
   const { affiliations } = props
 
   if (affiliations.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -134,11 +134,11 @@ interface ActorEmailProps {
   email: Actor['email']
 }
 
-function ActorEmail(props: ActorEmailProps): JSX.Element {
+function ActorEmail(props: ActorEmailProps): JSX.Element | null {
   const { email } = props
 
   if (email == null) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -154,11 +154,11 @@ interface ActorWebsiteProps {
   website: Actor['website']
 }
 
-function ActorWebsite(props: ActorWebsiteProps): JSX.Element {
+function ActorWebsite(props: ActorWebsiteProps): JSX.Element | null {
   const { website } = props
 
   if (website == null) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -174,11 +174,11 @@ interface ActorExternalIdsProps {
   externalIds: Actor['externalIds']
 }
 
-function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
+function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element | null {
   const { externalIds } = props
 
   if (externalIds.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (

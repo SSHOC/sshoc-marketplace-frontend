@@ -1,7 +1,7 @@
 import { useButton } from '@react-aria/button'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import type { AriaButtonProps } from '@react-types/button'
-import { Fragment, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import css from '@/components/item/ItemMedia.module.css'
 import type { Item } from '@/data/sshoc/api/item'
@@ -15,14 +15,14 @@ export interface ItemMediaProps {
   media: Item['media']
 }
 
-export function ItemMedia(props: ItemMediaProps): JSX.Element {
+export function ItemMedia(props: ItemMediaProps): JSX.Element | null {
   const { media } = props
 
   const { t } = useI18n<'common'>()
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
 
   if (media.length === 0) {
-    return <Fragment />
+    return null
   }
 
   function onPreviousMedia() {
@@ -37,7 +37,7 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
     })
   }
 
-   
+
   const currentMedia = media[currentMediaIndex]!
 
   /** Allow circle for more than 1 item. */
@@ -132,7 +132,7 @@ interface MediaProps {
   media: Item['media'][number]
 }
 
-function Media(props: MediaProps): JSX.Element {
+function Media(props: MediaProps): JSX.Element | null {
   const { media } = props
   const { info, caption } = media
   const url = isMediaDetailsUrl(info)
@@ -169,7 +169,7 @@ function Media(props: MediaProps): JSX.Element {
       /* eslint-disable-next-line jsx-a11y/media-has-caption */
       return <video src={url} />
     default:
-      return <Fragment />
+      return null
   }
 }
 
@@ -177,13 +177,13 @@ interface MediaCaptionProps {
   media: Item['media'][number]
 }
 
-function MediaCaption(props: MediaCaptionProps): JSX.Element {
+function MediaCaption(props: MediaCaptionProps): JSX.Element | null {
   const { media } = props
   const caption = media.caption
   const license = media.concept?.label
 
   if (caption == null && license == null) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -202,7 +202,7 @@ function Button(props: ButtonProps): JSX.Element {
   const { buttonProps } = useButton(props, buttonRef)
 
   return (
-    <button {...buttonProps} ref={buttonRef} className={css['button']}>
+    <button type='button' {...buttonProps} ref={buttonRef} className={css['button']}>
       {props.children}
     </button>
   )

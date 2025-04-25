@@ -1,5 +1,4 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
-import { Fragment } from 'react'
 
 import css from '@/components/item/ItemMetadata.module.css'
 import type { Item } from '@/data/sshoc/api/item'
@@ -10,13 +9,13 @@ export interface ItemSourceProps {
   id: Item['sourceItemId']
 }
 
-export function ItemSource(props: ItemSourceProps): JSX.Element {
+export function ItemSource(props: ItemSourceProps): JSX.Element | null {
   const { source, id } = props
 
   const { t } = useI18n<'common'>()
 
   if (source == null) {
-    return <Fragment />
+    return null
   }
 
   return (

@@ -27,7 +27,7 @@ function ErrorFallback(props: ErrorFallbackProps) {
   return (
     <section role="alert">
       <p>Sorry, something went wrong.</p>
-      <button onClick={props.onReset}>Clear errors</button>
+      <button type='button' onClick={props.onReset}>Clear errors</button>
     </section>
   )
 }

@@ -49,6 +49,7 @@ export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>):
   return (
     <div className={css['container']}>
       <button
+        type='button'
         {...buttonProps}
         className={pageNavigationStyles['nav-menu-button']}
         data-state={state.isOpen ? 'expanded' : 'collapsed'}

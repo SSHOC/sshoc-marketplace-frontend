@@ -21,6 +21,7 @@ export function PageAccessControl(props: PageAccessControlProps): JSX.Element {
   useAccessTokenExpirationTimer()
 
   if (isPageAccessible == null || isPageAccessible === true) {
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <Fragment>{props.children}</Fragment>
   }
 
@@ -45,6 +46,7 @@ export function PageAccessControl(props: PageAccessControlProps): JSX.Element {
     }
   }
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <Fragment>{props.children}</Fragment>
 }
 

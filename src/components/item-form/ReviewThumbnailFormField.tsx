@@ -67,10 +67,11 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 
   return (
     <FormFieldArray>
-      <div css={formFieldListCss['list']} data-variant="thumbnails">
-        <div css={formFieldListItemCss['list-item']}>
+      <div className={formFieldListCss['list']} data-variant="thumbnails">
+        <div className={formFieldListItemCss['list-item']}>
           <ReviewField<ItemsDiff['item']['thumbnail']>
             name={field.name}
+            // eslint-disable-next-line react/no-unstable-nested-components
             review={({ createLabel, status, value }) => {
               return (
                 <Thumbnail

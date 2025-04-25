@@ -1,6 +1,6 @@
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import type { ReactNode } from 'react'
-import { Fragment, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Timestamp } from '@/components/common/Timestamp'
 import css from '@/components/item/ItemMetadata.module.css'
@@ -14,14 +14,14 @@ export interface ItemPropertiesProps {
   properties: Item['properties']
 }
 
-export function ItemProperties(props: ItemPropertiesProps): JSX.Element {
+export function ItemProperties(props: ItemPropertiesProps): JSX.Element | null {
   const { properties } = props
 
   const { t } = useI18n<'common'>()
   const groups = useGroupedPropertyValues({ properties })
 
   if (groups.length === 0) {
-    return <Fragment />
+    return null
   }
 
   return (
@@ -90,13 +90,13 @@ function useGroupedPropertyValues(
       if (!groups.has(groupName)) {
         groups.set(groupName, new Map())
       }
-       
+
       const group = groups.get(groupName)!
 
       if (!group.has(label)) {
         group.set(label, [])
       }
-       
+
       const properties = group.get(label)!
 
       properties.push(property)
@@ -111,7 +111,7 @@ function useGroupedPropertyValues(
         groupName,
         Array.from(group)
           .sort(([_label, properties], [_otherLabel, otherProperties]) => {
-             
+
             return properties[0]!.type.ord > otherProperties[0]!.type.ord ? 1 : -1
           })
           .map(([label, properties]) => {

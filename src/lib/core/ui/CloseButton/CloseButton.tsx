@@ -42,7 +42,7 @@ export const CloseButton = forwardRef(function CloseButton(
   const ref = useComposedRef(buttonRef, forwardedRef)
 
   return (
-    <button ref={ref} {...buttonProps} className={css['button']} data-size={size} style={style}>
+    <button ref={ref} type='button' {...buttonProps} className={css['button']} data-size={size} style={style}>
       <Icon icon={CloseIcon} />
     </button>
   )

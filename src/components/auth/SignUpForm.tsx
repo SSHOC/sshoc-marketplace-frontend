@@ -87,6 +87,7 @@ export function SignUpForm(): JSX.Element {
           <FormCheckBox name="acceptedRegulations">
             {t(['common', 'auth', 'accept-terms-of-service'], {
               components: {
+                // eslint-disable-next-line react/no-unstable-nested-components
                 PrivacyPolicyLink(props) {
                   return <Link href="/privacy-policy">{props.children}</Link>
                 },
@@ -105,6 +106,7 @@ export function SignUpForm(): JSX.Element {
         <small className={css['helptext']}>
           {t(['common', 'auth', 'sign-up-helptext'], {
             components: {
+              // eslint-disable-next-line react/no-unstable-nested-components
               ContactLink(props) {
                 return <Link href="/contact">{props.children}</Link>
               },

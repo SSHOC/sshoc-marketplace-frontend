@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
 import { ItemsCount } from '@/components/common/ItemsCount'
@@ -16,14 +16,14 @@ export interface ItemRelatedItemsProps {
   headingLevel?: 2 | 3 | 4
 }
 
-export function ItemRelatedItems(props: ItemRelatedItemsProps): JSX.Element {
+export function ItemRelatedItems(props: ItemRelatedItemsProps): JSX.Element | null {
   const { items, headingLevel = 2 } = props
 
   const { t } = useI18n<'common'>()
   const [relatedItemsCount, setRelatedItemsCount] = useState(initialRelatedItemsCount)
 
   if (items.length === 0) {
-    return <Fragment />
+    return null
   }
 
   const visibleItems = items.slice(0, relatedItemsCount)

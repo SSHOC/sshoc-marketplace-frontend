@@ -45,7 +45,7 @@ export function AccountHelpText(): JSX.Element {
   const role = currentUser.data?.role
 
   if (role == null || !includes(keys(texts), role)) {
-    return <Fragment />
+    return null
   }
 
   const text = texts[role]
