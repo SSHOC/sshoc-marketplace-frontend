@@ -1,4 +1,4 @@
-import { assert } from "@stefanprobst/assert";
+import { assert } from "@acdh-oeaw/lib";
 import type { RequestOptions } from "@stefanprobst/request";
 import { createUrl, request } from "@stefanprobst/request";
 import type { FormEvent, ReactNode } from "react";
