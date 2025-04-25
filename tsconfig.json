@@ -1,23 +1,24 @@
 {
-  "extends": "@stefanprobst/tsconfig",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@acdh-oeaw/tsconfig",
   "compilerOptions": {
-    "target": "es2019",
-    "noUncheckedIndexedAccess": true,
-    // "exactOptionalPropertyTypes": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     },
-    "types": ["react/next", "@jest/types"]
+    "plugins": [{ "name": "next" }]
   },
   "include": [
-    "next-env.d.ts",
-    "app.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.config.mjs",
-    "scripts/*.loader.cjs"
+    "./**/*.d.ts",
+    "./**/*.js",
+    "./**/*.mdx",
+    "./**/*.ts",
+    "./**/*.tsx",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".next", "out", "public"]
+  "exclude": [".next", "content", "node_modules", "out", "public"],
+  "mdx": {
+    "checkMdx": false,
+    "plugins": ["remark-frontmatter", "remark-mdx-frontmatter", "remark-gfm"]
+  }
 }

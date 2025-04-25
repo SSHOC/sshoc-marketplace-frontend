@@ -9,6 +9,11 @@
   dependencies:
     "@commitlint/config-conventional" "^19.5.0"
 
+"@acdh-oeaw/tsconfig@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@acdh-oeaw/tsconfig/-/tsconfig-1.5.1.tgz#ebda13f352a80a9a6a8cffeb765908c981e38090"
+  integrity sha512-/tY4cU7Mq6YAxs5cG3ZaLYJfH3k8rmn4kEHw9Yn4lxdPUOQhVyAe1wrqr6+jakWCiZJRFKszcUSH1/M5BkzPeA==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.16.0":
   version "7.16.7"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.16.7.tgz#44416b6bd7624b998f5b1af5d470856c40138789"
@@ -2008,11 +2013,6 @@
     fast-glob "^3.2.11"
     json5 "^2.2.0"
     mri "^1.2.0"
-
-"@stefanprobst/tsconfig@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@stefanprobst/tsconfig/-/tsconfig-1.1.1.tgz#928a224956c82dacdee3688663822a31ddf6c2da"
-  integrity sha512-IrymX7awK1ywjb6HEc88t4Sb/4/nJ8qqGt1oJOB094/4csqmvUI53noeMFHVqfxIt7vavGy+7UCceZ/P2wqu1A==
 
 "@stefanprobst/val-loader@^4.0.0-4":
   version "4.0.0-4"

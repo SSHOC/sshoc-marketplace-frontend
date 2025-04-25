@@ -27,7 +27,7 @@
     "postinstall": "patch-package",
     "prepare": "simple-git-hooks || true",
     "start": "next start",
-    "types:check": "tsc -p tsconfig.json --noEmit",
+    "types:check": "tsc --noEmit",
     "validate": "yarn run format:check && yarn run lint:check && yarn run types:check"
   },
   "dependencies": {
@@ -148,6 +148,7 @@
   },
   "devDependencies": {
     "@acdh-oeaw/commitlint-config": "^2.0.0",
+    "@acdh-oeaw/tsconfig": "^1.5.1",
     "@commitlint/cli": "^19.8.0",
     "@faker-js/faker": "^6.1.1",
     "@mswjs/data": "^0.9.2",
@@ -168,7 +169,6 @@
     "@stefanprobst/prettier-config": "^2.0.1",
     "@stefanprobst/stylelint-config": "^2.1.2",
     "@stefanprobst/ts-script": "^1.0.2",
-    "@stefanprobst/tsconfig": "^1.1.1",
     "@types/final-form-focus": "^1.1.2",
     "@types/final-form-set-field-data": "^1.0.0",
     "@types/final-form-set-field-touched": "^1.0.0",
