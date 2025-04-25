@@ -22,7 +22,7 @@
     "lint:md:fix": "yarn run lint:md:check --output",
     "lint:mdx:check": "remark . --ext mdx --use mdx --quiet --frail",
     "lint:mdx:fix": "yarn run lint:mdx:check --output",
-    "lint:styles:check": "stylelint '**/*.css' --cache --cache-location .next/cache/stylelint/ --ignore-path .gitignore",
+    "lint:styles:check": "stylelint \"**/*.css\" --cache --ignore-path .gitignore",
     "lint:styles:fix": "yarn run lint:styles:check --fix",
     "postinstall": "patch-package",
     "prepare": "simple-git-hooks || true",
@@ -148,6 +148,7 @@
   },
   "devDependencies": {
     "@acdh-oeaw/commitlint-config": "^2.0.0",
+    "@acdh-oeaw/stylelint-config": "^2.1.2",
     "@acdh-oeaw/tsconfig": "^1.5.1",
     "@commitlint/cli": "^19.8.0",
     "@faker-js/faker": "^6.1.1",
@@ -167,7 +168,6 @@
     "@stefanprobst/eslint-config-next": "^5.0.2",
     "@stefanprobst/next-image-loader": "^1.0.3",
     "@stefanprobst/prettier-config": "^2.0.1",
-    "@stefanprobst/stylelint-config": "^2.1.2",
     "@stefanprobst/ts-script": "^1.0.2",
     "@types/final-form-focus": "^1.1.2",
     "@types/final-form-set-field-data": "^1.0.0",
@@ -198,7 +198,7 @@
     "remark-mdx": "^2.1.0",
     "simple-git-hooks": "^2.13.0",
     "strip-indent": "^4.0.0",
-    "stylelint": "^14.6.0",
+    "stylelint": "^16.19.0",
     "typescript": "^5.8.3"
   },
   "resolutions": {
@@ -290,7 +290,7 @@
     "pre-commit": "yarn lint-staged"
   },
   "stylelint": {
-    "extends": "@stefanprobst/stylelint-config",
+    "extends": "@acdh-oeaw/stylelint-config",
     "rules": {
       "block-no-empty": [
         true,
