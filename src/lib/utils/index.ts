@@ -4,7 +4,6 @@ export { entries } from "@/lib/utils/entries";
 export { enumerate } from "@/lib/utils/enumerate";
 export { groupAlphabetically } from "@/lib/utils/group-alphabetically";
 export { identity } from "@/lib/utils/identity";
-export { includes } from "@/lib/utils/includes";
 export { isDate } from "@/lib/utils/is-date";
 export { isEmail } from "@/lib/utils/is-email";
 export { isEmptyArray } from "@/lib/utils/is-empty-array";
@@ -21,6 +20,7 @@ export {
 	assert,
 	capitalize,
 	groupBy,
+	includes,
 	isUrl as isAbsoluteUrl,
 	isNonEmptyArray,
 	isNonEmptyString,
