@@ -1,7 +1,7 @@
 /* global process */
 
+import { log } from "@acdh-oeaw/lib";
 import createBundleAnalyzer from "@next/bundle-analyzer";
-import { log } from "@stefanprobst/log";
 import createSvgPlugin from "@stefanprobst/next-svg";
 import withToc from "@stefanprobst/rehype-extract-toc";
 import withTocExport from "@stefanprobst/rehype-extract-toc/mdx";

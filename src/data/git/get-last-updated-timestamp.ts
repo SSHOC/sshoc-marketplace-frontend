@@ -1,4 +1,4 @@
-import { log } from "@stefanprobst/log";
+import { log } from "@acdh-oeaw/lib";
 import { createUrl, request } from "@stefanprobst/request";
 
 import { backend } from "~/config/cms.config";

@@ -34,6 +34,11 @@
     eslint-plugin-simple-import-sort "^12.1.1"
     typescript-eslint "^8.26.1"
 
+"@acdh-oeaw/lib@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@acdh-oeaw/lib/-/lib-0.3.2.tgz#f504168fc9d87505b35410a47bb44da754bfe1cb"
+  integrity sha512-Ug+ZSljFv2Hl6mK96LeK9ltBgRqq/+ljL5p5v7UFztbU6bg7nyHNY3Tdq8H4mfs55hoadRFP1XuTD/K2FecUZw==
+
 "@acdh-oeaw/prettier-config@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@acdh-oeaw/prettier-config/-/prettier-config-2.0.1.tgz#46e037f758099e4b8df6ec65280e2da00396d970"
@@ -2235,11 +2240,6 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@stefanprobst/is-nonempty-string/-/is-nonempty-string-1.0.1.tgz#1edf251d195c5ac12d0e4a7996b2f02924d7129d"
   integrity sha512-goAibS+rdsbNz9ZqLFVKS3lLSly7hHlFix0m7MCh7M5CXdBxpq5V3K3EnwI8Vps3oYxRU9f4NAf/jRYOIss0FA==
-
-"@stefanprobst/log@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@stefanprobst/log/-/log-1.0.3.tgz#3962b5954ae1622dc6c64ed501357ebf4adabfd6"
-  integrity sha512-6lNIxwfg98UyvrQGlMHmqp0H8XCQFAbS/lDWt6D4kH/z0Goxg/GxqZ9vDdlswmYvphT5ubFOWk2SGwGBeGATVg==
 
 "@stefanprobst/netlify-cms-oauth-client@^0.1.3":
   version "0.1.3"
