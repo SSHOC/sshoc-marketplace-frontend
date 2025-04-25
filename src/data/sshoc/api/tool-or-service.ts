@@ -36,10 +36,10 @@ export function getTools(
 }
 
 export namespace GetTool {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -64,7 +64,7 @@ export function getTool(
 }
 
 export namespace GetToolVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
     versionId: Tool['id']
   }
@@ -86,10 +86,10 @@ export function getToolVersion(
 }
 
 export namespace GetToolHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -111,7 +111,7 @@ export function getToolHistory(
 }
 
 export namespace GetToolInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
   export type Params = PathParams
@@ -132,7 +132,7 @@ export function getToolInformationContributors(
 }
 
 export namespace GetToolVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
     versionId: Tool['id']
   }
@@ -154,7 +154,7 @@ export function getToolVersionInformationContributors(
 }
 
 export namespace CreateTool {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -177,7 +177,7 @@ export function createTool(
 }
 
 export namespace CommitDraftTool {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
   export type Params = PathParams
@@ -196,10 +196,10 @@ export function commitDraftTool(
 }
 
 export namespace UpdateTool {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -227,10 +227,10 @@ export function updateTool(
 }
 
 export namespace DeleteTool {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -253,7 +253,7 @@ export function deleteTool(
 }
 
 export namespace DeleteToolVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
     versionId: Tool['id']
   }
@@ -275,7 +275,7 @@ export function deleteToolVersion(
 }
 
 export namespace RevertToolToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
     versionId: Tool['id']
   }
@@ -299,10 +299,10 @@ export function revertToolToVersion(
 export const approveToolVersion = revertToolToVersion
 
 export namespace GetMergedTool {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Tool['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -324,7 +324,7 @@ export function getMergedTool(
 }
 
 export namespace MergeTools {
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Tool['persistentId']>
   }
   export type Params = SearchParams
@@ -346,10 +346,10 @@ export function mergeTools(
 }
 
 export namespace GetToolDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Tool['persistentId']
     /** `versionId` of item to compare with. */
@@ -374,11 +374,11 @@ export function getToolDiff(
 }
 
 export namespace GetToolVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
     versionId: Tool['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Tool['persistentId']
     /** `versionId` of item to compare with. */
@@ -403,7 +403,7 @@ export function getToolVersionDiff(
 }
 
 export namespace GetToolSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Tool['persistentId']
   }
   export type Params = PathParams

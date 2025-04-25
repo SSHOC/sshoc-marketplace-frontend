@@ -61,6 +61,7 @@ export function Form<T>(props: FormProps<T>): JSX.Element {
             method={method}
             name={name}
             noValidate
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={handleSubmit}
           >
             {props.children}

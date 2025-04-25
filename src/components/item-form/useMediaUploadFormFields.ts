@@ -4,7 +4,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type MediaUploadFormFields = ReturnType<typeof useMediaUploadFormFields>
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useMediaUploadFormFields() {
   const { t } = useI18n<'authenticated'>()
 

@@ -5,7 +5,7 @@ export type WithDynamicPropertySearchParams<T> = {
 export function convertDynamicPropertySearchParams<T extends object>(
   searchParams: T,
 ): WithDynamicPropertySearchParams<T> {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+   
   const query = {} as any
 
   Object.entries(searchParams).forEach(([key, value]) => {

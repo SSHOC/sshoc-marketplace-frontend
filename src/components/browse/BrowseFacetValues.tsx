@@ -100,7 +100,7 @@ function useGroupedFacetValues(
       if (!grouped.has(firstCharacter)) {
         grouped.set(firstCharacter, new Map())
       }
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       const group = grouped.get(firstCharacter)!
 
       group.set(value, count)

@@ -68,7 +68,7 @@ export const itemSourceInputSchema = z
   .refine(
     (data) => {
       if (`urlTemplate` in data && data.urlTemplate != null) {
-        if (!data.urlTemplate.includes('{source-item-id}')) return false
+        if (!data.urlTemplate.includes('{source-item-id}')) {return false}
       }
       return true
     },

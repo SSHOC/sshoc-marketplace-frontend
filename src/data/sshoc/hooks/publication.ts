@@ -62,34 +62,34 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [publication, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [publication, list, auth ?? null] as const
   },
-  list(params: GetPublications.Params, auth?: AuthData | undefined) {
+  list(params: GetPublications.Params, auth?: AuthData  ) {
     return [publication, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetPublications.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetPublications.Params, auth?: AuthData  ) {
     return [publication, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [publication, detail, auth ?? null] as const
   },
-  detail(params: GetPublication.Params, auth?: AuthData | undefined) {
+  detail(params: GetPublication.Params, auth?: AuthData  ) {
     return [publication, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [publication, version, auth ?? null] as const
   // },
-  version(params: GetPublicationVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetPublicationVersion.Params, auth?: AuthData  ) {
     return [publication, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [publication, history, auth ?? null] as const
   // },
-  history(params: GetPublicationHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetPublicationHistory.Params, auth?: AuthData  ) {
     return [publication, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -97,7 +97,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetPublicationInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [publication, informationContributors, params, auth ?? null] as const
   },
@@ -106,27 +106,27 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetPublicationVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [publication, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedPublication.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedPublication.Params, auth?: AuthData  ) {
     return [publication, merged, params, auth ?? null] as const
   },
-  sources(params: GetPublicationSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetPublicationSources.Params, auth?: AuthData  ) {
     return [publication, sources, params, auth ?? null] as const
   },
-  diff(params: GetPublicationDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetPublicationDiff.Params, auth?: AuthData  ) {
     return [publication, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetPublicationVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetPublicationVersionDiff.Params, auth?: AuthData  ) {
     return [publication, version, diff, params, auth ?? null] as const
   },
 }
 
 export function usePublications<TData = GetPublications.Response>(
   params: GetPublications.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetPublications.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -141,7 +141,7 @@ export function usePublications<TData = GetPublications.Response>(
 
 export function usePublicationsInfinite<TData = GetPublications.Response>(
   params: GetPublications.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetPublications.Response,
     Error,
@@ -160,7 +160,7 @@ export function usePublicationsInfinite<TData = GetPublications.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -169,7 +169,7 @@ export function usePublicationsInfinite<TData = GetPublications.Response>(
 
 export function usePublication<TData = GetPublication.Response>(
   params: GetPublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetPublication.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -184,7 +184,7 @@ export function usePublication<TData = GetPublication.Response>(
 
 export function usePublicationVersion<TData = GetPublicationVersion.Response>(
   params: GetPublicationVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationVersion.Response,
     Error,
@@ -204,7 +204,7 @@ export function usePublicationVersion<TData = GetPublicationVersion.Response>(
 
 export function usePublicationHistory<TData = GetPublicationHistory.Response>(
   params: GetPublicationHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationHistory.Response,
     Error,
@@ -226,7 +226,7 @@ export function usePublicationInformationContributors<
   TData = GetPublicationInformationContributors.Response,
 >(
   params: GetPublicationInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationInformationContributors.Response,
     Error,
@@ -248,7 +248,7 @@ export function usePublicationVersionInformationContributors<
   TData = GetPublicationVersionInformationContributors.Response,
 >(
   params: GetPublicationVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationVersionInformationContributors.Response,
     Error,
@@ -268,7 +268,7 @@ export function usePublicationVersionInformationContributors<
 
 export function useCreatePublication(
   params: CreatePublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreatePublication.Response, Error, { data: CreatePublication.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -294,7 +294,7 @@ export function useCreatePublication(
 
 export function useUpdatePublication(
   params: UpdatePublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdatePublication.Response, Error, { data: UpdatePublication.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -321,7 +321,7 @@ export function useUpdatePublication(
 
 export function useDeletePublication(
   params: DeletePublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeletePublication.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -348,7 +348,7 @@ export function useDeletePublication(
 
 export function useDeletePublicationVersion(
   params: DeletePublicationVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeletePublicationVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -375,7 +375,7 @@ export function useDeletePublicationVersion(
 
 export function useRevertPublicationToVersion(
   params: RevertPublicationToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertPublicationToVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -405,7 +405,7 @@ export const useRejectPublicationVersion = useDeletePublicationVersion
 
 export function useCommitDraftPublication(
   params: CommitDraftPublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CommitDraftPublication.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -433,7 +433,7 @@ export function useCommitDraftPublication(
 
 export function useMergedPublication<TData = GetMergedPublication.Response>(
   params: GetMergedPublication.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMergedPublication.Response,
     Error,
@@ -453,7 +453,7 @@ export function useMergedPublication<TData = GetMergedPublication.Response>(
 
 export function useMergePublications(
   params: MergePublications.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergePublications.Response, Error, { data: MergePublications.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -479,7 +479,7 @@ export function useMergePublications(
 
 export function usePublicationDiff<TData = GetPublicationDiff.Response>(
   params: GetPublicationDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationDiff.Response,
     Error,
@@ -499,7 +499,7 @@ export function usePublicationDiff<TData = GetPublicationDiff.Response>(
 
 export function usePublicationVersionDiff<TData = GetPublicationVersionDiff.Response>(
   params: GetPublicationVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationVersionDiff.Response,
     Error,
@@ -519,7 +519,7 @@ export function usePublicationVersionDiff<TData = GetPublicationVersionDiff.Resp
 
 export function usePublicationSources<TData = GetPublicationSources.Response>(
   params: GetPublicationSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetPublicationSources.Response,
     Error,

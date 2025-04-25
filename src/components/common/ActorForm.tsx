@@ -221,7 +221,7 @@ export function ActorIdentifierField(props: ActorIdentifierFieldProps): JSX.Elem
   const source = sources.find((source) => {
     return source.code === service
   })
-  const template = source?.urlTemplate?.replace(/{source-actor-id}/, value ?? '')
+  const template = source?.urlTemplate?.replace(/\{source-actor-id\}/, value ?? '')
 
   const description = (
     <Fragment>

@@ -42,10 +42,10 @@ export function getTrainingMaterials(
 }
 
 export namespace GetTrainingMaterial {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -70,7 +70,7 @@ export function getTrainingMaterial(
 }
 
 export namespace GetTrainingMaterialVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
     versionId: TrainingMaterial['id']
   }
@@ -92,10 +92,10 @@ export function getTrainingMaterialVersion(
 }
 
 export namespace GetTrainingMaterialHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -117,7 +117,7 @@ export function getTrainingMaterialHistory(
 }
 
 export namespace GetTrainingMaterialInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
   export type Params = PathParams
@@ -138,7 +138,7 @@ export function getTrainingMaterialInformationContributors(
 }
 
 export namespace GetTrainingMaterialVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
     versionId: TrainingMaterial['id']
   }
@@ -160,7 +160,7 @@ export function getTrainingMaterialVersionInformationContributors(
 }
 
 export namespace CreateTrainingMaterial {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -183,7 +183,7 @@ export function createTrainingMaterial(
 }
 
 export namespace CommitDraftTrainingMaterial {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
   export type Params = PathParams
@@ -202,10 +202,10 @@ export function commitDraftTrainingMaterial(
 }
 
 export namespace UpdateTrainingMaterial {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -233,10 +233,10 @@ export function updateTrainingMaterial(
 }
 
 export namespace DeleteTrainingMaterial {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -259,7 +259,7 @@ export function deleteTrainingMaterial(
 }
 
 export namespace DeleteTrainingMaterialVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
     versionId: TrainingMaterial['id']
   }
@@ -281,7 +281,7 @@ export function deleteTrainingMaterialVersion(
 }
 
 export namespace RevertTrainingMaterialToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
     versionId: TrainingMaterial['id']
   }
@@ -305,10 +305,10 @@ export function revertTrainingMaterialToVersion(
 export const approveTrainingMaterialVersion = revertTrainingMaterialToVersion
 
 export namespace GetMergedTrainingMaterial {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<TrainingMaterial['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -330,7 +330,7 @@ export function getMergedTrainingMaterial(
 }
 
 export namespace MergeTrainingMaterials {
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<TrainingMaterial['persistentId']>
   }
   export type Params = SearchParams
@@ -355,10 +355,10 @@ export function mergeTrainingMaterials(
 }
 
 export namespace GetTrainingMaterialDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: TrainingMaterial['persistentId']
     /** `versionId` of item to compare with. */
@@ -383,11 +383,11 @@ export function getTrainingMaterialDiff(
 }
 
 export namespace GetTrainingMaterialVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
     versionId: TrainingMaterial['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: TrainingMaterial['persistentId']
     /** `versionId` of item to compare with. */
@@ -412,7 +412,7 @@ export function getTrainingMaterialVersionDiff(
 }
 
 export namespace GetTrainingMaterialSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: TrainingMaterial['persistentId']
   }
   export type Params = PathParams

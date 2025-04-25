@@ -38,10 +38,10 @@ export function getWorkflows(
 }
 
 export namespace GetWorkflow {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -63,7 +63,7 @@ export function getWorkflow(
 }
 
 export namespace GetWorkflowVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     versionId: Workflow['id']
   }
@@ -85,10 +85,10 @@ export function getWorkflowVersion(
 }
 
 export namespace GetWorkflowHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -110,7 +110,7 @@ export function getWorkflowHistory(
 }
 
 export namespace GetWorkflowInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
   export type Params = PathParams
@@ -131,7 +131,7 @@ export function getWorkflowInformationContributors(
 }
 
 export namespace GetWorkflowVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     versionId: Workflow['id']
   }
@@ -153,7 +153,7 @@ export function getWorkflowVersionInformationContributors(
 }
 
 export namespace CreateWorkflow {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -176,7 +176,7 @@ export function createWorkflow(
 }
 
 export namespace CommitDraftWorkflow {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
   export type Params = PathParams
@@ -195,10 +195,10 @@ export function commitDraftWorkflow(
 }
 
 export namespace UpdateWorkflow {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -223,10 +223,10 @@ export function updateWorkflow(
 }
 
 export namespace DeleteWorkflow {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -246,7 +246,7 @@ export function deleteWorkflow(
 }
 
 export namespace DeleteWorkflowVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     versionId: Workflow['id']
   }
@@ -268,7 +268,7 @@ export function deleteWorkflowVersion(
 }
 
 export namespace RevertWorkflowToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     versionId: Workflow['id']
   }
@@ -292,10 +292,10 @@ export function revertWorkflowToVersion(
 export const approveWorkflowVersion = revertWorkflowToVersion
 
 export namespace GetMergedWorkflow {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Workflow['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -317,7 +317,7 @@ export function getMergedWorkflow(
 }
 
 export namespace MergeWorkflows {
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Workflow['persistentId']>
   }
   export type Params = SearchParams
@@ -339,10 +339,10 @@ export function mergeWorkflows(
 }
 
 export namespace GetWorkflowDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Workflow['persistentId']
     /** `versionId` of item to compare with. */
@@ -367,11 +367,11 @@ export function getWorkflowDiff(
 }
 
 export namespace GetWorkflowVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     versionId: Workflow['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Workflow['persistentId']
     /** `versionId` of item to compare with. */
@@ -396,7 +396,7 @@ export function getWorkflowVersionDiff(
 }
 
 export namespace GetWorkflowSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
   export type Params = PathParams

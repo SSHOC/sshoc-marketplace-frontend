@@ -12,7 +12,7 @@ import buttonCss from '@/lib/core/ui/Button/Button.module.css'
 import type { LinkProps } from '@/lib/core/ui/Link/Link'
 import css from '@/lib/core/ui/Link/Link.module.css'
 
-export interface ButtonLinkProps extends AriaButtonProps<'button'>, Pick<LinkProps, 'style'> {
+export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, 'style'> {
   children: ReactNode
   form?: string
   isPressed?: boolean

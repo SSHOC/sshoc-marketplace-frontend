@@ -9,7 +9,7 @@ import { useTreeState } from '@react-stately/tree'
 import type { AriaMenuProps, MenuTriggerProps } from '@react-types/menu'
 import type { CollectionChildren, Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
-import type { HTMLAttributes, Key, ReactNode, RefObject } from 'react'
+import type { HTMLAttributes, ReactNode, RefObject } from 'react'
 import { useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'

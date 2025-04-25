@@ -14,10 +14,10 @@ export function useAccessTokenExpirationTimer(): void {
   const { token } = session
 
   useEffect(() => {
-    if (token == null) return
+    if (token == null) {return}
 
     const { exp } = jwtDecode<JwtPayload>(token)
-    if (exp == null) return
+    if (exp == null) {return}
 
     function onTokenTimeout() {
       const message = t(['common', 'token-expiration-warning'], {

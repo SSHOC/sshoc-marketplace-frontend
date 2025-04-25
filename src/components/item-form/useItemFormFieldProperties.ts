@@ -1,6 +1,6 @@
 import { useI18n } from '@/lib/core/i18n/useI18n'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useItemFormFieldProperties(prefix = '') {
   const { t } = useI18n<'authenticated'>()
 

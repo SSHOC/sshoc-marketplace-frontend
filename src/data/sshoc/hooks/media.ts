@@ -42,41 +42,41 @@ const download = 'download'
 const thumbnail = 'thumbnail'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [media, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [media, detail, auth ?? null] as const
   },
-  detail(params: DownloadMedia.Params, auth?: AuthData | undefined) {
+  detail(params: DownloadMedia.Params, auth?: AuthData  ) {
     return [media, detail, params, auth ?? null] as const
   },
-  downloads(auth?: AuthData | undefined) {
+  downloads(auth?: AuthData  ) {
     return [media, download, auth ?? null] as const
   },
-  download(params: DownloadMedia.Params, auth?: AuthData | undefined) {
+  download(params: DownloadMedia.Params, auth?: AuthData  ) {
     return [media, download, params, auth ?? null] as const
   },
-  thumbnails(auth?: AuthData | undefined) {
+  thumbnails(auth?: AuthData  ) {
     return [media, thumbnail, auth ?? null] as const
   },
-  thumbnail(params: DownloadMediaThumbnail.Params, auth?: AuthData | undefined) {
+  thumbnail(params: DownloadMediaThumbnail.Params, auth?: AuthData  ) {
     return [media, thumbnail, params, auth ?? null] as const
   },
   source: {
-    all(auth?: AuthData | undefined) {
+    all(auth?: AuthData  ) {
       return [source, auth ?? null] as const
     },
-    lists(auth?: AuthData | undefined) {
+    lists(auth?: AuthData  ) {
       return [source, list, auth ?? null] as const
     },
-    list(auth?: AuthData | undefined) {
+    list(auth?: AuthData  ) {
       return [source, list, auth ?? null] as const
     },
-    details(auth?: AuthData | undefined) {
+    details(auth?: AuthData  ) {
       return [source, detail, auth ?? null] as const
     },
-    detail(params: GetMediaSource.Params, auth?: AuthData | undefined) {
+    detail(params: GetMediaSource.Params, auth?: AuthData  ) {
       return [source, detail, params, auth ?? null] as const
     },
   },
@@ -84,7 +84,7 @@ export const keys = {
 
 export function useMediaDetails<TData = GetMediaDetails.Response>(
   params: GetMediaDetails.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetMediaDetails.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -102,7 +102,7 @@ export function useMediaDetails<TData = GetMediaDetails.Response>(
  */
 export function useMediaDownload<TData = DownloadMedia.Response>(
   params: DownloadMedia.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<DownloadMedia.Response, Error, TData, ReturnType<typeof keys.download>>,
 ) {
   const session = useSession(auth)
@@ -120,7 +120,7 @@ export function useMediaDownload<TData = DownloadMedia.Response>(
  */
 export function useMediaThumbnailDownload<TData = DownloadMediaThumbnail.Response>(
   params: DownloadMediaThumbnail.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     DownloadMediaThumbnail.Response,
     Error,
@@ -139,7 +139,7 @@ export function useMediaThumbnailDownload<TData = DownloadMediaThumbnail.Respons
 }
 
 export function useUploadMedia(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UploadMedia.Response, Error, { data: UploadMedia.Body }>,
 ) {
   const session = useSession(auth)
@@ -150,7 +150,7 @@ export function useUploadMedia(
 
 export function useUploadMediaChunk(
   params: UploadMediaChunk.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UploadMediaChunk.Response, Error, { data: UploadMediaChunk.Body }>,
 ) {
   const session = useSession(auth)
@@ -161,7 +161,7 @@ export function useUploadMediaChunk(
 
 export function useUploadMediaChunksComplete(
   params: UploadMediaChunksComplete.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UploadMediaChunksComplete.Response, Error>,
 ) {
   const session = useSession(auth)
@@ -171,7 +171,7 @@ export function useUploadMediaChunksComplete(
 }
 
 export function useImportMedia(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<ImportMedia.Response, Error, { data: ImportMedia.Body }>,
 ) {
   const session = useSession(auth)
@@ -181,7 +181,7 @@ export function useImportMedia(
 }
 
 export function useMediaSources<TData = GetMediaSources.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMediaSources.Response,
     Error,
@@ -201,7 +201,7 @@ export function useMediaSources<TData = GetMediaSources.Response>(
 
 export function useMediaSource<TData = GetMediaSource.Response>(
   params: GetMediaSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMediaSource.Response,
     Error,
@@ -220,7 +220,7 @@ export function useMediaSource<TData = GetMediaSource.Response>(
 }
 
 export function useCreateMediaSource(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateMediaSource.Response, Error, { data: CreateMediaSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -241,7 +241,7 @@ export function useCreateMediaSource(
 
 export function useUpdateMediaSource(
   params: UpdateMediaSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateMediaSource.Response, Error, { data: UpdateMediaSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -263,7 +263,7 @@ export function useUpdateMediaSource(
 
 export function useDeleteMediaSource(
   params: DeleteMediaSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteMediaSource.Response, Error>,
 ) {
   const queryClient = useQueryClient()

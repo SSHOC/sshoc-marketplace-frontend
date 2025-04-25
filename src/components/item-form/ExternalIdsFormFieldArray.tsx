@@ -104,7 +104,7 @@ export function ItemIdentifierField(props: ItemIdentifierFieldProps): JSX.Elemen
   const source = sources.find((source) => {
     return source.code === service
   })
-  const template = source?.urlTemplate?.replace(/{source-item-id}/, value ?? '')
+  const template = source?.urlTemplate?.replace(/\{source-item-id\}/, value ?? '')
 
   const description = (
     <Fragment>

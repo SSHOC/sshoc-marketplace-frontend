@@ -28,7 +28,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
          */
         // if (query.state.data == null) return
 
-        if (error instanceof HttpError && error.response.status === 404) return
+        if (error instanceof HttpError && error.response.status === 404) {return}
 
         const meta = query.meta as QueryMetadata | undefined
         const customMessage =
@@ -143,7 +143,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
         /** Currently, `@react-aria` is not compatible with React 18 Suspense. */
         // suspense: true,
         useErrorBoundary(error) {
-          if (!(error instanceof HttpError)) return true
+          if (!(error instanceof HttpError)) {return true}
 
           /**
            * Propagate only server errors and authentication errors to the error boundary.
@@ -153,7 +153,7 @@ export function createQueryClient(defaultErrorMessages: DefaultErrorMessageMap):
       },
       mutations: {
         useErrorBoundary(error) {
-          if (!(error instanceof HttpError)) return true
+          if (!(error instanceof HttpError)) {return true}
 
           /**
            * Propagate only server errors and authentication errors to the error boundary.

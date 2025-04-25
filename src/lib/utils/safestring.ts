@@ -1,7 +1,5 @@
 export type SafeStringArg = number | string | null | undefined
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 /**
  * @see https://github.com/vercel/swr/discussions/1247
  */
@@ -11,7 +9,10 @@ export function safestring(
 ): string | null {
   let result = strings[0]!
   for (let index = 0; index < args.length; index++) {
-    if (args[index] == null) return null
+    if (args[index] == null) {
+      return null
+    }
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     result += args[index]! + strings[index + 1]!
   }
   return result

@@ -3,7 +3,7 @@ import { useField } from 'react-final-form'
 
 import { identity } from '@/lib/utils'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useFieldState<T>(
   name: string,
   subscription: UseFieldConfig<T>['subscription'] = { value: true },

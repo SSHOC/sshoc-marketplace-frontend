@@ -11,10 +11,10 @@ export interface ContactFormData {
   message: string
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-namespace */
+ 
 export namespace SubmitContactForm {
   export type Body = ContactFormData
-  export type Variables = { data: Body }
+  export interface Variables { data: Body }
   export type Response = void
 }
 
@@ -28,7 +28,7 @@ export function submitContactForm(
   return request(url, options)
 }
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useSubmitContactForm(
   options?: UseMutationOptions<SubmitContactForm.Response, Error, SubmitContactForm.Variables>,
 ) {

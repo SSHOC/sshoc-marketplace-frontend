@@ -4,7 +4,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type ItemFormDateFields = ReturnType<typeof useItemFormDateFields>
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useItemFormDateFields(prefix = '') {
   const { t } = useI18n<'authenticated'>()
 

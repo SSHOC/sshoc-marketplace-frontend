@@ -2,7 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 
 import type { ItemCategory } from '@/data/sshoc/api/item'
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+ 
 
 function createHref({
   pathname,

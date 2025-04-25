@@ -11,7 +11,7 @@ export function useQueryKeys<T>(keys: T, auth?: AuthData): T {
 }
 
 function addAuthData<T>(keys: T, session: AuthData): T {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+   
   const queryKeys = {} as any
 
   Object.entries(keys).forEach(([key, value]) => {

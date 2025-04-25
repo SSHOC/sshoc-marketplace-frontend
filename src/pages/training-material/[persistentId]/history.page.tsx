@@ -85,7 +85,7 @@ export default function TrainingMaterialHistoryPage(
   const meta: QueryMetadata = {
     messages: {
       error(error) {
-        if (isNotFoundError(error)) return false
+        if (isNotFoundError(error)) {return false}
         return undefined
       },
     },

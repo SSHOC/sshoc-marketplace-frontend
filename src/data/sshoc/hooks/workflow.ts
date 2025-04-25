@@ -62,34 +62,34 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [workflow, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [workflow, list, auth ?? null] as const
   },
-  list(params: GetWorkflows.Params, auth?: AuthData | undefined) {
+  list(params: GetWorkflows.Params, auth?: AuthData  ) {
     return [workflow, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetWorkflows.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetWorkflows.Params, auth?: AuthData  ) {
     return [workflow, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [workflow, detail, auth ?? null] as const
   },
-  detail(params: GetWorkflow.Params, auth?: AuthData | undefined) {
+  detail(params: GetWorkflow.Params, auth?: AuthData  ) {
     return [workflow, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [workflow, version, auth ?? null] as const
   // },
-  version(params: GetWorkflowVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetWorkflowVersion.Params, auth?: AuthData  ) {
     return [workflow, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [workflow, history, auth ?? null] as const
   // },
-  history(params: GetWorkflowHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetWorkflowHistory.Params, auth?: AuthData  ) {
     return [workflow, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -97,7 +97,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetWorkflowInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [workflow, informationContributors, params, auth ?? null] as const
   },
@@ -106,27 +106,27 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetWorkflowVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [workflow, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedWorkflow.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedWorkflow.Params, auth?: AuthData  ) {
     return [workflow, merged, params, auth ?? null] as const
   },
-  sources(params: GetWorkflowSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetWorkflowSources.Params, auth?: AuthData  ) {
     return [workflow, sources, params, auth ?? null] as const
   },
-  diff(params: GetWorkflowDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetWorkflowDiff.Params, auth?: AuthData  ) {
     return [workflow, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetWorkflowVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetWorkflowVersionDiff.Params, auth?: AuthData  ) {
     return [workflow, version, diff, params, auth ?? null] as const
   },
 }
 
 export function useWorkflows<TData = GetWorkflows.Response>(
   params: GetWorkflows.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetWorkflows.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -141,7 +141,7 @@ export function useWorkflows<TData = GetWorkflows.Response>(
 
 export function useWorkflowsInfinite<TData = GetWorkflows.Response>(
   params: GetWorkflows.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetWorkflows.Response,
     Error,
@@ -160,7 +160,7 @@ export function useWorkflowsInfinite<TData = GetWorkflows.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -169,7 +169,7 @@ export function useWorkflowsInfinite<TData = GetWorkflows.Response>(
 
 export function useWorkflow<TData = GetWorkflow.Response>(
   params: GetWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetWorkflow.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -184,7 +184,7 @@ export function useWorkflow<TData = GetWorkflow.Response>(
 
 export function useWorkflowVersion<TData = GetWorkflowVersion.Response>(
   params: GetWorkflowVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowVersion.Response,
     Error,
@@ -204,7 +204,7 @@ export function useWorkflowVersion<TData = GetWorkflowVersion.Response>(
 
 export function useWorkflowHistory<TData = GetWorkflowHistory.Response>(
   params: GetWorkflowHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowHistory.Response,
     Error,
@@ -226,7 +226,7 @@ export function useWorkflowInformationContributors<
   TData = GetWorkflowInformationContributors.Response,
 >(
   params: GetWorkflowInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowInformationContributors.Response,
     Error,
@@ -248,7 +248,7 @@ export function useWorkflowVersionInformationContributors<
   TData = GetWorkflowVersionInformationContributors.Response,
 >(
   params: GetWorkflowVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowVersionInformationContributors.Response,
     Error,
@@ -268,7 +268,7 @@ export function useWorkflowVersionInformationContributors<
 
 export function useCreateWorkflow(
   params: CreateWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateWorkflow.Response, Error, { data: CreateWorkflow.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -294,7 +294,7 @@ export function useCreateWorkflow(
 
 export function useUpdateWorkflow(
   params: UpdateWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateWorkflow.Response, Error, { data: UpdateWorkflow.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -321,7 +321,7 @@ export function useUpdateWorkflow(
 
 export function useDeleteWorkflow(
   params: DeleteWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteWorkflow.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -348,7 +348,7 @@ export function useDeleteWorkflow(
 
 export function useDeleteWorkflowVersion(
   params: DeleteWorkflowVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteWorkflowVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -375,7 +375,7 @@ export function useDeleteWorkflowVersion(
 
 export function useRevertWorkflowToVersion(
   params: RevertWorkflowToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertWorkflowToVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -405,7 +405,7 @@ export const useRejectWorkflowVersion = useDeleteWorkflowVersion
 
 export function useCommitDraftWorkflow(
   params: CommitDraftWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CommitDraftWorkflow.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -433,7 +433,7 @@ export function useCommitDraftWorkflow(
 
 export function useMergedWorkflow<TData = GetMergedWorkflow.Response>(
   params: GetMergedWorkflow.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMergedWorkflow.Response,
     Error,
@@ -453,7 +453,7 @@ export function useMergedWorkflow<TData = GetMergedWorkflow.Response>(
 
 export function useMergeWorkflows(
   params: MergeWorkflows.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergeWorkflows.Response, Error, { data: MergeWorkflows.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -479,7 +479,7 @@ export function useMergeWorkflows(
 
 export function useWorkflowDiff<TData = GetWorkflowDiff.Response>(
   params: GetWorkflowDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetWorkflowDiff.Response, Error, TData, ReturnType<typeof keys.diff>>,
 ) {
   const session = useSession(auth)
@@ -494,7 +494,7 @@ export function useWorkflowDiff<TData = GetWorkflowDiff.Response>(
 
 export function useWorkflowVersionDiff<TData = GetWorkflowVersionDiff.Response>(
   params: GetWorkflowVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowVersionDiff.Response,
     Error,
@@ -514,7 +514,7 @@ export function useWorkflowVersionDiff<TData = GetWorkflowVersionDiff.Response>(
 
 export function useWorkflowSources<TData = GetWorkflowSources.Response>(
   params: GetWorkflowSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowSources.Response,
     Error,

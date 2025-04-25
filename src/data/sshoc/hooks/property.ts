@@ -28,29 +28,29 @@ const detail = 'detail'
 const infinite = 'infinite'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [propertyType, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [propertyType, list, auth ?? null] as const
   },
-  list(params: GetPropertyTypes.Params, auth?: AuthData | undefined) {
+  list(params: GetPropertyTypes.Params, auth?: AuthData  ) {
     return [propertyType, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetPropertyTypes.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetPropertyTypes.Params, auth?: AuthData  ) {
     return [propertyType, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [propertyType, detail, auth ?? null] as const
   },
-  detail(params: GetPropertyType.Params, auth?: AuthData | undefined) {
+  detail(params: GetPropertyType.Params, auth?: AuthData  ) {
     return [propertyType, detail, params, auth ?? null] as const
   },
 }
 
 export function usePropertyTypes<TData = GetPropertyTypes.Response>(
   params: GetPropertyTypes.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetPropertyTypes.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -65,7 +65,7 @@ export function usePropertyTypes<TData = GetPropertyTypes.Response>(
 
 export function usePropertyTypesInfinite<TData = GetPropertyTypes.Response>(
   params: GetPropertyTypes.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetPropertyTypes.Response,
     Error,
@@ -84,7 +84,7 @@ export function usePropertyTypesInfinite<TData = GetPropertyTypes.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -93,7 +93,7 @@ export function usePropertyTypesInfinite<TData = GetPropertyTypes.Response>(
 
 export function usePropertyType<TData = GetPropertyType.Response>(
   params: GetPropertyType.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetPropertyType.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -107,7 +107,7 @@ export function usePropertyType<TData = GetPropertyType.Response>(
 }
 
 export function useCreatePropertyType(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CreatePropertyType.Response,
     Error,
@@ -132,7 +132,7 @@ export function useCreatePropertyType(
 
 export function useUpdatePropertyType(
   params: UpdatePropertyType.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UpdatePropertyType.Response,
     Error,
@@ -158,7 +158,7 @@ export function useUpdatePropertyType(
 
 export function useDeletePropertyType(
   params: DeletePropertyType.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeletePropertyType.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -179,7 +179,7 @@ export function useDeletePropertyType(
 }
 
 export function useReorderPropertyTypes(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     ReorderPropertyTypes.Response,
     Error,

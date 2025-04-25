@@ -15,7 +15,7 @@ export function useFormFieldValidationState<T>(
     validationState: meta.touched === true && meta.invalid === true ? 'invalid' : undefined,
     errorMessage: Array.isArray(meta.error)
       ? meta.error.join(', ')
-      : /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
+      :  
         meta.error || meta.submitError,
   }
 }

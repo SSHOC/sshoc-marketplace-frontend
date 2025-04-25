@@ -593,8 +593,8 @@ function ItemCategoryFacets(): JSX.Element {
   }
 
   const items = entries(values).filter(([category, { count }]) => {
-    if (category === 'step') return false
-    if (count === 0) return false
+    if (category === 'step') {return false}
+    if (count === 0) {return false}
     return true
   })
 
@@ -767,7 +767,7 @@ function InformationContributorFacets(): JSX.Element {
       itemsMap.set(
         key,
         valuesByUsername.has(key)
-          ? /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+          ?
             valuesByUsername.get(key)!
           : ({ displayName: key.slice(0, 12), username: key } as User),
       )
@@ -782,7 +782,7 @@ function InformationContributorFacets(): JSX.Element {
     const searchParams = {
       ...searchFilters,
       page: 1,
-      [name]: keys as Array<User['username']>,
+      [name]: keys,
     }
 
     searchModerateItems(searchParams)
@@ -819,7 +819,7 @@ function InformationContributorFacets(): JSX.Element {
             <div className={css['search-facets-overlay-controls']}>
               <ButtonLink
                 onPress={() => {
-                  return users.fetchNextPage()
+                  users.fetchNextPage()
                 }}
               >
                 {t(['common', 'search', 'show-more'])}

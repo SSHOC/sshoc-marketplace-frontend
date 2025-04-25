@@ -87,7 +87,7 @@ export function getUsers(
 }
 
 export namespace GetUser {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams
@@ -123,7 +123,7 @@ export function createUser(
 }
 
 export namespace UpdateUserDisplayName {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams
@@ -145,7 +145,7 @@ export function updateUserDisplayName(
 }
 
 export namespace UpdateUserPassword {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams
@@ -167,7 +167,7 @@ export function updateUserPassword(
 }
 
 export namespace UpdateUserRole {
-  export type PathParams = {
+  export interface PathParams {
     id: number
     role: UserRole
   }
@@ -187,7 +187,7 @@ export function updateUserRole(
 }
 
 export namespace UpdateUserStatus {
-  export type PathParams = {
+  export interface PathParams {
     id: number
     status: UserStatus
   }

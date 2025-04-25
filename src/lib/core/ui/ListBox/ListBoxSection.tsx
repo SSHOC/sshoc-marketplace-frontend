@@ -1,8 +1,8 @@
 import { useListBoxSection } from '@react-aria/listbox'
 import {
-  type VirtualizerItemOptions,
   layoutInfoToStyle,
   useVirtualizerItem,
+  type VirtualizerItemOptions,
 } from '@react-aria/virtualizer'
 import type { LayoutInfo } from '@react-stately/virtualizer'
 import type { Node } from '@react-types/shared'
@@ -48,7 +48,7 @@ export const ListBoxSection = forwardRef(function ListBoxSection<T extends objec
           style={layoutInfoToStyle(headerLayoutInfo, direction)}
         >
           {item.key !== state.collection.getFirstKey() && <div role="presentation" />}
-          {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
+          { }
           {item.rendered ? <div {...headingProps}>{item.rendered}</div> : null}
         </div>
       )}

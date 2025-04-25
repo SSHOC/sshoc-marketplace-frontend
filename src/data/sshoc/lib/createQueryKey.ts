@@ -34,11 +34,13 @@ export const kind = {
   thumbnail: 'thumbnail',
 }
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+
 export function createQueryKey<
   TScope extends keyof typeof scope,
   TKind extends keyof typeof kind,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   TParams extends object,
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   TAuthData extends AuthData,
 >(scope: TScope, kind: TKind, params?: TParams, auth?: TAuthData) {
   return [auth ?? {}, scope, kind, params ?? {}] as const

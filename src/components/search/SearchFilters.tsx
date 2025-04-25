@@ -407,8 +407,8 @@ function ItemCategoryFacets(): JSX.Element {
   }
 
   const items = entries(values).filter(([category, { count }]) => {
-    if (category === 'step') return false
-    if (count === 0) return false
+    if (category === 'step') {return false}
+    if (count === 0) {return false}
     return true
   })
 

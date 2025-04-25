@@ -77,7 +77,7 @@ const sources = 'sources'
 const contributedItems = 'contributedItems'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [items, auth ?? null] as const
   },
   // lists(auth?: AuthData | undefined) {
@@ -86,10 +86,10 @@ export const keys = {
   // list(params, auth?: AuthData | undefined) {
   //   return [items, list, params, auth ?? null] as const
   // },
-  search(params: ItemSearch.Params = {}, auth?: AuthData | undefined) {
+  search(params: ItemSearch.Params = {}, auth?: AuthData  ) {
     return [items, search, params, auth ?? null] as const
   },
-  searchInfinite(params: ItemSearch.Params, auth?: AuthData | undefined) {
+  searchInfinite(params: ItemSearch.Params, auth?: AuthData  ) {
     return [items, search, infinite, params, auth ?? null] as const
   },
   // details(auth?: AuthData | undefined) {
@@ -98,62 +98,62 @@ export const keys = {
   // detail(params, auth?: AuthData | undefined) {
   //   return [items, detail, params, auth ?? null] as const
   // },
-  autocomplete(params: ItemAutocomplete.Params, auth?: AuthData | undefined) {
+  autocomplete(params: ItemAutocomplete.Params, auth?: AuthData  ) {
     return [items, autocomplete, params, auth ?? null] as const
   },
-  categories(auth?: AuthData | undefined) {
+  categories(auth?: AuthData  ) {
     return [items, categories, auth ?? null] as const
   },
-  bySource(params: GetItemsBySource.Params, auth?: AuthData | undefined) {
+  bySource(params: GetItemsBySource.Params, auth?: AuthData  ) {
     return [items, bySource, params, auth ?? null] as const
   },
-  bySourceInfinite(params: GetItemsBySource.Params, auth?: AuthData | undefined) {
+  bySourceInfinite(params: GetItemsBySource.Params, auth?: AuthData  ) {
     return [items, bySource, infinite, params, auth ?? null] as const
   },
-  bySourceItem(params: GetItemsBySourceItem.Params, auth?: AuthData | undefined) {
+  bySourceItem(params: GetItemsBySourceItem.Params, auth?: AuthData  ) {
     return [items, bySourceItem, params, auth ?? null] as const
   },
-  bySourceItemInfinite(params: GetItemsBySourceItem.Params, auth?: AuthData | undefined) {
+  bySourceItemInfinite(params: GetItemsBySourceItem.Params, auth?: AuthData  ) {
     return [items, bySourceItem, infinite, params, auth ?? null] as const
   },
-  drafts(params: GetDraftItems.Params = {}, auth?: AuthData | undefined) {
+  drafts(params: GetDraftItems.Params = {}, auth?: AuthData  ) {
     return [items, drafts, params, auth ?? null] as const
   },
-  draftsInfinite(params: GetDraftItems.Params, auth?: AuthData | undefined) {
+  draftsInfinite(params: GetDraftItems.Params, auth?: AuthData  ) {
     return [items, drafts, infinite, params, auth ?? null] as const
   },
-  relations(params: GetItemRelations.Params = {}, auth?: AuthData | undefined) {
+  relations(params: GetItemRelations.Params = {}, auth?: AuthData  ) {
     return [items, relations, params, auth ?? null] as const
   },
-  relationsInfinite(params: GetItemRelations.Params, auth?: AuthData | undefined) {
+  relationsInfinite(params: GetItemRelations.Params, auth?: AuthData  ) {
     return [items, relations, infinite, params, auth ?? null] as const
   },
-  relationKinds(auth?: AuthData | undefined) {
+  relationKinds(auth?: AuthData  ) {
     return [items, relationKind, auth ?? null] as const
   },
-  relationKind(params: GetItemRelationKind.Params, auth?: AuthData | undefined) {
+  relationKind(params: GetItemRelationKind.Params, auth?: AuthData  ) {
     return [items, relationKind, params, auth ?? null] as const
   },
-  comments(params: GetItemComments.Params, auth?: AuthData | undefined) {
+  comments(params: GetItemComments.Params, auth?: AuthData  ) {
     return [items, comments, params, auth ?? null] as const
   },
-  lastComments(params: GetLastItemComments.Params, auth?: AuthData | undefined) {
+  lastComments(params: GetLastItemComments.Params, auth?: AuthData  ) {
     return [items, lastComments, params, auth ?? null] as const
   },
-  sources(auth?: AuthData | undefined) {
+  sources(auth?: AuthData  ) {
     return [items, sources, auth ?? null] as const
   },
-  source(params: GetItemSource.Params, auth?: AuthData | undefined) {
+  source(params: GetItemSource.Params, auth?: AuthData  ) {
     return [items, source, params, auth ?? null] as const
   },
-  contributedItems(params: GetContributedItems.Params, auth?: AuthData | undefined) {
+  contributedItems(params: GetContributedItems.Params, auth?: AuthData  ) {
     return [contributedItems, params, auth ?? null] as const
   },
 }
 
 export function useItemSearch<TData = ItemSearch.Response>(
   params: ItemSearch.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<ItemSearch.Response, Error, TData, ReturnType<typeof keys.search>>,
 ) {
   const session = useSession(auth)
@@ -168,7 +168,7 @@ export function useItemSearch<TData = ItemSearch.Response>(
 
 export function useItemSearchInfinite<TData = ItemSearch.Response>(
   params: ItemSearch.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     ItemSearch.Response,
     Error,
@@ -187,7 +187,7 @@ export function useItemSearchInfinite<TData = ItemSearch.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -196,7 +196,7 @@ export function useItemSearchInfinite<TData = ItemSearch.Response>(
 
 export function useItemAutocomplete<TData = ItemAutocomplete.Response>(
   params: ItemAutocomplete.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     ItemAutocomplete.Response,
     Error,
@@ -215,7 +215,7 @@ export function useItemAutocomplete<TData = ItemAutocomplete.Response>(
 }
 
 export function useItemCategories<TData = GetItemCategories.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemCategories.Response,
     Error,
@@ -235,7 +235,7 @@ export function useItemCategories<TData = GetItemCategories.Response>(
 
 export function useItemsBySource<TData = GetItemsBySource.Response>(
   params: GetItemsBySource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemsBySource.Response,
     Error,
@@ -255,7 +255,7 @@ export function useItemsBySource<TData = GetItemsBySource.Response>(
 
 export function useItemsBySourceInfinite<TData = GetItemsBySource.Response>(
   params: GetItemsBySource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetItemsBySource.Response,
     Error,
@@ -274,7 +274,7 @@ export function useItemsBySourceInfinite<TData = GetItemsBySource.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -283,7 +283,7 @@ export function useItemsBySourceInfinite<TData = GetItemsBySource.Response>(
 
 export function useItemsBySourceItem<TData = GetItemsBySourceItem.Response>(
   params: GetItemsBySourceItem.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemsBySourceItem.Response,
     Error,
@@ -303,7 +303,7 @@ export function useItemsBySourceItem<TData = GetItemsBySourceItem.Response>(
 
 export function useItemsBySourceItemInfinite<TData = GetItemsBySourceItem.Response>(
   params: GetItemsBySourceItem.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetItemsBySourceItem.Response,
     Error,
@@ -322,7 +322,7 @@ export function useItemsBySourceItemInfinite<TData = GetItemsBySourceItem.Respon
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -331,7 +331,7 @@ export function useItemsBySourceItemInfinite<TData = GetItemsBySourceItem.Respon
 
 export function useDraftItems<TData = GetDraftItems.Response>(
   params: GetDraftItems.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetDraftItems.Response, Error, TData, ReturnType<typeof keys.drafts>>,
 ) {
   const session = useSession(auth)
@@ -346,7 +346,7 @@ export function useDraftItems<TData = GetDraftItems.Response>(
 
 export function useDraftItemsInfinite<TData = GetDraftItems.Response>(
   params: GetDraftItems.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetDraftItems.Response,
     Error,
@@ -365,7 +365,7 @@ export function useDraftItemsInfinite<TData = GetDraftItems.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -374,7 +374,7 @@ export function useDraftItemsInfinite<TData = GetDraftItems.Response>(
 
 export function useItemRelations<TData = GetItemRelations.Response>(
   params: GetItemRelations.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemRelations.Response,
     Error,
@@ -394,7 +394,7 @@ export function useItemRelations<TData = GetItemRelations.Response>(
 
 export function useItemRelationsInfinite<TData = GetItemRelations.Response>(
   params: GetItemRelations.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetItemRelations.Response,
     Error,
@@ -413,7 +413,7 @@ export function useItemRelationsInfinite<TData = GetItemRelations.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -422,7 +422,7 @@ export function useItemRelationsInfinite<TData = GetItemRelations.Response>(
 
 export function useCreateItemRelation(
   params: CreateItemRelation.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CreateItemRelation.Response,
     Error,
@@ -450,7 +450,7 @@ export function useCreateItemRelation(
 
 export function useDeleteItemRelation(
   params: DeleteItemRelation.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteItemRelation.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -474,7 +474,7 @@ export function useDeleteItemRelation(
 
 export function useItemRelationKind<TData = GetItemRelationKind.Response>(
   params: GetItemRelationKind.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemRelationKind.Response,
     Error,
@@ -493,7 +493,7 @@ export function useItemRelationKind<TData = GetItemRelationKind.Response>(
 }
 
 export function useCreateItemRelationKind(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CreateItemRelationKind.Response,
     Error,
@@ -518,7 +518,7 @@ export function useCreateItemRelationKind(
 
 export function useUpdateItemRelationKind(
   params: UpdateItemRelationKind.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UpdateItemRelationKind.Response,
     Error,
@@ -544,7 +544,7 @@ export function useUpdateItemRelationKind(
 
 export function useDeleteItemRelationKind(
   params: DeleteItemRelationKind.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteItemRelationKind.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -566,7 +566,7 @@ export function useDeleteItemRelationKind(
 
 export function useItemComments<TData = GetItemComments.Response>(
   params: GetItemComments.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetItemComments.Response,
     Error,
@@ -586,7 +586,7 @@ export function useItemComments<TData = GetItemComments.Response>(
 
 export function useLastItemComments<TData = GetLastItemComments.Response>(
   params: GetLastItemComments.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetLastItemComments.Response,
     Error,
@@ -606,7 +606,7 @@ export function useLastItemComments<TData = GetLastItemComments.Response>(
 
 export function useCreateItemComment(
   params: CreateItemComment.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateItemComment.Response, Error, { data: CreateItemComment.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -628,7 +628,7 @@ export function useCreateItemComment(
 
 export function useUpdateItemComment(
   params: UpdateItemComment.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateItemComment.Response, Error, { data: UpdateItemComment.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -650,7 +650,7 @@ export function useUpdateItemComment(
 
 export function useDeleteItemComment(
   params: DeleteItemComment.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteItemComment.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -671,7 +671,7 @@ export function useDeleteItemComment(
 }
 
 export function useItemSources<TData = GetItemSources.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetItemSources.Response, Error, TData, ReturnType<typeof keys.sources>>,
 ) {
   const session = useSession(auth)
@@ -686,7 +686,7 @@ export function useItemSources<TData = GetItemSources.Response>(
 
 export function useItemSource<TData = GetItemSource.Response>(
   params: GetItemSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetItemSource.Response, Error, TData, ReturnType<typeof keys.source>>,
 ) {
   const session = useSession(auth)
@@ -700,7 +700,7 @@ export function useItemSource<TData = GetItemSource.Response>(
 }
 
 export function useCreateItemSource(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateItemSource.Response, Error, { data: CreateItemSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -722,7 +722,7 @@ export function useCreateItemSource(
 
 export function useUpdateItemSource(
   params: UpdateItemSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateItemSource.Response, Error, { data: UpdateItemSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -744,7 +744,7 @@ export function useUpdateItemSource(
 
 export function useDeleteItemSource(
   params: DeleteItemSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteItemSource.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -766,7 +766,7 @@ export function useDeleteItemSource(
 
 export function useContributedItems<TData = GetContributedItems.Response>(
   params: GetContributedItems.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetContributedItems.Response,
     Error,

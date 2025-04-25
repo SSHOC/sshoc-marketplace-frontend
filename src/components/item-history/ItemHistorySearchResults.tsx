@@ -45,7 +45,7 @@ export function ItemHistorySearchResults(props: ItemHistorySearchResultsProps): 
     <section className={css['container']}>
       <ol role="list" className={css['search-results']}>
         {items.data.map((item) => {
-          if (item.category === 'step') return null
+          if (item.category === 'step') {return null}
 
           return (
             <li key={[item.persistentId, item.id].join('+')}>

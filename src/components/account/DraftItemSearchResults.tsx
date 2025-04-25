@@ -32,7 +32,7 @@ export function DraftItemSearchResults(): JSX.Element {
         {draftItemSearch.data.items.map((item) => {
           // FIXME: Check if `getDraftItems` still returns steps or not
           // Also check any other endpoints returning `ItemCore`.
-          if (item.category === 'step') return null
+          if (item.category === 'step') {return null}
 
           return (
             <li key={[item.persistentId, item.id].join('+')}>

@@ -149,7 +149,7 @@ function MediaEditButton(props: MediaEditButtonProps): JSX.Element {
   const values = useField(name).input.value as ItemMedia | undefined
 
   const initialValues = useMemo<Partial<MediaUploadFormValues> | undefined>(() => {
-    if (values == null) return undefined
+    if (values == null) {return undefined}
 
     if ('location' in values.info) {
       return {

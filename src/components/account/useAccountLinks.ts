@@ -25,7 +25,7 @@ export function useAccountLinks(): AccountLinks {
   const { t } = useI18n<'authenticated' | 'common'>()
   const currentUser = useCurrentUser()
 
-  if (currentUser.data == null) return []
+  if (currentUser.data == null) {return []}
 
   const links: AccountLinks = [
     {

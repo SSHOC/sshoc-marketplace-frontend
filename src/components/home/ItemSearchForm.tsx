@@ -84,10 +84,10 @@ function useItemCategoryOptions() {
       { id: allItemCategories, label: t(['common', 'home', 'search', 'all-item-categories']) },
     ]
 
-    if (itemCategories.data == null) return options
+    if (itemCategories.data == null) {return options}
 
     keys(itemCategories.data).forEach((category) => {
-      if (category === 'step') return
+      if (category === 'step') {return}
       options.push({ id: category, label: t(['common', 'item-categories', category, 'other']) })
     })
 

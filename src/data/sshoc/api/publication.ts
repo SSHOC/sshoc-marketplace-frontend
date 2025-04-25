@@ -42,10 +42,10 @@ export function getPublications(
 }
 
 export namespace GetPublication {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -70,7 +70,7 @@ export function getPublication(
 }
 
 export namespace GetPublicationVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
     versionId: Publication['id']
   }
@@ -92,10 +92,10 @@ export function getPublicationVersion(
 }
 
 export namespace GetPublicationHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -117,7 +117,7 @@ export function getPublicationHistory(
 }
 
 export namespace GetPublicationInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
   export type Params = PathParams
@@ -138,7 +138,7 @@ export function getPublicationInformationContributors(
 }
 
 export namespace GetPublicationVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
     versionId: Publication['id']
   }
@@ -160,7 +160,7 @@ export function getPublicationVersionInformationContributors(
 }
 
 export namespace CreatePublication {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -183,7 +183,7 @@ export function createPublication(
 }
 
 export namespace CommitDraftPublication {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
   export type Params = PathParams
@@ -202,10 +202,10 @@ export function commitDraftPublication(
 }
 
 export namespace UpdatePublication {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -233,10 +233,10 @@ export function updatePublication(
 }
 
 export namespace DeletePublication {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -259,7 +259,7 @@ export function deletePublication(
 }
 
 export namespace DeletePublicationVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
     versionId: Publication['id']
   }
@@ -281,7 +281,7 @@ export function deletePublicationVersion(
 }
 
 export namespace RevertPublicationToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
     versionId: Publication['id']
   }
@@ -305,10 +305,10 @@ export function revertPublicationToVersion(
 export const approvePublicationVersion = revertPublicationToVersion
 
 export namespace GetMergedPublication {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Publication['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -330,7 +330,7 @@ export function getMergedPublication(
 }
 
 export namespace MergePublications {
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Publication['persistentId']>
   }
   export type Params = SearchParams
@@ -355,10 +355,10 @@ export function mergePublications(
 }
 
 export namespace GetPublicationDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Publication['persistentId']
     /** `versionId` of item to compare with. */
@@ -383,11 +383,11 @@ export function getPublicationDiff(
 }
 
 export namespace GetPublicationVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
     versionId: Publication['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Publication['persistentId']
     /** `versionId` of item to compare with. */
@@ -412,7 +412,7 @@ export function getPublicationVersionDiff(
 }
 
 export namespace GetPublicationSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Publication['persistentId']
   }
   export type Params = PathParams

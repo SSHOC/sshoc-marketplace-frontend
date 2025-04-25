@@ -1,6 +1,6 @@
 import { maxItemSearchFacetValues } from '~/config/sshoc.config'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function getTopFacetValues<T extends { count: number }>(
   values: Record<string, T>,
   additionalKeys?: Array<string>,
@@ -10,7 +10,7 @@ export function getTopFacetValues<T extends { count: number }>(
 
   additionalKeys?.forEach((key) => {
     if (!itemsMap.has(key) && key in values) {
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       itemsMap.set(key, values[key]!)
     }
   })

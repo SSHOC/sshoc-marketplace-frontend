@@ -90,7 +90,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
     defaultFilter: contains,
     defaultSelectedKey: undefined,
     onSelectionChange(key) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+       
       if (key != null) {
         // @ts-expect-error Error in upstream type definitions.
         onSubmit?.(null, key)
@@ -186,7 +186,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
           layout={layout}
           onLoadMore={onLoadMore}
           renderEmptyState={() => {
-            if (isAsync !== true) return null
+            if (isAsync !== true) {return null}
 
             return <span>{t(['common', 'ui', 'autocomplete', 'no-results'])}</span>
           }}

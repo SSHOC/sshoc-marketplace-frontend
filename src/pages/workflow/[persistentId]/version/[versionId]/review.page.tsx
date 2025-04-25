@@ -108,7 +108,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): JSX
   const ignoreMissingDiff: QueryMetadata = {
     messages: {
       error(error) {
-        if (isNotFoundError(error)) return false
+        if (isNotFoundError(error)) {return false}
         return undefined
       },
     },

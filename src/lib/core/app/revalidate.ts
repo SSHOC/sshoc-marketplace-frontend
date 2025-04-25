@@ -3,10 +3,10 @@ import { createUrl, request } from '@stefanprobst/request'
 
 import { baseUrl } from '~/config/site.config'
 
-/* eslint-disable-next-line @typescript-eslint/no-namespace */
+ 
 export namespace Revalidate {
-  export type Body = { pathname: string }
-  export type Variables = { data: Body }
+  export interface Body { pathname: string }
+  export interface Variables { data: Body }
   export type Response = void
 }
 

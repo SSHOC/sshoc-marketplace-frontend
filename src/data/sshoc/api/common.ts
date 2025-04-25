@@ -11,7 +11,7 @@ export type PaginatedResponse<T> = T & {
   pages: number
 }
 
-export type AuthData = {
+export interface AuthData {
   token: string | null
 }
 

@@ -54,7 +54,7 @@ export interface CheckBoxGroupItemProps extends AriaCheckboxGroupItemProps {
 
 export function CheckBoxGroupItem(props: CheckBoxGroupItemProps): JSX.Element {
   const ref = useRef<HTMLInputElement>(null)
-  /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+   
   const state = props.state!
   const { inputProps } = useCheckboxGroupItem(props, state, ref)
   const isDisabled = props.isDisabled === true || state.isDisabled === true

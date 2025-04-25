@@ -3,9 +3,7 @@ import { useMemo } from 'react'
 
 import { useRoute } from '@/lib/core/navigation/useRoute'
 
-export interface Matcher {
-  (href: LinkProps['href'], route: URL): boolean
-}
+export type Matcher = (href: LinkProps['href'], route: URL) => boolean
 
 const isMatchingPathnames: Matcher = function isMatchingPathnames(href, route) {
   return (

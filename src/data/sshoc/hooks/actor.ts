@@ -56,64 +56,64 @@ const search = 'search'
 const infinite = 'infinite'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [actor, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [actor, list, auth ?? null] as const
   },
-  list(params: GetActors.Params, auth?: AuthData | undefined) {
+  list(params: GetActors.Params, auth?: AuthData  ) {
     return [actor, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetActors.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetActors.Params, auth?: AuthData  ) {
     return [actor, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [actor, detail, auth ?? null] as const
   },
-  detail(params: GetActor.Params, auth?: AuthData | undefined) {
+  detail(params: GetActor.Params, auth?: AuthData  ) {
     return [actor, detail, params, auth ?? null] as const
   },
-  history(params: GetActorHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetActorHistory.Params, auth?: AuthData  ) {
     return [actor, history, params, auth ?? null] as const
   },
-  search(params: SearchActors.Params = {}, auth?: AuthData | undefined) {
+  search(params: SearchActors.Params = {}, auth?: AuthData  ) {
     return [actor, search, params, auth ?? null] as const
   },
-  searchInfinite(params: SearchActors.Params, auth?: AuthData | undefined) {
+  searchInfinite(params: SearchActors.Params, auth?: AuthData  ) {
     return [actor, search, infinite, params, auth ?? null] as const
   },
   source: {
-    all(auth?: AuthData | undefined) {
+    all(auth?: AuthData  ) {
       return [source, auth ?? null] as const
     },
-    lists(auth?: AuthData | undefined) {
+    lists(auth?: AuthData  ) {
       return [source, list, auth ?? null] as const
     },
-    list(auth?: AuthData | undefined) {
+    list(auth?: AuthData  ) {
       return [source, list, auth ?? null] as const
     },
-    details(auth?: AuthData | undefined) {
+    details(auth?: AuthData  ) {
       return [source, detail, auth ?? null] as const
     },
-    detail(params: GetActorSource.Params, auth?: AuthData | undefined) {
+    detail(params: GetActorSource.Params, auth?: AuthData  ) {
       return [source, detail, params, auth ?? null] as const
     },
   },
   role: {
-    all(auth?: AuthData | undefined) {
+    all(auth?: AuthData  ) {
       return [role, auth ?? null] as const
     },
-    lists(auth?: AuthData | undefined) {
+    lists(auth?: AuthData  ) {
       return [role, list, auth ?? null] as const
     },
-    list(auth?: AuthData | undefined) {
+    list(auth?: AuthData  ) {
       return [role, list, auth ?? null] as const
     },
-    details(auth?: AuthData | undefined) {
+    details(auth?: AuthData  ) {
       return [role, detail, auth ?? null] as const
     },
-    detail(params: GetActorRole.Params, auth?: AuthData | undefined) {
+    detail(params: GetActorRole.Params, auth?: AuthData  ) {
       return [role, detail, params, auth ?? null] as const
     },
   },
@@ -121,7 +121,7 @@ export const keys = {
 
 export function useActors<TData = GetActors.Response>(
   params: GetActors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetActors.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -136,7 +136,7 @@ export function useActors<TData = GetActors.Response>(
 
 export function useActorsInfinite<TData = GetActors.Response>(
   params: GetActors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetActors.Response,
     Error,
@@ -155,7 +155,7 @@ export function useActorsInfinite<TData = GetActors.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -164,7 +164,7 @@ export function useActorsInfinite<TData = GetActors.Response>(
 
 export function useActor<TData = GetActor.Response>(
   params: GetActor.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetActor.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -178,7 +178,7 @@ export function useActor<TData = GetActor.Response>(
 }
 
 export function useCreateActor(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateActor.Response, Error, { data: CreateActor.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -200,7 +200,7 @@ export function useCreateActor(
 
 export function useUpdateActor(
   params: UpdateActor.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateActor.Response, Error, { data: UpdateActor.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -223,7 +223,7 @@ export function useUpdateActor(
 
 export function useDeleteActor(
   params: DeleteActor.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteActor.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -246,7 +246,7 @@ export function useDeleteActor(
 
 export function useMergeActors(
   params: MergeActors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergeActors.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -269,7 +269,7 @@ export function useMergeActors(
 
 export function useActorHistory<TData = GetActorHistory.Response>(
   params: GetActorHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetActorHistory.Response,
     Error,
@@ -289,7 +289,7 @@ export function useActorHistory<TData = GetActorHistory.Response>(
 
 export function useActorSearch<TData = SearchActors.Response>(
   params: SearchActors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<SearchActors.Response, Error, TData, ReturnType<typeof keys.search>>,
 ) {
   const session = useSession(auth)
@@ -304,7 +304,7 @@ export function useActorSearch<TData = SearchActors.Response>(
 
 export function useActorSearchInfinite<TData = SearchActors.Response>(
   params: SearchActors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     SearchActors.Response,
     Error,
@@ -323,7 +323,7 @@ export function useActorSearchInfinite<TData = SearchActors.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -331,7 +331,7 @@ export function useActorSearchInfinite<TData = SearchActors.Response>(
 }
 
 export function useActorSources<TData = GetActorSources.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetActorSources.Response,
     Error,
@@ -351,7 +351,7 @@ export function useActorSources<TData = GetActorSources.Response>(
 
 export function useActorSource<TData = GetActorSource.Response>(
   params: GetActorSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetActorSource.Response,
     Error,
@@ -370,7 +370,7 @@ export function useActorSource<TData = GetActorSource.Response>(
 }
 
 export function useCreateActorSource(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateActorSource.Response, Error, { data: CreateActorSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -391,7 +391,7 @@ export function useCreateActorSource(
 
 export function useUpdateActorSource(
   params: UpdateActorSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateActorSource.Response, Error, { data: UpdateActorSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -413,7 +413,7 @@ export function useUpdateActorSource(
 
 export function useDeleteActorSource(
   params: DeleteActorSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteActorSource.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -434,7 +434,7 @@ export function useDeleteActorSource(
 }
 
 export function useActorRoles<TData = GetActorRoles.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetActorRoles.Response,
     Error,
@@ -454,7 +454,7 @@ export function useActorRoles<TData = GetActorRoles.Response>(
 
 export function useActorRole<TData = GetActorRole.Response>(
   params: GetActorRole.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetActorRole.Response,
     Error,
@@ -473,7 +473,7 @@ export function useActorRole<TData = GetActorRole.Response>(
 }
 
 export function useCreateActorRole(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateActorRole.Response, Error, { data: CreateActorRole.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -494,7 +494,7 @@ export function useCreateActorRole(
 
 export function useUpdateActorRole(
   params: UpdateActorRole.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateActorRole.Response, Error, { data: UpdateActorRole.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -516,7 +516,7 @@ export function useUpdateActorRole(
 
 export function useDeleteActorRole(
   params: DeleteActorRole.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteActorRole.Response, Error>,
 ) {
   const queryClient = useQueryClient()

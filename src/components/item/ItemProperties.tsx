@@ -81,7 +81,7 @@ function useGroupedPropertyValues(
 
     properties.forEach((property) => {
       /** Hidden properties should only be visible for admins and moderators. */
-      if (property.type.hidden && !hasPermission) return
+      if (property.type.hidden && !hasPermission) {return}
 
       /** Not translated since property labels returned from backend are not translated either. */
       const groupName = property.type.groupName ?? 'Other'
@@ -90,13 +90,13 @@ function useGroupedPropertyValues(
       if (!groups.has(groupName)) {
         groups.set(groupName, new Map())
       }
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       const group = groups.get(groupName)!
 
       if (!group.has(label)) {
         group.set(label, [])
       }
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       const properties = group.get(label)!
 
       properties.push(property)
@@ -111,7 +111,7 @@ function useGroupedPropertyValues(
         groupName,
         Array.from(group)
           .sort(([_label, properties], [_otherLabel, otherProperties]) => {
-            /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+             
             return properties[0]!.type.ord > otherProperties[0]!.type.ord ? 1 : -1
           })
           .map(([label, properties]) => {

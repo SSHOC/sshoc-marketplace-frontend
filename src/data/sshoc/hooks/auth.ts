@@ -14,16 +14,16 @@ const authentication = 'authentication'
 const user = 'user'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [authentication, auth ?? null] as const
   },
-  user(auth?: AuthData | undefined) {
+  user(auth?: AuthData  ) {
     return [authentication, user, auth ?? null] as const
   },
 }
 
 export function useCurrentUser<TData = GetCurrentUser.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetCurrentUser.Response, Error, TData, ReturnType<typeof keys.user>>,
 ) {
   const { isSignedIn, signOut } = useAuth()

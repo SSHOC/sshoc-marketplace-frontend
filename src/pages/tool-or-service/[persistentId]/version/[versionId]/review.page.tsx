@@ -107,7 +107,7 @@ export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.P
   const ignoreMissingDiff: QueryMetadata = {
     messages: {
       error(error) {
-        if (isNotFoundError(error)) return false
+        if (isNotFoundError(error)) {return false}
         return undefined
       },
     },

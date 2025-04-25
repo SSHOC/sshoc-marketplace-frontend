@@ -48,7 +48,7 @@ export function useSubmitMediaUploadForm(
     if (isNonEmptyString(sourceUrl)) {
       importMedia.mutate({ data: { sourceUrl } }, { onSuccess })
     } else if (fileList != null && fileList.length > 0) {
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       const file = fileList[0]!
       const formData = new FormData()
       formData.set('file', file)

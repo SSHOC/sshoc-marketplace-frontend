@@ -20,9 +20,9 @@ import { revalidate } from '@/lib/core/app/revalidate'
 // FIXME: DRY up.
 // TODO: export ItemFormValues<WorkflowInput & ...> type here, and use it on the /new page.
 
-/* eslint-disable-next-line @typescript-eslint/no-namespace */
+ 
 export namespace UseCreateOrUpdateWorkflow {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -241,7 +241,7 @@ export async function createOrUpdateWorkflow(
 }
 
 export function useCreateOrUpdateWorkflow(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UseCreateOrUpdateWorkflow.Response,
     Error,

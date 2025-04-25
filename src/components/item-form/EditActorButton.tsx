@@ -23,7 +23,7 @@ export function EditActorButton(props: EditActorButtonProps): JSX.Element {
   const actorId = useFieldState<ActorRef['id'] | undefined>(field.name).input.value
   // TODO: Reuse initialValues / actor search result. Need to save full actor search result
   // in form state in ActorComboBox#onSelectionChange; then get it from useField(actorField._root)
-  /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+   
   const actor = useActor({ id: actorId! }, undefined, { enabled: actorId != null })
 
   if (actorId == null || actor.data == null) {

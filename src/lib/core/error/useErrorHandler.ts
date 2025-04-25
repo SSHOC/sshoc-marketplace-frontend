@@ -8,7 +8,13 @@ import { useState } from 'react'
  */
 export function useErrorHandler(givenError?: unknown): (error: unknown) => void {
   const [error, setError] = useState<unknown>(null)
-  if (givenError != null) throw givenError
-  if (error != null) throw error
+  if (givenError != null) {
+    // eslint-disable-next-line @typescript-eslint/only-throw-error
+    throw givenError
+  }
+    if (error != null) {
+    // eslint-disable-next-line @typescript-eslint/only-throw-error
+    throw error
+  }
   return setError
 }

@@ -135,7 +135,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
       <ListBoxBase<T>
         ref={listboxRef}
         {...menuProps}
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+         
         autoFocus={state.focusStrategy || true}
         color={color}
         disallowEmptySelection
@@ -201,10 +201,10 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
     <span
       {...valueProps}
       className={css['select-value']}
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+       
       data-placeholder={state.selectedItem == null ? '' : undefined}
     >
-      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+      { }
       {state.selectedItem != null ? state.selectedItem.rendered : placeholder}
     </span>
   )

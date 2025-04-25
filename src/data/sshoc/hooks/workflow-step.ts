@@ -60,31 +60,31 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [workflowStep, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [workflowStep, list, auth ?? null] as const
   },
   // list(params: GetWorkflowSteps.Params, auth?: AuthData | undefined) {
   //   return [workflowStep, list, params, auth ?? null] as const
   // },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [workflowStep, detail, auth ?? null] as const
   },
-  detail(params: GetWorkflowStep.Params, auth?: AuthData | undefined) {
+  detail(params: GetWorkflowStep.Params, auth?: AuthData  ) {
     return [workflowStep, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [workflowStep, version, auth ?? null] as const
   // },
-  version(params: GetWorkflowStepVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetWorkflowStepVersion.Params, auth?: AuthData  ) {
     return [workflowStep, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [workflowStep, history, auth ?? null] as const
   // },
-  history(params: GetWorkflowStepHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetWorkflowStepHistory.Params, auth?: AuthData  ) {
     return [workflowStep, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -92,7 +92,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetWorkflowStepInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [workflowStep, informationContributors, params, auth ?? null] as const
   },
@@ -101,20 +101,20 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetWorkflowStepVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [workflowStep, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedWorkflowStep.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedWorkflowStep.Params, auth?: AuthData  ) {
     return [workflowStep, merged, params, auth ?? null] as const
   },
-  sources(params: GetWorkflowStepSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetWorkflowStepSources.Params, auth?: AuthData  ) {
     return [workflowStep, sources, params, auth ?? null] as const
   },
-  diff(params: GetWorkflowStepDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetWorkflowStepDiff.Params, auth?: AuthData  ) {
     return [workflowStep, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetWorkflowStepVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetWorkflowStepVersionDiff.Params, auth?: AuthData  ) {
     return [workflowStep, version, diff, params, auth ?? null] as const
   },
 }
@@ -136,7 +136,7 @@ export const keys = {
 
 export function useWorkflowStep<TData = GetWorkflowStep.Response>(
   params: GetWorkflowStep.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetWorkflowStep.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -151,7 +151,7 @@ export function useWorkflowStep<TData = GetWorkflowStep.Response>(
 
 export function useWorkflowStepVersion<TData = GetWorkflowStepVersion.Response>(
   params: GetWorkflowStepVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepVersion.Response,
     Error,
@@ -171,7 +171,7 @@ export function useWorkflowStepVersion<TData = GetWorkflowStepVersion.Response>(
 
 export function useWorkflowStepHistory<TData = GetWorkflowStepHistory.Response>(
   params: GetWorkflowStepHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepHistory.Response,
     Error,
@@ -193,7 +193,7 @@ export function useWorkflowStepInformationContributors<
   TData = GetWorkflowStepInformationContributors.Response,
 >(
   params: GetWorkflowStepInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepInformationContributors.Response,
     Error,
@@ -215,7 +215,7 @@ export function useWorkflowStepVersionInformationContributors<
   TData = GetWorkflowStepVersionInformationContributors.Response,
 >(
   params: GetWorkflowStepVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepVersionInformationContributors.Response,
     Error,
@@ -235,7 +235,7 @@ export function useWorkflowStepVersionInformationContributors<
 
 export function useCreateWorkflowStep(
   params: CreateWorkflowStep.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CreateWorkflowStep.Response,
     Error,
@@ -267,7 +267,7 @@ export function useCreateWorkflowStep(
 
 export function useUpdateWorkflowStep(
   params: UpdateWorkflowStep.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UpdateWorkflowStep.Response,
     Error,
@@ -299,7 +299,7 @@ export function useUpdateWorkflowStep(
 
 export function useDeleteWorkflowStep(
   params: DeleteWorkflowStep.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteWorkflowStep.Response, Error>,
 ) {
   // const queryClient = useQueryClient()
@@ -327,7 +327,7 @@ export function useDeleteWorkflowStep(
 
 export function useDeleteWorkflowStepVersion(
   params: DeleteWorkflowStepVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteWorkflowStepVersion.Response, Error>,
 ) {
   // const queryClient = useQueryClient()
@@ -355,7 +355,7 @@ export function useDeleteWorkflowStepVersion(
 
 export function useRevertWorkflowStepToVersion(
   params: RevertWorkflowStepToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertWorkflowStepToVersion.Response, Error>,
 ) {
   // const queryClient = useQueryClient()
@@ -397,7 +397,7 @@ export const useRejectWorkflowStepVersion = useDeleteWorkflowStepVersion
 
 export function useMergedWorkflowStep<TData = GetMergedWorkflowStep.Response>(
   params: GetMergedWorkflowStep.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMergedWorkflowStep.Response,
     Error,
@@ -417,7 +417,7 @@ export function useMergedWorkflowStep<TData = GetMergedWorkflowStep.Response>(
 
 export function useMergeWorkflowSteps(
   params: MergeWorkflowSteps.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     MergeWorkflowSteps.Response,
     Error,
@@ -449,7 +449,7 @@ export function useMergeWorkflowSteps(
 
 export function useWorkflowStepDiff<TData = GetWorkflowStepDiff.Response>(
   params: GetWorkflowStepDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepDiff.Response,
     Error,
@@ -469,7 +469,7 @@ export function useWorkflowStepDiff<TData = GetWorkflowStepDiff.Response>(
 
 export function useWorkflowStepVersionDiff<TData = GetWorkflowStepVersionDiff.Response>(
   params: GetWorkflowStepVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepVersionDiff.Response,
     Error,
@@ -489,7 +489,7 @@ export function useWorkflowStepVersionDiff<TData = GetWorkflowStepVersionDiff.Re
 
 export function useWorkflowStepSources<TData = GetWorkflowStepSources.Response>(
   params: GetWorkflowStepSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetWorkflowStepSources.Response,
     Error,

@@ -4,7 +4,7 @@ import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { convertDynamicPropertySearchParams } from '@/data/sshoc/lib/convertDynamicPropertySearchParams'
 import { entries } from '@/lib/utils'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useModerateItemsSearchResults() {
   const searchFilters = useModerateItemsSearchFilters()
   const normalizedSearchFilters = normalizeSearchFilters(searchFilters)

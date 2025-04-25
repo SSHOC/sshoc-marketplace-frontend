@@ -30,7 +30,7 @@ export function ModerateItemSearchResults(): JSX.Element {
     <section className={css['container']}>
       <ul role="list" className={css['search-results']}>
         {moderateItemSearch.data.items.map((item) => {
-          if (item.category === 'step') return null
+          if (item.category === 'step') {return null}
 
           return (
             <li key={[item.persistentId, item.id].join('+')}>

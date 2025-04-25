@@ -44,7 +44,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
     types: [propertyTypeId],
   })
   const items = useMemo(() => {
-    if (conceptSearchResults.data?.pages == null) return []
+    if (conceptSearchResults.data?.pages == null) {return []}
     return conceptSearchResults.data.pages.flatMap((page) => {
       return page.concepts
     })
@@ -81,7 +81,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
         {allowedVocabularies.map((vocabulary, index) => {
           const href = vocabulary.accessibleAt ?? vocabulary.namespace
 
-          if (href == null) return null
+          if (href == null) {return null}
 
           return (
             <Fragment key={vocabulary.code}>

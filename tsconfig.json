@@ -1,24 +1,26 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@acdh-oeaw/tsconfig",
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"]
-    },
-    "plugins": [{ "name": "next" }]
-  },
-  "include": [
-    "./**/*.d.ts",
-    "./**/*.js",
-    "./**/*.mdx",
-    "./**/*.ts",
-    "./**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [".next", "content", "node_modules", "out", "public"],
-  "mdx": {
-    "checkMdx": false,
-    "plugins": ["remark-frontmatter", "remark-mdx-frontmatter", "remark-gfm"]
-  }
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "@acdh-oeaw/tsconfig",
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"],
+			"~/*": ["./*"]
+		},
+		"plugins": [{ "name": "next" }]
+	},
+	"include": [
+		"./**/*.d.ts",
+		"./**/*.js",
+		"./**/*.cjs",
+		"./**/*.mjs",
+		"./**/*.mdx",
+		"./**/*.ts",
+		"./**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": [".next", "content", "node_modules", "out", "public"],
+	"mdx": {
+		"checkMdx": false,
+		"plugins": ["remark-frontmatter", "remark-mdx-frontmatter", "remark-gfm"]
+	}
 }

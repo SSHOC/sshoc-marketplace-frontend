@@ -27,7 +27,7 @@ export function ItemExternalIds(props: ItemExternalIdsProps): JSX.Element {
       <dd>
         <ul role="list">
           {ids.map((id) => {
-            if (internalExternalIds.includes(id.identifierService.code)) return null
+            if (internalExternalIds.includes(id.identifierService.code)) {return null}
 
             if (id.identifierService.urlTemplate == null) {
               return (

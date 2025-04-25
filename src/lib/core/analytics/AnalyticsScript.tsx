@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { appId, baseUrl } from '~/config/analytics.config'
 
 export function AnalyticsScript(): JSX.Element {
-  if (baseUrl == null || appId == null) return <Fragment />
+  if (baseUrl == null || appId == null) {return <Fragment />}
 
   return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />
 }

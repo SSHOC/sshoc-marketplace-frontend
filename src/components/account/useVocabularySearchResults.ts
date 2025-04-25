@@ -4,7 +4,7 @@ import { useConceptSearch } from '@/data/sshoc/hooks/vocabulary'
 import { convertDynamicPropertySearchParams } from '@/data/sshoc/lib/convertDynamicPropertySearchParams'
 import { entries } from '@/lib/utils'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useVocabularySearchResults() {
   const searchFilters = useVocabularySearchFilters()
   const normalizedSearchFilters = normalizeSearchFilters(searchFilters)
@@ -22,7 +22,7 @@ function normalizeSearchFilters(filters: SearchFilters) {
       case 'f.status': {
         if (Array.isArray(value)) {
           searchFilters['f.candidate'] = value.map((status) => {
-            if (status === 'candidate') return 'true'
+            if (status === 'candidate') {return 'true'}
             return 'false'
           })
         }

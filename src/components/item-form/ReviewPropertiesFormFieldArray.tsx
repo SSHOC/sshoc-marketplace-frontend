@@ -54,7 +54,7 @@ export function ReviewPropertiesFormFieldArray(
     },
   })
   const propertyTypesMap = useMemo(() => {
-    if (propertyTypes.data == null) return new Map<PropertyType['code'], PropertyType>()
+    if (propertyTypes.data == null) {return new Map<PropertyType['code'], PropertyType>()}
     return mapBy(propertyTypes.data.propertyTypes, 'code')
   }, [propertyTypes.data])
 

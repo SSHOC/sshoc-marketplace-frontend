@@ -5,7 +5,7 @@ export type WorkflowFormPage =
   | { type: 'steps' }
   | { type: 'workflow' }
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useWorkflowFormPage() {
   const [page, setPage] = useState<WorkflowFormPage>({ type: 'workflow' })
 

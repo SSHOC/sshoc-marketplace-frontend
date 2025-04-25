@@ -89,7 +89,7 @@ function BrowseLinks(props: BrowseLinksProps): JSX.Element {
               [K in ItemFacet as `f.${K}`]: Array<string>
             }
 
-            if (count === 0) return null
+            if (count === 0) {return null}
 
             return (
               <li key={value}>

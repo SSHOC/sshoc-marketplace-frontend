@@ -43,7 +43,7 @@ export function ActorComboBox(props: ActorComboBoxProps): JSX.Element {
     order: 'name',
   })
   const items = useMemo(() => {
-    if (actorSearchResults.data?.pages == null) return []
+    if (actorSearchResults.data?.pages == null) {return []}
     return actorSearchResults.data.pages.flatMap((page) => {
       return page.actors
     })

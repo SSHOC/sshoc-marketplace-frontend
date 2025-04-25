@@ -13,7 +13,6 @@ import { getTopFacetValues } from '@/components/common/getTopFacetValues'
 import { Link } from '@/components/common/Link'
 import { SearchFacetsOverlay } from '@/components/common/SearchFacetsOverlay'
 import { ModalDialog } from '@/components/search/ModalDialog'
-import type { PropertyType } from '@/data/sshoc/api/property'
 import type { ConceptStatus } from '@/data/sshoc/utils/concept'
 import { conceptStatus, mapConceptStatusToFacet } from '@/data/sshoc/utils/concept'
 import { useI18n } from '@/lib/core/i18n/useI18n'
@@ -329,7 +328,7 @@ function PropertyTypesFacets(): JSX.Element {
     const searchParams = {
       ...searchFilters,
       page: 1,
-      [name]: keys as Array<PropertyType['code']>,
+      [name]: keys,
     }
 
     searchVocabularies(searchParams)

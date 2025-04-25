@@ -15,9 +15,9 @@ import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
 
-/* eslint-disable-next-line @typescript-eslint/no-namespace */
+ 
 export namespace UseCreateOrUpdatePublication {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -62,7 +62,7 @@ export async function createOrUpdatePublication(
 }
 
 export function useCreateOrUpdatePublication(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UseCreateOrUpdatePublication.Response,
     Error,

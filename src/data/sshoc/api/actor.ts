@@ -139,10 +139,10 @@ export function getActors(
 }
 
 export namespace GetActor {
-  export type PathParams = {
+  export interface PathParams {
     id: Actor['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     items?: boolean
   }
@@ -179,7 +179,7 @@ export function createActor(
 }
 
 export namespace UpdateActor {
-  export type PathParams = {
+  export interface PathParams {
     id: Actor['id']
   }
   export type Params = PathParams
@@ -201,7 +201,7 @@ export function updateActor(
 }
 
 export namespace DeleteActor {
-  export type PathParams = {
+  export interface PathParams {
     id: Actor['id']
   }
   export type Params = PathParams
@@ -220,10 +220,10 @@ export function deleteActor(
 }
 
 export namespace MergeActors {
-  export type PathParams = {
+  export interface PathParams {
     id: Actor['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Actor['id']>
   }
   export type Params = PathParams & SearchParams
@@ -242,7 +242,7 @@ export function mergeActors(
 }
 
 export namespace GetActorHistory {
-  export type PathParams = {
+  export interface PathParams {
     id: Actor['id']
   }
   export type Params = PathParams
@@ -307,7 +307,7 @@ export function getActorSources(
 }
 
 export namespace GetActorSource {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorSource['code']
   }
   export type Params = PathParams
@@ -343,7 +343,7 @@ export function createActorSource(
 }
 
 export namespace UpdateActorSource {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorSource['code']
   }
   export type Params = PathParams
@@ -365,7 +365,7 @@ export function updateActorSource(
 }
 
 export namespace DeleteActorSource {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorSource['code']
   }
   export type Params = PathParams
@@ -398,7 +398,7 @@ export function getActorRoles(
 }
 
 export namespace GetActorRole {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorRole['code']
   }
   export type Params = PathParams
@@ -434,7 +434,7 @@ export function createActorRole(
 }
 
 export namespace UpdateActorRole {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorRole['code']
   }
   export type Params = PathParams
@@ -456,7 +456,7 @@ export function updateActorRole(
 }
 
 export namespace DeleteActorRole {
-  export type PathParams = {
+  export interface PathParams {
     code: ActorRole['code']
   }
   export type Params = PathParams

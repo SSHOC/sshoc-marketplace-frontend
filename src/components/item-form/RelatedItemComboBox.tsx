@@ -39,7 +39,7 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): JSX.Elemen
     order: ['label'],
   })
   const items = useMemo(() => {
-    if (itemSearchResults.data?.pages == null) return []
+    if (itemSearchResults.data?.pages == null) {return []}
     return itemSearchResults.data.pages.flatMap((page) => {
       return page.items
     })

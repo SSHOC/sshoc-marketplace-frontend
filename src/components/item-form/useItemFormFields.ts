@@ -24,7 +24,7 @@ export type ItemFormFields =
 
 export type ItemFormBaseFields = ReturnType<typeof useItemFormFields>
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useItemFormFields(prefix = '') {
   const { t } = useI18n<'authenticated'>()
 

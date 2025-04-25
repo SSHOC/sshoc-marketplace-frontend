@@ -107,7 +107,7 @@ export default function ReviewDatasetPage(props: ReviewDatasetPage.Props): JSX.E
   const ignoreMissingDiff: QueryMetadata = {
     messages: {
       error(error) {
-        if (isNotFoundError(error)) return false
+        if (isNotFoundError(error)) {return false}
         return undefined
       },
     },

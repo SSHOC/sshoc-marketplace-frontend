@@ -146,7 +146,7 @@ export function getPropertyTypes(
 }
 
 export namespace GetPropertyType {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -182,7 +182,7 @@ export function createPropertyType(
 }
 
 export namespace UpdatePropertyType {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -204,10 +204,10 @@ export function updatePropertyType(
 }
 
 export namespace DeletePropertyType {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     force?: boolean
   }

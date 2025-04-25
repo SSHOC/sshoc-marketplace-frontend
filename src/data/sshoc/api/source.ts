@@ -62,7 +62,7 @@ export function getSources(
 }
 
 export namespace GetSource {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams
@@ -98,7 +98,7 @@ export function createSource(
 }
 
 export namespace UpdateSource {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams
@@ -120,7 +120,7 @@ export function updateSource(
 }
 
 export namespace DeleteSource {
-  export type PathParams = {
+  export interface PathParams {
     id: number
   }
   export type Params = PathParams

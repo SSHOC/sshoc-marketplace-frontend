@@ -10,7 +10,7 @@ export function useItemCategoryNavItems(): NavItems | null {
   const { t } = useI18n<'common'>()
   const itemCategories = useItemCategories()
 
-  if (itemCategories.data == null) return null
+  if (itemCategories.data == null) {return null}
 
   const items = keys(itemCategories.data)
     .filter((category): category is ItemCategory => {

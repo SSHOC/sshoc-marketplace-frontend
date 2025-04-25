@@ -53,6 +53,7 @@ export function page<K extends string, V>(
 ): PaginatedResponse<Record<K, Array<V>>>
 export function page<K extends string, V>(
   obj: Record<K, Array<V>>,
+  // eslint-disable-next-line @typescript-eslint/unified-signatures
   options: { page?: number },
 ): PaginatedResponse<Record<K, Array<V>>>
 export function page<K extends string, V, O>(
@@ -383,7 +384,7 @@ const itemRelation = {
 
 const facets = {
   get(facet: ItemFacet): Map<string, Set<unknown>> {
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
     return facetStores.get(facet)!
   },
   addProperties(properties: Array<Property>): void {
@@ -392,27 +393,27 @@ const facets = {
     })
   },
   addProperty(property?: Property): void {
-    if (property == null) return
-    if (!includes(itemFacets, property.type.code)) return
+    if (property == null) {return}
+    if (!includes(itemFacets, property.type.code)) {return}
 
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
     const store = facetStores.get(property.type.code)!
     const value = isPropertyConcept(property) ? property.concept.label : property.value
     if (!store.has(value)) {
       store.set(value, new Set())
     }
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
     store.get(value)!.add(property)
   },
   addSource(source?: SourceBase): void {
-    if (source == null) return
+    if (source == null) {return}
 
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
     const store = facetStores.get('source')!
     if (!store.has(source.label)) {
       store.set(source.label, new Set())
     }
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+
     store.get(source.label)!.add(source.id)
   },
 }
@@ -567,7 +568,7 @@ const item = {
       step: { count: 0, checked: false, label: 'Steps' },
     }
     matches.forEach((item) => {
-      if (item.category === 'step') return
+      if (item.category === 'step') {return}
       return counts[item.category].count++
     })
 

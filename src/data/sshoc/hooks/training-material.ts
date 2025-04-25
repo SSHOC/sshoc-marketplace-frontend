@@ -62,34 +62,34 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [trainingMaterial, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [trainingMaterial, list, auth ?? null] as const
   },
-  list(params: GetTrainingMaterials.Params, auth?: AuthData | undefined) {
+  list(params: GetTrainingMaterials.Params, auth?: AuthData  ) {
     return [trainingMaterial, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetTrainingMaterials.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetTrainingMaterials.Params, auth?: AuthData  ) {
     return [trainingMaterial, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [trainingMaterial, detail, auth ?? null] as const
   },
-  detail(params: GetTrainingMaterial.Params, auth?: AuthData | undefined) {
+  detail(params: GetTrainingMaterial.Params, auth?: AuthData  ) {
     return [trainingMaterial, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [trainingMaterial, version, auth ?? null] as const
   // },
-  version(params: GetTrainingMaterialVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetTrainingMaterialVersion.Params, auth?: AuthData  ) {
     return [trainingMaterial, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [trainingMaterial, history, auth ?? null] as const
   // },
-  history(params: GetTrainingMaterialHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetTrainingMaterialHistory.Params, auth?: AuthData  ) {
     return [trainingMaterial, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -97,7 +97,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetTrainingMaterialInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [trainingMaterial, informationContributors, params, auth ?? null] as const
   },
@@ -106,27 +106,27 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetTrainingMaterialVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [trainingMaterial, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedTrainingMaterial.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedTrainingMaterial.Params, auth?: AuthData  ) {
     return [trainingMaterial, merged, params, auth ?? null] as const
   },
-  sources(params: GetTrainingMaterialSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetTrainingMaterialSources.Params, auth?: AuthData  ) {
     return [trainingMaterial, sources, params, auth ?? null] as const
   },
-  diff(params: GetTrainingMaterialDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetTrainingMaterialDiff.Params, auth?: AuthData  ) {
     return [trainingMaterial, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetTrainingMaterialVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetTrainingMaterialVersionDiff.Params, auth?: AuthData  ) {
     return [trainingMaterial, version, diff, params, auth ?? null] as const
   },
 }
 
 export function useTrainingMaterials<TData = GetTrainingMaterials.Response>(
   params: GetTrainingMaterials.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterials.Response,
     Error,
@@ -146,7 +146,7 @@ export function useTrainingMaterials<TData = GetTrainingMaterials.Response>(
 
 export function useTrainingMaterialsInfinite<TData = GetTrainingMaterials.Response>(
   params: GetTrainingMaterials.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetTrainingMaterials.Response,
     Error,
@@ -165,7 +165,7 @@ export function useTrainingMaterialsInfinite<TData = GetTrainingMaterials.Respon
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -174,7 +174,7 @@ export function useTrainingMaterialsInfinite<TData = GetTrainingMaterials.Respon
 
 export function useTrainingMaterial<TData = GetTrainingMaterial.Response>(
   params: GetTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterial.Response,
     Error,
@@ -194,7 +194,7 @@ export function useTrainingMaterial<TData = GetTrainingMaterial.Response>(
 
 export function useTrainingMaterialVersion<TData = GetTrainingMaterialVersion.Response>(
   params: GetTrainingMaterialVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialVersion.Response,
     Error,
@@ -214,7 +214,7 @@ export function useTrainingMaterialVersion<TData = GetTrainingMaterialVersion.Re
 
 export function useTrainingMaterialHistory<TData = GetTrainingMaterialHistory.Response>(
   params: GetTrainingMaterialHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialHistory.Response,
     Error,
@@ -236,7 +236,7 @@ export function useTrainingMaterialInformationContributors<
   TData = GetTrainingMaterialInformationContributors.Response,
 >(
   params: GetTrainingMaterialInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialInformationContributors.Response,
     Error,
@@ -258,7 +258,7 @@ export function useTrainingMaterialVersionInformationContributors<
   TData = GetTrainingMaterialVersionInformationContributors.Response,
 >(
   params: GetTrainingMaterialVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialVersionInformationContributors.Response,
     Error,
@@ -278,7 +278,7 @@ export function useTrainingMaterialVersionInformationContributors<
 
 export function useCreateTrainingMaterial(
   params: CreateTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CreateTrainingMaterial.Response,
     Error,
@@ -308,7 +308,7 @@ export function useCreateTrainingMaterial(
 
 export function useUpdateTrainingMaterial(
   params: UpdateTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UpdateTrainingMaterial.Response,
     Error,
@@ -339,7 +339,7 @@ export function useUpdateTrainingMaterial(
 
 export function useDeleteTrainingMaterial(
   params: DeleteTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteTrainingMaterial.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -366,7 +366,7 @@ export function useDeleteTrainingMaterial(
 
 export function useDeleteTrainingMaterialVersion(
   params: DeleteTrainingMaterialVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteTrainingMaterialVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -393,7 +393,7 @@ export function useDeleteTrainingMaterialVersion(
 
 export function useRevertTrainingMaterialToVersion(
   params: RevertTrainingMaterialToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertTrainingMaterialToVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -423,7 +423,7 @@ export const useRejectTrainingMaterialVersion = useDeleteTrainingMaterialVersion
 
 export function useCommitDraftTrainingMaterial(
   params: CommitDraftTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CommitDraftTrainingMaterial.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -451,7 +451,7 @@ export function useCommitDraftTrainingMaterial(
 
 export function useMergedTrainingMaterial<TData = GetMergedTrainingMaterial.Response>(
   params: GetMergedTrainingMaterial.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMergedTrainingMaterial.Response,
     Error,
@@ -471,7 +471,7 @@ export function useMergedTrainingMaterial<TData = GetMergedTrainingMaterial.Resp
 
 export function useMergeTrainingMaterials(
   params: MergeTrainingMaterials.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     MergeTrainingMaterials.Response,
     Error,
@@ -501,7 +501,7 @@ export function useMergeTrainingMaterials(
 
 export function useTrainingMaterialDiff<TData = GetTrainingMaterialDiff.Response>(
   params: GetTrainingMaterialDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialDiff.Response,
     Error,
@@ -521,7 +521,7 @@ export function useTrainingMaterialDiff<TData = GetTrainingMaterialDiff.Response
 
 export function useTrainingMaterialVersionDiff<TData = GetTrainingMaterialVersionDiff.Response>(
   params: GetTrainingMaterialVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialVersionDiff.Response,
     Error,
@@ -541,7 +541,7 @@ export function useTrainingMaterialVersionDiff<TData = GetTrainingMaterialVersio
 
 export function useTrainingMaterialSources<TData = GetTrainingMaterialSources.Response>(
   params: GetTrainingMaterialSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetTrainingMaterialSources.Response,
     Error,

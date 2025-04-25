@@ -12,7 +12,7 @@ export const sourceInputSchema = z
   })
   .refine(
     (data) => {
-      if (!data.urlTemplate.includes('{source-item-id}')) return false
+      if (!data.urlTemplate.includes('{source-item-id}')) {return false}
       return true
     },
     {

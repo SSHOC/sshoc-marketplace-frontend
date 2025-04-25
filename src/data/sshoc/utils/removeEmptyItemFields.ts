@@ -9,7 +9,7 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'accessibleAt': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: unknown) => {
-            if (v == null) return false
+            if (v == null) {return false}
             return true
           })
         }
@@ -19,9 +19,9 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'externalIds': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.identifierService?.code == null) return false
-            if (!isNonEmptyString(v.identifier)) return false
+            if (v == null) {return false}
+            if (v.identifierService?.code == null) {return false}
+            if (!isNonEmptyString(v.identifier)) {return false}
             return true
           })
         }
@@ -31,9 +31,9 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'contributors': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.role?.code == null) return false
-            if (v.actor?.id == null) return false
+            if (v == null) {return false}
+            if (v.role?.code == null) {return false}
+            if (v.actor?.id == null) {return false}
             return true
           })
         }
@@ -43,9 +43,9 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'properties': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.type?.code == null) return false
-            if (v.concept?.uri == null && !isNonEmptyString(v.value)) return false
+            if (v == null) {return false}
+            if (v.type?.code == null) {return false}
+            if (v.concept?.uri == null && !isNonEmptyString(v.value)) {return false}
             return true
           })
         }
@@ -55,9 +55,9 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'relatedItems': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: any) => {
-            if (v == null) return false
-            if (v.relation?.code == null) return false
-            if (v.persistentId == null) return false
+            if (v == null) {return false}
+            if (v.relation?.code == null) {return false}
+            if (v.persistentId == null) {return false}
             return true
           })
         }
@@ -67,7 +67,7 @@ export function removeEmptyItemFields<T extends ItemInput>(values: T): T {
       case 'media': {
         if (Array.isArray(value)) {
           item[key] = value.filter((v: unknown) => {
-            if (v == null) return false
+            if (v == null) {return false}
             return true
           })
         }

@@ -17,7 +17,7 @@ const processor = unified()
   .use(toHast)
   .use(toVdom, { createElement })
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export async function createProcessor() {
   const highlighter = await getHighlighter({ theme: syntaxHighlightingTheme })
 

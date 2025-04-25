@@ -34,7 +34,7 @@ export const actorSourceInputSchema = z
   .refine(
     (data) => {
       if (`urlTemplate` in data && data.urlTemplate != null) {
-        if (!data.urlTemplate.includes('{source-actor-id}')) return false
+        if (!data.urlTemplate.includes('{source-actor-id}')) {return false}
       }
       return true
     },

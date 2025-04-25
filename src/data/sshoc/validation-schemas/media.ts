@@ -62,7 +62,7 @@ export const mediaUploadSchema =
     )
     .refine(
       (data) => {
-        if (data.sourceUrl != null && data.sourceUrl.includes('youtube.com/watch')) return false
+        if (data.sourceUrl != null && data.sourceUrl.includes('youtube.com/watch')) {return false}
         return true
       },
       {

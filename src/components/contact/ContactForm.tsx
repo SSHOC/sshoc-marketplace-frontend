@@ -21,7 +21,7 @@ function useInitialContactFormValues(): Partial<ContactFormValues> {
   const searchParams = useSearchParams()
 
   const initialContactFormValues = useMemo(() => {
-    if (searchParams == null) return {}
+    if (searchParams == null) {return {}}
 
     return {
       email: searchParams.get('email') ?? undefined,

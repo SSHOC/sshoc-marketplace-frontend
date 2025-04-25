@@ -1,8 +1,6 @@
 import { useSiteMetadata } from '@/lib/core/metadata/useSiteMetadata'
 
-export interface UsePageTitleTemplateResult {
-  (pageTitle?: string): string
-}
+export type UsePageTitleTemplateResult = (pageTitle?: string) => string
 
 export function usePageTitleTemplate(): UsePageTitleTemplateResult {
   const { title } = useSiteMetadata()

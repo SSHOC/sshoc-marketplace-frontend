@@ -30,29 +30,29 @@ const detail = 'detail'
 const infinite = 'infinite'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [user, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [user, list, auth ?? null] as const
   },
-  list(params: GetUsers.Params, auth?: AuthData | undefined) {
+  list(params: GetUsers.Params, auth?: AuthData  ) {
     return [user, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetUsers.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetUsers.Params, auth?: AuthData  ) {
     return [user, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [user, detail, auth ?? null] as const
   },
-  detail(params: GetUser.Params, auth?: AuthData | undefined) {
+  detail(params: GetUser.Params, auth?: AuthData  ) {
     return [user, detail, params, auth ?? null] as const
   },
 }
 
 export function useUsers<TData = GetUsers.Response>(
   params: GetUsers.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetUsers.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -67,7 +67,7 @@ export function useUsers<TData = GetUsers.Response>(
 
 export function useUsersInfinite<TData = GetUsers.Response>(
   params: GetUsers.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetUsers.Response,
     Error,
@@ -86,7 +86,7 @@ export function useUsersInfinite<TData = GetUsers.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -95,7 +95,7 @@ export function useUsersInfinite<TData = GetUsers.Response>(
 
 export function useUser<TData = GetUser.Response>(
   params: GetUser.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetUser.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -109,11 +109,11 @@ export function useUser<TData = GetUser.Response>(
 }
 
 export namespace UseCreateUser {
-  export type Variables = { data: CreateUser.Body }
+  export interface Variables { data: CreateUser.Body }
 }
 
 export function useCreateUser(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateUser.Response, Error, UseCreateUser.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -140,7 +140,7 @@ export namespace UseUpdateUserDisplayName {
 
 export function useUpdateUserDisplayName(
   params: UpdateUserDisplayName.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UpdateUserDisplayName.Response,
     Error,
@@ -170,7 +170,7 @@ export namespace UseUpdateUserPassword {
 
 export function useUpdateUserPassword(
   params: UpdateUserPassword.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateUserPassword.Response, Error, UseUpdateUserPassword.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -196,7 +196,7 @@ export namespace UseUpdateUserRole {
 
 export function useUpdateUserRole(
   params: UpdateUserRole.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateUserRole.Response, Error, UseUpdateUserRole.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -222,7 +222,7 @@ export namespace UseUpdateUserStatus {
 
 export function useUpdateUserStatus(
   params: UpdateUserStatus.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateUserStatus.Response, Error, UseUpdateUserStatus.Variables>,
 ) {
   const queryClient = useQueryClient()

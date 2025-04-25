@@ -77,7 +77,7 @@ function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[str
       if (!roles.has(roleLabel)) {
         roles.set(roleLabel, new Map())
       }
-      /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+       
       const role = roles.get(roleLabel)!
 
       if (!role.has(name)) {
@@ -184,7 +184,7 @@ function ActorExternalIds(props: ActorExternalIdsProps): JSX.Element {
   return (
     <div className={css['values']}>
       {externalIds.map((id) => {
-        if (internalExternalIds.includes(id.identifierService.code)) return null
+        if (internalExternalIds.includes(id.identifierService.code)) {return null}
 
         if (id.identifierService.urlTemplate == null) {
           return (

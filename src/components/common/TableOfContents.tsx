@@ -40,7 +40,7 @@ function Level(props: LevelProps): JSX.Element | null {
       {entries.map((entry) => {
         return (
           <li key={entry.id} className={css['list-item']}>
-            <a href={'#' + entry.id}>{entry.value}</a>
+            <a href={'#' + String(entry.id)}>{entry.value}</a>
             <Level entries={entry.children} depth={depth + 1} maxDepth={maxDepth} />
           </li>
         )

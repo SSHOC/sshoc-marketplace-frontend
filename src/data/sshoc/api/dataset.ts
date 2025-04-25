@@ -42,10 +42,10 @@ export function getDatasets(
 }
 
 export namespace GetDataset {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -67,7 +67,7 @@ export function getDataset(
 }
 
 export namespace GetDatasetVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
     versionId: Dataset['id']
   }
@@ -89,10 +89,10 @@ export function getDatasetVersion(
 }
 
 export namespace GetDatasetHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -114,7 +114,7 @@ export function getDatasetHistory(
 }
 
 export namespace GetDatasetInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
   export type Params = PathParams
@@ -135,7 +135,7 @@ export function getDatasetInformationContributors(
 }
 
 export namespace GetDatasetVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
     versionId: Dataset['id']
   }
@@ -157,7 +157,7 @@ export function getDatasetVersionInformationContributors(
 }
 
 export namespace CreateDataset {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -180,7 +180,7 @@ export function createDataset(
 }
 
 export namespace CommitDraftDataset {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
   export type Params = PathParams
@@ -199,10 +199,10 @@ export function commitDraftDataset(
 }
 
 export namespace UpdateDataset {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -227,10 +227,10 @@ export function updateDataset(
 }
 
 export namespace DeleteDataset {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -250,7 +250,7 @@ export function deleteDataset(
 }
 
 export namespace DeleteDatasetVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
     versionId: Dataset['id']
   }
@@ -272,7 +272,7 @@ export function deleteDatasetVersion(
 }
 
 export namespace RevertDatasetToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
     versionId: Dataset['id']
   }
@@ -297,10 +297,10 @@ export const approveDatasetVersion = revertDatasetToVersion
 export const rejectDatasetVersion = deleteDatasetVersion
 
 export namespace GetMergedDataset {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Dataset['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -322,7 +322,7 @@ export function getMergedDataset(
 }
 
 export namespace MergeDatasets {
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<Dataset['persistentId']>
   }
   export type Params = SearchParams
@@ -344,10 +344,10 @@ export function mergeDatasets(
 }
 
 export namespace GetDatasetDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Dataset['persistentId']
     /** `versionId` of item to compare with. */
@@ -372,11 +372,11 @@ export function getDatasetDiff(
 }
 
 export namespace GetDatasetVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
     versionId: Dataset['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: Dataset['persistentId']
     /** `versionId` of item to compare with. */
@@ -401,7 +401,7 @@ export function getDatasetVersionDiff(
 }
 
 export namespace GetDatasetSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Dataset['persistentId']
   }
   export type Params = PathParams

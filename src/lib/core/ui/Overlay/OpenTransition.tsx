@@ -43,7 +43,7 @@ export function OpenTransition(props: OpenTransitionProps): JSX.Element {
     >
       {(state) => {
         return Children.map(children, (child) => {
-          if (!isValidElement(child)) return null
+          if (!isValidElement(child)) {return null}
 
           return cloneElement(child, { isOpen: OPEN_STATES[state], transitionState: state })
         })

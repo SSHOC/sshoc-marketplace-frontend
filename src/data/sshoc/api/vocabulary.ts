@@ -145,7 +145,7 @@ export function getVocabularies(
 }
 
 export namespace GetVocabulary {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type SearchParams = PaginatedRequest<unknown>
@@ -165,7 +165,7 @@ export function getVocabulary(
 }
 
 export namespace CreateVocabulary {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     query?: boolean
   }
@@ -188,10 +188,10 @@ export function createVocabulary(
 }
 
 export namespace UpdateVocabulary {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     force?: boolean
     /** @default false */
@@ -216,10 +216,10 @@ export function updateVocabulary(
 }
 
 export namespace DeleteVocabulary {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     force?: boolean
   }
@@ -239,7 +239,7 @@ export function deleteVocabulary(
 }
 
 export namespace SetVocabularyOpen {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -258,7 +258,7 @@ export function setVocabularyOpen(
 }
 
 export namespace SetVocabularyClosed {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -277,7 +277,7 @@ export function setVocabularyClosed(
 }
 
 export namespace GetConcept {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
     code: string
   }
@@ -299,10 +299,10 @@ export function getConcept(
 }
 
 export namespace CreateConcept {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default true */
     candidate?: boolean
   }
@@ -328,7 +328,7 @@ export function createConcept(
 }
 
 export namespace UpdateConcept {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
     code: string
   }
@@ -353,11 +353,11 @@ export function updateConcept(
 }
 
 export namespace DeleteConcept {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     force?: boolean
   }
@@ -382,7 +382,7 @@ export function deleteConcept(
 export const rejectSuggestedConcept = deleteConcept
 
 export namespace CommitSuggestedConcept {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
     code: string
   }
@@ -406,11 +406,11 @@ export function commitSuggestedConcept(
 export const approveSuggestedConcept = commitSuggestedConcept
 
 export namespace MergeConcepts {
-  export type PathParams = {
+  export interface PathParams {
     vocabularyCode: string
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<string>
   }
   export type Params = PathParams & SearchParams

@@ -77,7 +77,7 @@ export function getCurrentUser(
 }
 
 export namespace AuthorizeWithEosc {
-  export type SearchParams = {
+  export interface SearchParams {
     successUrl: URL
     registrationUrl: URL
     errorUrl: URL

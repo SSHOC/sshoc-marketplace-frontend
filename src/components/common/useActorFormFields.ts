@@ -4,7 +4,7 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 
 export type ActorFormFields = ReturnType<typeof useActorFormFields>
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useActorFormFields(prefix = '') {
   const { t } = useI18n<'authenticated'>()
 

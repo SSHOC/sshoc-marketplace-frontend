@@ -16,7 +16,7 @@ export interface CloseButtonStyleProps {
   '--close-button-color-active'?: CSSProperties['color']
   '--close-button-color-disabled'?: CSSProperties['color']
 }
-export interface CloseButtonProps extends AriaButtonProps<'button'> {
+export interface CloseButtonProps extends AriaButtonProps {
   /** @default 'md' */
   size?: 'lg' | 'md' | 'sm'
   style?: CloseButtonStyleProps

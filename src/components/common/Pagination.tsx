@@ -137,7 +137,7 @@ function PageInput<TResults, TFilters extends { page: number }>(
       </label>
       {/* Add hidden fields to preserve search filters when submitting html form without javascript. */}
       {Object.entries(searchFilters).map(([key, value]) => {
-        if (key === 'page') return null
+        if (key === 'page') {return null}
 
         if (Array.isArray(value)) {
           return (

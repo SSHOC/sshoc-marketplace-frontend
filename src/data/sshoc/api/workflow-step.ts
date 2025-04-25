@@ -19,11 +19,11 @@ export interface WorkflowStepInput extends ItemBaseInput {
 }
 
 export namespace GetWorkflowStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -48,7 +48,7 @@ export function getWorkflowStep(
 }
 
 export namespace GetWorkflowStepVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
     stepVersionId: WorkflowStep['id']
@@ -71,11 +71,11 @@ export function getWorkflowStepVersion(
 }
 
 export namespace GetWorkflowStepHistory {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -99,7 +99,7 @@ export function getWorkflowStepHistory(
 }
 
 export namespace GetWorkflowStepInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
@@ -121,7 +121,7 @@ export function getWorkflowStepInformationContributors(
 }
 
 export namespace GetWorkflowStepVersionInformationContributors {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
     stepVersionId: WorkflowStep['id']
@@ -144,10 +144,10 @@ export function getWorkflowStepVersionInformationContributors(
 }
 
 export namespace CreateWorkflowStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -173,11 +173,11 @@ export function createWorkflowStep(
 }
 
 export namespace CreateWorkflowSubStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -203,11 +203,11 @@ export function createWorkflowSubStep(
 }
 
 export namespace UpdateWorkflowStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
     /** @default true */
@@ -235,11 +235,11 @@ export function updateWorkflowStep(
 }
 
 export namespace DeleteWorkflowStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -262,7 +262,7 @@ export function deleteWorkflowStep(
 }
 
 export namespace DeleteWorkflowStepVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
     stepVersionId: WorkflowStep['id']
@@ -285,7 +285,7 @@ export function deleteWorkflowStepVersion(
 }
 
 export namespace RevertWorkflowStepToVersion {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
     stepVersionId: WorkflowStep['id']
@@ -310,11 +310,11 @@ export function revertWorkflowStepToVersion(
 export const approveWorkflowStepVersion = revertWorkflowStepToVersion
 
 export namespace GetMergedWorkflowStep {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<WorkflowStep['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -336,10 +336,10 @@ export function getMergedWorkflowStep(
 }
 
 export namespace MergeWorkflowSteps {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     with: Array<WorkflowStep['persistentId']>
   }
   export type Params = PathParams & SearchParams
@@ -364,11 +364,11 @@ export function mergeWorkflowSteps(
 }
 
 export namespace GetWorkflowStepDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: WorkflowStep['persistentId']
     /** `versionId` of item to compare with. */
@@ -393,12 +393,12 @@ export function getWorkflowStepDiff(
 }
 
 export namespace GetWorkflowStepVersionDiff {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
     stepVersionId: WorkflowStep['id']
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** `persistentId` of item to compare with. */
     with: WorkflowStep['persistentId']
     /** `versionId` of item to compare with. */
@@ -423,7 +423,7 @@ export function getWorkflowStepVersionDiff(
 }
 
 export namespace GetWorkflowStepSources {
-  export type PathParams = {
+  export interface PathParams {
     persistentId: Workflow['persistentId']
     stepPersistentId: WorkflowStep['persistentId']
   }

@@ -107,7 +107,7 @@ export default function ReviewPublicationPage(props: ReviewPublicationPage.Props
   const ignoreMissingDiff: QueryMetadata = {
     messages: {
       error(error) {
-        if (isNotFoundError(error)) return false
+        if (isNotFoundError(error)) {return false}
         return undefined
       },
     },

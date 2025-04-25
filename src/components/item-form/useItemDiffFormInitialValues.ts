@@ -13,7 +13,7 @@ export function useItemDiffFormInitialValues<T extends Item>(
   const { diff, item } = args
 
   const initialValues = useMemo(() => {
-    if (diff == null || item == null || diff.equal) return item
+    if (diff == null || item == null || diff.equal) {return item}
 
     const initialValues = { ...item }
 

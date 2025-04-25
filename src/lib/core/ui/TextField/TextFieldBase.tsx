@@ -146,7 +146,7 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
         style={style as CSSProperties}
       >
         <ElementType
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           ref={textFieldRef as any}
           {...mergeProps(focusProps, hoverProps, inputProps)}
           className={css['textfield-input']}

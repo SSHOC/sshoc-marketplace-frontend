@@ -8,7 +8,7 @@ export function FormSubmitErrorMessage(): JSX.Element {
   const { t } = useI18n<'authenticated'>()
   const form = useFormState({ subscription: { hasSubmitErrors: true, submitError: true } })
 
-  if (!form.hasSubmitErrors) return <Fragment />
+  if (!form.hasSubmitErrors) {return <Fragment />}
 
   return (
     <p className={css['message']}>

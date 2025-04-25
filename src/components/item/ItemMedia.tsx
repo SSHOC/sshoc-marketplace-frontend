@@ -37,7 +37,7 @@ export function ItemMedia(props: ItemMediaProps): JSX.Element {
     })
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+   
   const currentMedia = media[currentMediaIndex]!
 
   /** Allow circle for more than 1 item. */
@@ -194,7 +194,7 @@ function MediaCaption(props: MediaCaptionProps): JSX.Element {
   )
 }
 
-type ButtonProps = AriaButtonProps<'button'>
+type ButtonProps = AriaButtonProps
 
 // TODO: <Button variant="ghost" />
 function Button(props: ButtonProps): JSX.Element {

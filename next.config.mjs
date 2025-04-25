@@ -1,3 +1,5 @@
+/* global process */
+
 import createBundleAnalyzer from '@next/bundle-analyzer'
 import { log } from '@stefanprobst/log'
 import createSvgPlugin from '@stefanprobst/next-svg'

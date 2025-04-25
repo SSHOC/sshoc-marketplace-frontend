@@ -11,7 +11,7 @@ import { useTreeState } from '@react-stately/tree'
 import type { AriaMenuProps } from '@react-types/menu'
 import type { Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
-import type { HTMLAttributes, Key, RefObject } from 'react'
+import type { HTMLAttributes, RefObject } from 'react'
 import { Fragment, useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
@@ -73,7 +73,7 @@ export function AccountMenu(): JSX.Element {
             <DismissButton onDismiss={state.close} />
             <Menu
               aria-label={t(['common', 'auth', 'account-menu'])}
-              autoFocus={state.focusStrategy}
+              autoFocus={state.focusStrategy || undefined}
               items={items}
               menuProps={menuProps}
               onClose={state.close}

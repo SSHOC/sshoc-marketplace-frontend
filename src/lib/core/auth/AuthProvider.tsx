@@ -188,7 +188,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     },
     meta: signInWithBasicAuthMeta,
     useErrorBoundary(error) {
-      if (!(error instanceof HttpError)) return true
+      if (!(error instanceof HttpError)) {return true}
       return error.response.status >= 500
     },
   })
@@ -237,7 +237,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       },
       meta: validateIdTokenMeta,
       useErrorBoundary(error) {
-        if (!(error instanceof HttpError)) return true
+        if (!(error instanceof HttpError)) {return true}
         return error.response.status >= 500
       },
     },
@@ -276,7 +276,7 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
         },
       },
       useErrorBoundary(error) {
-        if (!(error instanceof HttpError)) return true
+        if (!(error instanceof HttpError)) {return true}
         return error.response.status >= 500
       },
     },
@@ -320,14 +320,14 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
       },
       meta: validateRegistrationDataMeta,
       useErrorBoundary(error) {
-        if (!(error instanceof HttpError)) return true
+        if (!(error instanceof HttpError)) {return true}
         return error.response.status >= 500
       },
     },
   )
 
   useEffect(() => {
-    if (session.status !== 'unknown') return
+    if (session.status !== 'unknown') {return}
 
     updateSessionState('checkingIsRedirect')
 
@@ -452,7 +452,7 @@ function isValidIdToken(token: string | null): token is string {
 }
 
 function isValidAccessToken(token: string | null, prefix = 'Bearer '): token is string {
-  if (token == null) return false
+  if (token == null) {return false}
 
   const { exp } = jwtDecode<JwtPayload>(token.slice(prefix.length))
 

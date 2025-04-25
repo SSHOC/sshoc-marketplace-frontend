@@ -1,5 +1,3 @@
-/* eslint-disable import/no-duplicates */
-
 /// <reference types="@stefanprobst/next-svg/types" />
 
 type DeepNonNullable<T> = {
@@ -38,9 +36,7 @@ type UndefinedLeaves<T> = {
 
 type Primitive = boolean | number | string
 
-interface ParamsInput {
-  [K: string]: Primitive | ReadonlyArray<Primitive>
-}
+type ParamsInput = Record<string, Primitive | ReadonlyArray<Primitive>>;
 
 type StringParams<T extends ParamsInput> = {
   [K in keyof T as string extends K ? never : K]: Exclude<T[K], undefined> extends Primitive

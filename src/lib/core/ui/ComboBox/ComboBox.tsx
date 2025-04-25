@@ -208,7 +208,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
           layout={layout}
           onLoadMore={onLoadMore}
           renderEmptyState={() => {
-            if (isAsync !== true) return null
+            if (isAsync !== true) {return null}
 
             return (
               <span>

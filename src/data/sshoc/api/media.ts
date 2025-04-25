@@ -77,7 +77,7 @@ export interface MediaSourceInput {
 }
 
 export namespace UploadMediaChunk {
-  export type SearchParams = {
+  export interface SearchParams {
     /** Required on every but the first chunk. */
     mediaId?: string
     /** Starts at 0. */
@@ -102,11 +102,11 @@ export function uploadMediaChunk(
 }
 
 export namespace UploadMediaChunksComplete {
-  export type PathParams = {
+  export interface PathParams {
     /** Returned from the `/media/upload/chunk` endpoint. */
     mediaId: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     filename?: string
   }
   export type Params = PathParams & SearchParams
@@ -162,7 +162,7 @@ export function importMedia(
 }
 
 export namespace GetMediaDetails {
-  export type PathParams = {
+  export interface PathParams {
     mediaId: string
   }
   export type Params = PathParams
@@ -181,7 +181,7 @@ export function getMediaDetails(
 }
 
 export namespace DownloadMedia {
-  export type PathParams = {
+  export interface PathParams {
     mediaId: string
   }
   export type Params = PathParams
@@ -201,7 +201,7 @@ export function downloadMedia(
 }
 
 export namespace DownloadMediaThumbnail {
-  export type PathParams = {
+  export interface PathParams {
     mediaId: string
   }
   export type Params = PathParams
@@ -221,7 +221,7 @@ export function downloadMediaThumbnail(
 }
 
 export namespace GetMediaUrl {
-  export type PathParams = {
+  export interface PathParams {
     mediaId: string
   }
   export type Params = PathParams
@@ -233,7 +233,7 @@ export function getMediaUrl(params: GetMediaUrl.Params): GetMediaUrl.Response {
 }
 
 export namespace GetMediaThumbnailUrl {
-  export type PathParams = {
+  export interface PathParams {
     mediaId: string
   }
   export type Params = PathParams
@@ -261,7 +261,7 @@ export function getMediaSources(
 }
 
 export namespace GetMediaSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -297,7 +297,7 @@ export function createMediaSource(
 }
 
 export namespace UpdateMediaSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -319,7 +319,7 @@ export function updateMediaSource(
 }
 
 export namespace DeleteMediaSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams

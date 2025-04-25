@@ -14,11 +14,11 @@ export interface FormDateFieldProps extends Omit<DateFieldProps, 'value'> {
 export function FormDateField(props: FormDateFieldProps): JSX.Element {
   const { input, meta } = useField(props.name, {
     format(value: IsoDateString | undefined) {
-      if (value == null) return ''
+      if (value == null) {return ''}
       return formatISO(new Date(value), { representation: 'date' })
     },
     parse(value: string) {
-      if (value === '') return undefined
+      if (value === '') {return undefined}
       return new Date(value).toISOString()
     },
   })

@@ -35,10 +35,10 @@ export function useItemDiffFormFieldsMetadata(diff?: ItemsDiff): void {
   const form = useForm()
 
   useEffect(() => {
-    if (diff == null) return
-    if (diff.equal) return
+    if (diff == null) {return}
+    if (diff.equal) {return}
 
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+     
     const setFieldData = form.mutators['setFieldData']!
 
     requiredScalarField('label', diff, setFieldData)

@@ -49,44 +49,44 @@ const search = 'search'
 const infinite = 'infinite'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [vocabulary, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [vocabulary, list, auth ?? null] as const
   },
-  list(params: GetVocabularies.Params, auth?: AuthData | undefined) {
+  list(params: GetVocabularies.Params, auth?: AuthData  ) {
     return [vocabulary, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetVocabularies.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetVocabularies.Params, auth?: AuthData  ) {
     return [vocabulary, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [vocabulary, detail, auth ?? null] as const
   },
-  detail(params: GetVocabulary.Params, auth?: AuthData | undefined) {
+  detail(params: GetVocabulary.Params, auth?: AuthData  ) {
     return [vocabulary, detail, params, auth ?? null] as const
   },
-  detailInfinite(params: GetVocabulary.Params, auth?: AuthData | undefined) {
+  detailInfinite(params: GetVocabulary.Params, auth?: AuthData  ) {
     return [vocabulary, detail, infinite, params, auth ?? null] as const
   },
-  relation(auth?: AuthData | undefined) {
+  relation(auth?: AuthData  ) {
     return [relation, auth ?? null] as const
   },
   concept: {
-    all(auth?: AuthData | undefined) {
+    all(auth?: AuthData  ) {
       return [vocabulary, concept, auth ?? null] as const
     },
-    details(auth?: AuthData | undefined) {
+    details(auth?: AuthData  ) {
       return [vocabulary, concept, detail, auth ?? null] as const
     },
-    detail(params: GetConcept.Params, auth?: AuthData | undefined) {
+    detail(params: GetConcept.Params, auth?: AuthData  ) {
       return [vocabulary, concept, detail, params, auth ?? null] as const
     },
-    search(params: SearchConcepts.Params = {}, auth?: AuthData | undefined) {
+    search(params: SearchConcepts.Params = {}, auth?: AuthData  ) {
       return [vocabulary, concept, search, params, auth ?? null] as const
     },
-    searchInfinite(params: SearchConcepts.Params, auth?: AuthData | undefined) {
+    searchInfinite(params: SearchConcepts.Params, auth?: AuthData  ) {
       return [vocabulary, concept, search, infinite, params, auth ?? null] as const
     },
   },
@@ -94,7 +94,7 @@ export const keys = {
 
 export function useVocabularies<TData = GetVocabularies.Response>(
   params: GetVocabularies.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetVocabularies.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -109,7 +109,7 @@ export function useVocabularies<TData = GetVocabularies.Response>(
 
 export function useVocabulariesInfinite<TData = GetVocabularies.Response>(
   params: GetVocabularies.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetVocabularies.Response,
     Error,
@@ -128,7 +128,7 @@ export function useVocabulariesInfinite<TData = GetVocabularies.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -137,7 +137,7 @@ export function useVocabulariesInfinite<TData = GetVocabularies.Response>(
 
 export function useVocabulary<TData = GetVocabulary.Response>(
   params: GetVocabulary.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetVocabulary.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -152,7 +152,7 @@ export function useVocabulary<TData = GetVocabulary.Response>(
 
 export function useVocabularyInfinite<TData = GetVocabulary.Response>(
   params: GetVocabulary.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetVocabulary.Response,
     Error,
@@ -188,7 +188,7 @@ export namespace UseCreateVocabulary {
 
 export function useCreateVocabulary(
   params: CreateVocabulary.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateVocabulary.Response, Error, UseCreateVocabulary.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -216,7 +216,7 @@ export namespace UseUpdateVocabulary {
 
 export function useUpdateVocabulary(
   params: UpdateVocabulary.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateVocabulary.Response, Error, UseUpdateVocabulary.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -243,7 +243,7 @@ export namespace UseDeleteVocabulary {
 
 export function useDeleteVocabulary(
   params: DeleteVocabulary.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteVocabulary.Response, Error, UseDeleteVocabulary.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -270,7 +270,7 @@ export namespace UseSetVocabularyToClosed {
 
 export function useSetVocabularyToClosed(
   params: SetVocabularyClosed.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     SetVocabularyClosed.Response,
     Error,
@@ -301,7 +301,7 @@ export namespace UseSetVocabularyToOpen {
 
 export function useSetVocabularyToOpen(
   params: SetVocabularyOpen.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<SetVocabularyOpen.Response, Error, UseSetVocabularyToOpen.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -324,7 +324,7 @@ export function useSetVocabularyToOpen(
 
 export function useConcept<TData = GetConcept.Response>(
   params: GetConcept.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetConcept.Response,
     Error,
@@ -350,7 +350,7 @@ export namespace UseCreateConcept {
 
 export function useCreateConcept(
   params: CreateConcept.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateConcept.Response, Error, UseCreateConcept.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -379,7 +379,7 @@ export namespace UseUpdateConcept {
 
 export function useUpdateConcept(
   params: UpdateConcept.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateConcept.Response, Error, UseUpdateConcept.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -409,7 +409,7 @@ export namespace UseDeleteConcept {
 
 export function useDeleteConcept(
   params: DeleteConcept.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteConcept.Response, Error, UseDeleteConcept.Variables>,
 ) {
   const queryClient = useQueryClient()
@@ -434,7 +434,7 @@ export function useDeleteConcept(
 }
 
 export function useConceptRelations<TData = GetConceptRelations.Response>(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetConceptRelations.Response,
     Error,
@@ -454,7 +454,7 @@ export function useConceptRelations<TData = GetConceptRelations.Response>(
 
 export function useConceptSearch<TData = SearchConcepts.Response>(
   params: SearchConcepts.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     SearchConcepts.Response,
     Error,
@@ -474,7 +474,7 @@ export function useConceptSearch<TData = SearchConcepts.Response>(
 
 export function useConceptSearchInfinite<TData = SearchConcepts.Response>(
   params: SearchConcepts.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     SearchConcepts.Response,
     Error,
@@ -492,7 +492,7 @@ export function useConceptSearchInfinite<TData = SearchConcepts.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -505,7 +505,7 @@ export namespace UseCommitSuggestedConcept {
 
 export function useCommitSuggestedConcept(
   params: CommitSuggestedConcept.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     CommitSuggestedConcept.Response,
     Error,
@@ -539,7 +539,7 @@ export namespace UseMergeConcepts {
 
 export function useMergeConcepts(
   params: MergeConcepts.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergeConcepts.Response, Error, UseMergeConcepts.Variables>,
 ) {
   const queryClient = useQueryClient()

@@ -106,7 +106,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
       return (
         <ListBoxSection
           key={reusableView.key}
-          item={reusableView.content!}
+          item={reusableView.content}
           layoutInfo={reusableView.layoutInfo!}
           virtualizer={reusableView.virtualizer}
           headerLayoutInfo={

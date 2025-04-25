@@ -3,7 +3,7 @@ import { publicationInputSchema as schema } from '@/data/sshoc/validation-schema
 import type { Preprocessor } from '@/lib/core/form/validateSchema'
 import { validateSchema } from '@/lib/core/form/validateSchema'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function usePublicationValidationSchema(preprocess?: Preprocessor<any, any>) {
   const errorMap = useItemFormErrorMap()
 

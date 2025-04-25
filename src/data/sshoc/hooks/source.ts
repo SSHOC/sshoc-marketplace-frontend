@@ -26,29 +26,29 @@ const detail = 'detail'
 const infinite = 'infinite'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [source, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [source, list, auth ?? null] as const
   },
-  list(params: GetSources.Params, auth?: AuthData | undefined) {
+  list(params: GetSources.Params, auth?: AuthData  ) {
     return [source, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetSources.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetSources.Params, auth?: AuthData  ) {
     return [source, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [source, detail, auth ?? null] as const
   },
-  detail(params: GetSource.Params, auth?: AuthData | undefined) {
+  detail(params: GetSource.Params, auth?: AuthData  ) {
     return [source, detail, params, auth ?? null] as const
   },
 }
 
 export function useSources<TData = GetSources.Response>(
   params: GetSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetSources.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -63,7 +63,7 @@ export function useSources<TData = GetSources.Response>(
 
 export function useSourcesInfinite<TData = GetSources.Response>(
   params: GetSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetSources.Response,
     Error,
@@ -82,7 +82,7 @@ export function useSourcesInfinite<TData = GetSources.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -91,7 +91,7 @@ export function useSourcesInfinite<TData = GetSources.Response>(
 
 export function useSource<TData = GetSource.Response>(
   params: GetSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetSource.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -105,7 +105,7 @@ export function useSource<TData = GetSource.Response>(
 }
 
 export function useCreateSource(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateSource.Response, Error, { data: CreateSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -126,7 +126,7 @@ export function useCreateSource(
 
 export function useUpdateSource(
   params: UpdateSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateSource.Response, Error, { data: UpdateSource.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -148,7 +148,7 @@ export function useUpdateSource(
 
 export function useDeleteSource(
   params: DeleteSource.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteSource.Response, Error>,
 ) {
   const queryClient = useQueryClient()

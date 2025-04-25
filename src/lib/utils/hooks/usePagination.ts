@@ -29,7 +29,7 @@ export function usePagination(options: UsePaginationArgs): UsePaginationResult {
 
   const siblingsEnd = Math.min(
     Math.max(page + siblingCount, boundaryCount + siblingCount * 2 + 2),
-    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+     
     endPages.length > 0 ? endPages[0]! - 2 : pages - 1,
   )
 

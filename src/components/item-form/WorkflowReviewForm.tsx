@@ -210,7 +210,7 @@ function WorkflowStepsFormSection(props: WorkflowStepsFormSectionProps): JSX.Ele
       <FormFieldList key={fieldArray.fields.length}>
         {fieldArray.fields.map((name, index) => {
           function onEdit() {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+             
             const value = fieldArray.fields.value[index]!
             setPage({
               type: 'step',

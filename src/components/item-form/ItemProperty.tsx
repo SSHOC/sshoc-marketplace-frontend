@@ -24,9 +24,9 @@ export function ItemProperty(props: ItemPropertyProps): JSX.Element {
 
   const hasPublishPermission = usePublishPermission()
   const items = useMemo(() => {
-    if (propertyTypes.data?.propertyTypes == null) return []
+    if (propertyTypes.data?.propertyTypes == null) {return []}
 
-    if (hasPublishPermission) return propertyTypes.data.propertyTypes
+    if (hasPublishPermission) {return propertyTypes.data.propertyTypes}
 
     return propertyTypes.data.propertyTypes.filter((propertyType) => {
       return propertyType.hidden !== true

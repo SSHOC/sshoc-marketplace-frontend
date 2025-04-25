@@ -16,7 +16,7 @@ import type { Tool, ToolInput } from '@/data/sshoc/api/tool-or-service'
 import type { TrainingMaterial, TrainingMaterialInput } from '@/data/sshoc/api/training-material'
 import type { User } from '@/data/sshoc/api/user'
 import type { ConceptBase, ConceptRef } from '@/data/sshoc/api/vocabulary'
-import type { Workflow, WorkflowInput } from '@/data/sshoc/api/workflow'
+import type { Workflow } from '@/data/sshoc/api/workflow'
 import type { WorkflowStep, WorkflowStepInput } from '@/data/sshoc/api/workflow-step'
 import type { RequestOptions } from '@/data/sshoc/lib/client'
 import { createUrl, request } from '@/data/sshoc/lib/client'
@@ -253,7 +253,7 @@ export type ItemInput =
   | PublicationInput
   | ToolInput
   | TrainingMaterialInput
-  | WorkflowInput
+
 
 export type ItemWithWorkflowStep = Item | WorkflowStep
 
@@ -409,10 +409,7 @@ export namespace ItemSearch {
     'f.keyword'?: Array<string>
     'f.language'?: Array<string>
     'f.source'?: Array<string>
-  }> & {
-    /** All values from `/api/property-types` are allowed. */
-    [key: `d.${string}`]: string
-  }
+  }> & Record<`d.${string}`, string>
   export type Params = SearchParams
   export type Response = PaginatedResponse<{
     q?: string
@@ -435,7 +432,7 @@ export function searchItems(
 }
 
 export namespace ItemAutocomplete {
-  export type SearchParams = {
+  export interface SearchParams {
     q: string
     category?: ItemCategory
   }
@@ -455,7 +452,7 @@ export function autocompleteItems(
 }
 
 export namespace GetItemsBySource {
-  export type PathParams = {
+  export interface PathParams {
     sourceId: number
   }
   export type SearchParams = PaginatedRequest<{
@@ -483,7 +480,7 @@ export function getItemsBySource(
 }
 
 export namespace GetItemsBySourceItem {
-  export type PathParams = {
+  export interface PathParams {
     sourceId: number
     sourceItemId: string
   }
@@ -549,11 +546,11 @@ export function getItemRelations(
 }
 
 export namespace CreateItemRelation {
-  export type PathParams = {
+  export interface PathParams {
     subjectId: string
     objectId: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -579,11 +576,11 @@ export function createItemRelation(
 }
 
 export namespace DeleteItemRelation {
-  export type PathParams = {
+  export interface PathParams {
     subjectId: string
     objectId: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -606,7 +603,7 @@ export function deleteItemRelation(
 }
 
 export namespace GetItemRelationKind {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -644,7 +641,7 @@ export function createItemRelationKind(
 }
 
 export namespace UpdateItemRelationKind {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -666,10 +663,10 @@ export function updateItemRelationKind(
 }
 
 export namespace DeleteItemRelationKind {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     force?: boolean
   }
@@ -692,7 +689,7 @@ export function deleteItemRelationKind(
 }
 
 export namespace GetItemComments {
-  export type PathParams = {
+  export interface PathParams {
     itemId: string
   }
   export type Params = PathParams
@@ -711,7 +708,7 @@ export function getItemComments(
 }
 
 export namespace CreateItemComment {
-  export type PathParams = {
+  export interface PathParams {
     itemId: string
   }
   export type Params = PathParams
@@ -733,7 +730,7 @@ export function createItemComment(
 }
 
 export namespace UpdateItemComment {
-  export type PathParams = {
+  export interface PathParams {
     itemId: string
     id: number
   }
@@ -756,7 +753,7 @@ export function updateItemComment(
 }
 
 export namespace DeleteItemComment {
-  export type PathParams = {
+  export interface PathParams {
     itemId: string
     id: number
   }
@@ -776,7 +773,7 @@ export function deleteItemComment(
 }
 
 export namespace GetLastItemComments {
-  export type PathParams = {
+  export interface PathParams {
     itemId: string
   }
   export type Params = PathParams
@@ -809,7 +806,7 @@ export function getItemSources(
 }
 
 export namespace GetItemSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -845,7 +842,7 @@ export function createItemSource(
 }
 
 export namespace UpdateItemSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams
@@ -867,7 +864,7 @@ export function updateItemSource(
 }
 
 export namespace DeleteItemSource {
-  export type PathParams = {
+  export interface PathParams {
     code: string
   }
   export type Params = PathParams

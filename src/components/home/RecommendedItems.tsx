@@ -34,7 +34,7 @@ export function RecommendedItems(): JSX.Element {
       <SectionTitle>{t(['common', 'home', 'recommended'])}</SectionTitle>
       <ul role="list" className={css['sections']}>
         {keys(itemCategories.data).map((category) => {
-          if (category === 'step') return null
+          if (category === 'step') {return null}
 
           return <RecommendedItemsForCategory key={category} category={category} />
         })}

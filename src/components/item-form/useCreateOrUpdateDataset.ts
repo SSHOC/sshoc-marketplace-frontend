@@ -11,9 +11,9 @@ import type { AllowedRequestOptions } from '@/data/sshoc/lib/types'
 import { useSession } from '@/data/sshoc/lib/useSession'
 import { revalidate } from '@/lib/core/app/revalidate'
 
-/* eslint-disable-next-line @typescript-eslint/no-namespace */
+ 
 export namespace UseCreateOrUpdateDataset {
-  export type SearchParams = {
+  export interface SearchParams {
     /** @default false */
     draft?: boolean
   }
@@ -58,7 +58,7 @@ export async function createOrUpdateDataset(
 }
 
 export function useCreateOrUpdateDataset(
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<
     UseCreateOrUpdateDataset.Response,
     Error,

@@ -3,7 +3,7 @@ import { trainingMaterialInputSchema as schema } from '@/data/sshoc/validation-s
 import type { Preprocessor } from '@/lib/core/form/validateSchema'
 import { validateSchema } from '@/lib/core/form/validateSchema'
 
-/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+ 
 export function useTrainingMaterialValidationSchema(preprocess?: Preprocessor<any, any>) {
   const errorMap = useItemFormErrorMap()
 

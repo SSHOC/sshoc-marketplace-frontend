@@ -6,7 +6,7 @@ export function useSearchParams(): URLSearchParams | null {
   const router = useRouter()
   const route = useRoute()
 
-  if (!router.isReady) return null
+  if (!router.isReady) {return null}
 
   return route.searchParams
 }

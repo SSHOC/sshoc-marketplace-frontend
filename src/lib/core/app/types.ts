@@ -4,9 +4,7 @@ import type { User } from '@/data/sshoc/api/user'
 import type { Dictionary } from '@/dictionaries'
 import type { DehydratedState } from '@/lib/core/query/QueryProvider'
 
-export interface GetLayout {
-  (page: JSX.Element, pageProps: SharedPageProps): JSX.Element
-}
+export type GetLayout = (page: JSX.Element, pageProps: SharedPageProps) => JSX.Element
 
 export type PageComponent<T = unknown> = NextAppProps<T>['Component'] & {
   getLayout?: GetLayout | undefined

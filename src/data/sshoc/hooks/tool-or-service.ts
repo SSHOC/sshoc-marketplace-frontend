@@ -62,34 +62,34 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [tool, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [tool, list, auth ?? null] as const
   },
-  list(params: GetTools.Params, auth?: AuthData | undefined) {
+  list(params: GetTools.Params, auth?: AuthData  ) {
     return [tool, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetTools.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetTools.Params, auth?: AuthData  ) {
     return [tool, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [tool, detail, auth ?? null] as const
   },
-  detail(params: GetTool.Params, auth?: AuthData | undefined) {
+  detail(params: GetTool.Params, auth?: AuthData  ) {
     return [tool, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [tool, version, auth ?? null] as const
   // },
-  version(params: GetToolVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetToolVersion.Params, auth?: AuthData  ) {
     return [tool, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [tool, history, auth ?? null] as const
   // },
-  history(params: GetToolHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetToolHistory.Params, auth?: AuthData  ) {
     return [tool, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -97,7 +97,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetToolInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [tool, informationContributors, params, auth ?? null] as const
   },
@@ -106,27 +106,27 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetToolVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [tool, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedTool.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedTool.Params, auth?: AuthData  ) {
     return [tool, merged, params, auth ?? null] as const
   },
-  sources(params: GetToolSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetToolSources.Params, auth?: AuthData  ) {
     return [tool, sources, params, auth ?? null] as const
   },
-  diff(params: GetToolDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetToolDiff.Params, auth?: AuthData  ) {
     return [tool, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetToolVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetToolVersionDiff.Params, auth?: AuthData  ) {
     return [tool, version, diff, params, auth ?? null] as const
   },
 }
 
 export function useTools<TData = GetTools.Response>(
   params: GetTools.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetTools.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -141,7 +141,7 @@ export function useTools<TData = GetTools.Response>(
 
 export function useToolsInfinite<TData = GetTools.Response>(
   params: GetTools.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetTools.Response,
     Error,
@@ -160,7 +160,7 @@ export function useToolsInfinite<TData = GetTools.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -169,7 +169,7 @@ export function useToolsInfinite<TData = GetTools.Response>(
 
 export function useTool<TData = GetTool.Response>(
   params: GetTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetTool.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -184,7 +184,7 @@ export function useTool<TData = GetTool.Response>(
 
 export function useToolVersion<TData = GetToolVersion.Response>(
   params: GetToolVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetToolVersion.Response, Error, TData, ReturnType<typeof keys.version>>,
 ) {
   const session = useSession(auth)
@@ -199,7 +199,7 @@ export function useToolVersion<TData = GetToolVersion.Response>(
 
 export function useToolHistory<TData = GetToolHistory.Response>(
   params: GetToolHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetToolHistory.Response, Error, TData, ReturnType<typeof keys.history>>,
 ) {
   const session = useSession(auth)
@@ -214,7 +214,7 @@ export function useToolHistory<TData = GetToolHistory.Response>(
 
 export function useToolInformationContributors<TData = GetToolInformationContributors.Response>(
   params: GetToolInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetToolInformationContributors.Response,
     Error,
@@ -236,7 +236,7 @@ export function useToolVersionInformationContributors<
   TData = GetToolVersionInformationContributors.Response,
 >(
   params: GetToolVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetToolVersionInformationContributors.Response,
     Error,
@@ -256,7 +256,7 @@ export function useToolVersionInformationContributors<
 
 export function useCreateTool(
   params: CreateTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateTool.Response, Error, { data: CreateTool.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -282,7 +282,7 @@ export function useCreateTool(
 
 export function useUpdateTool(
   params: UpdateTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateTool.Response, Error, { data: UpdateTool.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -309,7 +309,7 @@ export function useUpdateTool(
 
 export function useDeleteTool(
   params: DeleteTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteTool.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -336,7 +336,7 @@ export function useDeleteTool(
 
 export function useDeleteToolVersion(
   params: DeleteToolVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteToolVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -363,7 +363,7 @@ export function useDeleteToolVersion(
 
 export function useRevertToolToVersion(
   params: RevertToolToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertToolToVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -393,7 +393,7 @@ export const useRejectToolVersion = useDeleteToolVersion
 
 export function useCommitDraftTool(
   params: CommitDraftTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CommitDraftTool.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -421,7 +421,7 @@ export function useCommitDraftTool(
 
 export function useMergedTool<TData = GetMergedTool.Response>(
   params: GetMergedTool.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetMergedTool.Response, Error, TData, ReturnType<typeof keys.merged>>,
 ) {
   const session = useSession(auth)
@@ -436,7 +436,7 @@ export function useMergedTool<TData = GetMergedTool.Response>(
 
 export function useMergeTools(
   params: MergeTools.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergeTools.Response, Error, { data: MergeTools.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -462,7 +462,7 @@ export function useMergeTools(
 
 export function useToolDiff<TData = GetToolDiff.Response>(
   params: GetToolDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetToolDiff.Response, Error, TData, ReturnType<typeof keys.diff>>,
 ) {
   const session = useSession(auth)
@@ -477,7 +477,7 @@ export function useToolDiff<TData = GetToolDiff.Response>(
 
 export function useToolVersionDiff<TData = GetToolVersionDiff.Response>(
   params: GetToolVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetToolVersionDiff.Response,
     Error,
@@ -497,7 +497,7 @@ export function useToolVersionDiff<TData = GetToolVersionDiff.Response>(
 
 export function useToolSources<TData = GetToolSources.Response>(
   params: GetToolSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetToolSources.Response, Error, TData, ReturnType<typeof keys.sources>>,
 ) {
   const session = useSession(auth)

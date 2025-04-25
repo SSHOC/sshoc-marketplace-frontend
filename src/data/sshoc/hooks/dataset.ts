@@ -62,34 +62,34 @@ const sources = 'sources'
 const diff = 'diff'
 
 export const keys = {
-  all(auth?: AuthData | undefined) {
+  all(auth?: AuthData  ) {
     return [dataset, auth ?? null] as const
   },
-  lists(auth?: AuthData | undefined) {
+  lists(auth?: AuthData  ) {
     return [dataset, list, auth ?? null] as const
   },
-  list(params: GetDatasets.Params, auth?: AuthData | undefined) {
+  list(params: GetDatasets.Params, auth?: AuthData  ) {
     return [dataset, list, params, auth ?? null] as const
   },
-  listInfinite(params: GetDatasets.Params, auth?: AuthData | undefined) {
+  listInfinite(params: GetDatasets.Params, auth?: AuthData  ) {
     return [dataset, list, infinite, params, auth ?? null] as const
   },
-  details(auth?: AuthData | undefined) {
+  details(auth?: AuthData  ) {
     return [dataset, detail, auth ?? null] as const
   },
-  detail(params: GetDataset.Params, auth?: AuthData | undefined) {
+  detail(params: GetDataset.Params, auth?: AuthData  ) {
     return [dataset, detail, params, auth ?? null] as const
   },
   // versions(auth?: AuthData | undefined) {
   //   return [dataset, version, auth ?? null] as const
   // },
-  version(params: GetDatasetVersion.Params, auth?: AuthData | undefined) {
+  version(params: GetDatasetVersion.Params, auth?: AuthData  ) {
     return [dataset, version, params, auth ?? null] as const
   },
   // histories(auth?: AuthData | undefined) {
   //   return [dataset, history, auth ?? null] as const
   // },
-  history(params: GetDatasetHistory.Params, auth?: AuthData | undefined) {
+  history(params: GetDatasetHistory.Params, auth?: AuthData  ) {
     return [dataset, history, params, auth ?? null] as const
   },
   // informationContributors(auth?: AuthData | undefined) {
@@ -97,7 +97,7 @@ export const keys = {
   // },
   informationContributors(
     params: GetDatasetInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [dataset, informationContributors, params, auth ?? null] as const
   },
@@ -106,27 +106,27 @@ export const keys = {
   // },
   versionInformationContributors(
     params: GetDatasetVersionInformationContributors.Params,
-    auth?: AuthData | undefined,
+    auth?: AuthData  ,
   ) {
     return [dataset, versionInformationContributors, params, auth ?? null] as const
   },
-  merged(params: GetMergedDataset.Params, auth?: AuthData | undefined) {
+  merged(params: GetMergedDataset.Params, auth?: AuthData  ) {
     return [dataset, merged, params, auth ?? null] as const
   },
-  sources(params: GetDatasetSources.Params, auth?: AuthData | undefined) {
+  sources(params: GetDatasetSources.Params, auth?: AuthData  ) {
     return [dataset, sources, params, auth ?? null] as const
   },
-  diff(params: GetDatasetDiff.Params, auth?: AuthData | undefined) {
+  diff(params: GetDatasetDiff.Params, auth?: AuthData  ) {
     return [dataset, diff, params, auth ?? null] as const
   },
-  diffVersion(params: GetDatasetVersionDiff.Params, auth?: AuthData | undefined) {
+  diffVersion(params: GetDatasetVersionDiff.Params, auth?: AuthData  ) {
     return [dataset, version, diff, params, auth ?? null] as const
   },
 }
 
 export function useDatasets<TData = GetDatasets.Response>(
   params: GetDatasets.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetDatasets.Response, Error, TData, ReturnType<typeof keys.list>>,
 ) {
   const session = useSession(auth)
@@ -141,7 +141,7 @@ export function useDatasets<TData = GetDatasets.Response>(
 
 export function useDatasetsInfinite<TData = GetDatasets.Response>(
   params: GetDatasets.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseInfiniteQueryOptions<
     GetDatasets.Response,
     Error,
@@ -160,7 +160,7 @@ export function useDatasetsInfinite<TData = GetDatasets.Response>(
       keepPreviousData: true,
       ...options,
       getNextPageParam(lastPage, _allPages) {
-        if (lastPage.page < lastPage.pages) return lastPage.page + 1
+        if (lastPage.page < lastPage.pages) {return lastPage.page + 1}
         return undefined
       },
     },
@@ -169,7 +169,7 @@ export function useDatasetsInfinite<TData = GetDatasets.Response>(
 
 export function useDataset<TData = GetDataset.Response>(
   params: GetDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetDataset.Response, Error, TData, ReturnType<typeof keys.detail>>,
 ) {
   const session = useSession(auth)
@@ -184,7 +184,7 @@ export function useDataset<TData = GetDataset.Response>(
 
 export function useDatasetVersion<TData = GetDatasetVersion.Response>(
   params: GetDatasetVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetVersion.Response,
     Error,
@@ -204,7 +204,7 @@ export function useDatasetVersion<TData = GetDatasetVersion.Response>(
 
 export function useDatasetHistory<TData = GetDatasetHistory.Response>(
   params: GetDatasetHistory.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetHistory.Response,
     Error,
@@ -226,7 +226,7 @@ export function useDatasetInformationContributors<
   TData = GetDatasetInformationContributors.Response,
 >(
   params: GetDatasetInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetInformationContributors.Response,
     Error,
@@ -248,7 +248,7 @@ export function useDatasetVersionInformationContributors<
   TData = GetDatasetVersionInformationContributors.Response,
 >(
   params: GetDatasetVersionInformationContributors.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetVersionInformationContributors.Response,
     Error,
@@ -268,7 +268,7 @@ export function useDatasetVersionInformationContributors<
 
 export function useCreateDataset(
   params: CreateDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CreateDataset.Response, Error, { data: CreateDataset.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -294,7 +294,7 @@ export function useCreateDataset(
 
 export function useUpdateDataset(
   params: UpdateDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<UpdateDataset.Response, Error, { data: UpdateDataset.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -321,7 +321,7 @@ export function useUpdateDataset(
 
 export function useDeleteDataset(
   params: DeleteDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteDataset.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -348,7 +348,7 @@ export function useDeleteDataset(
 
 export function useDeleteDatasetVersion(
   params: DeleteDatasetVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<DeleteDatasetVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -375,7 +375,7 @@ export function useDeleteDatasetVersion(
 
 export function useRevertDatasetToVersion(
   params: RevertDatasetToVersion.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<RevertDatasetToVersion.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -405,7 +405,7 @@ export const useRejectDatasetVersion = useDeleteDatasetVersion
 
 export function useCommitDraftDataset(
   params: CommitDraftDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<CommitDraftDataset.Response, Error>,
 ) {
   const queryClient = useQueryClient()
@@ -433,7 +433,7 @@ export function useCommitDraftDataset(
 
 export function useMergedDataset<TData = GetMergedDataset.Response>(
   params: GetMergedDataset.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetMergedDataset.Response,
     Error,
@@ -453,7 +453,7 @@ export function useMergedDataset<TData = GetMergedDataset.Response>(
 
 export function useMergeDatasets(
   params: MergeDatasets.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseMutationOptions<MergeDatasets.Response, Error, { data: MergeDatasets.Body }>,
 ) {
   const queryClient = useQueryClient()
@@ -479,7 +479,7 @@ export function useMergeDatasets(
 
 export function useDatasetDiff<TData = GetDatasetDiff.Response>(
   params: GetDatasetDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<GetDatasetDiff.Response, Error, TData, ReturnType<typeof keys.diff>>,
 ) {
   const session = useSession(auth)
@@ -494,7 +494,7 @@ export function useDatasetDiff<TData = GetDatasetDiff.Response>(
 
 export function useDatasetVersionDiff<TData = GetDatasetVersionDiff.Response>(
   params: GetDatasetVersionDiff.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetVersionDiff.Response,
     Error,
@@ -514,7 +514,7 @@ export function useDatasetVersionDiff<TData = GetDatasetVersionDiff.Response>(
 
 export function useDatasetSources<TData = GetDatasetSources.Response>(
   params: GetDatasetSources.Params,
-  auth?: AuthData | undefined,
+  auth?: AuthData  ,
   options?: UseQueryOptions<
     GetDatasetSources.Response,
     Error,
