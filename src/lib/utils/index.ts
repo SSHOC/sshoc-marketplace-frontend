@@ -15,7 +15,6 @@ export { isNotNullish } from "@/lib/utils/is-not-nullish";
 export { keys } from "@/lib/utils/keys";
 export { length } from "@/lib/utils/length";
 export { mapBy } from "@/lib/utils/map-by";
-export { noop } from "@/lib/utils/noop";
 export { removeTrailingSlash } from "@/lib/utils/remove-trailing-slash";
 export { safestring } from "@/lib/utils/safestring";
 export { sanitizeSearchParams } from "@/lib/utils/sanitize-search-params";
@@ -27,6 +26,7 @@ export {
 	isNonEmptyArray,
 	isNonEmptyString,
 	log,
+	noop,
 	pick,
 	range,
 	times,
