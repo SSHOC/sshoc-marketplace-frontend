@@ -1,9 +1,12 @@
-import type { StaticResult as PropertyTypes } from "@/components/item-form/property-types.static";
-import _propertyTypes from "@/components/item-form/property-types.static";
-import type { PropertyTypeConcept, PropertyTypeScalar } from "@/data/sshoc/api/property";
+import type {
+	PropertyType,
+	PropertyTypeConcept,
+	PropertyTypeScalar,
+} from "@/data/sshoc/api/property";
 import type { ToolInput } from "@/data/sshoc/api/tool-or-service";
+import _propertyTypes from "~/public/data/property-types.json";
 
-const propertyTypes = _propertyTypes as unknown as PropertyTypes;
+const propertyTypes = _propertyTypes as Record<PropertyType["code"], PropertyType>;
 
 const recommendedFields = {
 	// label: '',

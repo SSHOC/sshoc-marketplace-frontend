@@ -135,13 +135,6 @@ const config = {
 			},
 		});
 
-		/** Evaluate modules at build-time. */
-		config.module?.rules?.push({
-			test: /\.static\.ts$/,
-			use: [{ loader: "@stefanprobst/val-loader" }],
-			exclude: /node_modules/,
-		});
-
 		/** @type {(heading: HastElement, id: string) => Array<HastElement>} */
 		function createPermalink(headingElement, id) {
 			const permaLinkId = ["permalink", id].join("-");

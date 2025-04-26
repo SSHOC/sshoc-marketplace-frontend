@@ -20,6 +20,7 @@ export default config(
 	{
 		rules: {
 			"prefer-template": "off",
+			"@typescript-eslint/consistent-type-definitions": "off",
 			"@typescript-eslint/dot-notation": "off",
 			"@typescript-eslint/no-confusing-void-expression": "off",
 			"@typescript-eslint/no-deprecated": "off",

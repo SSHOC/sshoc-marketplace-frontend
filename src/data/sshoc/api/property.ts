@@ -204,13 +204,13 @@ export function updatePropertyType(
 }
 
 export namespace DeletePropertyType {
-	export interface PathParams {
+	export type PathParams = {
 		code: string;
-	}
-	export interface SearchParams {
+	};
+	export type SearchParams = {
 		/** @default false */
 		force?: boolean;
-	}
+	};
 	export type Params = PathParams & SearchParams;
 	export type Response = void;
 }

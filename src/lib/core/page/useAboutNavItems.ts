@@ -1,8 +1,11 @@
-import type { StaticResult as AboutPages } from "@/lib/core/navigation/about-pages.static";
-import _aboutPages from "@/lib/core/navigation/about-pages.static";
 import type { NavItems } from "@/lib/core/page/types";
+import _aboutPages from "~/public/data/about-pages.json";
 
-const aboutPages = _aboutPages as unknown as AboutPages;
+const aboutPages = _aboutPages as Array<{
+	label: string;
+	href: string;
+	position: number;
+}>;
 
 export function useAboutNavItems(): NavItems {
 	const items = aboutPages.map((page) => {
