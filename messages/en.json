@@ -63,6 +63,65 @@
 		},
 		"title": "Contact"
 	},
+	"DatasetForm": {
+		"controls": {
+			"cancel": "Cancel",
+			"publish": "Publish",
+			"save-draft": "Save as draft",
+			"suggest": "Suggest changes"
+		},
+		"fields": {
+			"label": {
+				"label": "Label",
+				"description": "Name of the entry."
+			},
+			"description": {
+				"label": "Description",
+				"description": "Should be concise and raise interest in the entry. Allows Markdown content."
+			},
+			"accessible-at": {
+				"label": "Accessible at",
+				"description": "URL, ideally landing page, of the resource.",
+				"add": "Add Accessible at URL",
+				"remove": "Delete"
+			},
+			"version": {
+				"label": "Version"
+			},
+			"externalIds": {
+				"service": {
+					"label": "ID Service",
+					"description": ""
+				},
+				"identifier": {
+					"label": "Identifier",
+					"description": "Other URLs relevant to the resource, e.g. code, DOI, etc."
+				},
+				"add": "Add External ID",
+				"remove": "Delete"
+			},
+
+			"source": {},
+			"sourceItemId": {},
+
+			"dateCreated": {},
+			"dateLastUpdated": {},
+			"contributors": {},
+			"properties": {},
+			"media": {},
+			"thumbnail": {},
+			"relatedItemsc": {}
+		},
+		"sections": {
+			"base": "Base metadata",
+			"dates": "Dates",
+			"actors": "Actors",
+			"properties": "Properties",
+			"media": "Media",
+			"thumbnail": "Thumbnail",
+			"relations": "Related items"
+		}
+	},
 	"DatasetPage": {
 		"breadcrumbs": {
 			"items": {
@@ -74,8 +133,6 @@
 		"controls": {
 			"delete": "Delete",
 			"edit": "Edit",
-			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion",
 			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
@@ -89,8 +146,13 @@
 		"go-to-dataset": "Go to dataset"
 	},
 	"DatasetEditPage": {
+		"lead": "If you need more details on metadata fields, please consult <guidelines>our guidelines</guidelines>, or <contact>contact the Editorial Team</contact>!",
+		"message": {
+			"draft": "You are viewing a draft version last saved on {date}.",
+			"suggested": "You are viewing a suggested version last saved on {date}."
+		},
 		"meta": {
-			"title": "Edit dataset"
+			"title": "Edit dataset {item}"
 		},
 		"title": "Edit dataset"
 	},
@@ -313,8 +375,6 @@
 		"controls": {
 			"delete": "Delete",
 			"edit": "Edit",
-			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion",
 			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
@@ -329,7 +389,7 @@
 	},
 	"PublicationEditPage": {
 		"meta": {
-			"title": "Edit publication"
+			"title": "Edit publication {item}"
 		},
 		"title": "Edit publication"
 	},
@@ -423,8 +483,6 @@
 		"controls": {
 			"delete": "Delete",
 			"edit": "Edit",
-			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion",
 			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
@@ -460,7 +518,7 @@
 	},
 	"ToolOrServiceEditPage": {
 		"meta": {
-			"title": "Edit tool or service"
+			"title": "Edit tool or service {item}"
 		},
 		"title": "Edit tool or service"
 	},
@@ -498,8 +556,6 @@
 		"controls": {
 			"delete": "Delete",
 			"edit": "Edit",
-			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion",
 			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
@@ -514,7 +570,7 @@
 	},
 	"TrainingMaterialEditPage": {
 		"meta": {
-			"title": "Edit training material"
+			"title": "Edit training material {item}"
 		},
 		"title": "Edit training material"
 	},
@@ -573,8 +629,6 @@
 		"controls": {
 			"delete": "Delete",
 			"edit": "Edit",
-			"edit-draft": "Edit current draft",
-			"edit-suggestion": "Edit last suggestion",
 			"history": "History"
 		},
 		"copy-to-clipboard": "Copy to clipboard",
@@ -589,7 +643,7 @@
 	},
 	"WorkflowEditPage": {
 		"meta": {
-			"title": "Edit workflow"
+			"title": "Edit workflow {item}"
 		},
 		"title": "Edit workflow"
 	},

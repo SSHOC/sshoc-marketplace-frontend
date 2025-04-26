@@ -32,6 +32,28 @@ async function generate() {
 				break;
 			}
 
+			case "ActorExternalIdDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ActorHistoryDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
 			case "ActorRoleDto": {
 				assert(def.type === "object" && def.properties != null);
 
@@ -44,6 +66,17 @@ async function generate() {
 			}
 
 			case "ActorSourceDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ConceptBasicDto": {
 				assert(def.type === "object" && def.properties != null);
 
 				const optional: Array<string> = [];
@@ -80,7 +113,51 @@ async function generate() {
 				break;
 			}
 
+			case "ItemBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemCommentDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
 			case "ItemContributorDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemsDifferencesDtoItemDtoItemDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemExtBasicDto": {
 				assert(def.type === "object" && def.properties != null);
 
 				const optional: Array<string> = [];
@@ -113,7 +190,172 @@ async function generate() {
 				break;
 			}
 
+			case "ItemRelatedItemDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemRelationDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "ItemSourceDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "MediaSourceDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedItemsBasicItemBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedItemsBasicItemExtBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedDatasets": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedPublications": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedSearchConcepts": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedSearchItems": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedSources": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedTools": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedTrainingMaterials": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PaginatedWorkflows": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
 			case "PropertyDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "PropertyTypeDto": {
 				assert(def.type === "object" && def.properties != null);
 
 				const optional: Array<string> = [];
@@ -150,6 +392,39 @@ async function generate() {
 				break;
 			}
 
+			case "SearchConcept": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "SearchItem": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = ["thumbnailId"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "SourceDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
 			case "SourceBasicDto": {
 				assert(def.type === "object" && def.properties != null);
 
@@ -169,6 +444,28 @@ async function generate() {
 				category.enum = ["step"];
 
 				const optional: Array<string> = ["thumbnail"];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "SuggestedObject": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "SuggestedSearchPhrases": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
 				def.required = Object.keys(def.properties).filter((field) => {
 					return !optional.includes(field);
 				});
@@ -233,6 +530,17 @@ async function generate() {
 			}
 
 			case "VocabularyBasicDto": {
+				assert(def.type === "object" && def.properties != null);
+
+				const optional: Array<string> = [];
+				def.required = Object.keys(def.properties).filter((field) => {
+					return !optional.includes(field);
+				});
+
+				break;
+			}
+
+			case "VocabularyDto": {
 				assert(def.type === "object" && def.properties != null);
 
 				const optional: Array<string> = [];

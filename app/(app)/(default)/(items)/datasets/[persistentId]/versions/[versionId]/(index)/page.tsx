@@ -141,7 +141,7 @@ export default async function DatasetVersionPage(
 
 			<section className="relative flex flex-col gap-y-8 py-16">
 				<div className="grid grid-cols-[auto_1fr_auto] gap-x-6">
-					<ItemThumbnail category={item.category} mediaId={item.thumbnail.info.mediaId} />
+					<ItemThumbnail category={item.category} mediaId={item.thumbnail?.info.mediaId} />
 					<h1 className="py-1 text-[2rem] leading-[1.25] font-medium text-neutral-800">
 						{item.label}
 					</h1>
@@ -195,7 +195,7 @@ export default async function DatasetVersionPage(
 									>
 										{t("dialogs.delete.submit")}
 									</Button>
-									<Button kind="sceondary" slot="close">
+									<Button kind="secondary" slot="close">
 										{t("dialogs.delete.cancel")}
 									</Button>
 								</DialogFooter>

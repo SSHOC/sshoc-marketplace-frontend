@@ -6,24 +6,7 @@ import { redirect } from "@/lib/navigation/navigation";
 import { isHttpError } from "@/lib/server/errors";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getDataset({ persistentId }: { persistentId: string }) {
-	try {
-		return await _getDataset({ persistentId });
-	} catch (error) {
-		log.error(error);
-
-		if (isHttpError(error)) {
-			if (error.response.status === 404) {
-				notFound();
-			}
-		}
-
-		throw error;
-	}
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getDatasetDraft({
+export async function getLatestDatasetVersion({
 	persistentId,
 	token,
 }: {
@@ -31,7 +14,35 @@ export async function getDatasetDraft({
 	token: string;
 }) {
 	try {
-		return await _getDataset({ persistentId, searchParams: { draft: true }, token });
+		// return await _getDataset({
+		// 	persistentId,
+		// 	searchParams: { draft: true, approved: false },
+		// 	token,
+		// });
+
+		/**
+		 * The api returns 404 when `?draft?true` is provided and no draft exists,
+		 * instead of falling back to the latest non-draft version.
+		 *
+		 * @see https://github.com/SSHOC/sshoc-marketplace-backend/issues/497
+		 */
+		try {
+			return await _getDataset({
+				persistentId,
+				searchParams: { draft: true },
+				token,
+			});
+		} catch (error) {
+			if (isHttpError(error) && error.response.status === 404) {
+				return await _getDataset({
+					persistentId,
+					searchParams: { approved: false },
+					token,
+				});
+			}
+
+			throw error;
+		}
 	} catch (error) {
 		log.error(error);
 

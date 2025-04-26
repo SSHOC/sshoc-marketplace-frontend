@@ -14,7 +14,7 @@ export async function getDatasetVersions({
 	token: string;
 }) {
 	try {
-		return await _getDatasetVersions({ persistentId, token });
+		return await _getDatasetVersions({ persistentId, searchParams: { approved: false }, token });
 	} catch (error) {
 		log.error(error);
 

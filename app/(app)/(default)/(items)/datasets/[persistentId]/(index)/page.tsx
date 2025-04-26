@@ -8,12 +8,7 @@ import { CopyLinkButton } from "@/app/(app)/(default)/(items)/_components/copy-l
 import { ItemThumbnail } from "@/app/(app)/(default)/(items)/_components/item-thumbnail";
 import { SchemaOrgMetadata } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_components/schema-org-metadata";
 import { deleteDataset } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/delete-dataset";
-import {
-	getDataset,
-	getDatasetDraft,
-	getDatasetSuggestion,
-} from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/get-dataset";
-import type { SearchParamsSchema as DatasetEditPageSearchParamsSchema } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/edit/_lib/validation";
+import { getDataset } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/(index)/_lib/get-dataset";
 import type { SearchParamsSchema as SearchPageSearchParamsSchema } from "@/app/(app)/(default)/search/_lib/validation";
 import { ServerImage as Image } from "@/components/server-image";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -63,15 +58,11 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 
 	const t = await getTranslations("DatasetPage");
 
-	const [item, suggestedItem, draftItem, user] = await Promise.all([
+	const [item, user] = await Promise.all([
 		getDataset({ persistentId }),
-		token != null ? getDatasetSuggestion({ persistentId, token }) : null,
-		token != null ? getDatasetDraft({ persistentId, token }) : null,
 		token != null ? getCurrentUser({ token }) : null,
 	]);
 
-	const hasSuggestion = suggestedItem != null && suggestedItem.status === "suggested";
-	const hasDraft = draftItem != null && draftItem.status === "draft";
 	const isEditable = is(item.status, "editable");
 	const isDeletable = is(item.status, "deletable");
 	const canDelete = isDeletable && user != null && can(user, item.category, "delete");
@@ -135,8 +126,6 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 				</div>
 			</section>
 
-			{/* FIXME: when does it make sense to actually show these controls? */}
-			{/* FIXME: should we automatically load a draft if it exists, and a suggestion if not approved? */}
 			{canViewVersionHistory || canEdit || canDelete ? (
 				<div className="flex gap-x-4">
 					{canViewVersionHistory ? (
@@ -159,31 +148,6 @@ export default async function DatasetPage(props: Readonly<DatasetPageProps>): Pr
 							size="small"
 						>
 							{t("controls.edit")}
-						</ButtonLink>
-					) : null}
-					{canEdit && hasDraft ? (
-						<ButtonLink
-							href={createHref({
-								pathname: `/datasets/${item.persistentId}/edit`,
-								searchParams: {
-									initial: "draft",
-								} satisfies Partial<DatasetEditPageSearchParamsSchema>,
-							})}
-							kind="secondary"
-							size="small"
-						>
-							{t("controls.edit-draft")}
-						</ButtonLink>
-					) : null}
-					{canEdit && hasSuggestion ? (
-						<ButtonLink
-							href={createHref({
-								pathname: `/datasets/${item.persistentId}/versions/${String(suggestedItem.id)}/edit`,
-							})}
-							kind="secondary"
-							size="small"
-						>
-							{t("controls.edit-suggestion")}
 						</ButtonLink>
 					) : null}
 					{canDelete ? (

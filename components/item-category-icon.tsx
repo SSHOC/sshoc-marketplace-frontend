@@ -1,7 +1,7 @@
 import type { StaticImageData } from "next/image";
 import type { ComponentPropsWithRef, ReactNode } from "react";
 
-import { ServerImage as Image } from "@/components/server-image";
+import { Image } from "@/components/image";
 import dataset from "@/public/assets/images/categories/dataset.svg";
 import publication from "@/public/assets/images/categories/publication.svg";
 import step from "@/public/assets/images/categories/step.svg";

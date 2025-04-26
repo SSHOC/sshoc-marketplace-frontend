@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ItemCategoryIcon } from "@/components/item-category-icon";
-import { ServerImage } from "@/components/server-image";
+import { ServerImage as Image } from "@/components/server-image";
 import { getMediaThumbnailUrl, type ItemCategory } from "@/lib/api/client";
 
 interface ItemThumbnailProps {
@@ -19,7 +19,7 @@ export function ItemThumbnail(props: Readonly<ItemThumbnailProps>): ReactNode {
 	}
 
 	return (
-		<ServerImage
+		<Image
 			alt=""
 			className="size-20 shrink-0 object-contain"
 			src={String(getMediaThumbnailUrl(mediaId))}
