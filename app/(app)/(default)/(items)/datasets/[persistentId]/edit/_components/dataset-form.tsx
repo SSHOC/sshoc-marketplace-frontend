@@ -12,6 +12,7 @@ import { FormError } from "@/components/ui/form-error";
 import { FormSuccess } from "@/components/ui/form-success";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RichTextEditor } from "@/components/ui/rich-text-input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { TextInput } from "@/components/ui/text-input";
 import { TextArea } from "@/components/ui/textarea";
@@ -65,6 +66,8 @@ export function DatasetForm(props: Readonly<DatasetFormProps>): ReactNode {
 					<FieldDescription>{t("fields.description.description")}</FieldDescription>
 					<FieldError />
 				</TextInput>
+
+				<RichTextEditor />
 
 				<ul role="list">
 					{item.accessibleAt.map((url, index) => {
