@@ -1,9 +1,11 @@
+ignoredBuiltDependencies:
+  - unrs-resolver
+
 onlyBuiltDependencies:
-  - '@sentry/cli'
+  - "@sentry/cli"
   - esbuild
   - sharp
   - simple-git-hooks
-  - unrs-resolver
 
 patchedDependencies:
   next: patches/next.patch
