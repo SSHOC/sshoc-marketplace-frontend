@@ -2,16 +2,15 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
+import { SectionHeader } from '@/components/common/SectionHeader'
 import { SectionTitle } from '@/components/common/SectionTitle'
 import css from '@/components/home/LastUpdatedItems.module.css'
+import { SectionHeaderLink } from '@/components/home/SectionHeaderLink'
 import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { maxLastAddedItems } from '~/config/sshoc.config'
-
-import { SectionHeader } from '../common/SectionHeader'
-import { SectionHeaderLink } from './SectionHeaderLink'
 
 export function LastUpdatedItems(): JSX.Element {
   const { t } = useI18n<'common'>()

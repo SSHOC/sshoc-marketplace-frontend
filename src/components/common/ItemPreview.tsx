@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { ItemCategoryBadge } from '@/components/common/ItemCategoryBadge'
 import { ItemCategoryIcon } from '@/components/common/ItemCategoryIcon'
 import { ItemDescription } from '@/components/common/ItemDescription'
 import css from '@/components/common/ItemPreview.module.css'
@@ -9,8 +10,6 @@ import type { ItemSearchResult, RelatedItem } from '@/data/sshoc/api/item'
 import {} from '@/data/sshoc/api/vocabulary'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes as routes } from '@/lib/core/navigation/item-routes'
-
-import { ItemCategoryBadge } from './ItemCategoryBadge'
 
 export interface ItemPreviewProps {
   controls?: ReactNode

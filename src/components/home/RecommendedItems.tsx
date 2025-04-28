@@ -2,6 +2,7 @@ import { createUrlSearchParams } from '@stefanprobst/request'
 import { Fragment } from 'react'
 
 import { ItemPreview } from '@/components/common/ItemPreview'
+import { SectionTitle } from '@/components/common/SectionTitle'
 import css from '@/components/home/RecommendedItems.module.css'
 import { SectionHeader } from '@/components/home/SectionHeader'
 import { SectionHeaderLink } from '@/components/home/SectionHeaderLink'
@@ -10,8 +11,6 @@ import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 import { maxRecommendedItems } from '~/config/sshoc.config'
-
-import { SectionTitle } from '../common/SectionTitle'
 
 export function RecommendedItems(): JSX.Element {
   const { t } = useI18n<'common'>()
