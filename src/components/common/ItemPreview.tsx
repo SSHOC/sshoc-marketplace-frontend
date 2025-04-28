@@ -10,6 +10,8 @@ import {} from '@/data/sshoc/api/vocabulary'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { itemRoutes as routes } from '@/lib/core/navigation/item-routes'
 
+import { ItemCategoryBadge } from './ItemCategoryBadge'
+
 export interface ItemPreviewProps {
   controls?: ReactNode
   item: ItemSearchResult | RelatedItem
@@ -31,6 +33,7 @@ export function ItemPreview(props: ItemPreviewProps): JSX.Element {
 
   return (
     <article className={css['container']}>
+      <ItemCategoryBadge category={item.category} />
       <ElementType className={css['title']}>
         <ItemCategoryIcon category={item.category} />
         <Link href={href} variant="heading">

@@ -1,0 +1,31 @@
+.badge {
+  justify-self: start;
+  padding: 0 var(--space-2-5);
+  border-radius: 9999px;
+  font-size: var(--font-size-ui-xs);
+}
+
+.dataset {
+  background-color: var(--color-background-dataset);
+  color: var(--color-text-dataset);
+}
+
+.publication {
+  background-color: var(--color-background-publication);
+  color: var(--color-text-publication);
+}
+
+.tool-or-service {
+  background-color: var(--color-background-tool-or-service);
+  color: var(--color-text-tool-or-service);
+}
+
+.training-material {
+  background-color: var(--color-background-training-material);
+  color: var(--color-text-training-material);
+}
+
+.workflow {
+  background-color: var(--color-background-workflow);
+  color: var(--color-text-workflow);
+}
