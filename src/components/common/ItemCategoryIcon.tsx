@@ -1,5 +1,4 @@
 import type { ItemCategoryWithWorkflowStep } from '@/data/sshoc/api/item'
-import { useI18n } from '@/lib/core/i18n/useI18n'
 import DatasetIcon from '~/public/assets/images/categories/dataset.svg?symbol-icon'
 import PublicationIcon from '~/public/assets/images/categories/publication.svg?symbol-icon'
 import WorkflowStepIcon from '~/public/assets/images/categories/step.svg?symbol-icon'
@@ -12,22 +11,18 @@ export interface ItemCategoryIconProps {
 }
 
 export function ItemCategoryIcon(props: ItemCategoryIconProps): JSX.Element {
-  const { t } = useI18n<'common'>()
-
-  const label = t(['common', 'item-categories', props.category, 'one'])
-
   switch (props.category) {
     case 'dataset':
-      return <DatasetIcon width={40} height={40} aria-label={label} title={label} />
+      return <DatasetIcon aria-hidden={true} width={40} height={40} />
     case 'publication':
-      return <PublicationIcon width={40} height={40} aria-label={label} title={label} />
+      return <PublicationIcon aria-hidden={true} width={40} height={40} />
     case 'tool-or-service':
-      return <ToolIcon width={40} height={40} aria-label={label} title={label} />
+      return <ToolIcon aria-hidden={true} width={40} height={40} />
     case 'training-material':
-      return <TrainingMaterialIcon width={40} height={40} aria-label={label} title={label} />
+      return <TrainingMaterialIcon aria-hidden={true} width={40} height={40} />
     case 'workflow':
-      return <WorkflowIcon width={40} height={40} aria-label={label} title={label} />
+      return <WorkflowIcon aria-hidden={true} width={40} height={40} />
     case 'step':
-      return <WorkflowStepIcon width={40} height={40} aria-label={label} title={label} />
+      return <WorkflowStepIcon aria-hidden={true} width={40} height={40} />
   }
 }
