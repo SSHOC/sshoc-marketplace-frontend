@@ -9,13 +9,15 @@ import { useTreeState } from '@react-stately/tree'
 import type { AriaMenuProps, MenuTriggerProps } from '@react-types/menu'
 import type { CollectionChildren, Node } from '@react-types/shared'
 import { useRouter } from 'next/router'
-import type { HTMLAttributes, Key, ReactNode, RefObject } from 'react'
+import type { HTMLAttributes, ReactNode, RefObject } from 'react'
 import { useEffect, useRef } from 'react'
 
 import { NavLink } from '@/components/common/NavLink'
 import css from '@/lib/core/page/NavigationMenu.module.css'
 import pageNavigationStyles from '@/lib/core/page/PageNavigation.module.css'
 import { Popover } from '@/lib/core/page/Popover'
+import { Icon } from '@/lib/core/ui/Icon/Icon'
+import ChevronIcon from '@/lib/core/ui/icons/chevron.svg?symbol-icon'
 
 export interface NavigationMenuProps<T extends object> extends MenuTriggerProps {
   label?: ReactNode
@@ -55,6 +57,7 @@ export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>):
         ref={buttonRef}
       >
         {props.label}
+        <Icon icon={ChevronIcon} />
       </button>
       {state.isOpen ? (
         <FocusScope restoreFocus>
