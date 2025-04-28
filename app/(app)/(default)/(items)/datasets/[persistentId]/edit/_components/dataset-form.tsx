@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useActionState } from "react";
 
 import { updateAction } from "@/app/(app)/(default)/(items)/datasets/[persistentId]/edit/_actions/update-action";
+import { TestEditor } from "@/app/(app)/(default)/rte/_components/test-editor";
 import { Form } from "@/components/form";
 import { ButtonLink } from "@/components/ui/button";
 import { FieldDescription } from "@/components/ui/field-description";
@@ -12,7 +13,7 @@ import { FormError } from "@/components/ui/form-error";
 import { FormSuccess } from "@/components/ui/form-success";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RichTextEditor } from "@/components/ui/rich-text-input";
+// import { RichTextEditor } from "@/components/ui/rich-text-input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { TextInput } from "@/components/ui/text-input";
 import { TextArea } from "@/components/ui/textarea";
@@ -67,7 +68,8 @@ export function DatasetForm(props: Readonly<DatasetFormProps>): ReactNode {
 					<FieldError />
 				</TextInput>
 
-				<RichTextEditor />
+				{/* <RichTextEditor /> */}
+				<TestEditor />
 
 				<ul role="list">
 					{item.accessibleAt.map((url, index) => {

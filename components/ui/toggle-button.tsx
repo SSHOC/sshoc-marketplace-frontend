@@ -9,14 +9,14 @@ import {
 } from "react-aria-components";
 
 const toggleButtonStyles = styles({
-	base: "slot-icon:first-child:-ml-1 slot-icon:last-child:-mr-1 relative isolate inline-flex items-center justify-center gap-x-2 border border-neutral-250 bg-neutral-50 text-center outline-transparent transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:bg-neutral-200 forced-colors:disabled:text-[GrayText] selected:bg-neutral-200 slot-icon:shrink-0",
+	base: "relative isolate inline-flex items-center justify-center gap-x-2 border border-neutral-250 bg-neutral-50 text-center outline-transparent transition hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed forced-colors:disabled:text-[GrayText] selected:bg-brand-300 slot-icon:shrink-0",
 	variants: {
 		size: {
-			small: "rounded-sm px-4 text-sm font-medium",
-			medium: "rounded-sm px-4 text-base font-medium",
+			small: "rounded-sm text-sm font-medium",
+			medium: "rounded-sm text-base font-medium",
 		},
 		variant: {
-			default: "",
+			default: "slot-icon:first-child:-ml-1 slot-icon:last-child:-mr-1",
 			"icon-only": "",
 		},
 	},

@@ -10,7 +10,7 @@ import TableRow from "@tiptap/extension-table-row";
 import Underline from "@tiptap/extension-underline";
 import { type Editor, EditorContent, type JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
+import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from "lucide-react";
 import { type ReactNode, useMemo } from "react";
 import { Group, Toolbar } from "react-aria-components";
 
@@ -31,7 +31,7 @@ export function RichTextEditor(props: Readonly<RichTextEditorProps>): ReactNode 
 	// }, [_onChange]);
 
 	const editor = useEditor({
-		content: defaultValue,
+		// content: defaultValue,
 		editorProps: {
 			attributes: {
 				class:
@@ -46,18 +46,18 @@ export function RichTextEditor(props: Readonly<RichTextEditorProps>): ReactNode 
 				},
 			}),
 			Underline,
-			Link.configure({
-				autolink: true,
-				defaultProtocol: "https",
-				openOnClick: false,
-				protocols: ["http", "https", "mailto"],
-			}),
-			Table.configure({
-				resizable: true,
-			}),
-			TableRow,
-			TableHeader,
-			TableCell,
+			// Link.configure({
+			// 	autolink: true,
+			// 	defaultProtocol: "https",
+			// 	openOnClick: false,
+			// 	protocols: ["http", "https", "mailto"],
+			// }),
+			// Table.configure({
+			// 	resizable: true,
+			// }),
+			// TableRow,
+			// TableHeader,
+			// TableCell,
 		],
 		immediatelyRender: false,
 		// onBlur({ editor }) {
@@ -94,7 +94,7 @@ function MenuBar(props: Readonly<MenuBarProps>): ReactNode {
 				<Group className="flex flex-wrap gap-x-2">
 					<TooltipTrigger>
 						<ToggleIconButton
-							isDisabled={!editor.can().chain().focus().toggleBold().run()}
+							isDisabled={!editor.can().toggleBold()}
 							isSelected={editor.isActive("bold")}
 							label={"Bold"}
 							onChange={() => {
@@ -109,7 +109,7 @@ function MenuBar(props: Readonly<MenuBarProps>): ReactNode {
 
 					<TooltipTrigger>
 						<ToggleIconButton
-							isDisabled={!editor.can().chain().focus().toggleItalic().run()}
+							isDisabled={!editor.can().toggleItalic()}
 							isSelected={editor.isActive("italic")}
 							label={"Italic"}
 							onChange={() => {
@@ -124,7 +124,37 @@ function MenuBar(props: Readonly<MenuBarProps>): ReactNode {
 
 					<TooltipTrigger>
 						<ToggleIconButton
-							isDisabled={!editor.can().chain().focus().toggleUnderline().run()}
+							isDisabled={!editor.can().toggleStrike()}
+							isSelected={editor.isActive("strike")}
+							label={"Strikethrough"}
+							onChange={() => {
+								editor.chain().focus().toggleStrike().run();
+							}}
+							size="small"
+						>
+							<StrikethroughIcon aria-hidden={true} data-slot="icon" />
+						</ToggleIconButton>
+						<Tooltip>{"Strikethrough"}</Tooltip>
+					</TooltipTrigger>
+
+					<TooltipTrigger>
+						<ToggleIconButton
+							isDisabled={!editor.can().toggleCode()}
+							isSelected={editor.isActive("code")}
+							label={"Code"}
+							onChange={() => {
+								editor.chain().focus().toggleCode().run();
+							}}
+							size="small"
+						>
+							<CodeIcon aria-hidden={true} data-slot="icon" />
+						</ToggleIconButton>
+						<Tooltip>{"Code"}</Tooltip>
+					</TooltipTrigger>
+
+					<TooltipTrigger>
+						<ToggleIconButton
+							isDisabled={!editor.can().toggleUnderline()}
 							isSelected={editor.isActive("underline")}
 							label={"Underline"}
 							onChange={() => {
