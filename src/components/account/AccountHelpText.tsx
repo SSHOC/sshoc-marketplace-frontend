@@ -50,5 +50,16 @@ export function AccountHelpText(): JSX.Element {
 
   const text = texts[role]
 
-  return <p className={css['text']}>{text}</p>
+  return (
+    <div className={css['lead']}>
+      <p className={css['text']}>
+        Hi, {currentUser.data?.displayName} (
+        <a className={css['email']} href={`mailto:${currentUser.data?.email}`}>
+          {currentUser.data?.email}
+        </a>
+        )!
+      </p>
+      <p className={css['text']}>{text}</p>
+    </div>
+  )
 }
