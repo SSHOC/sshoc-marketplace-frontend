@@ -9,8 +9,8 @@
   font-size: var(--font-size-ui-xs);
   line-height: var(--line-height-relaxed);
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    grid-template-columns: 40px auto auto auto;
+  & p {
+    max-width: 44rem;
   }
 }
 
@@ -27,7 +27,7 @@
 .logos {
   display: grid;
   grid-column: span 2;
-  grid-auto-columns: 80px;
+  grid-auto-columns: 120px;
   grid-auto-flow: column;
   gap: var(--space-2);
 }
