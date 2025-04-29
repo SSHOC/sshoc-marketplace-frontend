@@ -19,7 +19,6 @@ const recommendedProperties = [
   'keyword',
   'discipline',
   'language',
-  'intended-audience',
   'see-also',
   'license',
   'publication-type',
@@ -31,7 +30,6 @@ const recommendedProperties = [
   'volume',
   'issue',
   'pages',
-  'standard',
   'resource-category',
 ]
 
