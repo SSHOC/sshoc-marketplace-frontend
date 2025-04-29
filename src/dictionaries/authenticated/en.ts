@@ -78,7 +78,8 @@ export const dictionary: Dictionary = {
     },
     description: {
       label: 'Description',
-      description: 'Should be concise and raise interest in the entry. Allows Markdown content.',
+      description:
+        'Should be concise and raise interest in the entry. Allows <Link>Markdown</Link> content.',
     },
     accessibleAt: {
       label: { one: 'Accessible at URL', other: 'Accessible at' },
