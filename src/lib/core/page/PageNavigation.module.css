@@ -46,6 +46,7 @@
   border-top-right-radius: var(--border-radius-md);
   background-color: transparent;
   color: var(--color-link-text);
+  column-gap: var(--space-3);
 
   @media (/* --page-navigation-font-size */ min-width: 98.25rem) {
     padding-inline: var(--space-7);
@@ -59,6 +60,17 @@
   &:focus-visible {
     background-color: var(--color-background-muted);
     color: var(--color-link-text-hover);
+  }
+
+  & > svg {
+    width: 10px;
+    height: 10px;
+    transition: none;
+    rotate: 90deg;
+  }
+
+  &[data-state='expanded'] > svg {
+    rotate: 270deg;
   }
 }
 

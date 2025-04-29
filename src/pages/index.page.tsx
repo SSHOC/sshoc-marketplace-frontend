@@ -65,8 +65,8 @@ export default function HomePage(_props: HomePage.Props): JSX.Element {
               </Centered>
             }
           > */}
-          <BrowseItems />
           <RecommendedItems />
+          <BrowseItems />
           <LastUpdatedItems />
           <FundingNotice />
           {/* </Suspense> */}

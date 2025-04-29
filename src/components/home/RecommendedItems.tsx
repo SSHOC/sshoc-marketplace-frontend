@@ -4,58 +4,39 @@ import { Fragment } from 'react'
 import { ItemPreview } from '@/components/common/ItemPreview'
 import { SectionTitle } from '@/components/common/SectionTitle'
 import css from '@/components/home/RecommendedItems.module.css'
-import { SubSectionHeader } from '@/components/home/SubSectionHeader'
-import { SubSectionHeaderLink } from '@/components/home/SubSectionHeaderLink'
-import { SubSectionTitle } from '@/components/home/SubSectionTitle'
-import type { ItemCategory } from '@/data/sshoc/api/item'
-import { useItemCategories, useItemSearch } from '@/data/sshoc/hooks/item'
+import { SectionHeader } from '@/components/home/SectionHeader'
+import { SectionHeaderLink } from '@/components/home/SectionHeaderLink'
+import { useItemSearch } from '@/data/sshoc/hooks/item'
 import { useI18n } from '@/lib/core/i18n/useI18n'
 import { Centered } from '@/lib/core/ui/Centered/Centered'
 import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
-import { keys } from '@/lib/utils'
-import { maxRecommendedItemsPerCategory } from '~/config/sshoc.config'
+import { maxRecommendedItems } from '~/config/sshoc.config'
 
 export function RecommendedItems(): JSX.Element {
   const { t } = useI18n<'common'>()
-  const itemCategories = useItemCategories()
-
-  if (itemCategories.data == null) {
-    return (
-      <section className={css['container']}>
-        <Centered>
-          <LoadingIndicator />
-        </Centered>
-      </section>
-    )
-  }
 
   return (
     <section className={css['container']}>
-      <SectionTitle>{t(['common', 'home', 'recommended'])}</SectionTitle>
+      <SectionHeader>
+        <SectionTitle>{t(['common', 'home', 'recommended'])}</SectionTitle>
+        <SectionHeaderLink
+          href={`/search?${createUrlSearchParams({ 'f.keyword': 'recommended', order: ['modified-on'] })}`}
+        >
+          {t(['common', 'see-all'])}
+        </SectionHeaderLink>
+      </SectionHeader>
       <ul role="list" className={css['sections']}>
-        {keys(itemCategories.data).map((category) => {
-          if (category === 'step') return null
-
-          return <RecommendedItemsForCategory key={category} category={category} />
-        })}
+        <ItemsRecommended />
       </ul>
     </section>
   )
 }
 
-interface RecommendedItemsForCategoryProps {
-  category: ItemCategory
-}
-
-function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): JSX.Element {
-  const { category } = props
-
-  const { t } = useI18n<'common'>()
+function ItemsRecommended(): JSX.Element {
   const itemSearch = useItemSearch({
-    categories: [category],
     'f.keyword': ['recommended'],
     order: ['modified-on'],
-    perpage: maxRecommendedItemsPerCategory,
+    perpage: maxRecommendedItems,
   })
 
   if (itemSearch.data == null) {
@@ -75,14 +56,6 @@ function RecommendedItemsForCategory(props: RecommendedItemsForCategoryProps): J
   return (
     <li>
       <section className={css['section']}>
-        <SubSectionHeader>
-          <SubSectionTitle>{t(['common', 'item-categories', category, 'other'])}</SubSectionTitle>
-          <SubSectionHeaderLink
-            href={`/search?${createUrlSearchParams({ categories: [category], order: ['label'] })}`}
-          >
-            {t(['common', 'see-all'])}
-          </SubSectionHeaderLink>
-        </SubSectionHeader>
         <ul role="list" className={css['items']}>
           {recommendedItems.map((item) => {
             return (

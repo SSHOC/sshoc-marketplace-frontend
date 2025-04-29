@@ -30,6 +30,7 @@
   },
   "stylelint.enable": true,
   "tailwindCSS.validate": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.startupEditor": "readme",
   "workbench.tree.indent": 16,
