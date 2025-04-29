@@ -149,7 +149,7 @@ export const dictionary: Dictionary = {
     browse: 'Browse by metadata',
     'browse-by-category': 'Browse by {{category}}',
     'browse-by-facet': '{{facet}}',
-    recommended: 'Recommended',
+    recommended: 'Featured resources',
     'last-updated': 'Last updated',
     'see-what-is-new': "See what's new",
   },
