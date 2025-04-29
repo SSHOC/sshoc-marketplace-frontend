@@ -34,7 +34,7 @@
       '. . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .';
   }
 
-  @media (/* --screen-lg */ min-width: 64rem) {
+  @media (/* --screen-xl */ min-width: 80rem) {
     grid-template-areas:
       '. . . hero hero hero hero hero hero hero hero . . .'
       '. . recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items last-updated-items last-updated-items last-updated-items . .'
