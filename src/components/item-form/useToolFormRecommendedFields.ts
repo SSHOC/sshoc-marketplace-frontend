@@ -24,7 +24,7 @@ const recommendedProperties = [
   'see-also',
   'helpdesk-url',
   'license',
-  'technical-readiness-level',
+  'technology-readiness-level',
   'resource-category',
 ]
 
@@ -45,8 +45,6 @@ recommendedProperties.forEach((id) => {
 })
 
 const fields = { ...recommendedFields, properties }
-
-console.log(fields)
 
 export function useToolFormRecommendedFields(): Partial<ToolInput> {
   return fields as unknown as Partial<ToolInput>
