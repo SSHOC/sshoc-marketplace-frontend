@@ -232,8 +232,10 @@ export const dictionary: Dictionary = {
       description: 'Info about performance levels provider expected to deliver.',
     },
     // 'source-last-update': { description: '' },
-    standard: { description: 'Standard used by the resource.' },
-    'technology-readiness-level': { description: 'Technology Readiness Level of the Resource.' },
+    standard: { description: 'Standard used by the resource. See <Link></Link>.' },
+    'technology-readiness-level': {
+      description: 'Technology Readiness Level of the Resource. See <Link></Link>.',
+    },
     'terms-of-use': { description: 'If license unknown, fill in textbox.' },
     'terms-of-use-url': { description: 'Webpage describing terms of use.' },
     'tool-family': { description: 'Type of tool.' },

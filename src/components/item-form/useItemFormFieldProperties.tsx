@@ -172,7 +172,13 @@ export function useItemFormFieldProperties(prefix = '') {
     // },
     'technology-readiness-level': {
       name: `${prefix}technology-readiness-level`,
-      description: t(['authenticated', 'properties', 'technology-readiness-level', 'description']),
+      description: t(['authenticated', 'properties', 'technology-readiness-level', 'description'], {
+        components: {
+          Link() {
+            return <SeeVocabularyLink type="technology-readiness-level" />
+          },
+        },
+      }),
     },
     'terms-of-use': {
       name: `${prefix}terms-of-use`,
