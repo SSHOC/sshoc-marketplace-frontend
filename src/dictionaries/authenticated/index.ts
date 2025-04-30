@@ -130,6 +130,7 @@ export interface Dictionary {
 		extent: Description;
 		"geographical-availability": Description;
 		"helpdesk-url": Description;
+		inputformat: Description;
 		"intended-audience": Description;
 		issue: Description;
 		journal: Description;
@@ -140,6 +141,7 @@ export interface Dictionary {
 		"mode-of-use": Description;
 		// 'model-version': Description
 		"object-format": Description;
+		outputformat: Description;
 		pages: Description;
 		"privacy-policy-url": Description;
 		// 'processed-at': Description
@@ -152,7 +154,7 @@ export interface Dictionary {
 		// 'service-type': Description
 		// 'source-last-update': Description
 		standard: Description;
-		"technical-readiness-level": Description;
+		"technology-readiness-level": Description;
 		"terms-of-use": Description;
 		"terms-of-use-url": Description;
 		"tool-family": Description;

@@ -10,8 +10,8 @@
 	display: grid;
 	grid-template-areas:
 		". hero hero hero hero hero hero hero hero hero hero hero hero ."
-		". browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items ."
 		". recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items ."
+		". browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items ."
 		". last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items ."
 		". funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice .";
 	grid-template-rows: auto auto auto 1fr auto;
@@ -28,17 +28,17 @@
 
 		grid-template-areas:
 			". . hero hero hero hero hero hero hero hero hero hero . ."
-			". . browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items . ."
 			". . recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items . ."
+			". . browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items browse-items . ."
 			". . last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items last-updated-items . ."
 			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
 	}
 
-	@media (/* --screen-lg */ min-width: 64rem) {
+	@media (/* --screen-xl */ min-width: 80rem) {
 		grid-template-areas:
 			". . . hero hero hero hero hero hero hero hero . . ."
-			". . browse-items browse-items browse-items browse-items browse-items browse-items browse-items last-updated-items last-updated-items last-updated-items . ."
 			". . recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items recommended-items last-updated-items last-updated-items last-updated-items . ."
+			". . browse-items browse-items browse-items browse-items browse-items browse-items browse-items last-updated-items last-updated-items last-updated-items . ."
 			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
 		grid-template-rows: auto auto 1fr auto;
 	}

@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
 import { BackgroundImage } from "@/components/home/BackgroundImage";
@@ -65,8 +65,8 @@ export default function HomePage(_props: HomePage.Props): ReactNode {
               </Centered>
             }
           > */}
-					<BrowseItems />
 					<RecommendedItems />
+					<BrowseItems />
 					<LastUpdatedItems />
 					<FundingNotice />
 					{/* </Suspense> */}

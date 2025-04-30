@@ -52,6 +52,18 @@
 	--color-neutral-700: hsl(0deg 0% 35%); /* #585858 */
 	--color-neutral-800: hsl(204deg 4% 23%); /* #373a3c */
 	--color-neutral-900: ;
+
+	/** sshoc design colors */
+	--color-background-tool-or-service: hsl(213deg 62% 47% / 8%);
+	--color-text-tool-or-service: hsl(213deg 62% 47%);
+	--color-background-training-material: hsl(33deg 98% 34% / 8%);
+	--color-text-training-material: hsl(33deg 98% 34%);
+	--color-background-dataset: hsl(115deg 32% 38% / 8%);
+	--color-text-dataset: hsl(115deg 32% 38%);
+	--color-background-workflow: hsl(250deg 50% 54% / 8%);
+	--color-text-workflow: hsl(250deg 50% 54%);
+	--color-background-publication: hsl(340deg 48% 50% / 8%);
+	--color-text-publication: hsl(340deg 48% 50%);
 }
 
 /* FIXME: Remove unused custom property aliases. */

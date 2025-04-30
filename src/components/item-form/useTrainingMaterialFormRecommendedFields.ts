@@ -25,7 +25,6 @@ const recommendedProperties = [
 	"intended-audience",
 	"see-also",
 	"license",
-	"standard",
 	"year",
 	"resource-category",
 ];

@@ -7,7 +7,7 @@ export const maxBrowseFacets = 20;
 
 export const maxLastAddedItems = 5;
 
-export const maxRecommendedItemsPerCategory = 2;
+export const maxRecommendedItems = 4;
 
 /** Visible text might be shorter because of css `line-clamp`. */
 export const maxPreviewDescriptionLength = 420;

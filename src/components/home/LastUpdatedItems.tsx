@@ -2,11 +2,10 @@ import { createUrlSearchParams } from "@stefanprobst/request";
 import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
+import { SectionHeader } from "@/components/common/SectionHeader";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import css from "@/components/home/LastUpdatedItems.module.css";
-import { SubSectionHeader } from "@/components/home/SubSectionHeader";
-import { SubSectionHeaderLink } from "@/components/home/SubSectionHeaderLink";
-import { SubSectionTitle } from "@/components/home/SubSectionTitle";
+import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
 import { useItemSearch } from "@/data/sshoc/hooks/item";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -35,16 +34,13 @@ export function LastUpdatedItems(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<SectionTitle>{t(["common", "home", "last-updated"])}</SectionTitle>
+			<SectionHeader>
+				<SectionTitle>{t(["common", "home", "see-what-is-new"])}</SectionTitle>
+				<SectionHeaderLink href={`/search?${createUrlSearchParams({ order: ["modified-on"] })}`}>
+					{t(["common", "see-all"])}
+				</SectionHeaderLink>
+			</SectionHeader>
 			<section className={css["section"]}>
-				<SubSectionHeader>
-					<SubSectionTitle>{t(["common", "home", "see-what-is-new"])}</SubSectionTitle>
-					<SubSectionHeaderLink
-						href={`/search?${createUrlSearchParams({ order: ["modified-on"] })}`}
-					>
-						{t(["common", "see-all"])}
-					</SubSectionHeaderLink>
-				</SubSectionHeader>
 				<ul role="list" className={css["items"]}>
 					{lastUpdatedItems.map((item) => {
 						return (

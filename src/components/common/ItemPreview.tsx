@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { ItemCategoryBadge } from "@/components/common/ItemCategoryBadge";
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
 import { ItemDescription } from "@/components/common/ItemDescription";
 import css from "@/components/common/ItemPreview.module.css";
@@ -31,6 +32,7 @@ export function ItemPreview(props: ItemPreviewProps): ReactNode {
 
 	return (
 		<article className={css["container"]}>
+			<ItemCategoryBadge category={item.category} />
 			<ElementType className={css["title"]}>
 				<ItemCategoryIcon category={item.category} />
 				<Link href={href} variant="heading">

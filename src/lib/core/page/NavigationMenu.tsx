@@ -16,6 +16,8 @@ import { NavLink } from "@/components/common/NavLink";
 import css from "@/lib/core/page/NavigationMenu.module.css";
 import pageNavigationStyles from "@/lib/core/page/PageNavigation.module.css";
 import { Popover } from "@/lib/core/page/Popover";
+import { Icon } from "@/lib/core/ui/Icon/Icon";
+import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
 
 export interface NavigationMenuProps<T extends object> extends MenuTriggerProps {
 	label?: ReactNode;
@@ -49,13 +51,14 @@ export function NavigationMenu<T extends object>(props: NavigationMenuProps<T>):
 	return (
 		<div className={css["container"]}>
 			<button
-				type="button"
 				{...buttonProps}
 				className={pageNavigationStyles["nav-menu-button"]}
 				data-state={state.isOpen ? "expanded" : "collapsed"}
 				ref={buttonRef}
+				type="button"
 			>
 				{props.label}
+				<Icon icon={ChevronIcon} />
 			</button>
 			{state.isOpen ? (
 				<FocusScope restoreFocus>

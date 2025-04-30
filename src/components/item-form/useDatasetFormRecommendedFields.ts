@@ -22,11 +22,9 @@ const recommendedProperties = [
 	"keyword",
 	"discipline",
 	"language",
-	"intended-audience",
 	"see-also",
 	"license",
 	"year",
-	"standard",
 	"publisher",
 	"resource-category",
 ];

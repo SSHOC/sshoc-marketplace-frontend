@@ -1,3 +1,4 @@
+import { SeeVocabularyLink } from "@/components/item-form/SeeVocabularyLink";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export function useItemFormFieldProperties(prefix = "") {
@@ -10,7 +11,13 @@ export function useItemFormFieldProperties(prefix = "") {
 		},
 		activity: {
 			name: `${prefix}activity`,
-			description: t(["authenticated", "properties", "activity", "description"]),
+			description: t(["authenticated", "properties", "activity", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="activity" />;
+					},
+				},
+			}),
 		},
 		authentication: {
 			name: `${prefix}authentication`,
@@ -22,11 +29,23 @@ export function useItemFormFieldProperties(prefix = "") {
 		},
 		discipline: {
 			name: `${prefix}discipline`,
-			description: t(["authenticated", "properties", "discipline", "description"]),
+			description: t(["authenticated", "properties", "discipline", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="discipline" />;
+					},
+				},
+			}),
 		},
 		"geographical-availability": {
 			name: `${prefix}geographical-availability`,
-			description: t(["authenticated", "properties", "geographical-availability", "description"]),
+			description: t(["authenticated", "properties", "geographical-availability", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="geographical-availability" />;
+					},
+				},
+			}),
 		},
 		"helpdesk-url": {
 			name: `${prefix}helpdesk-url`,
@@ -36,29 +55,63 @@ export function useItemFormFieldProperties(prefix = "") {
 			name: `${prefix}issue`,
 			description: t(["authenticated", "properties", "issue", "description"]),
 		},
+		inputformat: {
+			name: `${prefix}inputformat`,
+			description: t(["authenticated", "properties", "inputformat", "description"]),
+		},
 		journal: {
 			name: `${prefix}journal`,
 			description: t(["authenticated", "properties", "journal", "description"]),
 		},
 		keyword: {
 			name: `${prefix}keyword`,
-			description: t(["authenticated", "properties", "keyword", "description"]),
+			description: t(["authenticated", "properties", "keyword", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="keyword" />;
+					},
+				},
+			}),
 		},
 		language: {
 			name: `${prefix}language`,
-			description: t(["authenticated", "properties", "language", "description"]),
+			description: t(["authenticated", "properties", "language", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="language" />;
+					},
+				},
+			}),
 		},
 		license: {
 			name: `${prefix}license`,
-			description: t(["authenticated", "properties", "license", "description"]),
+			description: t(["authenticated", "properties", "license", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="license" />;
+					},
+				},
+			}),
 		},
 		"life-cycle-status": {
 			name: `${prefix}life-cycle-status`,
-			description: t(["authenticated", "properties", "life-cycle-status", "description"]),
+			description: t(["authenticated", "properties", "life-cycle-status", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="life-cycle-status" />;
+					},
+				},
+			}),
 		},
 		"mode-of-use": {
 			name: `${prefix}mode-of-use`,
-			description: t(["authenticated", "properties", "mode-of-use", "description"]),
+			description: t(["authenticated", "properties", "mode-of-use", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="mode-of-use" />;
+					},
+				},
+			}),
 		},
 		// 'model-version': {
 		//   name: `${prefix}model-version`,
@@ -66,7 +119,17 @@ export function useItemFormFieldProperties(prefix = "") {
 		// },
 		"object-format": {
 			name: `${prefix}object-format`,
-			description: t(["authenticated", "properties", "object-format", "description"]),
+			description: t(["authenticated", "properties", "object-format", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="object-format" />;
+					},
+				},
+			}),
+		},
+		outputformat: {
+			name: `${prefix}outputformat`,
+			description: t(["authenticated", "properties", "outputformat", "description"]),
 		},
 		pages: {
 			name: `${prefix}pages`,
@@ -78,7 +141,13 @@ export function useItemFormFieldProperties(prefix = "") {
 		},
 		"publication-type": {
 			name: `${prefix}publication-type`,
-			description: t(["authenticated", "properties", "publication-type", "description"]),
+			description: t(["authenticated", "properties", "publication-type", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="publication-type" />;
+					},
+				},
+			}),
 		},
 		"publication-place": {
 			name: `${prefix}publication-place`,
@@ -100,9 +169,15 @@ export function useItemFormFieldProperties(prefix = "") {
 		//   name: `${prefix}service-type`,
 		//   description: t(['authenticated', 'properties', 'service-type', 'description']),
 		// },
-		"technical-readiness-level": {
-			name: `${prefix}technical-readiness-level`,
-			description: t(["authenticated", "properties", "technical-readiness-level", "description"]),
+		"technology-readiness-level": {
+			name: `${prefix}technology-readiness-level`,
+			description: t(["authenticated", "properties", "technology-readiness-level", "description"], {
+				components: {
+					Link() {
+						return <SeeVocabularyLink type="technology-readiness-level" />;
+					},
+				},
+			}),
 		},
 		"terms-of-use": {
 			name: `${prefix}terms-of-use`,

@@ -8,7 +8,7 @@ import { includes, keys } from "@/lib/utils";
 
 type NonSystemUserRole = Exclude<UserRole, "system-contributor" | "system-moderator">;
 
-const texts: Record<NonSystemUserRole, JSX.Element> = {
+const texts: Record<NonSystemUserRole, ReactNode> = {
 	administrator: (
 		<Fragment>
 			Dear administrator of the SSH Open Marketplace, welcome to the curation dashboard! As any
@@ -50,5 +50,16 @@ export function AccountHelpText(): ReactNode {
 
 	const text = texts[role];
 
-	return <p className={css["text"]}>{text}</p>;
+	return (
+		<div className={css["lead"]}>
+			<p className={css["text"]}>
+				Hi, {currentUser.data?.displayName} (
+				<a className={css["email"]} href={`mailto:${currentUser.data?.email}`}>
+					{currentUser.data?.email}
+				</a>
+				)!
+			</p>
+			<p className={css["text"]}>{text}</p>
+		</div>
+	);
 }

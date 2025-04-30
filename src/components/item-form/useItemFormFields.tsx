@@ -38,7 +38,13 @@ export function useItemFormFields(prefix = "") {
 			description: {
 				name: `${prefix}description`,
 				label: t(["authenticated", "fields", "description", "label"]),
-				description: t(["authenticated", "fields", "description", "description"]),
+				description: t(["authenticated", "fields", "description", "description"], {
+					components: {
+						Link(props) {
+							return <a href="https://commonmark.org/help/">{props.children}</a>;
+						},
+					},
+				}),
 				isRequired: true,
 			},
 			accessibleAt: {

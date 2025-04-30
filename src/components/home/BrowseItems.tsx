@@ -37,14 +37,14 @@ export function BrowseItems(): ReactNode {
 			<SectionTitle>{t(["common", "home", "browse"])}</SectionTitle>
 			<BrowseLinks
 				title={t(["common", "home", "browse-by-facet"], {
-					values: { facet: t(["common", "facets", "activity", "one"]) },
+					values: { facet: t(["common", "facets", "activity", "other"]) },
 				})}
 				values={activity}
 				facet="activity"
 			/>
 			<BrowseLinks
 				title={t(["common", "home", "browse-by-facet"], {
-					values: { facet: t(["common", "facets", "keyword", "one"]) },
+					values: { facet: t(["common", "facets", "keyword", "other"]) },
 				})}
 				values={keyword}
 				facet="keyword"
