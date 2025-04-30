@@ -78,6 +78,7 @@ export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 				{/* @ts-expect-error Assume all possible property types have translation. */}
 				{t(["authenticated", "properties", propertyTypeId, "description"], {
 					components: {
+						// eslint-disable-next-line react/no-unstable-nested-components
 						Link() {
 							return <SeeVocabularyLink type={propertyTypeId} />;
 						},
