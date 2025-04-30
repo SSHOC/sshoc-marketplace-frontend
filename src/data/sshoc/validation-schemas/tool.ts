@@ -1,3 +1,3 @@
-import { itemBaseInputSchema } from '@/data/sshoc/validation-schemas/item'
+import { itemBaseInputSchema } from "@/data/sshoc/validation-schemas/item";
 
-export const toolInputSchema = itemBaseInputSchema
+export const toolInputSchema = itemBaseInputSchema;

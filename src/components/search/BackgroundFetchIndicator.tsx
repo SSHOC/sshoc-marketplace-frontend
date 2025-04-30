@@ -1,14 +1,14 @@
-import { Fragment } from 'react'
+import type { ReactNode } from "react";
 
-import { useSearchResults } from '@/components/search/useSearchResults'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
+import { useSearchResults } from "@/components/search/useSearchResults";
+import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function BackgroundFetchIndicator(): JSX.Element {
-  const searchResults = useSearchResults()
+export function BackgroundFetchIndicator(): ReactNode {
+	const searchResults = useSearchResults();
 
-  if (!searchResults.isFetching) {
-    return <Fragment />
-  }
+	if (!searchResults.isFetching) {
+		return null;
+	}
 
-  return <LoadingIndicator />
+	return <LoadingIndicator />;
 }

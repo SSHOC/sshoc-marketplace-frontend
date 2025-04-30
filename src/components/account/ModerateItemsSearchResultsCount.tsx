@@ -1,14 +1,14 @@
-import { Fragment } from 'react'
+import type { ReactNode } from "react";
 
-import { useModerateItemsSearchResults } from '@/components/account/useModerateItemsSearchResults'
-import { ItemsCount } from '@/components/common/ItemsCount'
+import { useModerateItemsSearchResults } from "@/components/account/useModerateItemsSearchResults";
+import { ItemsCount } from "@/components/common/ItemsCount";
 
-export function ModerateItemsSearchResultsCount(): JSX.Element {
-  const searchResults = useModerateItemsSearchResults()
+export function ModerateItemsSearchResultsCount(): ReactNode {
+	const searchResults = useModerateItemsSearchResults();
 
-  if (searchResults.data == null || searchResults.data.hits === 0 || searchResults.isFetching) {
-    return <Fragment />
-  }
+	if (searchResults.data == null || searchResults.data.hits === 0 || searchResults.isFetching) {
+		return null;
+	}
 
-  return <ItemsCount count={searchResults.data.hits} />
+	return <ItemsCount count={searchResults.data.hits} />;
 }

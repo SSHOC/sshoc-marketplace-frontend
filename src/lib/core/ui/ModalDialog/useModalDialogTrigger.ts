@@ -1,1 +1,1 @@
-export { useOverlayTrigger as useModalDialogTrigger } from '@react-aria/overlays'
+export { useOverlayTrigger as useModalDialogTrigger } from "@react-aria/overlays";

@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/contribute/ContributeScreenLayout.module.css'
+import css from "@/components/contribute/ContributeScreenLayout.module.css";
 
 export interface ContributeScreenLayoutProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function ContributeScreenLayout(props: ContributeScreenLayoutProps): JSX.Element {
-  return <div className={css['layout']}>{props.children}</div>
+export function ContributeScreenLayout(props: ContributeScreenLayoutProps): ReactNode {
+	return <div className={css["layout"]}>{props.children}</div>;
 }

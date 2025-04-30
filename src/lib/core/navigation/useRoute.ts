@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { useRouter } from "next/router";
+import { useMemo } from "react";
 
-import { createSiteUrl } from '@/lib/utils'
+import { createSiteUrl } from "@/lib/utils";
 
 /**
  * Converts `router.asPath` into a URL. Be aware that reading `searchParams` before checking
@@ -9,11 +9,11 @@ import { createSiteUrl } from '@/lib/utils'
  * server. Use `useSearchParams` to be safe.
  */
 export function useRoute(): URL {
-  const router = useRouter()
+	const router = useRouter();
 
-  const route = useMemo(() => {
-    return createSiteUrl({ pathname: router.asPath })
-  }, [router])
+	const route = useMemo(() => {
+		return createSiteUrl({ pathname: router.asPath });
+	}, [router]);
 
-  return route
+	return route;
 }

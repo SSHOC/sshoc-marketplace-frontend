@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/FormFieldListItemControls.module.css'
+import css from "@/components/common/FormFieldListItemControls.module.css";
 
 export interface FormFieldListItemControlsProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function FormFieldListItemControls(props: FormFieldListItemControlsProps): JSX.Element {
-  const { children } = props
+export function FormFieldListItemControls(props: FormFieldListItemControlsProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['container']}>{children}</div>
+	return <div className={css["container"]}>{children}</div>;
 }

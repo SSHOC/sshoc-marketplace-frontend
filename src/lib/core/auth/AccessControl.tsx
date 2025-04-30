@@ -1,26 +1,27 @@
-import type { ReactNode } from 'react'
-import { Fragment } from 'react'
+import type { ReactNode } from "react";
+import { Fragment } from "react";
 
-import type { UserRole } from '@/data/sshoc/api/user'
-import { useCurrentUser } from '@/data/sshoc/hooks/auth'
+import type { UserRole } from "@/data/sshoc/api/user";
+import { useCurrentUser } from "@/data/sshoc/hooks/auth";
 
 export interface AccessControlProps {
-  children?: ReactNode
-  roles?: Array<UserRole>
+	children?: ReactNode;
+	roles?: Array<UserRole>;
 }
 
-export function AccessControl(props: AccessControlProps): JSX.Element {
-  const { children, roles } = props
+export function AccessControl(props: AccessControlProps): ReactNode {
+	const { children, roles } = props;
 
-  const currentUser = useCurrentUser()
+	const currentUser = useCurrentUser();
 
-  if (currentUser.data == null) {
-    return <Fragment />
-  }
+	if (currentUser.data == null) {
+		return null;
+	}
 
-  if (Array.isArray(roles) && !roles.includes(currentUser.data.role)) {
-    return <Fragment />
-  }
+	if (Array.isArray(roles) && !roles.includes(currentUser.data.role)) {
+		return null;
+	}
 
-  return <Fragment>{children}</Fragment>
+	// eslint-disable-next-line react/jsx-no-useless-fragment
+	return <Fragment>{children}</Fragment>;
 }

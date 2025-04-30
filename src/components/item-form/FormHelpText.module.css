@@ -1,11 +1,11 @@
 .text {
-  margin-block-end: 3rem;
+	margin-block-end: 3rem;
 }
 
 .text a {
-  transition: color 150ms ease;
+	transition: color 150ms ease;
 }
 
 .text a:hover {
-  color: var(--color-primary-750);
+	color: var(--color-primary-750);
 }

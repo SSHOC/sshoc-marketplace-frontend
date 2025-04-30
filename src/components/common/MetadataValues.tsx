@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/MetadataValues.module.css'
+import css from "@/components/common/MetadataValues.module.css";
 
 export interface MetadataValuesProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function MetadataValues(props: MetadataValuesProps): JSX.Element {
-  const { children } = props
+export function MetadataValues(props: MetadataValuesProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['container']}>{children}</div>
+	return <div className={css["container"]}>{children}</div>;
 }

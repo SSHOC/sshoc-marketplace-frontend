@@ -1,23 +1,23 @@
 .container {
-  grid-area: search-results-footer;
-  justify-self: center;
-  padding-block: var(--space-8);
+	grid-area: search-results-footer;
+	justify-self: center;
+	padding-block: var(--space-8);
 
-  @media (/* --screen-xs */ min-width: 30rem) {
-    justify-self: end;
-  }
+	@media (/* --screen-xs */ min-width: 30rem) {
+		justify-self: end;
+	}
 }
 
 .input {
-  @media (/* --screen-xs */ min-width: 30rem) {
-    display: none;
-  }
+	@media (/* --screen-xs */ min-width: 30rem) {
+		display: none;
+	}
 }
 
 .long {
-  display: none;
+	display: none;
 
-  @media (/* --screen-xs */ min-width: 30rem) {
-    display: block;
-  }
+	@media (/* --screen-xs */ min-width: 30rem) {
+		display: block;
+	}
 }

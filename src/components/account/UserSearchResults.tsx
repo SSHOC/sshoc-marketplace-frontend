@@ -1,42 +1,44 @@
-import { UserSearchResult } from '@/components/account/UserSearchResult'
-import css from '@/components/account/UserSearchResults.module.css'
-import { useUserSearchResults } from '@/components/account/useUserSearchResults'
-import { NoSearchResultsFound } from '@/components/common/NoSearchResultsFound'
-import { Centered } from '@/lib/core/ui/Centered/Centered'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
+import type { ReactNode } from "react";
 
-export function UserSearchResults(): JSX.Element {
-  const userSearch = useUserSearchResults()
+import { UserSearchResult } from "@/components/account/UserSearchResult";
+import css from "@/components/account/UserSearchResults.module.css";
+import { useUserSearchResults } from "@/components/account/useUserSearchResults";
+import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
+import { Centered } from "@/lib/core/ui/Centered/Centered";
+import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-  if (userSearch.data == null) {
-    return (
-      <section className={css['container']} data-state="loading">
-        <Centered>
-          <LoadingIndicator />
-        </Centered>
-      </section>
-    )
-  }
+export function UserSearchResults(): ReactNode {
+	const userSearch = useUserSearchResults();
 
-  if (userSearch.data.users.length === 0) {
-    return (
-      <section className={css['container']} data-state="empty">
-        <NoSearchResultsFound />
-      </section>
-    )
-  }
+	if (userSearch.data == null) {
+		return (
+			<section className={css["container"]} data-state="loading">
+				<Centered>
+					<LoadingIndicator />
+				</Centered>
+			</section>
+		);
+	}
 
-  return (
-    <section className={css['container']}>
-      <ul role="list" className={css['search-results']}>
-        {userSearch.data.users.map((user) => {
-          return (
-            <li key={user.id}>
-              <UserSearchResult user={user} />
-            </li>
-          )
-        })}
-      </ul>
-    </section>
-  )
+	if (userSearch.data.users.length === 0) {
+		return (
+			<section className={css["container"]} data-state="empty">
+				<NoSearchResultsFound />
+			</section>
+		);
+	}
+
+	return (
+		<section className={css["container"]}>
+			<ul role="list" className={css["search-results"]}>
+				{userSearch.data.users.map((user) => {
+					return (
+						<li key={user.id}>
+							<UserSearchResult user={user} />
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+	);
 }

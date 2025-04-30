@@ -1,28 +1,28 @@
 .button {
-  display: none;
+	display: none;
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    display: inline-flex;
-    gap: var(--space-1-5);
-    align-items: center;
-    align-self: start;
-    border: none;
-    background: none;
-    color: var(--color-link-text);
-    font-size: var(--font-size-ui-sm);
+	@media (/* --screen-lg */ min-width: 64rem) {
+		display: inline-flex;
+		gap: var(--space-1-5);
+		align-items: center;
+		align-self: start;
+		border: none;
+		background: none;
+		color: var(--color-link-text);
+		font-size: var(--font-size-ui-sm);
 
-    &:hover {
-      color: var(--color-link-text-hover);
-    }
+		&:hover {
+			color: var(--color-link-text-hover);
+		}
 
-    &:focus-visible {
-      color: var(--color-link-text-hover);
-    }
+		&:focus-visible {
+			color: var(--color-link-text-hover);
+		}
 
-    & > svg {
-      flex-shrink: 0;
-      width: var(--size-2-5);
-      height: var(--size-2-5);
-    }
-  }
+		& > svg {
+			flex-shrink: 0;
+			width: var(--size-2-5);
+			height: var(--size-2-5);
+		}
+	}
 }

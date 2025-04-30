@@ -1,5 +1,5 @@
 .container {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: var(--space-4);
 }

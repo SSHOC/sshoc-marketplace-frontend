@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/success/SuccessCardControls.module.css'
+import css from "@/components/success/SuccessCardControls.module.css";
 
 export interface SuccessCardControlsProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function SuccessCardControls(props: SuccessCardControlsProps): JSX.Element {
-  const { children } = props
+export function SuccessCardControls(props: SuccessCardControlsProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['container']}>{children}</div>
+	return <div className={css["container"]}>{children}</div>;
 }

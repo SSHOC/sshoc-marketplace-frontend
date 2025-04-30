@@ -3,37 +3,37 @@
 
 /** @see https://fkhadra.github.io/react-toastify/how-to-style/#override-css-variables */
 :root {
-  --toastify-color-light: hsl(0deg 0% 100%);
-  --toastify-color-info: var(--color-primary-600);
-  --toastify-color-success: var(--color-positive-600);
-  --toastify-color-warning: var(--color-notice-600);
-  --toastify-color-error: var(--color-negative-600);
-  --toastify-color-transparent: hsl(0deg 0% 100% / 70%);
+	--toastify-color-light: hsl(0deg 0% 100%);
+	--toastify-color-info: var(--color-primary-600);
+	--toastify-color-success: var(--color-positive-600);
+	--toastify-color-warning: var(--color-notice-600);
+	--toastify-color-error: var(--color-negative-600);
+	--toastify-color-transparent: hsl(0deg 0% 100% / 70%);
 
-  /* --toastify-icon-color-info: var(--toastify-color-info); */
-  /* --toastify-icon-color-success: var(--toastify-color-success); */
-  /* --toastify-icon-color-warning: var(--toastify-color-warning); */
-  /* --toastify-icon-color-error: var(--toastify-color-error); */
+	/* --toastify-icon-color-info: var(--toastify-color-info); */
+	/* --toastify-icon-color-success: var(--toastify-color-success); */
+	/* --toastify-icon-color-warning: var(--toastify-color-warning); */
+	/* --toastify-icon-color-error: var(--toastify-color-error); */
 
-  /* --toastify-toast-width: 320px; */
-  --toastify-toast-background: var(--color-background);
-  /* --toastify-toast-min-height: 64px; */
-  /* --toastify-toast-max-height: 800px; */
-  --toastify-font-family: var(--font-family-ui);
-  --toastify-z-index: var(--z-index-toast);
+	/* --toastify-toast-width: 320px; */
+	--toastify-toast-background: var(--color-background);
+	/* --toastify-toast-min-height: 64px; */
+	/* --toastify-toast-max-height: 800px; */
+	--toastify-font-family: var(--font-family-ui);
+	--toastify-z-index: var(--z-index-toast);
 
-  --toastify-text-color-light: var(--color-text);
-  /* --toastify-text-color-dark: hsl(0deg 0% 100%); */
+	--toastify-text-color-light: var(--color-text);
+	/* --toastify-text-color-dark: hsl(0deg 0% 100%); */
 
-  /** Used only for "colored" theme. */
-  --toastify-text-color-info: hsl(0deg 0% 100%);
-  --toastify-text-color-success: hsl(0deg 0% 100%);
-  --toastify-text-color-warning: hsl(0deg 0% 100%); /* TODO: --color-neutral-800 */
-  --toastify-text-color-error: hsl(0deg 0% 100%);
+	/** Used only for "colored" theme. */
+	--toastify-text-color-info: hsl(0deg 0% 100%);
+	--toastify-text-color-success: hsl(0deg 0% 100%);
+	--toastify-text-color-warning: hsl(0deg 0% 100%); /* TODO: --color-neutral-800 */
+	--toastify-text-color-error: hsl(0deg 0% 100%);
 
-  --toastify-spinner-color: hsl(0deg 0% 38%);
-  --toastify-spinner-color-empty-area: hsl(0deg 0% 88%);
+	--toastify-spinner-color: hsl(0deg 0% 38%);
+	--toastify-spinner-color-empty-area: hsl(0deg 0% 88%);
 }
 
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
 }

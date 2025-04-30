@@ -1,14 +1,14 @@
-import { Fragment } from 'react'
+import type { ReactNode } from "react";
 
-import { useVocabularySearchResults } from '@/components/account/useVocabularySearchResults'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
+import { useVocabularySearchResults } from "@/components/account/useVocabularySearchResults";
+import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function VocabulariesBackgroundFetchIndicator(): JSX.Element {
-  const searchResults = useVocabularySearchResults()
+export function VocabulariesBackgroundFetchIndicator(): ReactNode {
+	const searchResults = useVocabularySearchResults();
 
-  if (!searchResults.isFetching) {
-    return <Fragment />
-  }
+	if (!searchResults.isFetching) {
+		return null;
+	}
 
-  return <LoadingIndicator />
+	return <LoadingIndicator />;
 }

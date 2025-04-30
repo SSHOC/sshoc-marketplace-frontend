@@ -1,35 +1,36 @@
-import type { ReactNode } from 'react'
-import { Fragment, useEffect, useState } from 'react'
+import type { ReactNode } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export interface MdxProps {
-  mdx: string
+	mdx: string;
 }
 
-export function Mdx(props: MdxProps): JSX.Element {
-  const { mdx } = props
+export function Mdx(props: MdxProps): ReactNode {
+	const { mdx } = props;
 
-  const [element, setElement] = useState<ReactNode>(null)
+	const [element, setElement] = useState<ReactNode>(null);
 
-  useEffect(() => {
-    let isCanceled = false
+	useEffect(() => {
+		let isCanceled = false;
 
-    async function run() {
-      const { createProcessor } = await import('@/lib/cms/components/create-processor')
+		async function run() {
+			const { createProcessor } = await import("@/lib/cms/components/create-processor");
 
-      const processor = await createProcessor()
-      const vfile = await processor.process(mdx)
+			const processor = await createProcessor();
+			const vfile = await processor.process(mdx);
 
-      if (!isCanceled) {
-        setElement(vfile.result)
-      }
-    }
+			if (!isCanceled) {
+				setElement(vfile.result);
+			}
+		}
 
-    run()
+		run();
 
-    return () => {
-      isCanceled = true
-    }
-  }, [mdx])
+		return () => {
+			isCanceled = true;
+		};
+	}, [mdx]);
 
-  return <Fragment>{element}</Fragment>
+	// eslint-disable-next-line react/jsx-no-useless-fragment
+	return <Fragment>{element}</Fragment>;
 }

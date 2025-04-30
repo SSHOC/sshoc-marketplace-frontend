@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/SearchResultContent.module.css'
+import css from "@/components/common/SearchResultContent.module.css";
 
 export interface SearchResultContentProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function SearchResultContent(props: SearchResultContentProps): JSX.Element {
-  const { children } = props
+export function SearchResultContent(props: SearchResultContentProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['content']}>{children}</div>
+	return <div className={css["content"]}>{children}</div>;
 }

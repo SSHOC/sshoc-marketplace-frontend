@@ -33,5 +33,6 @@ yarn-error.log*
 
 # caches
 .eslintcache
+.prettiercache
 .stylelintcache
 *.tsbuildinfo

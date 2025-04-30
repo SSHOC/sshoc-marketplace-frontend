@@ -1,11 +1,12 @@
-import { useField } from 'react-final-form'
+import type { ReactNode } from "react";
+import { useField } from "react-final-form";
 
 export interface FormHiddenFieldProps {
-  name: string
+	name: string;
 }
 
-export function FormHiddenField(props: FormHiddenFieldProps): JSX.Element {
-  const { input } = useField(props.name)
+export function FormHiddenField(props: FormHiddenFieldProps): ReactNode {
+	const { input } = useField(props.name);
 
-  return <input {...input} type="hidden" />
+	return <input {...input} type="hidden" />;
 }

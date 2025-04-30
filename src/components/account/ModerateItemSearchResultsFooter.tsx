@@ -1,15 +1,17 @@
-import css from '@/components/account/ModerateItemSearchResultsFooter.module.css'
-import { ModerateItemSearchResultsPageNavigation } from '@/components/account/ModerateItemSearchResultsPageNavigation'
+import type { ReactNode } from "react";
 
-export function ModerateItemSearchResultsFooter(): JSX.Element {
-  return (
-    <aside className={css['container']}>
-      <div className={css['input']}>
-        <ModerateItemSearchResultsPageNavigation variant="input" />
-      </div>
-      <div className={css['long']}>
-        <ModerateItemSearchResultsPageNavigation />
-      </div>
-    </aside>
-  )
+import css from "@/components/account/ModerateItemSearchResultsFooter.module.css";
+import { ModerateItemSearchResultsPageNavigation } from "@/components/account/ModerateItemSearchResultsPageNavigation";
+
+export function ModerateItemSearchResultsFooter(): ReactNode {
+	return (
+		<aside className={css["container"]}>
+			<div className={css["input"]}>
+				<ModerateItemSearchResultsPageNavigation variant="input" />
+			</div>
+			<div className={css["long"]}>
+				<ModerateItemSearchResultsPageNavigation />
+			</div>
+		</aside>
+	);
 }

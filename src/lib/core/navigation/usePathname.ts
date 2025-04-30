@@ -1,7 +1,7 @@
-import { useRoute } from '@/lib/core/navigation/useRoute'
+import { useRoute } from "@/lib/core/navigation/useRoute";
 
 export function usePathname(): string {
-  const route = useRoute()
+	const route = useRoute();
 
-  return route.pathname
+	return route.pathname;
 }

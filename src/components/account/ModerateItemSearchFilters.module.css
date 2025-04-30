@@ -1,183 +1,183 @@
 .container {
-  position: relative;
-  display: grid;
-  grid-area: search-filters;
-  grid-template-rows: auto 1fr;
-  align-items: start;
-  align-self: stretch;
+	position: relative;
+	display: grid;
+	grid-area: search-filters;
+	grid-template-rows: auto 1fr;
+	align-items: start;
+	align-self: stretch;
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    grid-template-rows: var(--section-header-height) 1fr;
-  }
+	@media (/* --screen-lg */ min-width: 64rem) {
+		grid-template-rows: var(--section-header-height) 1fr;
+	}
 }
 
 .section-header {
-  display: none;
+	display: none;
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    display: flex;
-    gap: var(--space-2);
-    align-items: baseline;
-    align-self: center;
-    justify-content: space-between;
-  }
+	@media (/* --screen-lg */ min-width: 64rem) {
+		display: flex;
+		gap: var(--space-2);
+		align-items: baseline;
+		align-self: center;
+		justify-content: space-between;
+	}
 }
 
 .section-title {
-  color: var(--color-heading);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-5-5);
-  line-height: var(--line-height-tight);
+	color: var(--color-heading);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-5-5);
+	line-height: var(--line-height-tight);
 }
 
 .overlay-header {
-  display: flex;
-  gap: var(--space-2);
-  align-items: baseline;
-  justify-content: space-between;
-  padding-block: var(--space-4);
+	display: flex;
+	gap: var(--space-2);
+	align-items: baseline;
+	justify-content: space-between;
+	padding-block: var(--space-4);
 }
 
 .overlay-title {
-  color: var(--color-heading);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-5-5);
-  line-height: var(--line-height-tight);
+	color: var(--color-heading);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-5-5);
+	line-height: var(--line-height-tight);
 }
 
 .clear-link {
-  font-size: var(--font-size-ui-base);
-  text-align: right;
+	font-size: var(--font-size-ui-base);
+	text-align: right;
 }
 
 .facets-form-container {
-  display: none;
+	display: none;
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    display: block;
-  }
+	@media (/* --screen-lg */ min-width: 64rem) {
+		display: block;
+	}
 }
 
 .facets-dialog-container {
-  display: grid;
-  gap: var(--space-4);
-  padding-block: var(--space-4);
+	display: grid;
+	gap: var(--space-4);
+	padding-block: var(--space-4);
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    display: none;
-  }
+	@media (/* --screen-lg */ min-width: 64rem) {
+		display: none;
+	}
 
-  & [data-dialog='search-term'] {
-    @media (/* --screen-xs */ min-width: 30rem) {
-      display: none;
-    }
-  }
+	& [data-dialog="search-term"] {
+		@media (/* --screen-xs */ min-width: 30rem) {
+			display: none;
+		}
+	}
 
-  & [data-dialog='facets'] {
-  }
+	& [data-dialog="facets"] {
+	}
 }
 
 .facets {
-  --gap: 0;
+	--gap: 0;
 
-  display: grid;
-  padding-block-end: var(--space-16);
-  border-top: 1px solid var(--color-separator);
+	display: grid;
+	padding-block-end: var(--space-16);
+	border-top: 1px solid var(--color-separator);
 
-  & > :not(:last-child)::after {
-    content: '';
-    display: flex;
-    height: 1px;
-    background-color: var(--color-separator);
-    transform: translateY(calc(var(--gap) / 2));
-  }
+	& > :not(:last-child)::after {
+		content: "";
+		display: flex;
+		height: 1px;
+		background-color: var(--color-separator);
+		transform: translateY(calc(var(--gap) / 2));
+	}
 }
 
 .secondary {
-  flex-shrink: 0;
-  color: var(--color-text-muted);
-  overflow-wrap: initial;
+	flex-shrink: 0;
+	color: var(--color-text-muted);
+	overflow-wrap: initial;
 }
 
 .active-facets {
-  display: grid;
-  gap: var(--space-6);
-  padding: var(--space-6);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-ui-xs);
+	display: grid;
+	gap: var(--space-6);
+	padding: var(--space-6);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-md);
+	font-size: var(--font-size-ui-xs);
 
-  @media (/* --screen-xs */ min-width: 30rem) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+	@media (/* --screen-xs */ min-width: 30rem) {
+		grid-template-columns: repeat(2, 1fr);
+	}
 
-  @media (/* --screen-md */ min-width: 48rem) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+	@media (/* --screen-md */ min-width: 48rem) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
 .active-facet {
-  display: grid;
-  gap: var(--space-1);
-  align-content: start;
+	display: grid;
+	gap: var(--space-1);
+	align-content: start;
 }
 
 .active-facet-title {
-  color: var(--color-heading);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-ui-sm);
-  line-height: var(--line-height-tight);
+	color: var(--color-heading);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-ui-sm);
+	line-height: var(--line-height-tight);
 }
 
 .active-facet-value {
-  display: inline-flex;
-  gap: var(--space-1-5);
-  align-items: center;
+	display: inline-flex;
+	gap: var(--space-1-5);
+	align-items: center;
 }
 
 .active-facet-values {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-0-5);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-0-5);
 }
 
 .remove-facet-value-button {
-  position: relative;
-  display: inline-grid;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--color-link-text);
-  place-items: center;
+	position: relative;
+	display: inline-grid;
+	padding: 0;
+	border: none;
+	background: none;
+	color: var(--color-link-text);
+	place-items: center;
 
-  /** Increase touch area. */
-  &::after {
-    content: '';
-    position: absolute;
-    width: var(--space-10);
-    height: var(--space-10);
-  }
+	/** Increase touch area. */
+	&::after {
+		content: "";
+		position: absolute;
+		width: var(--space-10);
+		height: var(--space-10);
+	}
 
-  &:hover {
-    color: var(--color-link-text-hover);
-  }
+	&:hover {
+		color: var(--color-link-text-hover);
+	}
 
-  &:focus-visible {
-    color: var(--color-link-text-hover);
-  }
+	&:focus-visible {
+		color: var(--color-link-text-hover);
+	}
 
-  & > svg {
-    width: var(--size-2-5);
-    height: var(--size-2-5);
-  }
+	& > svg {
+		width: var(--size-2-5);
+		height: var(--size-2-5);
+	}
 }
 
 .other-facet-values {
-  display: grid;
-  gap: var(--space-2);
+	display: grid;
+	gap: var(--space-2);
 }
 
 .search-facets-overlay-controls {
-  margin-top: var(--space-2);
-  font-size: var(--font-size-3-75);
+	margin-top: var(--space-2);
+	font-size: var(--font-size-3-75);
 }

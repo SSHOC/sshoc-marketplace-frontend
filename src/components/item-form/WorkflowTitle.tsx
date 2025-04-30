@@ -1,8 +1,10 @@
-import css from '@/components/item-form/WorkflowTitle.module.css'
-import { useFieldState } from '@/lib/core/form/useFieldState'
+import type { ReactNode } from "react";
 
-export function WorkflowTitle(): JSX.Element {
-  const title = useFieldState<string>('label').input.value
+import css from "@/components/item-form/WorkflowTitle.module.css";
+import { useFieldState } from "@/lib/core/form/useFieldState";
 
-  return <h2 className={css['workflow-title']}>{title}</h2>
+export function WorkflowTitle(): ReactNode {
+	const title = useFieldState<string>("label").input.value;
+
+	return <h2 className={css["workflow-title"]}>{title}</h2>;
 }

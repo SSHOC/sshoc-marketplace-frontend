@@ -1,14 +1,14 @@
-import { Fragment } from 'react'
+import type { ReactNode } from "react";
 
-import { useContributedItemsSearchResults } from '@/components/account/useContributedItemsSearchResults'
-import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
+import { useContributedItemsSearchResults } from "@/components/account/useContributedItemsSearchResults";
+import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function ContributedItemsBackgroundFetchIndicator(): JSX.Element {
-  const searchResults = useContributedItemsSearchResults()
+export function ContributedItemsBackgroundFetchIndicator(): ReactNode {
+	const searchResults = useContributedItemsSearchResults();
 
-  if (!searchResults.isFetching) {
-    return <Fragment />
-  }
+	if (!searchResults.isFetching) {
+		return null;
+	}
 
-  return <LoadingIndicator />
+	return <LoadingIndicator />;
 }

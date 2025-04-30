@@ -1,22 +1,22 @@
 .lead {
-  display: flex;
-  flex-direction: column;
-  row-gap: var(--space-4);
+	display: flex;
+	flex-direction: column;
+	row-gap: var(--space-4);
 }
 
 .text {
-  max-width: var(--size-192);
-  line-height: var(--line-height-relaxed);
+	max-width: var(--size-192);
+	line-height: var(--line-height-relaxed);
 }
 
 .email {
-  color: var(--color-primary-750);
-  text-decoration: none;
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	color: var(--color-primary-750);
+	text-decoration: none;
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 
-  &:hover {
-    color: var(--color-primary-600);
-  }
+	&:hover {
+		color: var(--color-primary-600);
+	}
 }

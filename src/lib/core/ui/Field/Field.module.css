@@ -1,10 +1,10 @@
 .field {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  width: 100%;
-  min-width: var(--size-24);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
+	display: inline-flex;
+	flex-direction: column;
+	gap: var(--space-1);
+	width: 100%;
+	min-width: var(--size-24);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
 }

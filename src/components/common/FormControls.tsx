@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/FormControls.module.css'
+import css from "@/components/common/FormControls.module.css";
 
 export interface FormControlsProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function FormControls(props: FormControlsProps): JSX.Element {
-  const { children } = props
+export function FormControls(props: FormControlsProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['controls']}>{children}</div>
+	return <div className={css["controls"]}>{children}</div>;
 }

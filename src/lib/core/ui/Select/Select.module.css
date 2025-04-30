@@ -1,68 +1,68 @@
 .select-input-group {
-  --icon-width: var(--size-2-5);
-  --icon-rotation: 90deg;
-  --field-button-width: 100%;
-  --field-button-padding-inline: 0 var(--space-4-5);
+	--icon-width: var(--size-2-5);
+	--icon-rotation: 90deg;
+	--field-button-width: 100%;
+	--field-button-padding-inline: 0 var(--space-4-5);
 }
 
-.select-input-group[data-open='true'] {
-  --icon-rotation: 270deg;
+.select-input-group[data-open="true"] {
+	--icon-rotation: 270deg;
 }
 
 .select-value {
-  flex: 1;
-  padding-block: var(--space-3);
-  padding-inline: var(--space-4) var(--space-4-5);
-  text-align: left;
+	flex: 1;
+	padding-block: var(--space-3);
+	padding-inline: var(--space-4) var(--space-4-5);
+	text-align: left;
 
-  &[data-placeholder] {
-    color: var(--color-neutral-400);
-  }
+	&[data-placeholder] {
+		color: var(--color-neutral-400);
+	}
 }
 
 .validation-icon {
-  --icon-width: var(--size-4);
-  --icon-height: var(--size-4);
-  --icon-rotation: 0;
+	--icon-width: var(--size-4);
+	--icon-height: var(--size-4);
+	--icon-rotation: 0;
 
-  display: grid;
-  width: var(--select-validation-icon-width, var(--size-12));
-  color: var(--select-validation-icon-color, currentColor);
-  transition-timing-function: var(--transition-timing-function);
-  transition-duration: var(--transition-duration);
-  transition-property: var(--transition-property);
-  place-items: center;
+	display: grid;
+	width: var(--select-validation-icon-width, var(--size-12));
+	color: var(--select-validation-icon-color, currentColor);
+	transition-timing-function: var(--transition-timing-function);
+	transition-duration: var(--transition-duration);
+	transition-property: var(--transition-property);
+	place-items: center;
 }
 
-.select-input-group[data-validation-state='valid'] {
-  --select-validation-icon-color: var(--color-positive-600);
+.select-input-group[data-validation-state="valid"] {
+	--select-validation-icon-color: var(--color-positive-600);
 }
 
-.select-input-group[data-validation-state='invalid'] {
-  --select-validation-icon-color: var(--color-negative-600);
+.select-input-group[data-validation-state="invalid"] {
+	--select-validation-icon-color: var(--color-negative-600);
 }
 
-.select-input-group[data-loading-state='loading'] {
-  --select-validation-icon-color: var(--color-primary-600);
+.select-input-group[data-loading-state="loading"] {
+	--select-validation-icon-color: var(--color-primary-600);
 }
 
-.select-input-group[data-size='sm'] .select-value {
-  padding-block: var(--space-2);
-  padding-inline: var(--space-3);
-  font-size: var(--font-size-3-5);
-  line-height: var(--line-height-5);
+.select-input-group[data-size="sm"] .select-value {
+	padding-block: var(--space-2);
+	padding-inline: var(--space-3);
+	font-size: var(--font-size-3-5);
+	line-height: var(--line-height-5);
 }
 
-.select-input-group[data-size='md'] .select-value {
-  padding-block: var(--space-3);
-  padding-inline: var(--space-4);
-  font-size: var(--font-size-3-75);
-  line-height: var(--line-height-5-5);
+.select-input-group[data-size="md"] .select-value {
+	padding-block: var(--space-3);
+	padding-inline: var(--space-4);
+	font-size: var(--font-size-3-75);
+	line-height: var(--line-height-5-5);
 }
 
-.select-input-group[data-size='lg'] .select-value {
-  padding-block: var(--space-3);
-  padding-inline: var(--space-4);
-  font-size: var(--font-size-4-25);
-  line-height: var(--line-height-6);
+.select-input-group[data-size="lg"] .select-value {
+	padding-block: var(--space-3);
+	padding-inline: var(--space-4);
+	font-size: var(--font-size-4-25);
+	line-height: var(--line-height-6);
 }

@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/ItemInfo.module.css'
+import css from "@/components/common/ItemInfo.module.css";
 
 export interface ItemInfoProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function ItemInfo(props: ItemInfoProps): JSX.Element {
-  const { children } = props
+export function ItemInfo(props: ItemInfoProps): ReactNode {
+	const { children } = props;
 
-  return <span className={css['text']}>{children}</span>
+	return <span className={css["text"]}>{children}</span>;
 }

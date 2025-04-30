@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/item/ItemDetails.module.css'
+import css from "@/components/item/ItemDetails.module.css";
 
 export interface ItemDetailsProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
-export function ItemDetails(props: ItemDetailsProps): JSX.Element {
-  return <div className={css['container']}>{props.children}</div>
+export function ItemDetails(props: ItemDetailsProps): ReactNode {
+	return <div className={css["container"]}>{props.children}</div>;
 }

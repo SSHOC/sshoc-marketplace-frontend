@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/FormFieldArray.module.css'
+import css from "@/components/common/FormFieldArray.module.css";
 
 export interface FormFieldArrayProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function FormFieldArray(props: FormFieldArrayProps): JSX.Element {
-  const { children } = props
+export function FormFieldArray(props: FormFieldArrayProps): ReactNode {
+	const { children } = props;
 
-  return <div className={css['container']}>{children}</div>
+	return <div className={css["container"]}>{children}</div>;
 }

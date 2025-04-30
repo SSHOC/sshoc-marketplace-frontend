@@ -1,10 +1,12 @@
-import { ScreenNavigation } from '@/components/common/ScreenNavigation'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { useContributeNavItems } from '@/lib/core/page/useContributeNavItems'
+import type { ReactNode } from "react";
 
-export function ContributeScreenNavigation(): JSX.Element {
-  const { t } = useI18n<'common'>()
-  const items = useContributeNavItems()
+import { ScreenNavigation } from "@/components/common/ScreenNavigation";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 
-  return <ScreenNavigation label={t(['common', 'pages', 'contribute'])} items={items} />
+export function ContributeScreenNavigation(): ReactNode {
+	const { t } = useI18n<"common">();
+	const items = useContributeNavItems();
+
+	return <ScreenNavigation label={t(["common", "pages", "contribute"])} items={items} />;
 }

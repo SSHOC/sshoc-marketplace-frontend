@@ -1,22 +1,22 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/lib/core/page/PageMainContent.module.css'
-import { usePage } from '@/lib/core/page/PageProvider'
+import css from "@/lib/core/page/PageMainContent.module.css";
+import { usePage } from "@/lib/core/page/PageProvider";
 
 export interface PageMainContentProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function PageMainContent(props: PageMainContentProps): JSX.Element {
-  const { pageLoadingIndicator, skipToMainContent } = usePage()
+export function PageMainContent(props: PageMainContentProps): ReactNode {
+	const { pageLoadingIndicator, skipToMainContent } = usePage();
 
-  return (
-    <main
-      className={css['container']}
-      {...pageLoadingIndicator.regionProps}
-      {...skipToMainContent.targetProps}
-    >
-      {props.children}
-    </main>
-  )
+	return (
+		<main
+			className={css["container"]}
+			{...pageLoadingIndicator.regionProps}
+			{...skipToMainContent.targetProps}
+		>
+			{props.children}
+		</main>
+	);
 }

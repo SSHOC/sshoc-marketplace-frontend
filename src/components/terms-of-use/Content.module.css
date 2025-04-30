@@ -1,7 +1,7 @@
 .container {
-  display: grid;
-  grid-area: content;
-  row-gap: var(--space-8);
-  max-width: var(--size-192);
-  padding-block-end: var(--space-16);
+	display: grid;
+	grid-area: content;
+	row-gap: var(--space-8);
+	max-width: var(--size-192);
+	padding-block-end: var(--space-16);
 }

@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/account/AccountScreenWithoutFiltersLayout.module.css'
+import css from "@/components/account/AccountScreenWithoutFiltersLayout.module.css";
 
 export interface AccountScreenWithoutFiltersLayoutProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 export function AccountScreenWithoutFiltersLayout(
-  props: AccountScreenWithoutFiltersLayoutProps,
-): JSX.Element {
-  return <div className={css['layout']}>{props.children}</div>
+	props: AccountScreenWithoutFiltersLayoutProps,
+): ReactNode {
+	return <div className={css["layout"]}>{props.children}</div>;
 }

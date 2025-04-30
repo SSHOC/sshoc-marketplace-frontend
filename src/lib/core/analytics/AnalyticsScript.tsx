@@ -1,12 +1,14 @@
-import Script from 'next/script'
-import { Fragment } from 'react'
+import Script from "next/script";
+import type { ReactNode } from "react";
 
-import { appId, baseUrl } from '~/config/analytics.config'
+import { appId, baseUrl } from "~/config/analytics.config";
 
-export function AnalyticsScript(): JSX.Element {
-  if (baseUrl == null || appId == null) return <Fragment />
+export function AnalyticsScript(): ReactNode {
+	if (baseUrl == null || appId == null) {
+		return null;
+	}
 
-  return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />
+	return <Script id="analytics" dangerouslySetInnerHTML={{ __html: matomoScript }} />;
 }
 
 const matomoScript = `
@@ -27,4 +29,4 @@ _paq.push(['enableHeartBeatTimer'])
   g.src = u + 'matomo.js'
   s.parentNode.insertBefore(g, s)
 })()
-`
+`;

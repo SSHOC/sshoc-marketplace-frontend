@@ -1,13 +1,13 @@
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode } from "react";
 
-import css from '@/lib/core/ui/Overlay/Underlay.module.css'
+import css from "@/lib/core/ui/Overlay/Underlay.module.css";
 
 export interface UnderlayProps extends HTMLAttributes<HTMLDivElement> {
-  isOpen?: boolean
+	isOpen?: boolean;
 }
 
-export function Underlay(props: UnderlayProps): JSX.Element {
-  const { isOpen, ...domProps } = props
+export function Underlay(props: UnderlayProps): ReactNode {
+	const { isOpen, ...domProps } = props;
 
-  return <div {...domProps} className={css['underlay']} data-open={isOpen} />
+	return <div {...domProps} className={css["underlay"]} data-open={isOpen} />;
 }

@@ -1,14 +1,14 @@
 .heading {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  color: var(--color-heading);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-page-title);
-  line-height: var(--line-height-tight);
-  column-gap: var(--space-3);
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	color: var(--color-heading);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-page-title);
+	line-height: var(--line-height-tight);
+	column-gap: var(--space-3);
 }
 
 :where(.heading) :is(svg, img) {
-  flex-shrink: 0;
+	flex-shrink: 0;
 }

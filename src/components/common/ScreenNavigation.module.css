@@ -1,61 +1,61 @@
 .container {
-  display: none;
+	display: none;
 
-  @media (/* --screen-lg */ min-width: 64rem) {
-    display: grid;
-    grid-area: navigation;
-    gap: var(--space-8);
-    align-content: start;
-    padding-block-end: var(--space-16);
+	@media (/* --screen-lg */ min-width: 64rem) {
+		display: grid;
+		grid-area: navigation;
+		gap: var(--space-8);
+		align-content: start;
+		padding-block-end: var(--space-16);
 
-    &::before {
-      content: '';
-      position: absolute;
-      z-index: var(--z-index-background-color);
-      grid-row: navigation;
-      grid-column: 1 / -1;
-      background-color: var(--color-sidebar-background);
-      inset: 0;
+		&::before {
+			content: "";
+			position: absolute;
+			z-index: var(--z-index-background-color);
+			grid-row: navigation;
+			grid-column: 1 / -1;
+			background-color: var(--color-sidebar-background);
+			inset: 0;
 
-      @media (/* --screen-lg */ min-width: 64rem) {
-        grid-column: 1 / navigation;
-      }
-    }
-  }
+			@media (/* --screen-lg */ min-width: 64rem) {
+				grid-column: 1 / navigation;
+			}
+		}
+	}
 }
 
 .nav-link a {
-  display: flex;
-  gap: var(--space-6);
-  align-items: center;
-  justify-content: space-between;
-  padding-block: var(--space-8);
-  padding-inline: var(--space-8);
-  border-left: var(--size-1) solid var(--color-border);
-  color: var(--color-link-text);
-  text-decoration: none;
+	display: flex;
+	gap: var(--space-6);
+	align-items: center;
+	justify-content: space-between;
+	padding-block: var(--space-8);
+	padding-inline: var(--space-8);
+	border-left: var(--size-1) solid var(--color-border);
+	color: var(--color-link-text);
+	text-decoration: none;
 
-  &:hover {
-    border-color: var(--color-primary-600);
-    background-color: var(--color-neutral-100);
-    color: var(--color-link-text-hover);
-  }
+	&:hover {
+		border-color: var(--color-primary-600);
+		background-color: var(--color-neutral-100);
+		color: var(--color-link-text-hover);
+	}
 
-  &:focus-visible {
-    border-color: var(--color-primary-600);
-    background-color: var(--color-neutral-100);
-    color: var(--color-link-text-hover);
-  }
+	&:focus-visible {
+		border-color: var(--color-primary-600);
+		background-color: var(--color-neutral-100);
+		color: var(--color-link-text-hover);
+	}
 
-  &[aria-current='page'] {
-    border-color: var(--color-primary-600);
-    background-color: var(--color-neutral-150);
-    color: var(--color-heading);
-  }
+	&[aria-current="page"] {
+		border-color: var(--color-primary-600);
+		background-color: var(--color-neutral-150);
+		color: var(--color-heading);
+	}
 
-  & > svg {
-    width: var(--size-2-5);
-    height: var(--size-2-5);
-    transform: rotate(-90deg);
-  }
+	& > svg {
+		width: var(--size-2-5);
+		height: var(--size-2-5);
+		transform: rotate(-90deg);
+	}
 }

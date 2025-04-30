@@ -1,24 +1,24 @@
-import { ItemVersionControls } from '@/components/item/ItemVersionControls'
-import type { ItemStatus } from '@/data/sshoc/api/item'
-import type { Tool } from '@/data/sshoc/api/tool-or-service'
+import type { ReactNode } from "react";
+
+import { ItemVersionControls } from "@/components/item/ItemVersionControls";
+import type { ItemStatus } from "@/data/sshoc/api/item";
+import type { Tool } from "@/data/sshoc/api/tool-or-service";
 
 export interface ToolOrServiceVersionControlsProps {
-  persistentId: Tool['persistentId']
-  status: ItemStatus
-  versionId: Tool['id']
+	persistentId: Tool["persistentId"];
+	status: ItemStatus;
+	versionId: Tool["id"];
 }
 
-export function ToolOrServiceVersionControls(
-  props: ToolOrServiceVersionControlsProps,
-): JSX.Element {
-  const { persistentId, status, versionId } = props
+export function ToolOrServiceVersionControls(props: ToolOrServiceVersionControlsProps): ReactNode {
+	const { persistentId, status, versionId } = props;
 
-  return (
-    <ItemVersionControls
-      category="tool-or-service"
-      persistentId={persistentId}
-      status={status}
-      versionId={versionId}
-    />
-  )
+	return (
+		<ItemVersionControls
+			category="tool-or-service"
+			persistentId={persistentId}
+			status={status}
+			versionId={versionId}
+		/>
+	);
 }

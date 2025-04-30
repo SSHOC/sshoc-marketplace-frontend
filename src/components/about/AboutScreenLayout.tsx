@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/about/AboutScreenLayout.module.css'
+import css from "@/components/about/AboutScreenLayout.module.css";
 
 export interface AboutScreenLayoutProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function AboutScreenLayout(props: AboutScreenLayoutProps): JSX.Element {
-  return <div className={css['layout']}>{props.children}</div>
+export function AboutScreenLayout(props: AboutScreenLayoutProps): ReactNode {
+	return <div className={css["layout"]}>{props.children}</div>;
 }

@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/common/FormFieldGroup.module.css'
+import css from "@/components/common/FormFieldGroup.module.css";
 
 export interface FormFieldGroupProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function FormFieldGroup(props: FormFieldGroupProps): JSX.Element {
-  const { children } = props
+export function FormFieldGroup(props: FormFieldGroupProps): ReactNode {
+	const { children } = props;
 
-  return (
-    <div role="group" className={css['container']}>
-      {children}
-    </div>
-  )
+	return (
+		<div role="group" className={css["container"]}>
+			{children}
+		</div>
+	);
 }

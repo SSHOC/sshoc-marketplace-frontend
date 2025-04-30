@@ -1,12 +1,12 @@
 .items {
-  display: grid;
-  gap: var(--space-4);
+	display: grid;
+	gap: var(--space-4);
 }
 
 .item {
-  line-height: var(--line-height-tight);
+	line-height: var(--line-height-tight);
 }
 
 .item-info {
-  color: var(--color-neutral-600);
+	color: var(--color-neutral-600);
 }

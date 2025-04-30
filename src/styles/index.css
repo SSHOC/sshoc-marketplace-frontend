@@ -1,16 +1,16 @@
-@import '@/styles/fonts/ubuntu.css';
+@import "@/styles/fonts/ubuntu.css";
 
-@import '@/styles/animation.css';
-@import '@/styles/borders.css';
-@import '@/styles/colors.css';
-@import '@/styles/box-shadows.css';
-@import '@/styles/typography.css';
-@import '@/styles/size.css';
-@import '@/styles/space.css';
-@import '@/styles/transition.css';
-@import '@/styles/z-indices.css';
+@import "@/styles/animation.css";
+@import "@/styles/borders.css";
+@import "@/styles/colors.css";
+@import "@/styles/box-shadows.css";
+@import "@/styles/typography.css";
+@import "@/styles/size.css";
+@import "@/styles/space.css";
+@import "@/styles/transition.css";
+@import "@/styles/z-indices.css";
 
-@import '@/styles/globals.css';
+@import "@/styles/globals.css";
 
-@import '@/styles/nprogress.css';
-@import '@/styles/toasts.css';
+@import "@/styles/nprogress.css";
+@import "@/styles/toasts.css";

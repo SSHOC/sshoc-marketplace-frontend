@@ -52,7 +52,6 @@ jobs:
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://marketplace.sshopencloud.eu
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://marketplace-api.sshopencloud.eu
-            NEXT_PUBLIC_MOCK_API=disabled
             NEXT_PUBLIC_BOTS=enabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_APP_ID=179
@@ -90,7 +89,6 @@ jobs:
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
-            NEXT_PUBLIC_MOCK_API=disabled
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_APP_ID=198
@@ -127,7 +125,6 @@ jobs:
           build-args: |
             NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
-            NEXT_PUBLIC_MOCK_API=disabled
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_APP_ID=190

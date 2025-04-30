@@ -1,39 +1,39 @@
 .combobox-input-group {
-  --textfield-input-border-width: 1px 0 1px 1px;
-  --textfield-input-border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
-  --field-button-border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
-  --field-button-border-color-hover: var(--color-neutral-200);
-  --field-button-border-color-focus: var(--color-neutral-200);
-  --field-button-border-color-active: var(--color-neutral-200);
-  --field-button-background-color-hover: var(--color-neutral-50);
-  --icon-width: var(--size-2-5);
-  --icon-rotation: 90deg;
+	--textfield-input-border-width: 1px 0 1px 1px;
+	--textfield-input-border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+	--field-button-border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+	--field-button-border-color-hover: var(--color-neutral-200);
+	--field-button-border-color-focus: var(--color-neutral-200);
+	--field-button-border-color-active: var(--color-neutral-200);
+	--field-button-background-color-hover: var(--color-neutral-50);
+	--icon-width: var(--size-2-5);
+	--icon-rotation: 90deg;
 
-  position: relative;
-  display: inline-grid;
-  grid-template-columns: 1fr var(--combobox-button-width, var(--size-12));
-  width: 100%;
-  min-width: var(--size-36);
+	position: relative;
+	display: inline-grid;
+	grid-template-columns: 1fr var(--combobox-button-width, var(--size-12));
+	width: 100%;
+	min-width: var(--size-36);
 }
 
-.combobox-input-group[data-open='true'] button {
-  --icon-rotation: 270deg;
+.combobox-input-group[data-open="true"] button {
+	--icon-rotation: 270deg;
 }
 
 .combobox-input-group:focus-within > button {
-  --field-button-border-color: var(--color-primary-600);
-  --field-button-border-color-hover: var(--color-primary-600);
-  --field-button-border-color-focus: var(--color-primary-600);
-  --field-button-border-color-active: var(--color-primary-600);
+	--field-button-border-color: var(--color-primary-600);
+	--field-button-border-color-hover: var(--color-primary-600);
+	--field-button-border-color-focus: var(--color-primary-600);
+	--field-button-border-color-active: var(--color-primary-600);
 
-  outline: 2px solid var(--color-primary-600);
-  outline-offset: 0;
+	outline: 2px solid var(--color-primary-600);
+	outline-offset: 0;
 }
 
-.combobox-input-group[data-hovered][data-color='form'] > button {
-  --field-button-border-color: var(--color-primary-600);
+.combobox-input-group[data-hovered][data-color="form"] > button {
+	--field-button-border-color: var(--color-primary-600);
 }
 
-.combobox-input-group[data-size='sm'] {
-  grid-template-columns: 1fr var(--combobox-button-width, var(--size-10));
+.combobox-input-group[data-size="sm"] {
+	grid-template-columns: 1fr var(--combobox-button-width, var(--size-10));
 }

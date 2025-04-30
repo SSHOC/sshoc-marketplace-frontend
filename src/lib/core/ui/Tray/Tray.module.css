@@ -1,7 +1,7 @@
 .tray {
 }
 
-.tray[data-open='true'] {
+.tray[data-open="true"] {
 }
 
 .tray-content {

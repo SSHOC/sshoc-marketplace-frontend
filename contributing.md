@@ -76,9 +76,6 @@ backend instances.
 - `NEXT_PUBLIC_SSHOC_API_BASE_URL`: base url of the backend api
 - `REVALIDATION_TOKEN`: secret for revalidating next.js routes. you can generate one with
   `openssl rand -hex 16`
-- `NEXT_PUBLIC_MOCK_API`: whether api mocking is enabled. allowed values are "disabled" and
-  "enabled". when "enabled" any http requests to the backend api will be intercepted by a service
-  worker (`msw`), and return dummy content generated with `@faker-js/faker`
 - `NEXT_PUBLIC_LOCAL_CMS_BACKEND`: whether the cms should write changes to the local filesystem
   ("enabled"), or try to commit changes to GitHub ("disabled")
 - `NEXT_PUBLIC_GITHUB_REPOSITORY`, `NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH`, `OAUTH_PROVIDER`,

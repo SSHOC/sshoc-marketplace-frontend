@@ -1,10 +1,10 @@
-import type { GetServerSidePropsContext, GetStaticPropsContext } from 'next'
-import type { NextRouter } from 'next/router'
+import type { GetServerSidePropsContext, GetStaticPropsContext } from "next";
+import type { NextRouter } from "next/router";
 
-import type { Locale } from '~/config/i18n.config.mjs'
+import type { Locale } from "~/config/i18n.config.mjs";
 
 export function getLocale(
-  context: GetServerSidePropsContext | GetStaticPropsContext | NextRouter,
+	context: GetServerSidePropsContext | GetStaticPropsContext | NextRouter,
 ): Locale {
-  return context.locale as Locale
+	return context.locale as Locale;
 }

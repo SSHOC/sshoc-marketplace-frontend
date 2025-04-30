@@ -1,19 +1,19 @@
-import { ErrorBoundary } from '@stefanprobst/next-error-boundary'
-import type { ReactNode } from 'react'
-import { useQueryErrorResetBoundary } from 'react-query'
+import { ErrorBoundary } from "@stefanprobst/next-error-boundary";
+import type { ReactNode } from "react";
+import { useQueryErrorResetBoundary } from "react-query";
 
-import { RootErrorFallback } from '@/lib/core/error/RootErrorFallback'
+import { RootErrorFallback } from "@/lib/core/error/RootErrorFallback";
 
 export interface RootErrorBoundaryProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function RootErrorBoundary(props: RootErrorBoundaryProps): JSX.Element {
-  const { reset } = useQueryErrorResetBoundary()
+export function RootErrorBoundary(props: RootErrorBoundaryProps): ReactNode {
+	const { reset } = useQueryErrorResetBoundary();
 
-  return (
-    <ErrorBoundary fallback={RootErrorFallback} onReset={reset}>
-      {props.children}
-    </ErrorBoundary>
-  )
+	return (
+		<ErrorBoundary fallback={RootErrorFallback} onReset={reset}>
+			{props.children}
+		</ErrorBoundary>
+	);
 }

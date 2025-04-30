@@ -1,16 +1,18 @@
-import { useUserSearch } from '@/components/account/useUserSearch'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { SearchField } from '@/lib/core/ui/SearchField/SearchField'
+import type { ReactNode } from "react";
 
-export function UserSearchField(): JSX.Element {
-  const { t } = useI18n<'authenticated'>()
-  const { searchUsers } = useUserSearch()
+import { useUserSearch } from "@/components/account/useUserSearch";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { SearchField } from "@/lib/core/ui/SearchField/SearchField";
 
-  function onSubmit(value: string) {
-    searchUsers({ q: value })
-  }
+export function UserSearchField(): ReactNode {
+	const { t } = useI18n<"authenticated">();
+	const { searchUsers } = useUserSearch();
 
-  return (
-    <SearchField aria-label={t(['authenticated', 'users', 'search-users'])} onSubmit={onSubmit} />
-  )
+	function onSubmit(value: string) {
+		searchUsers({ q: value });
+	}
+
+	return (
+		<SearchField aria-label={t(["authenticated", "users", "search-users"])} onSubmit={onSubmit} />
+	);
 }

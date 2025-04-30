@@ -1,21 +1,21 @@
 export type PaginatedRequest<T> = T & {
-  page?: number
-  perpage?: number
-}
+	page?: number;
+	perpage?: number;
+};
 
 export type PaginatedResponse<T> = T & {
-  hits: number
-  count: number
-  page: number
-  perpage: number
-  pages: number
-}
+	hits: number;
+	count: number;
+	page: number;
+	perpage: number;
+	pages: number;
+};
 
-export type AuthData = {
-  token: string | null
+export interface AuthData {
+	token: string | null;
 }
 
 export type FacetValue<T> = T & {
-  count: number
-  checked: boolean
-}
+	count: number;
+	checked: boolean;
+};

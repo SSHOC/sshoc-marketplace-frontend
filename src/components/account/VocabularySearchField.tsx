@@ -1,19 +1,21 @@
-import { useVocabularySearch } from '@/components/account/useVocabularySearch'
-import { useI18n } from '@/lib/core/i18n/useI18n'
-import { SearchField } from '@/lib/core/ui/SearchField/SearchField'
+import type { ReactNode } from "react";
 
-export function VocabularySearchField(): JSX.Element {
-  const { t } = useI18n<'authenticated'>()
-  const { searchVocabularies } = useVocabularySearch()
+import { useVocabularySearch } from "@/components/account/useVocabularySearch";
+import { useI18n } from "@/lib/core/i18n/useI18n";
+import { SearchField } from "@/lib/core/ui/SearchField/SearchField";
 
-  function onSubmit(value: string) {
-    searchVocabularies({ q: value })
-  }
+export function VocabularySearchField(): ReactNode {
+	const { t } = useI18n<"authenticated">();
+	const { searchVocabularies } = useVocabularySearch();
 
-  return (
-    <SearchField
-      aria-label={t(['authenticated', 'concepts', 'search-concepts'])}
-      onSubmit={onSubmit}
-    />
-  )
+	function onSubmit(value: string) {
+		searchVocabularies({ q: value });
+	}
+
+	return (
+		<SearchField
+			aria-label={t(["authenticated", "concepts", "search-concepts"])}
+			onSubmit={onSubmit}
+		/>
+	);
 }

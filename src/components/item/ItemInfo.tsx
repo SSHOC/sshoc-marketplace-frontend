@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/item/ItemInfo.module.css'
+import css from "@/components/item/ItemInfo.module.css";
 
 export interface ItemInfoProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function ItemInfo(props: ItemInfoProps): JSX.Element {
-  return <aside className={css['container']}>{props.children}</aside>
+export function ItemInfo(props: ItemInfoProps): ReactNode {
+	return <aside className={css["container"]}>{props.children}</aside>;
 }
