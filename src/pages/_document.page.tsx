@@ -1,4 +1,3 @@
-import { InitialThemeScript } from "@stefanprobst/next-theme";
 import { Head, Html, Main, NextScript } from "next/document";
 import type { ReactNode } from "react";
 
@@ -17,7 +16,6 @@ export default function Document(): ReactNode {
           rel="stylesheet"
         /> */}
 				<PreloadData />
-				<InitialThemeScript />
 				{isNonEmptyString(googleSiteId) ? (
 					<meta name="google-site-verification" content={googleSiteId} />
 				) : null}

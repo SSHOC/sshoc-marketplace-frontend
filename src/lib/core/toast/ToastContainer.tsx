@@ -1,7 +1,6 @@
 /** Needs to be imported in `src/pages/_app.page.tsx` so we can overwrite custom properties. */
 // import 'react-toastify/dist/ReactToastify.css'
 
-// import { useTheme } from '@stefanprobst/next-theme'
 import type { ReactNode } from "react";
 import { ToastContainer as ToastifyContainer } from "react-toastify";
 
