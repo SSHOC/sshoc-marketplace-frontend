@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 import css from "@/components/common/FundingNotice.module.css";
@@ -13,12 +13,43 @@ export function FundingNotice(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<Image src={EUFlag} alt={t(["common", "eu-flag"])} />
+			<Image
+				src={EUFlag}
+				alt={t(["common", "eu-flag"])}
+				style={{
+					maxWidth: "100%",
+					height: "auto",
+				}}
+			/>
 			<p>{t(["common", "funding-notice"])}</p>
 			<div className={css["logos"]}>
-				<Image src={CessdaLogo} alt={t(["common", "cessda"])} objectFit="contain" />
-				<Image src={ClarinLogo} alt={t(["common", "clarin"])} objectFit="contain" />
-				<Image src={DariahEuLogo} alt={t(["common", "dariah-eu"])} objectFit="contain" />
+				<Image
+					src={CessdaLogo}
+					alt={t(["common", "cessda"])}
+					style={{
+						maxWidth: "100%",
+						height: "auto",
+						objectFit: "contain",
+					}}
+				/>
+				<Image
+					src={ClarinLogo}
+					alt={t(["common", "clarin"])}
+					style={{
+						maxWidth: "100%",
+						height: "auto",
+						objectFit: "contain",
+					}}
+				/>
+				<Image
+					src={DariahEuLogo}
+					alt={t(["common", "dariah-eu"])}
+					style={{
+						maxWidth: "100%",
+						height: "auto",
+						objectFit: "contain",
+					}}
+				/>
 			</div>
 		</section>
 	);

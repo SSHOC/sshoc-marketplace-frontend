@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 import css from "@/components/error/BackgroundImage.module.css";
@@ -10,10 +10,13 @@ export function BackgroundImage(): ReactNode {
 			<Image
 				src={Clouds}
 				alt=""
-				layout="fill"
-				objectFit="contain"
-				objectPosition="right bottom"
 				priority
+				fill
+				sizes="100vw"
+				style={{
+					objectFit: "contain",
+					objectPosition: "right bottom",
+				}}
 			/>
 		</div>
 	);
