@@ -22,7 +22,7 @@ export function ItemTitle(props: ItemTitleProps): ReactNode {
 		<div className={css["container"]}>
 			<ItemTitleImage category={category} thumbnail={thumbnail} />
 			<ScreenTitle>{props.children}</ScreenTitle>
-			<CopyLinkToClipboardButton href={{ pathname }} />
+			<CopyLinkToClipboardButton pathname={pathname} />
 		</div>
 	);
 }

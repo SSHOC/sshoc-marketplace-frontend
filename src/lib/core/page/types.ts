@@ -1,9 +1,7 @@
-import type { LinkProps } from "next/link";
-
 export interface NavItem {
 	id: string;
 	label: string;
-	href: LinkProps["href"];
+	href: string;
 }
 
 export type NavItems = Array<NavItem>;

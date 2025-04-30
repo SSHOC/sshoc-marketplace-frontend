@@ -1,20 +1,14 @@
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
+import { useFocusable, useFocusRing } from "@react-aria/focus";
+import { useHover, usePress } from "@react-aria/interactions";
 import type { AriaLinkOptions as AriaLinkProps } from "@react-aria/link";
-import { useLink } from "@react-aria/link";
-import { mergeProps } from "@react-aria/utils";
-import type {
-	CSSProperties,
-	ElementType,
-	ForwardedRef,
-	HTMLAttributes,
-	MouseEventHandler,
-	ReactNode,
-} from "react";
+import { filterDOMProps, mergeProps } from "@react-aria/utils";
+import NextLink, { type LinkProps as NextLinkProps } from "next/link";
+import type { ComponentPropsWithoutRef, CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
 import css from "@/lib/core/ui/Link/Link.module.css";
+import type { Locale } from "~/config/i18n.config.mjs";
 
 export interface LinkStyleProps {
 	"--link-color"?: CSSProperties["color"];
@@ -26,19 +20,13 @@ export interface LinkStyleProps {
 	"--link-cursor"?: CSSProperties["cursor"];
 }
 
-export interface LinkProps extends AriaLinkProps {
-	"aria-current"?: HTMLAttributes<HTMLAnchorElement>["aria-current"];
-	children?: ReactNode;
-	href?: string;
-	/** Used by `next/link` for preloading. */
-	onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
-	rel?: string;
-	/** Necessary for menu links. */
-	role?: string;
-	style?: LinkStyleProps;
-	/** Necessary for menu links. */
-	tabIndex?: number;
-	target?: string;
+export interface LinkProps
+	extends AriaLinkProps,
+		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id">,
+		Omit<NextLinkProps, "as" | "href" | "locale" | "passHref"> {
+	children: ReactNode;
+	href: string;
+	locale?: Locale;
 	/** @default 'primary' */
 	variant?:
 		| "breadcrumb"
@@ -60,42 +48,47 @@ export const Link = forwardRef(function Link(
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
 ): ReactNode {
 	const {
-		"aria-current": ariaCurrent,
 		children,
-		elementType: ElementType = "a" as ElementType,
+		elementType,
 		href,
-		onMouseEnter,
-		rel,
-		role,
-		style,
-		tabIndex,
-		target,
 		variant, // = 'primary'
 	} = props;
 
 	const linkRef = useRef<HTMLAnchorElement>(null);
 	const ref = useComposedRef(linkRef, forwardedRef);
-	const { linkProps, isPressed } = useLink(props, linkRef);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
+
+	const isDisabled = props.isDisabled === true;
+	const isCurrent = Boolean(props["aria-current"]);
+	const isLinkElement = Boolean(props.href) && !isDisabled;
+	const ElementType = elementType ?? (isLinkElement ? NextLink : "span");
+
+	const { focusableProps } = useFocusable(props, linkRef);
+	const { pressProps, isPressed } = usePress({ ...props, ref: linkRef });
 	const { hoverProps, isHovered } = useHover(props);
+	const { focusProps, isFocused, isFocusVisible } = useFocusRing();
 
 	return (
 		<ElementType
 			ref={ref}
-			{...mergeProps(linkProps, focusProps, hoverProps)}
-			aria-current={ariaCurrent}
+			{...mergeProps(
+				filterDOMProps(props, { labelable: true, isLink: isLinkElement }),
+				focusableProps,
+				pressProps,
+				hoverProps,
+				focusProps,
+			)}
+			aria-disabled={isDisabled || undefined}
 			className={css["link"]}
-			data-active={isPressed ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
+			data-active={isPressed || undefined}
+			data-current={isCurrent || undefined}
+			data-disabled={isDisabled || undefined}
+			data-focused={isFocused || undefined}
+			data-focus-visible={isFocusVisible || undefined}
+			data-hovered={isHovered || undefined}
+			data-pressed={isPressed || undefined}
 			data-variant={variant}
 			href={href}
-			onMouseEnter={onMouseEnter}
-			rel={rel}
-			role={role}
-			style={style as CSSProperties}
-			tabIndex={tabIndex}
-			target={target}
+			role={!isLinkElement ? "link" : undefined}
 		>
 			{children}
 		</ElementType>
