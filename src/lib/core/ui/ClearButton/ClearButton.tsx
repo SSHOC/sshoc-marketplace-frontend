@@ -3,7 +3,7 @@ import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps } from "@react-aria/utils";
 import type { AriaButtonProps } from "@react-types/button";
-import type { CSSProperties, ElementType, ForwardedRef, Ref } from "react";
+import type { CSSProperties, ElementType, ForwardedRef, ReactNode, Ref } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -69,4 +69,4 @@ export const ClearButton = forwardRef(function ClearButton<T extends ElementType
 	);
 }) as <T extends ElementType = "button">(
 	props: ClearButtonProps<T> & { ref?: ForwardedRef<HTMLElement> },
-) => JSX.Element;
+) => ReactNode;

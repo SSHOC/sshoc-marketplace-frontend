@@ -6,7 +6,7 @@ import type {
 	NecessityIndicator,
 } from "@react-types/shared";
 import type { AriaTextFieldProps } from "@react-types/textfield";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 
 import type { TextFieldBaseStyleProps } from "@/lib/core/ui/TextField/TextFieldBase";
@@ -21,7 +21,7 @@ export interface TextFieldProps extends AriaTextFieldProps, LabelableProps {
 		| "review deleted"
 		| "review inserted"
 		| "review unchanged";
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	isRequired?: boolean;
 	labelAlign?: Alignment;
 	/** @default 'icon' */

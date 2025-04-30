@@ -17,7 +17,7 @@ import type {
 	LoadingState,
 	NecessityIndicator,
 } from "@react-types/shared";
-import type { ForwardedRef, InputHTMLAttributes, RefObject } from "react";
+import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -74,7 +74,7 @@ export const ComboBox = forwardRef(function ComboBox<T extends object>(
 	return <ComboBoxBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;
 
 const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 	props: ComboBoxProps<T>,
@@ -235,7 +235,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 	);
 }) as <T extends object>(
 	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;
 
 interface ComboBoxInputProps<T extends object> extends AriaComboBoxProps<T> {
 	/** @default 'primary' */
@@ -347,4 +347,4 @@ const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(
 	);
 }) as <T extends object>(
 	props: ComboBoxInputProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

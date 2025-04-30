@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import css from '@/components/home/SubSectionHeader.module.css'
+import css from "@/components/home/SubSectionHeader.module.css";
 
 export interface SectionHeaderProps {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
-export function SectionHeader(props: SectionHeaderProps): JSX.Element {
-  return <div className={css['container']}>{props.children}</div>
+export function SectionHeader(props: SectionHeaderProps): ReactNode {
+	return <div className={css["container"]}>{props.children}</div>;
 }

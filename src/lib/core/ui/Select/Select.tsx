@@ -7,7 +7,7 @@ import { useSelectState } from "@react-stately/select";
 import type { Placement } from "@react-types/overlays";
 import type { AriaSelectProps } from "@react-types/select";
 import type { Alignment, LoadingState } from "@react-types/shared";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, Fragment, useCallback, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -62,7 +62,7 @@ export const Select = forwardRef(function Select<T extends object>(
 	return <SelectBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;
 
 const SelectBase = forwardRef(function SelectBase<T extends object>(
 	props: SelectProps<T>,
@@ -272,4 +272,4 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 	);
 }) as <T extends object>(
 	props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

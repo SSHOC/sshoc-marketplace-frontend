@@ -10,7 +10,7 @@ import type { LabelProps } from "@/lib/core/ui/Label/Label";
 import { Label } from "@/lib/core/ui/Label/Label";
 
 export interface FieldProps extends Omit<LabelProps, "elementType">, HelpTextProps {
-	children: JSX.Element;
+	children: ReactNode;
 	descriptionProps?: HTMLAttributes<HTMLElement>;
 	errorMessageProps?: HTMLAttributes<HTMLElement>;
 	label?: ReactNode;

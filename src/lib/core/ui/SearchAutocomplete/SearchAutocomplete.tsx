@@ -9,7 +9,7 @@ import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from "@re
 import type { AriaButtonProps } from "@react-types/button";
 import type { Placement } from "@react-types/overlays";
 import type { LoadingState } from "@react-types/shared";
-import type { ForwardedRef, InputHTMLAttributes, RefObject } from "react";
+import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -56,7 +56,7 @@ export const SearchAutocomplete = forwardRef(function SearchAutocomplete<T exten
 	return <SearchAutocompleteBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: SearchAutocompleteProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;
 
 const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T extends object>(
 	props: SearchAutocompleteProps<T>,
@@ -205,7 +205,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 	);
 }) as <T extends object>(
 	props: SearchAutocompleteProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;
 
 interface SearchAutocompleteInputProps<T extends object> extends SearchAutocompleteProps<T> {
 	clearButtonProps: AriaButtonProps;
@@ -302,4 +302,4 @@ const SearchAutocompleteInput = forwardRef(function SearchAutocompleteInput<T ex
 	);
 }) as <T extends object>(
 	props: SearchAutocompleteInputProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

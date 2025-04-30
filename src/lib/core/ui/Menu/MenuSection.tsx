@@ -2,7 +2,7 @@ import { useMenuSection } from "@react-aria/menu";
 import { useSeparator } from "@react-aria/separator";
 import type { TreeState } from "@react-stately/tree";
 import type { Node } from "@react-types/shared";
-import type { ForwardedRef, Key } from "react";
+import type { ForwardedRef, Key, ReactNode } from "react";
 import { forwardRef, Fragment } from "react";
 
 import css from "@/lib/core/ui/Menu/Menu.module.css";
@@ -61,4 +61,4 @@ export const MenuSection = forwardRef(function MenuSection<T extends object>(
 	);
 }) as <T extends object>(
 	props: MenuSectionProps<T> & { ref?: ForwardedRef<HTMLElement> },
-) => JSX.Element;
+) => ReactNode;

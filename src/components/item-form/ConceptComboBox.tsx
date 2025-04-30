@@ -21,7 +21,7 @@ export interface ConceptComboBoxProps {
 	propertyTypeId: PropertyType["code"];
 }
 
-export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
+export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 	const { conceptSearchTerm, field, propertyTypeId, setConceptSearchTerm } = props;
 
 	const { t } = useI18n<"authenticated" | "common">();

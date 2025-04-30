@@ -4,7 +4,7 @@ import { useMenuItem } from "@react-aria/menu";
 import { mergeProps } from "@react-aria/utils";
 import type { TreeState } from "@react-stately/tree";
 import type { Node } from "@react-types/shared";
-import type { ForwardedRef, Key } from "react";
+import type { ForwardedRef, Key, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -92,4 +92,4 @@ export const MenuItem = forwardRef(function MenuItem<T extends object>(
 	);
 }) as <T extends object>(
 	props: MenuItemProps<T> & { ref?: ForwardedRef<HTMLLIElement> },
-) => JSX.Element;
+) => ReactNode;

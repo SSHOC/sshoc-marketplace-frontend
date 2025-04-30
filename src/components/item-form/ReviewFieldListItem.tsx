@@ -8,7 +8,7 @@ import { useReviewFieldLabels } from "@/components/item-form/useReviewFieldLabel
 import { useReviewFieldListItemMetadata } from "@/components/item-form/useReviewFieldListItemMetadata";
 
 export interface ReviewFieldListItemProps<T> {
-	children: JSX.Element;
+	children: ReactNode;
 	name: string;
 	fields: FieldArrayRenderProps<any, HTMLElement>["fields"];
 	index: number;
@@ -16,7 +16,7 @@ export interface ReviewFieldListItemProps<T> {
 		createLabel: (label: string) => string;
 		status: Status;
 		value: T | undefined;
-	}) => JSX.Element;
+	}) => ReactNode;
 }
 
 export function ReviewFieldListItem<T>(props: ReviewFieldListItemProps<T>): ReactNode {

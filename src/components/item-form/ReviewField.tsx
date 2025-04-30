@@ -8,13 +8,13 @@ import { useReviewFieldMetadata } from "@/components/item-form/useReviewFieldMet
 import { useReviewFieldLabels } from "./useReviewFieldLabels";
 
 export interface ReviewFieldProps<T> {
-	children: JSX.Element;
+	children: ReactNode;
 	name: string;
 	review: (props: {
 		createLabel: (label: string) => string;
 		status: Status;
 		value: T | undefined;
-	}) => JSX.Element;
+	}) => ReactNode;
 }
 
 export function ReviewField<T>(props: ReviewFieldProps<T>): ReactNode {

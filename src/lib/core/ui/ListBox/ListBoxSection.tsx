@@ -59,4 +59,4 @@ export const ListBoxSection = forwardRef(function ListBoxSection<T extends objec
 	);
 }) as <T extends object>(
 	props: ListBoxSectionProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

@@ -7,7 +7,7 @@ import { Select } from "@/lib/core/ui/Select/Select";
 export interface ApiParamSelectProps<T extends object>
 	extends Pick<SelectProps<T>, "aria-label" | "items" | "label" | "placeholder"> {
 	param: string;
-	children: Array<JSX.Element> | JSX.Element;
+	children: ReactNode;
 }
 
 export function ApiParamSelect<T extends object>(props: ApiParamSelectProps<T>): ReactNode {

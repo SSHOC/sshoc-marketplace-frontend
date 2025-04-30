@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import type { ItemCategoryWithWorkflowStep } from "@/data/sshoc/api/item";
 import DatasetIcon from "~/public/assets/images/categories/dataset.svg?symbol-icon";
 import PublicationIcon from "~/public/assets/images/categories/publication.svg?symbol-icon";
@@ -10,7 +12,7 @@ export interface ItemCategoryIconProps {
 	category: ItemCategoryWithWorkflowStep;
 }
 
-export function ItemCategoryIcon(props: ItemCategoryIconProps): JSX.Element {
+export function ItemCategoryIcon(props: ItemCategoryIconProps): ReactNode {
 	switch (props.category) {
 		case "dataset":
 			return <DatasetIcon aria-hidden={true} width={40} height={40} />;

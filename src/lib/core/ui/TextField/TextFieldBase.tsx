@@ -15,6 +15,7 @@ import type {
 	HTMLAttributes,
 	InputHTMLAttributes,
 	LabelHTMLAttributes,
+	ReactNode,
 	RefObject,
 	TextareaHTMLAttributes,
 } from "react";
@@ -67,7 +68,7 @@ export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, 
 	/** @default 'input' */
 	elementType?: "input" | "textarea";
 	errorMessageProps?: HTMLAttributes<HTMLElement>;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	inputProps: InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement>;
 	inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement>;
 	isLoading?: boolean;
@@ -76,14 +77,14 @@ export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, 
 	labelAlign?: Alignment;
 	labelPosition?: LabelPosition;
 	labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
-	loadingIndicator?: JSX.Element;
+	loadingIndicator?: ReactNode;
 	/** @default 'icon' */
 	necessityIndicator?: NecessityIndicator;
 	rows?: number;
 	/** @default 'md' */
 	size?: "lg" | "md" | "sm";
 	style?: TextFieldBaseStyleProps;
-	wrapperChildren?: Array<JSX.Element> | JSX.Element;
+	wrapperChildren?: ReactNode;
 }
 
 export const TextFieldBase = forwardRef(function TextFieldBase(

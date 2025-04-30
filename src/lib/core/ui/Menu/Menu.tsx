@@ -3,7 +3,7 @@ import { mergeProps } from "@react-aria/utils";
 import { useTreeState } from "@react-stately/tree";
 import type { AriaMenuProps } from "@react-types/menu";
 import type { Alignment } from "@react-types/shared";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
@@ -75,4 +75,4 @@ export const Menu = forwardRef(function Menu<T extends object>(
 	);
 }) as <T extends object>(
 	props: MenuProps<T> & { ref?: ForwardedRef<HTMLUListElement> },
-) => JSX.Element;
+) => ReactNode;

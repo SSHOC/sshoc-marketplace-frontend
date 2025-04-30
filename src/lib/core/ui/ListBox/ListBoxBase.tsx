@@ -100,8 +100,8 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 		parent: View | undefined,
 		reusableView: View,
 		children: Array<View>,
-		renderChildren: (views: Array<View>) => Array<JSX.Element>,
-	): JSX.Element => {
+		renderChildren: (views: Array<View>) => Array<ReactNode>,
+	): ReactNode => {
 		if (reusableView.viewType === "section") {
 			return (
 				<ListBoxSection
@@ -213,4 +213,4 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 	);
 }) as <T extends object>(
 	props: ListBoxBaseProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

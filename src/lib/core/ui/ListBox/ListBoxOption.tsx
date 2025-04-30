@@ -2,7 +2,7 @@ import { isFocusVisible, useHover } from "@react-aria/interactions";
 import { useOption } from "@react-aria/listbox";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
 import type { Node } from "@react-types/shared";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import { Icon } from "@/lib/core/ui/Icon/Icon";
@@ -68,4 +68,4 @@ export const ListBoxOption = forwardRef(function ListBoxOption<T extends object>
 	);
 }) as <T extends object>(
 	props: ListBoxOptionProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => JSX.Element;
+) => ReactNode;

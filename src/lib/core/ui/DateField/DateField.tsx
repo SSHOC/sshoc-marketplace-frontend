@@ -6,7 +6,7 @@ import type {
 	NecessityIndicator,
 } from "@react-types/shared";
 import type { AriaTextFieldProps } from "@react-types/textfield";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 
 import type { TextFieldBaseStyleProps } from "@/lib/core/ui/TextField/TextFieldBase";
@@ -15,7 +15,7 @@ import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 export interface DateFieldProps extends AriaTextFieldProps, LabelableProps {
 	/** @default 'primary' */
 	color?: "form" | "primary";
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	isRequired?: boolean;
 	/** @default 'start' */
 	labelAlign?: Alignment;
