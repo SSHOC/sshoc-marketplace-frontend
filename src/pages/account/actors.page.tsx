@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { AccountScreenWithoutFiltersLayout } from "@/components/account/AccountScreenWithoutFiltersLayout";
 import { ActorsBackgroundFetchIndicator } from "@/components/account/ActorsBackgroundFetchIndicator";

@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { AccountScreenWithFiltersLayout } from "@/components/account/AccountScreenWithFiltersLayout";
 import { BackgroundImage } from "@/components/account/BackgroundImage";

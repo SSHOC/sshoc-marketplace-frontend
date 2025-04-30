@@ -4,7 +4,7 @@ import { useTextField } from "@react-aria/textfield";
 import { mergeProps } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import type { AriaTextFieldProps } from "@react-types/textfield";
-import type { ChangeEvent, ForwardedRef } from "react";
+import type { ChangeEvent, ForwardedRef, ReactNode } from "react";
 import { forwardRef, Fragment, useRef, useState } from "react";
 
 import { useI18n } from "@/lib/core/i18n/useI18n";

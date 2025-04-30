@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useField } from "react-final-form";
 
 export interface FormHiddenFieldProps {

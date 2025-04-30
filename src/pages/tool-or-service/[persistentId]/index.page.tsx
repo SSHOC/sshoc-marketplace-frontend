@@ -6,7 +6,7 @@ import type {
 	GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { dehydrate, QueryClient, useQueryClient } from "react-query";
 
 import { FundingNotice } from "@/components/common/FundingNotice";

@@ -1,5 +1,5 @@
 import type { HelpTextProps as AriaHelpTextProps, Validation } from "@react-types/shared";
-import type { ForwardedRef, HTMLAttributes } from "react";
+import type { ForwardedRef, HTMLAttributes, ReactNode } from "react";
 import { forwardRef, Fragment } from "react";
 
 import css from "@/lib/core/ui/HelpText/HelpText.module.css";

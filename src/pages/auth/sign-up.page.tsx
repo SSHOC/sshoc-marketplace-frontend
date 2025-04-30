@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { BackgroundGradient } from "@/components/auth/BackgroundGradient";
 import { BackgroundImage } from "@/components/auth/BackgroundImageSignUp";

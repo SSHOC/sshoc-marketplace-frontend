@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { FundingNotice } from "@/components/common/FundingNotice";

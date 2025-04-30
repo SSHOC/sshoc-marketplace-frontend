@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { NavLink } from "@/components/common/NavLink";
 import { useI18n } from "@/lib/core/i18n/useI18n";
 import css from "@/lib/core/page/PageFooter.module.css";

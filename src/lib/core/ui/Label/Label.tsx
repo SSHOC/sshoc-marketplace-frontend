@@ -1,6 +1,6 @@
 import type { LabelProps as AriaLabelProps } from "@react-types/label";
 import type { Alignment, DOMProps, LabelPosition, NecessityIndicator } from "@react-types/shared";
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import css from "@/lib/core/ui/Label/Label.module.css";

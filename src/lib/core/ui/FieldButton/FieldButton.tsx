@@ -4,7 +4,7 @@ import { useHover } from "@react-aria/interactions";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
 import type { ButtonProps } from "@react-types/button";
 import type { DOMProps, ValidationState } from "@react-types/shared";
-import type { CSSProperties, ForwardedRef } from "react";
+import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import css from "@/lib/core/ui/FieldButton/FieldButton.module.css";

@@ -1,7 +1,7 @@
 import { useError } from "@stefanprobst/next-error-boundary";
 import { HttpError } from "@stefanprobst/request";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 
 import { SignInForm } from "@/components/auth/SignInForm";
 import { ErrorMessage } from "@/components/common/ErrorMessage";

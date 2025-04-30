@@ -1,5 +1,6 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
 import Image from "next/legacy/image";
+import type { ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";

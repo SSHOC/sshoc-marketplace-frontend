@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { createUrl } from "@/data/sshoc/lib/client";
 
 export function PreloadData(): ReactNode {

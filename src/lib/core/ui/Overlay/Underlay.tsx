@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
 import css from "@/lib/core/ui/Overlay/Underlay.module.css";
 

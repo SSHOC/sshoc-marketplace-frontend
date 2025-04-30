@@ -2,6 +2,7 @@
 // import 'react-toastify/dist/ReactToastify.css'
 
 // import { useTheme } from '@stefanprobst/next-theme'
+import type { ReactNode } from "react";
 import { ToastContainer as ToastifyContainer } from "react-toastify";
 
 import { toastAutoCloseDelay } from "~/config/site.config";

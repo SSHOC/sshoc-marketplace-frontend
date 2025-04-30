@@ -1,6 +1,6 @@
 import { Item } from "@react-stately/collections";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useI18n } from "@/lib/core/i18n/useI18n";

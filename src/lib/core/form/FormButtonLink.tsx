@@ -1,4 +1,4 @@
-import type { ForwardedRef } from "react";
+import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 import { useFormState } from "react-final-form";
 

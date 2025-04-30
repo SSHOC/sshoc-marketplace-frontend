@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { usePage } from "@/lib/core/page/PageProvider";
 
 /**

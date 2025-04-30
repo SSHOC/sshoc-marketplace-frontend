@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { Fragment, memo } from "react";
+import { Fragment, memo, type ReactNode } from "react";
 
 import { AboutScreenLayout } from "@/components/about/AboutScreenLayout";
 import { ContributeScreenLayout } from "@/components/contribute/ContributeScreenLayout";

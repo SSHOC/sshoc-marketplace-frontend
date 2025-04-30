@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { AccountHelpText } from "@/components/account/AccountHelpText";
 import { AccountLinks } from "@/components/account/AccountLinks";

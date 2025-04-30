@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { PageMetadata as NextPageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useAlternateLocaleUrls } from "@/lib/core/metadata/useAlternateLocaleUrls";

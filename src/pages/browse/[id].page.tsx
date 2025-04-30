@@ -4,7 +4,7 @@ import type {
 	GetStaticPropsContext,
 	GetStaticPropsResult,
 } from "next";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import { BackgroundImage } from "@/components/browse/BackgroundImage";
 import { BrowseFacets } from "@/components/browse/BrowseFacets";

@@ -1,6 +1,6 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import * as path from "path";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { fileURLToPath } from "url";
 
 import { FundingNotice } from "@/components/common/FundingNotice";

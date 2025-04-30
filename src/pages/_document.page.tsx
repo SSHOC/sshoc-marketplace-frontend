@@ -1,5 +1,6 @@
 import { InitialThemeScript } from "@stefanprobst/next-theme";
 import { Head, Html, Main, NextScript } from "next/document";
+import type { ReactNode } from "react";
 
 import { PreloadData } from "@/lib/core/app/PreloadData";
 import { isNonEmptyString } from "@/lib/utils";

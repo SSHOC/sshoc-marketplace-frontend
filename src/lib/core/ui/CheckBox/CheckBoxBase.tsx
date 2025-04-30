@@ -2,7 +2,7 @@ import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
-import type { ForwardedRef, InputHTMLAttributes, RefObject } from "react";
+import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 

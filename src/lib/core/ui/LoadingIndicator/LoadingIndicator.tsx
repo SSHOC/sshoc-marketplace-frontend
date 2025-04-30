@@ -1,5 +1,5 @@
 import type { AriaLabelingProps, DOMProps } from "@react-types/shared";
-import type { CSSProperties, ForwardedRef } from "react";
+import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import { useI18n } from "@/lib/core/i18n/useI18n";

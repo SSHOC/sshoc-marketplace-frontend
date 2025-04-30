@@ -1,6 +1,6 @@
 import { useButton } from "@react-aria/button";
 import type { AriaButtonProps } from "@react-types/button";
-import type { CSSProperties, ForwardedRef } from "react";
+import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 

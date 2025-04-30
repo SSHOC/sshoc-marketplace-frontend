@@ -2,7 +2,7 @@ import { OverlayContainer } from "@react-aria/overlays";
 import { createUrlSearchParams } from "@stefanprobst/request";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, type ReactNode, useEffect, useRef } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";

@@ -91,7 +91,6 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 		defaultSelectedKey: undefined,
 		onSelectionChange(key) {
 			if (key != null) {
-				// @ts-expect-error Error in upstream type definitions.
 				onSubmit?.(null, key);
 			}
 		},
