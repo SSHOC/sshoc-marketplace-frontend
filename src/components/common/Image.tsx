@@ -1,5 +1,5 @@
-import type { ImageProps as NextImageProps, StaticImageData } from "next/legacy/image";
-import NextImage from "next/legacy/image";
+import type { ImageProps as NextImageProps, StaticImageData } from "next/image";
+import NextImage from "next/image";
 import type { ReactNode } from "react";
 
 export type ImageProps = NextImageProps;
@@ -12,10 +12,13 @@ export function Image(props: ImageProps): ReactNode {
 
 	return (
 		<NextImage
-			sizes="55rem"
-			layout="responsive"
 			placeholder={showPlaceholder ? "blur" : undefined}
 			{...props}
+			sizes="55rem"
+			style={{
+				width: "100%",
+				height: "auto",
+			}}
 		/>
 	);
 }

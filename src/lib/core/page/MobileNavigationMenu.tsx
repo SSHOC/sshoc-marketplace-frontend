@@ -1,6 +1,6 @@
 import { OverlayContainer } from "@react-aria/overlays";
 import { createUrlSearchParams } from "@stefanprobst/request";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment, type ReactNode, useEffect, useRef } from "react";
 
@@ -84,7 +84,15 @@ function NavigationMenu(): ReactNode {
 						<header className={css["header"]}>
 							<div className={css["home-link"]}>
 								<NavLink aria-label={t(["common", "pages", "home"])} href="/">
-									<Image src={Logo} alt="" priority />
+									<Image
+										src={Logo}
+										alt=""
+										priority
+										style={{
+											maxWidth: "100%",
+											height: "auto",
+										}}
+									/>
 								</NavLink>
 							</div>
 							<CloseButton autoFocus onPress={state.close} size="lg" />
