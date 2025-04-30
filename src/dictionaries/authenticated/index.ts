@@ -154,7 +154,7 @@ export interface Dictionary {
     // 'service-type': Description
     // 'source-last-update': Description
     standard: Description
-    'technical-readiness-level': Description
+    'technology-readiness-level': Description
     'terms-of-use': Description
     'terms-of-use-url': Description
     'tool-family': Description

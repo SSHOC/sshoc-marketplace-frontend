@@ -21,12 +21,10 @@ const recommendedProperties = [
   'discipline',
   'language',
   'mode-of-use',
-  'intended-audience',
   'see-also',
   'helpdesk-url',
   'license',
-  'standard',
-  'technical-readiness-level',
+  'technology-readiness-level',
   'resource-category',
 ]
 
