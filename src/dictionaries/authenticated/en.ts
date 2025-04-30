@@ -180,37 +180,62 @@ export const dictionary: Dictionary = {
   },
   properties: {
     'access-policy-url': { description: 'URL pointing to info about the access policy.' },
-    activity: { description: 'The activities you can do with the resource.' },
+    activity: {
+      description: 'The activities you can do with the resource. See <Link></Link>.',
+    },
     authentication: { description: 'Is authentication needed? Yes or no.' },
     conference: { description: 'Name of the conference where paper was given.' },
-    discipline: { description: 'Describes the discipline covered by resource.' },
+    discipline: {
+      description: 'Describes the discipline covered by resource. See <Link></Link>.',
+    },
     extent: { description: 'Describe the granularity of a resource.' },
-    'geographical-availability': { description: 'Locations where the Resource is offered.' },
+    'geographical-availability': {
+      description: 'Locations where the Resource is offered. See <Link></Link>.',
+    },
     'helpdesk-url': { description: 'URL to helpdesk for incidents & user requests.' },
-    'intended-audience': { description: 'Audience targeted by the resource.' },
+    inputformat: { description: 'See <Link></Link>.' },
+    'intended-audience': {
+      description: 'Audience targeted by the resource. See <Link></Link>.',
+    },
     issue: { description: 'A particular published issue of a journal.' },
     journal: { description: 'The journal the work was published in.' },
-    keyword: { description: 'Concept or term related to MP entry.' },
-    language: { description: 'Language(s) in which a resource is available.' },
-    license: { description: 'Select license pertaining to resource.' },
-    'life-cycle-status': { description: 'Status of the Resource life-cycle.' },
-    'mode-of-use': { description: 'Mode of use for the resource.' },
+    keyword: { description: 'Concept or term related to MP entry. See <Link></Link>.' },
+    language: {
+      description: 'Language(s) in which a resource is available. See <Link></Link>.',
+    },
+    license: {
+      description:
+        'Select license pertaining to resource. See <Link></Link>. If license is unknown, use the "Terms of use" property field to describe the usage terms.',
+    },
+    'life-cycle-status': {
+      description: 'Status of the Resource life-cycle. See <Link></Link>.',
+    },
+    'mode-of-use': { description: 'Mode of use for the resource. See <Link></Link>.' },
     // 'model-version': { description: '' },
-    'object-format': { description: 'File format of the linked resource.' },
+    'object-format': {
+      description: 'File format of the linked resource. See <Link></Link>.',
+    },
+    outputformat: { description: 'See <Link></Link>.' },
     pages: { description: 'Page #s of a resource, separate by commas.' },
     'privacy-policy-url': { description: 'Link to the privacy policy of resource.' },
     // 'processed-at': { description: '' },
     'publication-place': { description: 'The place of publication.' },
-    'publication-type': { description: 'The publication type, eg Book, article, etc.' },
+    'publication-type': {
+      description: 'The publication type, eg Book, article, etc. See <Link></Link>.',
+    },
     publisher: { description: 'Entity responsible for making the resource available.' },
-    'resource-category': { description: "Refine the resource's nature and function." },
+    'resource-category': {
+      description: "Refine the resource's nature and function. See <Link></Link>.",
+    },
     'see-also': { description: 'Links to non-MP materials that are relevant.' },
     'service-level-url': {
       description: 'Info about performance levels provider expected to deliver.',
     },
     // 'source-last-update': { description: '' },
-    standard: { description: 'Standard used by the resource.' },
-    'technical-readiness-level': { description: 'Technology Readiness Level of the Resource.' },
+    standard: { description: 'Standard used by the resource. See <Link></Link>.' },
+    'technical-readiness-level': {
+      description: 'Technology Readiness Level of the Resource. See <Link></Link>.',
+    },
     'terms-of-use': { description: 'If license unknown, fill in textbox.' },
     'terms-of-use-url': { description: 'Webpage describing terms of use.' },
     'tool-family': { description: 'Type of tool.' },
