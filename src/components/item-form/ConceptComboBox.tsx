@@ -3,7 +3,7 @@ import { Fragment, useMemo } from 'react'
 import { useForm } from 'react-final-form'
 
 import { ItemInfo } from '@/components/common/ItemInfo'
-import { Link } from '@/components/common/Link'
+import { SeeVocabularyLink } from '@/components/item-form/SeeVocabularyLink'
 import type { ItemFormFields } from '@/components/item-form/useItemFormFields'
 import type { PropertyType } from '@/data/sshoc/api/property'
 import { useConceptSearchInfinite } from '@/data/sshoc/hooks/vocabulary'
@@ -19,12 +19,10 @@ export interface ConceptComboBoxProps {
   setConceptSearchTerm: (searchTerm: string) => void
   field: ItemFormFields['fields']['properties']['fields']['concept']
   propertyTypeId: PropertyType['code']
-  allowedVocabularies: PropertyType['allowedVocabularies']
 }
 
 export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
-  const { conceptSearchTerm, field, propertyTypeId, allowedVocabularies, setConceptSearchTerm } =
-    props
+  const { conceptSearchTerm, field, propertyTypeId, setConceptSearchTerm } = props
 
   const { t } = useI18n<'authenticated' | 'common'>()
   const form = useForm()
@@ -74,26 +72,16 @@ export function ConceptComboBox(props: ConceptComboBoxProps): JSX.Element {
   const description = (
     <Fragment>
       <span>{field.description} </span>
-      {/* @ts-expect-error Assume all possible property types have translation. */}
-      <span>{t(['authenticated', 'properties', propertyTypeId, 'description'])} </span>
-      <small>
-        See{' '}
-        {allowedVocabularies.map((vocabulary, index) => {
-          const href = vocabulary.accessibleAt ?? vocabulary.namespace
-
-          if (href == null) return null
-
-          return (
-            <Fragment key={vocabulary.code}>
-              {index !== 0 ? ', ' : null}
-              <Link href={{ pathname: href }} target="_blank" rel="noreferrer">
-                {vocabulary.label}
-              </Link>
-            </Fragment>
-          )
+      <span>
+        {/* @ts-expect-error Assume all possible property types have translation. */}
+        {t(['authenticated', 'properties', propertyTypeId, 'description'], {
+          components: {
+            Link() {
+              return <SeeVocabularyLink type={propertyTypeId} />
+            },
+          },
         })}
-        .
-      </small>
+      </span>
     </Fragment>
   )
 

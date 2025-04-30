@@ -77,7 +77,6 @@ export function ItemProperty(props: ItemPropertyProps): JSX.Element {
           setConceptSearchTerm={setConceptSearchTerm}
           field={fieldGroup.concept}
           propertyTypeId={selectedPropertyType.code}
-          allowedVocabularies={selectedPropertyType.allowedVocabularies}
         />
       ) : (
         <ValueTextField field={fieldGroup.value} propertyTypeId={selectedPropertyType.code} />
