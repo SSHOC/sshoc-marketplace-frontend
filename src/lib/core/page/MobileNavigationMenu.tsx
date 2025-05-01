@@ -84,15 +84,7 @@ function NavigationMenu(): ReactNode {
 						<header className={css["header"]}>
 							<div className={css["home-link"]}>
 								<NavLink aria-label={t(["common", "pages", "home"])} href="/">
-									<Image
-										src={Logo}
-										alt=""
-										priority
-										style={{
-											maxWidth: "100%",
-											height: "auto",
-										}}
-									/>
+									<Image src={Logo} alt="" priority />
 								</NavLink>
 							</div>
 							<CloseButton autoFocus onPress={state.close} size="lg" />

@@ -34,6 +34,10 @@
 	display: flex;
 	max-width: var(--size-64);
 	line-height: var(--line-height-none);
+
+	& a {
+		width: 100%;
+	}
 }
 
 .content {
