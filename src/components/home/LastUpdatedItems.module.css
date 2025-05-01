@@ -5,7 +5,7 @@
 	align-content: start;
 	padding-block: var(--space-16);
 
-	@media (/* --screen-lg */ min-width: 64rem) {
+	@media (/* --screen-xl */ min-width: 80rem) {
 		padding-inline-start: var(--space-8);
 	}
 
@@ -18,7 +18,7 @@
 		background-color: var(--color-sidebar-background);
 		inset: 0;
 
-		@media (/* --screen-lg */ min-width: 64rem) {
+		@media (/* --screen-xl */ min-width: 80rem) {
 			grid-column: last-updated-items / -1;
 		}
 	}
