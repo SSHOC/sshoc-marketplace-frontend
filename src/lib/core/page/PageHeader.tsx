@@ -21,15 +21,7 @@ export function PageHeader(): ReactNode {
 		<header className={css["container"]}>
 			<div className={css["home-link"]}>
 				<NavLink href="/" aria-label={t(["common", "pages", "home"])}>
-					<Image
-						src={Logo}
-						alt=""
-						priority
-						style={{
-							maxWidth: "100%",
-							height: "auto",
-						}}
-					/>
+					<Image src={Logo} alt="" priority />
 				</NavLink>
 			</div>
 			<div className={css["secondary-nav"]}>

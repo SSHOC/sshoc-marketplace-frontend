@@ -36,6 +36,10 @@
 	@media (/* --screen-xs */ min-width: 30rem) {
 		margin-inline: var(--space-8);
 	}
+
+	& a {
+		width: 100%;
+	}
 }
 
 .secondary-nav {
