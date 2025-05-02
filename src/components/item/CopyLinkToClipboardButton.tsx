@@ -10,9 +10,7 @@ import LinkIcon from "@/lib/core/ui/icons/link.svg?symbol-icon";
 import { createSiteUrl } from "@/lib/utils";
 
 export interface CopyLinkToClipboardButtonProps {
-	href: {
-		pathname: string;
-	};
+	pathname: string;
 }
 
 // FIXME: shoud use <Button variant="ghost" /> or similar
@@ -20,7 +18,7 @@ export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboard
 	props: CopyLinkToClipboardButtonProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const { pathname } = props.href;
+	const { pathname } = props;
 
 	const { t } = useI18n<"common">();
 	const buttonRef = useObjectRef(forwardedRef);
