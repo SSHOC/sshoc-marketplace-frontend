@@ -7,6 +7,7 @@ WORKDIR /app
 USER node
 
 COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node ./patches ./patches
 
 # cannot use `--ignore-scripts` for `sharp` to compile
 RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
@@ -14,9 +15,9 @@ RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
 # build
 FROM base AS build
 
-RUN yarn install --frozen-lockfile --ignore-scripts --silent --prefer-offline
+RUN yarn install --frozen-lockfile --silent --prefer-offline
 
-COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.mjs ./
+COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.ts ./
 COPY --chown=node:node scripts ./scripts
 COPY --chown=node:node config ./config
 COPY --chown=node:node public ./public
@@ -53,7 +54,7 @@ WORKDIR /app
 
 USER node
 
-COPY --from=build --chown=node:node /app/next.config.mjs ./
+COPY --from=build --chown=node:node /app/next.config.ts ./
 COPY --from=build --chown=node:node /app/public ./public
 COPY --from=build --chown=node:node /app/.next/standalone ./
 COPY --from=build --chown=node:node /app/.next/static ./.next/static

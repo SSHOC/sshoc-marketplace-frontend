@@ -1,0 +1,14 @@
+diff --git a/node_modules/@stefanprobst/next-svg/package.json b/node_modules/@stefanprobst/next-svg/package.json
+index 537ec18..58663a0 100644
+--- a/node_modules/@stefanprobst/next-svg/package.json
++++ b/node_modules/@stefanprobst/next-svg/package.json
+@@ -8,7 +8,8 @@
+   "exports": {
+     ".": {
+       "types": "./src/index.d.ts",
+-      "import": "./src/index.js"
++      "import": "./src/index.js",
++      "default": "./src/index.js"
+     },
+     "./svg-symbol-loader": "./src/svg-symbol-loader.cjs",
+     "./svg-inline-loader": "./src/svg-inline-loader.cjs",
