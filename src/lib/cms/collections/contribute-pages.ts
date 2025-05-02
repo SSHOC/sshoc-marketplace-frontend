@@ -5,7 +5,7 @@ export const collection: CmsCollection = {
 	label: "Contribute pages",
 	label_singular: "Contribute page",
 	format: "frontmatter",
-	extension: "page.mdx",
+	extension: "mdx",
 	folder: "src/pages/contribute",
 	/** Disallow creating new pages to ensure sensible route pathnames. */
 	create: false,

@@ -92,8 +92,6 @@ backend instances.
 
 - React components: PascalCase (e.g., `WorkflowForm.tsx`)
 - Hooks: camelCase prefixed with 'use' (e.g., `useWorkflowForm.ts`)
-- Pages: kebab-case with `.page.tsx` extension
-- Content pages: kebab-case with `.page.mdx` extension
 - Test files: Same name as tested file with `.test.ts` extension
 
 ### Component Conventions

@@ -5,7 +5,7 @@ export const collection: CmsCollection = {
 	label: "About pages",
 	label_singular: "About page",
 	format: "frontmatter",
-	extension: "page.mdx",
+	extension: "mdx",
 	folder: "src/pages/about",
 	/** Disallow creating new pages to ensure sensible route pathnames. */
 	create: false,

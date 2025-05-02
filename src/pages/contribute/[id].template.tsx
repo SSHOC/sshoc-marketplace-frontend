@@ -63,7 +63,7 @@ export async function getStaticProps(
 
 	const filePath = path.relative(process.cwd(), fileURLToPath(import.meta.url));
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
-	const id = path.basename(filePath, ".page.mdx");
+	const id = path.basename(filePath, ".mdx");
 
 	return {
 		props: {
