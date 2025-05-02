@@ -48,8 +48,10 @@ yarn install
 2. Create local .env file
 
 ```
-echo "NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at" > .env.development.local
+cp .env.local.example .env.local
 ```
+
+Adjust the API base url if you are running a local backend server.
 
 3. Start development server
 
