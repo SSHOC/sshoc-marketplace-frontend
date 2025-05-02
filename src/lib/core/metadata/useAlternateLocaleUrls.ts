@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useLocale } from "@/lib/core/i18n/useLocale";
 import { usePathname } from "@/lib/core/navigation/usePathname";
 import { createSiteUrl } from "@/lib/utils";
-import type { Locale } from "~/config/i18n.config.mjs";
+import type { Locale } from "~/config/i18n.config";
 
 export type UseAlternateLocaleUrlsResult = Array<{ hrefLang: Locale; href: string }>;
 

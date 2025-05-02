@@ -8,7 +8,7 @@ import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
 import css from "@/lib/core/ui/Link/Link.module.css";
-import type { Locale } from "~/config/i18n.config.mjs";
+import type { Locale } from "~/config/i18n.config";
 
 export interface LinkStyleProps {
 	"--link-color"?: CSSProperties["color"];

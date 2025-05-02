@@ -11,7 +11,7 @@ import useComposedRef from "use-composed-ref";
 import type { ButtonProps } from "@/lib/core/ui/Button/Button";
 import css from "@/lib/core/ui/Button/Button.module.css";
 import linkStyles from "@/lib/core/ui/Link/Link.module.css";
-import type { Locale } from "~/config/i18n.config.mjs";
+import type { Locale } from "~/config/i18n.config";
 
 export interface LinkButtonProps
 	extends AriaLinkProps,
