@@ -1,5 +1,5 @@
 import type { Dictionary } from "@/dictionaries";
-import type { Locale } from "~/config/i18n.config.mjs";
+import type { Locale } from "~/config/i18n.config";
 
 export async function load<K extends keyof Dictionary>(
 	locale: Locale,

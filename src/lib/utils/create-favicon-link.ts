@@ -1,6 +1,5 @@
 import { createSiteUrl } from "@/lib/utils";
-import type { Locale } from "~/config/i18n.config.mjs";
-import { defaultLocale } from "~/config/i18n.config.mjs";
+import { defaultLocale, type Locale } from "~/config/i18n.config";
 
 export function createFaviconLink(locale: Locale, fileName: string): URL {
 	return createSiteUrl({

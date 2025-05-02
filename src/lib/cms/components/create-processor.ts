@@ -8,7 +8,7 @@ import toHast from "remark-rehype";
 import { getHighlighter } from "shiki";
 import { unified } from "unified";
 
-import { syntaxHighlightingTheme } from "~/config/docs.config.mjs";
+import { syntaxHighlightingTheme } from "~/config/docs.config";
 
 const processor = unified()
 	.use(fromMarkdown)

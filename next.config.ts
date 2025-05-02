@@ -1,6 +1,7 @@
 /* global process */
 
 import { log } from "@acdh-oeaw/lib";
+import type { Options as MdxOptions } from "@mdx-js/loader";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import createSvgPlugin from "@stefanprobst/next-svg";
 import withToc from "@stefanprobst/rehype-extract-toc";
@@ -14,28 +15,25 @@ import withNoReferrerLinks from "@stefanprobst/rehype-noreferrer-links";
 import withSyntaxHighlighting from "@stefanprobst/rehype-shiki";
 import withParsedFrontmatter from "@stefanprobst/remark-extract-yaml-frontmatter";
 import withParsedFrontmatterExport from "@stefanprobst/remark-extract-yaml-frontmatter/mdx";
+import type { Options as MdxPageOptions } from "@stefanprobst/remark-mdx-page";
 import withPage from "@stefanprobst/remark-mdx-page";
 import withSmartQuotes from "@stefanprobst/remark-smart-quotes";
+import type { Element as HastElement } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { h } from "hastscript";
+import type { NextConfig as Config } from "next";
 import * as path from "path";
 import withHeadingIds from "rehype-slug";
 import withFrontmatter from "remark-frontmatter";
 import withGfm from "remark-gfm";
 import { getHighlighter } from "shiki";
 
-import { syntaxHighlightingTheme } from "./config/docs.config.mjs";
-import { defaultLocale, locales } from "./config/i18n.config.mjs";
+import { syntaxHighlightingTheme } from "~/config/docs.config";
+import { defaultLocale, locales } from "~/config/i18n.config";
 
-/** @typedef {import('~/config/i18n.config.mjs').Locale} Locale */
-/** @typedef {import('next').NextConfig & {i18n?: {locales: Array<Locale>; defaultLocale: Locale}}} NextConfig */
-/** @typedef {import('webpack').Configuration} WebpackConfig */
-/** @typedef {import('@mdx-js/loader').Options} MdxOptions */
-/** @typedef {import('@stefanprobst/remark-mdx-page').Options} MdxPageOptions */
-/** @typedef {import('hast').Element} HastElement */
+type NextConfig = Config;
 
-/** @type {NextConfig} */
-const config = {
+const config: NextConfig = {
 	eslint: {
 		dirs: ["."],
 		ignoreDuringBuilds: true,
@@ -114,7 +112,7 @@ const config = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	webpack(/** @type {WebpackConfig} */ config, context) {
+	webpack(config, context) {
 		/**
 		 * @see https://github.com/vercel/next.js/discussions/30870
 		 */
@@ -135,8 +133,7 @@ const config = {
 			},
 		});
 
-		/** @type {(heading: HastElement, id: string) => Array<HastElement>} */
-		function createPermalink(headingElement, id) {
+		function createPermalink(headingElement: HastElement, id: string): Array<HastElement> {
 			const permaLinkId = ["permalink", id].join("-");
 			const ariaLabelledBy = [permaLinkId, id].join(" ");
 
@@ -159,7 +156,6 @@ const config = {
 				context.defaultLoaders.babel,
 				{
 					loader: "@mdx-js/loader",
-					/** @type {MdxOptions} */
 					options: {
 						jsx: true,
 						remarkPlugins: [
@@ -178,7 +174,7 @@ const config = {
 							withHeadingIds,
 							[withHeadingFragmentLinks, { generate: createPermalink }],
 						],
-					},
+					} satisfies MdxOptions,
 				},
 			],
 		});
@@ -202,7 +198,7 @@ const config = {
 				context.defaultLoaders.babel,
 				{
 					loader: "@mdx-js/loader",
-					/** @type {MdxOptions} */
+
 					options: {
 						jsx: true,
 						remarkPlugins: [
@@ -237,18 +233,17 @@ const config = {
 						recmaPlugins: [
 							[
 								withPage,
-								/** @type {MdxPageOptions} */
-								({
+								{
 									template: aboutPageTemplate,
 									imports: [
 										'import { Image } from "@/components/common/Image"',
 										'import { Link } from "@/components/common/Link"',
 									],
 									props: "{ components: { Image, Link }, metadata, tableOfContents }",
-								}),
+								} satisfies MdxPageOptions,
 							],
 						],
-					},
+					} satisfies MdxOptions,
 				},
 			],
 		});
@@ -272,7 +267,6 @@ const config = {
 				context.defaultLoaders.babel,
 				{
 					loader: "@mdx-js/loader",
-					/** @type {MdxOptions} */
 					options: {
 						jsx: true,
 						remarkPlugins: [
@@ -307,18 +301,17 @@ const config = {
 						recmaPlugins: [
 							[
 								withPage,
-								/** @type {MdxPageOptions} */
-								({
+								{
 									template: contributePageTemplate,
 									imports: [
 										'import { Image } from "@/components/common/Image"',
 										'import { Link } from "@/components/common/Link"',
 									],
 									props: "{ components: { Image, Link }, metadata, tableOfContents }",
-								}),
+								} satisfies MdxPageOptions,
 							],
 						],
-					},
+					} satisfies MdxOptions,
 				},
 			],
 		});
@@ -327,8 +320,7 @@ const config = {
 	},
 };
 
-/** @type {Array<(config: NextConfig) => NextConfig>} */
-const plugins = [
+const plugins: Array<(config: NextConfig) => NextConfig> = [
 	createSvgPlugin(),
 	createBundleAnalyzer({ enabled: process.env["BUNDLE_ANALYZER"] === "enabled" }),
 ];

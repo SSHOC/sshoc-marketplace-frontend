@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import type { Locale, Locales } from "~/config/i18n.config.mjs";
+import type { Locale, Locales } from "~/config/i18n.config";
 
 export interface UseLocaleResult {
 	locale: Locale;

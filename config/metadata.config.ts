@@ -1,5 +1,5 @@
 import { createSiteUrl } from "@/lib/utils";
-import type { Locale } from "~/config/i18n.config.mjs";
+import type { Locale } from "~/config/i18n.config";
 
 export interface SiteMetadata {
 	locale: Locale;
