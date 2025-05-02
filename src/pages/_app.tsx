@@ -4,6 +4,7 @@ import "@/styles/index.css";
 
 import { ErrorBoundary, useError } from "@stefanprobst/next-error-boundary";
 import type { NextWebVitalsMetric } from "next/app";
+import Head from "next/head";
 import { Fragment, type ReactNode } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 
@@ -16,6 +17,7 @@ import { PageLayout } from "@/lib/core/layouts/PageLayout";
 import { SiteMetadata } from "@/lib/core/metadata/SiteMetadata";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { FullPage } from "@/lib/core/ui/FullPage/FullPage";
+import * as fonts from "@/lib/fonts";
 
 export default function App(props: AppProps): ReactNode {
 	const { Component, pageProps } = props;
@@ -24,6 +26,9 @@ export default function App(props: AppProps): ReactNode {
 
 	return (
 		<Fragment>
+			<Head>
+				<style>{`:root{--_font-body:${fonts.body.style.fontFamily};}`}</style>
+			</Head>
 			<AnalyticsScript />
 			<SiteMetadata />
 			<ErrorBoundary fallback={<ErrorFallback />}>
