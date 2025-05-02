@@ -15,7 +15,7 @@ RUN yarn install --frozen-lockfile --silent --production && yarn cache clean
 # build
 FROM base AS build
 
-RUN yarn install --frozen-lockfile --ignore-scripts --silent --prefer-offline
+RUN yarn install --frozen-lockfile --silent --prefer-offline
 
 COPY --chown=node:node tsconfig.json app.d.ts next-env.d.ts next.config.ts ./
 COPY --chown=node:node scripts ./scripts
