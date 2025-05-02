@@ -1,12 +1,12 @@
 import { log } from "@acdh-oeaw/lib";
 import { createUrl, request } from "@stefanprobst/request";
 
-import { backend } from "@/config/cms.config";
+const repo = process.env.NEXT_PUBLIC_GITHUB_REPOSITORY;
 
 async function getCommits(filePath: string) {
 	const url = createUrl({
 		baseUrl: "https://api.github.com",
-		pathname: `/repos/${backend.repo}/commits`,
+		pathname: `/repos/${repo}/commits`,
 		searchParams: { path: filePath },
 	});
 
@@ -21,6 +21,10 @@ async function getCommits(filePath: string) {
 }
 
 export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
+	if (process.env.NODE_ENV !== "production") {
+		return new Date();
+	}
+
 	const commits = await getCommits(filePath);
 	const [lastCommit] = commits;
 	const timestamp = lastCommit?.commit.committer.date;

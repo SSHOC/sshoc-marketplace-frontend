@@ -56,7 +56,6 @@ jobs:
             NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=nGy-4NymUoG2gvqsocWhF8A7TY9wVh5bAVIrPMNeC8M
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_ID=179
-            NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
@@ -92,7 +91,6 @@ jobs:
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_ID=198
-            NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
@@ -128,7 +126,6 @@ jobs:
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
             NEXT_PUBLIC_MATOMO_ID=190
-            NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
