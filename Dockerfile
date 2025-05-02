@@ -7,6 +7,7 @@ WORKDIR /app
 USER node
 
 COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node ./patches ./patches
 
 # cannot use `--ignore-scripts` for `sharp` to compile
 RUN yarn install --frozen-lockfile --silent --production && yarn cache clean

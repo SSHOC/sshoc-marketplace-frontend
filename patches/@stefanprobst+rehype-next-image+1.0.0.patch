@@ -1,0 +1,14 @@
+diff --git a/node_modules/@stefanprobst/rehype-next-image/package.json b/node_modules/@stefanprobst/rehype-next-image/package.json
+index b72ea19..45a5798 100644
+--- a/node_modules/@stefanprobst/rehype-next-image/package.json
++++ b/node_modules/@stefanprobst/rehype-next-image/package.json
+@@ -7,7 +7,8 @@
+   "license": "MIT",
+   "exports": {
+     "types": "./src/index.d.ts",
+-    "import": "./src/index.js"
++    "import": "./src/index.js",
++    "default": "./src/index.js"
+   },
+   "files": [
+     "src"
