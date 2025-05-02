@@ -15,11 +15,11 @@ install dependencies:
 yarn install
 ```
 
-if you don't plan to run a backend instance locally, create a `.env.development.local` file, and
-configure the api base url:
+if you don't plan to run a backend instance locally, create a `.env.local` file, and configure the
+api base url:
 
 ```
-# .env.development.local
+# .env.local
 NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
 ```
 
