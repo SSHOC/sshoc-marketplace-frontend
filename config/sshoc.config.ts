@@ -70,4 +70,4 @@ export const relatedItemsPage = 10;
 
 export const debounceDelay = 150; /** ms */
 
-export const baseUrl = process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"] ?? "http://localhost:8080";
+export const baseUrl = process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL ?? "http://localhost:8080";

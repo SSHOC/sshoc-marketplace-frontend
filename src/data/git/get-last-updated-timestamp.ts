@@ -10,7 +10,7 @@ async function getCommits(filePath: string) {
 		searchParams: { path: filePath },
 	});
 
-	const token = process.env["GITHUB_TOKEN"];
+	const token = process.env.GITHUB_TOKEN;
 	const headers = token != null ? { authorization: `Bearer ${token}` } : undefined;
 
 	if (token == null) {

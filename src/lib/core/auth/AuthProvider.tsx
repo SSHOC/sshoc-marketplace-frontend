@@ -126,7 +126,7 @@ export interface AuthService {
 }
 
 export const AuthContext = createContext<AuthService | null>(null);
-if (process.env["NODE_ENV"] !== "production") {
+if (process.env.NODE_ENV !== "production") {
 	AuthContext.displayName = "AuthContext";
 }
 
