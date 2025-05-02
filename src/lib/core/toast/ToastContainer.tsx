@@ -1,4 +1,4 @@
-/** Needs to be imported in `src/pages/_app.page.tsx` so we can overwrite custom properties. */
+/** Needs to be imported in `src/pages/_app.tsx` so we can overwrite custom properties. */
 // import 'react-toastify/dist/ReactToastify.css'
 
 import type { ReactNode } from "react";

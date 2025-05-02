@@ -89,7 +89,7 @@ const config: NextConfig = {
 				: undefined,
 	},
 	output: "standalone",
-	pageExtensions: ["page.tsx", "page.mdx", "api.ts"],
+	pageExtensions: ["tsx", "ts", "mdx"],
 	poweredByHeader: false,
 	/**
 	 * React Spectrum currently has issues with `StrictMode`.
