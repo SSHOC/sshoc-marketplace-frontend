@@ -1,0 +1,20 @@
+diff --git a/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json b/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
+index c5f48b6..681fdf8 100644
+--- a/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
++++ b/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
+@@ -10,11 +10,13 @@
+   "exports": {
+     ".": {
+       "types": "./src/index.d.ts",
+-      "import": "./src/index.js"
++      "import": "./src/index.js",
++      "default": "./src/index.js"
+     },
+     "./mdx": {
+       "types": "./src/mdx.d.ts",
+-      "import": "./src/mdx.js"
++      "import": "./src/mdx.js",
++      "default": "./src/mdx.js"
+     }
+   },
+   "files": [
