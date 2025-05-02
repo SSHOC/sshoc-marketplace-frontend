@@ -1,18 +1,18 @@
-@import "@/styles/tailwind.css";
+@import "./tailwind.css";
 
-@import "@/styles/fonts/ubuntu.css";
+@import "./fonts/ubuntu.css";
 
-@import "@/styles/animation.css";
-@import "@/styles/borders.css";
-@import "@/styles/colors.css";
-@import "@/styles/box-shadows.css";
-@import "@/styles/typography.css";
-@import "@/styles/size.css";
-@import "@/styles/space.css";
-@import "@/styles/transition.css";
-@import "@/styles/z-indices.css";
+@import "./animation.css";
+@import "./borders.css";
+@import "./colors.css";
+@import "./box-shadows.css";
+@import "./typography.css";
+@import "./size.css";
+@import "./space.css";
+@import "./transition.css";
+@import "./z-indices.css";
 
-@import "@/styles/globals.css";
+@import "./globals.css";
 
-@import "@/styles/nprogress.css";
-@import "@/styles/toasts.css";
+@import "./nprogress.css";
+@import "./toasts.css";
