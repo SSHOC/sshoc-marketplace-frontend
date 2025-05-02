@@ -1,1 +1,1 @@
-export { Link } from "@/lib/core/ui/Link/Link";
+export { Link, type LinkProps } from "@/lib/core/ui/Link/Link";

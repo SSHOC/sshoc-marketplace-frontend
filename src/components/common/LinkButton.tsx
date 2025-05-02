@@ -1,1 +1,1 @@
-export { LinkButton } from "@/lib/core/ui/Link/LinkButton";
+export { LinkButton, type LinkButtonProps } from "@/lib/core/ui/Link/LinkButton";

@@ -60,7 +60,7 @@ const config: NextConfig = {
 			},
 		];
 
-		if (process.env["NEXT_PUBLIC_BOTS"] !== "enabled") {
+		if (process.env.NEXT_PUBLIC_BOTS !== "enabled") {
 			headers.push({
 				source: "/:path*",
 				headers: [
@@ -81,11 +81,9 @@ const config: NextConfig = {
 		defaultLocale,
 	},
 	images: {
-		// contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-		// dangerouslyAllowSVG: true,
-		domains:
-			process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"] != null
-				? [process.env["NEXT_PUBLIC_SSHOC_API_BASE_URL"]]
+		remotePatterns:
+			process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL != null
+				? [new URL(process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL)]
 				: undefined,
 	},
 	output: "standalone",
@@ -322,7 +320,7 @@ const config: NextConfig = {
 
 const plugins: Array<(config: NextConfig) => NextConfig> = [
 	createSvgPlugin(),
-	createBundleAnalyzer({ enabled: process.env["BUNDLE_ANALYZER"] === "enabled" }),
+	createBundleAnalyzer({ enabled: process.env.BUNDLE_ANALYZER === "enabled" }),
 ];
 
 export default plugins.reduce((config, plugin) => {

@@ -13,7 +13,7 @@ const isMatchingPathnames: Matcher = function isMatchingPathnames(href, route) {
 };
 
 export interface UseIsCurrentRouteArgs {
-	href: LinkProps["href"];
+	href: string;
 	isCurrent?: Matcher | boolean | undefined;
 }
 

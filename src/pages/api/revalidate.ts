@@ -12,7 +12,7 @@ export default async function handler(
 		return;
 	}
 
-	const secret = process.env["REVALIDATION_TOKEN"];
+	const secret = process.env.REVALIDATION_TOKEN;
 
 	if (!isNonEmptyString(secret)) {
 		response.status(500).end();

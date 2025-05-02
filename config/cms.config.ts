@@ -1,10 +1,10 @@
 export { baseUrl as siteUrl } from "~/config/site.config";
 
-export const useLocalBackend = process.env["NEXT_PUBLIC_LOCAL_CMS_BACKEND"] === "enabled";
+export const useLocalBackend = process.env.NEXT_PUBLIC_LOCAL_CMS_BACKEND === "enabled";
 
-const repo = process.env["NEXT_PUBLIC_GITHUB_REPOSITORY"] ?? "sshoc/sshoc-marketplace-frontend";
-const branch = process.env["NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH"] ?? "main";
-const apiBaseUrl = process.env["NEXT_PUBLIC_BASE_URL"] ?? "https://marketplace.sshopencloud.eu";
+const repo = process.env.NEXT_PUBLIC_GITHUB_REPOSITORY ?? "sshoc/sshoc-marketplace-frontend";
+const branch = process.env.NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH ?? "main";
+const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://marketplace.sshopencloud.eu";
 
 export const backend = {
 	provider: "github" as const,
