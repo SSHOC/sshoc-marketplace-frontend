@@ -1,4 +1,4 @@
-export { baseUrl as siteUrl } from "~/config/site.config";
+export { baseUrl as siteUrl } from "@/config/site.config";
 
 export const useLocalBackend = process.env.NEXT_PUBLIC_LOCAL_CMS_BACKEND === "enabled";
 

@@ -28,8 +28,8 @@ import withFrontmatter from "remark-frontmatter";
 import withGfm from "remark-gfm";
 import { getHighlighter } from "shiki";
 
-import { syntaxHighlightingTheme } from "~/config/docs.config";
-import { defaultLocale, locales } from "~/config/i18n.config";
+import { syntaxHighlightingTheme } from "@/config/docs.config";
+import { defaultLocale, locales } from "@/config/i18n.config";
 
 type NextConfig = Config;
 
@@ -149,7 +149,7 @@ const config: NextConfig = {
 		/** Page sections. */
 		config.module?.rules?.push({
 			test: /\.mdx$/,
-			include: path.join(process.cwd(), "src", "components"),
+			include: path.join(process.cwd(), "components"),
 			use: [
 				context.defaultLoaders.babel,
 				{
@@ -178,16 +178,10 @@ const config: NextConfig = {
 		});
 
 		/** About pages. */
-		const aboutPageTemplate = path.join(
-			process.cwd(),
-			"src",
-			"templates",
-			"about",
-			"[id].template.tsx",
-		);
+		const aboutPageTemplate = path.join(process.cwd(), "templates", "about", "[id].template.tsx");
 		config.module?.rules?.push({
 			test: /\.mdx$/,
-			include: path.join(process.cwd(), "src", "pages", "about"),
+			include: path.join(process.cwd(), "pages", "about"),
 			use: [
 				{
 					loader: path.join(process.cwd(), "scripts", "add-dependencies.loader.cjs"),
@@ -249,14 +243,13 @@ const config: NextConfig = {
 		/** Contribute pages. */
 		const contributePageTemplate = path.join(
 			process.cwd(),
-			"src",
 			"templates",
 			"contribute",
 			"[id].template.tsx",
 		);
 		config.module?.rules?.push({
 			test: /\.mdx$/,
-			include: path.join(process.cwd(), "src", "pages", "contribute"),
+			include: path.join(process.cwd(), "pages", "contribute"),
 			use: [
 				{
 					loader: path.join(process.cwd(), "scripts", "add-dependencies.loader.cjs"),
