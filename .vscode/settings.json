@@ -25,9 +25,6 @@
 	},
 	"less.validate": false,
 	"scss.validate": false,
-	"search.exclude": {
-		"yarn.lock": true
-	},
 	"stylelint.enable": true,
 	"tailwindCSS.validate": false,
 	"typescript.preferences.importModuleSpecifier": "non-relative",

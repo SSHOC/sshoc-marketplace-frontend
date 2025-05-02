@@ -1,7 +1,7 @@
-diff --git a/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json b/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
-index c5f48b6..681fdf8 100644
---- a/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
-+++ b/node_modules/@stefanprobst/remark-extract-yaml-frontmatter/package.json
+diff --git a/package.json b/package.json
+index c5f48b6c72ce31b477eb328226a083ffa6ccc7f6..681fdf86a53df83d7db9a211f27cce8ab1a574b4 100644
+--- a/package.json
++++ b/package.json
 @@ -10,11 +10,13 @@
    "exports": {
      ".": {

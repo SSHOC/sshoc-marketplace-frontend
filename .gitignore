@@ -1,38 +1,48 @@
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+node_modules/
+.pnpm-store/
 
-# testing
-/coverage
+# logs
+*.log
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
+# non-public environment variables
+.env.keys
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# vercel
-.vercel
+.env.*.local
 
 # caches
 .eslintcache
 .prettiercache
 .stylelintcache
 *.tsbuildinfo
+
+# performance profiles
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+
+# vercel
+.vercel
+
+# misc
+.DS_Store
+*.pem
+.idea/
+
+# next.js
+.next/
+next-env.d.ts
+out/
+
+# i18n
+/content/**/*.d.json.ts
+/messages/**/*.d.json.ts
+
+# test
+/coverage/
+
+# playwright
+/blob-report/
+/playwright/.cache/
+/playwright-report/
+/test-results/

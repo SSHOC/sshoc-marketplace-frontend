@@ -50,12 +50,12 @@ jobs:
           tags: ${{ steps.meta-production.outputs.tags }}
           labels: ${{ steps.meta-production.outputs.labels }}
           build-args: |
-            NEXT_PUBLIC_BASE_URL=https://marketplace.sshopencloud.eu
-            NEXT_PUBLIC_SSHOC_API_BASE_URL=https://marketplace-api.sshopencloud.eu
+            NEXT_PUBLIC_API_BASE_URL=https://marketplace-api.sshopencloud.eu
+            NEXT_PUBLIC_APP_BASE_URL=https://marketplace.sshopencloud.eu
             NEXT_PUBLIC_BOTS=enabled
+            NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=nGy-4NymUoG2gvqsocWhF8A7TY9wVh5bAVIrPMNeC8M
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
-            NEXT_PUBLIC_MATOMO_APP_ID=179
-            NEXT_PUBLIC_GOOGLE_SITE_ID=nGy-4NymUoG2gvqsocWhF8A7TY9wVh5bAVIrPMNeC8M
+            NEXT_PUBLIC_MATOMO_ID=179
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
@@ -87,11 +87,11 @@ jobs:
           tags: ${{ steps.meta-stage.outputs.tags }}
           labels: ${{ steps.meta-stage.outputs.labels }}
           build-args: |
-            NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
-            NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_API_BASE_URL=https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_APP_BASE_URL=https://sshoc-marketplace-stage.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
-            NEXT_PUBLIC_MATOMO_APP_ID=198
+            NEXT_PUBLIC_MATOMO_ID=198
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
@@ -123,11 +123,11 @@ jobs:
           tags: ${{ steps.meta-dev.outputs.tags }}
           labels: ${{ steps.meta-dev.outputs.labels }}
           build-args: |
-            NEXT_PUBLIC_BASE_URL=https://sshoc-marketplace.acdh-dev.oeaw.ac.at
-            NEXT_PUBLIC_SSHOC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_API_BASE_URL=https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+            NEXT_PUBLIC_APP_BASE_URL=https://sshoc-marketplace.acdh-dev.oeaw.ac.at
             NEXT_PUBLIC_BOTS=disabled
             NEXT_PUBLIC_MATOMO_BASE_URL=https://matomo.acdh.oeaw.ac.at/
-            NEXT_PUBLIC_MATOMO_APP_ID=190
+            NEXT_PUBLIC_MATOMO_ID=190
             NEXT_PUBLIC_LOCAL_CMS_BACKEND=disabled
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main

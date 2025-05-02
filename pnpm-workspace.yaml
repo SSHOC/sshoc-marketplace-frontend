@@ -1,0 +1,15 @@
+ignoredBuiltDependencies:
+  - unrs-resolver
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - simple-git-hooks
+patchedDependencies:
+  next: patches/next.patch
+  final-form: patches/final-form.patch
+  '@stefanprobst/next-svg': patches/@stefanprobst__next-svg.patch
+  '@stefanprobst/rehype-image-captions': patches/@stefanprobst__rehype-image-captions.patch
+  '@stefanprobst/rehype-next-image': patches/@stefanprobst__rehype-next-image.patch
+  '@stefanprobst/rehype-next-links': patches/@stefanprobst__rehype-next-links.patch
+  '@stefanprobst/remark-mdx-page': patches/@stefanprobst__remark-mdx-page.patch
+  '@stefanprobst/remark-extract-yaml-frontmatter': patches/@stefanprobst__remark-extract-yaml-frontmatter.patch

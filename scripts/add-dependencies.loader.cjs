@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable */
 // @ts-nocheck
 
 /** @type {import('webpack').PitchLoaderDefinitionFunction<{ dependencies?: Array<string> }>} */

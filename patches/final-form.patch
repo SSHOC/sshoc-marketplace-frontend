@@ -1,0 +1,184 @@
+diff --git a/dist/final-form.cjs.js b/dist/final-form.cjs.js
+index 65fd607c183d7cd07e0d480477dc4355c2aa1884..db4db570796fd9ca1ae33069621d69dc778e6852 100644
+--- a/dist/final-form.cjs.js
++++ b/dist/final-form.cjs.js
+@@ -3,7 +3,7 @@
+ var _extends = require('@babel/runtime/helpers/extends');
+ var _objectWithoutPropertiesLoose = require('@babel/runtime/helpers/objectWithoutPropertiesLoose');
+ 
+-//      
++//
+ 
+ var charCodeOfDot = ".".charCodeAt(0);
+ var reEscapeChar = /\\(\\)?/g;
+@@ -76,7 +76,7 @@ var toPath = function toPath(key) {
+   return keysCache[key];
+ };
+ 
+-//      
++//
+ var getIn = function getIn(state, complexKey) {
+   // Intentionally using iteration rather than recursion
+   var path = toPath(complexKey);
+@@ -192,7 +192,7 @@ var setIn = function setIn(state, key, value, destroyArrays) {
+ var FORM_ERROR = "FINAL_FORM/form-error";
+ var ARRAY_ERROR = "FINAL_FORM/array-error";
+ 
+-//      
++//
+ 
+ 
+ /**
+@@ -256,10 +256,10 @@ function publishFieldState(formState, field) {
+   };
+ }
+ 
+-//      
++//
+ var fieldSubscriptionItems = ["active", "data", "dirty", "dirtySinceLastSubmit", "error", "initial", "invalid", "length", "modified", "modifiedSinceLastSubmit", "pristine", "submitError", "submitFailed", "submitSucceeded", "submitting", "touched", "valid", "value", "visited", "validating"];
+ 
+-//      
++//
+ 
+ var shallowEqual = function shallowEqual(a, b) {
+   if (a === b) {
+@@ -283,7 +283,7 @@ var shallowEqual = function shallowEqual(a, b) {
+   return true;
+ };
+ 
+-//      
++//
+ function subscriptionFilter (dest, src, previous, subscription, keys, shallowEqualKeys) {
+   var different = false;
+   keys.forEach(function (key) {
+@@ -297,7 +297,7 @@ function subscriptionFilter (dest, src, previous, subscription, keys, shallowEqu
+   return different;
+ }
+ 
+-//      
++//
+ var shallowEqualKeys$1 = ["data"];
+ 
+ /**
+@@ -314,10 +314,10 @@ var filterFieldState = function filterFieldState(state, previousState, subscript
+   return different || force ? result : undefined;
+ };
+ 
+-//      
++//
+ var formSubscriptionItems = ["active", "dirty", "dirtyFields", "dirtyFieldsSinceLastSubmit", "dirtySinceLastSubmit", "error", "errors", "hasSubmitErrors", "hasValidationErrors", "initialValues", "invalid", "modified", "modifiedSinceLastSubmit", "pristine", "submitting", "submitError", "submitErrors", "submitFailed", "submitSucceeded", "touched", "valid", "validating", "values", "visited"];
+ 
+-//      
++//
+ var shallowEqualKeys = ["touched", "visited"];
+ 
+ /**
+@@ -329,7 +329,7 @@ function filterFormState(state, previousState, subscription, force) {
+   return different || force ? result : undefined;
+ }
+ 
+-//      
++//
+ var memoize = function memoize(fn) {
+   var lastArgs;
+   var lastResult;
+@@ -724,6 +724,7 @@ function createForm(config) {
+     var safeFields = _extends({}, fields);
+     var notifyField = function notifyField(name) {
+       var field = safeFields[name];
++			if (field == null) return;
+       var fieldState = publishFieldState(formState, field);
+       var lastFieldState = field.lastFieldState;
+       field.lastFieldState = fieldState;
+diff --git a/dist/final-form.es.js b/dist/final-form.es.js
+index e31d7f32c686fede8d70925fbd486679adc42b38..38c52fc594c16192eaf377409ec6a2a6d0532aeb 100644
+--- a/dist/final-form.es.js
++++ b/dist/final-form.es.js
+@@ -1,7 +1,7 @@
+ import _extends from '@babel/runtime/helpers/esm/extends';
+ import _objectWithoutPropertiesLoose from '@babel/runtime/helpers/esm/objectWithoutPropertiesLoose';
+ 
+-//      
++//
+ 
+ var charCodeOfDot = ".".charCodeAt(0);
+ var reEscapeChar = /\\(\\)?/g;
+@@ -74,7 +74,7 @@ var toPath = function toPath(key) {
+   return keysCache[key];
+ };
+ 
+-//      
++//
+ var getIn = function getIn(state, complexKey) {
+   // Intentionally using iteration rather than recursion
+   var path = toPath(complexKey);
+@@ -190,7 +190,7 @@ var setIn = function setIn(state, key, value, destroyArrays) {
+ var FORM_ERROR = "FINAL_FORM/form-error";
+ var ARRAY_ERROR = "FINAL_FORM/array-error";
+ 
+-//      
++//
+ 
+ 
+ /**
+@@ -254,10 +254,10 @@ function publishFieldState(formState, field) {
+   };
+ }
+ 
+-//      
++//
+ var fieldSubscriptionItems = ["active", "data", "dirty", "dirtySinceLastSubmit", "error", "initial", "invalid", "length", "modified", "modifiedSinceLastSubmit", "pristine", "submitError", "submitFailed", "submitSucceeded", "submitting", "touched", "valid", "value", "visited", "validating"];
+ 
+-//      
++//
+ 
+ var shallowEqual = function shallowEqual(a, b) {
+   if (a === b) {
+@@ -281,7 +281,7 @@ var shallowEqual = function shallowEqual(a, b) {
+   return true;
+ };
+ 
+-//      
++//
+ function subscriptionFilter (dest, src, previous, subscription, keys, shallowEqualKeys) {
+   var different = false;
+   keys.forEach(function (key) {
+@@ -295,7 +295,7 @@ function subscriptionFilter (dest, src, previous, subscription, keys, shallowEqu
+   return different;
+ }
+ 
+-//      
++//
+ var shallowEqualKeys$1 = ["data"];
+ 
+ /**
+@@ -312,10 +312,10 @@ var filterFieldState = function filterFieldState(state, previousState, subscript
+   return different || force ? result : undefined;
+ };
+ 
+-//      
++//
+ var formSubscriptionItems = ["active", "dirty", "dirtyFields", "dirtyFieldsSinceLastSubmit", "dirtySinceLastSubmit", "error", "errors", "hasSubmitErrors", "hasValidationErrors", "initialValues", "invalid", "modified", "modifiedSinceLastSubmit", "pristine", "submitting", "submitError", "submitErrors", "submitFailed", "submitSucceeded", "touched", "valid", "validating", "values", "visited"];
+ 
+-//      
++//
+ var shallowEqualKeys = ["touched", "visited"];
+ 
+ /**
+@@ -327,7 +327,7 @@ function filterFormState(state, previousState, subscription, force) {
+   return different || force ? result : undefined;
+ }
+ 
+-//      
++//
+ var memoize = function memoize(fn) {
+   var lastArgs;
+   var lastResult;
+@@ -722,6 +722,7 @@ function createForm(config) {
+     var safeFields = _extends({}, fields);
+     var notifyField = function notifyField(name) {
+       var field = safeFields[name];
++			if (field == null) return;
+       var fieldState = publishFieldState(formState, field);
+       var lastFieldState = field.lastFieldState;
+       field.lastFieldState = fieldState;
