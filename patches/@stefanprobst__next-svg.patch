@@ -1,7 +1,7 @@
-diff --git a/node_modules/@stefanprobst/next-svg/package.json b/node_modules/@stefanprobst/next-svg/package.json
-index 537ec18..58663a0 100644
---- a/node_modules/@stefanprobst/next-svg/package.json
-+++ b/node_modules/@stefanprobst/next-svg/package.json
+diff --git a/package.json b/package.json
+index 537ec18b9207812063709ac87e685fdd1f4cdbd8..58663a04299be6315270e9d37a26fe9706c6fa75 100644
+--- a/package.json
++++ b/package.json
 @@ -8,7 +8,8 @@
    "exports": {
      ".": {

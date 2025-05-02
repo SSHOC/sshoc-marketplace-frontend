@@ -82,8 +82,8 @@ const config: NextConfig = {
 	},
 	images: {
 		remotePatterns:
-			process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL != null
-				? [new URL(process.env.NEXT_PUBLIC_SSHOC_API_BASE_URL)]
+			process.env.NEXT_PUBLIC_API_BASE_URL != null
+				? [new URL(process.env.NEXT_PUBLIC_API_BASE_URL)]
 				: undefined,
 	},
 	output: "standalone",
