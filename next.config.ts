@@ -181,7 +181,7 @@ const config: NextConfig = {
 		const aboutPageTemplate = path.join(
 			process.cwd(),
 			"src",
-			"pages",
+			"templates",
 			"about",
 			"[id].template.tsx",
 		);
@@ -250,7 +250,7 @@ const config: NextConfig = {
 		const contributePageTemplate = path.join(
 			process.cwd(),
 			"src",
-			"pages",
+			"templates",
 			"contribute",
 			"[id].template.tsx",
 		);
