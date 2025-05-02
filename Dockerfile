@@ -46,11 +46,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # to mount secrets which need to be available at build time
 # @see https://docs.docker.com/build/building/secrets/
-RUN pnpm run build
-RUN --mount=type=secret,id=github_token \
-  export GITHUB_TOKEN="$(cat /run/secrets/github_token)" && \
-  pnpm run build && \
-  unset GITHUB_TOKEN
+RUN --mount=type=secret,id=github_token,uid=1000 \
+	GITHUB_TOKEN=$(cat /run/secrets/github_token) \
+	pnpm run build
 
 # serve
 FROM node:22-alpine AS serve
