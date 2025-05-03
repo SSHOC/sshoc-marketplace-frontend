@@ -1,10 +1,7 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import * as path from "path";
 import { Fragment, type ReactNode } from "react";
-import { fileURLToPath } from "url";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
-import { Image } from "@/components/common/Image";
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
 import { LastUpdatedTimestamp } from "@/components/common/LastUpdatedTimestamp";
 import { Link } from "@/components/common/Link";
@@ -13,7 +10,6 @@ import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { BackgroundImage } from "@/components/terms-of-use/BackgroundImage";
 import { Content } from "@/components/terms-of-use/Content";
-import TermsOfUse, { metadata } from "@/components/terms-of-use/TermsOfUse.mdx";
 import { TermsOfUseScreenLayout } from "@/components/terms-of-use/TermsOfUseScreenLayout";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
@@ -25,6 +21,11 @@ import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
+import { join } from "node:path";
+import { matter } from "vfile-matter";
+import { compile } from "@/lib/core/mdx/compile";
+import { read } from "to-vfile";
+import { useMdx } from "@/lib/utils/hooks/useMdx";
 
 export namespace TermsOfUsePage {
 	export type PathParamsInput = Record<string, never>;
@@ -32,6 +33,8 @@ export namespace TermsOfUsePage {
 	export type SearchParamsInput = Record<string, never>;
 	export interface Props extends WithDictionaries<"common"> {
 		lastUpdatedTimestamp: IsoDateString;
+		code: string;
+		metadata: any;
 	}
 }
 
@@ -41,11 +44,19 @@ export async function getStaticProps(
 	const locale = getLocale(context);
 	const dictionaries = await load(locale, ["common"]);
 
-	const filePath = path.relative(process.cwd(), fileURLToPath(import.meta.url));
+	const filePath = join("content", "terms-of-use", "terms-of-use.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
+
+	const input = await read(join(process.cwd(), filePath));
+	matter(input, { strip: true });
+	const vfile = await compile(input);
+	const metadata = vfile.data.matter;
+	const code = String(vfile);
 
 	return {
 		props: {
+			code,
+			metadata,
 			dictionaries,
 			lastUpdatedTimestamp,
 		},
@@ -53,6 +64,8 @@ export async function getStaticProps(
 }
 
 export default function TermsOfUsePage(props: TermsOfUsePage.Props): ReactNode {
+	const { code, metadata } = props;
+
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "terms-of-use"]);
@@ -61,6 +74,8 @@ export default function TermsOfUsePage(props: TermsOfUsePage.Props): ReactNode {
 		{ href: "/", label: t(["common", "pages", "home"]) },
 		{ href: `/terms-of-use`, label: t(["common", "pages", "terms-of-use"]) },
 	];
+
+	const { default: PageContent } = useMdx(code);
 
 	return (
 		<Fragment>
@@ -75,7 +90,12 @@ export default function TermsOfUsePage(props: TermsOfUsePage.Props): ReactNode {
 					</ScreenHeader>
 					<Content>
 						<Prose>
-							<TermsOfUse components={{ Image, Link }} />
+							<PageContent
+								components={{
+									// @ts-expect-error
+									a: Link,
+								}}
+							/>
 						</Prose>
 						<LastUpdatedTimestamp dateTime={props.lastUpdatedTimestamp} />
 					</Content>

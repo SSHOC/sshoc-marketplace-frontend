@@ -2,14 +2,12 @@ import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
-import { Image } from "@/components/common/Image";
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
 import { Link } from "@/components/common/Link";
 import { Prose } from "@/components/common/Prose";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { BackgroundImage } from "@/components/contact/BackgroundImage";
-import Contact, { metadata } from "@/components/contact/Contact.mdx";
 import type { ContactFormValues } from "@/components/contact/ContactForm";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactScreenLayout } from "@/components/contact/ContactScreenLayout";
@@ -22,12 +20,20 @@ import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
+import { matter } from "vfile-matter";
+import { compile } from "@/lib/core/mdx/compile";
+import { join } from "node:path";
+import { read } from "to-vfile";
+import { useMdx } from "@/lib/utils/hooks/useMdx";
 
 export namespace ContactPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Partial<ContactFormValues>;
-	export type Props = WithDictionaries<"common">;
+	export type Props = WithDictionaries<"common"> & {
+		code: string;
+		metadata: any;
+	};
 }
 
 export async function getStaticProps(
@@ -36,14 +42,26 @@ export async function getStaticProps(
 	const locale = getLocale(context);
 	const dictionaries = await load(locale, ["common"]);
 
+	const filePath = join("content", "contact", "contact.mdx");
+
+	const input = await read(join(process.cwd(), filePath));
+	matter(input, { strip: true });
+	const vfile = await compile(input);
+	const metadata = vfile.data.matter;
+	const code = String(vfile);
+
 	return {
 		props: {
+			code,
+			metadata,
 			dictionaries,
 		},
 	};
 }
 
-export default function ContactPage(_props: ContactPage.Props): ReactNode {
+export default function ContactPage(props: ContactPage.Props): ReactNode {
+	const { code, metadata } = props;
+
 	const { t } = useI18n<"common">();
 
 	const title = t(["common", "pages", "contact"]);
@@ -52,6 +70,8 @@ export default function ContactPage(_props: ContactPage.Props): ReactNode {
 		{ href: "/", label: t(["common", "pages", "home"]) },
 		{ href: "/contact", label: t(["common", "pages", "contact"]) },
 	];
+
+	const { default: PageContent } = useMdx(code);
 
 	return (
 		<Fragment>
@@ -66,7 +86,12 @@ export default function ContactPage(_props: ContactPage.Props): ReactNode {
 					</ScreenHeader>
 					<Content>
 						<Prose>
-							<Contact components={{ Image, Link }} />
+							<PageContent
+								components={{
+									// @ts-expect-error
+									a: Link,
+								}}
+							/>
 						</Prose>
 					</Content>
 					<ContactForm />

@@ -1,14 +1,21 @@
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { CmsCollection } from "netlify-cms-core";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 
 import { getPropertyTypes } from "@/data/sshoc/api/property";
-import { collection as aboutCollection } from "@/lib/cms/collections/about-pages";
-import { collection as contributeCollection } from "@/lib/cms/collections/contribute-pages";
 import { log, mapBy } from "@/lib/utils";
+
+const aboutCollection = {
+	folder: "content/about",
+	extension: "mdx"
+}
+
+const contributeCollection = {
+	folder: "content/contribute",
+	extension: "mdx"
+}
 
 interface PageMetadata {
 	title: string;
@@ -51,7 +58,7 @@ generate()
 
 //
 
-async function getCollectionPages(collection: CmsCollection, pathname: string) {
+async function getCollectionPages(collection: { folder: string, extension: string }, pathname: string) {
 	if (collection.folder == null || collection.extension == null) {
 		throw new Error("Pages collection config requires `folder` and `extension` to be set.");
 	}
@@ -67,7 +74,8 @@ async function getCollectionPages(collection: CmsCollection, pathname: string) {
 			.map(async (folderEntry) => {
 				const id = folderEntry.name.slice(0, -fileExtension.length);
 
-				const vfile = matter(await read(join(folderPath, folderEntry.name), { encoding: "utf-8" }));
+				const vfile = await read(join(folderPath, folderEntry.name), { encoding: "utf-8" });
+				matter(vfile);
 				const { navigationMenu } = vfile.data["matter"] as PageMetadata;
 
 				return {
