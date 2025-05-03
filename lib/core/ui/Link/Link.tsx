@@ -22,8 +22,8 @@ export interface LinkStyleProps {
 
 export interface LinkProps
 	extends AriaLinkProps,
-		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id">,
-		Omit<NextLinkProps, "as" | "href" | "locale" | "passHref"> {
+		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id" | "style">,
+		Omit<NextLinkProps, "as" | "href" | "locale" | "onClick" | "passHref"> {
 	children: ReactNode;
 	href: string;
 	locale?: Locale;
