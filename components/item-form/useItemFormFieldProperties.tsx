@@ -100,7 +100,7 @@ export function useItemFormFieldProperties(prefix = "") {
 		},
 		// 'model-version': {
 		//   name: `${prefix}model-version`,
-		//   description: t(['authenticated', 'properties', 'model-version', 'description']),
+		//   description: t("authenticated.properties.model-version.description"),
 		// },
 		"object-format": {
 			name: `${prefix}object-format`,
@@ -148,7 +148,7 @@ export function useItemFormFieldProperties(prefix = "") {
 		},
 		// 'service-type': {
 		//   name: `${prefix}service-type`,
-		//   description: t(['authenticated', 'properties', 'service-type', 'description']),
+		//   description: t("authenticated.properties.service-type.description"),
 		// },
 		"technology-readiness-level": {
 			name: `${prefix}technology-readiness-level`,

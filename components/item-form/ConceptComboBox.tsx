@@ -76,12 +76,10 @@ export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 			<span>{field.description} </span>
 			<span>
 				{/* @ts-expect-error Assume all possible property types have translation. */}
-				{t(["authenticated", "properties", propertyTypeId, "description"], {
-					components: {
+				{t.rich(`authenticated.properties.${propertyTypeId}.description`, {
 						// eslint-disable-next-line react/no-unstable-nested-components
 						Link() {
 							return <SeeVocabularyLink type={propertyTypeId} />;
-						},
 					},
 				})}
 			</span>
