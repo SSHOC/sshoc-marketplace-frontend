@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
@@ -12,7 +13,6 @@ import { ReviewFieldListItem } from "@/components/item-form/ReviewFieldListItem"
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { ItemsDiff } from "@/data/sshoc/api/item";
 import { FormTextField } from "@/lib/core/form/FormTextField";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { TextField } from "@/lib/core/ui/TextField/TextField";
 
 export interface ReviewAccessibleAtFormFieldArrayProps {
@@ -24,7 +24,7 @@ export function ReviewAccessibleAtFormFieldArray(
 ): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fieldArray = useFieldArray<string | undefined>(field.name, { subscription: {} });
 
 	function onAdd() {
@@ -61,12 +61,12 @@ export function ReviewAccessibleAtFormFieldArray(
 									<FormTextField {...field} name={name} label={field.itemLabel} />
 									<FormFieldListItemControls>
 										<FormRecordRemoveButton
-											aria-label={t(["authenticated", "forms", "remove-field"], {
-												values: { field: field.itemLabel },
+											aria-label={t("authenticated.forms.remove-field", {
+												field: field.itemLabel,
 											})}
 											onPress={onRemove}
 										>
-											{t(["authenticated", "controls", "delete"])}
+											{t("authenticated.controls.delete")}
 										</FormRecordRemoveButton>
 									</FormFieldListItemControls>
 								</Fragment>
@@ -77,8 +77,8 @@ export function ReviewAccessibleAtFormFieldArray(
 			</FormFieldList>
 			<FormFieldArrayControls>
 				<FormRecordAddButton onPress={onAdd}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.itemLabel },
+					{t("authenticated.forms.add-field", {
+						field: field.itemLabel,
 					})}
 				</FormRecordAddButton>
 			</FormFieldArrayControls>

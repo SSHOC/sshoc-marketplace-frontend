@@ -1,9 +1,9 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { FormControls } from "@/components/common/FormControls";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface MediaUploadFormControlsProps {
 	form?: string;
@@ -13,15 +13,13 @@ export interface MediaUploadFormControlsProps {
 export function MediaUploadFormControls(props: MediaUploadFormControlsProps): ReactNode {
 	const { form, onCancel } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	return (
 		<FormControls>
-			<FormButtonLink onPress={onCancel}>
-				{t(["authenticated", "controls", "cancel"])}
-			</FormButtonLink>
+			<FormButtonLink onPress={onCancel}>{t("authenticated.controls.cancel")}</FormButtonLink>
 			<FormButton form={form} type="submit">
-				{t(["authenticated", "controls", "submit"])}
+				{t("authenticated.controls.submit")}
 			</FormButton>
 		</FormControls>
 	);

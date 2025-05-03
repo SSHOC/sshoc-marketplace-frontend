@@ -1,8 +1,8 @@
+import { useTranslations } from "next-intl";
 import type { HTMLAttributes, ReactNode } from "react";
 import { useEffect } from "react";
 
 import css from "@/components/common/SearchFacetsOverlay.module.css";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 
 export interface SearchFacetsOverlay {
@@ -15,7 +15,7 @@ export interface SearchFacetsOverlay {
 export function SearchFacetsOverlay(props: SearchFacetsOverlay): ReactNode {
 	const { title, onClose, triggerProps } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	useEffect(() => {
 		function onKeyDown(event: KeyboardEvent) {
@@ -37,7 +37,7 @@ export function SearchFacetsOverlay(props: SearchFacetsOverlay): ReactNode {
 				<h3 className={css["title"]}>{title}</h3>
 				<CloseButton
 					{...(triggerProps as any)}
-					aria-label={t(["common", "search", "show-less"])}
+					aria-label={t("common.search.show-less")}
 					autoFocus
 					onPress={onClose}
 					size="lg"

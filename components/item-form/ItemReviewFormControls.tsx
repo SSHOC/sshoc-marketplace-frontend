@@ -1,11 +1,11 @@
 import type { FormApi } from "final-form";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 
 import { FormControls } from "@/components/common/FormControls";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface ItemReviewFormControlsProps<T> {
 	form?: string;
@@ -15,7 +15,7 @@ export interface ItemReviewFormControlsProps<T> {
 }
 
 export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const form = useForm<T>();
 
 	function onBeforeSubmit() {
@@ -32,14 +32,10 @@ export function ItemReviewFormControls<T>(props: ItemReviewFormControlsProps<T>)
 
 	return (
 		<FormControls>
-			<FormButtonLink onPress={onCancel}>
-				{t(["authenticated", "controls", "cancel"])}
-			</FormButtonLink>
-			<FormButtonLink onPress={onReject}>
-				{t(["authenticated", "controls", "reject"])}
-			</FormButtonLink>
+			<FormButtonLink onPress={onCancel}>{t("authenticated.controls.cancel")}</FormButtonLink>
+			<FormButtonLink onPress={onReject}>{t("authenticated.controls.reject")}</FormButtonLink>
 			<FormButton form={props.form} onPress={onBeforeSubmit} type="submit">
-				{t(["authenticated", "controls", "approve"])}
+				{t("authenticated.controls.approve")}
 			</FormButton>
 		</FormControls>
 	);

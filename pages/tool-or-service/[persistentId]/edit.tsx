@@ -6,6 +6,7 @@ import type {
 	GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/router";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -28,8 +29,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -44,7 +43,8 @@ export namespace EditToolOrServicePage {
 	}
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export interface Props extends WithDictionaries<"authenticated" | "common"> {
+	export interface Props {
+		messages: Messages;
 		params: PathParams;
 	}
 }
@@ -72,18 +72,18 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<EditToolOrServicePage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as EditToolOrServicePage.PathParams;
-	const dictionaries = await load(locale, ["common", "authenticated"]);
+	const messages = await load(locale, ["common", "authenticated"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 			params,
 		},
 	};
 }
 
 export default function EditToolOrServicePage(props: EditToolOrServicePage.Props): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const router = useRouter();
 
 	const { persistentId } = props.params;
@@ -95,8 +95,8 @@ export default function EditToolOrServicePage(props: EditToolOrServicePage.Props
 	const tool = _tool.data;
 
 	const category = tool?.category ?? "tool-or-service";
-	const label = t(["common", "item-categories", category, "one"]);
-	const title = t(["authenticated", "forms", "edit-item"], { values: { item: label } });
+	const label = t(`common.item-categories.${category}.one`);
+	const title = t("authenticated.forms.edit-item", { item: label });
 
 	const formFields = useToolFormFields();
 	const validate = useToolValidationSchema();

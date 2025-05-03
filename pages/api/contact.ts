@@ -9,22 +9,26 @@ export default async function contact(
 	response: NextApiResponse,
 ): Promise<void> {
 	if (request.method !== "POST") {
-		return response.status(405).end();
+		response.status(405).end();
+		return;
 	}
 
 	if (smtpServer == null || smtpPort == null || sshocContactEmailAddress == null) {
-		return response.status(500).json({ message: "Email service is not configured." });
+		response.status(500).json({ message: "Email service is not configured." });
+		return;
 	}
 
 	const formSubmission = request.body;
 
 	if (formSubmission == null) {
-		return response.status(400).end();
+		response.status(400).end();
+		return;
 	}
 
 	/** Honeypot field. */
 	if (formSubmission.bot != null) {
-		return response.status(400).end();
+		response.status(400).end();
+		return;
 	}
 
 	const transporter = nodemailer.createTransport({
@@ -43,8 +47,10 @@ export default async function contact(
 
 		log.success("Contact message sent.", info);
 
-		return response.end();
+		response.end();
+		return;
 	} catch {
-		return response.status(500).end();
+		response.status(500).end();
+		return;
 	}
 }

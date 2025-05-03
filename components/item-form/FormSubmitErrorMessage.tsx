@@ -1,11 +1,11 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useFormState } from "react-final-form";
 
 import css from "@/components/item-form/FormSubmitErrorMessage.module.css";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export function FormSubmitErrorMessage(): ReactNode {
-	const { t } = useI18n<"authenticated">();
+	const t = useTranslations();
 	const form = useFormState({ subscription: { hasSubmitErrors: true, submitError: true } });
 
 	if (!form.hasSubmitErrors) {
@@ -14,7 +14,7 @@ export function FormSubmitErrorMessage(): ReactNode {
 
 	return (
 		<p className={css["message"]}>
-			{t(["authenticated", "validation", "last-submission-failed"])}: {form.submitError}
+			{t("authenticated.validation.last-submission-failed")}: {form.submitError}
 		</p>
 	);
 }

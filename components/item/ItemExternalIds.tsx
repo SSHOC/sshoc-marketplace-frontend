@@ -1,9 +1,9 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import css from "@/components/item/ItemMetadata.module.css";
 import type { Item } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { createKey } from "@/lib/utils/create-key";
 
 export interface ItemExternalIdsProps {
@@ -13,7 +13,7 @@ export interface ItemExternalIdsProps {
 export function ItemExternalIds(props: ItemExternalIdsProps): ReactNode {
 	const { ids } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	if (ids.length === 0) {
 		return null;
@@ -22,7 +22,7 @@ export function ItemExternalIds(props: ItemExternalIdsProps): ReactNode {
 	return (
 		<div>
 			<dt>
-				<VisuallyHidden>{t(["common", "item", "external-ids", "other"])}</VisuallyHidden>
+				<VisuallyHidden>{t("common.item.external-ids.other")}</VisuallyHidden>
 			</dt>
 			<dd>
 				<ul role="list">

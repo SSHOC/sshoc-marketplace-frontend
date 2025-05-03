@@ -1,9 +1,9 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Timestamp } from "@/components/common/Timestamp";
 import css from "@/components/item/ItemMetadata.module.css";
 import type { IsoDateString } from "@/data/sshoc/lib/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface ItemDateLastUpdatedProps {
 	dateTime?: IsoDateString;
@@ -12,7 +12,7 @@ export interface ItemDateLastUpdatedProps {
 export function ItemDateLastUpdated(props: ItemDateLastUpdatedProps): ReactNode {
 	const { dateTime } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	if (dateTime == null) {
 		return null;
@@ -20,7 +20,7 @@ export function ItemDateLastUpdated(props: ItemDateLastUpdatedProps): ReactNode 
 
 	return (
 		<div>
-			<dt className={css["group-label"]}>{t(["common", "item", "date-last-modified"])}</dt>
+			<dt className={css["group-label"]}>{t("common.item.date-last-modified")}</dt>
 			<dd>
 				<Timestamp dateTime={dateTime} />
 			</dd>

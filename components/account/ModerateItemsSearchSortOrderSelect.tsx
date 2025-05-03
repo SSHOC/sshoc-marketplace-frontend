@@ -1,15 +1,15 @@
 import { Item } from "@react-stately/collections";
+import { useTranslations } from "next-intl";
 import type { Key, ReactNode } from "react";
 
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
 import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
 import type { ModerateItemSortOrder } from "@/config/sshoc.config";
 import { moderateItemsSortOrder } from "@/config/sshoc.config";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Select } from "@/lib/core/ui/Select/Select";
 
 export function ModerateItemsSearchSortOrderSelect(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const sortOrder = searchFilters.order[0];
 	const { searchModerateItems } = useModerateItemsSearch();
@@ -17,8 +17,8 @@ export function ModerateItemsSearchSortOrderSelect(): ReactNode {
 	const items = moderateItemsSortOrder.map((id) => {
 		return {
 			id,
-			label: t(["common", "search", "sort-by"], {
-				values: { order: t(["common", "search", "sort-orders", id]) },
+			label: t("common.search.sort-by", {
+				order: t(`common.search.sort-orders.${id}`),
 			}),
 		};
 	});
@@ -30,7 +30,7 @@ export function ModerateItemsSearchSortOrderSelect(): ReactNode {
 
 	return (
 		<Select
-			aria-label={t(["common", "search", "sort-order"])}
+			aria-label={t("common.search.sort-order")}
 			items={items}
 			onSelectionChange={onChange}
 			selectedKey={sortOrder}

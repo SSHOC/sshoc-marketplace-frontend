@@ -4,10 +4,10 @@ import { useTextField } from "@react-aria/textfield";
 import { mergeProps } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import type { AriaTextFieldProps } from "@react-types/textfield";
+import { useTranslations } from "next-intl";
 import type { ChangeEvent, ForwardedRef, ReactNode } from "react";
 import { forwardRef, Fragment, useRef, useState } from "react";
 
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { ButtonProps } from "@/lib/core/ui/Button/Button";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { Field } from "@/lib/core/ui/Field/Field";
@@ -28,13 +28,13 @@ export const FileInput = forwardRef(function FileInput(
 	props: FileInputProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const [fileList, setFileList] = useState<FileList | null>(null);
 
 	const {
 		fileTypes = ["all"],
 		color = "gradient",
-		label = t(["common", "select-file"]),
+		label = t("common.select-file"),
 		multiple = false,
 		onChange,
 		/**

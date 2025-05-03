@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
@@ -7,7 +8,6 @@ import { SectionTitle } from "@/components/common/SectionTitle";
 import css from "@/components/item/ItemRelatedItems.module.css";
 import { initialRelatedItemsCount, relatedItemsPage } from "@/config/sshoc.config";
 import type { Item } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Button } from "@/lib/core/ui/Button/Button";
 
 export interface ItemRelatedItemsProps {
@@ -19,7 +19,7 @@ export interface ItemRelatedItemsProps {
 export function ItemRelatedItems(props: ItemRelatedItemsProps): ReactNode {
 	const { items, headingLevel = 2 } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const [relatedItemsCount, setRelatedItemsCount] = useState(initialRelatedItemsCount);
 
 	if (items.length === 0) {
@@ -43,7 +43,7 @@ export function ItemRelatedItems(props: ItemRelatedItemsProps): ReactNode {
 		<section className={css["container"]}>
 			<SectionHeader>
 				<SectionTitle headingLevel={headingLevel}>
-					{t(["common", "item", "related-items", "other"])}
+					{t("common.item.related-items.other")}
 					<ItemsCount count={items.length} />
 				</SectionTitle>
 			</SectionHeader>
@@ -58,11 +58,11 @@ export function ItemRelatedItems(props: ItemRelatedItemsProps): ReactNode {
 			</ul>
 			<div className={css["controls"]}>
 				<Button
-					aria-label={t(["common", "item", "show-more-related-items"])}
+					aria-label={t("common.item.show-more-related-items")}
 					isDisabled={!hasMoreItems}
 					onPress={showMore}
 				>
-					{t(["common", "item", "show-more"])}
+					{t("common.item.show-more")}
 				</Button>
 			</div>
 		</section>

@@ -1,5 +1,6 @@
+import { useTranslations } from "next-intl";
+
 import { useAuth } from "@/lib/core/auth/useAuth";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 interface MenuItemBase {
 	id: string;
@@ -25,19 +26,19 @@ interface MenuItemButton extends MenuItemBase {
 type MenuItem = MenuItemButton | MenuItemLink | MenuItemNavLink;
 
 export function useAccountMenuItems(): Array<MenuItem> {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { signOut } = useAuth();
 
 	const items: Array<MenuItem> = [
 		{
 			id: "account",
-			label: t(["common", "pages", "account"]),
+			label: t("common.pages.account"),
 			type: "nav-link",
 			href: `/account`,
 		},
 		{
 			id: "sign-out",
-			label: t(["common", "auth", "sign-out"]),
+			label: t("common.auth.sign-out"),
 			type: "button",
 			onPress() {
 				signOut();

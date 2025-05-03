@@ -1,5 +1,10 @@
+import { join } from "node:path";
+
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
+import { read } from "to-vfile";
+import { matter } from "vfile-matter";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
@@ -15,24 +20,20 @@ import { Content } from "@/components/contact/Content";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
+import { compile } from "@/lib/core/mdx/compile";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
-import { matter } from "vfile-matter";
-import { compile } from "@/lib/core/mdx/compile";
-import { join } from "node:path";
-import { read } from "to-vfile";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
 
 export namespace ContactPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Partial<ContactFormValues>;
-	export type Props = WithDictionaries<"common"> & {
+	export type Props = {
 		code: string;
 		metadata: any;
+		messages: Messages;
 	};
 }
 
@@ -40,7 +41,7 @@ export async function getStaticProps(
 	context: GetStaticPropsContext<ContactPage.PathParams>,
 ): Promise<GetStaticPropsResult<ContactPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	const filePath = join("content", "contact", "contact.mdx");
 
@@ -54,7 +55,7 @@ export async function getStaticProps(
 		props: {
 			code,
 			metadata,
-			dictionaries,
+			messages,
 		},
 	};
 }
@@ -62,13 +63,13 @@ export async function getStaticProps(
 export default function ContactPage(props: ContactPage.Props): ReactNode {
 	const { code, metadata } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "pages", "contact"]);
+	const title = t("common.pages.contact");
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
-		{ href: "/contact", label: t(["common", "pages", "contact"]) },
+		{ href: "/", label: t("common.pages.home") },
+		{ href: "/contact", label: t("common.pages.contact") },
 	];
 
 	const { default: PageContent } = useMdx(code);
@@ -88,7 +89,7 @@ export default function ContactPage(props: ContactPage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error
+									// @ts-expect-error This is fone.
 									a: Link,
 								}}
 							/>

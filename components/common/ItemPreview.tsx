@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemCategoryBadge } from "@/components/common/ItemCategoryBadge";
@@ -8,7 +9,6 @@ import { ItemPreviewMetadata } from "@/components/common/ItemPreviewMetadata";
 import { Link } from "@/components/common/Link";
 import type { ItemSearchResult, RelatedItem } from "@/data/sshoc/api/item";
 import {} from "@/data/sshoc/api/vocabulary";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { itemRoutes as routes } from "@/lib/core/navigation/item-routes";
 
 export interface ItemPreviewProps {
@@ -21,7 +21,7 @@ export interface ItemPreviewProps {
 export function ItemPreview(props: ItemPreviewProps): ReactNode {
 	const { controls = null, item, headingLevel = 2 } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const href =
 		item.category === "step"
@@ -43,11 +43,8 @@ export function ItemPreview(props: ItemPreviewProps): ReactNode {
 			<ItemPreviewMetadata item={item} />
 			<ItemDescription text={item.description} />
 			<div className={css["read-more-link"]}>
-				<Link
-					href={href}
-					aria-label={t(["common", "read-more-about-item"], { values: { item: item.label } })}
-				>
-					{t(["common", "read-more"])}
+				<Link href={href} aria-label={t("common.read-more-about-item", { item: item.label })}>
+					{t("common.read-more")}
 				</Link>
 			</div>
 		</article>

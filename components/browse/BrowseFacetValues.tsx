@@ -1,13 +1,14 @@
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { createUrlSearchParams } from "@stefanprobst/request";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useMemo } from "react";
+import { useCollator } from "react-aria";
 
 import css from "@/components/browse/BrowseFacetValues.module.css";
 import { Link } from "@/components/common/Link";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import type { ItemFacet, ItemSearch } from "@/data/sshoc/api/item";
 import { useItemSearch } from "@/data/sshoc/hooks/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
@@ -38,7 +39,7 @@ interface FacetValuesProps {
 function FacetValues(props: FacetValuesProps): ReactNode {
 	const { facet, values } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const grouped = useGroupedFacetValues({ values });
 
 	return (
@@ -49,8 +50,8 @@ function FacetValues(props: FacetValuesProps): ReactNode {
 						<div className={css["group-header"]}>
 							<SectionTitle>
 								<VisuallyHidden>
-									{t(["common", "browse", "values-by-character"], {
-										values: { character: firstCharacter },
+									{t("common.browse.values-by-character", {
+										character: firstCharacter,
 									})}
 								</VisuallyHidden>
 								<span aria-hidden>{firstCharacter.toUpperCase()}</span>
@@ -88,10 +89,8 @@ function useGroupedFacetValues(
 ): Array<[string, Array<[string, number]>]> {
 	const { values } = args;
 
-	const { createCollator } = useI18n<"common">();
+	const collator = useCollator();
 	const grouped = useMemo(() => {
-		const compare = createCollator();
-
 		const grouped = new Map<string, Map<string, number>>();
 
 		Object.entries(values).forEach(([value, { count }]) => {
@@ -107,20 +106,20 @@ function useGroupedFacetValues(
 		});
 
 		const sortedGroups = Array.from(grouped).sort(([firstCharacter], [otherFirstCharacter]) => {
-			return compare(firstCharacter, otherFirstCharacter);
+			return collator.compare(firstCharacter, otherFirstCharacter);
 		});
 
 		const sorted = sortedGroups.map(([firstCharacter, values]) => {
 			return [
 				firstCharacter,
 				Array.from(values).sort(([value], [otherValue]) => {
-					return compare(value, otherValue);
+					return collator.compare(value, otherValue);
 				}),
 			];
 		});
 
 		return sorted as Array<[string, Array<[string, number]>]>;
-	}, [values, createCollator]);
+	}, [values, collator]);
 
 	return grouped;
 }

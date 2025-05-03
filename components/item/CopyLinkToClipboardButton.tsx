@@ -1,10 +1,10 @@
 import { useButton } from "@react-aria/button";
 import { useObjectRef } from "@react-aria/utils";
+import { useTranslations } from "next-intl";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import css from "@/components/item/CopyLinkToClipboardButton.module.css";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import LinkIcon from "@/lib/core/ui/icons/link.svg?symbol-icon";
 import { createSiteUrl } from "@/lib/utils";
@@ -20,7 +20,7 @@ export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboard
 ): ReactNode {
 	const { pathname } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const buttonRef = useObjectRef(forwardedRef);
 	const { buttonProps } = useButton(
 		{
@@ -32,7 +32,7 @@ export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboard
 		buttonRef,
 	);
 
-	const label = t(["common", "search", "copy-to-clipboard"]);
+	const label = t("common.search.copy-to-clipboard");
 
 	return (
 		<button type="button" {...buttonProps} className={css["button"]} ref={buttonRef}>

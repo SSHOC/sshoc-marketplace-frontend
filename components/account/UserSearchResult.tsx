@@ -1,6 +1,6 @@
+import { useTranslations } from "next-intl";
 import type { FormEvent, Key, ReactNode } from "react";
 
-// import { useQueryClient } from 'react-query'
 import { MetadataLabel } from "@/components/common/MetadataLabel";
 import { MetadataValue } from "@/components/common/MetadataValue";
 import { SearchResult } from "@/components/common/SearchResult";
@@ -9,7 +9,6 @@ import { SearchResultControls } from "@/components/common/SearchResultControls";
 import { SearchResultMeta } from "@/components/common/SearchResultMeta";
 import { SearchResultTitle } from "@/components/common/SearchResultTitle";
 import { Timestamp } from "@/components/common/Timestamp";
-// import { useUserSearchFilters } from '@/components/account/useUserSearchFilters'
 import type {
 	GetUsers,
 	UpdateUserRole,
@@ -19,14 +18,8 @@ import type {
 	UserStatus,
 } from "@/data/sshoc/api/user";
 import { userRoles, userStatus } from "@/data/sshoc/api/user";
-import {
-	// keys as userQueryKeys,
-	useUpdateUserRole,
-	useUpdateUserStatus,
-} from "@/data/sshoc/hooks/user";
+import { useUpdateUserRole, useUpdateUserStatus } from "@/data/sshoc/hooks/user";
 import { PASSED_IN_VIA_MUTATION_FUNCTION } from "@/data/sshoc/lib/const";
-// import { useQueryKeys } from '@/data/sshoc/lib/useQueryKeys'
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { Item } from "@/lib/core/ui/Collection/Item";
 import { Select } from "@/lib/core/ui/Select/Select";
@@ -38,22 +31,20 @@ export interface UserSearchResultProps {
 export function UserSearchResult(props: UserSearchResultProps): ReactNode {
 	const { user } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	return (
 		<SearchResult>
 			<SearchResultTitle>{user.displayName}</SearchResultTitle>
 			<SearchResultMeta>
 				<MetadataValue size="sm">
-					<MetadataLabel size="sm">
-						{t(["authenticated", "users", "registration-date"])}:
-					</MetadataLabel>
+					<MetadataLabel size="sm">{t("authenticated.users.registration-date")}:</MetadataLabel>
 					<Timestamp dateTime={user.registrationDate} />
 				</MetadataValue>
 			</SearchResultMeta>
 			<SearchResultContent>
 				<MetadataValue>
-					<MetadataLabel>{t(["authenticated", "users", "email"])}:</MetadataLabel>
+					<MetadataLabel>{t("authenticated.users.email")}:</MetadataLabel>
 					<a href={`mailto:${user.email}`}>{user.email}</a>
 				</MetadataValue>
 			</SearchResultContent>
@@ -72,24 +63,21 @@ interface UserRoleSelectProps {
 function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 	const { user } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const userRoleIds = userRoles.map((role) => {
 		return { id: role, label: role };
 	});
 
-	// const queryClient = useQueryClient()
-	// const filters = useUserSearchFilters()
-	// const queryKeys = useQueryKeys(userQueryKeys)
 	const meta: MutationMetadata<UpdateUserRole.Response, Error> = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "users", "update-user-role-pending"]);
+				return t("authenticated.users.update-user-role-pending");
 			},
 			success() {
-				return t(["authenticated", "users", "update-user-role-success"]);
+				return t("authenticated.users.update-user-role-success");
 			},
 			error() {
-				return t(["authenticated", "users", "update-user-role-error"]);
+				return t("authenticated.users.update-user-role-error");
 			},
 		},
 	};
@@ -98,30 +86,6 @@ function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 		undefined,
 		{
 			meta,
-			/** TODO: Optimistic update. */
-			// onMutate(variables) {
-			//   queryClient.cancelQueries(queryKeys.list(filters))
-			//   const current = queryClient.getQueryData(queryKeys.list(filters))
-			//   queryClient.setQueriesData(queryKeys.list(filters), (data) => {
-			//     return {
-			//       ...data,
-			//       users: data.users.map((u) => {
-			//         if (u.id === user.id) return { ...u, role: variables.role }
-			//         return u
-			//       }),
-			//     }
-			//   })
-			//   const context = { current }
-			//   return context
-			// },
-			// onError(error, variables, context) {
-			//   if (context != null && context.current != null) {
-			//     queryClient.setQueriesData(queryKeys.list(filters), context.current)
-			//   }
-			// },
-			// onSettled() {
-			//   queryClient.invalidateQueries(queryKeys.list(filters))
-			// },
 		},
 	);
 
@@ -139,7 +103,7 @@ function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 				items={userRoleIds}
 				isDisabled={updateUserRole.isLoading}
 				loadingState={updateUserRole.isLoading ? "loading" : undefined}
-				label={t(["authenticated", "users", "role"])}
+				label={t("authenticated.users.role")}
 				onSelectionChange={onUpdateUserRole}
 				selectedKey={user.role}
 				size="sm"
@@ -159,24 +123,21 @@ interface UserStatusSelectProps {
 function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 	const { user } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const items = userStatus.map((status) => {
 		return { id: status, label: status };
 	});
 
-	// const queryClient = useQueryClient()
-	// const filters = useUserSearchFilters()
-	// const queryKeys = useQueryKeys(userQueryKeys)
 	const meta: MutationMetadata<UpdateUserStatus.Response, Error> = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "users", "update-user-status-pending"]);
+				return t("authenticated.users.update-user-status-pending");
 			},
 			success() {
-				return t(["authenticated", "users", "update-user-status-success"]);
+				return t("authenticated.users.update-user-status-success");
 			},
 			error() {
-				return t(["authenticated", "users", "update-user-status-error"]);
+				return t("authenticated.users.update-user-status-error");
 			},
 		},
 	};
@@ -185,30 +146,6 @@ function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 		undefined,
 		{
 			meta,
-			/** TODO: Optimistic update. */
-			// onMutate(variables) {
-			//   queryClient.cancelQueries(queryKeys.list(filters))
-			//   const current = queryClient.getQueryData(queryKeys.list(filters))
-			//   queryClient.setQueriesData(queryKeys.list(filters), (data) => {
-			//     return {
-			//       ...data,
-			//       users: data.users.map((u) => {
-			//         if (u.id === user.id) return { ...u, status: variables.status }
-			//         return u
-			//       }),
-			//     }
-			//   })
-			//   const context = { current }
-			//   return context
-			// },
-			// onError(error, variables, context) {
-			//   if (context != null && context.current != null) {
-			//     queryClient.setQueriesData(queryKeys.list(filters), context.current)
-			//   }
-			// },
-			// onSettled() {
-			//   queryClient.invalidateQueries(queryKeys.list(filters))
-			// },
 		},
 	);
 
@@ -226,7 +163,7 @@ function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 				items={items}
 				isDisabled={updateUserStatus.isLoading}
 				loadingState={updateUserStatus.isLoading ? "loading" : undefined}
-				label={t(["authenticated", "users", "status"])}
+				label={t("authenticated.users.status")}
 				onSelectionChange={onUpdateUserStatus}
 				selectedKey={user.status}
 				size="sm"

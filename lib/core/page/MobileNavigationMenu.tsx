@@ -2,12 +2,12 @@ import { OverlayContainer } from "@react-aria/overlays";
 import { createUrlSearchParams } from "@stefanprobst/request";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useEffect, useRef } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { usePathname } from "@/lib/core/navigation/usePathname";
 import { Disclosure } from "@/lib/core/page/Disclosure";
 import css from "@/lib/core/page/MobileNavigationMenu.module.css";
@@ -34,7 +34,7 @@ export function MobileNavigationMenu(): ReactNode {
 }
 
 function NavigationMenu(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { isSignedIn } = useAuth();
 	const state = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -62,7 +62,7 @@ function NavigationMenu(): ReactNode {
 			<Button
 				ref={triggerRef}
 				{...triggerProps}
-				aria-label={t(["common", "navigation-menu"])}
+				aria-label={t("common.navigation-menu")}
 				color="gradient"
 				onPress={state.toggle}
 				style={{
@@ -76,14 +76,14 @@ function NavigationMenu(): ReactNode {
 				<OverlayContainer>
 					<ModalDialog
 						{...(overlayProps as any)}
-						aria-label={t(["common", "navigation-menu"])}
+						aria-label={t("common.navigation-menu")}
 						isOpen={state.isOpen}
 						onClose={state.close}
 						isDismissable
 					>
 						<header className={css["header"]}>
 							<div className={css["home-link"]}>
-								<NavLink aria-label={t(["common", "pages", "home"])} href="/">
+								<NavLink aria-label={t("common.pages.home")} href="/">
 									<Image src={Logo} alt="" priority />
 								</NavLink>
 							</div>
@@ -112,11 +112,11 @@ function NavigationMenu(): ReactNode {
 											variant="nav-mobile-menu-link"
 											href={`/contact?${createUrlSearchParams({
 												email: currentUser.data?.email,
-												subject: t(["common", "report-issue"]),
-												message: t(["common", "report-issue-message"], { values: { pathname } }),
+												subject: t("common.report-issue"),
+												message: t("common.report-issue-message", { pathname }),
 											})}`}
 										>
-											{t(["common", "report-issue"])}
+											{t("common.report-issue")}
 										</NavLink>
 									</li>
 								</ul>
@@ -136,7 +136,7 @@ interface AuthLinksProps {
 function AuthLinks(props: AuthLinksProps): ReactNode {
 	const { onClose } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { isSignedIn, signOut } = useAuth();
 	const currentUser = useCurrentUser();
 
@@ -146,7 +146,7 @@ function AuthLinks(props: AuthLinksProps): ReactNode {
 	}
 
 	if (!isSignedIn || currentUser.data == null) {
-		const item = { href: `/auth/sign-in`, label: t(["common", "auth", "sign-in"]) };
+		const item = { href: `/auth/sign-in`, label: t("common.auth.sign-in") };
 
 		return (
 			<li className={css["nav-item"]}>
@@ -157,15 +157,17 @@ function AuthLinks(props: AuthLinksProps): ReactNode {
 		);
 	}
 
-	const items = [
-		{ id: "account", href: `/account`, label: t(["common", "pages", "account"]) },
-	] as Array<{ href: string; label: string; id: string }>;
+	const items = [{ id: "account", href: `/account`, label: t("common.pages.account") }] as Array<{
+		href: string;
+		label: string;
+		id: string;
+	}>;
 
 	return (
 		<li className={css["nav-item"]}>
 			<Disclosure
-				label={t(["common", "auth", "account-menu-message"], {
-					values: { username: currentUser.data.displayName },
+				label={t("common.auth.account-menu-message", {
+					username: currentUser.data.displayName,
 				})}
 				className={css["nav-link-disclosure-button"]}
 			>
@@ -181,7 +183,7 @@ function AuthLinks(props: AuthLinksProps): ReactNode {
 					})}
 					<li className={css["nav-item"]}>
 						<Button onPress={onSignOut} variant="nav-mobile-menu-link-secondary">
-							{t(["common", "auth", "sign-out"])}
+							{t("common.auth.sign-out")}
 						</Button>
 					</li>
 				</ul>
@@ -213,15 +215,12 @@ function ItemCategoryNavLinks(): ReactNode {
 }
 
 function BrowseNavLinks(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useBrowseNavItems();
 
 	return (
 		<li className={css["nav-item"]}>
-			<Disclosure
-				label={t(["common", "pages", "browse"])}
-				className={css["nav-link-disclosure-button"]}
-			>
+			<Disclosure label={t("common.pages.browse")} className={css["nav-link-disclosure-button"]}>
 				<ul role="list">
 					{items.map((item) => {
 						return (
@@ -239,13 +238,13 @@ function BrowseNavLinks(): ReactNode {
 }
 
 function ContributeNavLinks(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useContributeNavItems();
 
 	return (
 		<li className={css["nav-item"]}>
 			<Disclosure
-				label={t(["common", "pages", "contribute"])}
+				label={t("common.pages.contribute")}
 				className={css["nav-link-disclosure-button"]}
 			>
 				<ul role="list">
@@ -265,15 +264,12 @@ function ContributeNavLinks(): ReactNode {
 }
 
 function AboutNavLinks(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useAboutNavItems();
 
 	return (
 		<li className={css["nav-item"]}>
-			<Disclosure
-				label={t(["common", "pages", "about"])}
-				className={css["nav-link-disclosure-button"]}
-			>
+			<Disclosure label={t("common.pages.about")} className={css["nav-link-disclosure-button"]}>
 				<ul role="list">
 					{items.map((item) => {
 						return (
@@ -291,7 +287,7 @@ function AboutNavLinks(): ReactNode {
 }
 
 function CreateItemLinks(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useCreateItemLinks();
 
 	if (items == null) {
@@ -301,7 +297,7 @@ function CreateItemLinks(): ReactNode {
 	return (
 		<li className={css["nav-item"]}>
 			<Disclosure
-				label={t(["common", "create-new-items"])}
+				label={t("common.create-new-items")}
 				className={css["nav-link-disclosure-button"]}
 			>
 				<ul role="list">

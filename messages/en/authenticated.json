@@ -1,0 +1,507 @@
+{
+	"pages": {
+		"account": "My account",
+		"contributed-items": "My contributed items",
+		"draft-items": "My draft items",
+		"moderate-items": "Items to moderate",
+		"actors": "Actors",
+		"vocabularies": "Vocabularies",
+		"sources": "Sources",
+		"users": "Users",
+		"item-version-history": "History"
+	},
+	"item-history": {
+		"item-history": "{item} history",
+		"revert-to-version-pending": "Reverting to version...",
+		"revert-to-version-success": "Successfully reverted to version",
+		"revert-to-version-error": "Failed to revert to version"
+	},
+	"forms": {
+		"create-item": "Create {item}",
+		"create-item-pending": "Creating new {category}...",
+		"create-item-success": "Successfully created new {category}.",
+		"create-item-error": "Failed to create {category}.",
+		"create-item-draft-pending": "Saving {category} draft...",
+		"create-item-draft-success": "Successfully saved {category} draft.",
+		"create-item-draft-error": "Failed to save {category} draft.",
+		"create-item-suggestion-pending": "Suggesting new {category}...",
+		"create-item-suggestion-success": "Successfully suggested new {category}.",
+		"create-item-suggestion-error": "Failed to suggest new {category}.",
+		"edit-item": "Edit {item}",
+		"update-item-pending": "Updating {category}...",
+		"update-item-success": "Successfully updated {category}.",
+		"update-item-error": "Failed to update {category}.",
+		"update-item-draft-pending": "Saving {category} draft...",
+		"update-item-draft-success": "Successfully saved {category} draft.",
+		"update-item-draft-error": "Failed to save {category} draft.",
+		"update-item-suggestion-pending": "Suggesting {category} update...",
+		"update-item-suggestion-success": "Successfully suggested {category} update.",
+		"update-item-suggestion-error": "Failed to suggest {category} update.",
+		"approve-item-pending": "Approving {category}...",
+		"approve-item-success": "Successfully approved {category}.",
+		"approve-item-error": "Failed to approve {category}.",
+		"reject-item-pending": "Rejecting {category}...",
+		"reject-item-success": "Successfully rejected {category}.",
+		"reject-item-error": "Failed to reject {category}.",
+		"add": "Add",
+		"remove": "Remove",
+		"cancel": "Cancel",
+		"save-as-draft": "Save as draft",
+		"submit": "Submit",
+		"publish": "Publish",
+		"add-field": "Add {field}",
+		"remove-field": "Remove {field}",
+		"edit-field": "Edit {field}",
+		"main-section": "Main",
+		"date-section": "Dates",
+		"actors-section": "Actors",
+		"properties-section": "Properties",
+		"media-section": "Media",
+		"thumbnail-section": "Thumbnail",
+		"related-items-section": "Related items",
+		"other-suggested-versions-section": "Other suggested versions",
+		"add-workflow-step": "Add step",
+		"edit-workflow-step": "Edit step {position}",
+		"remove-workflow-step": "Remove step {position}",
+		"workflow-form-page-navigation": "Navigate between workflow details and workflow steps"
+	},
+	"fields": {
+		"label": {
+			"label": "Label",
+			"description": "Name of the entry."
+		},
+		"version": {
+			"label": "Version",
+			"description": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Should be concise and raise interest in the entry. Allows <Link>Markdown</Link> content."
+		},
+		"accessibleAt": {
+			"label": { "one": "Accessible at URL", "other": "Accessible at" },
+			"description": "URL, ideally landing page, of the resource."
+		},
+		"externalIds": {
+			"label": { "one": "External ID", "other": "External IDs" },
+			"description": "Other URLs relevant to the resource.",
+			"identifier": {
+				"label": "Identifier",
+				"description": "Other URLs relevant to the resource, e.g. code, DOI, etc."
+			},
+			"identifierService": {
+				"label": "ID Service",
+				"description": ""
+			}
+		},
+		"dateCreated": {
+			"label": "Date created",
+			"description": ""
+		},
+		"dateLastUpdated": {
+			"label": "Date last updated",
+			"description": ""
+		},
+		"contributors": {
+			"label": { "one": "Actor", "other": "Actors" },
+			"description": "Person/group/body who helped create the resource.",
+			"role": {
+				"label": "Role",
+				"description": ""
+			},
+			"actor": {
+				"label": "Name",
+				"description": "Person/group/body who helped create the resource."
+			}
+		},
+		"properties": {
+			"label": { "one": "Property", "other": "Properties" },
+			"description": "",
+			"type": {
+				"label": "Property type",
+				"description": ""
+			},
+			"value": {
+				"label": "Value",
+				"description": ""
+			},
+			"concept": {
+				"label": "Concept",
+				"description": ""
+			}
+		},
+		"relatedItems": {
+			"label": { "one": "Related item", "other": "Related items" },
+			"description": "Relations with other entries.",
+			"relation": {
+				"label": "Relation type",
+				"description": ""
+			},
+			"item": {
+				"label": "Related item",
+				"description": ""
+			}
+		},
+		"media": {
+			"label": { "one": "Media", "other": "Media" },
+			"description": "Media can be images or videos.",
+			"info": {
+				"label": "Media",
+				"description": ""
+			},
+			"caption": {
+				"label": "Caption",
+				"description": ""
+			},
+			"licence": {
+				"label": "Licence",
+				"description": ""
+			}
+		},
+		"thumbnail": {
+			"label": "Thumbnail",
+			"description": "Logo related to the resource.",
+			"info": {
+				"label": "Media",
+				"description": ""
+			},
+			"caption": {
+				"label": "Caption",
+				"description": ""
+			},
+			"licence": {
+				"label": "Licence",
+				"description": ""
+			}
+		}
+	},
+	"properties": {
+		"access-policy-url": { "description": "URL pointing to info about the access policy." },
+		"activity": {
+			"description": "The activities you can do with the resource. See <Link></Link>."
+		},
+		"authentication": { "description": "Is authentication needed? Yes or no." },
+		"conference": { "description": "Name of the conference where paper was given." },
+		"discipline": {
+			"description": "Describes the discipline covered by resource. See <Link></Link>."
+		},
+		"extent": { "description": "Describe the granularity of a resource." },
+		"geographical-availability": {
+			"description": "Locations where the Resource is offered. See <Link></Link>."
+		},
+		"helpdesk-url": { "description": "URL to helpdesk for incidents & user requests." },
+		"inputformat": { "description": "See <Link></Link>." },
+		"intended-audience": {
+			"description": "Audience targeted by the resource. See <Link></Link>."
+		},
+		"issue": { "description": "A particular published issue of a journal." },
+		"journal": { "description": "The journal the work was published in." },
+		"keyword": { "description": "Concept or term related to MP entry. See <Link></Link>." },
+		"language": {
+			"description": "Language(s) in which a resource is available. See <Link></Link>."
+		},
+		"license": {
+			"description": "Select license pertaining to resource. See <Link></Link>. If license is unknown, use the \"Terms of use\" property field to describe the usage terms."
+		},
+		"life-cycle-status": {
+			"description": "Status of the Resource life-cycle. See <Link></Link>."
+		},
+		"mode-of-use": { "description": "Mode of use for the resource. See <Link></Link>." },
+		"model-version": { "description": "" },
+		"object-format": {
+			"description": "File format of the linked resource. See <Link></Link>."
+		},
+		"outputformat": { "description": "See <Link></Link>." },
+		"pages": { "description": "Page #s of a resource, separate by commas." },
+		"privacy-policy-url": { "description": "Link to the privacy policy of resource." },
+		"processed-at": { "description": "" },
+		"publication-place": { "description": "The place of publication." },
+		"publication-type": {
+			"description": "The publication type, eg Book, article, etc. See <Link></Link>."
+		},
+		"publisher": { "description": "Entity responsible for making the resource available." },
+		"resource-category": {
+			"description": "Refine the resource's nature and function. See <Link></Link>."
+		},
+		"see-also": { "description": "Links to non-MP materials that are relevant." },
+		"service-level-url": {
+			"description": "Info about performance levels provider expected to deliver."
+		},
+		"source-last-update": { "description": "" },
+		"standard": { "description": "Standard used by the resource. See <Link></Link>." },
+		"technology-readiness-level": {
+			"description": "Technology Readiness Level of the Resource. See <Link></Link>."
+		},
+		"terms-of-use": { "description": "If license unknown, fill in textbox." },
+		"terms-of-use-url": { "description": "Webpage describing terms of use." },
+		"tool-family": { "description": "Type of tool." },
+		"user-manual-url": { "description": "Resource user manual and documentation URL." },
+		"version": { "description": "Version of the tool or service that is linked." },
+		"volume": { "description": "The volume of a journal or multivolume book." },
+		"year": { "description": "The year of publication." }
+	},
+	"validation": {
+		"empty-field": "Field must not be empty.",
+		"invalid-email": "Please provide a valid email address.",
+		"invalid-url": "Please provide a valid URL.",
+		"invalid-value-type": "Invalid value. Expected: {type}.",
+		"data-types": {
+			"boolean": "TRUE or FALSE",
+			"date": "Date in YYYY-MM-DD format",
+			"float": "Number",
+			"int": "Number",
+			"string": "String",
+			"url": "URL"
+		},
+		"last-submission-failed": "Last submission failed"
+	},
+	"controls": {
+		"add": "Add",
+		"edit": "Edit",
+		"delete": "Delete",
+		"remove": "Remove",
+		"cancel": "Cancel",
+		"submit": "Submit",
+		"publish": "Publish",
+		"save-as-draft": "Save as draft",
+		"approve": "Approve",
+		"reject": "Reject",
+		"review": "Review",
+		"revert": "Revert",
+		"next": "Next",
+		"save": "Save",
+		"move-up": "Move up",
+		"move-down": "Move down"
+	},
+	"actors": {
+		"create-actor": "Create actor",
+		"edit-actor": "Edit {name}",
+		"delete-actor": "Delete {name}",
+		"delete-actor-pending": "Deleting actor...",
+		"delete-actor-success": "Successfully deleted actor.",
+		"delete-actor-error": "Failed to delete actor.",
+		"update-actor-pending": "Updating actor...",
+		"update-actor-success": "Successfully updated actor.",
+		"update-actor-error": "Failed to update actor.",
+		"create-actor-pending": "Creating actor...",
+		"create-actor-success": "Successfully created actor.",
+		"create-actor-error": "Failed to create actor.",
+		"edit-actor-dialog-title": "Edit actor",
+		"search-actors": "Search actors",
+		"name": {
+			"label": "Name",
+			"description": ""
+		},
+		"externalIds": {
+			"label": "External IDs",
+			"description": "Other URLs relevant to the resource.",
+			"identifier": {
+				"label": "Identifier",
+				"description": "Other URLs relevant to the resource, e.g. ORCID, etc."
+			},
+			"identifierService": {
+				"label": "ID Service",
+				"description": ""
+			}
+		},
+		"email": {
+			"label": "Email",
+			"description": ""
+		},
+		"website": {
+			"label": "Website",
+			"description": ""
+		},
+		"affiliations": {
+			"label": "Affiliations",
+			"description": "",
+			"actor": {
+				"label": "Affiliated with",
+				"description": ""
+			}
+		}
+	},
+	"sources": {
+		"sort-by": "Sort by {order}",
+		"sort-orders": {
+			"name": "Name",
+			"date": "Date"
+		},
+		"sort-order": "Sort order",
+		"create-source": "Create source",
+		"delete-source": "Delete {name}",
+		"delete-source-pending": "Deleting source...",
+		"delete-source-success": "Successfully deleted source.",
+		"delete-source-error": "Failed to delete source.",
+		"edit-source": "Edit {name}",
+		"update-source-pending": "Updating source...",
+		"update-source-success": "Successfully updated source.",
+		"update-source-error": "Failed to update source.",
+		"create-source-pending": "Creating source...",
+		"create-source-success": "Successfully created source.",
+		"create-source-error": "Failed to create source.",
+		"edit-source-dialog-title": "Edit source",
+		"search-sources": "Search sources",
+		"source-url": "URL",
+		"last-harvest-date": "Last harvest date",
+		"label": {
+			"label": "Label",
+			"description": ""
+		},
+		"url": {
+			"label": "URL",
+			"description": ""
+		},
+		"urlTemplate": {
+			"label": "URL Template",
+			"description": ""
+		}
+	},
+	"users": {
+		"sort-by": "Sort by {order}",
+		"sort-orders": {
+			"username": "Username",
+			"date": "Registration date"
+		},
+		"sort-order": "Sort order",
+		"email": "Email",
+		"registration-date": "Registration date",
+		"status": "Status",
+		"search-users": "Search users",
+		"role": "Role",
+		"update-user-role-pending": "Updating user role...",
+		"update-user-role-success": "Successfully updated user role.",
+		"update-user-role-error": "Failed to update user role.",
+		"update-user-status-pending": "Updating user status...",
+		"update-user-status-success": "Successfully updated user status.",
+		"update-user-status-error": "Failed to update user status."
+	},
+	"draft-items": {
+		"sort-by": "Sort by {order}",
+		"sort-orders": {
+			"modified-on": "Last modification",
+			"label": "Label"
+		},
+		"sort-order": "Sort order",
+		"last-updated": "Last updated",
+		"edit-item": "Edit item",
+		"delete-item": "Delete item",
+		"delete-draft-item-pending": "Deleting draft item...",
+		"delete-draft-item-success": "Successfully deleted draft item.",
+		"delete-draft-item-error": "Failed to delete draft item."
+	},
+	"contributed-items": {
+		"last-updated": "Last updated",
+		"edit-item": "Edit item"
+	},
+	"moderate-items": {
+		"last-updated": "Last updated",
+		"owner": "User",
+		"edit-item": "Edit item",
+		"review-item": "Review item {label}",
+		"curation": "Curation",
+		"curation-flag": { "one": "Curation flag", "other": "Curation flags" },
+		"information-contributor": { "one": "User", "other": "Users" },
+		"other-facets": "Other",
+		"deprecated-at-source": "Deprecated at source",
+		"conflict-at-source": "Conflict at source"
+	},
+	"curation-flags": {
+		"coverage": "Coverage",
+		"description": "Description",
+		"merged": "Merged",
+		"relations": "Relations",
+		"url": "URL"
+	},
+	"concepts": {
+		"search-concepts": "Search concepts",
+		"concept-vocabulary": { "one": "Vocabulary", "other": "Vocabularies" },
+		"property-type": { "one": "Property type", "other": "Property types" },
+		"status": "Status",
+		"concept-status": {
+			"candidate": "Candidate",
+			"approved": "Approved"
+		},
+		"candidate-status": "Candidate",
+		"reject-candidate-concept": "Reject concept {label}.",
+		"reject-candidate-concept-pending": "Rejecting concept...",
+		"reject-candidate-concept-success": "Concept successfully rejected.",
+		"reject-candidate-concept-error": "Failed to reject concept.",
+		"approve-candidate-concept": "Approve concept {label}.",
+		"approve-candidate-concept-pending": "Approving concept.",
+		"approve-candidate-concept-success": "Successfully approved concept.",
+		"approve-candidate-concept-error": "Failed to approve concept",
+		"suggest-concept": "Suggest new concept",
+		"suggest-concept-pending": "Suggesting new concept...",
+		"suggest-concept-success": "Successfully suggested new concept.",
+		"suggest-concept-error": "Failed to suggest new concept.",
+		"vocabulary": {
+			"label": "Vocabulary",
+			"description": ""
+		},
+		"label": {
+			"label": "Label",
+			"description": ""
+		},
+		"notation": {
+			"label": "Notation",
+			"description": ""
+		},
+		"definition": {
+			"label": "Definition",
+			"description": ""
+		}
+	},
+	"media": {
+		"upload-media": "Upload media",
+		"upload-media-dialog-title": "Upload media",
+		"upload-media-pending": "Uploading media...",
+		"upload-media-success": "Successfully uploaded media.",
+		"upload-media-error": "Failed to upload media.",
+		"file": {
+			"label": "Select file",
+			"description": ""
+		},
+		"sourceUrl": {
+			"label": "Import from URL",
+			"description": ""
+		},
+		"caption": {
+			"label": "Caption",
+			"description": ""
+		},
+		"licence": {
+			"label": "Licence",
+			"description": ""
+		},
+		"validation": {
+			"empty-file-and-url": "Select a file to upload, or provide a URL to import.",
+			"file-or-url": "Either select a file to upload, or provide a URL to import, but not both."
+		}
+	},
+	"itemExternalId": {
+		"description": "The generated ID will be: {template}."
+	},
+	"actorExternalId": {
+		"description": "The generated ID will be: {template}."
+	},
+	"other-suggested-versions": {
+		"message": {
+			"one": "There is one other suggested change to this item.",
+			"other": "There are {count} other suggested changes to this item."
+		},
+		"warning": "Note that approving one will automatically reject all other suggestions.",
+		"suggested-by": "Suggested by {name} on <Timestamp></Timestamp>."
+	},
+	"review": {
+		"(current)": "(current)",
+		"(suggested)": "(suggested)",
+		"status": {
+			"unchanged": "Unchanged",
+			"changed": "Changed",
+			"deleted": "Deleted",
+			"inserted": "Inserted"
+		}
+	},
+	"item-status-alert": "You are currently viewing a {category} with status: {status}."
+}

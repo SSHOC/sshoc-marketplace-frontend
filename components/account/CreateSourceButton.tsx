@@ -1,9 +1,9 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useRef } from "react";
 
 import type { SourceFormValues } from "@/components/account/SourceForm";
 import { SourceForm } from "@/components/account/SourceForm";
 import { useCreateSource } from "@/data/sshoc/hooks/source";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
@@ -26,17 +26,17 @@ export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 		dialog,
 		triggerRef,
 	);
-	const { t } = useI18n<"authenticated">();
+	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "sources", "create-source-pending"]);
+				return t("authenticated.sources.create-source-pending");
 			},
 			success() {
-				return t(["authenticated", "sources", "create-source-success"]);
+				return t("authenticated.sources.create-source-success");
 			},
 			error() {
-				return t(["authenticated", "sources", "create-source-error"]);
+				return t("authenticated.sources.create-source-error");
 			},
 		},
 	};
@@ -59,11 +59,11 @@ export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 		<Fragment>
 			{variant === "button-link" ? (
 				<ButtonLink ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t(["authenticated", "sources", "create-source"])}
+					{t("authenticated.sources.create-source")}
 				</ButtonLink>
 			) : (
 				<Button ref={triggerRef} {...triggerProps} color="gradient" onPress={onOpenDialog}>
-					{t(["authenticated", "sources", "create-source"])}
+					{t("authenticated.sources.create-source")}
 				</Button>
 			)}
 			{dialog.isOpen ? (
@@ -72,7 +72,7 @@ export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 					isDismissable
 					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
-					title={t(["authenticated", "sources", "create-source"])}
+					title={t("authenticated.sources.create-source")}
 				>
 					<SourceForm name="create-source" onCancel={onCloseDialog} onSubmit={onCreateSource} />
 				</ModalDialog>

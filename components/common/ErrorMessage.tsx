@@ -1,7 +1,7 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import css from "@/components/common/ErrorMessage.module.css";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface ErrorMessageProps {
 	message?: string;
@@ -11,9 +11,9 @@ export interface ErrorMessageProps {
 }
 
 export function ErrorMessage(props: ErrorMessageProps): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const { message = t(["common", "default-error-message"]), statusCode = 500 } = props;
+	const { message = t("common.default-error-message"), statusCode = 500 } = props;
 
 	return (
 		<section role="alert" className={css["container"]}>

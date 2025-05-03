@@ -1,4 +1,6 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import type { Messages } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -14,37 +16,35 @@ import { RecommendedItems } from "@/components/home/RecommendedItems";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
-// import { Centered } from '@/lib/core/ui/Centered/Centered'
-// import { LoadingIndicator } from '@/lib/core/ui/LoadingIndicator/LoadingIndicator'
 
 export namespace HomePage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export type Props = WithDictionaries<"common">;
+	export type Props = {
+		messages: Messages;
+	};
 }
 
 export async function getStaticProps(
 	context: GetStaticPropsContext<HomePage.PathParams>,
 ): Promise<GetStaticPropsResult<HomePage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 		},
 	};
 }
 
 export default function HomePage(_props: HomePage.Props): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "pages", "home"]);
+	const title = t("common.pages.home");
 
 	return (
 		<Fragment>
@@ -58,18 +58,10 @@ export default function HomePage(_props: HomePage.Props): ReactNode {
 							<ItemSearchForm />
 						</ItemSearchFormPanel>
 					</Hero>
-					{/* <Suspense
-            fallback={
-              <Centered>
-                <LoadingIndicator />
-              </Centered>
-            }
-          > */}
 					<RecommendedItems />
 					<BrowseItems />
 					<LastUpdatedItems />
 					<FundingNotice />
-					{/* </Suspense> */}
 				</HomeScreenLayout>
 			</PageMainContent>
 		</Fragment>

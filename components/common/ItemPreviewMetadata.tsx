@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import css from "@/components/common/ItemPreviewMetadata.module.css";
@@ -12,7 +13,6 @@ import type {
 } from "@/data/sshoc/api/item";
 import type { PropertyConcept } from "@/data/sshoc/api/property";
 import { isPropertyConcept } from "@/data/sshoc/api/property";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface ItemPreviewMetadataProps {
 	item: ItemSearchResult | ItemWithWorkflowStep | RelatedItem;
@@ -21,7 +21,7 @@ export interface ItemPreviewMetadataProps {
 export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode {
 	const { item } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const { activities, keywords } = useItemPreviewMetadata({
 		properties: "properties" in item ? item.properties : [],
@@ -34,12 +34,12 @@ export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode 
 	return (
 		<dl className={css["metadata"]}>
 			<ItemPreviewMetadataValueList
-				label={t(["common", "facets", "activity", "other"])}
+				label={t("common.facets.activity.other")}
 				properties={activities}
 				facet="activity"
 			/>
 			<ItemPreviewMetadataValueList
-				label={t(["common", "facets", "keyword", "other"])}
+				label={t("common.facets.keyword.other")}
 				properties={keywords}
 				facet="keyword"
 			/>

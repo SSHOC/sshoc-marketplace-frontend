@@ -1,15 +1,15 @@
 import { Item } from "@react-stately/collections";
+import { useTranslations } from "next-intl";
 import type { Key, ReactNode } from "react";
 
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { useSearchFilters } from "@/components/search/useSearchFilters";
 import type { ItemSortOrder } from "@/data/sshoc/api/item";
 import { itemSortOrders } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Select } from "@/lib/core/ui/Select/Select";
 
 export function SearchSortOrderSelect(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const searchFilters = useSearchFilters();
 	const sortOrder = searchFilters.order[0];
 	const { searchItems } = useSearchItems();
@@ -17,8 +17,8 @@ export function SearchSortOrderSelect(): ReactNode {
 	const items = itemSortOrders.map((id) => {
 		return {
 			id,
-			label: t(["common", "search", "sort-by"], {
-				values: { order: t(["common", "search", "sort-orders", id]) },
+			label: t("common.search.sort-by", {
+				order: t(`common.search.sort-orders.${id}`),
 			}),
 		};
 	});
@@ -30,7 +30,7 @@ export function SearchSortOrderSelect(): ReactNode {
 
 	return (
 		<Select
-			aria-label={t(["common", "search", "sort-order"])}
+			aria-label={t("common.search.sort-order")}
 			items={items}
 			onSelectionChange={onChange}
 			selectedKey={sortOrder}

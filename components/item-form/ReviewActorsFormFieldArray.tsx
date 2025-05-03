@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
@@ -15,7 +16,6 @@ import { EditActorButton } from "@/components/item-form/EditActorButton";
 import { ReviewFieldListItem } from "@/components/item-form/ReviewFieldListItem";
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { ItemContributorRef, ItemsDiff } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { TextField } from "@/lib/core/ui/TextField/TextField";
 
 export interface ReviewActorsFormFieldArrayProps {
@@ -25,7 +25,7 @@ export interface ReviewActorsFormFieldArrayProps {
 export function ReviewActorsFormFieldArray(props: ReviewActorsFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fieldArray = useFieldArray<ItemContributorRef | UndefinedLeaves<ItemContributorRef>>(
 		field.name,
 		{ subscription: {} },
@@ -90,12 +90,12 @@ export function ReviewActorsFormFieldArray(props: ReviewActorsFormFieldArrayProp
 									<FormFieldListItemControls>
 										<EditActorButton field={fieldGroup.actor} />
 										<FormRecordRemoveButton
-											aria-label={t(["authenticated", "forms", "remove-field"], {
-												values: { field: field.itemLabel },
+											aria-label={t("authenticated.forms.remove-field", {
+												field: field.itemLabel,
 											})}
 											onPress={onRemove}
 										>
-											{t(["authenticated", "controls", "delete"])}
+											{t("authenticated.controls.delete")}
 										</FormRecordRemoveButton>
 									</FormFieldListItemControls>
 								</Fragment>
@@ -106,8 +106,8 @@ export function ReviewActorsFormFieldArray(props: ReviewActorsFormFieldArrayProp
 			</FormFieldList>
 			<FormFieldArrayControls>
 				<FormRecordAddButton onPress={onAdd}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.itemLabel },
+					{t("authenticated.forms.add-field", {
+						field: field.itemLabel,
 					})}
 				</FormRecordAddButton>
 			</FormFieldArrayControls>

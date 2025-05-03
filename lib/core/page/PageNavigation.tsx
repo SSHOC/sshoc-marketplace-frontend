@@ -1,9 +1,9 @@
 import { Item } from "@react-stately/collections";
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { NavigationMenu } from "@/lib/core/page/NavigationMenu";
 import css from "@/lib/core/page/PageNavigation.module.css";
 import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
@@ -49,13 +49,13 @@ function ItemCategoryNavLinks(): ReactNode {
 }
 
 function BrowseNavMenu(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useBrowseNavItems();
 	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t(["common", "pages", "browse"])} items={items}>
+			<NavigationMenu label={t("common.pages.browse")} items={items}>
 				{(item) => {
 					const props = {
 						href: item.href,
@@ -72,13 +72,13 @@ function BrowseNavMenu(): ReactNode {
 }
 
 function ContributeNavMenu(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useContributeNavItems();
 	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t(["common", "pages", "contribute"])} items={items}>
+			<NavigationMenu label={t("common.pages.contribute")} items={items}>
 				{(item) => {
 					const props = {
 						href: item.href,
@@ -95,13 +95,13 @@ function ContributeNavMenu(): ReactNode {
 }
 
 function AboutNavMenu(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const items = useAboutNavItems();
 	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t(["common", "pages", "about"])} items={items}>
+			<NavigationMenu label={t("common.pages.about")} items={items}>
 				{(item) => {
 					const props = {
 						href: item.href,

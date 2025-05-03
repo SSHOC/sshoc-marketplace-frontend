@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { z } from "zod";
 
@@ -14,7 +15,6 @@ import type { FormFileInputProps } from "@/lib/core/form/FormFileInput";
 import { FormFileInput } from "@/lib/core/form/FormFileInput";
 import { FormTextField } from "@/lib/core/form/FormTextField";
 import { validateSchema } from "@/lib/core/form/validateSchema";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Item } from "@/lib/core/ui/Collection/Item";
 
 export type MediaUploadFormValues = Pick<ItemMediaInput, "caption" | "concept"> & {
@@ -32,7 +32,7 @@ export interface MediaUploadFormProps extends Pick<FormFileInputProps, "fileType
 export function MediaUploadForm(props: MediaUploadFormProps): ReactNode {
 	const { fileTypes, initialValues, multiple, name, onCancel, onSubmit } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fields = useMediaUploadFormFields();
 
 	const errorMap: z.ZodErrorMap = function errorMap(issue, context) {
@@ -42,10 +42,10 @@ export function MediaUploadForm(props: MediaUploadFormProps): ReactNode {
 				if (Array.isArray(mediaInput)) {
 					if (mediaInput.length === 0) {
 						return {
-							message: t(["authenticated", "media", "validation", "empty-file-and-url"]),
+							message: t("authenticated.media.validation.empty-file-and-url"),
 						};
 					} else if (mediaInput.length === 2) {
-						return { message: t(["authenticated", "media", "validation", "file-or-url"]) };
+						return { message: t("authenticated.media.validation.file-or-url") };
 					}
 				}
 				break;

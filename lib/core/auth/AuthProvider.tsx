@@ -1,7 +1,7 @@
 import { HttpError } from "@stefanprobst/request";
-import type { JwtPayload } from "jwt-decode";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation } from "react-query";
@@ -14,7 +14,6 @@ import {
 	validateOAuthToken,
 } from "@/data/sshoc/api/auth";
 import type { PageComponent } from "@/lib/core/app/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { assert, createSiteUrl, isNonEmptyString } from "@/lib/utils";
@@ -140,7 +139,7 @@ export interface AuthProviderProps {
 export function AuthProvider(props: AuthProviderProps): ReactNode {
 	const { onSignIn, onSignOut, isPageAccessible } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const {
 		session,
 		signOut: _signOut,
@@ -165,13 +164,13 @@ export function AuthProvider(props: AuthProviderProps): ReactNode {
 	const signInWithBasicAuthMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["common", "auth", "signing-in"]);
+				return t("common.auth.signing-in");
 			},
 			success() {
-				return t(["common", "auth", "sign-in-success"]);
+				return t("common.auth.sign-in-success");
 			},
 			error() {
-				return t(["common", "auth", "sign-in-error"]);
+				return t("common.auth.sign-in-error");
 			},
 		},
 	};
@@ -206,16 +205,16 @@ export function AuthProvider(props: AuthProviderProps): ReactNode {
 	const validateIdTokenMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				// return t(['common', 'auth', 'signing-in'])
+				// return t("common.auth.signing-in")
 				// FIXME: never gets updated with success message (at least in firefox), although
 				// toast.update is called with the correct toast id.
 				return false;
 			},
 			success() {
-				return t(["common", "auth", "sign-in-success"]);
+				return t("common.auth.sign-in-success");
 			},
 			error() {
-				return t(["common", "auth", "sign-in-error"]);
+				return t("common.auth.sign-in-error");
 			},
 		},
 	};
@@ -275,7 +274,7 @@ export function AuthProvider(props: AuthProviderProps): ReactNode {
 						return false;
 					},
 					error() {
-						return t(["common", "auth", "sign-up-error"]);
+						return t("common.auth.sign-up-error");
 					},
 				},
 			},
@@ -293,13 +292,13 @@ export function AuthProvider(props: AuthProviderProps): ReactNode {
 	const validateRegistrationDataMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["common", "auth", "signing-up"]);
+				return t("common.auth.signing-up");
 			},
 			success() {
-				return t(["common", "auth", "sign-up-success"]);
+				return t("common.auth.sign-up-success");
 			},
 			error() {
-				return t(["common", "auth", "sign-up-error"]);
+				return t("common.auth.sign-up-error");
 			},
 		},
 	};
@@ -466,7 +465,7 @@ function isValidAccessToken(token: string | null, prefix = "Bearer "): token is 
 		return false;
 	}
 
-	const { exp } = jwtDecode<JwtPayload>(token.slice(prefix.length));
+	const { exp } = jwtDecode(token.slice(prefix.length));
 
 	if (exp != null && exp /** seconds */ * 1000 > Date.now()) {
 		return true;

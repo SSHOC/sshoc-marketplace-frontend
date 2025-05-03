@@ -1,6 +1,5 @@
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface UseReviewFieldLabelsResult {
 	suggested: (label: string) => string;
@@ -8,15 +7,15 @@ export interface UseReviewFieldLabelsResult {
 }
 
 export function useReviewFieldLabels(): UseReviewFieldLabelsResult {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const labels = useMemo(() => {
 		const labels = {
 			suggested(label: string) {
-				return [label, t(["authenticated", "review", "(suggested)"])].join(" ");
+				return [label, t("authenticated.review.(suggested)")].join(" ");
 			},
 			current(label: string) {
-				return [label, t(["authenticated", "review", "(current)"])].join(" ");
+				return [label, t("authenticated.review.(current)")].join(" ");
 			},
 		};
 

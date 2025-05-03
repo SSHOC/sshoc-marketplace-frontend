@@ -1,7 +1,7 @@
+import { useFormatter, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import css from "@/components/common/LastUpdatedTimestamp.module.css";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { IsoDateString } from "@/lib/core/types";
 
 export interface LastUpdatedTimestampProps {
@@ -11,12 +11,13 @@ export interface LastUpdatedTimestampProps {
 export function LastUpdatedTimestamp(props: LastUpdatedTimestampProps): ReactNode {
 	const { dateTime } = props;
 
-	const { t, formatDateTime } = useI18n<"common">();
+	const t = useTranslations();
+	const format = useFormatter();
 
 	return (
 		<time className={css["container"]} dateTime={dateTime}>
-			{t(["common", "item", "last-updated-on"], {
-				values: { date: formatDateTime(new Date(dateTime)) },
+			{t("common.item.last-updated-on", {
+				date: format.dateTime(new Date(dateTime)),
 			})}
 		</time>
 	);

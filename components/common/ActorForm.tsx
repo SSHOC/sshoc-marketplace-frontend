@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { useFieldArray } from "react-final-form-arrays";
 
@@ -16,7 +17,6 @@ import { FormSelect } from "@/lib/core/form/FormSelect";
 import { FormTextField } from "@/lib/core/form/FormTextField";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 import { validateSchema } from "@/lib/core/form/validateSchema";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Item } from "@/lib/core/ui/Collection/Item";
 
 export type ActorFormValues = ActorInput;
@@ -60,7 +60,7 @@ export interface ActorExternalIdsFieldArrayProps {
 export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProps): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fieldArray = useFieldArray<ActorExternalIdInput | UndefinedLeaves<ActorExternalIdInput>>(
 		field.name,
 		{ subscription: {} },
@@ -101,12 +101,12 @@ export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProp
 							</div>
 							<div>
 								<FormRecordRemoveButton
-									aria-label={t(["authenticated", "forms", "remove-field"], {
-										values: { field: field.label },
+									aria-label={t("authenticated.forms.remove-field", {
+										field: field.label,
 									})}
 									onPress={onRemove}
 								>
-									{t(["authenticated", "controls", "delete"])}
+									{t("authenticated.controls.delete")}
 								</FormRecordRemoveButton>
 							</div>
 						</div>
@@ -115,8 +115,8 @@ export function ActorExternalIdsFieldArray(props: ActorExternalIdsFieldArrayProp
 			</div>
 			<div>
 				<FormRecordAddButton onPress={onAdd}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.label },
+					{t("authenticated.forms.add-field", {
+						field: field.label,
 					})}
 				</FormRecordAddButton>
 			</div>
@@ -150,7 +150,7 @@ export interface ActorAffiliationsFieldArrayProps {
 export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayProps): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fieldArray = useFieldArray<string | undefined>(field.name);
 
 	function onAdd() {
@@ -178,12 +178,12 @@ export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayPr
 							<ActorComboBox field={fieldGroup.actor} />
 							<div>
 								<FormRecordRemoveButton
-									aria-label={t(["authenticated", "forms", "remove-field"], {
-										values: { field: field.label },
+									aria-label={t("authenticated.forms.remove-field", {
+										field: field.label,
 									})}
 									onPress={onRemove}
 								>
-									{t(["authenticated", "controls", "delete"])}
+									{t("authenticated.controls.delete")}
 								</FormRecordRemoveButton>
 							</div>
 						</div>
@@ -192,8 +192,8 @@ export function ActorAffiliationsFieldArray(props: ActorAffiliationsFieldArrayPr
 			</div>
 			<div>
 				<FormRecordAddButton onPress={onAdd}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.label },
+					{t("authenticated.forms.add-field", {
+						field: field.label,
 					})}
 				</FormRecordAddButton>
 			</div>
@@ -209,7 +209,7 @@ export interface ActorIdentifierFieldProps {
 export function ActorIdentifierField(props: ActorIdentifierFieldProps): ReactNode {
 	const { field, identifierServiceFieldName } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const service = useFieldState<string | null>(identifierServiceFieldName).input.value;
 	const value = useFieldState<string | null>(field.name).input.value;
 	const actorSources = useActorSources(undefined, {
@@ -225,10 +225,7 @@ export function ActorIdentifierField(props: ActorIdentifierFieldProps): ReactNod
 		<Fragment>
 			<span>{field.description}</span>
 			{template != null ? (
-				<span>
-					{" "}
-					{t(["authenticated", "actorExternalId", "description"], { values: { template } })}
-				</span>
+				<span> {t("authenticated.actorExternalId.description", { template })}</span>
 			) : null}
 		</Fragment>
 	);

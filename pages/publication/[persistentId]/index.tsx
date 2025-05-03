@@ -6,6 +6,7 @@ import type {
 	GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/router";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { dehydrate, QueryClient, useQueryClient } from "react-query";
 
@@ -42,8 +43,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -57,7 +56,8 @@ export namespace PublicationPage {
 	}
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export interface Props extends WithDictionaries<"common"> {
+	export interface Props {
+		messages: Messages;
 		params: PathParams;
 		initialQueryState: SharedPageProps["initialQueryState"];
 	}
@@ -86,7 +86,7 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<PublicationPage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as PublicationPage.PathParams;
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["authenticated", "common"]);
 
 	try {
 		const persistentId = params.persistentId;
@@ -97,7 +97,7 @@ export async function getStaticProps(
 
 		return {
 			props: {
-				dictionaries,
+				messages,
 				params,
 				initialQueryState: dehydrate(queryClient),
 			},
@@ -123,9 +123,9 @@ export default function PublicationPage(props: PublicationPage.Props): ReactNode
 	const publication = _publication.data;
 
 	const router = useRouter();
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const category = publication?.category ?? "publication";
-	const label = publication?.label ?? t(["common", "item-categories", category, "one"]);
+	const label = publication?.label ?? t(`common.item-categories.${category}.one`);
 
 	if (
 		_publication.error != null &&
@@ -151,10 +151,10 @@ export default function PublicationPage(props: PublicationPage.Props): ReactNode
 	}
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
+		{ href: "/", label: t("common.pages.home") },
 		{
 			href: `/search?${createUrlSearchParams({ categories: [publication.category], order: ["label"] })}`,
-			label: t(["common", "item-categories", publication.category, "other"]),
+			label: t(`common.item-categories.${publication.category}.other`),
 		},
 		{
 			href: `/publication/${persistentId}`,

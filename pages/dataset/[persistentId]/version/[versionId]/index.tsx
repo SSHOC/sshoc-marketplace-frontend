@@ -6,6 +6,7 @@ import type {
 	GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/router";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { Alert } from "@/components/common/Alert";
@@ -37,8 +38,6 @@ import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
@@ -56,7 +55,8 @@ export namespace DatasetVersionPage {
 	export interface SearchParamsInput {
 		draft?: boolean;
 	}
-	export interface Props extends WithDictionaries<"authenticated" | "common"> {
+	export interface Props {
+		messages: Messages;
 		params: PathParams;
 	}
 }
@@ -87,11 +87,11 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<DatasetVersionPage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as DatasetVersionPage.PathParams;
-	const dictionaries = await load(locale, ["common", "authenticated"]);
+	const messages = await load(locale, ["common", "authenticated"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 			params,
 		},
 	};
@@ -110,10 +110,10 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): Rea
 			useDataset({ persistentId, draft: true }, undefined, { enabled: router.isReady });
 	const dataset = _dataset.data;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const category = dataset?.category ?? "dataset";
-	const categoryLabel = t(["common", "item-categories", category, "one"]);
+	const categoryLabel = t(`common.item-categories.${category}.one`);
 	const label = dataset?.label ?? categoryLabel;
 
 	if (router.isFallback || dataset == null) {
@@ -132,10 +132,10 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): Rea
 	}
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
+		{ href: "/", label: t("common.pages.home") },
 		{
 			href: `/search?${createUrlSearchParams({ categories: [dataset.category], order: ["label"] })}`,
-			label: t(["common", "item-categories", category, "other"]),
+			label: t(`common.item-categories.${category}.other`),
 		},
 		{
 			href: `/dataset/${persistentId}/versions/${versionId}`,
@@ -156,11 +156,9 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): Rea
 				<ItemVersionScreenLayout>
 					<BackgroundImage />
 					<Alert color="notice">
-						{t(["authenticated", "item-status-alert"], {
-							values: {
-								category: categoryLabel,
-								status: t(["common", "item-status", dataset.status]),
-							},
+						{t("authenticated.item-status-alert", {
+							category: categoryLabel,
+							status: t(`common.item-status.${dataset.status}`),
 						})}
 					</Alert>
 					<ScreenHeader>

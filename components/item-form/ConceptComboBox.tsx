@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Key, ReactNode } from "react";
 import { Fragment, useMemo } from "react";
 import { useForm } from "react-final-form";
@@ -9,7 +10,6 @@ import { debounceDelay } from "@/config/sshoc.config";
 import type { PropertyType } from "@/data/sshoc/api/property";
 import { useConceptSearchInfinite } from "@/data/sshoc/hooks/vocabulary";
 import { FormComboBox } from "@/lib/core/form/FormComboBox";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Item } from "@/lib/core/ui/Collection/Item";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
@@ -24,7 +24,7 @@ export interface ConceptComboBoxProps {
 export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 	const { conceptSearchTerm, field, propertyTypeId, setConceptSearchTerm } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const form = useForm();
 
 	const idField = "uri";
@@ -76,12 +76,10 @@ export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 			<span>{field.description} </span>
 			<span>
 				{/* @ts-expect-error Assume all possible property types have translation. */}
-				{t(["authenticated", "properties", propertyTypeId, "description"], {
-					components: {
+				{t.rich(`authenticated.properties.${propertyTypeId}.description`, {
 						// eslint-disable-next-line react/no-unstable-nested-components
 						Link() {
 							return <SeeVocabularyLink type={propertyTypeId} />;
-						},
 					},
 				})}
 			</span>
