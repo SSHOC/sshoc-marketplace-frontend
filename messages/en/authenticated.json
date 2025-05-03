@@ -84,15 +84,15 @@
 		},
 		"externalIds": {
 			"label": { "one": "External ID", "other": "External IDs" },
-			"description": "Other URLs relevant to the resource."
-		},
-		"externalIds.identifier": {
-			"label": "Identifier",
-			"description": "Other URLs relevant to the resource, e.g. code, DOI, etc."
-		},
-		"externalIds.identifierService": {
-			"label": "ID Service",
-			"description": ""
+			"description": "Other URLs relevant to the resource.",
+			"identifier": {
+				"label": "Identifier",
+				"description": "Other URLs relevant to the resource, e.g. code, DOI, etc."
+			},
+			"identifierService": {
+				"label": "ID Service",
+				"description": ""
+			}
 		},
 		"dateCreated": {
 			"label": "Date created",
@@ -104,75 +104,75 @@
 		},
 		"contributors": {
 			"label": { "one": "Actor", "other": "Actors" },
-			"description": "Person/group/body who helped create the resource."
-		},
-		"contributors.role": {
-			"label": "Role",
-			"description": ""
-		},
-		"contributors.actor": {
-			"label": "Name",
-			"description": "Person/group/body who helped create the resource."
+			"description": "Person/group/body who helped create the resource.",
+			"role": {
+				"label": "Role",
+				"description": ""
+			},
+			"actor": {
+				"label": "Name",
+				"description": "Person/group/body who helped create the resource."
+			}
 		},
 		"properties": {
 			"label": { "one": "Property", "other": "Properties" },
-			"description": ""
-		},
-		"properties.type": {
-			"label": "Property type",
-			"description": ""
-		},
-		"properties.value": {
-			"label": "Value",
-			"description": ""
-		},
-		"properties.concept": {
-			"label": "Concept",
-			"description": ""
+			"description": "",
+			"type": {
+				"label": "Property type",
+				"description": ""
+			},
+			"value": {
+				"label": "Value",
+				"description": ""
+			},
+			"concept": {
+				"label": "Concept",
+				"description": ""
+			}
 		},
 		"relatedItems": {
 			"label": { "one": "Related item", "other": "Related items" },
-			"description": "Relations with other entries."
-		},
-		"relatedItems.relation": {
-			"label": "Relation type",
-			"description": ""
-		},
-		"relatedItems.item": {
-			"label": "Related item",
-			"description": ""
+			"description": "Relations with other entries.",
+			"relation": {
+				"label": "Relation type",
+				"description": ""
+			},
+			"item": {
+				"label": "Related item",
+				"description": ""
+			}
 		},
 		"media": {
 			"label": { "one": "Media", "other": "Media" },
-			"description": "Media can be images or videos."
-		},
-		"media.info": {
-			"label": "Media",
-			"description": ""
-		},
-		"media.caption": {
-			"label": "Caption",
-			"description": ""
-		},
-		"media.licence": {
-			"label": "Licence",
-			"description": ""
+			"description": "Media can be images or videos.",
+			"info": {
+				"label": "Media",
+				"description": ""
+			},
+			"caption": {
+				"label": "Caption",
+				"description": ""
+			},
+			"licence": {
+				"label": "Licence",
+				"description": ""
+			}
 		},
 		"thumbnail": {
 			"label": "Thumbnail",
-			"description": "Logo related to the resource."
-		},
-		"thumbnail.info": {
-			"label": "Media",
-			"description": ""
-		},
-		"thumbnail.caption": {
-			"label": "Caption",
-			"description": ""
-		},
-		"thumbnail.licence": {
-			"label": "Licence",
-			"description": ""
+			"description": "Logo related to the resource.",
+			"info": {
+				"label": "Media",
+				"description": ""
+			},
+			"caption": {
+				"label": "Caption",
+				"description": ""
+			},
+			"licence": {
+				"label": "Licence",
+				"description": ""
+			}
 		}
 	},
 	"properties": {
@@ -294,15 +294,15 @@
 		},
 		"externalIds": {
 			"label": "External IDs",
-			"description": "Other URLs relevant to the resource."
-		},
-		"externalIds.identifier": {
-			"label": "Identifier",
-			"description": "Other URLs relevant to the resource, e.g. ORCID, etc."
-		},
-		"externalIds.identifierService": {
-			"label": "ID Service",
-			"description": ""
+			"description": "Other URLs relevant to the resource.",
+			"identifier": {
+				"label": "Identifier",
+				"description": "Other URLs relevant to the resource, e.g. ORCID, etc."
+			},
+			"identifierService": {
+				"label": "ID Service",
+				"description": ""
+			}
 		},
 		"email": {
 			"label": "Email",
@@ -314,11 +314,11 @@
 		},
 		"affiliations": {
 			"label": "Affiliations",
-			"description": ""
-		},
-		"affiliations.actor": {
-			"label": "Affiliated with",
-			"description": ""
+			"description": "",
+			"actor": {
+				"label": "Affiliated with",
+				"description": ""
+			}
 		}
 	},
 	"sources": {
