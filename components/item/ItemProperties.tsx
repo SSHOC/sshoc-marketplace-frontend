@@ -1,8 +1,8 @@
-import { useCollator } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
+import { useCollator } from "react-aria";
 
 import { Timestamp } from "@/components/common/Timestamp";
 import css from "@/components/item/ItemMetadata.module.css";
@@ -72,12 +72,10 @@ function useGroupedPropertyValues(
 ): Array<[string, Array<[string, Array<ReactNode>]>]> {
 	const { properties } = args;
 
-	const createCollator = useCollator();
+	const collator = useCollator();
 	const hasPermission = usePublishPermission();
 
 	const groups = useMemo(() => {
-		const compare = createCollator();
-
 		const groups = new Map<string, Map<string, Array<Property>>>();
 
 		properties.forEach((property) => {
@@ -106,7 +104,7 @@ function useGroupedPropertyValues(
 		});
 
 		const sortedGroups = Array.from(groups).sort(([groupName], [otherGroupName]) => {
-			return compare(groupName, otherGroupName);
+			return collator.compare(groupName, otherGroupName);
 		});
 
 		const sorted = sortedGroups.map(([groupName, group]) => {
@@ -128,7 +126,7 @@ function useGroupedPropertyValues(
 		});
 
 		return sorted;
-	}, [properties, createCollator, hasPermission]);
+	}, [properties, collator, hasPermission]);
 
 	return groups as Array<[string, Array<[string, Array<ReactNode>]>]>;
 }

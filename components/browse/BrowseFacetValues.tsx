@@ -1,8 +1,8 @@
-import { useCollator } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { createUrlSearchParams } from "@stefanprobst/request";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useMemo } from "react";
+import { useCollator } from "react-aria";
 
 import css from "@/components/browse/BrowseFacetValues.module.css";
 import { Link } from "@/components/common/Link";
@@ -89,10 +89,8 @@ function useGroupedFacetValues(
 ): Array<[string, Array<[string, number]>]> {
 	const { values } = args;
 
-	const createCollator = useCollator();
+	const collator = useCollator();
 	const grouped = useMemo(() => {
-		const compare = createCollator();
-
 		const grouped = new Map<string, Map<string, number>>();
 
 		Object.entries(values).forEach(([value, { count }]) => {
@@ -108,20 +106,20 @@ function useGroupedFacetValues(
 		});
 
 		const sortedGroups = Array.from(grouped).sort(([firstCharacter], [otherFirstCharacter]) => {
-			return compare(firstCharacter, otherFirstCharacter);
+			return collator.compare(firstCharacter, otherFirstCharacter);
 		});
 
 		const sorted = sortedGroups.map(([firstCharacter, values]) => {
 			return [
 				firstCharacter,
 				Array.from(values).sort(([value], [otherValue]) => {
-					return compare(value, otherValue);
+					return collator.compare(value, otherValue);
 				}),
 			];
 		});
 
 		return sorted as Array<[string, Array<[string, number]>]>;
-	}, [values, createCollator]);
+	}, [values, collator]);
 
 	return grouped;
 }

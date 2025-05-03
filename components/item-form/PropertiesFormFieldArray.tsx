@@ -1,7 +1,7 @@
-import { useCollator } from "@react-aria/i18n";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { Fragment, useMemo } from "react";
+import { useCollator } from "react-aria";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -29,8 +29,7 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 	const { field } = props;
 
 	const t = useTranslations();
-	const createCollator = useCollator();
-	const compare = createCollator();
+	const collator = useCollator();
 	const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
 		subscription: {},
 	});
@@ -46,7 +45,7 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 	const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
 		select(data) {
 			data.propertyTypes.sort((a, b) => {
-				return compare(a.label, b.label);
+				return collator.compare(a.label, b.label);
 			});
 
 			return data;
@@ -104,12 +103,12 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 										propertyTypesMap={propertyTypesMap}
 									/>
 									<FormRecordRemoveButton
-										aria-label={t(["authenticated", "forms", "remove-field"], {
-											values: { field: field.itemLabel },
+										aria-label={t("authenticated.forms.remove-field", {
+											field: field.itemLabel,
 										})}
 										onPress={onRemove}
 									>
-										{t(["authenticated", "controls", "delete"])}
+										{t("authenticated.controls.delete")}
 									</FormRecordRemoveButton>
 								</FormFieldListItemControls>
 							</FormFieldListItem>
@@ -119,8 +118,8 @@ export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): 
 			</FormFieldList>
 			<FormFieldArrayControls>
 				<FormRecordAddButton onPress={onAdd}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.itemLabel },
+					{t("authenticated.forms.add-field", {
+						field: field.itemLabel,
 					})}
 				</FormRecordAddButton>
 			</FormFieldArrayControls>

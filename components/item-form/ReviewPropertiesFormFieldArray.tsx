@@ -1,6 +1,6 @@
-import { useCollator } from "@react-aria/i18n";
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useMemo } from "react";
+import { useCollator } from "react-aria";
 import { useFieldArray } from "react-final-form-arrays";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -32,7 +32,7 @@ export function ReviewPropertiesFormFieldArray(
 	const { field } = props;
 
 	const t = useTranslations();
-	const compare = useCollator();
+	const collator = useCollator();
 	const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
 		subscription: {},
 	});
@@ -48,7 +48,7 @@ export function ReviewPropertiesFormFieldArray(
 	const propertyTypes = usePropertyTypes({ perpage: 100 }, undefined, {
 		select(data) {
 			data.propertyTypes.sort((a, b) => {
-				return compare(a.label, b.label);
+				return collator.compare(a.label, b.label);
 			});
 
 			return data;
