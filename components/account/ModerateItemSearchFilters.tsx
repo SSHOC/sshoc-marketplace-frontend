@@ -1,6 +1,7 @@
 import { useButton } from "@react-aria/button";
 import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef } from "react";
 
@@ -19,7 +20,6 @@ import type { User } from "@/data/sshoc/api/user";
 import { useUsersInfinite } from "@/data/sshoc/hooks/user";
 import type { CurationFlag } from "@/data/sshoc/utils/curation";
 import { curationFlags } from "@/data/sshoc/utils/curation";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { IsoDateString } from "@/lib/core/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
@@ -39,26 +39,18 @@ import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogT
 import { entries, length, mapBy } from "@/lib/utils";
 
 export function ModerateItemSearchFilters(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	return (
 		<aside className={css["container"]}>
 			<header className={css["section-header"]}>
-				<h2 className={css["section-title"]}>{t(["common", "search", "refine-search"])}</h2>
+				<h2 className={css["section-title"]}>{t("common.search.refine-search")}</h2>
 				<div className={css["clear-link"]}>
-					<Link href="/account/moderate-items">{t(["common", "search", "clear-filters"])}</Link>
+					<Link href="/account/moderate-items">{t("common.search.clear-filters")}</Link>
 				</div>
 			</header>
 			<div className={css["facets-form-container"]}>
-				{/* <Suspense
-          fallback={
-            <Centered>
-              <LoadingIndicator />
-            </Centered>
-          }
-        > */}
 				<SearchFacetsForm />
-				{/* </Suspense> */}
 			</div>
 			<div className={css["facets-dialog-container"]}>
 				<SearchFacetsDialog />
@@ -68,7 +60,7 @@ export function ModerateItemSearchFilters(): ReactNode {
 }
 
 function SearchFacetsDialog(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const state = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -87,7 +79,7 @@ function SearchFacetsDialog(): ReactNode {
 				data-dialog="facets"
 				onPress={state.toggle}
 			>
-				{t(["common", "search", "refine-search"])}
+				{t("common.search.refine-search")}
 			</Button>
 			<ActiveSearchFacets />
 			{state.isOpen ? (
@@ -100,19 +92,11 @@ function SearchFacetsDialog(): ReactNode {
 				>
 					<header className={css["overlay-header"]}>
 						<h2 className={css["overlay-title"]} id={titleId}>
-							{t(["common", "search", "refine-search"])}
+							{t("common.search.refine-search")}
 						</h2>
 						<CloseButton autoFocus onPress={state.close} size="lg" />
 					</header>
-					{/* <Suspense
-            fallback={
-              <Centered>
-                <LoadingIndicator />
-              </Centered>
-            }
-          > */}
 					<SearchFacetsForm />
-					{/* </Suspense> */}
 				</ModalDialog>
 			) : null}
 		</Fragment>
@@ -194,7 +178,7 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 function ActiveCurationFacets(): ReactNode {
 	const name = "d.curation";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const values = searchFilters[name];
@@ -205,22 +189,18 @@ function ActiveCurationFacets(): ReactNode {
 
 	return (
 		<div className={css["active-facet"]}>
-			<h3 className={css["active-facet-title"]}>
-				{t(["authenticated", "moderate-items", "curation"])}
-			</h3>
+			<h3 className={css["active-facet-title"]}>{t("authenticated.moderate-items.curation")}</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
-							{t(["authenticated", "curation-flags", value])}
+							{t(`authenticated.curation-flags.${value}`)}
 							<RemoveFacetValueButton
 								name={name}
 								value={value}
-								label={t(["common", "search", "remove-filter-value"], {
-									values: {
-										facet: t(["authenticated", "moderate-items", "curation-flag", "one"]),
-										value: t(["authenticated", "curation-flags", value]),
-									},
+								label={t("common.search.remove-filter-value", {
+									facet: t("authenticated.moderate-items.curation-flag.one"),
+									value: t(`authenticated.curation-flags.${value}`),
 								})}
 							/>
 						</li>
@@ -234,7 +214,7 @@ function ActiveCurationFacets(): ReactNode {
 function ActiveItemStatusFacets(): ReactNode {
 	const name = "d.status";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const values = searchFilters[name];
@@ -245,20 +225,18 @@ function ActiveItemStatusFacets(): ReactNode {
 
 	return (
 		<div className={css["active-facet"]}>
-			<h3 className={css["active-facet-title"]}>{t(["common", "item", "status"])}</h3>
+			<h3 className={css["active-facet-title"]}>{t("common.item.status")}</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
-							{t(["common", "item-status", value])}
+							{t(`common.item-status.${value}`)}
 							<RemoveFacetValueButton
 								name={name}
 								value={value}
-								label={t(["common", "search", "remove-filter-value"], {
-									values: {
-										facet: t(["common", "item", "status"]),
-										value: t(["common", "item-status", value]),
-									},
+								label={t("common.search.remove-filter-value", {
+									facet: t("common.item.status"),
+									value: t(`common.item-status.${value}`),
 								})}
 							/>
 						</li>
@@ -273,7 +251,7 @@ function ActiveItemCategoryFacets(): ReactNode {
 	const facet = "item-category";
 	const name = "categories";
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const values = searchFilters[name];
@@ -284,20 +262,18 @@ function ActiveItemCategoryFacets(): ReactNode {
 
 	return (
 		<div className={css["active-facet"]}>
-			<h3 className={css["active-facet-title"]}>{t(["common", "facets", facet, "other"])}</h3>
+			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
-							{t(["common", "item-categories", value, "other"])}
+							{t(`common.item-categories.${value}.other`)}
 							<RemoveFacetValueButton
 								name={name}
 								value={value}
-								label={t(["common", "search", "remove-filter-value"], {
-									values: {
-										facet: t(["common", "facets", facet, "other"]),
-										value: t(["common", "item-categories", value, "other"]),
-									},
+								label={t("common.search.remove-filter-value", {
+									facet: t(`common.facets.${facet}.other`),
+									value: t(`common.item-categories.${value}.other`),
 								})}
 							/>
 						</li>
@@ -312,7 +288,7 @@ function ActiveSourceFacets(): ReactNode {
 	const facet = "source";
 	const name = "f.source";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const values = searchFilters[name];
@@ -323,7 +299,7 @@ function ActiveSourceFacets(): ReactNode {
 
 	return (
 		<div className={css["active-facet"]}>
-			<h3 className={css["active-facet-title"]}>{t(["common", "facets", facet, "other"])}</h3>
+			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
@@ -332,11 +308,9 @@ function ActiveSourceFacets(): ReactNode {
 							<RemoveFacetValueButton
 								name={name}
 								value={value}
-								label={t(["common", "search", "remove-filter-value"], {
-									values: {
-										facet: t(["common", "facets", facet, "one"]),
-										value,
-									},
+								label={t("common.search.remove-filter-value", {
+									facet: t(`common.facets.${facet}.one`),
+									value,
 								})}
 							/>
 						</li>
@@ -350,7 +324,7 @@ function ActiveSourceFacets(): ReactNode {
 function ActiveInformationContributorFacets(): ReactNode {
 	const name = "d.owner";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const values = searchFilters[name];
@@ -362,7 +336,7 @@ function ActiveInformationContributorFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>
-				{t(["authenticated", "moderate-items", "information-contributor", "other"])}
+				{t("authenticated.moderate-items.information-contributor.other")}
 			</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
@@ -372,11 +346,9 @@ function ActiveInformationContributorFacets(): ReactNode {
 							<RemoveFacetValueButton
 								name={name}
 								value={value}
-								label={t(["common", "search", "remove-filter-value"], {
-									values: {
-										facet: t(["authenticated", "moderate-items", "information-contributor", "one"]),
-										value,
-									},
+								label={t("common.search.remove-filter-value", {
+									facet: t("authenticated.moderate-items.information-contributor.one"),
+									value,
 								})}
 							/>
 						</li>
@@ -388,23 +360,23 @@ function ActiveInformationContributorFacets(): ReactNode {
 }
 
 function ActiveOtherFacets(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 
 	const fields = {
 		lastInfoUpdate: {
 			name: "d.lastInfoUpdate" as const,
-			label: t(["common", "item", "last-info-update"]),
+			label: t("common.item.last-info-update"),
 			value: searchFilters["d.lastInfoUpdate"][0],
 		},
 		deprecatedAtSource: {
 			name: "d.deprecated-at-source" as const,
-			label: t(["authenticated", "moderate-items", "deprecated-at-source"]),
+			label: t("authenticated.moderate-items.deprecated-at-source"),
 			value: searchFilters["d.deprecated-at-source"],
 		},
 		conflictAtSource: {
 			name: "d.conflict-at-source" as const,
-			label: t(["authenticated", "moderate-items", "conflict-at-source"]),
+			label: t("authenticated.moderate-items.conflict-at-source"),
 			value: searchFilters["d.conflict-at-source"],
 		},
 	};
@@ -420,52 +392,46 @@ function ActiveOtherFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>
-				{t(["authenticated", "moderate-items", "other-facets"])}
+				{t("authenticated.moderate-items.other-facets")}
 			</h3>
 			<ul role="list" className={css["active-facet-values"]}>
 				{fields.lastInfoUpdate.value != null ? (
 					<li className={css["active-facet-value"]}>
-						{t(["common", "item", "last-updated-on"], {
-							values: { date: fields.lastInfoUpdate.value },
+						{t("common.item.last-updated-on", {
+							date: fields.lastInfoUpdate.value,
 						})}
 						<RemoveFacetValueButton
 							name={fields.lastInfoUpdate.name}
 							value={fields.lastInfoUpdate.value}
-							label={t(["common", "search", "remove-filter-value"], {
-								values: {
-									facet: t(["common", "item", "last-info-update"]),
-									value: fields.lastInfoUpdate.value,
-								},
+							label={t("common.search.remove-filter-value", {
+								facet: t("common.item.last-info-update"),
+								value: fields.lastInfoUpdate.value,
 							})}
 						/>
 					</li>
 				) : null}
 				{fields.deprecatedAtSource.value === true ? (
 					<li className={css["active-facet-value"]}>
-						{t(["authenticated", "moderate-items", "deprecated-at-source"])}
+						{t("authenticated.moderate-items.deprecated-at-source")}
 						<RemoveFacetValueButton
 							name={fields.deprecatedAtSource.name}
 							value={fields.deprecatedAtSource.value}
-							label={t(["common", "search", "remove-filter-value"], {
-								values: {
-									facet: t(["authenticated", "moderate-items", "deprecated-at-source"]),
-									value: String(fields.deprecatedAtSource.value),
-								},
+							label={t("common.search.remove-filter-value", {
+								facet: t("authenticated.moderate-items.deprecated-at-source"),
+								value: String(fields.deprecatedAtSource.value),
 							})}
 						/>
 					</li>
 				) : null}
 				{fields.conflictAtSource.value === true ? (
 					<li className={css["active-facet-value"]}>
-						{t(["authenticated", "moderate-items", "conflict-at-source"])}
+						{t("authenticated.moderate-items.conflict-at-source")}
 						<RemoveFacetValueButton
 							name={fields.conflictAtSource.name}
 							value={fields.conflictAtSource.value}
-							label={t(["common", "search", "remove-filter-value"], {
-								values: {
-									facet: t(["authenticated", "moderate-items", "conflict-at-source"]),
-									value: String(fields.conflictAtSource.value),
-								},
+							label={t("common.search.remove-filter-value", {
+								facet: t("authenticated.moderate-items.conflict-at-source"),
+								value: String(fields.conflictAtSource.value),
 							})}
 						/>
 					</li>
@@ -503,16 +469,16 @@ function SearchFacetsForm(): ReactNode {
 }
 
 function CurationFacets(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
 
 	const name = "d.curation";
-	const label = t(["authenticated", "moderate-items", "curation"]);
+	const label = t("authenticated.moderate-items.curation");
 	const selectedKeys = searchFilters[name];
 
 	const items = curationFlags.map((flag) => {
-		return { id: flag, label: t(["authenticated", "curation-flags", flag]) };
+		return { id: flag, label: t(`authenticated.curation-flags.${flag}`) };
 	});
 
 	function onChange(keys: Array<string>) {
@@ -536,16 +502,16 @@ function CurationFacets(): ReactNode {
 
 // FIXME: Duplicate in ContributedItemsSearchFilters
 function ItemStatusFacets(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
 
 	const name = "d.status";
-	const label = t(["common", "item", "status"]);
+	const label = t("common.item.status");
 	const selectedKeys = searchFilters[name];
 
 	const items = queryableItemStatus.map((status) => {
-		return { id: status, label: t(["common", "item-status", status]) };
+		return { id: status, label: t(`common.item-status.${status}`) };
 	});
 
 	function onChange(keys: Array<string>) {
@@ -572,7 +538,7 @@ function ItemCategoryFacets(): ReactNode {
 	const facet = "item-category";
 	const name = "categories";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const selectedKeys = searchFilters[name];
 	const searchResults = useModerateItemsSearchResults();
@@ -620,7 +586,7 @@ function ItemCategoryFacets(): ReactNode {
 		<div>
 			<Facet
 				defaultOpen
-				label={t(["common", "facets", facet, "other"])}
+				label={t(`common.facets.${facet}.other`)}
 				name={name}
 				value={selectedKeys}
 				onChange={onChange}
@@ -628,7 +594,7 @@ function ItemCategoryFacets(): ReactNode {
 				{items.map(([value, { count }]) => {
 					return (
 						<FacetValue key={value} value={value}>
-							{t(["common", "item-categories", value, "other"])}
+							{t(`common.item-categories.${value}.other`)}
 							<span className={css["secondary"]}>{count}</span>
 						</FacetValue>
 					);
@@ -643,7 +609,7 @@ function SourceFacets(): ReactNode {
 	const facet = "source";
 	const name = "f.source";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const selectedKeys = searchFilters[name];
 	const searchResults = useModerateItemsSearchResults();
@@ -680,13 +646,13 @@ function SourceFacets(): ReactNode {
 		return (
 			<div>
 				<SearchFacetsOverlay
-					title={t(["common", "facets", facet, "other"])}
+					title={t(`common.facets.${facet}.other`)}
 					onClose={overlay.close}
 					triggerProps={triggerProps}
 				>
 					<CheckBoxGroup
 						{...(contentProps as any)}
-						aria-label={t(["common", "facets", facet, "other"])}
+						aria-label={t(`common.facets.${facet}.other`)}
 						name={name}
 						value={selectedKeys}
 						onChange={onChange}
@@ -708,7 +674,7 @@ function SourceFacets(): ReactNode {
 
 	const controls = (
 		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t(["common", "search", "show-more"])}
+			{t("common.search.show-more")}
 		</ButtonLink>
 	);
 
@@ -716,7 +682,7 @@ function SourceFacets(): ReactNode {
 		<div>
 			<Facet
 				defaultOpen
-				label={t(["common", "facets", facet, "other"])}
+				label={t(`common.facets.${facet}.other`)}
 				name={name}
 				value={selectedKeys}
 				onChange={onChange}
@@ -738,7 +704,7 @@ function SourceFacets(): ReactNode {
 function InformationContributorFacets(): ReactNode {
 	const name = "d.owner";
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const selectedKeys = searchFilters[name];
 	const users = useUsersInfinite({});
@@ -797,13 +763,13 @@ function InformationContributorFacets(): ReactNode {
 		return (
 			<div>
 				<SearchFacetsOverlay
-					title={t(["authenticated", "moderate-items", "information-contributor", "other"])}
+					title={t("authenticated.moderate-items.information-contributor.other")}
 					onClose={overlay.close}
 					triggerProps={triggerProps}
 				>
 					<CheckBoxGroup
 						{...(contentProps as any)}
-						aria-label={t(["authenticated", "moderate-items", "information-contributor", "other"])}
+						aria-label={t("authenticated.moderate-items.information-contributor.other")}
 						name={name}
 						value={selectedKeys}
 						onChange={onChange}
@@ -825,7 +791,7 @@ function InformationContributorFacets(): ReactNode {
 									users.fetchNextPage();
 								}}
 							>
-								{t(["common", "search", "show-more"])}
+								{t("common.search.show-more")}
 							</ButtonLink>
 						</div>
 					) : null}
@@ -836,7 +802,7 @@ function InformationContributorFacets(): ReactNode {
 
 	const controls = (
 		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t(["common", "search", "show-more"])}
+			{t("common.search.show-more")}
 		</ButtonLink>
 	);
 
@@ -845,7 +811,7 @@ function InformationContributorFacets(): ReactNode {
 			<Facet
 				controls={hasMoreItems ? controls : undefined}
 				defaultOpen
-				label={t(["authenticated", "moderate-items", "information-contributor", "other"])}
+				label={t("authenticated.moderate-items.information-contributor.other")}
 				name={name}
 				onChange={onChange}
 				value={selectedKeys}
@@ -863,7 +829,7 @@ function InformationContributorFacets(): ReactNode {
 }
 
 function OtherFacets(): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
 
@@ -873,7 +839,7 @@ function OtherFacets(): ReactNode {
 	const fields = {
 		lastInfoUpdate: {
 			name: "d.lastInfoUpdate",
-			label: t(["common", "item", "last-info-update"]),
+			label: t("common.item.last-info-update"),
 			value: searchFilters["d.lastInfoUpdate"][0] ?? "",
 			onChange(key: string) {
 				searchModerateItems({
@@ -885,7 +851,7 @@ function OtherFacets(): ReactNode {
 		},
 		deprecatedAtSource: {
 			name: "d.deprecated-at-source",
-			label: t(["authenticated", "moderate-items", "deprecated-at-source"]),
+			label: t("authenticated.moderate-items.deprecated-at-source"),
 			value: searchFilters["d.deprecated-at-source"],
 			onChange(key: boolean) {
 				searchModerateItems({
@@ -897,7 +863,7 @@ function OtherFacets(): ReactNode {
 		},
 		conflictAtSource: {
 			name: "d.conflict-at-source",
-			label: t(["authenticated", "moderate-items", "conflict-at-source"]),
+			label: t("authenticated.moderate-items.conflict-at-source"),
 			value: searchFilters["d.conflict-at-source"],
 			onChange(key: boolean) {
 				searchModerateItems({
@@ -912,7 +878,7 @@ function OtherFacets(): ReactNode {
 	return (
 		<div>
 			<FacetDisclosure
-				label={t(["authenticated", "moderate-items", "other-facets"])}
+				label={t("authenticated.moderate-items.other-facets")}
 				state={state}
 				triggerProps={triggerProps}
 			>

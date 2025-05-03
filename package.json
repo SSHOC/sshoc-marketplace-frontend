@@ -75,7 +75,6 @@
 		"@react-stately/tree": "^3.8.7",
 		"@react-stately/virtualizer": "^3.7.1",
 		"@stefanprobst/next-error-boundary": "^3.0.2",
-		"@stefanprobst/next-i18n": "^1.2.0",
 		"@stefanprobst/next-page-metadata": "^2.0.5",
 		"@stefanprobst/next-svg": "^4.2.1",
 		"@stefanprobst/rehype-extract-toc": "^3.0.0",

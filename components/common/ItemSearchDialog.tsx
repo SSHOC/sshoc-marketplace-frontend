@@ -1,4 +1,5 @@
 import { useId } from "@react-aria/utils";
+import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef, useState } from "react";
 
@@ -7,7 +8,6 @@ import { ItemSearchTermAutocomplete } from "@/components/common/ItemSearchTermAu
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { ModalDialog } from "@/components/search/ModalDialog";
 import { useSearchFilters } from "@/components/search/useSearchFilters";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
@@ -15,7 +15,7 @@ import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogT
 import { isNonEmptyString } from "@/lib/utils";
 
 export function ItemSearchDialog(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const searchFilters = useSearchFilters();
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const state = useModalDialogTriggerState({});
@@ -35,7 +35,7 @@ export function ItemSearchDialog(): ReactNode {
 				data-dialog="search-term"
 				onPress={state.open}
 			>
-				{t(["common", "search", "open-search-dialog"])}
+				{t("common.search.open-search-dialog")}
 			</Button>
 			{state.isOpen ? (
 				<ModalDialog
@@ -47,10 +47,10 @@ export function ItemSearchDialog(): ReactNode {
 				>
 					<header className={css["dialog-header"]}>
 						<h2 className={css["dialog-title"]} id={titleId}>
-							{t(["common", "search", "search-items"])}
+							{t("common.search.search-items")}
 						</h2>
 						<CloseButton
-							aria-label={t(["common", "search", "close-search-dialog"])}
+							aria-label={t("common.search.close-search-dialog")}
 							autoFocus
 							onPress={state.close}
 							size="lg"
@@ -75,7 +75,7 @@ interface ItemSearchFormProps {
 function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const { initialItemSearchTerm, onClose } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { searchItems } = useSearchItems();
 	const [itemSearchTerm, setItemSearchTerm] = useState(initialItemSearchTerm ?? "");
 
@@ -96,7 +96,7 @@ function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 			method="get"
 			action="/search"
 			onSubmit={onSubmit}
-			aria-label={t(["common", "search", "search-items"])}
+			aria-label={t("common.search.search-items")}
 			className={css["form-container"]}
 		>
 			<ItemSearchTermAutocomplete
@@ -105,7 +105,7 @@ function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 				onSubmit={onClose}
 			/>
 			<Button type="submit" color="gradient">
-				{t(["common", "search", "submit-search-term"])}
+				{t("common.search.submit-search-term")}
 			</Button>
 		</form>
 	);

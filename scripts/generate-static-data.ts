@@ -9,13 +9,13 @@ import { log, mapBy } from "@/lib/utils";
 
 const aboutCollection = {
 	folder: "content/about",
-	extension: "mdx"
-}
+	extension: "mdx",
+};
 
 const contributeCollection = {
 	folder: "content/contribute",
-	extension: "mdx"
-}
+	extension: "mdx",
+};
 
 interface PageMetadata {
 	title: string;
@@ -58,7 +58,10 @@ generate()
 
 //
 
-async function getCollectionPages(collection: { folder: string, extension: string }, pathname: string) {
+async function getCollectionPages(
+	collection: { folder: string; extension: string },
+	pathname: string,
+) {
 	if (collection.folder == null || collection.extension == null) {
 		throw new Error("Pages collection config requires `folder` and `extension` to be set.");
 	}

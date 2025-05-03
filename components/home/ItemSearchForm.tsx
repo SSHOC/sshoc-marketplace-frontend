@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { FormEvent, Key, ReactNode } from "react";
 import { useMemo, useState } from "react";
 
@@ -7,7 +8,6 @@ import { useSearchItems } from "@/components/common/useSearchItems";
 import css from "@/components/home/ItemSearchForm.module.css";
 import type { ItemCategory } from "@/data/sshoc/api/item";
 import { useItemCategories } from "@/data/sshoc/hooks/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { Item } from "@/lib/core/ui/Collection/Item";
 import { Select } from "@/lib/core/ui/Select/Select";
@@ -24,7 +24,7 @@ export interface ItemSearchFormProps {
 export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 	const { initialItemSearchTerm } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { searchItems } = useSearchItems();
 
 	const [selectedItemCategory, setSelectedItemCategory] =
@@ -49,7 +49,7 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 			method="get"
 			action="/search"
 			onSubmit={onSubmit}
-			aria-label={t(["common", "home", "search", "search-items"])}
+			aria-label={t("common.home.search.search-items")}
 			className={css["container"]}
 		>
 			<ItemCategorySelect
@@ -62,7 +62,7 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 				onChangeItemSearchTerm={setItemSearchTerm}
 			/>
 			<Button color="gradient" type="submit">
-				{t(["common", "home", "search", "submit"])}
+				{t("common.home.search.submit")}
 			</Button>
 		</form>
 	);
@@ -76,12 +76,12 @@ interface ItemCategoryOption {
 type ItemCategoryOptions = Array<ItemCategoryOption>;
 
 function useItemCategoryOptions() {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const itemCategories = useItemCategories();
 
 	const options: ItemCategoryOptions = useMemo(() => {
 		const options: ItemCategoryOptions = [
-			{ id: allItemCategories, label: t(["common", "home", "search", "all-item-categories"]) },
+			{ id: allItemCategories, label: t("common.home.search.all-item-categories") },
 		];
 
 		if (itemCategories.data == null) {
@@ -92,7 +92,7 @@ function useItemCategoryOptions() {
 			if (category === "step") {
 				return;
 			}
-			options.push({ id: category, label: t(["common", "item-categories", category, "other"]) });
+			options.push({ id: category, label: t(`common.item-categories.${category}.other`) });
 		});
 
 		return options;
@@ -109,7 +109,7 @@ interface ItemCategorySelectProps {
 function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 	const { selectedItemCategory, onSelectItemCategory } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const itemCategories = useItemCategoryOptions();
 
 	function onSelectionChange(key: Key) {
@@ -119,7 +119,7 @@ function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 	return (
 		<Select
 			name="categories"
-			aria-label={t(["common", "home", "search", "item-category"])}
+			aria-label={t("common.home.search.item-category")}
 			items={itemCategories.data}
 			loadingState={itemCategories.isLoading ? "loading" : undefined}
 			selectedKey={selectedItemCategory}

@@ -1,4 +1,5 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
@@ -8,21 +9,20 @@ import { SectionHeader } from "@/components/home/SectionHeader";
 import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
 import { maxRecommendedItems } from "@/config/sshoc.config";
 import { useItemSearch } from "@/data/sshoc/hooks/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
 export function RecommendedItems(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	return (
 		<section className={css["container"]}>
 			<SectionHeader>
-				<SectionTitle>{t(["common", "home", "recommended"])}</SectionTitle>
+				<SectionTitle>{t("common.home.recommended")}</SectionTitle>
 				<SectionHeaderLink
 					href={`/search?${createUrlSearchParams({ "f.keyword": "recommended", order: ["modified-on"] })}`}
 				>
-					{t(["common", "see-all"])}
+					{t("common.see-all")}
 				</SectionHeaderLink>
 			</SectionHeader>
 			<ul role="list" className={css["sections"]}>

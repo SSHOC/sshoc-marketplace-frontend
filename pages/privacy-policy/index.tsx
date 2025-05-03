@@ -1,5 +1,10 @@
+import { join } from "node:path";
+
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
+import { read } from "to-vfile";
+import { matter } from "vfile-matter";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
@@ -15,23 +20,19 @@ import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
+import { compile } from "@/lib/core/mdx/compile";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
-import { join } from "node:path";
-import { read } from "to-vfile";
-import { compile } from "@/lib/core/mdx/compile";
-import { matter } from "vfile-matter";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
 
 export namespace PrivacyPolicyPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export interface Props extends WithDictionaries<"common"> {
+	export interface Props {
+		messages: Messages;
 		lastUpdatedTimestamp: IsoDateString;
 		code: string;
 		metadata: any;
@@ -42,7 +43,7 @@ export async function getStaticProps(
 	context: GetStaticPropsContext<PrivacyPolicyPage.PathParams>,
 ): Promise<GetStaticPropsResult<PrivacyPolicyPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	const filePath = join("content", "privacy-policy", "privacy-policy.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
@@ -57,7 +58,7 @@ export async function getStaticProps(
 		props: {
 			code,
 			metadata,
-			dictionaries,
+			messages,
 			lastUpdatedTimestamp,
 		},
 	};
@@ -66,13 +67,13 @@ export async function getStaticProps(
 export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): ReactNode {
 	const { code, metadata } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "pages", "privacy-policy"]);
+	const title = t("common.pages.privacy-policy");
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
-		{ href: "/privacy-policy", label: t(["common", "pages", "privacy-policy"]) },
+		{ href: "/", label: t("common.pages.home") },
+		{ href: "/privacy-policy", label: t("common.pages.privacy-policy") },
 	];
 
 	const { default: PageContent } = useMdx(code);
@@ -92,7 +93,7 @@ export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): React
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error
+									// @ts-expect-error This is fine.
 									a: Link,
 								}}
 							/>

@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -17,8 +18,6 @@ import type { SearchFilters as ItemSearchFilters } from "@/components/search/use
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -28,30 +27,32 @@ export namespace SearchPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = ItemSearchFilters;
-	export type Props = WithDictionaries<"common">;
+	export type Props = {
+		messages: Messages;
+	};
 }
 
 export async function getStaticProps(
 	context: GetStaticPropsContext<SearchPage.PathParams>,
 ): Promise<GetStaticPropsResult<SearchPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 		},
 	};
 }
 
 export default function SearchPage(_props: SearchPage.Props): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "pages", "search"]);
+	const title = t("common.pages.search");
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
-		{ href: "/search", label: t(["common", "pages", "search"]) },
+		{ href: "/", label: t("common.pages.home") },
+		{ href: "/search", label: t("common.pages.search") },
 	];
 
 	return (
@@ -65,7 +66,7 @@ export default function SearchPage(_props: SearchPage.Props): ReactNode {
 						<Breadcrumbs links={breadcrumbs} />
 						<SpacedRow>
 							<ScreenTitle>
-								{t(["common", "search", "search-results"])}
+								{t("common.search.search-results")}
 								<SearchResultsCount />
 							</ScreenTitle>
 							<BackgroundFetchIndicator />

@@ -9,14 +9,13 @@ import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from "@re
 import type { AriaButtonProps } from "@react-types/button";
 import type { Placement } from "@react-types/overlays";
 import type { LoadingState } from "@react-types/shared";
+import { useTranslations } from "next-intl";
 import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
 import { Field } from "@/lib/core/ui/Field/Field";
-// import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import MagnifierIcon from "@/lib/core/ui/icons/magnifier.svg?symbol-icon";
 import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
@@ -45,14 +44,6 @@ export const SearchAutocomplete = forwardRef(function SearchAutocomplete<T exten
 	props: SearchAutocompleteProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	// const isMobile = useIsMobileDevice()
-
-	// if (isMobile) {
-	//   return <MobileSearchAutocomplete ref={forwardedRef} {...props} menuTrigger="input" />
-	// } else {
-	//   return <SearchAutocompleteBase ref={forwardedRef} {...props} />
-	// }
-
 	return <SearchAutocompleteBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: SearchAutocompleteProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
@@ -73,7 +64,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 		shouldFlip = true,
 	} = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const isAsync = loadingState != null;
 	const popoverRef = useRef<HTMLDivElement>(null);
@@ -188,7 +179,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 							return null;
 						}
 
-						return <span>{t(["common", "ui", "autocomplete", "no-results"])}</span>;
+						return <span>{t("common.ui.autocomplete.no-results")}</span>;
 					}}
 					shouldSelectOnPressUp
 					shouldUseVirtualFocus

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemLink } from "@/components/common/ItemLink";
@@ -16,7 +17,6 @@ import { useDeletePublicationVersion } from "@/data/sshoc/hooks/publication";
 import { useDeleteToolVersion } from "@/data/sshoc/hooks/tool-or-service";
 import { useDeleteTrainingMaterialVersion } from "@/data/sshoc/hooks/training-material";
 import { useDeleteWorkflowVersion } from "@/data/sshoc/hooks/workflow";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { itemRoutes } from "@/lib/core/navigation/item-routes";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
@@ -28,18 +28,18 @@ export interface DraftItemSearchResultProps {
 export function DraftItemSearchResult(props: DraftItemSearchResultProps): ReactNode {
 	const { item } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const meta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "draft-items", "delete-draft-item-pending"]);
+				return t("authenticated.draft-items.delete-draft-item-pending");
 			},
 			success() {
-				return t(["authenticated", "draft-items", "delete-draft-item-success"]);
+				return t("authenticated.draft-items.delete-draft-item-success");
 			},
 			error() {
-				return t(["authenticated", "draft-items", "delete-draft-item-error"]);
+				return t("authenticated.draft-items.delete-draft-item-error");
 			},
 		},
 	};
@@ -67,26 +67,24 @@ export function DraftItemSearchResult(props: DraftItemSearchResultProps): ReactN
 			</SearchResultTitle>
 			<SearchResultMeta>
 				<MetadataValue size="sm">
-					<MetadataLabel size="sm">
-						{t(["authenticated", "draft-items", "last-updated"])}:
-					</MetadataLabel>
+					<MetadataLabel size="sm">{t("authenticated.draft-items.last-updated")}:</MetadataLabel>
 					<Timestamp dateTime={item.lastInfoUpdate} />
 				</MetadataValue>
 			</SearchResultMeta>
 			<SearchResultContent>
 				<MetadataValue>
-					<MetadataLabel>{t(["common", "item", "item-category", "one"])}:</MetadataLabel>
-					<span>{t(["common", "item-categories", item.category, "one"])}</span>
+					<MetadataLabel>{t("common.item.item-category.one")}:</MetadataLabel>
+					<span>{t(`common.item-categories.${item.category}.one`)}</span>
 				</MetadataValue>
 			</SearchResultContent>
 			<SearchResultControls>
 				<ButtonLink
-					aria-label={t(["authenticated", "draft-items", "delete-item"], {
-						values: { label: item.label },
+					aria-label={t("authenticated.draft-items.delete-item", {
+						label: item.label,
 					})}
 					onPress={onDeleteDraftItem}
 				>
-					{t(["authenticated", "controls", "delete"])}
+					{t("authenticated.controls.delete")}
 				</ButtonLink>
 				<Link
 					href={itemRoutes.ItemEditVersionPage(item.category)(
@@ -96,11 +94,11 @@ export function DraftItemSearchResult(props: DraftItemSearchResultProps): ReactN
 						},
 						{ draft: true },
 					)}
-					aria-label={t(["authenticated", "draft-items", "edit-item"], {
-						values: { label: item.label },
+					aria-label={t("authenticated.draft-items.edit-item", {
+						label: item.label,
 					})}
 				>
-					{t(["authenticated", "controls", "edit"])}
+					{t("authenticated.controls.edit")}
 				</Link>
 			</SearchResultControls>
 		</SearchResult>

@@ -6,6 +6,7 @@ import type {
 	GetStaticPropsResult,
 } from "next";
 import { useRouter } from "next/router";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -23,8 +24,6 @@ import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { QueryMetadata } from "@/lib/core/query/types";
@@ -39,7 +38,8 @@ export namespace DatasetHistoryPage {
 	}
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export interface Props extends WithDictionaries<"authenticated" | "common"> {
+	export interface Props {
+		messages: Messages;
 		params: PathParams;
 	}
 }
@@ -67,11 +67,11 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<DatasetHistoryPage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as DatasetHistoryPage.PathParams;
-	const dictionaries = await load(locale, ["common", "authenticated"]);
+	const messages = await load(locale, ["common", "authenticated"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 			params,
 		},
 	};
@@ -93,14 +93,14 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): Rea
 	const datasetHistory = useDatasetHistory({ persistentId }, undefined, { meta });
 
 	const router = useRouter();
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const dataset = datasetHistory.data?.find((item) => {
 		return item.status === "approved";
 	});
 	const category = dataset?.category ?? "dataset";
-	const label = dataset?.label ?? t(["common", "item-categories", category, "one"]);
-	const title = t(["authenticated", "item-history", "item-history"], { values: { item: label } });
+	const label = dataset?.label ?? t(`common.item-categories.${category}.one`);
+	const title = t("authenticated.item-history.item-history", { item: label });
 
 	if (router.isFallback) {
 		return (
@@ -118,10 +118,10 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): Rea
 	}
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
+		{ href: "/", label: t("common.pages.home") },
 		{
 			href: `/search?${createUrlSearchParams({ categories: [category], order: ["label"] })}`,
-			label: t(["common", "item-categories", category, "other"]),
+			label: t(`common.item-categories.${category}.other`),
 		},
 		{
 			href: `/dataset/${persistentId}`,
@@ -129,7 +129,7 @@ export default function DatasetHistoryPage(props: DatasetHistoryPage.Props): Rea
 		},
 		{
 			href: `/dataset/${persistentId}/history`,
-			label: t(["authenticated", "pages", "item-version-history"]),
+			label: t("authenticated.pages.item-version-history"),
 		},
 	];
 

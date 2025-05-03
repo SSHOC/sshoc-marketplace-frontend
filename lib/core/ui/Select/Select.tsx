@@ -7,11 +7,11 @@ import { useSelectState } from "@react-stately/select";
 import type { Placement } from "@react-types/overlays";
 import type { AriaSelectProps } from "@react-types/select";
 import type { Alignment, LoadingState } from "@react-types/shared";
+import { useTranslations } from "next-intl";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, Fragment, useCallback, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
@@ -51,14 +51,6 @@ export const Select = forwardRef(function Select<T extends object>(
 	props: SelectProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	// const isMobile = useIsMobileDevice()
-
-	// if (isMobile) {
-	//   return <MobileSelect ref={forwardedRef} {...props}/>
-	// } else {
-	//   return <SelectBase ref={forwardedRef} {...props} />
-	// }
-
 	return <SelectBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
@@ -76,18 +68,16 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 		direction = "bottom",
 		isDisabled,
 		label,
-		// labelPosition = 'top' as LabelPosition,
 		layout: _layout,
 		loadingState,
 		maxHeight,
-		// menuWidth,
 		name,
 		shouldFlip = true,
 		size = "md",
 		validationState,
 	} = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const state = useSelectState<T>(props);
 	const popoverRef = useRef<HTMLDivElement>(null);
@@ -121,7 +111,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 	const { hoverProps, isHovered } = useHover(props);
 	const { focusProps, isFocusVisible } = useFocusRing(props);
 
-	const placeholder = props.placeholder ?? t(["common", "ui", "select", "placeholder"]);
+	const placeholder = props.placeholder ?? t("common.ui.select.placeholder");
 
 	const isInvalid = validationState === "invalid";
 

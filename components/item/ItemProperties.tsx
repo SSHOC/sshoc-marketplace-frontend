@@ -1,4 +1,6 @@
+import { useCollator } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 
@@ -8,7 +10,6 @@ import type { Item } from "@/data/sshoc/api/item";
 import type { Property } from "@/data/sshoc/api/property";
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import { usePublishPermission } from "@/data/sshoc/utils/usePublishPermission";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface ItemPropertiesProps {
 	properties: Item["properties"];
@@ -17,7 +18,7 @@ export interface ItemPropertiesProps {
 export function ItemProperties(props: ItemPropertiesProps): ReactNode {
 	const { properties } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const groups = useGroupedPropertyValues({ properties });
 
 	if (groups.length === 0) {
@@ -27,7 +28,7 @@ export function ItemProperties(props: ItemPropertiesProps): ReactNode {
 	return (
 		<div>
 			<dt>
-				<VisuallyHidden>{t(["common", "item", "properties", "other"])}</VisuallyHidden>
+				<VisuallyHidden>{t("common.item.properties.other")}</VisuallyHidden>
 			</dt>
 			<dd>
 				<dl className={css["groups"]}>
@@ -71,7 +72,7 @@ function useGroupedPropertyValues(
 ): Array<[string, Array<[string, Array<ReactNode>]>]> {
 	const { properties } = args;
 
-	const { createCollator } = useI18n<"common">();
+	const createCollator = useCollator();
 	const hasPermission = usePublishPermission();
 
 	const groups = useMemo(() => {

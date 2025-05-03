@@ -1,12 +1,12 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { NavLinkButton } from "@/components/common/NavLinkButton";
 import { useAuth } from "@/lib/core/auth/useAuth";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { AccountMenu } from "@/lib/core/page/AccountMenu";
 
 export function AuthButton(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { isSignedIn, isSignedOut } = useAuth();
 
 	if (isSignedIn) {
@@ -23,7 +23,7 @@ export function AuthButton(): ReactNode {
 					"--button-border-radius": "0 0 var(--border-radius-md) var(--border-radius-md)",
 				}}
 			>
-				{t(["common", "auth", "sign-in"])}
+				{t("common.auth.sign-in")}
 			</NavLinkButton>
 		);
 	}

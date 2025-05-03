@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import type { Messages } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { ErrorMessage } from "@/components/common/ErrorMessage";
@@ -11,8 +12,6 @@ import { ErrorScreenLayout } from "@/components/error/ErrorScreenLayout";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
@@ -20,7 +19,9 @@ export namespace NotFoundPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export type Props = WithDictionaries<"common">;
+	export type Props = {
+		messages: Messages;
+	};
 }
 
 export async function getStaticProps(
@@ -37,7 +38,7 @@ export async function getStaticProps(
 }
 
 export default function NotFoundPage(_props: NotFoundPage.Props): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const title = t(["common", "pages", "internal-server-error"]);
 	const message = t(["common", "internal-server-error-message"]);

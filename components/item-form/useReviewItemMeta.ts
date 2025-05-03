@@ -1,5 +1,6 @@
+import { useTranslations } from "next-intl";
+
 import type { ItemCategory } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 
 export interface useuseReviewItemMetaArgs {
@@ -14,24 +15,24 @@ export interface useuseReviewItemMetaResult {
 export function useReviewItemMeta(args: useuseReviewItemMetaArgs): useuseReviewItemMetaResult {
 	const { category } = args;
 
-	const { t } = useI18n<"authenticated" | "common">();
-	const label = t(["common", "item-categories", category, "one"]);
+	const t = useTranslations();
+	const label = t(`common.item-categories.${category}.one`);
 
 	const approve: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "forms", "approve-item-pending"], {
-					values: { category: label },
+				return t("authenticated.forms.approve-item-pending", {
+					category: label,
 				});
 			},
 			success() {
-				return t(["authenticated", "forms", "approve-item-success"], {
-					values: { category: label },
+				return t("authenticated.forms.approve-item-success", {
+					category: label,
 				});
 			},
 			error() {
-				return t(["authenticated", "forms", "approve-item-error"], {
-					values: { category: label },
+				return t("authenticated.forms.approve-item-error", {
+					category: label,
 				});
 			},
 		},
@@ -40,18 +41,18 @@ export function useReviewItemMeta(args: useuseReviewItemMetaArgs): useuseReviewI
 	const reject: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "forms", "reject-item-pending"], {
-					values: { category: label },
+				return t("authenticated.forms.reject-item-pending", {
+					category: label,
 				});
 			},
 			success() {
-				return t(["authenticated", "forms", "reject-item-success"], {
-					values: { category: label },
+				return t("authenticated.forms.reject-item-success", {
+					category: label,
 				});
 			},
 			error() {
-				return t(["authenticated", "forms", "reject-item-error"], {
-					values: { category: label },
+				return t("authenticated.forms.reject-item-error", {
+					category: label,
 				});
 			},
 		},

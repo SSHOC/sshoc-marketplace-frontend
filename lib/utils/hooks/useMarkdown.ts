@@ -1,17 +1,13 @@
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
-import * as runtime from "react/jsx-runtime"
+import * as runtime from "react/jsx-runtime";
 import toElements from "rehype-react";
 import withGfm from "remark-gfm";
 import fromMarkdown from "remark-parse";
 import toHast from "remark-rehype";
 import { unified } from "unified";
 
-const processor = unified()
-	.use(fromMarkdown)
-	.use(withGfm)
-	.use(toHast)
-	.use(toElements, runtime);
+const processor = unified().use(fromMarkdown).use(withGfm).use(toHast).use(toElements, runtime);
 
 export interface UseMarkdownArgs {
 	markdown: string;

@@ -1,10 +1,11 @@
+import { useCollator } from "@react-aria/i18n";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useMemo } from "react";
 
 import css from "@/components/item/ItemMetadata.module.css";
 import type { Actor } from "@/data/sshoc/api/actor";
 import type { Item } from "@/data/sshoc/api/item";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { createKey } from "@/lib/utils/create-key";
 
 export interface ItemActorsProps {
@@ -14,7 +15,7 @@ export interface ItemActorsProps {
 export function ItemActors(props: ItemActorsProps): ReactNode {
 	const { actors } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const roles = useGroupedActors({ actors });
 
 	if (roles.length === 0) {
@@ -24,7 +25,7 @@ export function ItemActors(props: ItemActorsProps): ReactNode {
 	return (
 		<div>
 			<dt>
-				<VisuallyHidden>{t(["common", "item", "actors", "other"])}</VisuallyHidden>
+				<VisuallyHidden>{t("common.item.actors.other")}</VisuallyHidden>
 			</dt>
 			<dd>
 				<dl className={css["groups"]}>
@@ -63,7 +64,7 @@ interface UseGroupedActorsArgs {
 function useGroupedActors(args: UseGroupedActorsArgs): Array<[string, Array<[string, Actor]>]> {
 	const { actors } = args;
 
-	const { createCollator } = useI18n<"common">();
+	const createCollator = useCollator();
 
 	const roles = useMemo(() => {
 		const compare = createCollator();

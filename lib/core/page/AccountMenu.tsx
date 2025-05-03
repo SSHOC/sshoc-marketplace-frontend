@@ -11,13 +11,13 @@ import { useTreeState } from "@react-stately/tree";
 import type { AriaMenuProps } from "@react-types/menu";
 import type { Node } from "@react-types/shared";
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import type { HTMLAttributes, ReactNode, RefObject } from "react";
 import { useEffect, useRef } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import css from "@/lib/core/page/AccountMenu.module.css";
 import menuStyles from "@/lib/core/page/NavigationMenu.module.css";
 import { Popover } from "@/lib/core/page/Popover";
@@ -25,7 +25,7 @@ import { useAccountMenuItems } from "@/lib/core/page/useAccountMenuItems";
 import { Button } from "@/lib/core/ui/Button/Button";
 
 export function AccountMenu(): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const { isSignedIn } = useAuth();
 	const currentUser = useCurrentUser();
 
@@ -64,8 +64,8 @@ export function AccountMenu(): ReactNode {
 				data-hovered={isHovered ? "" : undefined}
 				data-state={state.isOpen ? "expanded" : "collapsed"}
 			>
-				{t(["common", "auth", "account-menu-message"], {
-					values: { username: currentUser.data.displayName },
+				{t("common.auth.account-menu-message", {
+					username: currentUser.data.displayName,
 				})}
 			</button>
 			{state.isOpen ? (
@@ -73,7 +73,7 @@ export function AccountMenu(): ReactNode {
 					<Popover isDismissable isOpen={state.isOpen} onClose={state.close} shouldCloseOnBlur>
 						<DismissButton onDismiss={state.close} />
 						<Menu
-							aria-label={t(["common", "auth", "account-menu"])}
+							aria-label={t("common.auth.account-menu")}
 							autoFocus={state.focusStrategy || undefined}
 							items={items}
 							menuProps={menuProps}

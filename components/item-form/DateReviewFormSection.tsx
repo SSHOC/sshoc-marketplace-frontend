@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { FormSection } from "@/components/common/FormSection";
@@ -6,7 +7,6 @@ import { ReviewField } from "@/components/item-form/ReviewField";
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { ItemsDiff } from "@/data/sshoc/api/item";
 import { FormDateField } from "@/lib/core/form/FormDateField";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { DateField } from "@/lib/core/ui/DateField/DateField";
 
 export interface DateReviewFormSectionProps {
@@ -16,12 +16,12 @@ export interface DateReviewFormSectionProps {
 export function DateReviewFormSection(props: DateReviewFormSectionProps): ReactNode {
 	const { category, fields } = props.formFields;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	if (category === "dataset" || category === "publication" || category === "training-material") {
 		return (
 			<FormSection>
-				<FormSectionTitle>{t(["authenticated", "forms", "date-section"])}</FormSectionTitle>
+				<FormSectionTitle>{t("authenticated.forms.date-section")}</FormSectionTitle>
 
 				<ReviewField<ItemsDiff["item"]["dateCreated"]>
 					name={fields.label.name}

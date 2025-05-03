@@ -1,18 +1,18 @@
 import { useError } from "@stefanprobst/next-error-boundary";
 import { HttpError } from "@stefanprobst/request";
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect } from "react";
 
 import { SignInForm } from "@/components/auth/SignInForm";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { AuthorizationError } from "@/lib/core/error/AuthorizationError";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { FullPage } from "@/lib/core/ui/FullPage/FullPage";
 
 export function RootErrorFallback(): ReactNode {
 	const router = useRouter();
 	const { error, onReset } = useError();
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	/**
 	 * TODO:
@@ -42,7 +42,7 @@ export function RootErrorFallback(): ReactNode {
 			<FullPage>
 				<ErrorMessage
 					statusCode={error instanceof HttpError ? error.response.status : undefined}
-					message={t(["common", "default-authorization-error-message"])}
+					message={t("common.default-authorization-error-message")}
 				/>
 			</FullPage>
 		);

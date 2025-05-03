@@ -17,15 +17,14 @@ import type {
 	LoadingState,
 	NecessityIndicator,
 } from "@react-types/shared";
+import { useTranslations } from "next-intl";
 import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import css from "@/lib/core/ui/ComboBox/ComboBox.module.css";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
-// import { useIsMobileDevice } from '@/lib/core/ui/hooks/useIsMobileDevice'
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
 import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
@@ -63,14 +62,6 @@ export const ComboBox = forwardRef(function ComboBox<T extends object>(
 	props: ComboBoxProps<T>,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	// const isMobile = useIsMobileDevice()
-
-	// if (isMobile) {
-	//   return <MobileComboBox ref={forwardedRef} {...props} menuTrigger="input" />
-	// } else {
-	//   return <ComboBoxBase ref={forwardedRef} {...props} />
-	// }
-
 	return <ComboBoxBase ref={forwardedRef} {...props} />;
 }) as <T extends object>(
 	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
@@ -92,7 +83,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 		size = "md",
 	} = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const isAsync = loadingState != null;
 	const popoverRef = useRef<HTMLDivElement>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
@@ -215,8 +206,8 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 						return (
 							<span>
 								{loadingState === "loading"
-									? t(["common", "ui", "combobox", "loading"])
-									: t(["common", "ui", "combobox", "no-results"])}
+									? t("common.ui.combobox.loading")
+									: t("common.ui.combobox.no-results")}
 							</span>
 						);
 					}}

@@ -1,9 +1,9 @@
 import { useProgressBar } from "@react-aria/progress";
 import type { AriaLabelingProps, DOMProps } from "@react-types/shared";
+import { useTranslations } from "next-intl";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import css from "@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css";
 
 export interface ProgressSpinnerStyleProps {
@@ -22,15 +22,13 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
 ): ReactNode {
 	const { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, size = "md", style } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const { progressBarProps } = useProgressBar({
 		...props,
 		isIndeterminate: true,
 		"aria-label":
-			ariaLabel == null && ariaLabelledby == null
-				? t(["common", "default-spinner-message"])
-				: ariaLabel,
+			ariaLabel == null && ariaLabelledby == null ? t("common.default-spinner-message") : ariaLabel,
 	});
 
 	function getRadius() {

@@ -1,3 +1,5 @@
+import { useCollator } from "@react-aria/i18n";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { Fragment, useMemo } from "react";
 import { useFieldArray } from "react-final-form-arrays";
@@ -17,7 +19,6 @@ import type { PropertyInput, PropertyType } from "@/data/sshoc/api/property";
 import { usePropertyTypes } from "@/data/sshoc/hooks/property";
 import { usePublishPermission } from "@/data/sshoc/utils/usePublishPermission";
 import { useFieldState } from "@/lib/core/form/useFieldState";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { mapBy } from "@/lib/utils";
 
 export interface PropertiesFormFieldArrayProps {
@@ -27,7 +28,8 @@ export interface PropertiesFormFieldArrayProps {
 export function PropertiesFormFieldArray(props: PropertiesFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
-	const { t, createCollator } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
+	const createCollator = useCollator();
 	const compare = createCollator();
 	const fieldArray = useFieldArray<PropertyInput | UndefinedLeaves<PropertyInput>>(field.name, {
 		subscription: {},

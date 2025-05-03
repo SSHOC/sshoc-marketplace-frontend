@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -14,8 +15,6 @@ import type { PublicationInput } from "@/data/sshoc/api/publication";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
@@ -25,28 +24,30 @@ export namespace CreatePublicationPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export type Props = WithDictionaries<"authenticated" | "common">;
+	export type Props = {
+		messages: Messages;
+	};
 }
 
 export async function getStaticProps(
 	context: GetStaticPropsContext<CreatePublicationPage.PathParams>,
 ): Promise<GetStaticPropsResult<CreatePublicationPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common", "authenticated"]);
+	const messages = await load(locale, ["common", "authenticated"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 		},
 	};
 }
 
 export default function CreatePublicationPage(_props: CreatePublicationPage.Props): ReactNode {
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const category = "publication";
-	const label = t(["common", "item-categories", category, "one"]);
-	const title = t(["authenticated", "forms", "create-item"], { values: { item: label } });
+	const label = t(`common.item-categories.${category}.one`);
+	const title = t("authenticated.forms.create-item", { item: label });
 
 	return (
 		<Fragment>

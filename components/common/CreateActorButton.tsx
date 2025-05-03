@@ -1,9 +1,9 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useRef } from "react";
 
 import type { ActorFormValues } from "@/components/common/ActorForm";
 import { ActorForm } from "@/components/common/ActorForm";
 import { useCreateActor } from "@/data/sshoc/hooks/actor";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
@@ -26,17 +26,17 @@ export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 		dialog,
 		triggerRef,
 	);
-	const { t } = useI18n<"authenticated">();
+	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "actors", "create-actor-pending"]);
+				return t("authenticated.actors.create-actor-pending");
 			},
 			success() {
-				return t(["authenticated", "actors", "create-actor-success"]);
+				return t("authenticated.actors.create-actor-success");
 			},
 			error() {
-				return t(["authenticated", "actors", "create-actor-error"]);
+				return t("authenticated.actors.create-actor-error");
 			},
 		},
 	};
@@ -59,11 +59,11 @@ export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 		<Fragment>
 			{variant === "button-link" ? (
 				<ButtonLink ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t(["authenticated", "actors", "create-actor"])}
+					{t("authenticated.actors.create-actor")}
 				</ButtonLink>
 			) : (
 				<Button ref={triggerRef} {...triggerProps} color="gradient" onPress={onOpenDialog}>
-					{t(["authenticated", "actors", "create-actor"])}
+					{t("authenticated.actors.create-actor")}
 				</Button>
 			)}
 			{dialog.isOpen ? (
@@ -72,7 +72,7 @@ export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 					isDismissable
 					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
-					title={t(["authenticated", "actors", "create-actor"])}
+					title={t("authenticated.actors.create-actor")}
 				>
 					<ActorForm name="create-actor" onCancel={onCloseDialog} onSubmit={onCreateActor} />
 				</ModalDialog>

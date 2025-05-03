@@ -4,6 +4,7 @@ import type {
 	GetStaticPropsContext,
 	GetStaticPropsResult,
 } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { BackgroundImage } from "@/components/browse/BackgroundImage";
@@ -20,8 +21,6 @@ import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -32,8 +31,9 @@ export namespace BrowsePage {
 	}
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export interface Props extends WithDictionaries<"common"> {
+	export interface Props {
 		params: PathParams;
+		messages: Messages;
 	}
 }
 
@@ -59,11 +59,11 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<BrowsePage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as BrowsePage.PathParams;
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 			params,
 		},
 	};
@@ -72,14 +72,14 @@ export async function getStaticProps(
 export default function BrowsePage(props: BrowsePage.Props): ReactNode {
 	const id = props.params.id as ItemFacet;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "browse", "browse-facet"], {
-		values: { facet: t(["common", "facets", id, "other"]) },
+	const title = t("common.browse.browse-facet", {
+		facet: t(`common.facets.${id}.other`),
 	});
 
 	const breadcrumbs = [
-		{ href: "/", label: t(["common", "pages", "home"]) },
+		{ href: "/", label: t("common.pages.home") },
 		{ href: `/browse/${id}`, label: title },
 	];
 
@@ -95,15 +95,7 @@ export default function BrowsePage(props: BrowsePage.Props): ReactNode {
 						<ScreenTitle>{title}</ScreenTitle>
 					</ScreenHeader>
 					<BrowseFacets>
-						{/* <Suspense
-              fallback={
-                <Centered>
-                  <LoadingIndicator />
-                </Centered>
-              }
-            > */}
 						<BrowseFacetValues facet={id} />
-						{/* </Suspense> */}
 					</BrowseFacets>
 					<FundingNotice />
 				</BrowseScreenLayout>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -13,7 +14,6 @@ import {
 	useApproveSuggestedConcept,
 	useRejectSuggestedConcept,
 } from "@/data/sshoc/hooks/vocabulary";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 
@@ -24,18 +24,18 @@ export interface VocabularySearchResultProps {
 export function VocabularySearchResult(props: VocabularySearchResultProps): ReactNode {
 	const { concept } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const rejectConceptMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "concepts", "reject-candidate-concept-pending"]);
+				return t("authenticated.concepts.reject-candidate-concept-pending");
 			},
 			success() {
-				return t(["authenticated", "concepts", "reject-candidate-concept-success"]);
+				return t("authenticated.concepts.reject-candidate-concept-success");
 			},
 			error() {
-				return t(["authenticated", "concepts", "reject-candidate-concept-error"]);
+				return t("authenticated.concepts.reject-candidate-concept-error");
 			},
 		},
 	};
@@ -48,13 +48,13 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): Reac
 	const approveConceptMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "concepts", "approve-candidate-concept-pending"]);
+				return t("authenticated.concepts.approve-candidate-concept-pending");
 			},
 			success() {
-				return t(["authenticated", "concepts", "approve-candidate-concept-success"]);
+				return t("authenticated.concepts.approve-candidate-concept-success");
 			},
 			error() {
-				return t(["authenticated", "concepts", "approve-candidate-concept-error"]);
+				return t("authenticated.concepts.approve-candidate-concept-error");
 			},
 		},
 	};
@@ -80,23 +80,19 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): Reac
 			<SearchResultMeta>
 				{isCandidateConcept ? (
 					<MetadataValue size="sm">
-						<MetadataLabel size="sm">{t(["authenticated", "concepts", "status"])}:</MetadataLabel>
-						{t(["authenticated", "concepts", "concept-status", "candidate"])}
+						<MetadataLabel size="sm">{t("authenticated.concepts.status")}:</MetadataLabel>
+						{t("authenticated.concepts.concept-status.candidate")}
 					</MetadataValue>
 				) : null}
 			</SearchResultMeta>
 			<SearchResultContent>
 				<MetadataValues>
 					<MetadataValue>
-						<MetadataLabel>
-							{t(["authenticated", "concepts", "concept-vocabulary", "one"])}:
-						</MetadataLabel>
+						<MetadataLabel>{t("authenticated.concepts.concept-vocabulary.one")}:</MetadataLabel>
 						{concept.vocabulary.code}
 					</MetadataValue>
 					<MetadataValue>
-						<MetadataLabel>
-							{t(["authenticated", "concepts", "property-type", "other"])}:
-						</MetadataLabel>
+						<MetadataLabel>{t("authenticated.concepts.property-type.other")}:</MetadataLabel>
 						{concept.types
 							.map((type) => {
 								return type.code;
@@ -110,20 +106,20 @@ export function VocabularySearchResult(props: VocabularySearchResultProps): Reac
 				{isCandidateConcept ? (
 					<Fragment>
 						<ButtonLink
-							aria-label={t(["authenticated", "concepts", "reject-candidate-concept"], {
-								values: { label: concept.label },
+							aria-label={t("authenticated.concepts.reject-candidate-concept", {
+								label: concept.label,
 							})}
 							onPress={onReject}
 						>
-							{t(["authenticated", "controls", "reject"])}
+							{t("authenticated.controls.reject")}
 						</ButtonLink>
 						<ButtonLink
-							aria-label={t(["authenticated", "concepts", "approve-candidate-concept"], {
-								values: { label: concept.label },
+							aria-label={t("authenticated.concepts.approve-candidate-concept", {
+								label: concept.label,
 							})}
 							onPress={onApprove}
 						>
-							{t(["authenticated", "controls", "approve"])}
+							{t("authenticated.controls.approve")}
 						</ButtonLink>
 					</Fragment>
 				) : null}

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Key, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-final-form";
@@ -9,7 +10,6 @@ import type { RelatedItem } from "@/data/sshoc/api/item";
 import { useItemSearchInfinite } from "@/data/sshoc/hooks/item";
 import { FormComboBox } from "@/lib/core/form/FormComboBox";
 import { useFieldState } from "@/lib/core/form/useFieldState";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { Item } from "@/lib/core/ui/Collection/Item";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
@@ -22,7 +22,7 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): ReactNode 
 	const { field } = props;
 
 	const form = useForm();
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	const idField = "persistentId";
 	const labelField = "label";
@@ -95,7 +95,7 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): ReactNode 
 				return (
 					<Item key={item[idField]} textValue={item[labelField]}>
 						{item[labelField]}
-						<ItemInfo>{t(["common", "item-categories", item.category, "one"])}</ItemInfo>
+						<ItemInfo>{t(`common.item-categories.${item.category}.one`)}</ItemInfo>
 					</Item>
 				);
 			}}

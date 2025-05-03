@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -12,8 +13,6 @@ import { SuccessScreenLayout } from "@/components/success/SuccessScreenLayout";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import type { WithDictionaries } from "@/lib/core/i18n/types";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
@@ -21,26 +20,28 @@ export namespace SuccessPage {
 	export type PathParamsInput = Record<string, never>;
 	export type PathParams = StringParams<PathParamsInput>;
 	export type SearchParamsInput = Record<string, never>;
-	export type Props = WithDictionaries<"common">;
+	export type Props = {
+		messages: Messages;
+	};
 }
 
 export async function getStaticProps(
 	context: GetStaticPropsContext<SuccessPage.PathParams>,
 ): Promise<GetStaticPropsResult<SuccessPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 		},
 	};
 }
 
 export default function SuccessPage(_props: SuccessPage.Props): ReactNode {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
-	const title = t(["common", "pages", "success"]);
+	const title = t("common.pages.success");
 
 	return (
 		<Fragment>
@@ -50,11 +51,11 @@ export default function SuccessPage(_props: SuccessPage.Props): ReactNode {
 					<BackgroundGradient />
 					<SuccessCard>
 						<ScreenHeader>
-							<ScreenTitle>{t(["common", "success", "title"])}</ScreenTitle>
+							<ScreenTitle>{t("common.success.title")}</ScreenTitle>
 						</ScreenHeader>
-						<p>{t(["common", "success", "message"])}</p>
+						<p>{t("common.success.message")}</p>
 						<SuccessCardControls>
-							<LinkButton href="/">{t(["common", "success", "back-home"])}</LinkButton>
+							<LinkButton href="/">{t("common.success.back-home")}</LinkButton>
 						</SuccessCardControls>
 					</SuccessCard>
 					<FundingNotice />

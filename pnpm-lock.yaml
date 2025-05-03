@@ -151,9 +151,6 @@ importers:
       '@stefanprobst/next-error-boundary':
         specifier: ^3.0.2
         version: 3.0.2(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      '@stefanprobst/next-i18n':
-        specifier: ^1.2.0
-        version: 1.2.0(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@stefanprobst/next-page-metadata':
         specifier: ^2.0.5
         version: 2.0.5(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
@@ -1740,13 +1737,6 @@ packages:
 
   '@stefanprobst/next-error-boundary@3.0.2':
     resolution: {integrity: sha512-8IScHyhmvZgYBGHkE827f93dweG4p7ZR1L41QMWlo26DFrZfpHnkwY8HOX8QRmAf/DUJilCE3aSm5FGIQGmF8g==}
-    engines: {node: '>=14.17', yarn: 1.x}
-    peerDependencies:
-      next: '>=11.0.0'
-      react: '>=16.14.0'
-
-  '@stefanprobst/next-i18n@1.2.0':
-    resolution: {integrity: sha512-74cvB81L6O7TA34Cp3rQ0Rf3OudpfbbAAGAO+RNBJJyQbImUe2whyGzuQQJTqQPhFlzzGq+72EMPU2o+UPYu/w==}
     engines: {node: '>=14.17', yarn: 1.x}
     peerDependencies:
       next: '>=11.0.0'
@@ -6812,12 +6802,6 @@ snapshots:
   '@stefanprobst/assert@1.0.3': {}
 
   '@stefanprobst/next-error-boundary@3.0.2(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@stefanprobst/assert': 1.0.3
-      next: 15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-
-  '@stefanprobst/next-i18n@1.2.0(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@stefanprobst/assert': 1.0.3
       next: 15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

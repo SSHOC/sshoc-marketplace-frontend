@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useMemo, useRef } from "react";
 import { useField } from "react-final-form";
 import { useFieldArray } from "react-final-form-arrays";
@@ -16,7 +17,6 @@ import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import { useSubmitMediaUploadForm } from "@/components/item-form/useSubmitMediaUploadForm";
 import type { ItemMedia, ItemMediaInput } from "@/data/sshoc/api/item";
 import { FormThumbnail } from "@/lib/core/form/FormThumbnail";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
@@ -28,7 +28,7 @@ export interface MediaFormFieldArrayProps {
 export function MediaFormFieldArray(props: MediaFormFieldArrayProps): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const fieldArray = useFieldArray<ItemMediaInput | UndefinedLeaves<ItemMediaInput>>(field.name, {
 		subscription: {},
 	});
@@ -96,12 +96,12 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): ReactNode 
 							<FormFieldListItemControls>
 								<MediaEditButton name={name} field={field} onEdit={onEdit} />
 								<FormRecordRemoveButton
-									aria-label={t(["authenticated", "forms", "remove-field"], {
-										values: { field: field.itemLabel },
+									aria-label={t("authenticated.forms.remove-field", {
+										field: field.itemLabel,
 									})}
 									onPress={onRemove}
 								>
-									{t(["authenticated", "controls", "delete"])}
+									{t("authenticated.controls.delete")}
 								</FormRecordRemoveButton>
 							</FormFieldListItemControls>
 						</FormFieldListItem>
@@ -110,8 +110,8 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): ReactNode 
 			</FormFieldList>
 			<FormFieldArrayControls>
 				<FormRecordAddButton ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.itemLabel },
+					{t("authenticated.forms.add-field", {
+						field: field.itemLabel,
 					})}
 				</FormRecordAddButton>
 				{dialog.isOpen ? (
@@ -120,7 +120,7 @@ export function MediaFormFieldArray(props: MediaFormFieldArrayProps): ReactNode 
 						isDismissable
 						isOpen={dialog.isOpen}
 						onClose={onCloseDialog}
-						title={t(["authenticated", "media", "upload-media-dialog-title"])}
+						title={t("authenticated.media.upload-media-dialog-title")}
 					>
 						<MediaUploadForm
 							fileTypes={["image", "video"]}
@@ -144,7 +144,7 @@ interface MediaEditButtonProps {
 function MediaEditButton(props: MediaEditButtonProps): ReactNode {
 	const { field, onEdit, name } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 
 	const values = useField(name).input.value as ItemMedia | undefined;
 
@@ -198,12 +198,12 @@ function MediaEditButton(props: MediaEditButtonProps): ReactNode {
 			<FormRecordEditButton
 				ref={triggerRef}
 				{...triggerProps}
-				aria-label={t(["authenticated", "forms", "edit-field"], {
-					values: { field: field.itemLabel },
+				aria-label={t("authenticated.forms.edit-field", {
+					field: field.itemLabel,
 				})}
 				onPress={onOpenDialog}
 			>
-				{t(["authenticated", "controls", "edit"])}
+				{t("authenticated.controls.edit")}
 			</FormRecordEditButton>
 			{dialog.isOpen ? (
 				<ModalDialog
@@ -211,7 +211,7 @@ function MediaEditButton(props: MediaEditButtonProps): ReactNode {
 					isDismissable
 					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
-					title={t(["authenticated", "media", "upload-media-dialog-title"])}
+					title={t("authenticated.media.upload-media-dialog-title")}
 				>
 					<MediaUploadForm
 						initialValues={initialValues}

@@ -1,8 +1,8 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import css from "@/components/item/ItemMetadata.module.css";
 import type { User } from "@/data/sshoc/api/user";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
 export interface ItemContentContributorsProps {
@@ -12,7 +12,7 @@ export interface ItemContentContributorsProps {
 export function ItemContentContributors(props: ItemContentContributorsProps): ReactNode {
 	const { contentContributors } = props;
 
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 
 	if (contentContributors == null) {
 		return <LoadingIndicator />;
@@ -24,9 +24,7 @@ export function ItemContentContributors(props: ItemContentContributorsProps): Re
 
 	return (
 		<div className={css["group"]}>
-			<dt className={css["group-label"]}>
-				{t(["common", "item", "content-contributors", "other"])}
-			</dt>
+			<dt className={css["group-label"]}>{t("common.item.content-contributors.other")}</dt>
 			<dd>
 				<ul role="list" className={css["group-items"]}>
 					{contentContributors.map((contributor) => {

@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
+import { useTranslations } from "next-intl";
 import nprogress from "nprogress";
 import { useEffect } from "react";
-
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 const id = "page-load-indicator";
 
@@ -30,9 +29,9 @@ export interface UsePageLoadingIndicatorResult {
 }
 
 export function usePageLoadingIndicator(): UsePageLoadingIndicatorResult {
-	const { t } = useI18n<"common">();
+	const t = useTranslations();
 	const router = useRouter();
-	const message = t(["common", "page-loading-indicator"]);
+	const message = t("common.page-loading-indicator");
 	// FIXME: move outside of react to avoid re-render
 	// const [isLoading, setIsLoading] = useState(false)
 

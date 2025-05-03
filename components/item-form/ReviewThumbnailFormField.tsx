@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useRef } from "react";
 import { useForm } from "react-final-form";
 
@@ -15,7 +16,6 @@ import { useSubmitMediaUploadForm } from "@/components/item-form/useSubmitMediaU
 import type { ItemMediaInput, ItemsDiff } from "@/data/sshoc/api/item";
 import { FormThumbnail } from "@/lib/core/form/FormThumbnail";
 import { useFieldState } from "@/lib/core/form/useFieldState";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
@@ -28,7 +28,7 @@ export interface ReviewThumbnailFormFieldProps {
 export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): ReactNode {
 	const { field } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const form = useForm();
 	const dialog = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
@@ -88,12 +88,12 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 							<FormFieldListItemControls>
 								{thumbnail != null ? (
 									<FormRecordRemoveButton
-										aria-label={t(["authenticated", "forms", "remove-field"], {
-											values: { field: field.label },
+										aria-label={t("authenticated.forms.remove-field", {
+											field: field.label,
 										})}
 										onPress={onRemove}
 									>
-										{t(["authenticated", "controls", "delete"])}
+										{t("authenticated.controls.delete")}
 									</FormRecordRemoveButton>
 								) : null}
 							</FormFieldListItemControls>
@@ -103,8 +103,8 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 			</div>
 			<FormFieldArrayControls>
 				<FormRecordAddButton ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t(["authenticated", "forms", "add-field"], {
-						values: { field: field.label },
+					{t("authenticated.forms.add-field", {
+						field: field.label,
 					})}
 				</FormRecordAddButton>
 				{dialog.isOpen ? (
@@ -113,7 +113,7 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 						isDismissable
 						isOpen={dialog.isOpen}
 						onClose={onCloseDialog}
-						title={t(["authenticated", "media", "upload-media-dialog-title"])}
+						title={t("authenticated.media.upload-media-dialog-title")}
 					>
 						<MediaUploadForm
 							fileTypes={["image"]}

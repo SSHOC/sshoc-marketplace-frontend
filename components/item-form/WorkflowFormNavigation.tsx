@@ -1,4 +1,5 @@
 import type { FormApi } from "final-form";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm } from "react-final-form";
 
@@ -6,7 +7,6 @@ import type { WorkflowFormPage } from "@/components/item-form/useWorkflowFormPag
 import type { WorkflowFormValues } from "@/components/item-form/WorkflowForm";
 import css from "@/components/item-form/WorkflowFormNavigation.module.css";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 
 export interface WorkflowFormNavigationProps {
 	onBeforeSubmit?: (form: FormApi<WorkflowFormValues>) => void;
@@ -17,7 +17,7 @@ export interface WorkflowFormNavigationProps {
 export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): ReactNode {
 	const { page, setPage } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const form = useForm<WorkflowFormValues>();
 
 	if (page.type === "step") {
@@ -34,7 +34,7 @@ export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): Reac
 
 	return (
 		<nav
-			aria-label={t(["authenticated", "forms", "workflow-form-page-navigation"])}
+			aria-label={t("authenticated.forms.workflow-form-page-navigation")}
 			className={css["container"]}
 		>
 			<FormButtonLink isDisabled={page.type === "workflow"} onPress={onNavigateBackToWorkflow}>
@@ -42,7 +42,7 @@ export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): Reac
 					<span aria-hidden className={css["circle"]}>
 						1
 					</span>
-					{t(["common", "item-categories", "workflow", "one"])}
+					{t("common.item-categories.workflow.one")}
 				</div>
 			</FormButtonLink>
 			<FormButtonLink isDisabled={page.type === "steps"} onPress={onBeforeSubmit} type="submit">
@@ -50,7 +50,7 @@ export function WorkflowFormNavigation(props: WorkflowFormNavigationProps): Reac
 					<span aria-hidden className={css["circle"]}>
 						2
 					</span>
-					{t(["common", "item-categories", "step", "other"])}
+					{t("common.item-categories.step.other")}
 				</div>
 			</FormButtonLink>
 		</nav>

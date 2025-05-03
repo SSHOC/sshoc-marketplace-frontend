@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useRef } from "react";
 
 import { SourceForm } from "@/components/account/SourceForm";
@@ -11,7 +12,6 @@ import { SearchResultTitle } from "@/components/common/SearchResultTitle";
 import { Timestamp } from "@/components/common/Timestamp";
 import type { GetSources, SourceInput } from "@/data/sshoc/api/source";
 import { useDeleteSource, useUpdateSource } from "@/data/sshoc/hooks/source";
-import { useI18n } from "@/lib/core/i18n/useI18n";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
@@ -25,7 +25,7 @@ export interface SourceSearchResultProps {
 export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	const { source } = props;
 
-	const { t } = useI18n<"authenticated" | "common">();
+	const t = useTranslations();
 	const dialog = useModalDialogTriggerState({});
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const { triggerProps, overlayProps } = useModalDialogTrigger(
@@ -37,13 +37,13 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	const deleteSourceMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "sources", "delete-source-pending"]);
+				return t("authenticated.sources.delete-source-pending");
 			},
 			success() {
-				return t(["authenticated", "sources", "delete-source-success"]);
+				return t("authenticated.sources.delete-source-success");
 			},
 			error() {
-				return t(["authenticated", "sources", "delete-source-error"]);
+				return t("authenticated.sources.delete-source-error");
 			},
 		},
 	};
@@ -52,13 +52,13 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	const updateSourceMeta: MutationMetadata = {
 		messages: {
 			mutate() {
-				return t(["authenticated", "sources", "update-source-pending"]);
+				return t("authenticated.sources.update-source-pending");
 			},
 			success() {
-				return t(["authenticated", "sources", "update-source-success"]);
+				return t("authenticated.sources.update-source-success");
 			},
 			error() {
-				return t(["authenticated", "sources", "update-source-error"]);
+				return t("authenticated.sources.update-source-error");
 			},
 		},
 	};
@@ -89,7 +89,7 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 					{source.lastHarvestedDate != null ? (
 						<MetadataValue size="sm">
 							<MetadataLabel size="sm">
-								{t(["authenticated", "sources", "last-harvest-date"])}:
+								{t("authenticated.sources.last-harvest-date")}:
 							</MetadataLabel>
 							<Timestamp dateTime={source.lastHarvestedDate} />
 						</MetadataValue>
@@ -97,7 +97,7 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 				</SearchResultMeta>
 				<SearchResultContent>
 					<MetadataValue>
-						<MetadataLabel>{t(["authenticated", "sources", "source-url"])}:</MetadataLabel>
+						<MetadataLabel>{t("authenticated.sources.source-url")}:</MetadataLabel>
 						<a href={source.url} rel="noreferrer" target="_blank">
 							{source.url}
 						</a>
@@ -105,22 +105,22 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 				</SearchResultContent>
 				<SearchResultControls>
 					<ButtonLink
-						aria-label={t(["authenticated", "sources", "delete-source"], {
-							values: { label: source.label },
+						aria-label={t("authenticated.sources.delete-source", {
+							label: source.label,
 						})}
 						onPress={onDeleteSource}
 					>
-						{t(["authenticated", "controls", "delete"])}
+						{t("authenticated.controls.delete")}
 					</ButtonLink>
 					<ButtonLink
 						ref={triggerRef}
 						{...triggerProps}
-						aria-label={t(["authenticated", "sources", "edit-source"], {
-							values: { label: source.label },
+						aria-label={t("authenticated.sources.edit-source", {
+							label: source.label,
 						})}
 						onPress={onOpenEditDialog}
 					>
-						{t(["authenticated", "controls", "edit"])}
+						{t("authenticated.controls.edit")}
 					</ButtonLink>
 				</SearchResultControls>
 			</SearchResult>
@@ -130,7 +130,7 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 					isDismissable
 					isOpen={dialog.isOpen}
 					onClose={onCloseEditDialog}
-					title={t(["authenticated", "sources", "edit-source-dialog-title"])}
+					title={t("authenticated.sources.edit-source-dialog-title")}
 				>
 					<SourceForm
 						initialValues={source}
