@@ -23,7 +23,8 @@
 		background-color: var(--color-primary-600);
 	}
 
-	&[data-state="expanded"] {
+	&[data-state="expanded"],
+	&[aria-expanded="true"] {
 		background-color: var(--color-primary-600);
 	}
 }

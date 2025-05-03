@@ -1,9 +1,15 @@
-import { OverlayContainer } from "@react-aria/overlays";
 import { createUrlSearchParams } from "@stefanprobst/request";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useEffect, useRef } from "react";
+import { Fragment, type ReactNode, useEffect } from "react";
+import {
+	Button as AriaButton,
+	Dialog as AriaDialog,
+	DialogTrigger as AriaDialogTrigger,
+	Modal as AriaModal,
+	ModalOverlay as AriaModalOverlay,
+} from "react-aria-components";
 
 import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";
@@ -11,7 +17,7 @@ import { useAuth } from "@/lib/core/auth/useAuth";
 import { usePathname } from "@/lib/core/navigation/usePathname";
 import { Disclosure } from "@/lib/core/page/Disclosure";
 import css from "@/lib/core/page/MobileNavigationMenu.module.css";
-import { ModalDialog } from "@/lib/core/page/ModalDialog";
+import dialogStyles from "@/lib/core/page/ModalDialog.module.css";
 import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
 import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
 import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
@@ -21,8 +27,6 @@ import { Button } from "@/lib/core/ui/Button/Button";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import MenuIcon from "@/lib/core/ui/icons/menu.svg?symbol-icon";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import Logo from "@/public/assets/images/logo-with-text.svg";
 
 export function MobileNavigationMenu(): ReactNode {
@@ -36,96 +40,87 @@ export function MobileNavigationMenu(): ReactNode {
 function NavigationMenu(): ReactNode {
 	const t = useTranslations();
 	const { isSignedIn } = useAuth();
-	const state = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		state,
-		triggerRef,
-	);
-	const router = useRouter();
+
+	// const router = useRouter();
 	const pathname = usePathname();
 	const currentUser = useCurrentUser();
 
-	useEffect(() => {
-		router.events.on("routeChangeStart", state.close);
-		window.addEventListener("resize", state.close, { passive: true });
+	// useEffect(() => {
+	// 	router.events.on("routeChangeStart", state.close);
+	// 	window.addEventListener("resize", state.close, { passive: true });
 
-		return () => {
-			router.events.off("routeChangeStart", state.close);
-			window.removeEventListener("resize", state.close);
-		};
-	}, [router.events, state.close]);
+	// 	return () => {
+	// 		router.events.off("routeChangeStart", state.close);
+	// 		window.removeEventListener("resize", state.close);
+	// 	};
+	// }, [router.events, state.close]);
 
 	return (
-		<Fragment>
-			<Button
-				ref={triggerRef}
-				{...triggerProps}
+		<AriaDialogTrigger>
+			<AriaButton
 				aria-label={t("common.navigation-menu")}
 				color="gradient"
-				onPress={state.toggle}
 				style={{
 					"--button-padding-inline": "var(--space-2-5)",
 					"--button-padding-block": "var(--space-2-5)",
 				}}
 			>
 				<Icon icon={MenuIcon} />
-			</Button>
-			{state.isOpen ? (
-				<OverlayContainer>
-					<ModalDialog
-						{...(overlayProps as any)}
-						aria-label={t("common.navigation-menu")}
-						isOpen={state.isOpen}
-						onClose={state.close}
-						isDismissable
-					>
-						<header className={css["header"]}>
-							<div className={css["home-link"]}>
-								<NavLink aria-label={t("common.pages.home")} href="/">
-									<Image src={Logo} alt="" priority />
-								</NavLink>
-							</div>
-							<CloseButton autoFocus onPress={state.close} size="lg" />
-						</header>
-						<div className={css["content"]}>
-							<nav className={css["main-nav"]}>
-								<ul className={css["nav-items"]} role="list">
-									<AuthLinks onClose={state.close} />
-									<Separator />
-									<ItemCategoryNavLinks />
-									<Separator />
-									{isSignedIn ? (
-										<Fragment>
-											<CreateItemLinks />
-											<Separator />
-										</Fragment>
-									) : null}
-									<BrowseNavLinks />
-									<Separator />
-									<ContributeNavLinks />
-									<AboutNavLinks />
-									<Separator />
-									<li className={css["nav-item"]}>
-										<NavLink
-											variant="nav-mobile-menu-link"
-											href={`/contact?${createUrlSearchParams({
-												email: currentUser.data?.email,
-												subject: t("common.report-issue"),
-												message: t("common.report-issue-message", { pathname }),
-											})}`}
-										>
-											{t("common.report-issue")}
-										</NavLink>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</ModalDialog>
-				</OverlayContainer>
-			) : null}
-		</Fragment>
+			</AriaButton>
+			<AriaModalOverlay className={dialogStyles["backdrop"]}>
+				<AriaModal className={dialogStyles["container"]}>
+					<AriaDialog aria-label={t("common.navigation-menu")}>
+						{({ close }) => {
+							return (
+								<Fragment>
+									<header className={css["header"]}>
+										<div className={css["home-link"]}>
+											<NavLink aria-label={t("common.pages.home")} href="/">
+												<Image src={Logo} alt="" priority />
+											</NavLink>
+										</div>
+										<CloseButton autoFocus onPress={close} size="lg" />
+									</header>
+									<div className={css["content"]}>
+										<nav className={css["main-nav"]}>
+											<ul className={css["nav-items"]} role="list">
+												<AuthLinks onClose={close} />
+												<Separator />
+												<ItemCategoryNavLinks />
+												<Separator />
+												{isSignedIn ? (
+													<Fragment>
+														<CreateItemLinks />
+														<Separator />
+													</Fragment>
+												) : null}
+												<BrowseNavLinks />
+												<Separator />
+												<ContributeNavLinks />
+												<AboutNavLinks />
+												<Separator />
+												<li className={css["nav-item"]}>
+													<NavLink
+														variant="nav-mobile-menu-link"
+														href={`/contact?${createUrlSearchParams({
+															email: currentUser.data?.email,
+															subject: t("common.report-issue"),
+															message: t("common.report-issue-message", { pathname }),
+														})}`}
+													>
+														{t("common.report-issue")}
+													</NavLink>
+												</li>
+											</ul>
+										</nav>
+									</div>
+								</Fragment>
+							);
+						}}
+					</AriaDialog>
+				</AriaModal>
+			</AriaModalOverlay>
+		</AriaDialogTrigger>
 	);
 }
 

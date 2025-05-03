@@ -1,5 +1,3 @@
-import { Item } from "@react-stately/collections";
-import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
@@ -51,22 +49,10 @@ function ItemCategoryNavLinks(): ReactNode {
 function BrowseNavMenu(): ReactNode {
 	const t = useTranslations();
 	const items = useBrowseNavItems();
-	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t("common.pages.browse")} items={items}>
-				{(item) => {
-					const props = {
-						href: item.href,
-						onAction() {
-							router.push(item.href);
-						},
-					};
-
-					return <Item {...props}>{item.label}</Item>;
-				}}
-			</NavigationMenu>
+			<NavigationMenu label={t("common.pages.browse")} items={items} />
 		</li>
 	);
 }
@@ -74,22 +60,10 @@ function BrowseNavMenu(): ReactNode {
 function ContributeNavMenu(): ReactNode {
 	const t = useTranslations();
 	const items = useContributeNavItems();
-	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t("common.pages.contribute")} items={items}>
-				{(item) => {
-					const props = {
-						href: item.href,
-						onAction() {
-							router.push(item.href);
-						},
-					};
-
-					return <Item {...props}>{item.label}</Item>;
-				}}
-			</NavigationMenu>
+			<NavigationMenu label={t("common.pages.contribute")} items={items} />
 		</li>
 	);
 }
@@ -97,22 +71,10 @@ function ContributeNavMenu(): ReactNode {
 function AboutNavMenu(): ReactNode {
 	const t = useTranslations();
 	const items = useAboutNavItems();
-	const router = useRouter();
 
 	return (
 		<li className={css["nav-item"]}>
-			<NavigationMenu label={t("common.pages.about")} items={items}>
-				{(item) => {
-					const props = {
-						href: item.href,
-						onAction() {
-							router.push(item.href);
-						},
-					};
-
-					return <Item {...props}>{item.label}</Item>;
-				}}
-			</NavigationMenu>
+			<NavigationMenu label={t("common.pages.about")} items={items} />
 		</li>
 	);
 }

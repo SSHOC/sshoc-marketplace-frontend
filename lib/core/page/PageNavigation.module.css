@@ -77,7 +77,8 @@
 .nav-menu-button[data-state="collapsed"] {
 }
 
-.nav-menu-button[data-state="expanded"] {
+.nav-menu-button[data-state="expanded"],
+.nav-menu-button[aria-expanded="true"] {
 	background-color: var(--color-primary-600);
 	color: var(--color-neutral-0);
 }
