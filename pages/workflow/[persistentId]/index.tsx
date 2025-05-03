@@ -89,7 +89,7 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<WorkflowPage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as WorkflowPage.PathParams;
-	const messages = await load(locale, ["common"]);
+	const messages = await load(locale, ["authenticated", "common"]);
 
 	try {
 		const persistentId = params.persistentId;

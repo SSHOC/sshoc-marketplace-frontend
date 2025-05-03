@@ -84,7 +84,7 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<ToolOrServicePage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as ToolOrServicePage.PathParams;
-	const messages = await load(locale, ["common"]);
+	const messages = await load(locale, ["authenticated", "common"]);
 
 	try {
 		const persistentId = params.persistentId;

@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import type { Messages } from "next-intl";
+import { useTranslations, type Messages } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { ErrorMessage } from "@/components/common/ErrorMessage";
@@ -28,11 +28,11 @@ export async function getStaticProps(
 	context: GetStaticPropsContext<NotFoundPage.PathParams>,
 ): Promise<GetStaticPropsResult<NotFoundPage.Props>> {
 	const locale = getLocale(context);
-	const dictionaries = await load(locale, ["common"]);
+	const messages = await load(locale, ["common"]);
 
 	return {
 		props: {
-			dictionaries,
+			messages,
 		},
 	};
 }
@@ -40,8 +40,8 @@ export async function getStaticProps(
 export default function NotFoundPage(_props: NotFoundPage.Props): ReactNode {
 	const t = useTranslations();
 
-	const title = t(["common", "pages", "page-not-found"]);
-	const message = t(["common", "page-not-found-error-message"]);
+	const title = t("common.pages.page-not-found");
+	const message = t("common.page-not-found-error-message");
 
 	return (
 		<Fragment>
@@ -54,7 +54,7 @@ export default function NotFoundPage(_props: NotFoundPage.Props): ReactNode {
 						<ErrorMessage message={message} statusCode={404} />
 						<div>
 							<LinkButton href="/" color="secondary">
-								{t(["common", "go-to-main-page"])}
+								{t("common.go-to-main-page")}
 							</LinkButton>
 						</div>
 					</Content>

@@ -86,7 +86,7 @@ export async function getStaticProps(
 ): Promise<GetStaticPropsResult<DatasetPage.Props>> {
 	const locale = getLocale(context);
 	const params = context.params as DatasetPage.PathParams;
-	const messages = await load(locale, ["common"]);
+	const messages = await load(locale, ["authenticated", "common"]);
 
 	try {
 		const persistentId = params.persistentId;
