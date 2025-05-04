@@ -16,7 +16,7 @@
 	background-color: var(--color-footer-background);
 	column-gap: var(--column-gap);
 
-	@media (/* --screen-xs */ min-width: 30rem) {
+	@media (/* --breakpoint-xs */ min-width: 30rem) {
 		--column-gap: var(--size-8);
 
 		grid-template-areas: ". . footer-nav footer-nav footer-nav footer-nav footer-nav footer-nav footer-nav footer-nav footer-nav footer-nav . .";
@@ -33,7 +33,7 @@
 	padding-block: var(--space-2);
 	font-size: var(--font-size-ui-base);
 
-	@media (/* --screen-xs */ min-width: 30rem) {
+	@media (/* --breakpoint-xs */ min-width: 30rem) {
 		flex-direction: row;
 		padding-block: 0;
 	}

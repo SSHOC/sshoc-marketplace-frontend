@@ -7,9 +7,8 @@ import { NavLink } from "@/components/common/NavLink";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";
 import { usePathname } from "@/lib/core/navigation/usePathname";
 import { AuthButton } from "@/lib/core/page/AuthButton";
-import { MobileNavigationMenu } from "@/lib/core/page/MobileNavigationMenu";
 import css from "@/lib/core/page/PageHeader.module.css";
-import { PageNavigation } from "@/lib/core/page/PageNavigation";
+import { MobileNavigationMenu, PageNavigation } from "@/lib/core/page/PageNavigation";
 import Logo from "@/public/assets/images/logo-with-text.svg";
 
 export function PageHeader(): ReactNode {

@@ -1,46 +1,22 @@
 import { useTranslations } from "next-intl";
 
 import { useAuth } from "@/lib/core/auth/useAuth";
+import type { NavigationAction, NavigationLink } from "@/lib/core/page/PageNavigation";
 
-interface MenuItemBase {
-	id: string;
-	label: string;
-	type: "button" | "link" | "nav-link";
-}
-
-interface MenuItemNavLink extends MenuItemBase {
-	type: "nav-link";
-	href: string;
-}
-
-interface MenuItemLink extends MenuItemBase {
-	type: "link";
-	href: string;
-}
-
-interface MenuItemButton extends MenuItemBase {
-	type: "button";
-	onPress: () => void;
-}
-
-type MenuItem = MenuItemButton | MenuItemLink | MenuItemNavLink;
-
-export function useAccountMenuItems(): Array<MenuItem> {
+export function useAccountMenuItems(): Array<NavigationLink | NavigationAction> {
 	const t = useTranslations();
 	const { signOut } = useAuth();
 
-	const items: Array<MenuItem> = [
+	const items: Array<NavigationLink | NavigationAction> = [
 		{
-			id: "account",
 			label: t("common.pages.account"),
-			type: "nav-link",
+			type: "link",
 			href: `/account`,
 		},
 		{
-			id: "sign-out",
 			label: t("common.auth.sign-out"),
-			type: "button",
-			onPress() {
+			type: "action",
+			onAction() {
 				signOut();
 			},
 		},

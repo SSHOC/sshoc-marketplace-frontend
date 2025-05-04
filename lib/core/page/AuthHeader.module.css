@@ -8,11 +8,11 @@
 
 	display: none;
 
-	@media (/* --screen-xs */ min-width: 30rem) {
+	@media (/* --breakpoint-xs */ min-width: 30rem) {
 		--column-gap: var(--size-8);
 	}
 
-	@media (/* --page-navigation-bar */ min-width: 86.625rem) {
+	@media (/* --breakpoint-xl */ min-width: 80rem) {
 		display: grid;
 		grid-area: auth-header;
 		grid-template-columns:
@@ -34,10 +34,6 @@
 	font-size: var(--font-size-ui-sm);
 	line-height: var(--line-height-tight);
 	border-block: 1px solid var(--color-primary-100);
-
-	@media (/* --page-navigation-font-size */ min-width: 98.25rem) {
-		font-size: var(--font-size-ui-base);
-	}
 }
 
 .link {
