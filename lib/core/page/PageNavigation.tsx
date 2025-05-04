@@ -295,7 +295,12 @@ export function MobileNavigationMenu(): ReactNode {
 									<Fragment>
 										<header className="flex items-center justify-between gap-8 bg-neutral-100 py-4 pr-8 pl-4 text-primary-700">
 											<div className="flex max-w-64 flex-1 leading-none">
-												<Link aria-label={t("common.pages.home")} href="/" className="w-full">
+												<Link
+													aria-label={t("common.pages.home")}
+													href="/"
+													className="w-full"
+													onClick={close}
+												>
 													<Image src={Logo} alt="" priority />
 												</Link>
 											</div>
@@ -318,9 +323,7 @@ export function MobileNavigationMenu(): ReactNode {
 																		<Link
 																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			href={item.href}
-																			onClick={() => {
-																				close();
-																			}}
+																			onClick={close}
 																		>
 																			{item.label}
 																		</Link>
@@ -378,9 +381,7 @@ export function MobileNavigationMenu(): ReactNode {
 																										<Link
 																											href={item.href}
 																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
-																											onClick={() => {
-																												close();
-																											}}
+																											onClick={close}
 																										>
 																											{item.label}
 																										</Link>
