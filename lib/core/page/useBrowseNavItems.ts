@@ -1,12 +1,12 @@
 import { useTranslations } from "next-intl";
 
 import { itemFacets } from "@/data/sshoc/api/item";
-import type { NavItems } from "@/lib/core/page/types";
+import type { NavigationLink } from "@/lib/core/page/PageNavigation";
 
-export function useBrowseNavItems(): NavItems {
+export function useBrowseNavItems(): Array<NavigationLink> {
 	const t = useTranslations();
 
-	const items = itemFacets.map((id) => {
+	const items: Array<NavigationLink> = itemFacets.map((id) => {
 		const label = t("common.browse.browse-facet", {
 			facet: t(`common.facets.${id}.other`).toLowerCase(),
 		});
@@ -14,8 +14,7 @@ export function useBrowseNavItems(): NavItems {
 		const href = `/browse/${id}`;
 
 		return {
-			type: "link" as const,
-			id,
+			type: "link",
 			label,
 			href,
 		};

@@ -1,6 +1,5 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
-
-import { Link } from "@/components/common/Link";
 
 export interface SkipLinkProps {
 	children?: ReactNode;
@@ -17,7 +16,11 @@ export function SkipLink(props: SkipLinkProps): ReactNode {
 	}
 
 	return (
-		<Link href={"#" + id} onClick={moveFocus} variant="skip-link">
+		<Link
+			href={"#" + id}
+			className="absolute z-10 m-2 translate-y-[-125%] rounded-sm bg-neutral-0 p-4 text-primary-700 shadow focus-visible:translate-y-0"
+			onClick={moveFocus}
+		>
 			{props.children}
 		</Link>
 	);

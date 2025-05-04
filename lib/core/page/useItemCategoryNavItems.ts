@@ -3,10 +3,10 @@ import { useTranslations } from "next-intl";
 
 import type { ItemCategory } from "@/data/sshoc/api/item";
 import { useItemCategories } from "@/data/sshoc/hooks/item";
-import type { NavItems } from "@/lib/core/page/types";
+import type { NavigationLink } from "@/lib/core/page/PageNavigation";
 import { keys } from "@/lib/utils";
 
-export function useItemCategoryNavItems(): NavItems {
+export function useItemCategoryNavItems(): Array<NavigationLink> {
 	const t = useTranslations();
 	const itemCategories = useItemCategories();
 
@@ -14,14 +14,13 @@ export function useItemCategoryNavItems(): NavItems {
 		return [];
 	}
 
-	const items = keys(itemCategories.data)
+	const items: Array<NavigationLink> = keys(itemCategories.data)
 		.filter((category): category is ItemCategory => {
 			return category !== "step";
 		})
 		.map((category) => {
 			return {
-				type: "link" as const,
-				id: category,
+				type: "link",
 				label: t(`common.item-categories.${category}.other`),
 				href: `/search?${createUrlSearchParams({ categories: [category] })}`,
 			};

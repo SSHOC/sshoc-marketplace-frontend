@@ -3,24 +3,24 @@ import { useTranslations } from "next-intl";
 import type { ItemCategory } from "@/data/sshoc/api/item";
 import { useItemCategories } from "@/data/sshoc/hooks/item";
 import { itemRoutes as routes } from "@/lib/core/navigation/item-routes";
-import type { NavItems } from "@/lib/core/page/types";
+import type { NavigationLink } from "@/lib/core/page/PageNavigation";
 import { keys } from "@/lib/utils";
 
-export function useCreateItemLinks(): NavItems | null {
+export function useCreateItemLinks(): Array<NavigationLink> {
 	const t = useTranslations();
 	const itemCategories = useItemCategories();
 
 	if (itemCategories.data == null) {
-		return null;
+		return [];
 	}
 
-	const items = keys(itemCategories.data)
+	const items: Array<NavigationLink> = keys(itemCategories.data)
 		.filter((category): category is ItemCategory => {
 			return category !== "step";
 		})
-		.map((category) => {
+		.map((category): NavigationLink => {
 			return {
-				id: category,
+				type: "link",
 				label: t("common.create-new-item", {
 					item: t(`common.item-categories.${category}.one`),
 				}),
