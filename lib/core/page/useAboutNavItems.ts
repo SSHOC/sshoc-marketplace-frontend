@@ -9,7 +9,12 @@ const aboutPages = _aboutPages as Array<{
 
 export function useAboutNavItems(): NavItems {
 	const items = aboutPages.map((page) => {
-		return { id: page.label, label: page.label, href: page.href };
+		return {
+			type: "link" as const,
+			id: page.label,
+			label: page.label,
+			href: page.href,
+		};
 	});
 
 	return items;

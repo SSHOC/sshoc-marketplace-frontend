@@ -6,12 +6,12 @@ import { useItemCategories } from "@/data/sshoc/hooks/item";
 import type { NavItems } from "@/lib/core/page/types";
 import { keys } from "@/lib/utils";
 
-export function useItemCategoryNavItems(): NavItems | null {
+export function useItemCategoryNavItems(): NavItems {
 	const t = useTranslations();
 	const itemCategories = useItemCategories();
 
 	if (itemCategories.data == null) {
-		return null;
+		return [];
 	}
 
 	const items = keys(itemCategories.data)
@@ -20,6 +20,7 @@ export function useItemCategoryNavItems(): NavItems | null {
 		})
 		.map((category) => {
 			return {
+				type: "link" as const,
 				id: category,
 				label: t(`common.item-categories.${category}.other`),
 				href: `/search?${createUrlSearchParams({ categories: [category] })}`,

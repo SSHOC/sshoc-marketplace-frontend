@@ -1,178 +1,175 @@
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-	min-width: 0;
-	min-height: 0;
-	margin: 0;
-	padding: 0;
-	-webkit-tap-highlight-color: transparent;
-}
+@layer base {
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			/** Not set to 0, to ensure `transitionend` and `animationend` events are still fired. */
+			transition-duration: 0.01ms !important;
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			scroll-behavior: auto !important;
+		}
+	}
 
-:root {
-	overflow-x: hidden;
-
-	/* text-rendering: optimizeSpeed; */
-	background-color: var(--color-background);
-	color: var(--color-text);
-	font-size: var(--font-size-text);
-	font-family: var(--font-family-ui);
-	line-height: var(--line-height-default);
-	overflow-wrap: break-word;
-	tab-size: 4;
-	text-size-adjust: 100%;
-	touch-action: manipulation;
-	-webkit-font-smoothing: antialiased;
-}
-
-:root,
-body,
-#__next,
-[data-overlay-container] {
-	block-size: 100%;
-}
-
-/* :root:focus-within {
-  scroll-behavior: smooth;
-} */
-
-#__next,
-[data-overlay-container] {
-	/* overflow: hidden scroll; */
-	isolation: isolate;
-}
-
-:-moz-focusring {
-	outline: auto;
-}
-
-:focus,
-:focus-visible {
-	z-index: var(--z-index-focus-ring);
-	outline: 2px solid var(--color-focus-ring, Highlight);
-	outline: 2px solid var(--color-focus-ring, -webkit-focus-ring-color);
-	outline-offset: 2px;
-}
-
-:focus:not(:focus-visible) {
-	/**
-   * Not setting `outline: none` to keep all focus outlines (irrespective of `:focus-visible`)
-   * in Windows High Contrast Mode.
-   */
-	outline: 2px solid transparent;
-}
-
-::selection {
-	background-color: var(--color-selection-background);
-	color: var(--color-selection-text);
-}
-
-a {
-	color: inherit;
-	text-underline-offset: 0.25em;
-}
-
-button,
-input,
-select,
-textarea {
-	font: inherit;
-	letter-spacing: inherit;
-	word-spacing: inherit;
-}
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-	appearance: none;
-}
-
-textarea {
-	resize: vertical;
-}
-
-canvas,
-figure,
-iframe,
-img,
-picture,
-svg,
-video {
-	display: block;
-	max-width: 100%;
-}
-
-img[width][height] {
-	height: auto;
-}
-
-svg[data-symbol] {
-	max-height: 100%;
-}
-
-img[src$=".svg"] {
-	width: 100%;
-	max-width: none;
-	height: auto;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	color: var(--color-heading);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-	text-rendering: optimizeLegibility;
-}
-
-iframe {
-	border: none;
-}
-
-ol[role="list"],
-ul[role="list"] {
-	list-style: none;
-}
-
-fieldset {
-	border: none;
-}
-
-pre {
-	overflow: auto;
-}
-
-table {
-	border-collapse: collapse;
-	border-color: currentColor;
-	text-indent: 0;
-}
-
-[hidden] {
-	display: none !important;
-}
-
-[id] {
-	scroll-margin-block-start: 2ex;
-}
-
-@media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
 	*::after {
-		/** Not set to 0, to ensure `transitionend` and `animationend` events are still fired. */
-		transition-duration: 0.01ms !important;
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		scroll-behavior: auto !important;
+		box-sizing: border-box;
+		min-width: 0;
+		min-height: 0;
+		margin: 0;
+		padding: 0;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	:root {
+		overflow-x: hidden;
+
+		/* text-rendering: optimizeSpeed; */
+		background-color: var(--color-background);
+		color: var(--color-text);
+		font-size: var(--font-size-text);
+		font-family: var(--font-family-ui);
+		line-height: var(--line-height-default);
+		overflow-wrap: break-word;
+		tab-size: 4;
+		text-size-adjust: 100%;
+		touch-action: manipulation;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	:root,
+	body,
+	#__next,
+	[data-overlay-container] {
+		block-size: 100%;
+	}
+
+	#__next,
+	[data-overlay-container] {
+		isolation: isolate;
+	}
+
+	:-moz-focusring {
+		outline: auto;
+	}
+
+	:focus,
+	:focus-visible {
+		z-index: var(--z-index-focus-ring);
+		outline: 2px solid var(--color-focus-ring, Highlight);
+		outline: 2px solid var(--color-focus-ring, -webkit-focus-ring-color);
+		outline-offset: 2px;
+	}
+
+	:focus:not(:focus-visible) {
+		/**
+   * Not setting `outline: none` to keep all focus outlines (irrespective of `:focus-visible`)
+   * in Windows High Contrast Mode.
+   */
+		outline: 2px solid transparent;
+	}
+
+	::selection {
+		background-color: var(--color-selection-background);
+		color: var(--color-selection-text);
+	}
+
+	a {
+		color: inherit;
+		text-underline-offset: 0.25em;
+	}
+
+	button,
+	input,
+	select,
+	textarea {
+		font: inherit;
+		letter-spacing: inherit;
+		word-spacing: inherit;
+	}
+
+	input[type="search"]::-webkit-search-cancel-button,
+	input[type="search"]::-webkit-search-decoration {
+		appearance: none;
+	}
+
+	textarea {
+		resize: vertical;
+	}
+
+	canvas,
+	figure,
+	iframe,
+	img,
+	picture,
+	svg,
+	video {
+		display: block;
+		max-width: 100%;
+	}
+
+	img[width][height] {
+		height: auto;
+	}
+
+	svg[data-symbol] {
+		max-height: 100%;
+	}
+
+	img[src$=".svg"] {
+		width: 100%;
+		max-width: none;
+		height: auto;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: var(--color-heading);
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		text-rendering: optimizeLegibility;
+	}
+
+	iframe {
+		border: none;
+	}
+
+	ol[role="list"],
+	ul[role="list"] {
+		list-style: none;
+	}
+
+	fieldset {
+		border: none;
+	}
+
+	pre {
+		overflow: auto;
+	}
+
+	table {
+		border-collapse: collapse;
+		border-color: currentColor;
+		text-indent: 0;
+	}
+
+	[hidden] {
+		display: none !important;
+	}
+
+	[id] {
+		scroll-margin-block-start: 2ex;
 	}
 }

@@ -89,11 +89,11 @@
 		"final-form-set-field-touched": "^1.0.1",
 		"highlight-words-core": "^1.2.3",
 		"jwt-decode": "^4.0.0",
+		"lucide-react": "^0.507.0",
 		"mdast-util-to-markdown": "^2.1.2",
 		"next": "^15.3.1",
 		"next-intl": "^4.1.0",
 		"nodemailer": "^6.7.2",
-		"nprogress": "^0.2.0",
 		"react": "^18.3.1",
 		"react-aria": "^3.39.0",
 		"react-aria-components": "^1.8.0",
@@ -146,7 +146,6 @@
 		"@types/mdx": "^2.0.13",
 		"@types/node": "^22.15.2",
 		"@types/nodemailer": "^6.4.4",
-		"@types/nprogress": "^0.2.0",
 		"@types/react": "^18.3.20",
 		"@types/react-dom": "^18.3.6",
 		"autoprefixer": "^10.4.2",
@@ -157,7 +156,6 @@
 		"lint-staged": "^15.5.1",
 		"npm-run-all2": "^8.0.1",
 		"postcss": "^8.5.3",
-		"postcss-custom-media": "^11.0.5",
 		"postcss-nesting": "^13.0.1",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
@@ -194,7 +192,6 @@
 	},
 	"postcss": {
 		"plugins": {
-			"postcss-custom-media": {},
 			"postcss-nesting": {},
 			"autoprefixer": {},
 			"@tailwindcss/postcss": {}

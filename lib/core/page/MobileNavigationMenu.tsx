@@ -1,5 +1,7 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
+import { MenuIcon, XIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useEffect } from "react";
@@ -9,6 +11,7 @@ import {
 	DialogTrigger as AriaDialogTrigger,
 	Modal as AriaModal,
 	ModalOverlay as AriaModalOverlay,
+	Separator as AriaSeparator,
 } from "react-aria-components";
 
 import { NavLink } from "@/components/common/NavLink";
@@ -16,22 +19,17 @@ import { useCurrentUser } from "@/data/sshoc/hooks/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";
 import { usePathname } from "@/lib/core/navigation/usePathname";
 import { Disclosure } from "@/lib/core/page/Disclosure";
-import css from "@/lib/core/page/MobileNavigationMenu.module.css";
-import dialogStyles from "@/lib/core/page/ModalDialog.module.css";
 import { useAboutNavItems } from "@/lib/core/page/useAboutNavItems";
 import { useBrowseNavItems } from "@/lib/core/page/useBrowseNavItems";
 import { useContributeNavItems } from "@/lib/core/page/useContributeNavItems";
 import { useCreateItemLinks } from "@/lib/core/page/useCreateItemLinks";
 import { useItemCategoryNavItems } from "@/lib/core/page/useItemCategoryNavItems";
 import { Button } from "@/lib/core/ui/Button/Button";
-import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
-import { Icon } from "@/lib/core/ui/Icon/Icon";
-import MenuIcon from "@/lib/core/ui/icons/menu.svg?symbol-icon";
 import Logo from "@/public/assets/images/logo-with-text.svg";
 
 export function MobileNavigationMenu(): ReactNode {
 	return (
-		<nav className={css["container"]}>
+		<nav className="my-2 flex items-center justify-end gap-8 [grid-area:main-nav]">
 			<NavigationMenu />
 		</nav>
 	);
@@ -59,31 +57,33 @@ function NavigationMenu(): ReactNode {
 		<AriaDialogTrigger>
 			<AriaButton
 				aria-label={t("common.navigation-menu")}
-				color="gradient"
-				style={{
-					"--button-padding-inline": "var(--space-2-5)",
-					"--button-padding-block": "var(--space-2-5)",
-				}}
+				className="to-primay-600 bg-gradient-to-r from-primary-750 p-2.5"
 			>
-				<Icon icon={MenuIcon} />
+				<MenuIcon aria-hidden={true} className="size-10" />
 			</AriaButton>
-			<AriaModalOverlay className={dialogStyles["backdrop"]}>
-				<AriaModal className={dialogStyles["container"]}>
+			<AriaModalOverlay className="fixed inset-0 z-10 flex animate-fade-in justify-end">
+				<AriaModal className="flex w-128 max-w-full animate-slide-in-from-right flex-col overflow-hidden bg-neutral-50 shadow">
 					<AriaDialog aria-label={t("common.navigation-menu")}>
 						{({ close }) => {
 							return (
 								<Fragment>
-									<header className={css["header"]}>
-										<div className={css["home-link"]}>
-											<NavLink aria-label={t("common.pages.home")} href="/">
+									<header className="flex items-center justify-between gap-8 bg-neutral-100 py-4 pr-8 pl-4 text-primary-700">
+										<div className="flex max-w-64 flex-1 leading-none">
+											<Link aria-label={t("common.pages.home")} href="/" className="w-full">
 												<Image src={Logo} alt="" priority />
-											</NavLink>
+											</Link>
 										</div>
-										<CloseButton autoFocus onPress={close} size="lg" />
+										<AriaButton
+											className="focus-visible::text-primary-600 hover:text-primary-600"
+											onPress={close}
+										>
+											<XIcon aria-hidden={true} className="size-10" />
+											<span className="sr-only">{t("common.close")}</span>
+										</AriaButton>
 									</header>
-									<div className={css["content"]}>
-										<nav className={css["main-nav"]}>
-											<ul className={css["nav-items"]} role="list">
+									<div className="flex flex-col overflow-auto text-md">
+										<nav className="py-0.5">
+											<ul className="flex flex-col gap-y-1" role="list">
 												<AuthLinks onClose={close} />
 												<Separator />
 												<ItemCategoryNavLinks />
@@ -99,7 +99,7 @@ function NavigationMenu(): ReactNode {
 												<ContributeNavLinks />
 												<AboutNavLinks />
 												<Separator />
-												<li className={css["nav-item"]}>
+												<li className="flex flex-col gap-1">
 													<NavLink
 														variant="nav-mobile-menu-link"
 														href={`/contact?${createUrlSearchParams({
@@ -144,7 +144,7 @@ function AuthLinks(props: AuthLinksProps): ReactNode {
 		const item = { href: `/auth/sign-in`, label: t("common.auth.sign-in") };
 
 		return (
-			<li className={css["nav-item"]}>
+			<li className="flex flex-col gap-1">
 				<NavLink href={item.href} variant="nav-mobile-menu-link">
 					{item.label}
 				</NavLink>
@@ -159,24 +159,24 @@ function AuthLinks(props: AuthLinksProps): ReactNode {
 	}>;
 
 	return (
-		<li className={css["nav-item"]}>
+		<li className="flex flex-col gap-1">
 			<Disclosure
 				label={t("common.auth.account-menu-message", {
 					username: currentUser.data.displayName,
 				})}
-				className={css["nav-link-disclosure-button"]}
+				className="flex items-center justify-between border-l-4 border-neutral-200 bg-neutral-50 px-8 py-6 leading-5.5 text-primary-600 text-primary-700 outline-offset-0 hover:border-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 expanded:border-primary-750 expanded:bg-primary-600 expanded:text-neutral-0"
 			>
 				<ul role="list">
 					{items.map((item) => {
 						return (
-							<li className={css["nav-item"]} key={item.id}>
+							<li className="flex flex-col gap-1" key={item.id}>
 								<NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
 									{item.label}
 								</NavLink>
 							</li>
 						);
 					})}
-					<li className={css["nav-item"]}>
+					<li className="flex flex-col gap-1">
 						<Button onPress={onSignOut} variant="nav-mobile-menu-link-secondary">
 							{t("common.auth.sign-out")}
 						</Button>
@@ -198,7 +198,7 @@ function ItemCategoryNavLinks(): ReactNode {
 		<Fragment>
 			{items.map((item) => {
 				return (
-					<li className={css["nav-item"]} key={item.id}>
+					<li className="flex flex-col gap-1" key={item.id}>
 						<NavLink href={item.href} variant="nav-mobile-menu-link">
 							{item.label}
 						</NavLink>
@@ -214,12 +214,15 @@ function BrowseNavLinks(): ReactNode {
 	const items = useBrowseNavItems();
 
 	return (
-		<li className={css["nav-item"]}>
-			<Disclosure label={t("common.pages.browse")} className={css["nav-link-disclosure-button"]}>
+		<li className="flex flex-col gap-1">
+			<Disclosure
+				label={t("common.pages.browse")}
+				className="flex items-center justify-between border-l-4 border-neutral-200 bg-neutral-50 px-8 py-6 leading-5.5 text-primary-600 text-primary-700 outline-offset-0 hover:border-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 expanded:border-primary-750 expanded:bg-primary-600 expanded:text-neutral-0"
+			>
 				<ul role="list">
 					{items.map((item) => {
 						return (
-							<li className={css["nav-item"]} key={item.id}>
+							<li className="flex flex-col gap-1" key={item.id}>
 								<NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
 									{item.label}
 								</NavLink>
@@ -237,15 +240,15 @@ function ContributeNavLinks(): ReactNode {
 	const items = useContributeNavItems();
 
 	return (
-		<li className={css["nav-item"]}>
+		<li className="flex flex-col gap-1">
 			<Disclosure
 				label={t("common.pages.contribute")}
-				className={css["nav-link-disclosure-button"]}
+				className="flex items-center justify-between border-l-4 border-neutral-200 bg-neutral-50 px-8 py-6 leading-5.5 text-primary-600 text-primary-700 outline-offset-0 hover:border-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 expanded:border-primary-750 expanded:bg-primary-600 expanded:text-neutral-0"
 			>
 				<ul role="list">
 					{items.map((item) => {
 						return (
-							<li className={css["nav-item"]} key={item.id}>
+							<li className="flex flex-col gap-1" key={item.id}>
 								<NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
 									{item.label}
 								</NavLink>
@@ -263,12 +266,15 @@ function AboutNavLinks(): ReactNode {
 	const items = useAboutNavItems();
 
 	return (
-		<li className={css["nav-item"]}>
-			<Disclosure label={t("common.pages.about")} className={css["nav-link-disclosure-button"]}>
+		<li className="flex flex-col gap-1">
+			<Disclosure
+				label={t("common.pages.about")}
+				className="flex items-center justify-between border-l-4 border-neutral-200 bg-neutral-50 px-8 py-6 leading-5.5 text-primary-600 text-primary-700 outline-offset-0 hover:border-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 expanded:border-primary-750 expanded:bg-primary-600 expanded:text-neutral-0"
+			>
 				<ul role="list">
 					{items.map((item) => {
 						return (
-							<li className={css["nav-item"]} key={item.id}>
+							<li className="flex flex-col gap-1" key={item.id}>
 								<NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
 									{item.label}
 								</NavLink>
@@ -290,15 +296,15 @@ function CreateItemLinks(): ReactNode {
 	}
 
 	return (
-		<li className={css["nav-item"]}>
+		<li className="flex flex-col gap-1">
 			<Disclosure
 				label={t("common.create-new-items")}
-				className={css["nav-link-disclosure-button"]}
+				className="flex items-center justify-between border-l-4 border-neutral-200 bg-neutral-50 px-8 py-6 leading-5.5 text-primary-600 text-primary-700 outline-offset-0 hover:border-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 expanded:border-primary-750 expanded:bg-primary-600 expanded:text-neutral-0"
 			>
 				<ul role="list">
 					{items.map((item) => {
 						return (
-							<li className={css["nav-item"]} key={item.id}>
+							<li className="flex flex-col gap-1" key={item.id}>
 								<NavLink href={item.href} variant="nav-mobile-menu-link-secondary">
 									{item.label}
 								</NavLink>
@@ -312,5 +318,5 @@ function CreateItemLinks(): ReactNode {
 }
 
 function Separator(): ReactNode {
-	return <li role="separator" className={css["nav-separator"]} />;
+	return <AriaSeparator elementType="li" className="h-px w-full bg-neutral-150" />;
 }

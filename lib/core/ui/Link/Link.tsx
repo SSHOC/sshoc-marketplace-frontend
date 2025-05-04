@@ -32,8 +32,6 @@ export interface LinkProps
 		| "breadcrumb"
 		| "heading"
 		| "nav-link-footer"
-		| "nav-link-header"
-		| "nav-menu-link"
 		| "nav-mobile-menu-link-secondary"
 		| "nav-mobile-menu-link"
 		| "pagination"

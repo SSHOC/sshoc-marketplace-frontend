@@ -13,7 +13,12 @@ export function useBrowseNavItems(): NavItems {
 
 		const href = `/browse/${id}`;
 
-		return { id, label, href };
+		return {
+			type: "link" as const,
+			id,
+			label,
+			href,
+		};
 	});
 
 	return items;

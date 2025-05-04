@@ -46,12 +46,7 @@ export interface ButtonProps<T extends ElementType = "button"> extends AriaButto
 	style?: ButtonStyleProps;
 	trigger?: "collapsed" | "expanded";
 	/** @default 'fill' */
-	variant?:
-		| "border"
-		| "fill"
-		| "nav-menu-link"
-		| "nav-mobile-menu-link-secondary"
-		| "nav-mobile-menu-link";
+	variant?: "border" | "fill" | "nav-mobile-menu-link-secondary" | "nav-mobile-menu-link";
 }
 
 export const Button = forwardRef(function Button<T extends ElementType = "button">(

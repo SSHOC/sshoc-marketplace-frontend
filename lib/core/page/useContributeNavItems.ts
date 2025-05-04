@@ -9,7 +9,12 @@ const contributePages = _contributePages as Array<{
 
 export function useContributeNavItems(): NavItems {
 	const items = contributePages.map((page) => {
-		return { id: page.label, label: page.label, href: page.href };
+		return {
+			type: "link" as const,
+			id: page.label,
+			label: page.label,
+			href: page.href,
+		};
 	});
 
 	return items;
