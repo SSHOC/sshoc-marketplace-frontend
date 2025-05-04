@@ -289,7 +289,7 @@ export function MobileNavigationMenu(): ReactNode {
 					className="fixed inset-0 z-10 flex animate-fade-in justify-end"
 				>
 					<AriaModal className="flex w-128 max-w-full animate-slide-in-from-right flex-col overflow-hidden bg-neutral-50 shadow">
-						<AriaDialog className="h-full" aria-label={t("common.navigation-menu")}>
+						<AriaDialog className="flex h-full flex-col" aria-label={t("common.navigation-menu")}>
 							{({ close }) => {
 								return (
 									<Fragment>
@@ -307,14 +307,14 @@ export function MobileNavigationMenu(): ReactNode {
 												<span className="sr-only">{t("common.close")}</span>
 											</AriaButton>
 										</header>
-										<div className="flex flex-col overflow-auto text-md">
-											<nav className="py-0.5">
+										<div className="flex flex-1 flex-col text-md">
+											<nav className="h-full overflow-auto py-0.5">
 												<ul className="flex flex-col gap-y-1" role="list">
 													{items.map((item, index) => {
 														switch (item.type) {
 															case "link": {
 																return (
-																	<li key={index} className="flex flex-col gap-1">
+																	<li key={index} className="flex shrink-0 flex-col gap-1">
 																		<Link
 																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			href={item.href}
@@ -330,7 +330,7 @@ export function MobileNavigationMenu(): ReactNode {
 
 															case "action": {
 																return (
-																	<li key={index} className="flex flex-col gap-1">
+																	<li key={index} className="flex shrink-0 flex-col gap-1">
 																		<AriaButton
 																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			onPress={chain(item.onAction, close)}
@@ -353,7 +353,7 @@ export function MobileNavigationMenu(): ReactNode {
 
 															case "menu": {
 																return (
-																	<li key={index} className="flex flex-col gap-1">
+																	<li key={index} className="flex shrink-0 flex-col gap-1">
 																		<AriaDisclosure className="group">
 																			<AriaButton
 																				slot="trigger"
@@ -371,7 +371,10 @@ export function MobileNavigationMenu(): ReactNode {
 																						switch (item.type) {
 																							case "link": {
 																								return (
-																									<li key={index} className="flex flex-col gap-1">
+																									<li
+																										key={index}
+																										className="flex shrink-0 flex-col gap-1"
+																									>
 																										<Link
 																											href={item.href}
 																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
@@ -387,7 +390,10 @@ export function MobileNavigationMenu(): ReactNode {
 
 																							case "action": {
 																								return (
-																									<li key={index} className="flex flex-col gap-1">
+																									<li
+																										key={index}
+																										className="flex shrink-0 flex-col gap-1"
+																									>
 																										<AriaButton
 																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																											onPress={chain(item.onAction, close)}

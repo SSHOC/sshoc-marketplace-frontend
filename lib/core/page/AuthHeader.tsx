@@ -11,16 +11,16 @@ export function AuthHeader(): ReactNode {
 	const items = useCreateItemLinks();
 	const { isSignedIn } = useAuth();
 
-	if (!isSignedIn || items == null) {
+	if (!isSignedIn || items.length === 0) {
 		return null;
 	}
 
 	return (
 		<nav aria-label={t("common.create-new-items")} className={css["container"]}>
 			<ul role="list" className={css["items"]}>
-				{items.map((item) => {
+				{items.map((item, index) => {
 					return (
-						<li key={item.id}>
+						<li key={index}>
 							<div className={css["link"]}>
 								<NavLink href={item.href}>{item.label}</NavLink>
 							</div>
