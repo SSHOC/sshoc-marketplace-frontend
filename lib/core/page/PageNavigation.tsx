@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
+import { chain } from "react-aria";
 import {
 	Button as AriaButton,
 	Dialog as AriaDialog,
@@ -104,6 +105,19 @@ export function PageNavigation(): ReactNode {
 							);
 						}
 
+						case "action": {
+							return (
+								<li key={index} className="inline-flex">
+									<AriaButton
+										className="inline-flex items-center rounded-t-sm p-6 text-primary-700 hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+										onPress={item.onAction}
+									>
+										{item.label}
+									</AriaButton>
+								</li>
+							);
+						}
+
 						case "separator": {
 							return (
 								<AriaSeparator
@@ -123,7 +137,7 @@ export function PageNavigation(): ReactNode {
 											{item.label}
 											<ChevronDownIcon
 												aria-hidden={true}
-												className="size-4 group-aria-expanded:rotate-180"
+												className="size-4 shrink-0 group-aria-expanded:rotate-180"
 											/>
 										</AriaButton>
 										<AriaPopover offset={8} placement="bottom">
@@ -180,7 +194,6 @@ export function PageNavigation(): ReactNode {
 
 export function MobileNavigationMenu(): ReactNode {
 	const t = useTranslations();
-	// const router = useRouter();
 	const pathname = usePathname();
 	const { isSignedIn, signOut } = useAuth();
 	const currentUser = useCurrentUser();
@@ -190,16 +203,6 @@ export function MobileNavigationMenu(): ReactNode {
 	const browseNavItems = useBrowseNavItems();
 	const contributeNavItems = useContributeNavItems();
 	const aboutNavItems = useAboutNavItems();
-
-	// useEffect(() => {
-	// 	router.events.on("routeChangeStart", state.close);
-	// 	window.addEventListener("resize", state.close, { passive: true });
-
-	// 	return () => {
-	// 		router.events.off("routeChangeStart", state.close);
-	// 		window.removeEventListener("resize", state.close);
-	// 	};
-	// }, [router.events, state.close]);
 
 	const items: Array<NavigationItem> = [
 		...((!isSignedIn || currentUser.data == null
@@ -273,17 +276,20 @@ export function MobileNavigationMenu(): ReactNode {
 	];
 
 	return (
-		<nav className="my-2 flex items-center justify-end gap-8 [grid-area:main-nav]">
+		<nav className="my-2 flex items-center justify-end gap-8 [grid-area:main-nav] xl:hidden">
 			<AriaDialogTrigger>
 				<AriaButton
 					aria-label={t("common.navigation-menu")}
-					className="to-primay-600 bg-gradient-to-r from-primary-750 p-2.5"
+					className="rounded-sm bg-gradient-to-r from-primary-600 to-primary-750 bg-size-[125%] bg-left p-2 text-neutral-0 transition-all hover:bg-right"
 				>
-					<MenuIcon aria-hidden={true} className="size-10" />
+					<MenuIcon aria-hidden={true} className="size-6 shrink-0" />
 				</AriaButton>
-				<AriaModalOverlay className="fixed inset-0 z-10 flex animate-fade-in justify-end">
+				<AriaModalOverlay
+					isDismissable={true}
+					className="fixed inset-0 z-10 flex animate-fade-in justify-end"
+				>
 					<AriaModal className="flex w-128 max-w-full animate-slide-in-from-right flex-col overflow-hidden bg-neutral-50 shadow">
-						<AriaDialog aria-label={t("common.navigation-menu")}>
+						<AriaDialog className="h-full" aria-label={t("common.navigation-menu")}>
 							{({ close }) => {
 								return (
 									<Fragment>
@@ -294,10 +300,10 @@ export function MobileNavigationMenu(): ReactNode {
 												</Link>
 											</div>
 											<AriaButton
-												className="focus-visible::text-primary-600 hover:text-primary-600"
+												className="-mr-2 rounded-sm p-2 hover:text-primary-600 focus-visible:text-primary-600"
 												onPress={close}
 											>
-												<XIcon aria-hidden={true} className="size-10" />
+												<XIcon aria-hidden={true} className="size-6 shrink-0" />
 												<span className="sr-only">{t("common.close")}</span>
 											</AriaButton>
 										</header>
@@ -310,8 +316,11 @@ export function MobileNavigationMenu(): ReactNode {
 																return (
 																	<li key={index} className="flex flex-col gap-1">
 																		<Link
-																			className="focus-visible::border-primary-600 focus-visible::bg-neutral-50 focus-visible::text-primary-600 flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600"
+																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			href={item.href}
+																			onClick={() => {
+																				close();
+																			}}
 																		>
 																			{item.label}
 																		</Link>
@@ -323,8 +332,8 @@ export function MobileNavigationMenu(): ReactNode {
 																return (
 																	<li key={index} className="flex flex-col gap-1">
 																		<AriaButton
-																			className="focus-visible::border-primary-600 focus-visible::bg-neutral-50 focus-visible::text-primary-600 flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600"
-																			onPress={item.onAction}
+																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																			onPress={chain(item.onAction, close)}
 																		>
 																			{item.label}
 																		</AriaButton>
@@ -345,10 +354,16 @@ export function MobileNavigationMenu(): ReactNode {
 															case "menu": {
 																return (
 																	<li key={index} className="flex flex-col gap-1">
-																		<AriaDisclosure>
-																			<AriaButton>
+																		<AriaDisclosure className="group">
+																			<AriaButton
+																				slot="trigger"
+																				className="flex w-full items-center justify-between border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 aria-expanded:bg-primary-600 aria-expanded:text-neutral-0"
+																			>
 																				<span>{item.label}</span>
-																				<ChevronDownIcon aria-hidden={true} className="size-4" />
+																				<ChevronDownIcon
+																					aria-hidden={true}
+																					className="size-4 shrink-0 group-expanded:rotate-180"
+																				/>
 																			</AriaButton>
 																			<AriaDisclosurePanel>
 																				<ul role="list">
@@ -359,7 +374,10 @@ export function MobileNavigationMenu(): ReactNode {
 																									<li key={index} className="flex flex-col gap-1">
 																										<Link
 																											href={item.href}
-																											className="focus-visible::border-primary-600 focus-visible::bg-neutral-50 focus-visible::text-primary-600 flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-neutral-0 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600"
+																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																											onClick={() => {
+																												close();
+																											}}
 																										>
 																											{item.label}
 																										</Link>
@@ -371,8 +389,8 @@ export function MobileNavigationMenu(): ReactNode {
 																								return (
 																									<li key={index} className="flex flex-col gap-1">
 																										<AriaButton
-																											className="focus-visible::border-primary-600 focus-visible::bg-neutral-50 focus-visible::text-primary-600 flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-neutral-0 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600"
-																											onPress={item.onAction}
+																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																											onPress={chain(item.onAction, close)}
 																										>
 																											{item.label}
 																										</AriaButton>

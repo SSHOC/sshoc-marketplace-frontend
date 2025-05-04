@@ -21,7 +21,7 @@ export interface LinkStyleProps {
 }
 
 export interface LinkProps
-	extends AriaLinkProps,
+	extends Omit<AriaLinkProps, "routerOptions">,
 		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id" | "style">,
 		Omit<NextLinkProps, "as" | "href" | "locale" | "onClick" | "passHref"> {
 	children: ReactNode;
@@ -49,6 +49,9 @@ export const Link = forwardRef(function Link(
 		children,
 		elementType,
 		href,
+		replace,
+		scroll,
+		shallow,
 		variant, // = 'primary'
 	} = props;
 
@@ -86,7 +89,10 @@ export const Link = forwardRef(function Link(
 			data-pressed={isPressed || undefined}
 			data-variant={variant}
 			href={href}
+			replace={replace}
 			role={!isLinkElement ? "link" : undefined}
+			scroll={scroll}
+			shallow={shallow}
 		>
 			{children}
 		</ElementType>
