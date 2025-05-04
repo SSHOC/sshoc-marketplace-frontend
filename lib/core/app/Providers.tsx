@@ -9,7 +9,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { AuthProvider } from "@/lib/core/auth/AuthProvider";
 import { PageAccessControl } from "@/lib/core/auth/PageAccessControl";
 import { useLocale } from "@/lib/core/i18n/useLocale";
-import { PageProvider } from "@/lib/core/page/PageProvider";
 import type { QueryClient } from "@/lib/core/query/create-query-client";
 import { createQueryClient } from "@/lib/core/query/create-query-client";
 import { QueryProvider } from "@/lib/core/query/QueryProvider";
@@ -79,21 +78,19 @@ export function Providers(props: ProvidersProps): ReactNode {
 
 	return (
 		<NextIntlClientProvider messages={messages} locale={locale} timeZone="UTC">
-			<PageProvider>
-				<QueryProvider client={queryClient} state={initialQueryState}>
-					<AuthProvider
-						isPageAccessible={isPageAccessible}
-						onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
-						onSignOut={onSignOut}
-					>
-						<PageAccessControl>
-							<AriaI18nProvider locale={locale}>
-								<OverlayProvider>{props.children}</OverlayProvider>
-							</AriaI18nProvider>
-						</PageAccessControl>
-					</AuthProvider>
-				</QueryProvider>
-			</PageProvider>
+			<QueryProvider client={queryClient} state={initialQueryState}>
+				<AuthProvider
+					isPageAccessible={isPageAccessible}
+					onSignIn={onSignIn} // FIXME: useQueryErrorResetBoundary().reset
+					onSignOut={onSignOut}
+				>
+					<PageAccessControl>
+						<AriaI18nProvider locale={locale}>
+							<OverlayProvider>{props.children}</OverlayProvider>
+						</AriaI18nProvider>
+					</PageAccessControl>
+				</AuthProvider>
+			</QueryProvider>
 			<ToastContainer />
 		</NextIntlClientProvider>
 	);
