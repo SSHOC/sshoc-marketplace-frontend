@@ -19,6 +19,13 @@ export default config(
 	},
 	{
 		rules: {
+			"no-restricted-syntax": [
+				"error",
+				{
+					selector: 'MemberExpression[computed!=true][object.name="process"][property.name="env"]',
+					message: "Please use `@/config/env.config` instead.",
+				},
+			],
 			"prefer-template": "off",
 			"@typescript-eslint/consistent-type-definitions": "off",
 			"@typescript-eslint/dot-notation": "off",

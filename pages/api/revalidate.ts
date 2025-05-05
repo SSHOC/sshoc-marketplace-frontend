@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { env } from "@/config/env.config";
 import { baseUrl } from "@/config/site.config";
 import { isNonEmptyString } from "@/lib/utils";
 
@@ -12,7 +13,7 @@ export default async function handler(
 		return;
 	}
 
-	const secret = process.env.REVALIDATION_TOKEN;
+	const secret = env.REVALIDATION_TOKEN;
 
 	if (!isNonEmptyString(secret)) {
 		response.status(500).end();

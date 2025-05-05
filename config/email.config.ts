@@ -1,6 +1,7 @@
-export const smtpServer = process.env.SMTP_SERVER;
+import { env } from "@/config/env.config";
 
-export const smtpPort =
-	process.env.SMTP_PORT != null ? parseInt(process.env.SMTP_PORT, 10) : undefined;
+export const smtpServer = env.SMTP_SERVER;
 
-export const sshocContactEmailAddress = process.env.SSHOC_CONTACT_EMAIL_ADDRESS;
+export const smtpPort = env.SMTP_PORT;
+
+export const sshocContactEmailAddress = env.SSHOC_CONTACT_EMAIL_ADDRESS;

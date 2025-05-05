@@ -1,7 +1,9 @@
 import { log } from "@acdh-oeaw/lib";
 import { createUrl, request } from "@stefanprobst/request";
 
-const repo = process.env.NEXT_PUBLIC_GITHUB_REPOSITORY;
+import { env } from "@/config/env.config";
+
+const repo = env.NEXT_PUBLIC_GITHUB_REPOSITORY;
 
 async function getCommits(filePath: string) {
 	const url = createUrl({
@@ -10,7 +12,7 @@ async function getCommits(filePath: string) {
 		searchParams: { path: filePath },
 	});
 
-	const token = process.env.GITHUB_TOKEN;
+	const token = env.GITHUB_TOKEN;
 	const headers = token != null ? { authorization: `Bearer ${token}` } : undefined;
 
 	if (token == null) {
@@ -21,7 +23,7 @@ async function getCommits(filePath: string) {
 }
 
 export async function getLastUpdatedTimestamp(filePath: string): Promise<Date> {
-	if (process.env.NODE_ENV !== "production") {
+	if (env.NODE_ENV !== "production") {
 		return new Date();
 	}
 

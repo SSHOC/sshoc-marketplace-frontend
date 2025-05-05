@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 
-import css from "@/components/home/SubSectionHeader.module.css";
-
 export interface SectionHeaderProps {
 	children?: ReactNode;
 }
 
 export function SectionHeader(props: SectionHeaderProps): ReactNode {
-	return <div className={css["container"]}>{props.children}</div>;
+	return (
+		<div className="flex items-baseline justify-between border-b border-neutral-150 pb-4">
+			{props.children}
+		</div>
+	);
 }
