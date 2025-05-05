@@ -36,18 +36,18 @@ export const env = createEnv({
 			NEXT_PUBLIC_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
 			NEXT_PUBLIC_GITHUB_REPOSITORY: v.optional(v.pipe(v.string(), v.nonEmpty())),
 			NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url()),
+			// NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url()),
 			NEXT_PUBLIC_MATOMO_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
 			NEXT_PUBLIC_MATOMO_ID: v.optional(
 				v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 			),
-			NEXT_PUBLIC_REDMINE_ID: v.pipe(
-				v.string(),
-				v.transform(Number),
-				v.number(),
-				v.integer(),
-				v.minValue(1),
-			),
+			// NEXT_PUBLIC_REDMINE_ID: v.pipe(
+			// 	v.string(),
+			// 	v.transform(Number),
+			// 	v.number(),
+			// 	v.integer(),
+			// 	v.minValue(1),
+			// ),
 		});
 
 		return v.parse(Schema, input);
@@ -62,10 +62,10 @@ export const env = createEnv({
 		NEXT_PUBLIC_BOTS: process.env.NEXT_PUBLIC_BOTS,
 		NEXT_PUBLIC_GITHUB_REPOSITORY: process.env.NEXT_PUBLIC_GITHUB_REPOSITORY,
 		NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-		NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: process.env.NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL,
+		// NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: process.env.NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL,
 		NEXT_PUBLIC_MATOMO_BASE_URL: process.env.NEXT_PUBLIC_MATOMO_BASE_URL,
 		NEXT_PUBLIC_MATOMO_ID: process.env.NEXT_PUBLIC_MATOMO_ID,
-		NEXT_PUBLIC_REDMINE_ID: process.env.NEXT_PUBLIC_REDMINE_ID,
+		// NEXT_PUBLIC_REDMINE_ID: process.env.NEXT_PUBLIC_REDMINE_ID,
 		NEXT_RUNTIME: process.env.NEXT_RUNTIME,
 		NODE_ENV: process.env.NODE_ENV,
 		REVALIDATION_TOKEN: process.env.REVALIDATION_TOKEN,
