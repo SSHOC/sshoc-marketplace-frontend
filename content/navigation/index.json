@@ -1,0 +1,26 @@
+{
+  "about-pages": {
+    "items": [
+      { "id": "service", "label": "About the service" },
+      { "id": "sshoc-eosc", "label": "SSHOC and the EOSC" },
+      { "id": "data-population", "label": "About the data population" },
+      { "id": "team", "label": "Who are we?" },
+      { "id": "api-documentation", "label": "API Documentation" },
+      { "id": "implementation", "label": "About the technical aspects" },
+      { "id": "frequently-asked-questions", "label": "FAQ" },
+      { "id": "user-stories", "label": "User stories" },
+      { "id": "communication-kit" ,"label": "Communication kit" }
+    ]
+  },
+  "contribute-pages": {
+    "items": [
+      { "id": "overview", "label": "Help grow the SSH Open Marketplace" },
+      { "id": "create-an-individual-item", "label": "Create an individual item" },
+      { "id": "enrich-an-individual-item", "label": "Enrich an individual item" },
+      { "id": "report-an-issue", "label": "Report an issue" },
+      { "id": "moderator-guidelines", "label": "Moderator Guidelines" },
+      { "id": "administrator-guidelines", "label": "Administrator Guidelines" },
+      { "id": "metadata-guidelines", "label": "Metadata guidelines" }
+    ]
+  }
+}

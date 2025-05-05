@@ -1,0 +1,378 @@
+---
+title: API Documentation
+toc: true
+---
+## API documentation
+
+The SSH Open Marketplace also includes an Application Programming Interface (API), which is opened
+for anyone to use. Some of the functionalities are closed, but most are opened, such as searching
+and retrieving detailed information on all items of the Marketplace.
+
+You can inspect the API Swagger documentation here:
+[https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs](https://marketplace-api.sshopencloud.eu/swagger-ui/index.html?url=/v3/api-docs)
+
+The endpoint of the SSH Open Marketplace API is:
+[https://marketplace-api.sshopencloud.eu/api](https://marketplace-api.sshopencloud.eu/api)
+
+The API responses are in JSON and follow the data model that we have created for the Marketplace
+(see ["Data model" section](/about/implementation#data-model)).
+
+For example, you can request a description of all the "tools and services" that the SSH Open
+Marketplace provides at
+[https://marketplace-api.sshopencloud.eu/api/tools-services](https://marketplace-api.sshopencloud.eu/api/tools-services)
+
+The following documentation provides API user stories and easy to test API calls as examples of the API use for anyone interested in testing the approach.
+
+### Basic API calls: exploring the SSH Open Marketplace data
+
+This section lists and provides a step-by step explanation for the most useful API calls of the SSH Open Marketplace, in read access only. Using the GET requests presented below will allow you to retrieve information from the Marketplace, using various parameters.
+
+#### Items list
+
+It is possible to retrieve the list of Marketplace items by type.
+
+For example, as a trainer in digital methods, you are interested in retrieving the list of all the "training materials" of the Marketplace, so that you can display the list on your own teaching blog. To retrieve all the training materials listed in the SSH Open Marketplace, you can use the following API request: [https://marketplace-api.sshopencloud.eu/api/training-materials](https://marketplace-api.sshopencloud.eu/api/training-materials).
+Because there is a limited  number of results per page, you can access the next pages as follows: [https://marketplace-api.sshopencloud.eu/api/training-materials?page=2](https://marketplace-api.sshopencloud.eu/api/training-materials?page=2).
+
+Testing different calls in the box below will allow you to look into the different API calls to retrieve Marketplace items by type.
+
+<ApiEndpoint title="Retrieve items by type" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamSelect label="Category" param="categories" placeholder="Category">
+      <Item key="tool-or-service">Tools or services</Item>
+      <Item key="training-material">Training materials</Item>
+      <Item key="dataset">Datasets</Item>
+      <Item key="publication">Publications</Item>
+      <Item key="workflow">Workflows</Item>
+    </ApiParamSelect>
+    <ApiParamSelect label="Page" param="page" placeholder="Page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+#### Items search
+
+The `/api/item-search` query is a powerful one and supports a number of parameters to refine the search. Some basic examples of its use are described below.
+
+As a researcher in Digital Humanities interested in network analysis, you want to retrieve all the items in the Marketplace using (in their label or description) a specific term, such as for example "Gephi". The API request to use for this example is the following: [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi).
+And you can try out other terms in the widget below.
+
+<ApiEndpoint title="Item search" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamTextField label="Search" param="q" placeholder="Search term" />
+    <ApiParamSelect label="Page" param="page" placeholder="Page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+More parameters can be added to the query, you can for example choose the item type you want to concentrate on, by adding a category type. So if you only want to search for publications using "Gephi", you will use the following query: [https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication](https://marketplace-api.sshopencloud.eu/api/item-search?q=gephi&categories=publication)
+
+
+<ApiEndpoint title="Item search & Item category" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamTextField label="Search" param="q" placeholder="Search term" />
+    <ApiParamSelect label="Category" param="categories" placeholder="Category">
+      <Item key="tool-or-service">Tools or services</Item>
+      <Item key="training-material">Training materials</Item>
+      <Item key="dataset">Datasets</Item>
+      <Item key="publication">Publications</Item>
+      <Item key="workflow">Workflows</Item>
+    </ApiParamSelect>
+    <ApiParamSelect label="Page" param="page" placeholder="Page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+More specific searches can also be undertaken using some of the parameters of this API call.
+
+As an open science officer, you are interested in retrieving all the items in the Marketplace using open licenses. An initial call can give you the list of items using the license field (i.e. for which the license field is not empty): [https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%5B\*%20TO%20\*%5D](https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%5B*%20TO%20*%5D) Then, instead of looking for all licenses referenced, you want to restrict the search to items using the [Creative Commons Attribution 4.0 International](http://spdx.org/licenses/CC-BY-4.0) license and this call can help you: [https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%22Creative%20Commons%20Attribution%204.0%20International%22](https://marketplace-api.sshopencloud.eu/api/item-search?d.license=%22Creative%20Commons%20Attribution%204.0%20International%22)
+
+<ApiEndpoint title="Item search on specific fields" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamTextField label="Source" param="d.source" placeholder="Search term" />
+    <ApiParamTextField label="Contributor" param="d.contributor" placeholder="Search term" />
+    <ApiParamTextField label="License" param="d.license" placeholder="Search term" />
+    <ApiParamTextField label="Journal" param="d.journal" placeholder="Search term" />
+    <ApiParamTextField label="Resource category" param="d.resource-category" placeholder="Search term" />
+    <ApiParamSelect label="Page" param="page" placeholder="page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+A complementary parameter allows users to search among faceted fields such as activity, keyword or language.
+
+As a DARIAH officer, you are interested in retrieving all the items tagged as "DARIAH national resource". This tag is a keyword in the SSH Open Marketplace and the following call will give you the results you're looking for [https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?f.keyword=DARIAH%20National%20Resource)
+
+<ApiEndpoint title="Item search on faceted fields" endpoint={{ key: 'item-search', pathname: '/api/item-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamTextField label="Activity" param="f.activity" placeholder="Search term" />
+    <ApiParamTextField label="Keyword" param="f.keyword" placeholder="Search term" />
+    <ApiParamTextField label="Language" param="f.language" placeholder="Search term" />
+    <ApiParamSelect label="Page" param="page" placeholder="page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+Note that it is also possible to mix the `d` and `f` parameters in one query, such as for example: [https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource](https://marketplace-api.sshopencloud.eu/api/item-search?d.resource-category=%22Repository%22&f.keyword=DARIAH%20National%20Resource)
+
+#### Vocabulary & concepts search
+
+As a researcher in Palaeography, you are interested in digital resources and methods associated with your discipline. A standard item search via [https://marketplace-api.sshopencloud.eu/api/item-search?q=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?q=Palaeography) would give you some results, but you want to understand if some items are specifically tagged as Palaegraphic resources. Thanks to the concept search API call allowing the exploration of all the concept used in the [13 controlled vocabularies](https://marketplace.sshopencloud.eu/contribute/metadata-guidelines#vocabularies) of the SSH Open Marketplace, you can first understand that "Palaeography" is an existing concept in the discipline vocabulary of the Marketplace: [https://marketplace-api.sshopencloud.eu/api/concept-search?q=Palaeography](https://marketplace-api.sshopencloud.eu/api/concept-search?q=Palaeography)
+
+<ApiEndpoint title="Concept search among the SSH Open marketplace vocabularies" endpoint={{ key: 'concept-search', pathname: '/api/concept-search' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+    <ApiParamTextField label="Search" param="q" placeholder="Search concept" />
+    <ApiParamSelect label="Page" param="page" placeholder="Page">
+      <Item key={1}>Page 1</Item>
+      <Item key={2}>Page 2</Item>
+      <Item key={3}>Page 3</Item>
+    </ApiParamSelect>
+  </div>
+</ApiEndpoint>
+
+Using then the advanced item search query [https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography](https://marketplace-api.sshopencloud.eu/api/item-search?d.discipline=Palaeography) you understand that no items is tagged yet with the Palaeography discipline concept and you decide to tag your favorite resources - IIIF Universal Viewer; Kraken and Transkribus - with your discipline, following the ["enrich an item" guidelines](https://marketplace.sshopencloud.eu/contribute/enrich-an-individual-item) or via the API, see Managing items section below.
+
+### Advanced API calls - editing the SSH Open Marketplace data
+
+
+This section lists and provides a step-by step explanation for the most useful API calls of the SSH Open Marketplace for authenticated users. Using the `POST`, `PUT`, `DELETE` requests presented below will allow you to make changes to the Marketplace data, using various parameters.
+
+Some of the endpoints presented below are accessible to authenticated contributors, but most of the following endpoints are of interest for moderator and/or administrator user roles.
+
+#### API authentication
+
+The API includes some endpoints that are only accessible to logged in users. To use them, you need to ask for a JWT (JSON Web Token) to the authentication endpoint and then use the Token to connect to the other endpoint, by passing the Token as a Bearer Authentication.
+
+Example:
+
+```bash
+curl -i --request POST \
+  --url 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/auth/sign-in' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{"username": "MyUsername", "password": "MyPassword"}'
+```
+
+Will respond with a token as such:
+
+```
+Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn
+```
+
+And this is then used in the following requests to prove you are authenticated, for example:
+
+```bash
+curl --request DELETE \
+  --url 'https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at/api/datasets/3752' \
+  --header 'Authorization: Bearer xxxyyyyzzzhfdsklmgdflkngfdngdfklngfdfgdf,gfdngfndkljgn' \
+```
+
+Once you are authenticated, you can perform different actions on the data via the API.
+
+#### Managing items
+
+##### Contributor suggesting a new item
+
+After proper authentication (see section above), a contributor can suggest a new item using the token. The example below describes the creation of a new tool. The API call is the following: `POST api/tools-services`
+
+This `POST api/tools-services` needs to be sent with a JSON as input including at least a label and a description. Additional values can also be added based on the following structure:
+
+```json
+{
+  "label": "kraken",
+  "description": "kraken is a turn-key OCR system optimized for historical and non-Latin script material."
+}
+```
+
+<details>
+
+<summary>**Result**: New item stored in the database with the status `SUGGESTED`.</summary>
+
+```json
+{
+  "id": 42054,
+  "category": "tool-or-service",
+  "label": "kraken",
+  "persistentId": "L4500r",
+  "lastInfoUpdate": "2022-09-08T14:24:44+0000",
+  "status": "suggested",
+  "informationContributor": {
+    "id": 3,
+    "username": "Contributor",
+    "displayName": "Contributor",
+    "status": "enabled",
+    "registrationDate": "2021-05-28T15:28:06+0000",
+    "role": "contributor",
+    "config": true
+  },
+  "description": "kraken is a turn-key OCR system optimized for historical and non-Latin script material.",
+  "contributors": [],
+  "properties": [],
+  "externalIds": [],
+  "accessibleAt": [],
+  "relatedItems": [],
+  "media": []
+}
+```
+</details>
+
+##### Contributor suggesting changes to an existing item
+
+After proper authentication (see section above), a contributor can suggest changes to an existing item using the token. The example below describes the addition of a new property to an existing training material. The API call to use is: `PUT api/training-materials/{persistentId}`
+
+This `PUT api/training-materials/{persistentId}` needs to be sent with a JSON as input including the result of the corresponding `GET api/training-materials/{persistentId}` and the changes the contributor wants to suggest.
+
+Step 1: `GET api/training-materials/{persistentId}`. In this example, the contributor wishes to edit the CloudCompare - Tutorials Video item (ID: `ejzW3x`): [https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x](https://marketplace-api.sshopencloud.eu/api/training-materials/ejzW3x)
+
+Step 2: Copy the body of the GET call
+
+Step 3: PUT api/training-materials/ejzW3x . The contributor pastes in the body the result of the GET call and add the changes they want to introduce. In our case, the contributor wishes to add the "3d" keyword to the CloudCompare training.
+
+<details>
+
+<summary>**Result**: New version of an existing item stored in the database with the status `SUGGESTED`.</summary>
+
+```json
+{
+  "id": 40331,
+  "category": "training-material",
+  "label": "CloudCompare - Tutorials Video",
+  "persistentId": "ejzW3x",
+  "lastInfoUpdate": "2022-01-17T14:15:03+0000",
+  "status": "approved",
+  "informationContributor": {
+    "id": 65,
+    "username": "4ea88b26c3275dbb81ef7ec4f4c5869ce4c0e751268125e9361f0f36e542fb18@dariah.eu",
+    "displayName": "Laure Barbot",
+    "status": "enabled",
+    "registrationDate": "2021-07-28T07:54:55+0000",
+    "role": "moderator",
+    "config": false
+  },
+  "description": "Video tutorials related to CloudCompare",
+  "contributors": [
+    {
+      "actor": {
+        "id": 1593,
+        "name": "Eugene Liscio",
+        "externalIds": [],
+        "affiliations": []
+      },
+      "role": {
+        "code": "author",
+        "label": "Author",
+        "ord": 2
+      }
+    }
+  ],
+  "properties": [
+    {
+      "type": {
+        "code": "language",
+        "label": "Language",
+        "type": "concept",
+        "groupName": "Categorisation",
+        "hidden": false,
+        "ord": 20,
+        "allowedVocabularies": [
+          {
+            "code": "iso-639-3",
+            "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
+            "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
+            "label": "ISO 639-3 Language Codes",
+            "closed": true
+          }
+        ]
+      },
+      "concept": {
+        "code": "eng",
+        "vocabulary": {
+          "code": "iso-639-3",
+          "scheme": "https://vocabs.acdh.oeaw.ac.at/iso6393/Schema",
+          "namespace": "https://vocabs.acdh.oeaw.ac.at/iso6393/",
+          "label": "ISO 639-3 Language Codes",
+          "closed": true
+        },
+        "label": "English",
+        "notation": "",
+        "uri": "https://vocabs.acdh.oeaw.ac.at/iso6393/eng",
+        "candidate": false
+      }
+    },
+    {
+      "type": {
+        "code": "keyword",
+        "label": "Keyword",
+        "type": "concept",
+        "groupName": "Categorisation",
+        "hidden": false,
+        "ord": 18,
+        "allowedVocabularies": [
+          {
+            "code": "sshoc-keyword",
+            "scheme": "https://vocabs.dariah.eu/sshoc-keyword/Schema",
+            "namespace": "https://vocabs.dariah.eu/sshoc-keyword/",
+            "label": "Keywords from SSHOC MP",
+            "closed": false
+          }
+        ]
+      },
+      "concept": {
+        "code": "3d",
+        "vocabulary": {
+          "code": "sshoc-keyword",
+          "scheme": "https://vocabs.dariah.eu/sshoc-keyword/Schema",
+          "namespace": "https://vocabs.dariah.eu/sshoc-keyword/",
+          "label": "Keywords from SSHOC MP",
+          "closed": false
+        },
+        "label": "3D",
+        "notation": "",
+        "uri": "https://vocabs.dariah.eu/sshoc-keyword/3d",
+        "candidate": false
+      }
+    }
+  ],
+  "externalIds": [],
+  "accessibleAt": ["http://www.danielgm.net/cc/tutorials.html"],
+  "source": {
+    "id": 3,
+    "label": "SSK Zotero Resources",
+    "url": "https://www.zotero.org/groups/427927/ssk-parthenos",
+    "urlTemplate": "https://api.zotero.org/groups/427927/items/{source-item-id}"
+  },
+  "sourceItemId": "JVFDSGD7",
+  "relatedItems": [
+    {
+      "id": 40330,
+      "persistentId": "Ruek2W",
+      "category": "tool-or-service",
+      "label": "CloudCompare - Documentation",
+      "description": "Documentation about CloudCompare",
+      "relation": {
+        "code": "is-related-to",
+        "label": "Is related to",
+        "inverseOf": "relates-to"
+      }
+    }
+  ],
+  "media": []
+}
+
+```
+
+</details>

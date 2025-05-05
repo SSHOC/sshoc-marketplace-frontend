@@ -1,7 +1,7 @@
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { Toc } from "@stefanprobst/rehype-extract-toc";
+import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 import type { GetStaticPathsContext, GetStaticPropsContext, GetStaticPropsResult } from "next";
 import { type Messages, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -17,6 +17,9 @@ import { Prose } from "@/components/common/Prose";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { TableOfContents } from "@/components/common/TableOfContents";
+import { Avatar } from "@/components/content/avatar";
+import { Embed } from "@/components/content/embed";
+import { Figure } from "@/components/content/figure";
 import { BackgroundImage } from "@/components/contribute/BackgroundImage";
 import { Content } from "@/components/contribute/Content";
 import { ContributeScreenLayout } from "@/components/contribute/ContributeScreenLayout";
@@ -53,8 +56,7 @@ export async function getStaticPaths(context: GetStaticPathsContext) {
 	const locales = getLocales(context);
 	const ids = await readdir(join(process.cwd(), "content", "contribute"));
 	const paths = locales.flatMap((locale) => {
-		return ids.map((_id) => {
-			const id = _id.slice(0, -".mdx".length);
+		return ids.map((id) => {
 			const params = { id };
 			return { locale, params };
 		});
@@ -73,14 +75,14 @@ export async function getStaticProps(
 	const { id } = context.params!;
 	const messages = await load(locale, ["common"]);
 
-	const filePath = join("content", "contribute", id + ".mdx");
+	const filePath = join("content", "contribute", id, "index.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
 
 	const input = await read(join(process.cwd(), filePath));
 	matter(input, { strip: true });
 	const vfile = await compile(input);
 	const metadata = vfile.data.matter;
-	const tableOfContents = vfile.data.toc ?? null;
+	const tableOfContents = vfile.data.tableOfContents ?? null;
 	const code = String(vfile);
 
 	return {
@@ -128,6 +130,9 @@ export default function ContributePage(props: ContributePage.Props): ReactNode {
 								components={{
 									// @ts-expect-error This is fine.
 									a: Link,
+									Avatar,
+									Embed,
+									Figure,
 								}}
 							/>
 						</Prose>

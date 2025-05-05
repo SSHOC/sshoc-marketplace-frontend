@@ -1,18 +1,12 @@
+import navigation from "@/content/navigation/index.json";
 import type { NavigationLink } from "@/lib/core/page/PageNavigation";
-import _contributePages from "@/public/data/contribute-pages.json";
-
-const contributePages = _contributePages as Array<{
-	label: string;
-	href: string;
-	position: number;
-}>;
 
 export function useContributeNavItems(): Array<NavigationLink> {
-	const items: Array<NavigationLink> = contributePages.map((page) => {
+	const items: Array<NavigationLink> = navigation["contribute-pages"].items.map((page) => {
 		return {
 			type: "link",
 			label: page.label,
-			href: page.href,
+			href: `/contribute/${page.id}`,
 		};
 	});
 

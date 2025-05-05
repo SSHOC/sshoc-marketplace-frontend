@@ -43,7 +43,7 @@ export async function getStaticProps(
 	const locale = getLocale(context);
 	const messages = await load(locale, ["common"]);
 
-	const filePath = join("content", "contact", "contact.mdx");
+	const filePath = join("content", "contact", "index.mdx");
 
 	const input = await read(join(process.cwd(), filePath));
 	matter(input, { strip: true });

@@ -45,7 +45,7 @@ export async function getStaticProps(
 	const locale = getLocale(context);
 	const messages = await load(locale, ["common"]);
 
-	const filePath = join("content", "privacy-policy", "privacy-policy.mdx");
+	const filePath = join("content", "privacy-policy", "index.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
 
 	const input = await read(join(process.cwd(), filePath));
