@@ -18,12 +18,12 @@ export function PageFooter(): ReactNode {
 				className="mx-auto w-full max-w-[120rem] px-8"
 				aria-label={t("common.footer-navigation")}
 			>
-				<ul className="flex flex-col py-2 text-md xs:flex-row xs:py-0" role="list">
+				<ul className="flex flex-col py-2 text-md sm:flex-row sm:py-0" role="list">
 					{links.map((link) => {
 						return (
 							<li key={link.label}>
 								<Link
-									className="flex justify-center px-6 py-5 text-neutral-700 transition hover:bg-neutral-50 focus-visible:bg-neutral-50"
+									className="flex justify-center px-6 py-5 text-center text-neutral-700 transition hover:bg-neutral-50 focus-visible:bg-neutral-50"
 									href={link.href}
 								>
 									{link.label}

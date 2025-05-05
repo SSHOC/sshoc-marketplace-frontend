@@ -27,6 +27,6 @@
 		grid-template-areas:
 			". . header header header header header header header header header header . ."
 			". . facets facets facets facets facets facets facets facets facets facets . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 	}
 }

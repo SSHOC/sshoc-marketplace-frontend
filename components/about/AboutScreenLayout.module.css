@@ -27,13 +27,13 @@
 		grid-template-areas:
 			". . header header header header header header header header header header . ."
 			". . content content content content content content content content content content . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 	}
 
 	@media (/* --screen-lg */ min-width: 64rem) {
 		grid-template-areas:
 			". . header header header header header header header header header header . ."
 			". . navigation navigation navigation content content content content content content content . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 	}
 }

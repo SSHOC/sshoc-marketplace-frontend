@@ -6,13 +6,13 @@ import { Fragment, type ReactNode } from "react";
 import { FundingNotice } from "@/components/common/FundingNotice";
 import { BackgroundImage } from "@/components/home/BackgroundImage";
 import { BrowseItems } from "@/components/home/BrowseItems";
+import { FeaturedResources } from "@/components/home/FeaturedResources";
 import { Hero } from "@/components/home/Hero";
 import { HomeScreenLayout } from "@/components/home/HomeScreenLayout";
 import { ItemSearchForm } from "@/components/home/ItemSearchForm";
 import { ItemSearchFormPanel } from "@/components/home/ItemSearchFormPanel";
 import { LastUpdatedItems } from "@/components/home/LastUpdatedItems";
 import { PeopleImage } from "@/components/home/PeopleImage";
-import { RecommendedItems } from "@/components/home/RecommendedItems";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
@@ -58,7 +58,7 @@ export default function HomePage(_props: HomePage.Props): ReactNode {
 							<ItemSearchForm />
 						</ItemSearchFormPanel>
 					</Hero>
-					<RecommendedItems />
+					<FeaturedResources />
 					<BrowseItems />
 					<LastUpdatedItems />
 					<FundingNotice />

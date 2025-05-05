@@ -294,13 +294,9 @@ export function MobileNavigationMenu(): ReactNode {
 								return (
 									<Fragment>
 										<header className="flex items-center justify-between gap-8 bg-neutral-100 py-4 pr-8 pl-4 text-primary-700">
-											<div className="flex max-w-64 flex-1 leading-none">
-												<Link
-													aria-label={t("common.pages.home")}
-													href="/"
-													className="w-full"
-													onClick={close}
-												>
+											<div className="flex max-w-52 flex-1 leading-none">
+												<Link href="/" className="w-full" onClick={close}>
+													<span className="sr-only">{t("common.pages.home")}</span>
 													<Image src={Logo} alt="" priority />
 												</Link>
 											</div>

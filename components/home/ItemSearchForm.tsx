@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
 import { ItemSearchTermAutocomplete } from "@/components/common/ItemSearchTermAutocomplete";
 import { useSearchItems } from "@/components/common/useSearchItems";
-import css from "@/components/home/ItemSearchForm.module.css";
 import type { ItemCategory } from "@/data/sshoc/api/item";
 import { useItemCategories } from "@/data/sshoc/hooks/item";
 import { Button } from "@/lib/core/ui/Button/Button";
@@ -50,7 +49,7 @@ export function ItemSearchForm(props: ItemSearchFormProps): ReactNode {
 			action="/search"
 			onSubmit={onSubmit}
 			aria-label={t("common.home.search.search-items")}
-			className={css["container"]}
+			className="grid gap-1.5 md:grid-cols-[minmax(--spacing(56),auto)_1fr_auto]"
 		>
 			<ItemCategorySelect
 				selectedItemCategory={selectedItemCategory}
@@ -128,15 +127,8 @@ function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 			{(item) => {
 				return (
 					<Item textValue={item.label}>
-						<span
-							style={{
-								display: "grid",
-								gap: "6px",
-								gridTemplateColumns: "20px 1fr",
-								alignItems: "center",
-							}}
-						>
-							<span aria-hidden style={{ aspectRatio: "1" }}>
+						<span className="grid grid-cols-[20px_1fr] items-center gap-1.5">
+							<span aria-hidden className="aspect-square">
 								{item.id !== allItemCategories ? <ItemCategoryIcon category={item.id} /> : null}
 							</span>
 							{item.label}

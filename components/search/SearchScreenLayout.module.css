@@ -43,7 +43,7 @@
 			". . search-filters search-filters search-filters search-results-header search-results-header search-results-header search-results-header search-results-header search-results-header search-results-header . ."
 			". . search-filters search-filters search-filters search-results search-results search-results search-results search-results search-results search-results . ."
 			". . search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer search-results-footer . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 		grid-template-rows: auto auto 1fr auto auto;
 	}
 }
