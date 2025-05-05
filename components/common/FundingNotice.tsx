@@ -14,7 +14,7 @@ export function FundingNotice(): ReactNode {
 		<section className="flex flex-col gap-y-6 py-24 [grid-area:funding-notice] before:absolute before:inset-x-0 before:top-0 before:[grid-row:funding-notice] before:border-t before:border-neutral-150">
 			<div className="flex gap-x-6">
 				<Image src={EUFlag} alt={t("common.eu-flag")} className="w-10 shrink-0 object-contain" />
-				<p className="max-w-176 text-xs leading-[1.75] text-neutral-600">
+				<p className="max-w-176 text-xs leading-relaxed text-neutral-600">
 					{t("common.funding-notice")}
 				</p>
 			</div>
