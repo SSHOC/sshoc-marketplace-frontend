@@ -28,17 +28,7 @@ export interface LinkProps
 	href: string;
 	locale?: Locale;
 	/** @default 'primary' */
-	variant?:
-		| "breadcrumb"
-		| "heading"
-		| "nav-link-footer"
-		| "nav-mobile-menu-link-secondary"
-		| "nav-mobile-menu-link"
-		| "pagination"
-		| "primary"
-		| "skip-link"
-		| "tag"
-		| "text";
+	variant?: "breadcrumb" | "heading" | "pagination" | "primary" | "tag" | "text";
 }
 
 export const Link = forwardRef(function Link(

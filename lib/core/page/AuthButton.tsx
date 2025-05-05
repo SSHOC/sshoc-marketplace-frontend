@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import { NavLinkButton } from "@/components/common/NavLinkButton";
 import { useAuth } from "@/lib/core/auth/useAuth";
 import { AccountMenu } from "@/lib/core/page/AccountMenu";
 
@@ -15,20 +15,12 @@ export function AuthButton(): ReactNode {
 
 	if (isSignedOut) {
 		return (
-			<NavLinkButton
+			<Link
+				className="-mt-px rounded-b-sm bg-primary-750 px-16 py-2.5 text-sm font-medium text-neutral-0 transition hover:bg-primary-600 focus-visible:bg-primary-600"
 				href="/auth/sign-in"
-				size="sm"
-				style={{
-					// @ts-expect-error It's fine.
-					marginTop: -1,
-					"--button-border-width": 0,
-					"--button-padding-inline": "var(--space-16)",
-					"--button-padding-block": "var(--space-2-5)",
-					"--button-border-radius": "0 0 var(--border-radius-md) var(--border-radius-md)",
-				}}
 			>
 				{t("common.auth.sign-in")}
-			</NavLinkButton>
+			</Link>
 		);
 	}
 
