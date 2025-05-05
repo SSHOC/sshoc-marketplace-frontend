@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import css from "@/components/home/RecommendedItems.module.css";
 import { SectionHeader } from "@/components/home/SectionHeader";
 import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
 import { maxRecommendedItems } from "@/config/sshoc.config";
@@ -12,11 +11,11 @@ import { useItemSearch } from "@/data/sshoc/hooks/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
-export function RecommendedItems(): ReactNode {
+export function FeaturedResources(): ReactNode {
 	const t = useTranslations();
 
 	return (
-		<section className={css["container"]}>
+		<section className="grid content-start gap-8 py-16 [grid-area:recommended-items]">
 			<SectionHeader>
 				<SectionTitle>{t("common.home.recommended")}</SectionTitle>
 				<SectionHeaderLink
@@ -25,7 +24,7 @@ export function RecommendedItems(): ReactNode {
 					{t("common.see-all")}
 				</SectionHeaderLink>
 			</SectionHeader>
-			<ul role="list" className={css["sections"]}>
+			<ul role="list" className="grid gap-12">
 				<ItemsRecommended />
 			</ul>
 		</section>
@@ -55,8 +54,8 @@ function ItemsRecommended(): ReactNode {
 
 	return (
 		<li>
-			<section className={css["section"]}>
-				<ul role="list" className={css["items"]}>
+			<section className="grid gap-6">
+				<ul role="list" className="grid grid-cols-[repeat(auto-fill,minmax(24rem,1fr))] gap-16">
 					{recommendedItems.map((item) => {
 						return (
 							<li key={[item.persistentId, item.id].join("+")}>

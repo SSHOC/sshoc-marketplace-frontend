@@ -18,7 +18,7 @@ export function PageHeader(): ReactNode {
 	return (
 		<header className="border-b border-neutral-150 [grid-area:page-header]">
 			<div className="mx-auto flex w-full max-w-[120rem] gap-x-8 px-8">
-				<Link href="/" className="my-4 flex w-64 shrink-0 items-center rounded-sm">
+				<Link href="/" className="my-4 flex w-52 shrink-0 items-center rounded-sm">
 					<span className="sr-only">{t("common.pages.home")}</span>
 					<Image src={Logo} alt="" priority />
 				</Link>
