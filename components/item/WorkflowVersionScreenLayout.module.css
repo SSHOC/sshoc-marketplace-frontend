@@ -37,7 +37,7 @@
 			". . item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details . ."
 			". . workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps . ."
 			". . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 	}
 
 	@media (/* --screen-lg */ min-width: 64rem) {
@@ -48,7 +48,7 @@
 			". . item-details item-details item-details item-details item-details item-details item-details item-info item-info item-info . ."
 			". . workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps workflow-steps item-info item-info item-info . ."
 			". . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-info item-info item-info . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 		grid-template-rows: auto auto auto auto 1fr auto;
 	}
 }

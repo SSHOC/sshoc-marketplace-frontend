@@ -55,7 +55,10 @@ function ItemsRecommended(): ReactNode {
 	return (
 		<li>
 			<section className="grid gap-6">
-				<ul role="list" className="grid grid-cols-[repeat(auto-fill,minmax(24rem,1fr))] gap-16">
+				<ul
+					role="list"
+					className="grid grid-cols-[repeat(auto-fill,minmax(min(24rem,100%),1fr))] gap-16"
+				>
 					{recommendedItems.map((item) => {
 						return (
 							<li key={[item.persistentId, item.id].join("+")}>

@@ -19,13 +19,9 @@ export function FundingNotice(): ReactNode {
 				</p>
 			</div>
 			<div className="flex gap-x-2">
-				<Image src={CessdaLogo} alt={t("common.cessda")} className="w-30 shrink-0 object-contain" />
-				<Image src={ClarinLogo} alt={t("common.clarin")} className="w-30 shrink-0 object-contain" />
-				<Image
-					src={DariahEuLogo}
-					alt={t("common.dariah-eu")}
-					className="w-30 shrink-0 object-contain"
-				/>
+				<Image src={CessdaLogo} alt={t("common.cessda")} className="max-w-30 object-contain" />
+				<Image src={ClarinLogo} alt={t("common.clarin")} className="max-w-30 object-contain" />
+				<Image src={DariahEuLogo} alt={t("common.dariah-eu")} className="max-w-30 object-contain" />
 			</div>
 		</section>
 	);

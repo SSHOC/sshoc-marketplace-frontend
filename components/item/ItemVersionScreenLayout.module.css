@@ -35,7 +35,7 @@
 			". . item-info item-info item-info item-info item-info item-info item-info item-info item-info item-info . ."
 			". . item-details item-details item-details item-details item-details item-details item-details item-details item-details item-details . ."
 			". . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-comments . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 	}
 
 	@media (/* --screen-lg */ min-width: 64rem) {
@@ -45,7 +45,7 @@
 			". . item-header item-header item-header item-header item-header item-header item-header item-info item-info item-info . ."
 			". . item-details item-details item-details item-details item-details item-details item-details item-info item-info item-info . ."
 			". . item-comments item-comments item-comments item-comments item-comments item-comments item-comments item-info item-info item-info . ."
-			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . . . .";
+			". . funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice funding-notice . .";
 		grid-template-rows: auto auto auto auto 1fr auto;
 	}
 }
