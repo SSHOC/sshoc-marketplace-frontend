@@ -1,3 +1,5 @@
-export const baseUrl = process.env.NEXT_PUBLIC_MATOMO_BASE_URL;
+import { env } from "@/config/env.config";
 
-export const appId = process.env.NEXT_PUBLIC_MATOMO_ID;
+export const baseUrl = env.NEXT_PUBLIC_MATOMO_BASE_URL;
+
+export const appId = env.NEXT_PUBLIC_MATOMO_ID;

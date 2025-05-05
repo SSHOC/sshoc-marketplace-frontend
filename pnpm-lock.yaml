@@ -22,6 +22,9 @@ importers:
       '@acdh-oeaw/lib':
         specifier: ^0.3.2
         version: 0.3.2
+      '@acdh-oeaw/validate-env':
+        specifier: ^0.0.3
+        version: 0.0.3
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.1)
@@ -268,6 +271,9 @@ importers:
       use-composed-ref:
         specifier: ^1.4.0
         version: 1.4.0(@types/react@18.3.20)(react@18.3.1)
+      valibot:
+        specifier: ^1.0.0
+        version: 1.0.0(typescript@5.8.3)
       vfile:
         specifier: ^6.0.3
         version: 6.0.3
@@ -457,6 +463,10 @@ packages:
     resolution: {integrity: sha512-/tY4cU7Mq6YAxs5cG3ZaLYJfH3k8rmn4kEHw9Yn4lxdPUOQhVyAe1wrqr6+jakWCiZJRFKszcUSH1/M5BkzPeA==}
     peerDependencies:
       typescript: '>=5.8'
+
+  '@acdh-oeaw/validate-env@0.0.3':
+    resolution: {integrity: sha512-dP7ZGC533M/Hfebriu5THBQt9DXOuldywY0U5893JMBuAXrGr5f+ONuDE5tk5zp5XHu2Lks+VDkg2wX+TQ03ow==}
+    engines: {node: '>=20', pnpm: '>=9'}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -4856,6 +4866,14 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
+  valibot@1.0.0:
+    resolution: {integrity: sha512-1Hc0ihzWxBar6NGeZv7fPLY0QuxFMyxwYR2sF1Blu7Wq7EnremwY2W02tit2ij2VJT8HcSkHAQqmFfl77f73Yw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   vfile-location@4.1.0:
     resolution: {integrity: sha512-YF23YMyASIIJXpktBa4vIGLJ5Gs88UB/XePgqPmTa7cDA+JeO3yclbpheQYCHjVHBn/yePzrXuygIL+xbvRYHw==}
 
@@ -5019,6 +5037,8 @@ snapshots:
   '@acdh-oeaw/tsconfig@1.5.1(typescript@5.8.3)':
     dependencies:
       typescript: 5.8.3
+
+  '@acdh-oeaw/validate-env@0.0.3': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -10822,6 +10842,10 @@ snapshots:
       diff: 5.2.0
       kleur: 4.1.5
       sade: 1.8.1
+
+  valibot@1.0.0(typescript@5.8.3):
+    optionalDependencies:
+      typescript: 5.8.3
 
   vfile-location@4.1.0:
     dependencies:

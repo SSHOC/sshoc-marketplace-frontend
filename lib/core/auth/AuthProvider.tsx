@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation } from "react-query";
 
+import { env } from "@/config/env.config";
 import type { OAuthRegistrationInput, SignInInput, SignUpResponse } from "@/data/sshoc/api/auth";
 import {
 	authorizeWithEosc,
@@ -125,7 +126,7 @@ export interface AuthService {
 }
 
 export const AuthContext = createContext<AuthService | null>(null);
-if (process.env.NODE_ENV !== "production") {
+if (env.NODE_ENV !== "production") {
 	AuthContext.displayName = "AuthContext";
 }
 
