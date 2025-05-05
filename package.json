@@ -32,6 +32,7 @@
 	},
 	"dependencies": {
 		"@acdh-oeaw/lib": "^0.3.2",
+		"@acdh-oeaw/validate-env": "^0.0.3",
 		"@mdx-js/mdx": "^3.1.0",
 		"@next/bundle-analyzer": "^15.3.1",
 		"@react-aria/accordion": "^3.0.0-alpha.37",
@@ -114,6 +115,7 @@
 		"to-vfile": "^8.0.0",
 		"unified": "^11.0.5",
 		"use-composed-ref": "^1.4.0",
+		"valibot": "^1.0.0",
 		"vfile": "^6.0.3",
 		"vfile-matter": "^5.0.1",
 		"zod": "^3.24.3"

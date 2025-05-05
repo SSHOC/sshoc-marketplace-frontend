@@ -1,10 +1,9 @@
-/* global process */
-
 import { log } from "@acdh-oeaw/lib";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import createSvgPlugin from "@stefanprobst/next-svg";
 import type { NextConfig as Config } from "next";
 
+import { env } from "@/config/env.config";
 import { defaultLocale, locales } from "@/config/i18n.config";
 
 type NextConfig = Config;
@@ -27,7 +26,7 @@ const config: NextConfig = {
 			},
 		];
 
-		if (process.env.NEXT_PUBLIC_BOTS !== "enabled") {
+		if (env.NEXT_PUBLIC_BOTS !== "enabled") {
 			headers.push({
 				source: "/:path*",
 				headers: [
@@ -48,10 +47,7 @@ const config: NextConfig = {
 		defaultLocale,
 	},
 	images: {
-		remotePatterns:
-			process.env.NEXT_PUBLIC_API_BASE_URL != null
-				? [new URL(process.env.NEXT_PUBLIC_API_BASE_URL)]
-				: undefined,
+		remotePatterns: [new URL(env.NEXT_PUBLIC_API_BASE_URL)],
 	},
 	output: "standalone",
 	poweredByHeader: false,
@@ -103,7 +99,7 @@ const config: NextConfig = {
 
 const plugins: Array<(config: NextConfig) => NextConfig> = [
 	createSvgPlugin(),
-	createBundleAnalyzer({ enabled: process.env.BUNDLE_ANALYZER === "enabled" }),
+	createBundleAnalyzer({ enabled: env.BUNDLE_ANALYZER === "enabled" }),
 ];
 
 export default plugins.reduce((config, plugin) => {

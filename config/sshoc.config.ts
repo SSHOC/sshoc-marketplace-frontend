@@ -1,3 +1,4 @@
+import { env } from "@/config/env.config";
 import type { ItemDraftSortOrder, ItemSortOrder, ItemStatus } from "@/data/sshoc/api/item";
 import { itemSortOrders, itemStatus } from "@/data/sshoc/api/item";
 import type { SourceSortOrder } from "@/data/sshoc/api/source";
@@ -70,4 +71,4 @@ export const relatedItemsPage = 10;
 
 export const debounceDelay = 150; /** ms */
 
-export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+export const baseUrl = env.NEXT_PUBLIC_API_BASE_URL;
