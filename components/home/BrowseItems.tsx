@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 
 import { Link } from "@/components/common/Link";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import css from "@/components/home/BrowseItems.module.css";
 import { SubSectionHeader } from "@/components/home/SubSectionHeader";
 import { SubSectionHeaderLink } from "@/components/home/SubSectionHeaderLink";
 import { SubSectionTitle } from "@/components/home/SubSectionTitle";
@@ -17,12 +16,18 @@ import { length } from "@/lib/utils";
 
 export function BrowseItems(): ReactNode {
 	const t = useTranslations();
-	/** Match the request from `LastUpdatedItems` so it can be deduplicated. Here we only need the list of facet values. */
-	const itemSearch = useItemSearch({ order: ["modified-on"], perpage: maxLastAddedItems });
+	/**
+	 * Match the request from `LastUpdatedItems` so it can be de-duplicated.
+	 * Here we only need the list of facet values.
+	 */
+	const itemSearch = useItemSearch({
+		order: ["modified-on"],
+		perpage: maxLastAddedItems,
+	});
 
 	if (itemSearch.data == null) {
 		return (
-			<section className={css["container"]}>
+			<section className="grid content-start gap-8 py-16 [grid-area:browse-items]">
 				<Centered>
 					<LoadingIndicator />
 				</Centered>
@@ -33,7 +38,7 @@ export function BrowseItems(): ReactNode {
 	const { activity, keyword } = itemSearch.data.facets;
 
 	return (
-		<section className={css["container"]}>
+		<section className="grid content-start gap-8 py-16 [grid-area:browse-items]">
 			<SectionTitle>{t("common.home.browse")}</SectionTitle>
 			<BrowseLinks
 				title={t("common.home.browse-by-facet", {
@@ -69,7 +74,7 @@ function BrowseLinks(props: BrowseLinksProps): ReactNode {
 	}
 
 	return (
-		<section className={css["section"]}>
+		<section className="grid gap-6">
 			<SubSectionHeader>
 				<SubSectionTitle>{title}</SubSectionTitle>
 				<SubSectionHeaderLink
@@ -81,7 +86,7 @@ function BrowseLinks(props: BrowseLinksProps): ReactNode {
 					{t("common.see-all")}
 				</SubSectionHeaderLink>
 			</SubSectionHeader>
-			<ul role="list" className={css["items"]}>
+			<ul role="list" className="flex flex-wrap gap-x-6 gap-y-3">
 				{Object.entries(values)
 					.slice(0, maxBrowseFacets)
 					.map(([value, { count }]) => {
@@ -97,7 +102,7 @@ function BrowseLinks(props: BrowseLinksProps): ReactNode {
 							<li key={value}>
 								<Link href={`/search?${createUrlSearchParams(query)}`} variant="tag">
 									<span>{value}</span>
-									<span className={css["item-count"]}>({count})</span>
+									<span className="text-neutral-600">({count})</span>
 								</Link>
 							</li>
 						);
