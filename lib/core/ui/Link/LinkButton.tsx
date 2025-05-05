@@ -16,7 +16,7 @@ import linkStyles from "@/lib/core/ui/Link/Link.module.css";
 export interface LinkButtonProps
 	extends AriaLinkProps,
 		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id">,
-		Omit<NextLinkProps, "as" | "href" | "locale" | "passHref">,
+		Omit<NextLinkProps, "as" | "href" | "locale" | "onClick" | "passHref">,
 		Pick<ButtonProps, "color" | "size" | "style" | "variant"> {
 	children: ReactNode;
 	href: string;

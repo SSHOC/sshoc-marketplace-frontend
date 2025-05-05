@@ -46,22 +46,6 @@
 	--link-color-active: var(--color-primary-750);
 }
 
-.link[data-variant="nav-link-footer"] {
-	display: flex;
-	justify-content: center;
-	padding-block: var(--space-5);
-	padding-inline: var(--space-6);
-	color: var(--color-text);
-
-	&[data-hovered] {
-		background-color: var(--color-neutral-50);
-	}
-
-	&[data-focused] {
-		background-color: var(--color-neutral-50);
-	}
-}
-
 .link[data-variant="tag"] {
 	display: inline-flex;
 	gap: var(--space-1);

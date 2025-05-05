@@ -88,7 +88,7 @@ export function PageNavigation(): ReactNode {
 	];
 
 	return (
-		<nav className="hidden [grid-area:main-nav] xl:block">
+		<nav>
 			<ul className="flex justify-end text-center text-sm" role="list">
 				{items.map((item, index) => {
 					switch (item.type) {
@@ -96,7 +96,7 @@ export function PageNavigation(): ReactNode {
 							return (
 								<li key={index} className="inline-flex">
 									<Link
-										className="inline-flex items-center rounded-t-sm p-6 text-primary-700 hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+										className="inline-flex items-center rounded-t-sm p-6 text-primary-700 transition hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 										href={item.href}
 									>
 										{item.label}
@@ -109,7 +109,7 @@ export function PageNavigation(): ReactNode {
 							return (
 								<li key={index} className="inline-flex">
 									<AriaButton
-										className="inline-flex items-center rounded-t-sm p-6 text-primary-700 hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+										className="inline-flex items-center rounded-t-sm p-6 text-primary-700 transition hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 										onPress={item.onAction}
 									>
 										{item.label}
@@ -133,7 +133,7 @@ export function PageNavigation(): ReactNode {
 							return (
 								<li key={index} className="relative inline-flex">
 									<AriaMenuTrigger>
-										<AriaButton className="group inline-flex items-center gap-x-3 rounded-t-sm p-6 text-primary-700 hover:bg-neutral-50 hover:text-primary-700 focus-visible:bg-neutral-50 focus-visible:text-primary-700 aria-expanded:bg-primary-600 aria-expanded:text-neutral-0">
+										<AriaButton className="group inline-flex items-center gap-x-3 rounded-t-sm p-6 text-primary-700 transition hover:bg-neutral-50 hover:text-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 aria-expanded:bg-primary-600 aria-expanded:text-neutral-0">
 											{item.label}
 											<ChevronDownIcon
 												aria-hidden={true}
@@ -147,7 +147,7 @@ export function PageNavigation(): ReactNode {
 														case "link": {
 															return (
 																<AriaMenuItem
-																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																	key={index}
 																	href={item.href}
 																>
@@ -159,7 +159,7 @@ export function PageNavigation(): ReactNode {
 														case "action": {
 															return (
 																<AriaMenuItem
-																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																	className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																	key={index}
 																	onAction={item.onAction}
 																>
@@ -276,7 +276,7 @@ export function MobileNavigationMenu(): ReactNode {
 	];
 
 	return (
-		<nav className="my-2 flex items-center justify-end gap-8 [grid-area:main-nav] xl:hidden">
+		<nav className="my-2 flex items-center justify-end gap-8">
 			<AriaDialogTrigger>
 				<AriaButton
 					aria-label={t("common.navigation-menu")}
@@ -305,7 +305,7 @@ export function MobileNavigationMenu(): ReactNode {
 												</Link>
 											</div>
 											<AriaButton
-												className="-mr-2 rounded-sm p-2 hover:text-primary-600 focus-visible:text-primary-600"
+												className="-mr-2 rounded-sm p-2 transition hover:text-primary-600 focus-visible:text-primary-600"
 												onPress={close}
 											>
 												<XIcon aria-hidden={true} className="size-6 shrink-0" />
@@ -321,7 +321,7 @@ export function MobileNavigationMenu(): ReactNode {
 																return (
 																	<li key={index} className="flex shrink-0 flex-col gap-1">
 																		<Link
-																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			href={item.href}
 																			onClick={close}
 																		>
@@ -335,7 +335,7 @@ export function MobileNavigationMenu(): ReactNode {
 																return (
 																	<li key={index} className="flex shrink-0 flex-col gap-1">
 																		<AriaButton
-																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																			className="flex border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																			onPress={chain(item.onAction, close)}
 																		>
 																			{item.label}
@@ -360,7 +360,7 @@ export function MobileNavigationMenu(): ReactNode {
 																		<AriaDisclosure className="group">
 																			<AriaButton
 																				slot="trigger"
-																				className="flex w-full items-center justify-between border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 aria-expanded:bg-primary-600 aria-expanded:text-neutral-0"
+																				className="flex w-full items-center justify-between border-l-4 border-neutral-200 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600 aria-expanded:bg-primary-600 aria-expanded:text-neutral-0"
 																			>
 																				<span>{item.label}</span>
 																				<ChevronDownIcon
@@ -380,7 +380,7 @@ export function MobileNavigationMenu(): ReactNode {
 																									>
 																										<Link
 																											href={item.href}
-																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																											onClick={close}
 																										>
 																											{item.label}
@@ -396,7 +396,7 @@ export function MobileNavigationMenu(): ReactNode {
 																										className="flex shrink-0 flex-col gap-1"
 																									>
 																										<AriaButton
-																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+																											className="flex border-l-4 border-neutral-200 bg-neutral-0 px-8 py-6 leading-5.5 text-primary-700 outline-offset-0 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 																											onPress={chain(item.onAction, close)}
 																										>
 																											{item.label}

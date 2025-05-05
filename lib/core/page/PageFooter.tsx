@@ -1,8 +1,6 @@
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-
-import { NavLink } from "@/components/common/NavLink";
-import css from "@/lib/core/page/PageFooter.module.css";
 
 export function PageFooter(): ReactNode {
 	const t = useTranslations();
@@ -15,15 +13,21 @@ export function PageFooter(): ReactNode {
 	];
 
 	return (
-		<footer className={css["container"]}>
-			<nav className={css["footer-nav"]} aria-label={t("common.footer-navigation")}>
-				<ul className={css["nav-items"]} role="list">
+		<footer className="border-t border-neutral-150 bg-neutral-100 [grid-area:page-footer]">
+			<nav
+				className="mx-auto w-full max-w-[120rem] px-8"
+				aria-label={t("common.footer-navigation")}
+			>
+				<ul className="flex flex-col py-2 text-md xs:flex-row xs:py-0" role="list">
 					{links.map((link) => {
 						return (
 							<li key={link.label}>
-								<NavLink variant="nav-link-footer" href={link.href}>
+								<Link
+									className="flex justify-center px-6 py-5 text-neutral-700 transition hover:bg-neutral-50 focus-visible:bg-neutral-50"
+									href={link.href}
+								>
 									{link.label}
-								</NavLink>
+								</Link>
 							</li>
 						);
 					})}

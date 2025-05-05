@@ -26,7 +26,7 @@ export function AccountMenu(): ReactNode {
 	return (
 		<div className="relative inline-flex">
 			<AriaMenuTrigger>
-				<AriaButton className="-mt-px inline-flex rounded-b-sm bg-primary-750 px-16 py-2.5 text-sm font-medium text-neutral-50 hover:bg-primary-600 focus-visible:bg-primary-600 aria-expanded:bg-primary-600">
+				<AriaButton className="-mt-px inline-flex rounded-b-sm bg-primary-750 px-16 py-2.5 text-sm font-medium text-neutral-50 transition hover:bg-primary-600 focus-visible:bg-primary-600 aria-expanded:bg-primary-600">
 					{t("common.auth.account-menu-message", {
 						username: currentUser.data.displayName,
 					})}
@@ -37,7 +37,7 @@ export function AccountMenu(): ReactNode {
 							if (item.type === "action") {
 								return (
 									<AriaMenuItem
-										className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+										className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 										onAction={item.onAction}
 										key={index}
 									>
@@ -48,7 +48,7 @@ export function AccountMenu(): ReactNode {
 
 							return (
 								<AriaMenuItem
-									className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
+									className="flex border-l-4 border-neutral-200 px-8 py-6 text-primary-700 transition hover:border-primary-600 hover:bg-neutral-50 hover:text-primary-600 focus-visible:border-primary-600 focus-visible:bg-neutral-50 focus-visible:text-primary-600"
 									href={item.href}
 									key={index}
 								>
