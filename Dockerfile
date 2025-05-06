@@ -51,11 +51,11 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
 		--mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_SECRET,uid=1000 \
 		--mount=type=secret,id=KEYSTATIC_SECRET,uid=1000 \
-		--mount=type=secret,id=github_token,uid=1000 \
+		--mount=type=secret,id=GITHUB_TOKEN,uid=1000 \
 		KEYSTATIC_GITHUB_CLIENT_ID=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_ID) \
 		KEYSTATIC_GITHUB_CLIENT_SECRET=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_SECRET) \
 		KEYSTATIC_SECRET=$(cat /run/secrets/KEYSTATIC_SECRET) \
-		GITHUB_TOKEN=$(cat /run/secrets/github_token) \
+		GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN) \
 		pnpm run build
 
 # serve
