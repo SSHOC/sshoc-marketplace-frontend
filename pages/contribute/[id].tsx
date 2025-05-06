@@ -35,6 +35,10 @@ import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
+import { Video } from "@/components/content/video";
+import { Grid, GridItem } from "@/components/content/grid";
+import { ApiEndpoint, ApiParamSelect, ApiParamTextField } from "@/components/content/api-endpoint";
+import { Disclosure } from "@/components/content/disclosure";
 
 export namespace ContributePage {
 	export interface PathParamsInput extends ParamsInput {
@@ -130,9 +134,16 @@ export default function ContributePage(props: ContributePage.Props): ReactNode {
 								components={{
 									// @ts-expect-error This is fine.
 									a: Link,
+									ApiEndpoint,
+									ApiParamSelect,
+									ApiParamTextField,
 									Avatar,
+									Disclosure,
 									Embed,
 									Figure,
+									Grid,
+									GridItem,
+									Video,
 								}}
 							/>
 						</Prose>

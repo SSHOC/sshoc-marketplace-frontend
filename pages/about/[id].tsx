@@ -24,9 +24,6 @@ import { TableOfContents } from "@/components/common/TableOfContents";
 import { Avatar } from "@/components/content/avatar";
 import { Embed } from "@/components/content/embed";
 import { Figure } from "@/components/content/figure";
-import { ApiEndpoint } from "@/components/documentation/ApiEndpoint";
-import { ApiParamSelect } from "@/components/documentation/ApiParamSelect";
-import { ApiParamTextField } from "@/components/documentation/ApiParamTextField";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
@@ -37,8 +34,11 @@ import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
-import { Item } from "@/lib/core/ui/Collection/Item";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
+import { Video } from "@/components/content/video";
+import { Grid, GridItem } from "@/components/content/grid";
+import { ApiEndpoint, ApiParamSelect, ApiParamTextField } from "@/components/content/api-endpoint";
+import { Disclosure } from "@/components/content/disclosure";
 
 export namespace AboutPage {
 	export interface PathParamsInput extends ParamsInput {
@@ -132,15 +132,18 @@ export default function AboutPage(props: AboutPage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
+									// @ts-expect-error This is fine.
+									a: Link,
 									ApiEndpoint,
 									ApiParamSelect,
 									ApiParamTextField,
 									Avatar,
+									Disclosure,
 									Embed,
 									Figure,
-									Item,
-									// @ts-expect-error This is fine.
-									a: Link,
+									Grid,
+									GridItem,
+									Video,
 								}}
 							/>
 						</Prose>

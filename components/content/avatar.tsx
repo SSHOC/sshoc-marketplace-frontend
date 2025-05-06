@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 interface AvatarProps {
 	children?: ReactNode;
-
 	src: string;
 }
 

@@ -27,10 +27,13 @@ ARG NEXT_PUBLIC_APP_BASE_URL
 ARG NEXT_PUBLIC_BOTS
 ARG NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 # ARG NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME
+ARG NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER
+ARG NEXT_PUBLIC_KEYSTATIC_MODE
 ARG NEXT_PUBLIC_MATOMO_BASE_URL
 ARG NEXT_PUBLIC_MATOMO_ID
 # ARG NEXT_PUBLIC_REDMINE_ID
-
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY
 ARG NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH
 
@@ -45,9 +48,15 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # to mount secrets which need to be available at build time
 # @see https://docs.docker.com/build/building/secrets/
-RUN --mount=type=secret,id=github_token,uid=1000 \
-	GITHUB_TOKEN=$(cat /run/secrets/github_token) \
-	pnpm run build
+RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
+		--mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_SECRET,uid=1000 \
+		--mount=type=secret,id=KEYSTATIC_SECRET,uid=1000 \
+		--mount=type=secret,id=github_token,uid=1000 \
+		KEYSTATIC_GITHUB_CLIENT_ID=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_ID) \
+		KEYSTATIC_GITHUB_CLIENT_SECRET=$(cat /run/secrets/KEYSTATIC_GITHUB_CLIENT_SECRET) \
+		KEYSTATIC_SECRET=$(cat /run/secrets/KEYSTATIC_SECRET) \
+		GITHUB_TOKEN=$(cat /run/secrets/github_token) \
+		pnpm run build
 
 # serve
 FROM node:22-alpine AS serve

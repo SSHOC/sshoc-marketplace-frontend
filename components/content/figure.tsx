@@ -1,8 +1,10 @@
 import { cn } from "@acdh-oeaw/style-variants";
 import type { ReactNode } from "react";
 
+import type { FigureAlignment } from "@/lib/content/options";
+
 interface FigureProps {
-	alignment?: "center" | "stretch";
+	alignment?: FigureAlignment;
 	alt?: string;
 	children?: ReactNode;
 	/** Maybe added by `with-image-sizes` mdx plugin. */

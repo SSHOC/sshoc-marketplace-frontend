@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Link } from "@/components/common/Link";
-import { SectionTitle } from "@/components/common/SectionTitle";
+import { SectionTitle } from "@/components/home/SectionTitle";
 import { SubSectionHeader } from "@/components/home/SubSectionHeader";
 import { SubSectionHeaderLink } from "@/components/home/SubSectionHeaderLink";
 import { SubSectionTitle } from "@/components/home/SubSectionTitle";
