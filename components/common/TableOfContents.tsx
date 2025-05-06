@@ -1,4 +1,4 @@
-import type { Toc } from "@stefanprobst/rehype-extract-toc";
+import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 

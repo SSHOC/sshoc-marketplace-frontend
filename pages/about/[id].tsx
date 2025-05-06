@@ -1,7 +1,7 @@
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { Toc } from "@stefanprobst/rehype-extract-toc";
+import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 import type { GetStaticPathsContext, GetStaticPropsContext, GetStaticPropsResult } from "next";
 import { type Messages, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -21,9 +21,9 @@ import { Prose } from "@/components/common/Prose";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { TableOfContents } from "@/components/common/TableOfContents";
-import { ApiEndpoint } from "@/components/documentation/ApiEndpoint";
-import { ApiParamSelect } from "@/components/documentation/ApiParamSelect";
-import { ApiParamTextField } from "@/components/documentation/ApiParamTextField";
+import { Avatar } from "@/components/content/avatar";
+import { Embed } from "@/components/content/embed";
+import { Figure } from "@/components/content/figure";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
@@ -34,8 +34,11 @@ import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
-import { Item } from "@/lib/core/ui/Collection/Item";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
+import { Video } from "@/components/content/video";
+import { Grid, GridItem } from "@/components/content/grid";
+import { ApiEndpoint, ApiParamSelect, ApiParamTextField } from "@/components/content/api-endpoint";
+import { Disclosure } from "@/components/content/disclosure";
 
 export namespace AboutPage {
 	export interface PathParamsInput extends ParamsInput {
@@ -57,8 +60,7 @@ export async function getStaticPaths(context: GetStaticPathsContext) {
 	const locales = getLocales(context);
 	const ids = await readdir(join(process.cwd(), "content", "about"));
 	const paths = locales.flatMap((locale) => {
-		return ids.map((_id) => {
-			const id = _id.slice(0, -".mdx".length);
+		return ids.map((id) => {
 			const params = { id };
 			return { locale, params };
 		});
@@ -77,14 +79,14 @@ export async function getStaticProps(
 	const { id } = context.params!;
 	const messages = await load(locale, ["common"]);
 
-	const filePath = join("content", "about", id + ".mdx");
+	const filePath = join("content", "about", id, "index.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
 
 	const input = await read(join(process.cwd(), filePath));
 	matter(input, { strip: true });
 	const vfile = await compile(input);
 	const metadata = vfile.data.matter;
-	const tableOfContents = vfile.data.toc ?? null;
+	const tableOfContents = vfile.data.tableOfContents ?? null;
 	const code = String(vfile);
 
 	return {
@@ -130,12 +132,18 @@ export default function AboutPage(props: AboutPage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
+									// @ts-expect-error This is fine.
+									a: Link,
 									ApiEndpoint,
 									ApiParamSelect,
 									ApiParamTextField,
-									Item,
-									// @ts-expect-error This is fine.
-									a: Link,
+									Avatar,
+									Disclosure,
+									Embed,
+									Figure,
+									Grid,
+									GridItem,
+									Video,
 								}}
 							/>
 						</Prose>

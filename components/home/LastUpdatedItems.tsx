@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
-import { SectionHeader } from "@/components/common/SectionHeader";
-import { SectionTitle } from "@/components/common/SectionTitle";
+import { SectionHeader } from "@/components/home/SectionHeader";
+import { SectionTitle } from "@/components/home/SectionTitle";
 import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
 import { maxLastAddedItems } from "@/config/sshoc.config";
 import { useItemSearch } from "@/data/sshoc/hooks/item";

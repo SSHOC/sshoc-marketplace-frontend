@@ -9,6 +9,7 @@ import { defaultLocale, locales } from "@/config/i18n.config";
 type NextConfig = Config;
 
 const config: NextConfig = {
+	allowedDevOrigins: ["127.0.0.1"],
 	eslint: {
 		dirs: ["."],
 		ignoreDuringBuilds: true,
@@ -57,6 +58,17 @@ const config: NextConfig = {
 	 * @see e.g. https://github.com/adobe/react-spectrum/issues/977
 	 */
 	reactStrictMode: false,
+	redirects() {
+		const redirects: Awaited<ReturnType<NonNullable<Config["redirects"]>>> = [
+			{
+				source: "/admin",
+				destination: "/keystatic",
+				permanent: false,
+			},
+		];
+
+		return Promise.resolve(redirects);
+	},
 	async rewrites() {
 		return [
 			{
