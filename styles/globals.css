@@ -50,24 +50,11 @@
 		isolation: isolate;
 	}
 
-	:-moz-focusring {
-		outline: auto;
-	}
-
-	:focus,
 	:focus-visible {
 		z-index: var(--z-index-focus-ring);
 		outline: 2px solid var(--color-focus-ring, Highlight);
 		outline: 2px solid var(--color-focus-ring, -webkit-focus-ring-color);
 		outline-offset: 2px;
-	}
-
-	:focus:not(:focus-visible) {
-		/**
-   * Not setting `outline: none` to keep all focus outlines (irrespective of `:focus-visible`)
-   * in Windows High Contrast Mode.
-   */
-		outline: 2px solid transparent;
 	}
 
 	::selection {
