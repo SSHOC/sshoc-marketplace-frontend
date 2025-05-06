@@ -63,7 +63,10 @@ jobs:
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
-            "github_token=${{ secrets.GITHUB_TOKEN }}"
+            "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+            "KEYSTATIC_GITHUB_CLIENT_ID=${{ secrets.KEYSTATIC_GITHUB_CLIENT_ID }}"
+            "KEYSTATIC_GITHUB_CLIENT_SECRET=${{ secrets.KEYSTATIC_GITHUB_CLIENT_SECRET }}"
+            "KEYSTATIC_SECRET=${{ secrets.KEYSTATIC_SECRET }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -102,7 +105,10 @@ jobs:
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
-            "github_token=${{ secrets.GITHUB_TOKEN }}"
+            "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+            "KEYSTATIC_GITHUB_CLIENT_ID=${{ secrets.KEYSTATIC_GITHUB_CLIENT_ID }}"
+            "KEYSTATIC_GITHUB_CLIENT_SECRET=${{ secrets.KEYSTATIC_GITHUB_CLIENT_SECRET }}"
+            "KEYSTATIC_SECRET=${{ secrets.KEYSTATIC_SECRET }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -141,7 +147,10 @@ jobs:
             NEXT_PUBLIC_GITHUB_REPOSITORY=sshoc/sshoc-marketplace-frontend
             NEXT_PUBLIC_GITHUB_REPOSITORY_BRANCH=main
           secrets: |
-            "github_token=${{ secrets.GITHUB_TOKEN }}"
+            "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+            "KEYSTATIC_GITHUB_CLIENT_ID=${{ secrets.KEYSTATIC_GITHUB_CLIENT_ID }}"
+            "KEYSTATIC_GITHUB_CLIENT_SECRET=${{ secrets.KEYSTATIC_GITHUB_CLIENT_SECRET }}"
+            "KEYSTATIC_SECRET=${{ secrets.KEYSTATIC_SECRET }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
