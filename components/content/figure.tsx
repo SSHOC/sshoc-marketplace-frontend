@@ -25,7 +25,7 @@ export function Figure(props: FigureProps): ReactNode {
 			<img
 				alt={alt}
 				src={src}
-				className="overflow-hidden rounded-sm border border-neutral-150"
+				className="m-0! overflow-hidden rounded-sm border border-neutral-150"
 				height={height}
 				width={width}
 			/>

@@ -13,7 +13,7 @@ export function Avatar(props: AvatarProps): ReactNode {
 			{/* eslint-disable-next-line @next/next/no-img-element */}
 			<img
 				alt=""
-				className="aspect-square size-44 rounded-full border border-neutral-150 object-cover"
+				className="m-0! aspect-square w-44 rounded-full border border-neutral-150 object-cover"
 				src={src}
 			/>
 			{children != null ? (
