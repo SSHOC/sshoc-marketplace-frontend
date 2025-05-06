@@ -113,7 +113,7 @@ export function ApiEndpoint(props: Readonly<ApiEndpointProps>): ReactNode {
 				className="flex min-h-12 items-end justify-between gap-8 bg-neutral-50 px-4 py-3 [&_svg]:m-0!"
 				onSubmit={onSubmit}
 			>
-				<div className="flex flex-1 flex-col items-center gap-4 sm:flex-row">
+				<div className="flex flex-1 flex-col flex-wrap items-center gap-4 *:w-auto! sm:flex-row">
 					<ApiParamsProvider value={{ params, setParams }}>{children}</ApiParamsProvider>
 				</div>
 				<div className="flex items-center gap-4">

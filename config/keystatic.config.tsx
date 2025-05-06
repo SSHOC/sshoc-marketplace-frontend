@@ -6,6 +6,7 @@ import { block, repeating, wrapper } from "@keystatic/core/content-components";
 import slugify from "@sindresorhus/slugify";
 import {
 	AppWindowIcon,
+	BlindsIcon,
 	CogIcon,
 	GridIcon,
 	ImageIcon,
@@ -211,6 +212,7 @@ const Avatar = wrapper({
 const Disclosure = wrapper({
 	label: "Disclosure",
 	description: "Insert a disclosure panel.",
+	icon: <BlindsIcon />,
 	schema: {
 		title: fields.text({
 			label: "Title",
@@ -223,10 +225,11 @@ const Disclosure = wrapper({
 		const { title } = value;
 
 		return (
-			<details>
+			<details className="flex flex-col gap-y-1">
 				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>{title}</NotEditable>
-				<summary></summary>
+				<NotEditable>
+					<summary className="cursor-pointer">{title}</summary>
+				</NotEditable>
 				{/* @ts-expect-error Fixed in react 19 types. */}
 				<div>{children}</div>
 			</details>

@@ -10,7 +10,7 @@ export function Disclosure(props: Readonly<DisclosureProps>): ReactNode {
 
 	return (
 		<details className="flex flex-col gap-y-1">
-			<summary>{title}</summary>
+			<summary className="cursor-pointer">{title}</summary>
 			<div>{children}</div>
 		</details>
 	);
