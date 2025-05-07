@@ -2,329 +2,384 @@ import { useObjectUrl } from "@acdh-oeaw/keystatic-lib/preview";
 import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { cn, styles } from "@acdh-oeaw/style-variants";
 import { collection, config, fields, NotEditable, singleton } from "@keystatic/core";
-import { block, repeating, wrapper } from "@keystatic/core/content-components";
-import slugify from "@sindresorhus/slugify";
+import { block, mark, repeating, wrapper } from "@keystatic/core/content-components";
 import {
 	AppWindowIcon,
 	BlindsIcon,
 	CogIcon,
 	GridIcon,
 	ImageIcon,
+	LinkIcon,
 	ServerIcon,
 	SquareIcon,
 	UserCircle2Icon,
 	VideoIcon,
 } from "lucide-react";
-// import { createAssetOptions } from "@acdh-oeaw/keystatic-lib";
-
+import * as validation from "@/lib/keystatic/validation";
 import { env } from "@/config/env.config";
 import {
 	figureAlignments,
 	gridAlignments,
 	gridLayouts,
+	linkKinds,
 	socialMediaKinds,
 	videoProviders,
 } from "@/lib/content/options";
 import { createVideoUrl } from "@/lib/keystatic/create-video-url";
-import logo from "@/public/assets/images/logo.svg";
-// import type { createLinkSchema } from "@/lib/keystatic/create-link-schema";
+import { Logo } from "@/components/content/logo";
+import slugify from "@sindresorhus/slugify";
 
-function transformFilename(fileName: string): string {
-	return slugify(fileName, { preserveCharacters: ["."] });
+function transformFilename(path: string) {
+	return slugify(path, { preserveCharacters: ["."] });
 }
 
-const assetOptions = {
-	directory: "./public/assets/cms/",
-	publicPath: "/assets/cms/",
-};
+function createAssetPaths(path: `/${string}/`) {
+	return {
+		downloads: {
+			directory: `./public/assets/content/downloads${path}`,
+			publicPath: `/assets/content/downloads${path}`,
+			transformFilename,
+		},
+		images: {
+			directory: `./public/assets/content/images${path}`,
+			publicPath: `/assets/content/images${path}`,
+			transformFilename,
+		},
+	} as const;
+}
 
-const ApiParamSelect = block({
-	label: "Query parameter (select)",
-	description: "",
-	icon: <CogIcon />,
-	schema: {
-		label: fields.text({
-			label: "Label",
-			validation: { isRequired: true },
-		}),
-		id: fields.text({
-			label: "Parameter",
-			validation: { isRequired: true },
-		}),
-		placeholder: fields.text({
-			label: "Placeholder",
-			validation: { isRequired: false },
-		}),
-		options: fields.array(
-			fields.object({
-				id: fields.text({
-					label: "Identifier",
-					validation: { isRequired: true },
-				}),
+function createCollectionPaths(path: `/${string}/`) {
+	return {
+		assets: createAssetPaths(path),
+		content: `./content${path}*/`,
+	} as const;
+}
+
+type CollectionPaths = ReturnType<typeof createCollectionPaths>;
+
+function createSingletonPaths(path: `/${string}/`) {
+	return {
+		assets: createAssetPaths(path),
+		content: `./content${path}`,
+	} as const;
+}
+
+type SingletonPaths = ReturnType<typeof createSingletonPaths>;
+
+type Paths = CollectionPaths | SingletonPaths;
+
+function createContentFieldOptions(paths: Paths): Parameters<typeof fields.mdx>[0]["options"] {
+	return {
+		heading: [2, 3, 4],
+		image: paths.assets.images,
+	} as const;
+}
+
+function createApiEndpointComponent() {
+	return {
+		ApiParamSelect: block({
+			label: "Query parameter (select)",
+			description: "",
+			icon: <CogIcon />,
+			schema: {
 				label: fields.text({
 					label: "Label",
 					validation: { isRequired: true },
 				}),
-			}),
-			{
-				label: "Options",
-				itemLabel(props) {
-					return props.fields.label.value;
-				},
-				validation: { length: { min: 1 } },
+				id: fields.text({
+					label: "Parameter",
+					validation: { isRequired: true },
+				}),
+				placeholder: fields.text({
+					label: "Placeholder",
+					validation: { isRequired: false },
+				}),
+				options: fields.array(
+					fields.object({
+						id: fields.text({
+							label: "Identifier",
+							validation: { isRequired: true },
+						}),
+						label: fields.text({
+							label: "Label",
+							validation: { isRequired: true },
+						}),
+					}),
+					{
+						label: "Options",
+						itemLabel(props) {
+							return props.fields.label.value;
+						},
+						validation: { length: { min: 1 } },
+					},
+				),
 			},
-		),
-	},
-	forSpecificLocations: true,
-	ContentView(props) {
-		const { value } = props;
+			forSpecificLocations: true,
+			ContentView(props) {
+				const { value } = props;
 
-		const { id, label } = value;
+				const { id, label } = value;
 
-		return (
-			/* @ts-expect-error Fixed in react 19 types. */
-			<NotEditable className="flex flex-col gap-y-1">
-				<div>
-					<span>Parameter:</span> {id}
-				</div>
-				<div>
-					<span>Label:</span> {label}
-				</div>
-			</NotEditable>
-		);
-	},
-});
-
-const ApiParamTextField = block({
-	label: "Query parameter (text)",
-	description: "",
-	icon: <CogIcon />,
-	schema: {
-		label: fields.text({
-			label: "Label",
-			validation: { isRequired: true },
+				return (
+					/* @ts-expect-error Fixed in react 19 types. */
+					<NotEditable className="flex flex-col gap-y-1">
+						<div>
+							<span>Parameter:</span> {id}
+						</div>
+						<div>
+							<span>Label:</span> {label}
+						</div>
+					</NotEditable>
+				);
+			},
 		}),
-		id: fields.text({
-			label: "Parameter",
-			validation: { isRequired: true },
+		ApiParamTextField: block({
+			label: "Query parameter (text)",
+			description: "",
+			icon: <CogIcon />,
+			schema: {
+				label: fields.text({
+					label: "Label",
+					validation: { isRequired: true },
+				}),
+				id: fields.text({
+					label: "Parameter",
+					validation: { isRequired: true },
+				}),
+				placeholder: fields.text({
+					label: "Placeholder",
+					validation: { isRequired: false },
+				}),
+			},
+			forSpecificLocations: true,
+			ContentView(props) {
+				const { value } = props;
+
+				const { id, label } = value;
+
+				return (
+					/* @ts-expect-error Fixed in react 19 types. */
+					<NotEditable className="flex flex-col gap-y-1">
+						<div>
+							<span>Parameter:</span> {id}
+						</div>
+						<div>
+							<span>Label:</span> {label}
+						</div>
+					</NotEditable>
+				);
+			},
 		}),
-		placeholder: fields.text({
-			label: "Placeholder",
-			validation: { isRequired: false },
+		ApiEndpoint: repeating({
+			label: "API Endpoint",
+			description: "Insert a widget to interact with the API.",
+			icon: <ServerIcon />,
+			schema: {
+				title: fields.text({
+					label: "Title",
+					validation: { isRequired: true },
+				}),
+				pathname: fields.url({
+					label: "API endpoint pathname",
+					validation: { isRequired: true },
+				}),
+			},
+			children: ["ApiParamSelect", "ApiParamTextField"],
+			ContentView(props) {
+				const { children, value } = props;
+
+				const { pathname, title } = value;
+
+				return (
+					<aside className="flex flex-col gap-y-1">
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable className="flex flex-col gap-y-1">
+							<div>
+								<span>Title:</span> {title}
+							</div>
+							<div>
+								<span>Pathname:</span> {pathname}
+							</div>
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<div>{children}</div>
+					</aside>
+				);
+			},
 		}),
-	},
-	forSpecificLocations: true,
-	ContentView(props) {
-		const { value } = props;
+	};
+}
 
-		const { id, label } = value;
+function createAvatarComponent(paths: Paths) {
+	return {
+		Avatar: wrapper({
+			label: "Avatar",
+			description: "Insert rounded image of a person.",
+			icon: <UserCircle2Icon />,
+			schema: {
+				src: fields.image({
+					label: "Image",
+					validation: { isRequired: true },
+					...paths.assets.images,
+				}),
+			},
+			ContentView(props) {
+				const { children, value } = props;
 
-		return (
-			/* @ts-expect-error Fixed in react 19 types. */
-			<NotEditable className="flex flex-col gap-y-1">
-				<div>
-					<span>Parameter:</span> {id}
-				</div>
-				<div>
-					<span>Label:</span> {label}
-				</div>
-			</NotEditable>
-		);
-	},
-});
+				const { src } = value;
 
-const ApiEndpoint = repeating({
-	label: "API Endpoint",
-	description: "Insert a widget to interact with the API.",
-	icon: <ServerIcon />,
-	schema: {
-		title: fields.text({
-			label: "Title",
-			validation: { isRequired: true },
+				const url = useObjectUrl(src);
+
+				return (
+					<figure className="flex flex-col gap-y-1">
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable>
+							{url != null ? (
+								/* eslint-disable-next-line @next/next/no-img-element */
+								<img
+									alt=""
+									className="aspect-square size-44 rounded-full border border-neutral-150 object-cover"
+									src={url}
+								/>
+							) : null}
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
+					</figure>
+				);
+			},
 		}),
-		pathname: fields.url({
-			label: "API endpoint pathname",
-			validation: { isRequired: true },
+	};
+}
+
+function createDisclosureComponent() {
+	return {
+		Disclosure: wrapper({
+			label: "Disclosure",
+			description: "Insert a disclosure panel.",
+			icon: <BlindsIcon />,
+			schema: {
+				title: fields.text({
+					label: "Title",
+					validation: { isRequired: true },
+				}),
+			},
+			ContentView(props) {
+				const { children, value } = props;
+
+				const { title } = value;
+
+				return (
+					<details className="flex flex-col gap-y-1">
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable>
+							<summary className="cursor-pointer">{title}</summary>
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<div>{children}</div>
+					</details>
+				);
+			},
 		}),
-	},
-	children: ["ApiParamSelect", "ApiParamTextField"],
-	ContentView(props) {
-		const { children, value } = props;
+	};
+}
 
-		const { pathname, title } = value;
+function createEmbedComponent() {
+	return {
+		Embed: wrapper({
+			label: "Embed",
+			description: "Insert content from another website.",
+			icon: <AppWindowIcon />,
+			schema: {
+				src: fields.url({
+					label: "URL",
+					validation: { isRequired: true },
+				}),
+			},
+			ContentView(props) {
+				const { children, value } = props;
 
-		return (
-			<aside className="flex flex-col gap-y-1">
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable className="flex flex-col gap-y-1">
-					<div>
-						<span>Title:</span> {title}
-					</div>
-					<div>
-						<span>Pathname:</span> {pathname}
-					</div>
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<div>{children}</div>
-			</aside>
-		);
-	},
-});
+				const { src } = value;
 
-const Avatar = wrapper({
-	label: "Avatar",
-	description: "Insert rounded image of a person.",
-	icon: <UserCircle2Icon />,
-	schema: {
-		src: fields.image({
-			label: "Image",
-			validation: { isRequired: true },
-			...assetOptions,
+				return (
+					<figure className="flex flex-col gap-y-1">
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable>
+							{src != null ? (
+								/* eslint-disable-next-line jsx-a11y/iframe-has-title */
+								<iframe
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowFullScreen={true}
+									className="aspect-video w-full overflow-hidden rounded-sm border border-neutral-150"
+									referrerPolicy="strict-origin-when-cross-origin"
+									src={src}
+								/>
+							) : null}
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
+					</figure>
+				);
+			},
 		}),
-	},
-	ContentView(props) {
-		const { children, value } = props;
+	};
+}
 
-		const { src } = value;
+function createFigureComponent(paths: Paths) {
+	return {
+		Figure: wrapper({
+			label: "Figure",
+			description: "Insert an image with caption.",
+			icon: <ImageIcon />,
+			schema: {
+				src: fields.image({
+					label: "Image",
+					validation: { isRequired: true },
+					...paths.assets.images,
+				}),
+				alt: fields.text({
+					label: "Image description for assistive technology",
+					validation: { isRequired: false },
+				}),
+				alignment: fields.select({
+					label: "Alignment",
+					options: figureAlignments,
+					defaultValue: "stretch",
+				}),
+			},
+			ContentView(props) {
+				const { children, value } = props;
 
-		const url = useObjectUrl(src);
+				const { alignment = "stretch", alt = "", src } = value;
 
-		return (
-			<figure className="flex flex-col gap-y-1">
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>
-					{url != null ? (
-						/* eslint-disable-next-line @next/next/no-img-element */
-						<img
-							alt=""
-							className="aspect-square size-44 rounded-full border border-neutral-150 object-cover"
-							src={url}
-						/>
-					) : null}
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<figcaption className="text-sm text-neutral-700">{children}</figcaption>
-			</figure>
-		);
-	},
-});
+				const url = useObjectUrl(src);
 
-const Disclosure = wrapper({
-	label: "Disclosure",
-	description: "Insert a disclosure panel.",
-	icon: <BlindsIcon />,
-	schema: {
-		title: fields.text({
-			label: "Title",
-			validation: { isRequired: true },
+				return (
+					<figure
+						className={cn(
+							"flex flex-col gap-y-1",
+							alignment === "center" ? "justify-center" : undefined,
+						)}
+					>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable>
+							{url != null ? (
+								/* eslint-disable-next-line @next/next/no-img-element */
+								<img
+									alt={alt}
+									className="w-full overflow-hidden rounded-sm border border-neutral-150"
+									src={url}
+								/>
+							) : null}
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
+					</figure>
+				);
+			},
 		}),
-	},
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { title } = value;
-
-		return (
-			<details className="flex flex-col gap-y-1">
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>
-					<summary className="cursor-pointer">{title}</summary>
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<div>{children}</div>
-			</details>
-		);
-	},
-});
-
-const Embed = wrapper({
-	label: "Embed",
-	description: "Insert content from another website.",
-	icon: <AppWindowIcon />,
-	schema: {
-		src: fields.url({
-			label: "URL",
-			validation: { isRequired: true },
-		}),
-	},
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { src } = value;
-
-		return (
-			<figure className="flex flex-col gap-y-1">
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>
-					{src != null ? (
-						/* eslint-disable-next-line jsx-a11y/iframe-has-title */
-						<iframe
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowFullScreen={true}
-							className="aspect-video w-full overflow-hidden rounded-sm border border-neutral-150"
-							referrerPolicy="strict-origin-when-cross-origin"
-							src={src}
-						/>
-					) : null}
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<figcaption className="text-sm text-neutral-700">{children}</figcaption>
-			</figure>
-		);
-	},
-});
-
-const Figure = wrapper({
-	label: "Figure",
-	description: "Insert an image with caption.",
-	icon: <ImageIcon />,
-	schema: {
-		src: fields.image({
-			label: "Image",
-			validation: { isRequired: true },
-			...assetOptions,
-		}),
-		alt: fields.text({
-			label: "Image description for assistive technology",
-			validation: { isRequired: false },
-		}),
-		alignment: fields.select({
-			label: "Alignment",
-			options: figureAlignments,
-			defaultValue: "stretch",
-		}),
-	},
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { alignment = "stretch", alt = "", src } = value;
-
-		const url = useObjectUrl(src);
-
-		return (
-			<figure
-				className={cn(
-					"flex flex-col gap-y-1",
-					alignment === "center" ? "justify-center" : undefined,
-				)}
-			>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>
-					{url != null ? (
-						/* eslint-disable-next-line @next/next/no-img-element */
-						<img
-							alt={alt}
-							className="w-full overflow-hidden rounded-sm border border-neutral-150"
-							src={url}
-						/>
-					) : null}
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<figcaption className="text-sm text-neutral-700">{children}</figcaption>
-			</figure>
-		);
-	},
-});
+	};
+}
 
 const gridStyles = styles({
 	base: "grid content-start gap-x-8",
@@ -348,356 +403,450 @@ const gridStyles = styles({
 	},
 });
 
-const Grid = repeating({
-	label: "Grid",
-	description: "Insert a layout grid.",
-	icon: <GridIcon />,
-	schema: {
-		layout: fields.select({
-			label: "Layout",
-			options: gridLayouts,
-			defaultValue: "two-columns",
-		}),
-		alignment: fields.select({
-			label: "Vertical alignment",
-			options: gridAlignments,
-			defaultValue: "stretch",
-		}),
-	},
-	children: ["GridItem"],
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { alignment = "stretch", layout = "two-columns" } = value;
-
-		/* @ts-expect-error Fixed in react 19 types. */
-		return <div className={gridStyles({ alignment, layout })}>{children}</div>;
-	},
-});
-
-const GridItem = wrapper({
-	label: "Grid item",
-	description: "Insert a layout grid cell.",
-	icon: <SquareIcon />,
-	schema: {
-		alignment: fields.select({
-			label: "Vertical alignment",
-			options: gridAlignments,
-			defaultValue: "stretch",
-		}),
-	},
-	forSpecificLocations: true,
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { alignment = "stretch" } = value;
-
-		/* @ts-expect-error Fixed in react 19 types. */
-		return <div className={alignment === "center" ? "self-center" : undefined}>{children}</div>;
-	},
-});
-
-const Video = wrapper({
-	label: "Video",
-	description: "Insert a video.",
-	icon: <VideoIcon />,
-	schema: {
-		provider: fields.select({
-			label: "Provider",
-			options: videoProviders,
-			defaultValue: "youtube",
-		}),
-		id: fields.text({
-			label: "ID",
-			validation: { isRequired: true },
-		}),
-		startTime: fields.number({
-			label: "Start time",
-			validation: { isRequired: false },
-		}),
-	},
-	ContentView(props) {
-		const { children, value } = props;
-
-		const { id, provider, startTime } = value;
-
-		const src = isNonEmptyString(id) ? String(createVideoUrl(provider, id, startTime)) : null;
-
-		return (
-			<figure className="flex flex-col gap-y-1">
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<NotEditable>
-					{src != null ? (
-						// eslint-disable-next-line jsx-a11y/iframe-has-title
-						<iframe
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowFullScreen={true}
-							className="rounded-2 border-stroke-weak aspect-video w-full overflow-hidden border"
-							referrerPolicy="strict-origin-when-cross-origin"
-							src={src}
-						/>
-					) : null}
-				</NotEditable>
-				{/* @ts-expect-error Fixed in react 19 types. */}
-				<figcaption className="text-sm text-neutral-700">{children}</figcaption>
-			</figure>
-		);
-	},
-});
-
-export default config({
-	collections: {
-		"about-pages": collection({
-			label: "About pages",
-			path: "./content/about/*/",
-			format: { contentField: "content" },
-			slugField: "title",
-			columns: ["title"],
-			entryLayout: "form",
+function createGridComponent() {
+	return {
+		Grid: repeating({
+			label: "Grid",
+			description: "Insert a layout grid.",
+			icon: <GridIcon />,
 			schema: {
-				title: fields.slug({
-					name: {
-						label: "Title",
-						validation: { isRequired: true },
-					},
+				layout: fields.select({
+					label: "Layout",
+					options: gridLayouts,
+					defaultValue: "two-columns",
 				}),
-				toc: fields.checkbox({
-					label: "Table of contents",
-				}),
-				content: fields.mdx({
-					label: "Content",
-					options: {
-						heading: [2, 3, 4],
-						image: {
-							...assetOptions,
-							transformFilename,
-						},
-					},
-					components: {
-						ApiEndpoint,
-						ApiParamSelect,
-						ApiParamTextField,
-						Avatar,
-						Disclosure,
-						Embed,
-						Figure,
-						Grid,
-						GridItem,
-						Video,
-					},
+				alignment: fields.select({
+					label: "Vertical alignment",
+					options: gridAlignments,
+					defaultValue: "stretch",
 				}),
 			},
-		}),
-		"contribute-pages": collection({
-			label: "Contribute pages",
-			path: "./content/contribute/*/",
-			format: { contentField: "content" },
-			slugField: "title",
-			columns: ["title"],
-			entryLayout: "form",
-			schema: {
-				title: fields.slug({
-					name: {
-						label: "Title",
-						validation: { isRequired: true },
-					},
-				}),
-				toc: fields.checkbox({
-					label: "Table of contents",
-				}),
-				content: fields.mdx({
-					label: "Content",
-					options: {
-						heading: [2, 3, 4],
-						image: {
-							...assetOptions,
-							transformFilename,
-						},
-					},
-					components: {
-						ApiEndpoint,
-						ApiParamSelect,
-						ApiParamTextField,
-						Avatar,
-						Disclosure,
-						Embed,
-						Figure,
-						Grid,
-						GridItem,
-						Video,
-					},
-				}),
+			children: ["GridItem"],
+			ContentView(props) {
+				const { children, value } = props;
+
+				const { alignment = "stretch", layout = "two-columns" } = value;
+
+				/* @ts-expect-error Fixed in react 19 types. */
+				return <div className={gridStyles({ alignment, layout })}>{children}</div>;
 			},
 		}),
-	},
-	singletons: {
-		"contact-page": singleton({
-			label: "Contact page",
-			path: "./content/contact/",
-			format: { contentField: "content" },
-			entryLayout: "form",
+		GridItem: wrapper({
+			label: "Grid item",
+			description: "Insert a layout grid cell.",
+			icon: <SquareIcon />,
 			schema: {
-				title: fields.text({
+				alignment: fields.select({
+					label: "Vertical alignment",
+					options: gridAlignments,
+					defaultValue: "stretch",
+				}),
+			},
+			forSpecificLocations: true,
+			ContentView(props) {
+				const { children, value } = props;
+
+				const { alignment = "stretch" } = value;
+
+				/* @ts-expect-error Fixed in react 19 types. */
+				return <div className={alignment === "center" ? "self-center" : undefined}>{children}</div>;
+			},
+		}),
+	};
+}
+
+function createLinkSchema(paths: Paths) {
+	return fields.conditional(
+		fields.select({
+			label: "Kind",
+			options: linkKinds,
+			defaultValue: "external",
+		}),
+		{
+			"about-pages": fields.relationship({
+				label: "About pages",
+				validation: { isRequired: true },
+				collection: "about-pages",
+			}),
+			"contribute-pages": fields.relationship({
+				label: "Contribute pages",
+				validation: { isRequired: true },
+				collection: "contribute-pages",
+			}),
+			"contact-page": fields.relationship({
+				label: "Contact page",
+				validation: { isRequired: true },
+				collection: "contact-page",
+			}),
+			download: fields.file({
+				label: "Download",
+				validation: { isRequired: true },
+				...paths.assets.downloads,
+			}),
+			email: fields.text({
+				label: "Email",
+				validation: { isRequired: true, pattern: validation.email },
+			}),
+			external: fields.url({
+				label: "URL",
+				validation: { isRequired: true },
+			}),
+			"url-fragment-id": fields.text({
+				label: "Identifier",
+				validation: { isRequired: true, pattern: validation.urlFragment },
+			}),
+		},
+	);
+}
+
+function createLinkComponent(paths: Paths) {
+	return {
+		Link: mark({
+			label: "Link",
+			icon: <LinkIcon />,
+			schema: {
+				link: createLinkSchema(paths),
+			},
+			tag: "a",
+		}),
+	};
+}
+
+function createVideoComponent() {
+	return {
+		Video: wrapper({
+			label: "Video",
+			description: "Insert a video.",
+			icon: <VideoIcon />,
+			schema: {
+				provider: fields.select({
+					label: "Provider",
+					options: videoProviders,
+					defaultValue: "youtube",
+				}),
+				id: fields.text({
+					label: "ID",
+					validation: { isRequired: true },
+				}),
+				startTime: fields.number({
+					label: "Start time",
+					validation: { isRequired: false },
+				}),
+			},
+			ContentView(props) {
+				const { children, value } = props;
+
+				const { id, provider, startTime } = value;
+
+				const src = isNonEmptyString(id) ? String(createVideoUrl(provider, id, startTime)) : null;
+
+				return (
+					<figure className="flex flex-col gap-y-1">
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<NotEditable>
+							{src != null ? (
+								// eslint-disable-next-line jsx-a11y/iframe-has-title
+								<iframe
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									allowFullScreen={true}
+									className="rounded-2 border-stroke-weak aspect-video w-full overflow-hidden border"
+									referrerPolicy="strict-origin-when-cross-origin"
+									src={src}
+								/>
+							) : null}
+						</NotEditable>
+						{/* @ts-expect-error Fixed in react 19 types. */}
+						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
+					</figure>
+				);
+			},
+		}),
+	};
+}
+
+function createAboutPagesCollection() {
+	const paths = createCollectionPaths("/about/");
+
+	return collection({
+		label: "About pages",
+		path: paths.content,
+		format: { contentField: "content" },
+		slugField: "title",
+		columns: ["title"],
+		entryLayout: "form",
+		schema: {
+			title: fields.slug({
+				name: {
 					label: "Title",
 					validation: { isRequired: true },
-				}),
-				content: fields.mdx({
-					label: "Content",
-				}),
-			},
-		}),
-		metadata: singleton({
-			label: "Site metadata",
-			path: "./content/metadata/",
-			format: { data: "json" },
-			entryLayout: "form",
-			schema: {
-				title: fields.text({
+				},
+			}),
+			toc: fields.checkbox({
+				label: "Table of contents",
+			}),
+			content: fields.mdx({
+				label: "Content",
+				options: createContentFieldOptions(paths),
+				components: {
+					...createApiEndpointComponent(),
+					...createAvatarComponent(paths),
+					...createDisclosureComponent(),
+					...createEmbedComponent(),
+					...createFigureComponent(paths),
+					...createGridComponent(),
+					...createLinkComponent(paths),
+					...createVideoComponent(),
+				},
+			}),
+		},
+	});
+}
+
+function createContributePagesCollection() {
+	const paths = createCollectionPaths("/contribute/");
+
+	return collection({
+		label: "Contribute pages",
+		path: paths.content,
+		format: { contentField: "content" },
+		slugField: "title",
+		columns: ["title"],
+		entryLayout: "form",
+		schema: {
+			title: fields.slug({
+				name: {
 					label: "Title",
 					validation: { isRequired: true },
-				}),
-				description: fields.text({
-					label: "Description",
-					validation: { isRequired: true },
-				}),
-				manifest: fields.object(
+				},
+			}),
+			toc: fields.checkbox({
+				label: "Table of contents",
+			}),
+			content: fields.mdx({
+				label: "Content",
+				options: createContentFieldOptions(paths),
+				components: {
+					...createApiEndpointComponent(),
+					...createAvatarComponent(paths),
+					...createDisclosureComponent(),
+					...createEmbedComponent(),
+					...createFigureComponent(paths),
+					...createGridComponent(),
+					...createLinkComponent(paths),
+					...createVideoComponent(),
+				},
+			}),
+		},
+	});
+}
+
+function createContactPageSingleton() {
+	const paths = createSingletonPaths("/contact/");
+
+	return singleton({
+		label: "Contact page",
+		path: paths.content,
+		format: { contentField: "content" },
+		entryLayout: "form",
+		schema: {
+			title: fields.text({
+				label: "Title",
+				validation: { isRequired: true },
+			}),
+			content: fields.mdx({
+				label: "Content",
+			}),
+		},
+	});
+}
+
+function createMetadataSingleton() {
+	const paths = createSingletonPaths("/metadata/");
+
+	return singleton({
+		label: "Site metadata",
+		path: paths.content,
+		format: { data: "json" },
+		entryLayout: "form",
+		schema: {
+			title: fields.text({
+				label: "Title",
+				validation: { isRequired: true },
+			}),
+			description: fields.text({
+				label: "Description",
+				validation: { isRequired: true },
+			}),
+			manifest: fields.object(
+				{
+					name: fields.text({
+						label: "Name",
+						validation: { isRequired: true },
+					}),
+					"short-name": fields.text({
+						label: "Short name",
+						validation: { isRequired: true },
+					}),
+					description: fields.text({
+						label: "Description",
+						validation: { isRequired: true },
+					}),
+				},
+				{
+					label: "Webmanifest",
+				},
+			),
+			social: fields.array(
+				fields.object(
 					{
-						name: fields.text({
-							label: "Name",
-							validation: { isRequired: true },
+						kind: fields.select({
+							label: "Kind",
+							options: socialMediaKinds,
+							defaultValue: "website",
 						}),
-						"short-name": fields.text({
-							label: "Short name",
-							validation: { isRequired: true },
-						}),
-						description: fields.text({
-							label: "Description",
-							validation: { isRequired: true },
+						href: fields.url({
+							label: "URL",
 						}),
 					},
 					{
-						label: "Webmanifest",
+						label: "Social medium",
 					},
 				),
-				social: fields.array(
-					fields.object(
-						{
-							kind: fields.select({
-								label: "Kind",
-								options: socialMediaKinds,
-								defaultValue: "website",
+				{
+					label: "Social media",
+					itemLabel(props) {
+						return props.fields.kind.value;
+					},
+					validation: { length: { min: 1 } },
+				},
+			),
+		},
+	});
+}
+
+function createNavigationSingleton() {
+	const paths = createSingletonPaths("/metadata/");
+
+	return singleton({
+		label: "Navigation",
+		path: paths.content,
+		format: { data: "json" },
+		entryLayout: "form",
+		schema: {
+			"about-pages": fields.object(
+				{
+					items: fields.array(
+						fields.object({
+							id: fields.relationship({
+								label: "Page",
+								collection: "about-pages",
+								validation: { isRequired: true },
 							}),
-							href: fields.url({
-								label: "URL",
+							label: fields.text({
+								label: "Label",
+								validation: { isRequired: true },
 							}),
-						},
+						}),
 						{
-							label: "Social medium",
+							label: "Pages",
+							itemLabel(props) {
+								return props.fields.label.value;
+							},
+							validation: { length: { min: 1 } },
 						},
 					),
-					{
-						label: "Social media",
-						itemLabel(props) {
-							return props.fields.kind.value;
+				},
+				{
+					label: "About pages",
+				},
+			),
+			"contribute-pages": fields.object(
+				{
+					items: fields.array(
+						fields.object({
+							id: fields.relationship({
+								label: "Page",
+								collection: "contribute-pages",
+								validation: { isRequired: true },
+							}),
+							label: fields.text({
+								label: "Label",
+								validation: { isRequired: true },
+							}),
+						}),
+						{
+							label: "Pages",
+							itemLabel(props) {
+								return props.fields.label.value;
+							},
+							validation: { length: { min: 1 } },
 						},
-						validation: { length: { min: 1 } },
-					},
-				),
-			},
-		}),
-		navigation: singleton({
-			label: "Navigation",
-			path: "./content/navigation/",
-			format: { data: "json" },
-			entryLayout: "form",
-			schema: {
-				"about-pages": fields.object(
-					{
-						items: fields.array(
-							fields.object({
-								id: fields.relationship({
-									label: "Page",
-									collection: "about-pages",
-									validation: { isRequired: true },
-								}),
-								label: fields.text({
-									label: "Label",
-									validation: { isRequired: true },
-								}),
-							}),
-							{
-								label: "Pages",
-								itemLabel(props) {
-									return props.fields.label.value;
-								},
-								validation: { length: { min: 1 } },
-							},
-						),
-					},
-					{
-						label: "About pages",
-					},
-				),
-				"contribute-pages": fields.object(
-					{
-						items: fields.array(
-							fields.object({
-								id: fields.relationship({
-									label: "Page",
-									collection: "contribute-pages",
-									validation: { isRequired: true },
-								}),
-								label: fields.text({
-									label: "Label",
-									validation: { isRequired: true },
-								}),
-							}),
-							{
-								label: "Pages",
-								itemLabel(props) {
-									return props.fields.label.value;
-								},
-								validation: { length: { min: 1 } },
-							},
-						),
-					},
-					{
-						label: "Contribute pages",
-					},
-				),
-			},
-		}),
-		"privacy-policy-page": singleton({
-			label: "Privacy policy page",
-			path: "./content/privacy-policy/",
-			format: { contentField: "content" },
-			entryLayout: "form",
-			schema: {
-				title: fields.text({
-					label: "Title",
-					validation: { isRequired: true },
-				}),
-				content: fields.mdx({
-					label: "Content",
-				}),
-			},
-		}),
-		"terms-of-use-page": singleton({
-			label: "Terms of use page",
-			path: "./content/terms-of-use/",
-			format: { contentField: "content" },
-			entryLayout: "form",
-			schema: {
-				title: fields.text({
-					label: "Title",
-					validation: { isRequired: true },
-				}),
-				content: fields.mdx({
-					label: "Content",
-				}),
-			},
-		}),
-	},
+					),
+				},
+				{
+					label: "Contribute pages",
+				},
+			),
+		},
+	});
+}
+
+function createPrivacyPolicyPageSingleton() {
+	const paths = createSingletonPaths("/privacy-policy/");
+
+	return singleton({
+		label: "Privacy policy page",
+		path: paths.content,
+		format: { contentField: "content" },
+		entryLayout: "form",
+		schema: {
+			title: fields.text({
+				label: "Title",
+				validation: { isRequired: true },
+			}),
+			content: fields.mdx({
+				label: "Content",
+			}),
+		},
+	});
+}
+
+function createTermsOfUsePageSingleton() {
+	const paths = createSingletonPaths("/terms-of-use/");
+
+	return singleton({
+		label: "Terms of use page",
+		path: paths.content,
+		format: { contentField: "content" },
+		entryLayout: "form",
+		schema: {
+			title: fields.text({
+				label: "Title",
+				validation: { isRequired: true },
+			}),
+			content: fields.mdx({
+				label: "Content",
+			}),
+		},
+	});
+}
+
+const collections = {
+	"about-pages": createAboutPagesCollection(),
+	"contribute-pages": createContributePagesCollection(),
+};
+
+const singletons = {
+	"contact-page": createContactPageSingleton(),
+	metadata: createMetadataSingleton(),
+	navigation: createNavigationSingleton(),
+	"privacy-policy-page": createPrivacyPolicyPageSingleton(),
+	"terms-of-use-page": createTermsOfUsePageSingleton(),
+};
+
+export default config({
+	collections,
+	singletons,
 	storage:
 		env.NEXT_PUBLIC_KEYSTATIC_MODE === "github" &&
 		env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER &&
@@ -716,8 +865,7 @@ export default config({
 	ui: {
 		brand: {
 			mark() {
-				// eslint-disable-next-line @next/next/no-img-element
-				return <img width="32" src={logo.src} alt="" />;
+				return <Logo />;
 			},
 			name: "SSHOC",
 		},
