@@ -467,20 +467,44 @@ function createLinkSchema(paths: Paths) {
 			defaultValue: "external",
 		}),
 		{
-			"about-pages": fields.relationship({
-				label: "About pages",
-				validation: { isRequired: true },
-				collection: "about-pages",
+			"about-pages": fields.object({
+				id: fields.relationship({
+					label: "About page",
+					validation: { isRequired: true },
+					collection: "about-pages",
+				}),
+				search: fields.text({
+					label: "Query params",
+					validation: { isRequired: true, pattern: validation.urlSearchParams },
+				}),
+				hash: fields.text({
+					label: "URL fragment",
+					validation: { isRequired: true, pattern: validation.urlFragment },
+				}),
 			}),
-			"contribute-pages": fields.relationship({
-				label: "Contribute pages",
-				validation: { isRequired: true },
-				collection: "contribute-pages",
+			"contribute-pages": fields.object({
+				id: fields.relationship({
+					label: "Contribute page",
+					validation: { isRequired: true },
+					collection: "contribute-pages",
+				}),
+				search: fields.text({
+					label: "Query params",
+					validation: { isRequired: true, pattern: validation.urlSearchParams },
+				}),
+				hash: fields.text({
+					label: "URL fragment",
+					validation: { isRequired: true, pattern: validation.urlFragment },
+				}),
 			}),
 			"contact-page": fields.relationship({
 				label: "Contact page",
 				validation: { isRequired: true },
 				collection: "contact-page",
+			}),
+			"current-page": fields.text({
+				label: "URL fragment",
+				validation: { isRequired: true, pattern: validation.urlFragment },
 			}),
 			download: fields.file({
 				label: "Download",
@@ -495,9 +519,15 @@ function createLinkSchema(paths: Paths) {
 				label: "URL",
 				validation: { isRequired: true },
 			}),
-			"url-fragment-id": fields.text({
-				label: "Identifier",
-				validation: { isRequired: true, pattern: validation.urlFragment },
+			"search-page": fields.object({
+				search: fields.text({
+					label: "Query params",
+					validation: { isRequired: true, pattern: validation.urlSearchParams },
+				}),
+				hash: fields.text({
+					label: "URL fragment",
+					validation: { isRequired: true, pattern: validation.urlFragment },
+				}),
 			}),
 		},
 	);
