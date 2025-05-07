@@ -15,13 +15,13 @@ import { FundingNotice } from "@/components/common/FundingNotice";
 import { ItemSearchBar } from "@/components/common/ItemSearchBar";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { ItemFacet } from "@/data/sshoc/api/item";
 import { itemFacets } from "@/data/sshoc/api/item";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 
@@ -85,7 +85,7 @@ export default function BrowsePage(props: BrowsePage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata title={title} />
 			<PageMainContent>
 				<BrowseScreenLayout>
 					<BackgroundImage />

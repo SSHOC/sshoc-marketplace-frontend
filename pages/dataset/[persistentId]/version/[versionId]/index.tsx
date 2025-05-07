@@ -32,13 +32,13 @@ import { ItemRelatedItems } from "@/components/item/ItemRelatedItems";
 import { ItemSource } from "@/components/item/ItemSource";
 import { ItemTitle } from "@/components/item/ItemTitle";
 import { ItemVersionScreenLayout } from "@/components/item/ItemVersionScreenLayout";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import { useDataset, useDatasetVersion } from "@/data/sshoc/hooks/dataset";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -119,7 +119,7 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): Rea
 	if (router.isFallback || dataset == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -146,12 +146,7 @@ export default function DatasetVersionPage(props: DatasetVersionPage.Props): Rea
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={dataset.label}
-				description={dataset.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={dataset.label} description={dataset.description} />
 			<PageMainContent>
 				<ItemVersionScreenLayout>
 					<BackgroundImage />

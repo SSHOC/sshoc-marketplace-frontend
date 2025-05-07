@@ -29,13 +29,13 @@ import { Figure } from "@/components/content/figure";
 import { Grid, GridItem } from "@/components/content/grid";
 import { Link as ContentLink } from "@/components/content/link";
 import { Video } from "@/components/content/video";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
 import { compile } from "@/lib/core/mdx/compile";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -116,7 +116,7 @@ export default function AboutPage(props: AboutPage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata title={props.metadata.title} openGraph={{}} twitter={{}} />
+			<PageMetadata title={props.metadata.title} />
 			<PageMainContent>
 				<AboutScreenLayout>
 					<BackgroundImage />

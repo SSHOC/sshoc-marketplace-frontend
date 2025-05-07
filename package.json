@@ -82,7 +82,6 @@
 		"@react-stately/virtualizer": "^3.7.1",
 		"@sindresorhus/slugify": "^2.2.1",
 		"@stefanprobst/next-error-boundary": "^3.0.2",
-		"@stefanprobst/next-page-metadata": "^2.0.5",
 		"@stefanprobst/next-svg": "^4.2.1",
 		"@stefanprobst/request": "^0.2.1",
 		"change-case": "^5.4.4",

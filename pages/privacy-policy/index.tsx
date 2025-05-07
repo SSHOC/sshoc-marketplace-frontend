@@ -13,6 +13,7 @@ import { Link } from "@/components/common/Link";
 import { Prose } from "@/components/common/Prose";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import { BackgroundImage } from "@/components/privacy-policy/BackgroundImage";
 import { Content } from "@/components/privacy-policy/Content";
 import { PrivacyPolicyScreenLayout } from "@/components/privacy-policy/PrivacyPolicyScreenLayout";
@@ -21,7 +22,6 @@ import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
 import { compile } from "@/lib/core/mdx/compile";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): React
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<PrivacyPolicyScreenLayout>
 					<BackgroundImage />

@@ -21,6 +21,7 @@ import { useCreateOrUpdateTrainingMaterial } from "@/components/item-form/useCre
 import { useReviewItemMeta } from "@/components/item-form/useReviewItemMeta";
 import { useTrainingMaterialFormFields } from "@/components/item-form/useTrainingMaterialFormFields";
 import { useTrainingMaterialValidationSchema } from "@/components/item-form/useTrainingMaterialValidationSchema";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { TrainingMaterial, TrainingMaterialInput } from "@/data/sshoc/api/training-material";
 import {
 	useRejectTrainingMaterialVersion,
@@ -33,7 +34,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { QueryMetadata } from "@/lib/core/query/types";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -191,7 +191,7 @@ export default function ReviewTrainingMaterialPage(
 	if (router.isFallback || trainingMaterial == null || (diff == null && !diffNotFound)) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -205,7 +205,7 @@ export default function ReviewTrainingMaterialPage(
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

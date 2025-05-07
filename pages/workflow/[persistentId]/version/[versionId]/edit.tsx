@@ -22,6 +22,7 @@ import { useWorkflowFormFields } from "@/components/item-form/useWorkflowFormFie
 import { useWorkflowFormPage } from "@/components/item-form/useWorkflowFormPage";
 import { useWorkflowWithStepsValidationSchema } from "@/components/item-form/useWorkflowValidationSchema";
 import { WorkflowForm } from "@/components/item-form/WorkflowForm";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Workflow, WorkflowInput } from "@/data/sshoc/api/workflow";
 import { useWorkflow, useWorkflowVersion } from "@/data/sshoc/hooks/workflow";
 import type { PageComponent } from "@/lib/core/app/types";
@@ -29,7 +30,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -172,7 +172,7 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
 	if (router.isFallback || workflow == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -186,7 +186,7 @@ export default function EditWorkflowVersionPage(props: EditWorkflowVersionPage.P
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

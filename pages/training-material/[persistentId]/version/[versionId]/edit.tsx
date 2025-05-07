@@ -21,6 +21,7 @@ import { useCreateOrUpdateTrainingMaterial } from "@/components/item-form/useCre
 import { useTrainingMaterialFormFields } from "@/components/item-form/useTrainingMaterialFormFields";
 import { useTrainingMaterialValidationSchema } from "@/components/item-form/useTrainingMaterialValidationSchema";
 import { useUpdateItemMeta } from "@/components/item-form/useUpdateItemMeta";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { TrainingMaterial, TrainingMaterialInput } from "@/data/sshoc/api/training-material";
 import {
 	useTrainingMaterial,
@@ -31,7 +32,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -167,7 +167,7 @@ export default function EditTrainingMaterialVersionPage(
 	if (router.isFallback || trainingMaterial == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -181,7 +181,7 @@ export default function EditTrainingMaterialVersionPage(
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

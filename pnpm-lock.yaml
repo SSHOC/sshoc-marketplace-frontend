@@ -31,15 +31,15 @@ importers:
       '@acdh-oeaw/style-variants':
         specifier: ^0.1.0
         version: 0.1.0
+      '@acdh-oeaw/validate-env':
+        specifier: ^0.0.3
+        version: 0.0.3
       '@keystatic/core':
         specifier: ^0.5.47
         version: 0.5.47(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@keystatic/next':
         specifier: ^5.0.4
         version: 5.0.4(@keystatic/core@0.5.47(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@acdh-oeaw/validate-env':
-        specifier: ^0.0.3
-        version: 0.0.3
       '@mdx-js/mdx':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.1)
@@ -172,9 +172,6 @@ importers:
       '@stefanprobst/next-error-boundary':
         specifier: ^3.0.2
         version: 3.0.2(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      '@stefanprobst/next-page-metadata':
-        specifier: ^2.0.5
-        version: 2.0.5(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       '@stefanprobst/next-svg':
         specifier: ^4.2.1
         version: 4.2.1(patch_hash=80430da9892afec1accd494c0363408893a12a906b20e888e98b120fcc3afa49)(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -1917,13 +1914,6 @@ packages:
 
   '@stefanprobst/next-error-boundary@3.0.2':
     resolution: {integrity: sha512-8IScHyhmvZgYBGHkE827f93dweG4p7ZR1L41QMWlo26DFrZfpHnkwY8HOX8QRmAf/DUJilCE3aSm5FGIQGmF8g==}
-    engines: {node: '>=14.17', yarn: 1.x}
-    peerDependencies:
-      next: '>=11.0.0'
-      react: '>=16.14.0'
-
-  '@stefanprobst/next-page-metadata@2.0.5':
-    resolution: {integrity: sha512-34doPfaYucwo/PmWwgMUOHslaYPB017YCatT8QSs+LKYU4BeGbLlI8mDUD+68eIJCcM7AJeJtzTU0ZMyPz8cig==}
     engines: {node: '>=14.17', yarn: 1.x}
     peerDependencies:
       next: '>=11.0.0'
@@ -4670,14 +4660,6 @@ packages:
       react-native:
         optional: true
 
-  react-schemaorg@2.0.0:
-    resolution: {integrity: sha512-UqciFKA203ewNjn0zC09uYKuJSvMD8L75L1s/cW4rc7cS64w8l7vaI3SYkuoI/nwCBkJRmOkSJedWDUZBlYZwg==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      react: '>=16.3.0'
-      schema-dts: '>=0.7.4'
-      typescript: '>=3.1.6'
-
   react-stately@3.37.0:
     resolution: {integrity: sha512-fm2LRM3XN5lJD48+WQKWvESx54kAIHw0JztCRHMsFmTDgYWX/VASuXKON7LECv227stSEadrxGa8LhPkcelljw==}
     peerDependencies:
@@ -4849,9 +4831,6 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
-
-  schema-dts@1.1.5:
-    resolution: {integrity: sha512-RJr9EaCmsLzBX2NDiO5Z3ux2BVosNZN5jo0gWgsyKvxKIUL5R3swNvoorulAeL9kLB0iTSX7V6aokhla2m7xbg==}
 
   scroll-into-view-if-needed@2.2.31:
     resolution: {integrity: sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA==}
@@ -7672,15 +7651,6 @@ snapshots:
       '@stefanprobst/assert': 1.0.3
       next: 15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
-
-  '@stefanprobst/next-page-metadata@2.0.5(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3)':
-    dependencies:
-      next: 15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-schemaorg: 2.0.0(react@18.3.1)(schema-dts@1.1.5)(typescript@5.8.3)
-      schema-dts: 1.1.5
-    transitivePeerDependencies:
-      - typescript
 
   '@stefanprobst/next-svg@4.2.1(patch_hash=80430da9892afec1accd494c0363408893a12a906b20e888e98b120fcc3afa49)(next@15.3.1(patch_hash=de17907a43a1b46b5534a9628cc7b229f5c0cce5a5f7b19baa0dde85ba1b7624)(@babel/core@7.27.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
@@ -11098,12 +11068,6 @@ snapshots:
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
 
-  react-schemaorg@2.0.0(react@18.3.1)(schema-dts@1.1.5)(typescript@5.8.3):
-    dependencies:
-      react: 18.3.1
-      schema-dts: 1.1.5
-      typescript: 5.8.3
-
   react-stately@3.37.0(react@18.3.1):
     dependencies:
       '@react-stately/calendar': 3.8.0(react@18.3.1)
@@ -11401,8 +11365,6 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
-
-  schema-dts@1.1.5: {}
 
   scroll-into-view-if-needed@2.2.31:
     dependencies:

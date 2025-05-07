@@ -21,6 +21,7 @@ import { useCreateOrUpdateTool } from "@/components/item-form/useCreateOrUpdateT
 import { useReviewItemMeta } from "@/components/item-form/useReviewItemMeta";
 import { useToolFormFields } from "@/components/item-form/useToolFormFields";
 import { useToolValidationSchema } from "@/components/item-form/useToolValidationSchema";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Tool, ToolInput } from "@/data/sshoc/api/tool-or-service";
 import {
 	useRejectToolVersion,
@@ -33,7 +34,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { QueryMetadata } from "@/lib/core/query/types";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -187,7 +187,7 @@ export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.P
 	if (router.isFallback || tool == null || (diff == null && !diffNotFound)) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -201,7 +201,7 @@ export default function ReviewToolOrServicePage(props: ReviewToolOrServicePage.P
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

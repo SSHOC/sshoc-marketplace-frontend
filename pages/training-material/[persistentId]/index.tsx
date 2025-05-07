@@ -35,6 +35,7 @@ import { ItemTitle } from "@/components/item/ItemTitle";
 import { TrainingMaterialContentContributors } from "@/components/item/TrainingMaterialContentContributors";
 import { TrainingMaterialControls } from "@/components/item/TrainingMaterialControls";
 import { TrainingMaterialSchemaOrgMetadata } from "@/components/item/TrainingMaterialSchemaOrgMetadata";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
 import { getTrainingMaterial } from "@/data/sshoc/api/training-material";
 import { keys, useTrainingMaterial } from "@/data/sshoc/hooks/training-material";
@@ -43,7 +44,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -138,7 +138,7 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
 	if (router.isFallback || trainingMaterial == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -165,12 +165,7 @@ export default function TrainingMaterialPage(props: TrainingMaterialPage.Props):
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={trainingMaterial.label}
-				description={trainingMaterial.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={trainingMaterial.label} description={trainingMaterial.description} />
 			<TrainingMaterialSchemaOrgMetadata trainingMaterial={trainingMaterial} />
 			<PageMainContent>
 				<ItemScreenLayout>

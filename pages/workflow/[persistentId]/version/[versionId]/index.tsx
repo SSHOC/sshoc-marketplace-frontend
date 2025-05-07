@@ -33,13 +33,13 @@ import { WorkflowContentContributors } from "@/components/item/WorkflowContentCo
 import { WorkflowStepsList } from "@/components/item/WorkflowStepsList";
 import { WorkflowVersionControls } from "@/components/item/WorkflowVersionControls";
 import { WorkflowVersionScreenLayout } from "@/components/item/WorkflowVersionScreenLayout";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Workflow } from "@/data/sshoc/api/workflow";
 import { useWorkflow, useWorkflowVersion } from "@/data/sshoc/hooks/workflow";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -118,7 +118,7 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): R
 	if (router.isFallback || workflow == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -145,12 +145,7 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): R
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={workflow.label}
-				description={workflow.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={workflow.label} description={workflow.description} />
 			<PageMainContent>
 				<WorkflowVersionScreenLayout>
 					<BackgroundImage />

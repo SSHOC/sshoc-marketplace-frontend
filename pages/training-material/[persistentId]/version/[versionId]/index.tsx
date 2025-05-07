@@ -32,6 +32,7 @@ import { ItemTitle } from "@/components/item/ItemTitle";
 import { ItemVersionScreenLayout } from "@/components/item/ItemVersionScreenLayout";
 import { TrainingMaterialContentContributors } from "@/components/item/TrainingMaterialContentContributors";
 import { TrainingMaterialVersionControls } from "@/components/item/TrainingMaterialVersionControls";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
 import {
 	useTrainingMaterial,
@@ -41,7 +42,6 @@ import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -124,7 +124,7 @@ export default function TrainingMaterialVersionPage(
 	if (router.isFallback || trainingMaterial == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -151,12 +151,7 @@ export default function TrainingMaterialVersionPage(
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={trainingMaterial.label}
-				description={trainingMaterial.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={trainingMaterial.label} description={trainingMaterial.description} />
 			<PageMainContent>
 				<ItemVersionScreenLayout>
 					<BackgroundImage />

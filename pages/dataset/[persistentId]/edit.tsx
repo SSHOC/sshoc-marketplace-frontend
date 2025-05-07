@@ -22,6 +22,7 @@ import { useCreateOrUpdateDataset } from "@/components/item-form/useCreateOrUpda
 import { useDatasetFormFields } from "@/components/item-form/useDatasetFormFields";
 import { useDatasetValidationSchema } from "@/components/item-form/useDatasetValidationSchema";
 import { useUpdateItemMeta } from "@/components/item-form/useUpdateItemMeta";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Dataset, DatasetInput } from "@/data/sshoc/api/dataset";
 import { useDataset } from "@/data/sshoc/hooks/dataset";
 import type { PageComponent } from "@/lib/core/app/types";
@@ -29,7 +30,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { FullPage } from "@/lib/core/ui/FullPage/FullPage";
@@ -145,7 +145,7 @@ export default function EditDatasetPage(props: EditDatasetPage.Props): ReactNode
 	if (router.isFallback || dataset == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -159,7 +159,7 @@ export default function EditDatasetPage(props: EditDatasetPage.Props): ReactNode
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

@@ -35,6 +35,7 @@ import { ItemTitle } from "@/components/item/ItemTitle";
 import { PublicationContentContributors } from "@/components/item/PublicationContentContributors";
 import { PublicationControls } from "@/components/item/PublicationControls";
 import { PublicationSchemaOrgMetadata } from "@/components/item/PublicationSchemaOrgMetadata";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Publication } from "@/data/sshoc/api/publication";
 import { getPublication } from "@/data/sshoc/api/publication";
 import { keys, usePublication } from "@/data/sshoc/hooks/publication";
@@ -43,7 +44,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -138,7 +138,7 @@ export default function PublicationPage(props: PublicationPage.Props): ReactNode
 	if (router.isFallback || publication == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -165,12 +165,7 @@ export default function PublicationPage(props: PublicationPage.Props): ReactNode
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={publication.label}
-				description={publication.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={publication.label} description={publication.description} />
 			<PublicationSchemaOrgMetadata publication={publication} />
 			<PageMainContent>
 				<ItemScreenLayout>
