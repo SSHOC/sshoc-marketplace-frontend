@@ -3,7 +3,6 @@ import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { cn, styles } from "@acdh-oeaw/style-variants";
 import { collection, config, fields, NotEditable, singleton } from "@keystatic/core";
 import { block, mark, repeating, wrapper } from "@keystatic/core/content-components";
-import slugify from "@sindresorhus/slugify";
 import {
 	AppWindowIcon,
 	BlindsIcon,
