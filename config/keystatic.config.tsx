@@ -3,7 +3,6 @@ import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { cn, styles } from "@acdh-oeaw/style-variants";
 import { collection, config, fields, NotEditable, singleton } from "@keystatic/core";
 import { block, mark, repeating, wrapper } from "@keystatic/core/content-components";
-import slugify from "@sindresorhus/slugify";
 import {
 	AppWindowIcon,
 	BlindsIcon,
@@ -23,51 +22,12 @@ import {
 	figureAlignments,
 	gridAlignments,
 	gridLayouts,
-	linkKinds,
 	socialMediaKinds,
 	videoProviders,
 } from "@/lib/content/options";
+import { createLinkSchema } from "@/lib/keystatic/create-link-schema";
 import { createVideoUrl } from "@/lib/keystatic/create-video-url";
-import * as validation from "@/lib/keystatic/validation";
-
-function transformFilename(path: string) {
-	return slugify(path, { preserveCharacters: ["."] });
-}
-
-function createAssetPaths(path: `/${string}/`) {
-	return {
-		downloads: {
-			directory: `./public/assets/content/downloads${path}`,
-			publicPath: `/assets/content/downloads${path}`,
-			transformFilename,
-		},
-		images: {
-			directory: `./public/assets/content/images${path}`,
-			publicPath: `/assets/content/images${path}`,
-			transformFilename,
-		},
-	} as const;
-}
-
-function createCollectionPaths(path: `/${string}/`) {
-	return {
-		assets: createAssetPaths(path),
-		content: `./content${path}*/`,
-	} as const;
-}
-
-type CollectionPaths = ReturnType<typeof createCollectionPaths>;
-
-function createSingletonPaths(path: `/${string}/`) {
-	return {
-		assets: createAssetPaths(path),
-		content: `./content${path}`,
-	} as const;
-}
-
-type SingletonPaths = ReturnType<typeof createSingletonPaths>;
-
-type Paths = CollectionPaths | SingletonPaths;
+import { createCollectionPaths, createSingletonPaths, type Paths } from "@/lib/keystatic/paths";
 
 function createContentFieldOptions(paths: Paths): Parameters<typeof fields.mdx>[0]["options"] {
 	return {
@@ -457,80 +417,6 @@ function createGridComponent() {
 			},
 		}),
 	};
-}
-
-function createLinkSchema(paths: Paths) {
-	return fields.conditional(
-		fields.select({
-			label: "Kind",
-			options: linkKinds,
-			defaultValue: "external",
-		}),
-		{
-			"about-pages": fields.object({
-				id: fields.relationship({
-					label: "About page",
-					validation: { isRequired: true },
-					collection: "about-pages",
-				}),
-				search: fields.text({
-					label: "Query params",
-					validation: { isRequired: true, pattern: validation.urlSearchParams },
-				}),
-				hash: fields.text({
-					label: "URL fragment",
-					validation: { isRequired: true, pattern: validation.urlFragment },
-				}),
-			}),
-			"contribute-pages": fields.object({
-				id: fields.relationship({
-					label: "Contribute page",
-					validation: { isRequired: true },
-					collection: "contribute-pages",
-				}),
-				search: fields.text({
-					label: "Query params",
-					validation: { isRequired: true, pattern: validation.urlSearchParams },
-				}),
-				hash: fields.text({
-					label: "URL fragment",
-					validation: { isRequired: true, pattern: validation.urlFragment },
-				}),
-			}),
-			"contact-page": fields.relationship({
-				label: "Contact page",
-				validation: { isRequired: true },
-				collection: "contact-page",
-			}),
-			"current-page": fields.text({
-				label: "URL fragment",
-				validation: { isRequired: true, pattern: validation.urlFragment },
-			}),
-			download: fields.file({
-				label: "Download",
-				validation: { isRequired: true },
-				...paths.assets.downloads,
-			}),
-			email: fields.text({
-				label: "Email",
-				validation: { isRequired: true, pattern: validation.email },
-			}),
-			external: fields.url({
-				label: "URL",
-				validation: { isRequired: true },
-			}),
-			"search-page": fields.object({
-				search: fields.text({
-					label: "Query params",
-					validation: { isRequired: true, pattern: validation.urlSearchParams },
-				}),
-				hash: fields.text({
-					label: "URL fragment",
-					validation: { isRequired: true, pattern: validation.urlFragment },
-				}),
-			}),
-		},
-	);
 }
 
 function createLinkComponent(paths: Paths) {
