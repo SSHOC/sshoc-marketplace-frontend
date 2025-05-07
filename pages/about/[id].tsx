@@ -27,6 +27,7 @@ import { Disclosure } from "@/components/content/disclosure";
 import { Embed } from "@/components/content/embed";
 import { Figure } from "@/components/content/figure";
 import { Grid, GridItem } from "@/components/content/grid";
+import { Link as ContentLink } from "@/components/content/link";
 import { Video } from "@/components/content/video";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
@@ -143,6 +144,7 @@ export default function AboutPage(props: AboutPage.Props): ReactNode {
 									Figure,
 									Grid,
 									GridItem,
+									Link: ContentLink,
 									Video,
 								}}
 							/>

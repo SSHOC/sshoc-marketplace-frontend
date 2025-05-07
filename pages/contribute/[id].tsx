@@ -23,6 +23,7 @@ import { Disclosure } from "@/components/content/disclosure";
 import { Embed } from "@/components/content/embed";
 import { Figure } from "@/components/content/figure";
 import { Grid, GridItem } from "@/components/content/grid";
+import { Link as ContentLink } from "@/components/content/link";
 import { Video } from "@/components/content/video";
 import { BackgroundImage } from "@/components/contribute/BackgroundImage";
 import { Content } from "@/components/contribute/Content";
@@ -143,6 +144,7 @@ export default function ContributePage(props: ContributePage.Props): ReactNode {
 									Figure,
 									Grid,
 									GridItem,
+									Link: ContentLink,
 									Video,
 								}}
 							/>
