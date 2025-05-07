@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
-import { useTranslations, type Messages } from "next-intl";
+import { type Messages, useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { ErrorMessage } from "@/components/common/ErrorMessage";

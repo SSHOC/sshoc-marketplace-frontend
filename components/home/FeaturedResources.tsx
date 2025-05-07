@@ -3,9 +3,9 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
-import { SectionTitle } from "@/components/home/SectionTitle";
 import { SectionHeader } from "@/components/home/SectionHeader";
 import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
+import { SectionTitle } from "@/components/home/SectionTitle";
 import { maxRecommendedItems } from "@/config/sshoc.config";
 import { useItemSearch } from "@/data/sshoc/hooks/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
