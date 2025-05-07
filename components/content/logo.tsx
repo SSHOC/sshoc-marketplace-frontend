@@ -1,9 +1,15 @@
 import type { ReactNode } from "react";
 
-export function Logo(): ReactNode {
+interface LogoProps {
+	className?: string;
+}
+
+export function Logo(props: Readonly<LogoProps>): ReactNode {
+	const { className } = props;
+
 	return (
-		<svg viewBox="0 0 1200 1200" aria-hidden={true}>
-			<g stroke-width="9.031">
+		<svg aria-hidden={true} className={className} height={32} viewBox="0 0 1200 1200" width={32}>
+			<g strokeWidth="9.031">
 				<path
 					d="M398.614 506.14a34.806 34.806 0 1 0 60.018-35.265l-70.439-119.93a34.807 34.807 0 0 0-60.027 35.256l70.439 119.94z"
 					fill="#ff9e1a"

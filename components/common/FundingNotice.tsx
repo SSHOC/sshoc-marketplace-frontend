@@ -2,10 +2,10 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import CessdaLogo from "@/public/assets/cms/images/cessda-logo.png";
-import ClarinLogo from "@/public/assets/cms/images/clarin-logo.png";
-import DariahEuLogo from "@/public/assets/cms/images/dariah-eu-logo.png";
-import EUFlag from "@/public/assets/images/eu-flag.svg";
+import CessdaLogo from "@/public/assets/images/logo-cessda.png";
+import ClarinLogo from "@/public/assets/images/logo-clarin.png";
+import DariahEuLogo from "@/public/assets/images/logo-dariah-eu.png";
+import EUFlag from "@/public/assets/images/logo-eu.svg";
 
 export function FundingNotice(): ReactNode {
 	const t = useTranslations();
