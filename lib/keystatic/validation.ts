@@ -8,7 +8,6 @@ export const email = { regex: /.+?@.+?/, message: "Must be a valid email address
 
 export const twitter = { regex: /^@.+/, message: "Must start with an '@' character." };
 
-export const urlFragment = {
-	regex: /^[^#].+/,
-	message: "Must not include the leading '#' character.",
-};
+export const urlFragment = { regex: /^#.+/, message: "Must start with '#' character." };
+
+export const urlSearchParams = { regex: /^\?.+/, message: "Must start with '?' character." };

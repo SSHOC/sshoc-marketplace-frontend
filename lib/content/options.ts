@@ -27,10 +27,11 @@ export const linkKinds = [
 	{ label: "About pages", value: "about-pages" },
 	{ label: "Contribute pages", value: "contribute-pages" },
 	{ label: "Contact page", value: "contact-page" },
+	{ label: "Current page", value: "current-page" },
 	{ label: "Download", value: "download" },
 	{ label: "Email", value: "email" },
 	{ label: "External", value: "external" },
-	{ label: "URL fragment identifier", value: "url-fragment-id" },
+	{ label: "Search page", value: "search-page" },
 ] as const;
 
 export type LinkKind = (typeof linkKinds)[number]["value"];
