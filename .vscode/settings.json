@@ -35,5 +35,6 @@
 	},
 	"[mdx]": {
 		"editor.wordWrap": "on"
-	}
+	},
+	"i18n-ally.localesPaths": ["messages", "lib/core/i18n"]
 }

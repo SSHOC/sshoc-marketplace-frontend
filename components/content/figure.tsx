@@ -25,12 +25,15 @@ export function Figure(props: FigureProps): ReactNode {
 			<img
 				alt={alt}
 				src={src}
-				className="m-0! overflow-hidden rounded-sm border border-neutral-150"
+				className={cn(
+					"m-0! w-full overflow-hidden rounded-sm border border-neutral-150",
+					alignment === "center" ? "max-h-100 object-contain" : "",
+				)}
 				height={height}
 				width={width}
 			/>
 			{children != null ? (
-				<figcaption className="text-sm text-neutral-700">{children}</figcaption>
+				<figcaption className="m-0! text-sm text-neutral-700 [&>p]:my-2!">{children}</figcaption>
 			) : null}
 		</figure>
 	);

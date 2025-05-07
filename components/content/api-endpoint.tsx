@@ -1,21 +1,22 @@
-import { Button } from "@/lib/core/ui/Button/Button";
+import { assert, createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
+import { CheckIcon, ClipboardIcon } from "lucide-react";
 import {
 	createContext,
+	type FormEvent,
+	type ReactNode,
 	useContext,
 	useEffect,
 	useMemo,
 	useState,
-	type FormEvent,
-	type ReactNode,
 } from "react";
+import type { Key } from "react-aria-components";
+import { useQuery } from "react-query";
+
+import { baseUrl } from "@/config/sshoc.config";
+import { Button } from "@/lib/core/ui/Button/Button";
 import { Item } from "@/lib/core/ui/Collection/Item";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import { assert, createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
-import { baseUrl } from "@/config/sshoc.config";
-import { useQuery } from "react-query";
-import { CheckIcon, ClipboardIcon } from "lucide-react";
 import { Select } from "@/lib/core/ui/Select/Select";
-import type { Key } from "react-aria-components";
 import { TextField } from "@/lib/core/ui/TextField/TextField";
 
 type ApiParams = Record<string, Array<number | string> | number | string>;

@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
 import { SectionHeader } from "@/components/home/SectionHeader";
-import { SectionTitle } from "@/components/home/SectionTitle";
 import { SectionHeaderLink } from "@/components/home/SectionHeaderLink";
+import { SectionTitle } from "@/components/home/SectionTitle";
 import { maxLastAddedItems } from "@/config/sshoc.config";
 import { useItemSearch } from "@/data/sshoc/hooks/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";

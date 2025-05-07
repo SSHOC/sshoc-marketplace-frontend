@@ -3,6 +3,7 @@ import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { cn, styles } from "@acdh-oeaw/style-variants";
 import { collection, config, fields, NotEditable, singleton } from "@keystatic/core";
 import { block, mark, repeating, wrapper } from "@keystatic/core/content-components";
+import slugify from "@sindresorhus/slugify";
 import {
 	AppWindowIcon,
 	BlindsIcon,
@@ -15,7 +16,8 @@ import {
 	UserCircle2Icon,
 	VideoIcon,
 } from "lucide-react";
-import * as validation from "@/lib/keystatic/validation";
+
+import { Logo } from "@/components/content/logo";
 import { env } from "@/config/env.config";
 import {
 	figureAlignments,
@@ -26,8 +28,7 @@ import {
 	videoProviders,
 } from "@/lib/content/options";
 import { createVideoUrl } from "@/lib/keystatic/create-video-url";
-import { Logo } from "@/components/content/logo";
-import slugify from "@sindresorhus/slugify";
+import * as validation from "@/lib/keystatic/validation";
 
 function transformFilename(path: string) {
 	return slugify(path, { preserveCharacters: ["."] });
@@ -238,7 +239,7 @@ function createAvatarComponent(paths: Paths) {
 								/* eslint-disable-next-line @next/next/no-img-element */
 								<img
 									alt=""
-									className="aspect-square size-44 rounded-full border border-neutral-150 object-cover"
+									className="aspect-square w-44 rounded-full border border-neutral-150 object-cover"
 									src={url}
 								/>
 							) : null}
@@ -367,7 +368,10 @@ function createFigureComponent(paths: Paths) {
 								/* eslint-disable-next-line @next/next/no-img-element */
 								<img
 									alt={alt}
-									className="w-full overflow-hidden rounded-sm border border-neutral-150"
+									className={cn(
+										"w-full overflow-hidden rounded-sm border border-neutral-150",
+										alignment === "center" ? "max-h-100 object-contain" : undefined,
+									)}
 									src={url}
 								/>
 							) : null}
@@ -725,7 +729,7 @@ function createMetadataSingleton() {
 }
 
 function createNavigationSingleton() {
-	const paths = createSingletonPaths("/metadata/");
+	const paths = createSingletonPaths("/navigation/");
 
 	return singleton({
 		label: "Navigation",
@@ -857,7 +861,7 @@ export default config({
 						owner: env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER,
 						name: env.NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME,
 					},
-					branchPrefix: "./content/",
+					branchPrefix: "content/",
 				}
 			: {
 					kind: "local",

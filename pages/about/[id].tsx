@@ -21,9 +21,13 @@ import { Prose } from "@/components/common/Prose";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { TableOfContents } from "@/components/common/TableOfContents";
+import { ApiEndpoint, ApiParamSelect, ApiParamTextField } from "@/components/content/api-endpoint";
 import { Avatar } from "@/components/content/avatar";
+import { Disclosure } from "@/components/content/disclosure";
 import { Embed } from "@/components/content/embed";
 import { Figure } from "@/components/content/figure";
+import { Grid, GridItem } from "@/components/content/grid";
+import { Video } from "@/components/content/video";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
@@ -35,10 +39,6 @@ import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
-import { Video } from "@/components/content/video";
-import { Grid, GridItem } from "@/components/content/grid";
-import { ApiEndpoint, ApiParamSelect, ApiParamTextField } from "@/components/content/api-endpoint";
-import { Disclosure } from "@/components/content/disclosure";
 
 export namespace AboutPage {
 	export interface PathParamsInput extends ParamsInput {
