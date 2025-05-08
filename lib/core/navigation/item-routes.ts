@@ -61,30 +61,30 @@ export const itemRoutes = {
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/publication/${persistentId}/version/${versionId}`,
 						query: searchParams,
-					};
+					});
 				};
 			case "tool-or-service":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/tool-or-service/${persistentId}/version/${versionId}`,
 						query: searchParams,
-					};
+					});
 				};
 			case "training-material":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/training-material/${persistentId}/version/${versionId}`,
 						query: searchParams,
-					};
+					});
 				};
 			case "workflow":
 				return (
@@ -192,50 +192,50 @@ export const itemRoutes = {
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/dataset/${persistentId}/version/${versionId}/edit`,
 						query: searchParams,
-					};
+					});
 				};
 			case "publication":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/publication/${persistentId}/version/${versionId}/edit`,
 						query: searchParams,
-					};
+					});
 				};
 			case "tool-or-service":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/tool-or-service/${persistentId}/version/${versionId}/edit`,
 						query: searchParams,
-					};
+					});
 				};
 			case "training-material":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/training-material/${persistentId}/version/${versionId}/edit`,
 						query: searchParams,
-					};
+					});
 				};
 			case "workflow":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/workflow/${persistentId}/version/${versionId}/edit`,
 						query: searchParams,
-					};
+					});
 				};
 		}
 	},
@@ -246,50 +246,50 @@ export const itemRoutes = {
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/dataset/${persistentId}/version/${versionId}/review`,
 						query: searchParams,
-					};
+					});
 				};
 			case "publication":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/publication/${persistentId}/version/${versionId}/review`,
 						query: searchParams,
-					};
+					});
 				};
 			case "tool-or-service":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/tool-or-service/${persistentId}/version/${versionId}/review`,
 						query: searchParams,
-					};
+					});
 				};
 			case "training-material":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/training-material/${persistentId}/version/${versionId}/review`,
 						query: searchParams,
-					};
+					});
 				};
 			case "workflow":
 				return (
 					{ persistentId, versionId }: { persistentId: string; versionId: number },
 					searchParams?: Record<string, any>,
 				) => {
-					return {
+					return createHref({
 						pathname: `/workflow/${persistentId}/version/${versionId}/review`,
 						query: searchParams,
-					};
+					});
 				};
 		}
 	},

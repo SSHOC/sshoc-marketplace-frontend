@@ -1,10 +1,5 @@
 import { useTextField } from "@react-aria/textfield";
-import type {
-	Alignment,
-	LabelableProps,
-	LabelPosition,
-	NecessityIndicator,
-} from "@react-types/shared";
+import type { LabelableProps } from "@react-types/shared";
 import type { AriaTextFieldProps } from "@react-types/textfield";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
@@ -23,11 +18,6 @@ export interface TextFieldProps extends AriaTextFieldProps, LabelableProps {
 		| "review unchanged";
 	icon?: ReactNode;
 	isRequired?: boolean;
-	labelAlign?: Alignment;
-	/** @default 'icon' */
-	labelPosition?: LabelPosition;
-	/** @default 'start' */
-	necessityIndicator?: NecessityIndicator;
 	/** @default 'md' */
 	size?: "lg" | "md" | "sm";
 	style?: TextFieldBaseStyleProps;
