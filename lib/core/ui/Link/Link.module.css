@@ -32,12 +32,6 @@
 	}
 }
 
-.link-button {
-	--button-cursor: pointer;
-
-	text-decoration: none;
-}
-
 .link[data-variant="heading"],
 .link[data-variant="text"] {
 	--link-color: var(--color-heading);

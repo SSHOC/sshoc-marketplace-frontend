@@ -23,13 +23,13 @@ export function ReviewControls(props: ReviewControlsProps): ReactNode {
 		<div className={css["container"]}>
 			<span className={css["status"]}>{t(`authenticated.review.status.${metadata.status}`)}</span>
 			<div className={css["approve-button"]}>
-				<Button color="positive" onPress={onApprove} size="sm" variant="border">
+				<Button color="review-positive" onPress={onApprove} size="sm">
 					<Icon icon={CheckMarkIcon} />
 					{t("authenticated.controls.approve")}
 				</Button>
 			</div>
 			<div className={css["reject-button"]}>
-				<Button color="negative" onPress={onReject} size="sm" variant="border">
+				<Button color="review-negative" onPress={onReject} size="sm">
 					<Icon icon={CrossIcon} />
 					{t("authenticated.controls.reject")}
 				</Button>
