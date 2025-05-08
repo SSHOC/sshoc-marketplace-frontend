@@ -51,13 +51,6 @@
 	gap: var(--space-1);
 }
 
-.link[data-variant="breadcrumb"] {
-	&[aria-current="page"] {
-		color: var(--color-text-muted);
-		pointer-events: none;
-	}
-}
-
 .link[data-variant="pagination"] {
 	display: flex;
 	gap: var(--space-1);
