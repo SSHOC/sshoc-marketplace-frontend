@@ -1,56 +1,17 @@
-import { useButton } from "@react-aria/button";
-import type { AriaButtonProps } from "@react-types/button";
+import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { CSSProperties, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import type { ReactNode } from "react";
+import { Button as AriaButton } from "react-aria-components";
 
-import css from "@/lib/core/ui/CloseButton/CloseButton.module.css";
-import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CloseIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
-
-export interface CloseButtonStyleProps {
-	"--close-button-color"?: CSSProperties["color"];
-	"--close-button-color-hover"?: CSSProperties["color"];
-	"--close-button-color-focus"?: CSSProperties["color"];
-	"--close-button-color-active"?: CSSProperties["color"];
-	"--close-button-color-disabled"?: CSSProperties["color"];
-}
-export interface CloseButtonProps extends AriaButtonProps {
-	/** @default 'md' */
-	size?: "lg" | "md" | "sm";
-	style?: CloseButtonStyleProps;
-}
-
-// FIXME: should be <Button variant="ghost" />
-export const CloseButton = forwardRef(function CloseButton(
-	props: CloseButtonProps,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): ReactNode {
-	const { size = "md", style } = props;
-
+export function CloseButton(): ReactNode {
 	const t = useTranslations();
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(
-		{
-			...props,
-			"aria-label": props["aria-label"] ?? t("common.close"),
-		},
-		buttonRef,
-	);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
 
 	return (
-		<button
-			ref={ref}
-			type="button"
-			{...buttonProps}
-			className={css["button"]}
-			data-size={size}
-			style={style}
+		<AriaButton
+			aria-label={t("common.close")}
+			className="grid shrink-0 place-content-center text-neutral-700 hover:text-primary-600 focus-visible:text-primary-600 pressed:text-primary-500"
 		>
-			<Icon icon={CloseIcon} />
-		</button>
+			<XIcon aria-hidden className="size-5" />
+		</AriaButton>
 	);
-});
+}
