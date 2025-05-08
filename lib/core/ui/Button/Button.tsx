@@ -71,7 +71,10 @@ export const Button = forwardRef(function Button(
 
 interface LinkButtonProps
 	extends Omit<LinkProps, "as" | "href" | "locale" | "passHref">,
-		Omit<ComponentPropsWithoutRef<typeof Link>, "color">,
+		Pick<
+			ComponentPropsWithoutRef<"a">,
+			"aria-current" | "children" | "className" | "id" | "rel" | "target"
+		>,
 		ButtonStyleProps {
 	href: string;
 }
