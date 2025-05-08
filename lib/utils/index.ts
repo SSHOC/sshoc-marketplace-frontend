@@ -1,4 +1,3 @@
-export { createFaviconLink } from "@/lib/utils/create-favicon-link";
 export { createSiteUrl } from "@/lib/utils/create-site-url";
 export { entries } from "@/lib/utils/entries";
 export { enumerate } from "@/lib/utils/enumerate";
