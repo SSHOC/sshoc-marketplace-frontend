@@ -21,7 +21,7 @@ const buttonStyles = styles({
 			secondary:
 				"bg-primary-600 text-neutral-0 hover:bg-primary-500 focus-visible:bg-primary-500 pressed:bg-primary-750",
 			gradient:
-				"bg-gradient-to-r bg-size-[125%] bg-left text-neutral-0 transition-all hover:bg-right focus-visible:bg-right disabled:bg-none pressed:bg-right",
+				"bg-gradient-to-r from-primary-500 to-primary-800 bg-size-[125%] bg-left text-neutral-0 transition-all hover:bg-right focus-visible:bg-right disabled:bg-none pressed:bg-right",
 			negative:
 				"bg-negative-600 text-neutral-0 hover:bg-negative-500 focus-visible:bg-negative-500 pressed:bg-negative-750",
 			positive:
