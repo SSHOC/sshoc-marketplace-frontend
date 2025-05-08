@@ -13,7 +13,7 @@ import {
 } from "react-aria-components";
 
 const buttonStyles = styles({
-	base: "inline-flex items-center justify-center gap-x-2 rounded-sm border font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:bg-neutral-200 disabled:text-neutral-600",
+	base: "inline-flex items-center justify-center gap-x-2 rounded-sm border border-transparent font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:bg-neutral-200 disabled:text-neutral-600",
 	variants: {
 		color: {
 			primary:
