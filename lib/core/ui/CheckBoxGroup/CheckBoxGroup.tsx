@@ -3,7 +3,6 @@ import { mergeProps } from "@react-aria/utils";
 import type { CheckboxGroupState } from "@react-stately/checkbox";
 import { useCheckboxGroupState } from "@react-stately/checkbox";
 import type { AriaCheckboxGroupItemProps, AriaCheckboxGroupProps } from "@react-types/checkbox";
-import type { NecessityIndicator, Validation } from "@react-types/shared";
 import type { ReactElement, ReactNode } from "react";
 import { Children, cloneElement, useRef } from "react";
 
@@ -13,7 +12,6 @@ import { Field } from "@/lib/core/ui/Field/Field";
 
 export interface CheckBoxGroupProps extends AriaCheckboxGroupProps, Validation {
 	children: Array<ReactElement<CheckBoxGroupItemProps>> | ReactElement<CheckBoxGroupItemProps>;
-	necessityIndicator?: NecessityIndicator;
 	validationMessage?: ReactNode;
 	/** @default "primary" */
 	variant?: "facet" | "primary";
@@ -32,7 +30,6 @@ export function CheckBoxGroup(props: CheckBoxGroupProps): ReactNode {
 			label={props.label}
 			isDisabled={props.isDisabled}
 			isRequired={props.isRequired}
-			necessityIndicator={props.necessityIndicator}
 			validationState={props.validationState}
 			// validationMessage={props.validationMessage}
 			// errorMessageProps={errorMessageProps}

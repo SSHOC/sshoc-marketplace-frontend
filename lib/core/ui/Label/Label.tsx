@@ -1,52 +1,26 @@
-import type { LabelProps as AriaLabelProps } from "@react-types/label";
-import type { Alignment, DOMProps, LabelPosition, NecessityIndicator } from "@react-types/shared";
-import type { ForwardedRef, ReactNode } from "react";
-import { forwardRef } from "react";
+import { cn } from "@acdh-oeaw/style-variants";
+import type { ReactNode } from "react";
+import { Label as AriaLabel, type LabelProps as AriaLabelProps } from "react-aria-components";
 
-import css from "@/lib/core/ui/Label/Label.module.css";
 import { RequiredIndicator } from "@/lib/core/ui/RequiredIndicator/RequiredIndicator";
 
-export interface LabelProps extends AriaLabelProps, DOMProps {
-	includeNecessityIndicatorInAccessibilityName?: boolean;
+export interface LabelProps extends AriaLabelProps {
 	isRequired?: boolean;
-	/** @default 'start' */
-	labelAlign?: Alignment;
-	/** @default 'top' */
-	labelPosition?: LabelPosition;
-	/** @default 'icon' */
-	necessityIndicator?: NecessityIndicator;
 }
 
-export const Label = forwardRef(function Label(
-	props: LabelProps,
-	forwardedRef: ForwardedRef<HTMLLabelElement>,
-): ReactNode {
-	const {
-		children,
-		elementType: ElementType = "label",
-		htmlFor,
-		includeNecessityIndicatorInAccessibilityName,
-		isRequired,
-		// labelAlign = props.labelPosition === 'side' ? 'start' : null,
-		// labelPosition = 'top',
-		necessityIndicator,
-		onClick, // FIXME: why do we need this?
-	} = props;
+export function Label(props: Readonly<LabelProps>): ReactNode {
+	const { children, className, isRequired, ...rest } = props;
 
 	return (
-		<ElementType
-			ref={forwardedRef}
-			className={css["label"]}
-			htmlFor={ElementType === "label" ? htmlFor : undefined}
-			id={props.id}
-			onClick={onClick}
+		<AriaLabel
+			{...rest}
+			className={cn(
+				"inline-flex cursor-default gap-x-1 text-sm text-neutral-800 transition",
+				className,
+			)}
 		>
 			{children}
-			<RequiredIndicator
-				isRequired={isRequired}
-				necessityIndicator={necessityIndicator}
-				includeNecessityIndicatorInAccessibilityName={includeNecessityIndicatorInAccessibilityName}
-			/>
-		</ElementType>
+			{isRequired ? <RequiredIndicator /> : null}
+		</AriaLabel>
 	);
-});
+}

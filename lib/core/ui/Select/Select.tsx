@@ -252,7 +252,6 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 			{...props}
 			descriptionProps={descriptionProps}
 			errorMessageProps={errorMessageProps}
-			includeNecessityIndicatorInAccessibilityName
 			labelElementType="span"
 			labelProps={labelProps}
 			showErrorIcon={false}

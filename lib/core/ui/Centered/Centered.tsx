@@ -5,7 +5,7 @@ export interface CenteredProps {
 	children?: ReactNode;
 }
 
-export function Centered(props: CenteredProps): ReactNode {
+export function Centered(props: Readonly<CenteredProps>): ReactNode {
 	const ElementType = props.elementType ?? "div";
 
 	return (

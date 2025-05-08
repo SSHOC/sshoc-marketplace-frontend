@@ -58,9 +58,9 @@ export const Button = forwardRef(function Button(
 		<AriaButton
 			ref={forwardedRef}
 			{...rest}
-			className={composeRenderProps(className, (className) =>
-				buttonStyles({ className, color, size }),
-			)}
+			className={composeRenderProps(className, (className) => {
+				return buttonStyles({ className, color, size });
+			})}
 		>
 			{children}
 		</AriaButton>

@@ -1,5 +1,4 @@
 import { mergeProps } from "@react-aria/utils";
-import type { LabelPosition } from "@react-types/shared";
 import type { ForwardedRef, HTMLAttributes, ReactNode } from "react";
 import { cloneElement, forwardRef } from "react";
 
@@ -28,15 +27,11 @@ export const Field = forwardRef(function Field(
 		descriptionProps,
 		errorMessage,
 		errorMessageProps,
-		includeNecessityIndicatorInAccessibilityName,
 		isDisabled,
 		isRequired,
 		label,
-		labelAlign,
 		labelElementType,
-		labelPosition = "top" as LabelPosition,
 		labelProps,
-		necessityIndicator,
 		showErrorIcon,
 		validationState,
 	} = props;
@@ -48,17 +43,7 @@ export const Field = forwardRef(function Field(
 		return (
 			<div ref={forwardedRef} className={css["field"]}>
 				{label != null ? (
-					<Label
-						{...labelProps}
-						elementType={labelElementType}
-						includeNecessityIndicatorInAccessibilityName={
-							includeNecessityIndicatorInAccessibilityName
-						}
-						isRequired={isRequired}
-						labelAlign={labelAlign}
-						labelPosition={labelPosition}
-						necessityIndicator={necessityIndicator}
-					>
+					<Label {...labelProps} elementType={labelElementType} isRequired={isRequired}>
 						{label}
 					</Label>
 				) : null}

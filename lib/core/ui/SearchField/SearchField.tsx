@@ -1,7 +1,7 @@
 import { useSearchField } from "@react-aria/searchfield";
 import { useSearchFieldState } from "@react-stately/searchfield";
 import type { AriaSearchFieldProps } from "@react-types/searchfield";
-import type { Alignment, LabelPosition, NecessityIndicator } from "@react-types/shared";
+import type { Alignment, LabelPosition } from "@react-types/shared";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 
@@ -16,8 +16,6 @@ export interface SearchFieldProps extends AriaSearchFieldProps {
 	/** @default 'start' */
 	labelAlign?: Alignment;
 	labelPosition?: LabelPosition;
-	/** @default 'icon' */
-	necessityIndicator?: NecessityIndicator;
 }
 
 export const SearchField = forwardRef(function SearchField(
