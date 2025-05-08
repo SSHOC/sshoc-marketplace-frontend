@@ -1,5 +1,5 @@
-import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 import type { ReactNode } from "react";
+import { JsonLd } from "react-schemaorg";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Publication } from "@/data/sshoc/api/publication";
@@ -14,8 +14,9 @@ export function PublicationSchemaOrgMetadata(props: PublicationSchemaOrgMetadata
 	const conceptBasedProperties = publication.properties.filter(isPropertyConcept);
 
 	return (
-		<SchemaOrg
-			schema={{
+		<JsonLd
+			item={{
+				"@context": "https://schema.org",
 				"@type": "CreativeWork",
 				headline: publication.label,
 				name: publication.label,

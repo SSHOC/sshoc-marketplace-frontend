@@ -247,6 +247,9 @@ importers:
       react-query:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-schemaorg:
+        specifier: ^2.0.0
+        version: 2.0.0(react@18.3.1)(schema-dts@1.1.5)(typescript@5.8.3)
       react-toastify:
         specifier: ^10.0.6
         version: 10.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -425,6 +428,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.11(prettier@3.5.3)
+      schema-dts:
+        specifier: ^1.1.5
+        version: 1.1.5
       simple-git-hooks:
         specifier: ^2.13.0
         version: 2.13.0
@@ -4660,6 +4666,14 @@ packages:
       react-native:
         optional: true
 
+  react-schemaorg@2.0.0:
+    resolution: {integrity: sha512-UqciFKA203ewNjn0zC09uYKuJSvMD8L75L1s/cW4rc7cS64w8l7vaI3SYkuoI/nwCBkJRmOkSJedWDUZBlYZwg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      react: '>=16.3.0'
+      schema-dts: '>=0.7.4'
+      typescript: '>=3.1.6'
+
   react-stately@3.37.0:
     resolution: {integrity: sha512-fm2LRM3XN5lJD48+WQKWvESx54kAIHw0JztCRHMsFmTDgYWX/VASuXKON7LECv227stSEadrxGa8LhPkcelljw==}
     peerDependencies:
@@ -4831,6 +4845,9 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  schema-dts@1.1.5:
+    resolution: {integrity: sha512-RJr9EaCmsLzBX2NDiO5Z3ux2BVosNZN5jo0gWgsyKvxKIUL5R3swNvoorulAeL9kLB0iTSX7V6aokhla2m7xbg==}
 
   scroll-into-view-if-needed@2.2.31:
     resolution: {integrity: sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA==}
@@ -11068,6 +11085,12 @@ snapshots:
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
 
+  react-schemaorg@2.0.0(react@18.3.1)(schema-dts@1.1.5)(typescript@5.8.3):
+    dependencies:
+      react: 18.3.1
+      schema-dts: 1.1.5
+      typescript: 5.8.3
+
   react-stately@3.37.0(react@18.3.1):
     dependencies:
       '@react-stately/calendar': 3.8.0(react@18.3.1)
@@ -11365,6 +11388,8 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  schema-dts@1.1.5: {}
 
   scroll-into-view-if-needed@2.2.31:
     dependencies:
