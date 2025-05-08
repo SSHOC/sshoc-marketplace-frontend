@@ -1,5 +1,5 @@
-import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 import type { ReactNode } from "react";
+import { JsonLd } from "react-schemaorg";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { TrainingMaterial } from "@/data/sshoc/api/training-material";
@@ -16,8 +16,9 @@ export function TrainingMaterialSchemaOrgMetadata(
 	const conceptBasedProperties = trainingMaterial.properties.filter(isPropertyConcept);
 
 	return (
-		<SchemaOrg
-			schema={{
+		<JsonLd
+			item={{
+				"@context": "https://schema.org",
 				"@type": "CreativeWork",
 				headline: trainingMaterial.label,
 				name: trainingMaterial.label,

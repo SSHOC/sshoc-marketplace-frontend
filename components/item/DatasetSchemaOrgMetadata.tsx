@@ -1,5 +1,5 @@
-import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 import type { ReactNode } from "react";
+import { JsonLd } from "react-schemaorg";
 
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import { isPropertyConcept } from "@/data/sshoc/api/property";
@@ -14,8 +14,9 @@ export function DatasetSchemaOrgMetadata(props: DatasetSchemaOrgMetadataProps): 
 	const conceptBasedProperties = dataset.properties.filter(isPropertyConcept);
 
 	return (
-		<SchemaOrg
-			schema={{
+		<JsonLd
+			item={{
+				"@context": "https://schema.org",
 				"@type": "Dataset",
 				headline: dataset.label,
 				name: dataset.label,

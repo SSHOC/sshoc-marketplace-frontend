@@ -11,11 +11,11 @@ import { FormHelpText } from "@/components/item-form/FormHelpText";
 import type { ItemFormValues } from "@/components/item-form/ItemForm";
 import { ItemFormScreenLayout } from "@/components/item-form/ItemFormScreenLayout";
 import { PublicationCreateForm } from "@/components/item-form/PublicationCreateForm";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { PublicationInput } from "@/data/sshoc/api/publication";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export type CreatePublicationFormValues = ItemFormValues<PublicationInput>;
@@ -51,7 +51,7 @@ export default function CreatePublicationPage(_props: CreatePublicationPage.Prop
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

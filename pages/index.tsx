@@ -13,10 +13,10 @@ import { ItemSearchForm } from "@/components/home/ItemSearchForm";
 import { ItemSearchFormPanel } from "@/components/home/ItemSearchFormPanel";
 import { LastUpdatedItems } from "@/components/home/LastUpdatedItems";
 import { PeopleImage } from "@/components/home/PeopleImage";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export namespace HomePage {
@@ -48,7 +48,7 @@ export default function HomePage(_props: HomePage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata title={title} />
 			<PageMainContent>
 				<HomeScreenLayout>
 					<BackgroundImage />

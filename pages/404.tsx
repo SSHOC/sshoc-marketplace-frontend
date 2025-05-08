@@ -9,10 +9,10 @@ import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { BackgroundImage } from "@/components/error/BackgroundImage";
 import { Content } from "@/components/error/Content";
 import { ErrorScreenLayout } from "@/components/error/ErrorScreenLayout";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export namespace NotFoundPage {
@@ -45,7 +45,7 @@ export default function NotFoundPage(_props: NotFoundPage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ErrorScreenLayout>
 					<BackgroundImage />

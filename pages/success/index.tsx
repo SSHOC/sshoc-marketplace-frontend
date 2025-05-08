@@ -6,6 +6,7 @@ import { FundingNotice } from "@/components/common/FundingNotice";
 import { LinkButton } from "@/components/common/LinkButton";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import { BackgroundGradient } from "@/components/success/BackgroundGradient";
 import { SuccessCard } from "@/components/success/SuccessCard";
 import { SuccessCardControls } from "@/components/success/SuccessCardControls";
@@ -13,7 +14,6 @@ import { SuccessScreenLayout } from "@/components/success/SuccessScreenLayout";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export namespace SuccessPage {
@@ -45,7 +45,7 @@ export default function SuccessPage(_props: SuccessPage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<SuccessScreenLayout>
 					<BackgroundGradient />

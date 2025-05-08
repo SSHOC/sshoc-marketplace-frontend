@@ -1,5 +1,5 @@
-import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 import type { ReactNode } from "react";
+import { JsonLd } from "react-schemaorg";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Tool } from "@/data/sshoc/api/tool-or-service";
@@ -16,8 +16,9 @@ export function ToolOrServiceSchemaOrgMetadata(
 	const conceptBasedProperties = tool.properties.filter(isPropertyConcept);
 
 	return (
-		<SchemaOrg
-			schema={{
+		<JsonLd
+			item={{
+				"@context": "https://schema.org",
 				"@type": "SoftwareApplication",
 				headline: tool.label,
 				name: tool.label,

@@ -34,6 +34,7 @@ import { WorkflowControls } from "@/components/item/WorkflowControls";
 import { WorkflowSchemaOrgMetadata } from "@/components/item/WorkflowSchemaOrgMetadata";
 import { WorkflowScreenLayout } from "@/components/item/WorkflowScreenLayout";
 import { WorkflowStepsList } from "@/components/item/WorkflowStepsList";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Workflow } from "@/data/sshoc/api/workflow";
 import { getWorkflow } from "@/data/sshoc/api/workflow";
 import type { WorkflowStep } from "@/data/sshoc/api/workflow-step";
@@ -43,7 +44,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -141,7 +141,7 @@ export default function WorkflowPage(props: WorkflowPage.Props): ReactNode {
 	if (router.isFallback || workflow == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -168,12 +168,7 @@ export default function WorkflowPage(props: WorkflowPage.Props): ReactNode {
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={workflow.label}
-				description={workflow.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={workflow.label} description={workflow.description} />
 			<WorkflowSchemaOrgMetadata workflow={workflow} />
 			<PageMainContent>
 				<WorkflowScreenLayout>

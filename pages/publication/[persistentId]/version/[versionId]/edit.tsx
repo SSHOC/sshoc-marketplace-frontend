@@ -21,6 +21,7 @@ import { useCreateOrUpdatePublication } from "@/components/item-form/useCreateOr
 import { usePublicationFormFields } from "@/components/item-form/usePublicationFormFields";
 import { usePublicationValidationSchema } from "@/components/item-form/usePublicationValidationSchema";
 import { useUpdateItemMeta } from "@/components/item-form/useUpdateItemMeta";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Publication, PublicationInput } from "@/data/sshoc/api/publication";
 import { usePublication, usePublicationVersion } from "@/data/sshoc/hooks/publication";
 import type { PageComponent } from "@/lib/core/app/types";
@@ -28,7 +29,6 @@ import { FORM_ERROR } from "@/lib/core/form/Form";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -164,7 +164,7 @@ export default function EditPublicationVersionPage(
 	if (router.isFallback || publication == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={title} openGraph={{}} twitter={{}} />
+				<PageMetadata title={title} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -178,7 +178,7 @@ export default function EditPublicationVersionPage(
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

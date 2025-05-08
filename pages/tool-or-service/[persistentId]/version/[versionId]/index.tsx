@@ -32,13 +32,13 @@ import { ItemTitle } from "@/components/item/ItemTitle";
 import { ItemVersionScreenLayout } from "@/components/item/ItemVersionScreenLayout";
 import { ToolOrServiceContentContributors } from "@/components/item/ToolOrServiceContentContributors";
 import { ToolOrServiceVersionControls } from "@/components/item/ToolOrServiceVersionControls";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Tool } from "@/data/sshoc/api/tool-or-service";
 import { useTool, useToolVersion } from "@/data/sshoc/hooks/tool-or-service";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -117,7 +117,7 @@ export default function ToolOrServiceVersionPage(props: ToolOrServiceVersionPage
 	if (router.isFallback || toolOrService == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -144,12 +144,7 @@ export default function ToolOrServiceVersionPage(props: ToolOrServiceVersionPage
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={toolOrService.label}
-				description={toolOrService.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={toolOrService.label} description={toolOrService.description} />
 			<PageMainContent>
 				<ItemVersionScreenLayout>
 					<BackgroundImage />

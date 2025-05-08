@@ -1,5 +1,5 @@
-import { SchemaOrg } from "@stefanprobst/next-page-metadata";
 import type { ReactNode } from "react";
+import { JsonLd } from "react-schemaorg";
 
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 import type { Workflow } from "@/data/sshoc/api/workflow";
@@ -14,8 +14,9 @@ export function WorkflowSchemaOrgMetadata(props: WorkflowSchemaOrgMetadataProps)
 	const conceptBasedProperties = workflow.properties.filter(isPropertyConcept);
 
 	return (
-		<SchemaOrg
-			schema={{
+		<JsonLd
+			item={{
+				"@context": "https://schema.org",
 				"@type": "HowTo",
 				headline: workflow.label,
 				name: workflow.label,
@@ -49,7 +50,7 @@ export function WorkflowSchemaOrgMetadata(props: WorkflowSchemaOrgMetadataProps)
 					}),
 				step: workflow.composedOf.map((step) => {
 					return {
-						"@type": "HowToStep",
+						"@type": "HowToStep" as const,
 						headline: step.label,
 						name: step.label,
 						abstract: step.description,

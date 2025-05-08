@@ -32,13 +32,13 @@ import { ItemTitle } from "@/components/item/ItemTitle";
 import { ItemVersionScreenLayout } from "@/components/item/ItemVersionScreenLayout";
 import { PublicationContentContributors } from "@/components/item/PublicationContentContributors";
 import { PublicationVersionControls } from "@/components/item/PublicationVersionControls";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Publication } from "@/data/sshoc/api/publication";
 import { usePublication, usePublicationVersion } from "@/data/sshoc/hooks/publication";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { useSearchParams } from "@/lib/core/navigation/useSearchParams";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -117,7 +117,7 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
 	if (router.isFallback || publication == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -144,12 +144,7 @@ export default function PublicationVersionPage(props: PublicationVersionPage.Pro
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={publication.label}
-				description={publication.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={publication.label} description={publication.description} />
 			<PageMainContent>
 				<ItemVersionScreenLayout>
 					<BackgroundImage />

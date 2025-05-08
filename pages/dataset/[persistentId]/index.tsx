@@ -35,6 +35,7 @@ import { ItemRelatedItems } from "@/components/item/ItemRelatedItems";
 import { ItemScreenLayout } from "@/components/item/ItemScreenLayout";
 import { ItemSource } from "@/components/item/ItemSource";
 import { ItemTitle } from "@/components/item/ItemTitle";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { Dataset } from "@/data/sshoc/api/dataset";
 import { getDataset } from "@/data/sshoc/api/dataset";
 import { keys, useDataset } from "@/data/sshoc/hooks/dataset";
@@ -43,7 +44,6 @@ import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -138,7 +138,7 @@ export default function DatasetPage(props: DatasetPage.Props): ReactNode {
 	if (router.isFallback || dataset == null) {
 		return (
 			<Fragment>
-				<PageMetadata title={label} openGraph={{}} twitter={{}} />
+				<PageMetadata title={label} />
 				<PageMainContent>
 					<FullPage>
 						<Centered>
@@ -165,12 +165,7 @@ export default function DatasetPage(props: DatasetPage.Props): ReactNode {
 	return (
 		<Fragment>
 			{/* TODO: strip markdown from description (synchronously) */}
-			<PageMetadata
-				title={dataset.label}
-				description={dataset.description}
-				openGraph={{}}
-				twitter={{}}
-			/>
+			<PageMetadata title={dataset.label} description={dataset.description} />
 			<DatasetSchemaOrgMetadata dataset={dataset} />
 			<PageMainContent>
 				<ItemScreenLayout>

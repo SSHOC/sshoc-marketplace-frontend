@@ -11,10 +11,10 @@ import { FormHelpText } from "@/components/item-form/FormHelpText";
 import { ItemFormScreenLayout } from "@/components/item-form/ItemFormScreenLayout";
 import { useWorkflowFormPage } from "@/components/item-form/useWorkflowFormPage";
 import { WorkflowCreateForm } from "@/components/item-form/WorkflowCreateForm";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 
 export namespace CreateWorkflowPage {
@@ -57,7 +57,7 @@ export default function CreateWorkflowPage(_props: CreateWorkflowPage.Props): Re
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<ItemFormScreenLayout>
 					<BackgroundImage />

@@ -13,10 +13,10 @@ import type { SearchFilters } from "@/components/account/useSourceSearchFilters"
 import { FundingNotice } from "@/components/common/FundingNotice";
 import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { ScreenTitle } from "@/components/common/ScreenTitle";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { load } from "@/lib/core/i18n/load";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { SpacedRow } from "@/lib/core/ui/SpacedRow/SpacedRow";
@@ -62,7 +62,7 @@ export default function SourcesPage(_props: SourcesPage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata nofollow noindex title={title} openGraph={{}} twitter={{}} />
+			<PageMetadata noindex title={title} />
 			<PageMainContent>
 				<AccountScreenWithoutFiltersLayout>
 					<BackgroundImage />

@@ -29,13 +29,13 @@ import { BackgroundImage } from "@/components/contribute/BackgroundImage";
 import { Content } from "@/components/contribute/Content";
 import { ContributeScreenLayout } from "@/components/contribute/ContributeScreenLayout";
 import { ContributeScreenNavigation } from "@/components/contribute/ContributeScreenNavigation";
+import { PageMetadata } from "@/components/metadata/page-metadata";
 import { getLastUpdatedTimestamp } from "@/data/git/get-last-updated-timestamp";
 import type { PageComponent } from "@/lib/core/app/types";
 import { getLocale } from "@/lib/core/i18n/getLocale";
 import { getLocales } from "@/lib/core/i18n/getLocales";
 import { load } from "@/lib/core/i18n/load";
 import { compile } from "@/lib/core/mdx/compile";
-import { PageMetadata } from "@/lib/core/metadata/PageMetadata";
 import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
@@ -116,7 +116,7 @@ export default function ContributePage(props: ContributePage.Props): ReactNode {
 
 	return (
 		<Fragment>
-			<PageMetadata title={props.metadata.title} openGraph={{}} twitter={{}} />
+			<PageMetadata title={props.metadata.title} />
 			<PageMainContent>
 				<ContributeScreenLayout>
 					<BackgroundImage />
