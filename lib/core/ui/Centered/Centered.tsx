@@ -1,7 +1,5 @@
 import type { ElementType, ReactNode } from "react";
 
-import css from "@/lib/core/ui/Centered/Centered.module.css";
-
 export interface CenteredProps {
 	elementType?: ElementType;
 	children?: ReactNode;
@@ -10,5 +8,9 @@ export interface CenteredProps {
 export function Centered(props: CenteredProps): ReactNode {
 	const ElementType = props.elementType ?? "div";
 
-	return <ElementType className={css["container"]}>{props.children}</ElementType>;
+	return (
+		<ElementType className="grid place-content-center place-items-center px-16 py-8">
+			{props.children}
+		</ElementType>
+	);
 }
