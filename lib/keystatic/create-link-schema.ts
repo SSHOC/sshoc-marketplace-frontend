@@ -20,11 +20,11 @@ export function createLinkSchema(paths: Paths) {
 				}),
 				search: fields.text({
 					label: "Query params",
-					validation: { isRequired: false, pattern: validation.urlSearchParams },
+					validation: { isRequired: false, pattern: validation.urlSearchParamsOptional },
 				}),
 				hash: fields.text({
 					label: "URL fragment",
-					validation: { isRequired: false, pattern: validation.urlFragment },
+					validation: { isRequired: false, pattern: validation.urlFragmentOptional },
 				}),
 			}),
 			"contribute-pages": fields.object({
@@ -35,21 +35,21 @@ export function createLinkSchema(paths: Paths) {
 				}),
 				search: fields.text({
 					label: "Query params",
-					validation: { isRequired: false, pattern: validation.urlSearchParams },
+					validation: { isRequired: false, pattern: validation.urlSearchParamsOptional },
 				}),
 				hash: fields.text({
 					label: "URL fragment",
-					validation: { isRequired: false, pattern: validation.urlFragment },
+					validation: { isRequired: false, pattern: validation.urlFragmentOptional },
 				}),
 			}),
 			"contact-page": fields.object({
 				search: fields.text({
 					label: "Query params",
-					validation: { isRequired: false, pattern: validation.urlSearchParams },
+					validation: { isRequired: false, pattern: validation.urlSearchParamsOptional },
 				}),
 				hash: fields.text({
 					label: "URL fragment",
-					validation: { isRequired: false, pattern: validation.urlFragment },
+					validation: { isRequired: false, pattern: validation.urlFragmentOptional },
 				}),
 			}),
 			"current-page": fields.text({
@@ -72,11 +72,11 @@ export function createLinkSchema(paths: Paths) {
 			"search-page": fields.object({
 				search: fields.text({
 					label: "Query params",
-					validation: { isRequired: false, pattern: validation.urlSearchParams },
+					validation: { isRequired: false, pattern: validation.urlSearchParamsOptional },
 				}),
 				hash: fields.text({
 					label: "URL fragment",
-					validation: { isRequired: false, pattern: validation.urlFragment },
+					validation: { isRequired: false, pattern: validation.urlFragmentOptional },
 				}),
 			}),
 		},
