@@ -103,6 +103,8 @@ export const FileInput = forwardRef(function FileInput(
 						multiple={multiple}
 						onChange={onChangeFileList}
 						type="file"
+						// `<input type="file" />` elements are uncontrolled in React.
+						value={undefined}
 					/>
 				</VisuallyHidden>
 				{fileList != null && fileList.length > 0 ? (
