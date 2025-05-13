@@ -86,7 +86,7 @@ export function ModerateItemSearchResult(props: ModerateItemSearchResultProps): 
 				</MetadataValues>
 			</SearchResultContent>
 			<SearchResultControls>
-				{["suggested.ingested"].includes(item.status) ? (
+				{["suggested", "ingested"].includes(item.status) ? (
 					<Fragment>
 						<ButtonLink onPress={onApprove}>{t("authenticated.controls.approve")}</ButtonLink>
 						<ButtonLink onPress={onReject}>{t("authenticated.controls.reject")}</ButtonLink>
