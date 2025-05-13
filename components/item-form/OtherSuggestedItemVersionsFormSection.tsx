@@ -38,7 +38,7 @@ export function OtherSuggestedItemVersionsFormSection(): ReactNode {
 		meta,
 		select(data) {
 			return data.filter((item) => {
-				return ["suggested.ingested"].includes(item.status) && item.id !== versionId;
+				return ["suggested", "ingested"].includes(item.status) && item.id !== versionId;
 			});
 		},
 	});

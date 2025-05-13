@@ -67,7 +67,7 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
 						{t("authenticated.controls.edit")}
 					</Link>
 				) : null}
-				{["draft.suggested.ingested"].includes(item.status) ? (
+				{["draft", "suggested", "ingested"].includes(item.status) ? (
 					<Link
 						href={itemRoutes.ItemEditVersionPage(item.category)({
 							persistentId: item.persistentId,
