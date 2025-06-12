@@ -49,6 +49,7 @@ const config: NextConfig = {
 	},
 	images: {
 		remotePatterns: [new URL(env.NEXT_PUBLIC_API_BASE_URL)],
+		unoptimized: true,
 	},
 	output: "standalone",
 	poweredByHeader: false,
