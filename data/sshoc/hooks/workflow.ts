@@ -366,6 +366,7 @@ export function useDeleteWorkflowVersion(
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
 				queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }));
+				queryClient.invalidateQueries(itemKeys.drafts());
 				options?.onSuccess?.(...args);
 			},
 		},
