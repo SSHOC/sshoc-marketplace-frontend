@@ -27,22 +27,22 @@ const infinite = "infinite";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [source, auth ?? null] as const;
+		return [source, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [source, list, auth ?? null] as const;
+		return [source, list, auth ?? {}] as const;
 	},
 	list(params: GetSources.Params, auth?: AuthData) {
-		return [source, list, params, auth ?? null] as const;
+		return [source, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetSources.Params, auth?: AuthData) {
-		return [source, list, infinite, params, auth ?? null] as const;
+		return [source, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [source, detail, auth ?? null] as const;
+		return [source, detail, auth ?? {}] as const;
 	},
 	detail(params: GetSource.Params, auth?: AuthData) {
-		return [source, detail, params, auth ?? null] as const;
+		return [source, detail, params, auth ?? {}] as const;
 	},
 };
 

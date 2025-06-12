@@ -61,58 +61,58 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [workflowStep, auth ?? null] as const;
+		return [workflowStep, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [workflowStep, list, auth ?? null] as const;
+		return [workflowStep, list, auth ?? {}] as const;
 	},
 	// list(params: GetWorkflowSteps.Params, auth?: AuthData | undefined) {
-	//   return [workflowStep, list, params, auth ?? null] as const
+	//   return [workflowStep, list, params, auth ?? {}] as const
 	// },
 	details(auth?: AuthData) {
-		return [workflowStep, detail, auth ?? null] as const;
+		return [workflowStep, detail, auth ?? {}] as const;
 	},
 	detail(params: GetWorkflowStep.Params, auth?: AuthData) {
-		return [workflowStep, detail, params, auth ?? null] as const;
+		return [workflowStep, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [workflowStep, version, auth ?? null] as const
+	//   return [workflowStep, version, auth ?? {}] as const
 	// },
 	version(params: GetWorkflowStepVersion.Params, auth?: AuthData) {
-		return [workflowStep, version, params, auth ?? null] as const;
+		return [workflowStep, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [workflowStep, history, auth ?? null] as const
+	//   return [workflowStep, history, auth ?? {}] as const
 	// },
 	history(params: GetWorkflowStepHistory.Params, auth?: AuthData) {
-		return [workflowStep, history, params, auth ?? null] as const;
+		return [workflowStep, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [workflowStep, informationContributors, auth ?? null] as const
+	//   return [workflowStep, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(params: GetWorkflowStepInformationContributors.Params, auth?: AuthData) {
-		return [workflowStep, informationContributors, params, auth ?? null] as const;
+		return [workflowStep, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [workflowStep, versionInformationContributors, auth ?? null] as const
+	//   return [workflowStep, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetWorkflowStepVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [workflowStep, versionInformationContributors, params, auth ?? null] as const;
+		return [workflowStep, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedWorkflowStep.Params, auth?: AuthData) {
-		return [workflowStep, merged, params, auth ?? null] as const;
+		return [workflowStep, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetWorkflowStepSources.Params, auth?: AuthData) {
-		return [workflowStep, sources, params, auth ?? null] as const;
+		return [workflowStep, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetWorkflowStepDiff.Params, auth?: AuthData) {
-		return [workflowStep, diff, params, auth ?? null] as const;
+		return [workflowStep, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetWorkflowStepVersionDiff.Params, auth?: AuthData) {
-		return [workflowStep, version, diff, params, auth ?? null] as const;
+		return [workflowStep, version, diff, params, auth ?? {}] as const;
 	},
 };
 

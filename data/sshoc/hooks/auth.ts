@@ -15,10 +15,10 @@ const user = "user";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [authentication, auth ?? null] as const;
+		return [authentication, auth ?? {}] as const;
 	},
 	user(auth?: AuthData) {
-		return [authentication, user, auth ?? null] as const;
+		return [authentication, user, auth ?? {}] as const;
 	},
 };
 

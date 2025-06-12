@@ -50,44 +50,44 @@ const infinite = "infinite";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [vocabulary, auth ?? null] as const;
+		return [vocabulary, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [vocabulary, list, auth ?? null] as const;
+		return [vocabulary, list, auth ?? {}] as const;
 	},
 	list(params: GetVocabularies.Params, auth?: AuthData) {
-		return [vocabulary, list, params, auth ?? null] as const;
+		return [vocabulary, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetVocabularies.Params, auth?: AuthData) {
-		return [vocabulary, list, infinite, params, auth ?? null] as const;
+		return [vocabulary, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [vocabulary, detail, auth ?? null] as const;
+		return [vocabulary, detail, auth ?? {}] as const;
 	},
 	detail(params: GetVocabulary.Params, auth?: AuthData) {
-		return [vocabulary, detail, params, auth ?? null] as const;
+		return [vocabulary, detail, params, auth ?? {}] as const;
 	},
 	detailInfinite(params: GetVocabulary.Params, auth?: AuthData) {
-		return [vocabulary, detail, infinite, params, auth ?? null] as const;
+		return [vocabulary, detail, infinite, params, auth ?? {}] as const;
 	},
 	relation(auth?: AuthData) {
-		return [relation, auth ?? null] as const;
+		return [relation, auth ?? {}] as const;
 	},
 	concept: {
 		all(auth?: AuthData) {
-			return [vocabulary, concept, auth ?? null] as const;
+			return [vocabulary, concept, auth ?? {}] as const;
 		},
 		details(auth?: AuthData) {
-			return [vocabulary, concept, detail, auth ?? null] as const;
+			return [vocabulary, concept, detail, auth ?? {}] as const;
 		},
 		detail(params: GetConcept.Params, auth?: AuthData) {
-			return [vocabulary, concept, detail, params, auth ?? null] as const;
+			return [vocabulary, concept, detail, params, auth ?? {}] as const;
 		},
 		search(params: SearchConcepts.Params = {}, auth?: AuthData) {
-			return [vocabulary, concept, search, params, auth ?? null] as const;
+			return [vocabulary, concept, search, params, auth ?? {}] as const;
 		},
 		searchInfinite(params: SearchConcepts.Params, auth?: AuthData) {
-			return [vocabulary, concept, search, infinite, params, auth ?? null] as const;
+			return [vocabulary, concept, search, infinite, params, auth ?? {}] as const;
 		},
 	},
 };

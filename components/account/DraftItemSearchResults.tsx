@@ -4,6 +4,7 @@ import { DraftItemSearchResult } from "@/components/account/DraftItemSearchResul
 import css from "@/components/account/DraftItemSearchResults.module.css";
 import { useDraftItemsSearchResults } from "@/components/account/useDraftItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
+import type { ItemCategory, ItemCore } from "@/data/sshoc/api/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
@@ -40,7 +41,7 @@ export function DraftItemSearchResults(): ReactNode {
 
 					return (
 						<li key={[item.persistentId, item.id].join("+")}>
-							<DraftItemSearchResult item={item} />
+							<DraftItemSearchResult item={item as ItemCore & { category: ItemCategory }} />
 						</li>
 					);
 				})}

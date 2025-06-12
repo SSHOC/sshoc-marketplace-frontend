@@ -63,61 +63,61 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [tool, auth ?? null] as const;
+		return [tool, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [tool, list, auth ?? null] as const;
+		return [tool, list, auth ?? {}] as const;
 	},
 	list(params: GetTools.Params, auth?: AuthData) {
-		return [tool, list, params, auth ?? null] as const;
+		return [tool, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetTools.Params, auth?: AuthData) {
-		return [tool, list, infinite, params, auth ?? null] as const;
+		return [tool, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [tool, detail, auth ?? null] as const;
+		return [tool, detail, auth ?? {}] as const;
 	},
 	detail(params: GetTool.Params, auth?: AuthData) {
-		return [tool, detail, params, auth ?? null] as const;
+		return [tool, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [tool, version, auth ?? null] as const
+	//   return [tool, version, auth ?? {}] as const
 	// },
 	version(params: GetToolVersion.Params, auth?: AuthData) {
-		return [tool, version, params, auth ?? null] as const;
+		return [tool, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [tool, history, auth ?? null] as const
+	//   return [tool, history, auth ?? {}] as const
 	// },
 	history(params: GetToolHistory.Params, auth?: AuthData) {
-		return [tool, history, params, auth ?? null] as const;
+		return [tool, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [tool, informationContributors, auth ?? null] as const
+	//   return [tool, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(params: GetToolInformationContributors.Params, auth?: AuthData) {
-		return [tool, informationContributors, params, auth ?? null] as const;
+		return [tool, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [tool, versionInformationContributors, auth ?? null] as const
+	//   return [tool, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetToolVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [tool, versionInformationContributors, params, auth ?? null] as const;
+		return [tool, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedTool.Params, auth?: AuthData) {
-		return [tool, merged, params, auth ?? null] as const;
+		return [tool, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetToolSources.Params, auth?: AuthData) {
-		return [tool, sources, params, auth ?? null] as const;
+		return [tool, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetToolDiff.Params, auth?: AuthData) {
-		return [tool, diff, params, auth ?? null] as const;
+		return [tool, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetToolVersionDiff.Params, auth?: AuthData) {
-		return [tool, version, diff, params, auth ?? null] as const;
+		return [tool, version, diff, params, auth ?? {}] as const;
 	},
 };
 
@@ -354,6 +354,7 @@ export function useDeleteToolVersion(
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
 				queryClient.invalidateQueries(keys.detail({ persistentId: params.persistentId }));
+				queryClient.invalidateQueries(itemKeys.drafts());
 				options?.onSuccess?.(...args);
 			},
 		},
