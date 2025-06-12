@@ -63,64 +63,64 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [trainingMaterial, auth ?? null] as const;
+		return [trainingMaterial, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [trainingMaterial, list, auth ?? null] as const;
+		return [trainingMaterial, list, auth ?? {}] as const;
 	},
 	list(params: GetTrainingMaterials.Params, auth?: AuthData) {
-		return [trainingMaterial, list, params, auth ?? null] as const;
+		return [trainingMaterial, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetTrainingMaterials.Params, auth?: AuthData) {
-		return [trainingMaterial, list, infinite, params, auth ?? null] as const;
+		return [trainingMaterial, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [trainingMaterial, detail, auth ?? null] as const;
+		return [trainingMaterial, detail, auth ?? {}] as const;
 	},
 	detail(params: GetTrainingMaterial.Params, auth?: AuthData) {
-		return [trainingMaterial, detail, params, auth ?? null] as const;
+		return [trainingMaterial, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [trainingMaterial, version, auth ?? null] as const
+	//   return [trainingMaterial, version, auth ?? {}] as const
 	// },
 	version(params: GetTrainingMaterialVersion.Params, auth?: AuthData) {
-		return [trainingMaterial, version, params, auth ?? null] as const;
+		return [trainingMaterial, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [trainingMaterial, history, auth ?? null] as const
+	//   return [trainingMaterial, history, auth ?? {}] as const
 	// },
 	history(params: GetTrainingMaterialHistory.Params, auth?: AuthData) {
-		return [trainingMaterial, history, params, auth ?? null] as const;
+		return [trainingMaterial, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [trainingMaterial, informationContributors, auth ?? null] as const
+	//   return [trainingMaterial, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(
 		params: GetTrainingMaterialInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [trainingMaterial, informationContributors, params, auth ?? null] as const;
+		return [trainingMaterial, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [trainingMaterial, versionInformationContributors, auth ?? null] as const
+	//   return [trainingMaterial, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetTrainingMaterialVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [trainingMaterial, versionInformationContributors, params, auth ?? null] as const;
+		return [trainingMaterial, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedTrainingMaterial.Params, auth?: AuthData) {
-		return [trainingMaterial, merged, params, auth ?? null] as const;
+		return [trainingMaterial, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetTrainingMaterialSources.Params, auth?: AuthData) {
-		return [trainingMaterial, sources, params, auth ?? null] as const;
+		return [trainingMaterial, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetTrainingMaterialDiff.Params, auth?: AuthData) {
-		return [trainingMaterial, diff, params, auth ?? null] as const;
+		return [trainingMaterial, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetTrainingMaterialVersionDiff.Params, auth?: AuthData) {
-		return [trainingMaterial, version, diff, params, auth ?? null] as const;
+		return [trainingMaterial, version, diff, params, auth ?? {}] as const;
 	},
 };
 

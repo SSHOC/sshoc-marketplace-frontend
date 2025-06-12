@@ -63,61 +63,61 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [workflow, auth ?? null] as const;
+		return [workflow, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [workflow, list, auth ?? null] as const;
+		return [workflow, list, auth ?? {}] as const;
 	},
 	list(params: GetWorkflows.Params, auth?: AuthData) {
-		return [workflow, list, params, auth ?? null] as const;
+		return [workflow, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetWorkflows.Params, auth?: AuthData) {
-		return [workflow, list, infinite, params, auth ?? null] as const;
+		return [workflow, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [workflow, detail, auth ?? null] as const;
+		return [workflow, detail, auth ?? {}] as const;
 	},
 	detail(params: GetWorkflow.Params, auth?: AuthData) {
-		return [workflow, detail, params, auth ?? null] as const;
+		return [workflow, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [workflow, version, auth ?? null] as const
+	//   return [workflow, version, auth ?? {}] as const
 	// },
 	version(params: GetWorkflowVersion.Params, auth?: AuthData) {
-		return [workflow, version, params, auth ?? null] as const;
+		return [workflow, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [workflow, history, auth ?? null] as const
+	//   return [workflow, history, auth ?? {}] as const
 	// },
 	history(params: GetWorkflowHistory.Params, auth?: AuthData) {
-		return [workflow, history, params, auth ?? null] as const;
+		return [workflow, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [workflow, informationContributors, auth ?? null] as const
+	//   return [workflow, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(params: GetWorkflowInformationContributors.Params, auth?: AuthData) {
-		return [workflow, informationContributors, params, auth ?? null] as const;
+		return [workflow, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [workflow, versionInformationContributors, auth ?? null] as const
+	//   return [workflow, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetWorkflowVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [workflow, versionInformationContributors, params, auth ?? null] as const;
+		return [workflow, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedWorkflow.Params, auth?: AuthData) {
-		return [workflow, merged, params, auth ?? null] as const;
+		return [workflow, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetWorkflowSources.Params, auth?: AuthData) {
-		return [workflow, sources, params, auth ?? null] as const;
+		return [workflow, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetWorkflowDiff.Params, auth?: AuthData) {
-		return [workflow, diff, params, auth ?? null] as const;
+		return [workflow, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetWorkflowVersionDiff.Params, auth?: AuthData) {
-		return [workflow, version, diff, params, auth ?? null] as const;
+		return [workflow, version, diff, params, auth ?? {}] as const;
 	},
 };
 

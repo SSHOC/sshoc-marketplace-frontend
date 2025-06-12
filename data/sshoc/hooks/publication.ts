@@ -63,61 +63,61 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [publication, auth ?? null] as const;
+		return [publication, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [publication, list, auth ?? null] as const;
+		return [publication, list, auth ?? {}] as const;
 	},
 	list(params: GetPublications.Params, auth?: AuthData) {
-		return [publication, list, params, auth ?? null] as const;
+		return [publication, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetPublications.Params, auth?: AuthData) {
-		return [publication, list, infinite, params, auth ?? null] as const;
+		return [publication, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [publication, detail, auth ?? null] as const;
+		return [publication, detail, auth ?? {}] as const;
 	},
 	detail(params: GetPublication.Params, auth?: AuthData) {
-		return [publication, detail, params, auth ?? null] as const;
+		return [publication, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [publication, version, auth ?? null] as const
+	//   return [publication, version, auth ?? {}] as const
 	// },
 	version(params: GetPublicationVersion.Params, auth?: AuthData) {
-		return [publication, version, params, auth ?? null] as const;
+		return [publication, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [publication, history, auth ?? null] as const
+	//   return [publication, history, auth ?? {}] as const
 	// },
 	history(params: GetPublicationHistory.Params, auth?: AuthData) {
-		return [publication, history, params, auth ?? null] as const;
+		return [publication, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [publication, informationContributors, auth ?? null] as const
+	//   return [publication, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(params: GetPublicationInformationContributors.Params, auth?: AuthData) {
-		return [publication, informationContributors, params, auth ?? null] as const;
+		return [publication, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [publication, versionInformationContributors, auth ?? null] as const
+	//   return [publication, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetPublicationVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [publication, versionInformationContributors, params, auth ?? null] as const;
+		return [publication, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedPublication.Params, auth?: AuthData) {
-		return [publication, merged, params, auth ?? null] as const;
+		return [publication, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetPublicationSources.Params, auth?: AuthData) {
-		return [publication, sources, params, auth ?? null] as const;
+		return [publication, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetPublicationDiff.Params, auth?: AuthData) {
-		return [publication, diff, params, auth ?? null] as const;
+		return [publication, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetPublicationVersionDiff.Params, auth?: AuthData) {
-		return [publication, version, diff, params, auth ?? null] as const;
+		return [publication, version, diff, params, auth ?? {}] as const;
 	},
 };
 

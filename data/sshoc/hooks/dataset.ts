@@ -63,61 +63,61 @@ const diff = "diff";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [dataset, auth ?? null] as const;
+		return [dataset, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [dataset, list, auth ?? null] as const;
+		return [dataset, list, auth ?? {}] as const;
 	},
 	list(params: GetDatasets.Params, auth?: AuthData) {
-		return [dataset, list, params, auth ?? null] as const;
+		return [dataset, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetDatasets.Params, auth?: AuthData) {
-		return [dataset, list, infinite, params, auth ?? null] as const;
+		return [dataset, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [dataset, detail, auth ?? null] as const;
+		return [dataset, detail, auth ?? {}] as const;
 	},
 	detail(params: GetDataset.Params, auth?: AuthData) {
-		return [dataset, detail, params, auth ?? null] as const;
+		return [dataset, detail, params, auth ?? {}] as const;
 	},
 	// versions(auth?: AuthData | undefined) {
-	//   return [dataset, version, auth ?? null] as const
+	//   return [dataset, version, auth ?? {}] as const
 	// },
 	version(params: GetDatasetVersion.Params, auth?: AuthData) {
-		return [dataset, version, params, auth ?? null] as const;
+		return [dataset, version, params, auth ?? {}] as const;
 	},
 	// histories(auth?: AuthData | undefined) {
-	//   return [dataset, history, auth ?? null] as const
+	//   return [dataset, history, auth ?? {}] as const
 	// },
 	history(params: GetDatasetHistory.Params, auth?: AuthData) {
-		return [dataset, history, params, auth ?? null] as const;
+		return [dataset, history, params, auth ?? {}] as const;
 	},
 	// informationContributors(auth?: AuthData | undefined) {
-	//   return [dataset, informationContributors, auth ?? null] as const
+	//   return [dataset, informationContributors, auth ?? {}] as const
 	// },
 	informationContributors(params: GetDatasetInformationContributors.Params, auth?: AuthData) {
-		return [dataset, informationContributors, params, auth ?? null] as const;
+		return [dataset, informationContributors, params, auth ?? {}] as const;
 	},
 	// versionInformationContributors(auth?: AuthData | undefined) {
-	//   return [dataset, versionInformationContributors, auth ?? null] as const
+	//   return [dataset, versionInformationContributors, auth ?? {}] as const
 	// },
 	versionInformationContributors(
 		params: GetDatasetVersionInformationContributors.Params,
 		auth?: AuthData,
 	) {
-		return [dataset, versionInformationContributors, params, auth ?? null] as const;
+		return [dataset, versionInformationContributors, params, auth ?? {}] as const;
 	},
 	merged(params: GetMergedDataset.Params, auth?: AuthData) {
-		return [dataset, merged, params, auth ?? null] as const;
+		return [dataset, merged, params, auth ?? {}] as const;
 	},
 	sources(params: GetDatasetSources.Params, auth?: AuthData) {
-		return [dataset, sources, params, auth ?? null] as const;
+		return [dataset, sources, params, auth ?? {}] as const;
 	},
 	diff(params: GetDatasetDiff.Params, auth?: AuthData) {
-		return [dataset, diff, params, auth ?? null] as const;
+		return [dataset, diff, params, auth ?? {}] as const;
 	},
 	diffVersion(params: GetDatasetVersionDiff.Params, auth?: AuthData) {
-		return [dataset, version, diff, params, auth ?? null] as const;
+		return [dataset, version, diff, params, auth ?? {}] as const;
 	},
 };
 

@@ -57,64 +57,64 @@ const infinite = "infinite";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [actor, auth ?? null] as const;
+		return [actor, auth ?? {}] as const;
 	},
 	lists(auth?: AuthData) {
-		return [actor, list, auth ?? null] as const;
+		return [actor, list, auth ?? {}] as const;
 	},
 	list(params: GetActors.Params, auth?: AuthData) {
-		return [actor, list, params, auth ?? null] as const;
+		return [actor, list, params, auth ?? {}] as const;
 	},
 	listInfinite(params: GetActors.Params, auth?: AuthData) {
-		return [actor, list, infinite, params, auth ?? null] as const;
+		return [actor, list, infinite, params, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [actor, detail, auth ?? null] as const;
+		return [actor, detail, auth ?? {}] as const;
 	},
 	detail(params: GetActor.Params, auth?: AuthData) {
-		return [actor, detail, params, auth ?? null] as const;
+		return [actor, detail, params, auth ?? {}] as const;
 	},
 	history(params: GetActorHistory.Params, auth?: AuthData) {
-		return [actor, history, params, auth ?? null] as const;
+		return [actor, history, params, auth ?? {}] as const;
 	},
 	search(params: SearchActors.Params = {}, auth?: AuthData) {
-		return [actor, search, params, auth ?? null] as const;
+		return [actor, search, params, auth ?? {}] as const;
 	},
 	searchInfinite(params: SearchActors.Params, auth?: AuthData) {
-		return [actor, search, infinite, params, auth ?? null] as const;
+		return [actor, search, infinite, params, auth ?? {}] as const;
 	},
 	source: {
 		all(auth?: AuthData) {
-			return [source, auth ?? null] as const;
+			return [source, auth ?? {}] as const;
 		},
 		lists(auth?: AuthData) {
-			return [source, list, auth ?? null] as const;
+			return [source, list, auth ?? {}] as const;
 		},
 		list(auth?: AuthData) {
-			return [source, list, auth ?? null] as const;
+			return [source, list, auth ?? {}] as const;
 		},
 		details(auth?: AuthData) {
-			return [source, detail, auth ?? null] as const;
+			return [source, detail, auth ?? {}] as const;
 		},
 		detail(params: GetActorSource.Params, auth?: AuthData) {
-			return [source, detail, params, auth ?? null] as const;
+			return [source, detail, params, auth ?? {}] as const;
 		},
 	},
 	role: {
 		all(auth?: AuthData) {
-			return [role, auth ?? null] as const;
+			return [role, auth ?? {}] as const;
 		},
 		lists(auth?: AuthData) {
-			return [role, list, auth ?? null] as const;
+			return [role, list, auth ?? {}] as const;
 		},
 		list(auth?: AuthData) {
-			return [role, list, auth ?? null] as const;
+			return [role, list, auth ?? {}] as const;
 		},
 		details(auth?: AuthData) {
-			return [role, detail, auth ?? null] as const;
+			return [role, detail, auth ?? {}] as const;
 		},
 		detail(params: GetActorRole.Params, auth?: AuthData) {
-			return [role, detail, params, auth ?? null] as const;
+			return [role, detail, params, auth ?? {}] as const;
 		},
 	},
 };

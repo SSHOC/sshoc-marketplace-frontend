@@ -78,76 +78,76 @@ const contributedItems = "contributedItems";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [items, auth ?? null] as const;
+		return [items, auth ?? {}] as const;
 	},
 	// lists(auth?: AuthData | undefined) {
-	//   return [items, list, auth ?? null] as const
+	//   return [items, list, auth ?? {}] as const
 	// },
 	// list(params, auth?: AuthData | undefined) {
-	//   return [items, list, params, auth ?? null] as const
+	//   return [items, list, params, auth ?? {}] as const
 	// },
 	search(params: ItemSearch.Params = {}, auth?: AuthData) {
-		return [items, search, params, auth ?? null] as const;
+		return [items, search, params, auth ?? {}] as const;
 	},
 	searchInfinite(params: ItemSearch.Params, auth?: AuthData) {
-		return [items, search, infinite, params, auth ?? null] as const;
+		return [items, search, infinite, params, auth ?? {}] as const;
 	},
 	// details(auth?: AuthData | undefined) {
-	//   return [items, detail, auth ?? null] as const
+	//   return [items, detail, auth ?? {}] as const
 	// },
 	// detail(params, auth?: AuthData | undefined) {
-	//   return [items, detail, params, auth ?? null] as const
+	//   return [items, detail, params, auth ?? {}] as const
 	// },
 	autocomplete(params: ItemAutocomplete.Params, auth?: AuthData) {
-		return [items, autocomplete, params, auth ?? null] as const;
+		return [items, autocomplete, params, auth ?? {}] as const;
 	},
 	categories(auth?: AuthData) {
-		return [items, categories, auth ?? null] as const;
+		return [items, categories, auth ?? {}] as const;
 	},
 	bySource(params: GetItemsBySource.Params, auth?: AuthData) {
-		return [items, bySource, params, auth ?? null] as const;
+		return [items, bySource, params, auth ?? {}] as const;
 	},
 	bySourceInfinite(params: GetItemsBySource.Params, auth?: AuthData) {
-		return [items, bySource, infinite, params, auth ?? null] as const;
+		return [items, bySource, infinite, params, auth ?? {}] as const;
 	},
 	bySourceItem(params: GetItemsBySourceItem.Params, auth?: AuthData) {
-		return [items, bySourceItem, params, auth ?? null] as const;
+		return [items, bySourceItem, params, auth ?? {}] as const;
 	},
 	bySourceItemInfinite(params: GetItemsBySourceItem.Params, auth?: AuthData) {
-		return [items, bySourceItem, infinite, params, auth ?? null] as const;
+		return [items, bySourceItem, infinite, params, auth ?? {}] as const;
 	},
 	drafts(params: GetDraftItems.Params = {}, auth?: AuthData) {
-		return [items, drafts, params, auth ?? null] as const;
+		return [items, drafts, params, auth ?? {}] as const;
 	},
 	draftsInfinite(params: GetDraftItems.Params, auth?: AuthData) {
-		return [items, drafts, infinite, params, auth ?? null] as const;
+		return [items, drafts, infinite, params, auth ?? {}] as const;
 	},
 	relations(params: GetItemRelations.Params = {}, auth?: AuthData) {
-		return [items, relations, params, auth ?? null] as const;
+		return [items, relations, params, auth ?? {}] as const;
 	},
 	relationsInfinite(params: GetItemRelations.Params, auth?: AuthData) {
-		return [items, relations, infinite, params, auth ?? null] as const;
+		return [items, relations, infinite, params, auth ?? {}] as const;
 	},
 	relationKinds(auth?: AuthData) {
-		return [items, relationKind, auth ?? null] as const;
+		return [items, relationKind, auth ?? {}] as const;
 	},
 	relationKind(params: GetItemRelationKind.Params, auth?: AuthData) {
-		return [items, relationKind, params, auth ?? null] as const;
+		return [items, relationKind, params, auth ?? {}] as const;
 	},
 	comments(params: GetItemComments.Params, auth?: AuthData) {
-		return [items, comments, params, auth ?? null] as const;
+		return [items, comments, params, auth ?? {}] as const;
 	},
 	lastComments(params: GetLastItemComments.Params, auth?: AuthData) {
-		return [items, lastComments, params, auth ?? null] as const;
+		return [items, lastComments, params, auth ?? {}] as const;
 	},
 	sources(auth?: AuthData) {
-		return [items, sources, auth ?? null] as const;
+		return [items, sources, auth ?? {}] as const;
 	},
 	source(params: GetItemSource.Params, auth?: AuthData) {
-		return [items, source, params, auth ?? null] as const;
+		return [items, source, params, auth ?? {}] as const;
 	},
 	contributedItems(params: GetContributedItems.Params, auth?: AuthData) {
-		return [contributedItems, params, auth ?? null] as const;
+		return [contributedItems, params, auth ?? {}] as const;
 	},
 };
 

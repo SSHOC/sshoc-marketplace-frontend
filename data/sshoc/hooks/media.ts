@@ -43,41 +43,41 @@ const thumbnail = "thumbnail";
 
 export const keys = {
 	all(auth?: AuthData) {
-		return [media, auth ?? null] as const;
+		return [media, auth ?? {}] as const;
 	},
 	details(auth?: AuthData) {
-		return [media, detail, auth ?? null] as const;
+		return [media, detail, auth ?? {}] as const;
 	},
 	detail(params: DownloadMedia.Params, auth?: AuthData) {
-		return [media, detail, params, auth ?? null] as const;
+		return [media, detail, params, auth ?? {}] as const;
 	},
 	downloads(auth?: AuthData) {
-		return [media, download, auth ?? null] as const;
+		return [media, download, auth ?? {}] as const;
 	},
 	download(params: DownloadMedia.Params, auth?: AuthData) {
-		return [media, download, params, auth ?? null] as const;
+		return [media, download, params, auth ?? {}] as const;
 	},
 	thumbnails(auth?: AuthData) {
-		return [media, thumbnail, auth ?? null] as const;
+		return [media, thumbnail, auth ?? {}] as const;
 	},
 	thumbnail(params: DownloadMediaThumbnail.Params, auth?: AuthData) {
-		return [media, thumbnail, params, auth ?? null] as const;
+		return [media, thumbnail, params, auth ?? {}] as const;
 	},
 	source: {
 		all(auth?: AuthData) {
-			return [source, auth ?? null] as const;
+			return [source, auth ?? {}] as const;
 		},
 		lists(auth?: AuthData) {
-			return [source, list, auth ?? null] as const;
+			return [source, list, auth ?? {}] as const;
 		},
 		list(auth?: AuthData) {
-			return [source, list, auth ?? null] as const;
+			return [source, list, auth ?? {}] as const;
 		},
 		details(auth?: AuthData) {
-			return [source, detail, auth ?? null] as const;
+			return [source, detail, auth ?? {}] as const;
 		},
 		detail(params: GetMediaSource.Params, auth?: AuthData) {
-			return [source, detail, params, auth ?? null] as const;
+			return [source, detail, params, auth ?? {}] as const;
 		},
 	},
 };
