@@ -281,7 +281,7 @@ export function useCreateWorkflow(
 			onSuccess(workflow, ...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: workflow.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -307,7 +307,7 @@ export function useUpdateWorkflow(
 			onSuccess(workflow, ...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: workflow.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -334,7 +334,7 @@ export function useDeleteWorkflow(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -361,7 +361,7 @@ export function useDeleteWorkflowVersion(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -388,7 +388,7 @@ export function useRevertWorkflowToVersion(
 			onSuccess(workflow, ...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: workflow.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -418,7 +418,7 @@ export function useCommitDraftWorkflow(
 			onSuccess(workflow, ...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: workflow.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -466,7 +466,7 @@ export function useMergeWorkflows(
 			onSuccess(workflow, ...args) {
 				const pathname = itemRoutes.ItemPage("workflow")({
 					persistentId: workflow.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());

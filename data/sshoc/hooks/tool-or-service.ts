@@ -269,7 +269,7 @@ export function useCreateTool(
 			onSuccess(tool, ...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: tool.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -295,7 +295,7 @@ export function useUpdateTool(
 			onSuccess(tool, ...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: tool.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -322,7 +322,7 @@ export function useDeleteTool(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -349,7 +349,7 @@ export function useDeleteToolVersion(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -376,7 +376,7 @@ export function useRevertToolToVersion(
 			onSuccess(tool, ...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: tool.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -406,7 +406,7 @@ export function useCommitDraftTool(
 			onSuccess(tool, ...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: tool.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -449,7 +449,7 @@ export function useMergeTools(
 			onSuccess(tool, ...args) {
 				const pathname = itemRoutes.ItemPage("tool-or-service")({
 					persistentId: tool.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());

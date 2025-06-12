@@ -49,7 +49,8 @@ export default async function contact(
 
 		response.end();
 		return;
-	} catch {
+	} catch (error) {
+		log.error(error);
 		response.status(500).end();
 		return;
 	}
