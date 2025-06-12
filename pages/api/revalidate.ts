@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { env } from "@/config/env.config";
 import { baseUrl } from "@/config/site.config";
-import { isNonEmptyString } from "@/lib/utils";
+import { isNonEmptyString, log } from "@/lib/utils";
 
 export default async function handler(
 	request: NextApiRequest,
@@ -43,7 +43,8 @@ export default async function handler(
 		await response.revalidate(pathname, { unstable_onlyGenerated: true });
 		response.status(200).end();
 		return;
-	} catch {
+	} catch (error) {
+		log.error(error);
 		response.status(500).end();
 		return;
 	}

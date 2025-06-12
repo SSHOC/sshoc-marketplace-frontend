@@ -298,7 +298,7 @@ export function useCreateTrainingMaterial(
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: trainingMaterial.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -328,7 +328,7 @@ export function useUpdateTrainingMaterial(
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: trainingMaterial.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -355,7 +355,7 @@ export function useDeleteTrainingMaterial(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -382,7 +382,7 @@ export function useDeleteTrainingMaterialVersion(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -409,7 +409,7 @@ export function useRevertTrainingMaterialToVersion(
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: trainingMaterial.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -439,7 +439,7 @@ export function useCommitDraftTrainingMaterial(
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: trainingMaterial.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -491,7 +491,7 @@ export function useMergeTrainingMaterials(
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = itemRoutes.ItemPage("training-material")({
 					persistentId: trainingMaterial.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());

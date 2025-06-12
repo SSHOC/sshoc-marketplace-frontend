@@ -281,7 +281,7 @@ export function useCreateDataset(
 			onSuccess(dataset, ...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: dataset.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -307,7 +307,7 @@ export function useUpdateDataset(
 			onSuccess(dataset, ...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: dataset.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -334,7 +334,7 @@ export function useDeleteDataset(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -361,7 +361,7 @@ export function useDeleteDatasetVersion(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -388,7 +388,7 @@ export function useRevertDatasetToVersion(
 			onSuccess(dataset, ...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: dataset.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -418,7 +418,7 @@ export function useCommitDraftDataset(
 			onSuccess(dataset, ...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: dataset.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -466,7 +466,7 @@ export function useMergeDatasets(
 			onSuccess(dataset, ...args) {
 				const pathname = itemRoutes.ItemPage("dataset")({
 					persistentId: dataset.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());

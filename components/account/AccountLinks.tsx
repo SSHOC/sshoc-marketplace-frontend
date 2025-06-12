@@ -13,7 +13,7 @@ export function AccountLinks(): ReactNode {
 				const Icon = link.icon;
 
 				return (
-					<li key={link.href.pathname}>
+					<li key={link.href}>
 						<div className={css["link"]}>
 							<Link href={link.href}>
 								<Icon className={css["icon"]} />

@@ -281,7 +281,7 @@ export function useCreatePublication(
 			onSuccess(publication, ...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: publication.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -307,7 +307,7 @@ export function useUpdatePublication(
 			onSuccess(publication, ...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: publication.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -334,7 +334,7 @@ export function useDeletePublication(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -361,7 +361,7 @@ export function useDeletePublicationVersion(
 			onSuccess(...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: params.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -388,7 +388,7 @@ export function useRevertPublicationToVersion(
 			onSuccess(publication, ...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: publication.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -418,7 +418,7 @@ export function useCommitDraftPublication(
 			onSuccess(publication, ...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: publication.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
@@ -466,7 +466,7 @@ export function useMergePublications(
 			onSuccess(publication, ...args) {
 				const pathname = itemRoutes.ItemPage("publication")({
 					persistentId: publication.persistentId,
-				}).pathname;
+				});
 				revalidate({ pathname });
 				queryClient.invalidateQueries(itemKeys.search());
 				queryClient.invalidateQueries(keys.lists());
