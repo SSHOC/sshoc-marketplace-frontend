@@ -48,7 +48,7 @@ const config: NextConfig = {
 		defaultLocale,
 	},
 	images: {
-		remotePatterns: [new URL(env.NEXT_PUBLIC_API_BASE_URL)],
+		// remotePatterns: [new URL(env.NEXT_PUBLIC_API_BASE_URL)],
 		unoptimized: true,
 	},
 	output: "standalone",
