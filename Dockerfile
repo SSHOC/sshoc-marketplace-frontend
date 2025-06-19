@@ -5,8 +5,11 @@
 # using alpine base image to avoid `sharp` memory leaks.
 # @see https://sharp.pixelplumbing.com/install#linux-memory-allocator
 
+# FIXME: temporarily switching to glibc based image, to investigate memory issues
+# image optimisation is also disabled temporarily
+
 # build
-FROM node:22-alpine AS build
+FROM node:22-slim AS build
 
 RUN corepack enable
 
@@ -59,7 +62,7 @@ RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
 		pnpm run build
 
 # serve
-FROM node:22-alpine AS serve
+FROM node:22-slim AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
