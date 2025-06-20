@@ -12,26 +12,26 @@ export default async function handler(
 	response: NextApiResponse,
 ): Promise<void> {
 	if (request.method?.toLowerCase() !== "get") {
-		response.status(405).end();
+		response.status(405).end("Method not allowed.");
 		return;
 	}
 
 	const secret = process.env.DEBUG_TOKEN;
 
 	if (!isNonEmptyString(secret)) {
-		response.status(500).end();
+		response.status(500).end("Missing secret.");
 		return;
 	}
 
 	const token = request.headers.authorization;
 
 	if (!isNonEmptyString(token)) {
-		response.status(401).end();
+		response.status(401).end("Unauthorized.");
 		return;
 	}
 
 	if (token !== secret) {
-		response.status(403).end();
+		response.status(403).end("Forbidden.");
 		return;
 	}
 
@@ -41,7 +41,7 @@ export default async function handler(
 	const snapshotPath = v8.writeHeapSnapshot(filepath);
 
 	if (!snapshotPath) {
-		response.status(500).end();
+		response.status(500).end("Missing snapshot.");
 		return;
 	}
 
@@ -54,7 +54,7 @@ export default async function handler(
 
 	stream.on("error", (error) => {
 		log.error("Stream error:", String(error));
-		response.status(500).end();
+		response.status(500).end("Stream error.");
 	});
 
 	stream.pipe(response);
