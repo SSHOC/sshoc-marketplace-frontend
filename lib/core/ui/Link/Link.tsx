@@ -32,7 +32,7 @@ export interface LinkProps
 }
 
 export const Link = forwardRef(function Link(
-	props: LinkProps,
+	props: Readonly<LinkProps>,
 	forwardedRef: ForwardedRef<HTMLAnchorElement>,
 ): ReactNode {
 	const {

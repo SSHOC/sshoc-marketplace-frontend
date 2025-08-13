@@ -1,50 +1,31 @@
-import { useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaButtonProps } from "@react-types/button";
-import cx from "clsx";
-import type { CSSProperties, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import { cn } from "@acdh-oeaw/style-variants";
+import { type ForwardedRef, forwardRef, type ReactNode } from "react";
+import {
+	Button as AriaButton,
+	type ButtonProps as AriaButtonProps,
+	composeRenderProps,
+} from "react-aria-components";
 
-import buttonCss from "@/lib/core/ui/Button/Button.module.css";
-import type { LinkProps } from "@/lib/core/ui/Link/Link";
-import css from "@/lib/core/ui/Link/Link.module.css";
-
-export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, "style"> {
-	children: ReactNode;
-	form?: string;
-	isPressed?: boolean;
-	trigger?: "collapsed" | "expanded";
-}
+export interface ButtonLinkProps extends AriaButtonProps {}
 
 export const ButtonLink = forwardRef(function ButtonLink(
 	props: ButtonLinkProps,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const { children, isPressed = false, style, trigger } = props;
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps, isPressed: isActive } = useButton(props, buttonRef);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
-	const { hoverProps, isHovered } = useHover(props);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
+	const { children, className, ...rest } = props;
 
 	return (
-		<button
-			ref={ref}
-			type="button"
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
-			className={cx(css["link"], buttonCss["button-link"])}
-			data-active={isPressed || isActive ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
-			data-trigger={trigger}
-			style={style as CSSProperties}
+		<AriaButton
+			ref={forwardedRef}
+			{...rest}
+			className={composeRenderProps(className, (className) => {
+				return cn(
+					"inline-flex items-center gap-1.5 text-primary-750 outline-transparent transition hover:text-primary-600 focus-visible:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:text-neutral-600 pressed:hover:text-primary-500",
+					className,
+				);
+			})}
 		>
 			{children}
-		</button>
+		</AriaButton>
 	);
 });
