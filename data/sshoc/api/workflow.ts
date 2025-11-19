@@ -159,6 +159,8 @@ export namespace CreateWorkflow {
 	export interface SearchParams {
 		/** @default false */
 		draft?: boolean;
+		/** @default false */
+		createHandle?: boolean;
 	}
 	export type Params = SearchParams;
 	export type Body = WorkflowInput;

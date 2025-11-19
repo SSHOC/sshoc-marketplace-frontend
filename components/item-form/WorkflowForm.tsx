@@ -33,6 +33,8 @@ import type { FormProps } from "@/lib/core/form/Form";
 import { Form } from "@/lib/core/form/Form";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
+import { isProductionDeployment } from "@/lib/is-production-deployment";
+import { FormCheckBox } from "@/lib/core/form/FormCheckBox";
 
 export type WorkflowFormValues = WorkflowInput & {
 	persistentId?: Workflow["persistentId"];
@@ -43,6 +45,7 @@ export type WorkflowFormValues = WorkflowInput & {
 };
 
 export interface WorkflowFormProps extends FormProps<WorkflowFormValues> {
+	allowHandleCreation?: boolean;
 	name?: string;
 	onCancel: () => void;
 	formFields: ItemFormFields;
@@ -51,7 +54,8 @@ export interface WorkflowFormProps extends FormProps<WorkflowFormValues> {
 }
 
 export function WorkflowForm(props: WorkflowFormProps): ReactNode {
-	const { initialValues, name, onCancel, onSubmit, validate, page, setPage } = props;
+	const { allowHandleCreation, initialValues, name, onCancel, onSubmit, validate, page, setPage } =
+		props;
 
 	function onBeforeSaveAsDraft(form: FormApi<WorkflowFormValues>) {
 		form.batch(() => {
@@ -107,6 +111,16 @@ export function WorkflowForm(props: WorkflowFormProps): ReactNode {
 			{page.type === "steps" ? (
 				<FormSections>
 					<WorkflowStepsFormSection setPage={setPage} />
+
+					{allowHandleCreation && !isProductionDeployment ? (
+						<div className="flex flex-col items-end gap-y-1 justify-self-end text-right">
+							<FormCheckBox name="__create-handle__">Create handle</FormCheckBox>
+							<p className="text-sm text-negative-600">
+								Warning: Checking this will create an actual handle with the SSHOC Marketplace
+								prefix.
+							</p>
+						</div>
+					) : null}
 
 					<ItemFormControls<WorkflowFormValues>
 						onBeforeSaveAsDraft={onBeforeSaveAsDraft}
