@@ -21,6 +21,9 @@ USER node
 COPY --chown=node:node .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY ./patches ./patches
 
+ENV CI=true
+ENV SKIP_INSTALL_SIMPLE_GIT_HOOKS=1
+
 RUN pnpm fetch
 
 COPY --chown=node:node ./ ./
