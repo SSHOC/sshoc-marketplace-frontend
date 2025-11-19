@@ -4,10 +4,9 @@
 	"license": "Apache-2.0",
 	"type": "module",
 	"engines": {
-		"node": "22.x",
-		"pnpm": "10.x"
+		"node": "^24"
 	},
-	"packageManager": "pnpm@10.12.1",
+	"packageManager": "pnpm@10.22.0",
 	"scripts": {
 		"analyze": "BUNDLE_ANALYZER=\"enabled\" next build --no-lint",
 		"build": "run-s generate:static-data build:app",
@@ -27,8 +26,7 @@
 		"setup": "is-ci || simple-git-hooks",
 		"start": "next start",
 		"test": "exit 0",
-		"types:check": "tsc --noEmit",
-		"validate": "run-p format:check lint:check types:check test"
+		"types:check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@acdh-oeaw/keystatic-lib": "^0.6.1",
@@ -154,7 +152,7 @@
 		"@types/highlight-words-core": "^1.2.1",
 		"@types/mdast": "^4.0.4",
 		"@types/mdx": "^2.0.13",
-		"@types/node": "^22.15.2",
+		"@types/node": "^24.10.1",
 		"@types/nodemailer": "^6.4.4",
 		"@types/react": "^18.3.20",
 		"@types/react-dom": "^18.3.6",
