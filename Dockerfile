@@ -9,7 +9,7 @@
 # image optimisation is also disabled temporarily
 
 # build
-FROM node:22-slim AS build
+FROM node:24-slim AS build
 
 RUN corepack enable
 
@@ -62,7 +62,7 @@ RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
 		pnpm run build
 
 # serve
-FROM node:22-slim AS serve
+FROM node:24-slim AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
