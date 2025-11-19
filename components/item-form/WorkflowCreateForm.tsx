@@ -17,7 +17,10 @@ import type { WorkflowStepInput } from "@/data/sshoc/api/workflow-step";
 import { getApiErrorMessage } from "@/data/sshoc/utils/get-api-error-message";
 
 export type CreateWorkflowFormValues = ItemFormValues<
-	WorkflowInput & { composedOf?: Array<ItemFormValues<WorkflowStepInput>> }
+	WorkflowInput & {
+		composedOf?: Array<ItemFormValues<WorkflowStepInput>>;
+		"__create-handle__"?: boolean;
+	}
 >;
 
 export interface WorkflowCreateFormProps {
@@ -45,12 +48,15 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 		const shouldSaveAsDraft = values["__draft__"] === true;
 		delete values["__draft__"];
 
+		const shouldCreateHandle = values["__create-handle__"] === true;
+		delete values["__create-handle__"];
+
 		const data = removeEmptyItemFieldsOnSubmit(values);
 		delete values["__submitting__"];
 
 		form.pauseValidation();
 		createOrUpdateWorkflow.mutate(
-			{ data, draft: shouldSaveAsDraft },
+			{ data, draft: shouldSaveAsDraft, createHandle: shouldCreateHandle },
 			{
 				onSuccess(workflow) {
 					if (workflow.status === "draft") {
@@ -87,6 +93,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 
 	return (
 		<WorkflowForm<CreateWorkflowFormValues>
+			allowHandleCreation={true}
 			formFields={formFields}
 			initialValues={recommendedFields}
 			name="create-workflow"

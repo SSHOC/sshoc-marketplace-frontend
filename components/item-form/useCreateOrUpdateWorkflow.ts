@@ -24,6 +24,8 @@ export namespace UseCreateOrUpdateWorkflow {
 	export interface SearchParams {
 		/** @default false */
 		draft?: boolean;
+		/** @default false */
+		createHandle?: boolean;
 	}
 	export type Params = SearchParams;
 	export type Body = ItemFormValues<
@@ -114,7 +116,12 @@ export async function createOrUpdateWorkflow(
 		}
 	} else {
 		if (data.persistentId == null) {
-			const workflow = await createWorkflow({}, data, auth, requestOptions);
+			const workflow = await createWorkflow(
+				{ createHandle: params.createHandle },
+				data,
+				auth,
+				requestOptions,
+			);
 
 			const createdSteps = [];
 			for (const [index, step] of steps.entries()) {
