@@ -40,6 +40,7 @@ import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
+import { existsSync } from "node:fs";
 
 export namespace AboutPage {
 	export interface PathParamsInput extends ParamsInput {
@@ -82,8 +83,13 @@ export async function getStaticProps(
 
 	const filePath = join("content", "about", id, "index.mdx");
 	const lastUpdatedTimestamp = (await getLastUpdatedTimestamp(filePath)).toISOString();
+	const absoluteFilePath = join(process.cwd(), filePath);
 
-	const input = await read(join(process.cwd(), filePath));
+	if (!existsSync(absoluteFilePath)) {
+		return { notFound: true };
+	}
+
+	const input = await read(absoluteFilePath);
 	matter(input, { strip: true });
 	const vfile = await compile(input);
 	const metadata = vfile.data.matter;
