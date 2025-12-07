@@ -66,6 +66,11 @@ const config: NextConfig = {
 				destination: "/keystatic",
 				permanent: false,
 			},
+			{
+				source: "/about/data",
+				destination: "/about/data-population",
+				permanent: true,
+			},
 		];
 
 		return Promise.resolve(redirects);
