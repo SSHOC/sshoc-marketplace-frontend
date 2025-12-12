@@ -6,7 +6,7 @@
 	"engines": {
 		"node": "^24"
 	},
-	"packageManager": "pnpm@10.22.0",
+	"packageManager": "pnpm@10.25.0",
 	"scripts": {
 		"analyze": "BUNDLE_ANALYZER=\"enabled\" next build --no-lint",
 		"build": "run-s generate:static-data build:app",
@@ -95,7 +95,7 @@
 		"jwt-decode": "^4.0.0",
 		"lucide-react": "^0.507.0",
 		"mdast-util-to-markdown": "^2.1.2",
-		"next": "^15.1.10",
+		"next": "^15.5.9",
 		"next-intl": "^4.1.0",
 		"nodemailer": "^6.7.2",
 		"react": "^18.3.1",
@@ -131,7 +131,7 @@
 		"@acdh-oeaw/prettier-config": "^2.0.1",
 		"@acdh-oeaw/stylelint-config": "^2.1.2",
 		"@acdh-oeaw/tsconfig": "^1.5.1",
-		"@next/eslint-plugin-next": "^15.1.10",
+		"@next/eslint-plugin-next": "^15.5.9",
 		"@react-types/button": "^3.10.2",
 		"@react-types/checkbox": "^3.9.1",
 		"@react-types/combobox": "^3.13.2",
