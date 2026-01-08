@@ -202,7 +202,3 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): R
 const Page: PageComponent<WorkflowVersionPage.Props> = WorkflowVersionPage;
 
 Page.getLayout = undefined;
-
-Page.isPageAccessible = function isPageAccessible(user) {
-	return ["administrator", "moderator", "contributor"].includes(user.role);
-};
