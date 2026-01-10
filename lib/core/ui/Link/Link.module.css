@@ -32,12 +32,6 @@
 	}
 }
 
-.link-button {
-	--button-cursor: pointer;
-
-	text-decoration: none;
-}
-
 .link[data-variant="heading"],
 .link[data-variant="text"] {
 	--link-color: var(--color-heading);
@@ -49,13 +43,6 @@
 .link[data-variant="tag"] {
 	display: inline-flex;
 	gap: var(--space-1);
-}
-
-.link[data-variant="breadcrumb"] {
-	&[aria-current="page"] {
-		color: var(--color-text-muted);
-		pointer-events: none;
-	}
 }
 
 .link[data-variant="pagination"] {

@@ -21,9 +21,9 @@ export function PageFooter(): ReactNode {
 				<ul className="flex flex-col py-2 text-md sm:flex-row sm:py-0" role="list">
 					{links.map((link) => {
 						return (
-							<li key={link.label}>
+							<li className="flex" key={link.label}>
 								<Link
-									className="flex justify-center px-6 py-5 text-center text-neutral-700 transition hover:bg-neutral-50 focus-visible:bg-neutral-50"
+									className="flex items-center justify-center px-6 py-5 text-center text-neutral-700 outline-transparent transition hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-primary-750"
 									href={link.href}
 								>
 									{link.label}

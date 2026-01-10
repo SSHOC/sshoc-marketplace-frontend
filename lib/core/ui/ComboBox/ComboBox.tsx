@@ -15,7 +15,6 @@ import type {
 	LabelableProps,
 	LabelPosition,
 	LoadingState,
-	NecessityIndicator,
 } from "@react-types/shared";
 import { useTranslations } from "next-intl";
 import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
@@ -52,7 +51,6 @@ export interface ComboBoxProps<T extends object>
 	layout?: ListBoxHeights<T>;
 	loadingState?: LoadingState;
 	/** @default 'icon' */
-	necessityIndicator?: NecessityIndicator;
 	shouldFlip?: boolean;
 	/** @default 'md' */
 	size?: "md" | "sm";
