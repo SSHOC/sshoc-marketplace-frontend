@@ -64,16 +64,20 @@ export function ItemHistorySearchResult(props: ItemHistorySearchResultProps): Re
 					</MetadataValue>
 				</MetadataValues>
 			</SearchResultContent>
-			<SearchResultControls>
-				{item.status === "approved" ? (
-					<Link href={itemRoutes.ItemEditPage(item.category)({ persistentId: item.persistentId })}>
-						{t("authenticated.controls.edit")}
-					</Link>
-				) : null}
-				<AccessControl roles={["administrator", "moderator"]}>
-					{item.status === "deprecated" ? <RevertButton item={item} /> : null}
-				</AccessControl>
-			</SearchResultControls>
+			<AccessControl>
+				<SearchResultControls>
+					{item.status === "approved" ? (
+						<Link
+							href={itemRoutes.ItemEditPage(item.category)({ persistentId: item.persistentId })}
+						>
+							{t("authenticated.controls.edit")}
+						</Link>
+					) : null}
+					<AccessControl roles={["administrator", "moderator"]}>
+						{item.status === "deprecated" ? <RevertButton item={item} /> : null}
+					</AccessControl>
+				</SearchResultControls>
+			</AccessControl>
 		</SearchResult>
 	);
 }

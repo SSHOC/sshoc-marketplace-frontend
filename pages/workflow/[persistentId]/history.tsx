@@ -157,7 +157,3 @@ export default function WorkflowHistoryPage(props: WorkflowHistoryPage.Props): R
 const Page: PageComponent<WorkflowHistoryPage.Props> = WorkflowHistoryPage;
 
 Page.getLayout = undefined;
-
-Page.isPageAccessible = function isPageAccessible(user) {
-	return ["administrator", "moderator", "contributor"].includes(user.role);
-};

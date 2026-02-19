@@ -23,7 +23,7 @@
 		"lint:styles:fix": "pnpm run lint:styles:check --fix",
 		"preinstall": "npx only-allow pnpm",
 		"prepare": "run-s setup",
-		"setup": "is-ci || simple-git-hooks",
+		"setup": "is-in-ci || simple-git-hooks",
 		"start": "next start",
 		"test": "exit 0",
 		"types:check": "tsc --noEmit"
@@ -161,6 +161,7 @@
 		"eslint": "^9.25.1",
 		"eslint-config-flat-gitignore": "^2.1.0",
 		"globals": "^16.0.0",
+		"is-in-ci": "^2.0.0",
 		"lint-staged": "^15.5.1",
 		"npm-run-all2": "^8.0.1",
 		"postcss": "^8.5.3",
