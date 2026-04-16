@@ -149,7 +149,7 @@ function Media(props: MediaProps): ReactNode {
 					// sandbox="allow-popups; allow-same-origin; allow-scripts"
 					loading="lazy"
 					title={caption ?? t("common.item.embedded-content")}
-					allow="fullscreen; picture-in-picture"
+					allow="encrypted-media; fullscreen; picture-in-picture; web-share"
 					referrerPolicy="no-referrer"
 				/>
 			);
