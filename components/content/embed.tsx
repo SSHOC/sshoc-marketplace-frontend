@@ -15,7 +15,7 @@ export function Embed(props: EmbedProps): ReactNode {
 			<iframe
 				src={src}
 				title={title}
-				allow="encrypted-media; fullscreen; picture-in-picture; web-share"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				allowFullScreen
 				className="aspect-video w-full overflow-hidden rounded-sm border border-neutral-150"
 				referrerPolicy="strict-origin-when-cross-origin"
