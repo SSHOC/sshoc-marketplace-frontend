@@ -149,8 +149,9 @@ function Media(props: MediaProps): ReactNode {
 					// sandbox="allow-popups; allow-same-origin; allow-scripts"
 					loading="lazy"
 					title={caption ?? t("common.item.embedded-content")}
-					allow="encrypted-media; fullscreen; picture-in-picture; web-share"
-					referrerPolicy="no-referrer"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowFullScreen
+					referrerPolicy="strict-origin-when-cross-origin"
 				/>
 			);
 		case "image":
