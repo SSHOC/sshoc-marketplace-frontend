@@ -1,72 +1,17 @@
-import { useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaButtonProps } from "@react-types/button";
+import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { CSSProperties, ElementType, ForwardedRef, ReactNode, Ref } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import type { ReactNode } from "react";
+import { Button as AriaButton } from "react-aria-components";
 
-import css from "@/lib/core/ui/ClearButton/ClearButton.module.css";
-import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
-
-export interface ClearButtonStyleProps {
-	"--clear-button-width"?: CSSProperties["width"];
-	"--clear-button-height"?: CSSProperties["height"];
-	"--clear-button-color"?: CSSProperties["color"];
-}
-
-export interface ClearButtonProps<T extends ElementType = "button"> extends AriaButtonProps<T> {
-	preventFocus?: boolean;
-	style?: ClearButtonStyleProps;
-}
-
-export const ClearButton = forwardRef(function ClearButton<T extends ElementType = "button">(
-	props: ClearButtonProps<T>,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
-): ReactNode {
-	const defaultIcon = <Icon icon={CrossIcon} width="0.5em" />;
-
+export function ClearButton(): ReactNode {
 	const t = useTranslations();
 
-	const {
-		"aria-label": ariaLabel = t("common.ui.clear"),
-		children = defaultIcon,
-		preventFocus = false,
-		style,
-	} = props;
-
-	const ElementType = preventFocus ? "div" : "button";
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps, isPressed } = useButton(
-		{ ...props, "aria-label": ariaLabel, elementType: ElementType },
-		buttonRef,
-	);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
-	const { hoverProps, isHovered } = useHover(props);
-
-	if (preventFocus) {
-		delete buttonProps.tabIndex;
-	}
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
-
 	return (
-		<ElementType
-			ref={ref as Ref<any>}
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
-			className={css["clear-button"]}
-			data-active={isPressed === true ? "" : undefined}
-			data-focused={isFocusVisible === true ? "" : undefined}
-			data-hovered={isHovered === true ? "" : undefined}
-			style={style as CSSProperties}
+		<AriaButton
+			aria-label={t("common.ui.clear")}
+			className="grid shrink-0 place-content-center text-neutral-700"
 		>
-			{children}
-		</ElementType>
+			<XIcon aria-hidden />
+		</AriaButton>
 	);
-}) as <T extends ElementType = "button">(
-	props: ClearButtonProps<T> & { ref?: ForwardedRef<HTMLElement> },
-) => ReactNode;
+}

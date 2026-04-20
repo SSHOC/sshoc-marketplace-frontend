@@ -1,93 +1,94 @@
-import { useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaButtonProps } from "@react-types/button";
-import type { CSSProperties, ElementType, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import { type GetVariantProps, styles } from "@acdh-oeaw/style-variants";
+import Link, { type LinkProps } from "next/link";
+import {
+	type ComponentPropsWithoutRef,
+	type ForwardedRef,
+	forwardRef,
+	type ReactNode,
+} from "react";
+import {
+	Button as AriaButton,
+	type ButtonProps as AriaButtonProps,
+	composeRenderProps,
+} from "react-aria-components";
 
-import css from "@/lib/core/ui/Button/Button.module.css";
+const buttonStyles = styles({
+	base: "inline-flex items-center justify-center gap-x-2 rounded-sm border border-transparent font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 disabled:bg-neutral-200 disabled:text-neutral-600",
+	variants: {
+		color: {
+			primary:
+				"bg-primary-750 text-neutral-0 hover:bg-primary-600 focus-visible:bg-primary-600 pressed:bg-primary-500",
+			secondary:
+				"bg-primary-600 text-neutral-0 hover:bg-primary-500 focus-visible:bg-primary-500 pressed:bg-primary-750",
+			gradient:
+				"bg-gradient-to-r from-primary-500 to-primary-800 bg-size-[125%] bg-left text-neutral-0 transition-all hover:bg-right focus-visible:bg-right disabled:bg-none pressed:bg-right",
+			negative:
+				"bg-negative-600 text-neutral-0 hover:bg-negative-500 focus-visible:bg-negative-500 pressed:bg-negative-750",
+			positive:
+				"pressed:bg-positive-750 bg-positive-600 text-neutral-0 hover:bg-positive-500 focus-visible:bg-positive-500",
+			"review-negative":
+				"border-neutral-250 bg-neutral-0 text-primary-750 hover:border-negative-200 hover:bg-negative-100 hover:text-neutral-800 focus-visible:border-negative-200 focus-visible:bg-negative-100 focus-visible:text-neutral-800 pressed:border-negative-200 pressed:bg-negative-100 pressed:text-neutral-800",
+			"review-positive":
+				"border-neutral-250 bg-neutral-0 text-primary-750 hover:border-positive-400 hover:bg-positive-100 hover:text-neutral-800 focus-visible:border-positive-400 focus-visible:bg-positive-100 focus-visible:text-neutral-800 pressed:border-positive-400 pressed:bg-positive-100 pressed:text-neutral-800",
+		},
+		size: {
+			lg: "px-12 py-3.5 text-lg leading-6",
+			md: "px-10 py-3 text-md leading-5.5",
+			sm: "px-8 py-2 text-sm leading-4",
+			xs: "px-4 py-1.5 text-xs leading-4",
+		},
+	},
+	defaults: {
+		color: "primary",
+		size: "md",
+	},
+});
 
-export interface ButtonStyleProps {
-	"--button-color"?: CSSProperties["color"];
-	"--button-color-focus"?: CSSProperties["color"];
-	"--button-color-hover"?: CSSProperties["color"];
-	"--button-color-active"?: CSSProperties["color"];
-	"--button-color-disabled"?: CSSProperties["color"];
-	"--button-background-color"?: CSSProperties["backgroundColor"];
-	"--button-background-color-focus"?: CSSProperties["backgroundColor"];
-	"--button-background-color-hover"?: CSSProperties["backgroundColor"];
-	"--button-background-color-active"?: CSSProperties["backgroundColor"];
-	"--button-background-color-disabled"?: CSSProperties["backgroundColor"];
-	"--button-border-radius"?: CSSProperties["borderRadius"];
-	"--button-border-color"?: CSSProperties["borderColor"];
-	"--button-border-color-focus"?: CSSProperties["borderColor"];
-	"--button-border-color-hover"?: CSSProperties["borderColor"];
-	"--button-border-color-active"?: CSSProperties["borderColor"];
-	"--button-border-color-disabled"?: CSSProperties["borderColor"];
-	"--button-border-width"?: CSSProperties["borderWidth"];
-	"--button-font-size"?: CSSProperties["fontSize"];
-	"--button-font-weight"?: CSSProperties["fontWeight"];
-	"--button-line-height"?: CSSProperties["lineHeight"];
-	"--button-padding-inline"?: CSSProperties["paddingInline"];
-	"--button-padding-block"?: CSSProperties["paddingBlock"];
-	"--button-cursor"?: CSSProperties["cursor"];
-}
+type ButtonStyleProps = GetVariantProps<typeof buttonStyles>;
 
-export interface ButtonProps<T extends ElementType = "button"> extends AriaButtonProps<T> {
-	children: ReactNode;
-	/** @default 'primary' */
-	color?: "gradient" | "negative" | "positive" | "primary" | "secondary";
-	form?: string;
-	isPressed?: boolean;
-	/** @default 'md' */
-	size?: "lg" | "md" | "sm" | "xs";
-	style?: ButtonStyleProps;
-	trigger?: "collapsed" | "expanded";
-	/** @default 'fill' */
-	variant?: "border" | "fill" | "nav-mobile-menu-link-secondary" | "nav-mobile-menu-link";
-}
+export interface ButtonProps extends AriaButtonProps, ButtonStyleProps {}
 
-export const Button = forwardRef(function Button<T extends ElementType = "button">(
-	props: ButtonProps<T>,
+export const Button = forwardRef(function Button(
+	props: Readonly<ButtonProps>,
 	forwardedRef: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const {
-		color = "primary",
-		children,
-		elementType: ElementType = "button",
-		isPressed = false,
-		size = "md",
-		style,
-		trigger,
-		variant = "fill",
-	} = props;
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps, isPressed: isActive } = useButton(props, buttonRef);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
-	const { hoverProps, isHovered } = useHover(props);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
+	const { children, className, color, size, ...rest } = props;
 
 	return (
-		<ElementType
-			ref={ref}
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
-			className={css["button"]}
-			data-color={color}
-			data-active={isPressed || isActive ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
-			data-size={size}
-			data-variant={variant}
-			data-trigger={trigger}
-			style={style as CSSProperties}
+		<AriaButton
+			ref={forwardedRef}
+			{...rest}
+			className={composeRenderProps(className, (className) => {
+				return buttonStyles({ className, color, size });
+			})}
 		>
 			{children}
-		</ElementType>
+		</AriaButton>
 	);
-}) as <T extends ElementType = "button">(
-	props: ButtonProps<T> & { ref?: ForwardedRef<HTMLElement> },
-) => ReactNode;
+});
+
+//
+
+interface LinkButtonProps
+	extends Omit<LinkProps, "as" | "href" | "locale" | "passHref">,
+		Pick<
+			ComponentPropsWithoutRef<"a">,
+			"aria-current" | "children" | "className" | "id" | "rel" | "target"
+		>,
+		ButtonStyleProps {
+	href: string;
+}
+
+export const LinkButton = forwardRef(function LinkButton(
+	props: Readonly<LinkButtonProps>,
+	forwardedRef: ForwardedRef<HTMLAnchorElement>,
+) {
+	const { children, className, color, size, ...rest } = props;
+
+	// TODO: "cursor-pointer"
+	return (
+		<Link ref={forwardedRef} {...rest} className={buttonStyles({ className, color, size })}>
+			{children}
+		</Link>
+	);
+});

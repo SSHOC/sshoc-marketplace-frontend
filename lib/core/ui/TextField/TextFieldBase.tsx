@@ -1,13 +1,7 @@
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
-import type {
-	Alignment,
-	LabelableProps,
-	LabelPosition,
-	NecessityIndicator,
-	PressEvents,
-} from "@react-types/shared";
+import type { LabelableProps, PressEvents } from "@react-types/shared";
 import type { AriaTextFieldProps } from "@react-types/textfield";
 import type {
 	CSSProperties,
@@ -73,13 +67,8 @@ export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, 
 	inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement>;
 	isLoading?: boolean;
 	isRequired?: boolean;
-	/** @default 'start' */
-	labelAlign?: Alignment;
-	labelPosition?: LabelPosition;
 	labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
 	loadingIndicator?: ReactNode;
-	/** @default 'icon' */
-	necessityIndicator?: NecessityIndicator;
 	rows?: number;
 	/** @default 'md' */
 	size?: "lg" | "md" | "sm";

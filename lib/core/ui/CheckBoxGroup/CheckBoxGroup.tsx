@@ -1,77 +1,28 @@
-import { useCheckboxGroup, useCheckboxGroupItem } from "@react-aria/checkbox";
-import { mergeProps } from "@react-aria/utils";
-import type { CheckboxGroupState } from "@react-stately/checkbox";
-import { useCheckboxGroupState } from "@react-stately/checkbox";
-import type { AriaCheckboxGroupItemProps, AriaCheckboxGroupProps } from "@react-types/checkbox";
-import type { NecessityIndicator, Validation } from "@react-types/shared";
-import type { ReactElement, ReactNode } from "react";
-import { Children, cloneElement, useRef } from "react";
+import { Fragment, type ReactNode } from "react";
+import {
+	CheckboxGroup as AriaCheckboxGroup,
+	type CheckboxGroupProps as AriaCheckboxGroupProps,
+	composeRenderProps,
+	Label as AriaLabel,
+} from "react-aria-components";
 
-import { CheckBoxBase } from "@/lib/core/ui/CheckBox/CheckBoxBase";
-import css from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup.module.css";
-import { Field } from "@/lib/core/ui/Field/Field";
-
-export interface CheckBoxGroupProps extends AriaCheckboxGroupProps, Validation {
-	children: Array<ReactElement<CheckBoxGroupItemProps>> | ReactElement<CheckBoxGroupItemProps>;
-	necessityIndicator?: NecessityIndicator;
-	validationMessage?: ReactNode;
-	/** @default "primary" */
-	variant?: "facet" | "primary";
+interface CheckBoxGroupProps extends AriaCheckboxGroupProps {
+	label: ReactNode;
 }
 
-export function CheckBoxGroup(props: CheckBoxGroupProps): ReactNode {
-	const state = useCheckboxGroupState(props);
-	const { groupProps, labelProps } = useCheckboxGroup(props, state);
-
-	const variant = props.variant ?? "primary";
+export function CheckBoxGroup(props: Readonly<CheckBoxGroupProps>): ReactNode {
+	const { children, label, ...rest } = props;
 
 	return (
-		<Field
-			labelElementType="span"
-			labelProps={labelProps}
-			label={props.label}
-			isDisabled={props.isDisabled}
-			isRequired={props.isRequired}
-			necessityIndicator={props.necessityIndicator}
-			validationState={props.validationState}
-			// validationMessage={props.validationMessage}
-			// errorMessageProps={errorMessageProps}
-		>
-			<div {...mergeProps(groupProps)} className={css["container"]}>
-				{Children.map(props.children, (child) => {
-					return cloneElement(child, { state, variant });
-				})}
-			</div>
-		</Field>
+		<AriaCheckboxGroup {...rest} className="inline-flex w-full min-w-24 flex-col gap-1">
+			{composeRenderProps(children, (children) => {
+				return (
+					<Fragment>
+						<AriaLabel>{label}</AriaLabel>
+						<div className="flex flex-col gap-1">{children}</div>
+					</Fragment>
+				);
+			})}
+		</AriaCheckboxGroup>
 	);
 }
-
-export interface CheckBoxGroupItemProps extends AriaCheckboxGroupItemProps {
-	state?: CheckboxGroupState;
-	/** @default "primary" */
-	variant?: "facet" | "primary";
-}
-
-export function CheckBoxGroupItem(props: CheckBoxGroupItemProps): ReactNode {
-	const ref = useRef<HTMLInputElement>(null);
-
-	const state = props.state!;
-	const { inputProps } = useCheckboxGroupItem(props, state, ref);
-	const isDisabled = props.isDisabled === true || state.isDisabled === true;
-	const isSelected = state.isSelected(props.value);
-
-	const variant = props.variant ?? "primary";
-
-	return (
-		<CheckBoxBase
-			{...props}
-			checkBoxRef={ref}
-			inputProps={inputProps}
-			isDisabled={isDisabled}
-			isSelected={isSelected}
-			variant={variant}
-		/>
-	);
-}
-
-export { CheckBoxGroupItem as Item };

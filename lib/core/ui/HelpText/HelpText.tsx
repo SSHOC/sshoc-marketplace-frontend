@@ -1,55 +1,25 @@
-import type { HelpTextProps as AriaHelpTextProps, Validation } from "@react-types/shared";
-import type { ForwardedRef, HTMLAttributes, ReactNode } from "react";
-import { forwardRef, Fragment } from "react";
+import { AlertTriangleIcon } from "lucide-react";
+import type { ReactNode } from "react";
+import { FieldError, Text } from "react-aria-components";
 
-import css from "@/lib/core/ui/HelpText/HelpText.module.css";
-import { Icon } from "@/lib/core/ui/Icon/Icon";
-import AlertIcon from "@/lib/core/ui/icons/alert.svg?symbol-icon";
-
-export interface HelpTextProps extends AriaHelpTextProps, Validation {
-	descriptionProps?: HTMLAttributes<HTMLElement>;
-	errorMessageProps?: HTMLAttributes<HTMLElement>;
-	isDisabled?: boolean;
-	showErrorIcon?: boolean;
+interface HelpTextProps {
+	description?: string;
+	errorMessage?: string;
 }
 
-export const HelpText = forwardRef(function HelpText(
-	props: HelpTextProps,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	const {
-		description,
-		errorMessage,
-		validationState,
-		isDisabled,
-		showErrorIcon,
-		descriptionProps,
-		errorMessageProps,
-	} = props;
-	const isErrorMessage = errorMessage != null && validationState === "invalid";
+export function HelpText(props: Readonly<HelpTextProps>): ReactNode {
+	const { description, errorMessage } = props;
 
 	return (
-		<div
-			ref={forwardedRef}
-			className={css["help-text"]}
-			data-disabled={isDisabled === true ? "" : undefined}
-			data-validation-state={validationState}
-		>
-			{isErrorMessage ? (
-				<Fragment>
-					{showErrorIcon === true ? <Icon icon={AlertIcon} /> : null}
-					<div {...errorMessageProps} data-error-message>
-						{errorMessage}
-					</div>
-					<div {...descriptionProps} data-help-text>
-						{description}
-					</div>
-				</Fragment>
-			) : (
-				<div {...descriptionProps} data-help-text>
-					{description}
-				</div>
-			)}
+		<div className="inline-flex items-center gap-x-2 text-sm">
+			<FieldError className="inline-flex items-center gap-x-2">
+				<AlertTriangleIcon aria-hidden className="text-negative-500" />
+				<div className="text-negative-600">{errorMessage}</div>
+			</FieldError>
+
+			<Text className="text-neutral-600" slot="description">
+				{description}
+			</Text>
 		</div>
 	);
-});
+}
