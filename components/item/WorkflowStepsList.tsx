@@ -1,6 +1,6 @@
 import { useButton } from "@react-aria/button";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useRef } from "react";
 
 import { ItemPreviewMetadata } from "@/components/common/ItemPreviewMetadata";
 import { ItemsCount } from "@/components/common/ItemsCount";
@@ -14,6 +14,8 @@ import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import { isPropertyConcept } from "@/data/sshoc/api/property";
+import { maxPreviewMetadataValues } from "@/config/sshoc.config";
 
 export interface WorkflowStepsListProps {
 	steps: Workflow["composedOf"];
@@ -94,11 +96,75 @@ function WorkflowStep(props: WorkflowStepProps): ReactNode {
 			</header>
 			{state.isOpen ? (
 				<div {...contentProps} className={css["item-content"]}>
-					<ItemPreviewMetadata item={step} />
+					<ItemPreviewMetadata item={step}>
+						<StepMetadata step={step} />
+					</ItemPreviewMetadata>
 					<ItemDescription description={step.description} />
 					<ItemRelatedItems items={step.relatedItems} headingLevel={4} />
 				</div>
 			) : null}
 		</article>
+	);
+}
+
+interface StepMetadataProps {
+	step: Workflow["composedOf"][number];
+}
+
+function StepMetadata(props: StepMetadataProps): ReactNode {
+	const { step } = props;
+
+	const t = useTranslations();
+
+	const conceptBasedProperties = step.properties.filter(isPropertyConcept);
+
+	const outputformat = conceptBasedProperties
+		.filter((property) => {
+			return property.type.code === "outputformat";
+		})
+		.slice(0, maxPreviewMetadataValues);
+
+	const inputformat = conceptBasedProperties
+		.filter((property) => {
+			return property.type.code === "inputformat";
+		})
+		.slice(0, maxPreviewMetadataValues);
+
+	return (
+		<Fragment>
+			{inputformat.length > 0 ? (
+				<Fragment>
+					<dt>{t("common.item.inputformat.other")}</dt>
+					<dd>
+						<ul role="list" className={css["metadata-terms"]}>
+							{inputformat.map((property) => {
+								return (
+									<li key={property.concept.code}>
+										<span>{property.concept.label}</span>
+									</li>
+								);
+							})}
+						</ul>
+					</dd>
+				</Fragment>
+			) : null}
+
+			{outputformat.length > 0 ? (
+				<Fragment>
+					<dt>{t("common.item.outputformat.other")}</dt>
+					<dd>
+						<ul role="list" className={css["metadata-terms"]}>
+							{outputformat.map((property) => {
+								return (
+									<li key={property.concept.code}>
+										<span>{property.concept.label}</span>
+									</li>
+								);
+							})}
+						</ul>
+					</dd>
+				</Fragment>
+			) : null}
+		</Fragment>
 	);
 }
