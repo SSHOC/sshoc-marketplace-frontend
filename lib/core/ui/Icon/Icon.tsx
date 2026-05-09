@@ -10,11 +10,10 @@ export interface IconStyleProps {
 	"--icon-rotation"?: `${number}deg`;
 }
 
-export interface IconProps
-	extends Pick<
-		SVGProps<SVGSVGElement>,
-		"aria-label" | "aria-labelledby" | "fill" | "height" | "stroke" | "width"
-	> {
+export interface IconProps extends Pick<
+	SVGProps<SVGSVGElement>,
+	"aria-label" | "aria-labelledby" | "fill" | "height" | "stroke" | "width"
+> {
 	icon: FC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
 	rotation?: "half" | "quarter" | "three-quarters";
 	style?: IconStyleProps;

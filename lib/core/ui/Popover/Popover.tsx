@@ -59,21 +59,20 @@ const arrowPlacement: Record<Axis, Axis> = {
 	top: "bottom",
 };
 
-interface PopoverWrapperProps
-	extends Pick<
-		PopoverProps,
-		| "arrowProps"
-		| "children"
-		| "hideArrow"
-		| "isDismissable"
-		| "isKeyboardDismissDisabled"
-		| "isNonModal"
-		| "isOpen"
-		| "onClose"
-		| "placement"
-		| "shouldCloseOnBlur"
-		| "style"
-	> {
+interface PopoverWrapperProps extends Pick<
+	PopoverProps,
+	| "arrowProps"
+	| "children"
+	| "hideArrow"
+	| "isDismissable"
+	| "isKeyboardDismissDisabled"
+	| "isNonModal"
+	| "isOpen"
+	| "onClose"
+	| "placement"
+	| "shouldCloseOnBlur"
+	| "style"
+> {
 	transitionState?: TransitionStatus;
 }
 

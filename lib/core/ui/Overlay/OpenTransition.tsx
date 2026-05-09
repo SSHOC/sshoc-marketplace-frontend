@@ -17,7 +17,8 @@ const OPEN_STATES = {
 const timeout = { enter: 0, exit: 0 }; // FIXME:
 
 export interface OpenTransitionProps
-	extends Pick<
+	extends
+		Pick<
 			TransitionProps,
 			"in" | "onEnter" | "onEntered" | "onEntering" | "onExit" | "onExited" | "onExiting"
 		>,

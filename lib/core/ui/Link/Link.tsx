@@ -21,7 +21,8 @@ export interface LinkStyleProps {
 }
 
 export interface LinkProps
-	extends Omit<AriaLinkProps, "routerOptions">,
+	extends
+		Omit<AriaLinkProps, "routerOptions">,
 		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id" | "style">,
 		Omit<NextLinkProps, "as" | "href" | "locale" | "onClick" | "passHref"> {
 	children: ReactNode;

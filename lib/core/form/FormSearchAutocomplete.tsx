@@ -8,8 +8,10 @@ import { SearchAutocomplete } from "@/lib/core/ui/SearchAutocomplete/SearchAutoc
 
 // FIXME:;do we actually want this? does not really make sense
 
-export interface FormSearchAutocompleteProps<T extends object>
-	extends Omit<SearchAutocompleteProps<T>, "inputValue"> {
+export interface FormSearchAutocompleteProps<T extends object> extends Omit<
+	SearchAutocompleteProps<T>,
+	"inputValue"
+> {
 	name: string;
 }
 

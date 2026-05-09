@@ -14,7 +14,8 @@ import css from "@/lib/core/ui/Button/Button.module.css";
 import linkStyles from "@/lib/core/ui/Link/Link.module.css";
 
 export interface LinkButtonProps
-	extends AriaLinkProps,
+	extends
+		AriaLinkProps,
 		Pick<ComponentPropsWithoutRef<"a">, "aria-current" | "id">,
 		Omit<NextLinkProps, "as" | "href" | "locale" | "onClick" | "passHref">,
 		Pick<ButtonProps, "color" | "size" | "style" | "variant"> {

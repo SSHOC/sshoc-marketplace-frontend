@@ -16,8 +16,7 @@ import { MenuContext } from "@/lib/core/ui/Menu/MenuContext";
 import { Popover } from "@/lib/core/ui/Popover/Popover";
 
 export interface MenuTriggerProps
-	extends AriaMenuTriggerProps,
-		Pick<ButtonProps, "color" | "style" | "variant"> {
+	extends AriaMenuTriggerProps, Pick<ButtonProps, "color" | "style" | "variant"> {
 	label?: ReactNode;
 	children?: ReactNode;
 }
