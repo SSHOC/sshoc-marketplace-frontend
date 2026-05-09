@@ -5,6 +5,7 @@ allowBuilds:
   sharp: true
   simple-git-hooks: true
   unrs-resolver: true
+
 patchedDependencies:
   '@stefanprobst/next-svg': patches/@stefanprobst__next-svg.patch
   final-form: patches/final-form.patch
