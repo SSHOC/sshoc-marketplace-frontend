@@ -6,8 +6,10 @@ import type { FormSelectProps } from "@/lib/core/form/FormSelect";
 import { FormSelect } from "@/lib/core/form/FormSelect";
 import { Item } from "@/lib/core/ui/Collection/Item";
 
-export interface PropertyTypeSelectProps
-	extends Pick<FormSelectProps<PropertyType>, "items" | "loadingState" | "onSelectionChange"> {
+export interface PropertyTypeSelectProps extends Pick<
+	FormSelectProps<PropertyType>,
+	"items" | "loadingState" | "onSelectionChange"
+> {
 	field: ItemFormFields["fields"]["properties"]["fields"]["type"];
 }
 

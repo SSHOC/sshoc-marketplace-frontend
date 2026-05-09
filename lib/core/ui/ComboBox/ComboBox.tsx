@@ -35,7 +35,8 @@ import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface ComboBoxProps<T extends object>
-	extends AriaComboBoxProps<T>,
+	extends
+		AriaComboBoxProps<T>,
 		LabelableProps,
 		AriaLabelingProps,
 		Omit<AsyncLoadable, "isLoading"> {

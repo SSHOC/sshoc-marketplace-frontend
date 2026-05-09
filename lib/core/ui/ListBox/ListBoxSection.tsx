@@ -12,8 +12,10 @@ import { forwardRef, Fragment, useRef } from "react";
 import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
 import { useListBoxContext } from "@/lib/core/ui/ListBox/useListBoxContext";
 
-export interface ListBoxSectionProps<T extends object>
-	extends Omit<VirtualizerItemOptions, "layoutInfo" | "ref"> {
+export interface ListBoxSectionProps<T extends object> extends Omit<
+	VirtualizerItemOptions,
+	"layoutInfo" | "ref"
+> {
 	layoutInfo: LayoutInfo;
 	headerLayoutInfo: LayoutInfo | null;
 	item: Node<T>;

@@ -12,7 +12,8 @@ const decorators = [focusOnFirstError()];
 const mutators = { ...arrayMutators, setFieldData, setFieldTouched };
 
 export interface FormProps<T>
-	extends Pick<ComponentPropsWithoutRef<"form">, "action" | "id" | "method" | "name">,
+	extends
+		Pick<ComponentPropsWithoutRef<"form">, "action" | "id" | "method" | "name">,
 		Pick<
 			FinalFormProps<T>,
 			| "initialValues"
