@@ -93,7 +93,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 
 	return (
 		<WorkflowForm<CreateWorkflowFormValues>
-			allowHandleCreation={true}
+			allowHandleCreation={false}
 			formFields={formFields}
 			initialValues={recommendedFields}
 			name="create-workflow"
