@@ -222,7 +222,9 @@
 		"collapse-workflow-step": "Collapse",
 		"expand-workflow-step": "Expand",
 		"comments": { "one": "Comment", "other": "Comments" },
-		"users": { "one": "User", "other": "Users" }
+		"users": { "one": "User", "other": "Users" },
+		"inputformat": { "one": "Input format", "other": "Input formats" },
+		"outputformat": { "one": "Output format", "other": "Output formats" }
 	},
 	"item-status": {
 		"approved": "Approved",

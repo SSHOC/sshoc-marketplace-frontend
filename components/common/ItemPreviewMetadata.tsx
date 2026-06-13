@@ -15,11 +15,12 @@ import type { PropertyConcept } from "@/data/sshoc/api/property";
 import { isPropertyConcept } from "@/data/sshoc/api/property";
 
 export interface ItemPreviewMetadataProps {
+	children?: ReactNode;
 	item: ItemSearchResult | ItemWithWorkflowStep | RelatedItem;
 }
 
 export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode {
-	const { item } = props;
+	const { children, item } = props;
 
 	const t = useTranslations();
 
@@ -27,7 +28,7 @@ export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode 
 		properties: "properties" in item ? item.properties : [],
 	});
 
-	if (activities.length === 0 && keywords.length === 0) {
+	if (activities.length === 0 && keywords.length === 0 && children == null) {
 		return null;
 	}
 
@@ -43,6 +44,7 @@ export function ItemPreviewMetadata(props: ItemPreviewMetadataProps): ReactNode 
 				properties={keywords}
 				facet="keyword"
 			/>
+			{children}
 		</dl>
 	);
 }
