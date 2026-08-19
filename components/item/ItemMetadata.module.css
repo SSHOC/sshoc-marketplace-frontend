@@ -80,6 +80,7 @@
 	color: var(--color-link-text);
 	text-decoration: none;
 	display: inline-block;
+	overflow-wrap: anywhere;
 
 	&:hover {
 		color: var(--color-link-text-hover);
