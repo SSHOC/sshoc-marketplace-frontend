@@ -50,6 +50,7 @@
 .value-group-label {
 	color: var(--color-text-muted);
 	font-weight: var(--font-weight-medium);
+	margin-inline-end: var(--space-2-5);
 }
 
 .value-group-items {
@@ -65,7 +66,7 @@
 }
 
 .value-group-items > * {
-	margin-inline-start: var(--space-2-5);
+	margin-inline-end: var(--space-2-5);
 	line-height: var(--size-7);
 }
 
@@ -78,6 +79,8 @@
 .link {
 	color: var(--color-link-text);
 	text-decoration: none;
+	display: inline-block;
+	overflow-wrap: anywhere;
 
 	&:hover {
 		color: var(--color-link-text-hover);
