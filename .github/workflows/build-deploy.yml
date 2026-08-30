@@ -14,7 +14,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-deploy:
+  build:
+    name: Build docker images
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -38,7 +39,7 @@ jobs:
         id: meta-production
         uses: docker/metadata-action@v6
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-main
           tags: |
             type=raw,value=main
 
@@ -70,18 +71,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy to cluster (production)
-        uses: acdh-oeaw/deploy-action@v1
-        with:
-          token: ${{ secrets.RANCHER_API_TOKEN }}
-          project: c-m-6hwgqq2g:p-jv25s
-          deployment: sshoc-marketplace-frontend:sshoc-mp-frontend
-
       - name: Extract metadata (tags, labels) for Docker (stage)
         id: meta-stage
         uses: docker/metadata-action@v6
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-stage
           tags: |
             type=raw,value=stage
 
@@ -112,18 +106,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy to cluster (stage)
-        uses: acdh-oeaw/deploy-action@v1
-        with:
-          token: ${{ secrets.RANCHER_API_TOKEN }}
-          project: c-m-6hwgqq2g:p-jv25s
-          deployment: sshoc-marketplace-frontend:sshoc-mp-frontendstg
-
       - name: Extract metadata (tags, labels) for Docker (dev)
         id: meta-dev
         uses: docker/metadata-action@v6
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-dev
           tags: |
             type=raw,value=dev
 
@@ -154,9 +141,43 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy to cluster (dev)
-        uses: acdh-oeaw/deploy-action@v1
-        with:
-          token: ${{ secrets.RANCHER_API_TOKEN }}
-          project: c-m-6hwgqq2g:p-jv25s
-          deployment: sshoc-marketplace-frontend:sshoc-mp-frontenddev
+  deploy:
+    name: Deploy docker images
+    needs: [build]
+    uses: sshoc/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
+    secrets: inherit
+
+    strategy:
+      fail-fast: true
+      matrix:
+        target:
+          - name: dev
+            tag: dev
+            environment: development
+            public_url: https://sshoc-marketplace-api.acdh-dev.oeaw.ac.at
+            service_id: 15819
+            domain: acdh-dev.oeaw.ac.at
+          - name: stage
+            tag: stage
+            environment: staging
+            public_url: https://sshoc-marketplace-api-stage.acdh-dev.oeaw.ac.at
+            service_id: 19194
+            domain: acdh-dev.oeaw.ac.at
+          - name: main
+            tag: main
+            environment: production
+            public_url: https://marketplace-api.sshopencloud.eu
+            service_id: 17467
+            domain: sshopencloud.eu
+      max-parallel: 1
+
+    with:
+      default_port: "3000"
+      environment: "${{ matrix.target.environment }}"
+      APP_NAME: "${{ matrix.target.name }}"
+      APP_ROOT: "/"
+      DOCKER_TAG: "ghcr.io/${{ github.repository }}-${{ matrix.target.tag }}"
+      PUBLIC_URL: "${{ matrix.target.public_url }}"
+      SERVICE_ID: "${{ matrix.target.service_id }}"
+      KUBE_NAMESPACE: "sshoc-marketplace-frontend"
+      KUBE_INGRESS_BASE_DOMAIN: "${{ matrix.target.domain }}"
