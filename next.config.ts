@@ -1,6 +1,5 @@
 import { log } from "@acdh-oeaw/lib";
 import createBundleAnalyzer from "@next/bundle-analyzer";
-import createSvgPlugin from "@stefanprobst/next-svg";
 import type { NextConfig as Config } from "next";
 
 import { env } from "@/config/env.config";
@@ -10,10 +9,6 @@ type NextConfig = Config;
 
 const config: NextConfig = {
 	allowedDevOrigins: ["127.0.0.1"],
-	eslint: {
-		dirs: ["."],
-		ignoreDuringBuilds: true,
-	},
 	async headers() {
 		const headers = [
 			{
@@ -88,38 +83,13 @@ const config: NextConfig = {
 		];
 	},
 	typescript: {
+		// TypeScript 7 uses a native compiler, not the JS API used by Next.js.
+		// build:app runs types:check after Next generates its ambient declarations.
 		ignoreBuildErrors: true,
-	},
-	webpack(config: any) {
-		/**
-		 * @see https://github.com/vercel/next.js/discussions/30870
-		 */
-		config.infrastructureLogging = { ...config.infrastructureLogging, level: "error" };
-
-		/** Enable top-level await. */
-		config.experiments = config.experiments ?? {};
-		config.experiments.topLevelAwait = true;
-
-		/**
-		 * @see https://github.com/vercel/next.js/issues/17806
-		 */
-		config.module?.rules?.push({
-			test: /\.mjs$/,
-			type: "javascript/auto",
-			resolve: {
-				fullySpecified: false,
-			},
-		});
-
-		return config;
 	},
 };
 
-const plugins: Array<(config: NextConfig) => NextConfig> = [
-	createSvgPlugin(),
-	createBundleAnalyzer({ enabled: env.BUNDLE_ANALYZER === "enabled" }),
-];
-
-export default plugins.reduce((config, plugin) => {
-	return plugin(config);
-}, config);
+// The bundle analyzer uses Webpack; regular development and builds use Turbopack.
+export default env.BUNDLE_ANALYZER === "enabled"
+	? createBundleAnalyzer({ enabled: true })(config)
+	: config;

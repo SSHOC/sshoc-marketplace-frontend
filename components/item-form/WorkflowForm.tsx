@@ -33,8 +33,8 @@ import type { FormProps } from "@/lib/core/form/Form";
 import { Form } from "@/lib/core/form/Form";
 import { FormButton } from "@/lib/core/form/FormButton";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
-import { isProductionDeployment } from "@/lib/is-production-deployment";
 import { FormCheckBox } from "@/lib/core/form/FormCheckBox";
+import { isProductionDeployment } from "@/lib/is-production-deployment";
 
 export type WorkflowFormValues = WorkflowInput & {
 	persistentId?: Workflow["persistentId"];
@@ -50,7 +50,7 @@ export interface WorkflowFormProps extends FormProps<WorkflowFormValues> {
 	onCancel: () => void;
 	formFields: ItemFormFields;
 	page: WorkflowFormPage;
-	setPage: (page: WorkflowFormPage | ((page: WorkflowFormPage) => WorkflowFormPage)) => void;
+	setPage: (page: WorkflowFormPage) => void;
 }
 
 export function WorkflowForm(props: WorkflowFormProps): ReactNode {

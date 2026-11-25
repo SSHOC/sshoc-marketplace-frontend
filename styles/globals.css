@@ -100,7 +100,7 @@
 		height: auto;
 	}
 
-	svg[data-symbol] {
+	svg[data-icon] {
 		max-height: 100%;
 	}
 

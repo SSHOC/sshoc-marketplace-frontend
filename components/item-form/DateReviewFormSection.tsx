@@ -5,7 +5,7 @@ import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { ReviewField } from "@/components/item-form/ReviewField";
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
-import type { ItemsDiff } from "@/data/sshoc/api/item";
+import type { IsoDateString } from "@/data/sshoc/lib/types";
 import { FormDateField } from "@/lib/core/form/FormDateField";
 import { DateField } from "@/lib/core/ui/DateField/DateField";
 
@@ -23,8 +23,8 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): ReactN
 			<FormSection>
 				<FormSectionTitle>{t("authenticated.forms.date-section")}</FormSectionTitle>
 
-				<ReviewField<ItemsDiff["item"]["dateCreated"]>
-					name={fields.label.name}
+				<ReviewField<IsoDateString | undefined>
+					name={fields.dateCreated.name}
 					// eslint-disable-next-line react/no-unstable-nested-components
 					review={({ createLabel, status, value }) => {
 						return (
@@ -40,8 +40,8 @@ export function DateReviewFormSection(props: DateReviewFormSectionProps): ReactN
 					<FormDateField {...fields.dateCreated} />
 				</ReviewField>
 
-				<ReviewField<ItemsDiff["item"]["dateLastUpdated"]>
-					name={fields.label.name}
+				<ReviewField<IsoDateString | undefined>
+					name={fields.dateLastUpdated.name}
 					// eslint-disable-next-line react/no-unstable-nested-components
 					review={({ createLabel, status, value }) => {
 						return (

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { useAuth } from "@/lib/core/auth/useAuth";
@@ -20,7 +20,7 @@ export function AuthHeader(): ReactNode {
 			className="-mt-px hidden border-y border-primary-100 bg-primary-25 xl:block"
 		>
 			<ul
-				role="list"
+				
 				className="mx-auto flex w-full max-w-[120rem] items-center justify-end px-8 text-sm"
 			>
 				{items.map((item, index) => {

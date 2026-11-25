@@ -1,3 +1,5 @@
+import css from "@/components/item-form/OtherSuggestedItemVersionsFormSection.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useFormState } from "react-final-form";
@@ -6,7 +8,6 @@ import { FormSection } from "@/components/common/FormSection";
 import { FormSectionTitle } from "@/components/common/FormSectionTitle";
 import { Link } from "@/components/common/Link";
 import { Timestamp } from "@/components/common/Timestamp";
-import css from "@/components/item-form/OtherSuggestedItemVersionsFormSection.module.css";
 import type { Item, ItemCategory } from "@/data/sshoc/api/item";
 import { useDatasetHistory } from "@/data/sshoc/hooks/dataset";
 import { usePublicationHistory } from "@/data/sshoc/hooks/publication";
@@ -60,7 +61,7 @@ export function OtherSuggestedItemVersionsFormSection(): ReactNode {
 					{ count: String(items.data.length) },
 				)}
 			</p>
-			<ul className={css["items"]} role="list">
+			<ul className={css["items"]} >
 				{items.data.map((item) => {
 					return (
 						<li key={[item.persistentId, item.id].join("+")}>

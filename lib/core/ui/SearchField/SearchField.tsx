@@ -1,16 +1,16 @@
-import { useSearchField } from "@react-aria/searchfield";
+import { type AriaSearchFieldProps, useSearchField } from "@react-aria/searchfield";
 import { useSearchFieldState } from "@react-stately/searchfield";
-import type { AriaSearchFieldProps } from "@react-types/searchfield";
 import type { Alignment, LabelPosition, NecessityIndicator } from "@react-types/shared";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 
 import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import MagnifierIcon from "@/lib/core/ui/icons/magnifier.svg?symbol-icon";
+import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
-export interface SearchFieldProps extends AriaSearchFieldProps {
+export interface SearchFieldProps extends Omit<AriaSearchFieldProps, "errorMessage"> {
+	errorMessage?: ReactNode;
 	icon?: ReactNode;
 	isRequired?: boolean;
 	/** @default 'start' */

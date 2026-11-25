@@ -1,6 +1,7 @@
+import css from "@/components/item-form/WorkflowTitle.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/item-form/WorkflowTitle.module.css";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 
 export function WorkflowTitle(): ReactNode {

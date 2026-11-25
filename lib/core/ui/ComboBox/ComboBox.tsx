@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/ComboBox/ComboBox.module.css";
+
 import { useComboBox } from "@react-aria/combobox";
 import { useFocusRing } from "@react-aria/focus";
 import { useFilter } from "@react-aria/i18n";
@@ -22,11 +24,10 @@ import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "re
 import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
 import useComposedRef from "use-composed-ref";
 
-import css from "@/lib/core/ui/ComboBox/ComboBox.module.css";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
+import ChevronIcon from "@/lib/core/ui/icons/chevron";
 import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
@@ -36,10 +37,11 @@ import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface ComboBoxProps<T extends object>
 	extends
-		AriaComboBoxProps<T>,
+		Omit<AriaComboBoxProps<T>, "errorMessage">,
 		LabelableProps,
 		AriaLabelingProps,
 		Omit<AsyncLoadable, "isLoading"> {
+	errorMessage?: ReactNode;
 	/** @default 'primary' */
 	color?: "form" | "primary";
 	/** @default 'bottom' */
@@ -50,7 +52,7 @@ export interface ComboBoxProps<T extends object>
 	/** @default 'start' */
 	labelAlign?: Alignment;
 	labelPosition?: LabelPosition;
-	layout?: ListBoxHeights<T>;
+	layout?: ListBoxHeights;
 	loadingState?: LoadingState;
 	/** @default 'icon' */
 	necessityIndicator?: NecessityIndicator;
@@ -98,7 +100,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 		allowsEmptyCollection: isAsync,
 		defaultFilter: contains,
 	});
-	const layout = useListBoxLayout<T>(state, _layout);
+	const layout = useListBoxLayout<T>(_layout);
 
 	const { buttonProps, inputProps, listBoxProps, labelProps, descriptionProps, errorMessageProps } =
 		useComboBox<T>(
@@ -106,7 +108,7 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 				...props,
 				buttonRef,
 				inputRef,
-				keyboardDelegate: layout,
+				layoutDelegate: layout,
 				listBoxRef,
 				menuTrigger,
 				popoverRef,
@@ -186,13 +188,13 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 				isDismissable={false}
 				isNonModal
 				isOpen={state.isOpen}
-				placement={placement}
+				placement={placement ?? undefined}
 				style={style}
 			>
 				<ListBoxBase<T>
 					ref={listBoxRef}
 					{...listBoxProps}
-					autoFocus={state.focusStrategy}
+					autoFocus={state.focusStrategy ?? undefined}
 					color={color}
 					disallowEmptySelection
 					focusOnPointerEnter
@@ -229,17 +231,18 @@ const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
 	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
 ) => ReactNode;
 
-interface ComboBoxInputProps<T extends object> extends AriaComboBoxProps<T> {
+interface ComboBoxInputProps<T extends object> extends Omit<AriaComboBoxProps<T>, "errorMessage"> {
+	errorMessage?: ReactNode;
 	/** @default 'primary' */
 	color?: "form" | "primary";
 	inputProps: InputHTMLAttributes<HTMLInputElement>;
-	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>;
+	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 	isOpen?: boolean;
 	loadingState?: LoadingState;
 	/** @default 'md' */
 	size?: "md" | "sm";
 	triggerProps: AriaButtonProps;
-	triggerRef: RefObject<HTMLButtonElement>;
+	triggerRef: RefObject<HTMLButtonElement | null>;
 }
 
 const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(

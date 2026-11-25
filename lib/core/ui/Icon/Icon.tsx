@@ -1,7 +1,7 @@
+import css from "@/lib/core/ui/Icon/Icon.module.css";
+
 import type { CSSProperties, FC, ForwardedRef, ReactNode, SVGProps } from "react";
 import { forwardRef } from "react";
-
-import css from "@/lib/core/ui/Icon/Icon.module.css";
 
 export interface IconStyleProps {
 	"--icon-color"?: CSSProperties["color"];

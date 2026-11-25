@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/account/AccountScreenWithFiltersLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface AccountScreenWithFiltersLayoutProps {
 	children?: ReactNode;

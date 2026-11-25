@@ -1,17 +1,19 @@
+import css from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup.module.css";
+
 import { useCheckboxGroup, useCheckboxGroupItem } from "@react-aria/checkbox";
 import { mergeProps } from "@react-aria/utils";
 import type { CheckboxGroupState } from "@react-stately/checkbox";
 import { useCheckboxGroupState } from "@react-stately/checkbox";
 import type { AriaCheckboxGroupItemProps, AriaCheckboxGroupProps } from "@react-types/checkbox";
-import type { NecessityIndicator, Validation } from "@react-types/shared";
+import type { NecessityIndicator } from "@react-types/shared";
 import type { ReactElement, ReactNode } from "react";
 import { Children, cloneElement, useRef } from "react";
 
 import { CheckBoxBase } from "@/lib/core/ui/CheckBox/CheckBoxBase";
-import css from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup.module.css";
 import { Field } from "@/lib/core/ui/Field/Field";
 
-export interface CheckBoxGroupProps extends AriaCheckboxGroupProps, Validation {
+export interface CheckBoxGroupProps extends Omit<AriaCheckboxGroupProps, "errorMessage"> {
+	errorMessage?: ReactNode;
 	children: Array<ReactElement<CheckBoxGroupItemProps>> | ReactElement<CheckBoxGroupItemProps>;
 	necessityIndicator?: NecessityIndicator;
 	validationMessage?: ReactNode;

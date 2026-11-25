@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/success/SuccessScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface SuccessScreenLayoutProps {
 	children?: ReactNode;

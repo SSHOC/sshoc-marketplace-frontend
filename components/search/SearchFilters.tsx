@@ -1,3 +1,5 @@
+import css from "@/components/search/SearchFilters.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
@@ -12,7 +14,6 @@ import { Link } from "@/components/common/Link";
 import { SearchFacetsOverlay } from "@/components/common/SearchFacetsOverlay";
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { ModalDialog } from "@/components/search/ModalDialog";
-import css from "@/components/search/SearchFilters.module.css";
 import type { SearchFilters as ItemSearchFilters } from "@/components/search/useSearchFilters";
 import { useSearchFilters } from "@/components/search/useSearchFilters";
 import { useSearchResults } from "@/components/search/useSearchResults";
@@ -26,7 +27,7 @@ import { Facet, Item as FacetValue } from "@/lib/core/ui/Facet/Facet";
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
@@ -178,7 +179,7 @@ function ActiveItemCategoryFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -215,7 +216,7 @@ function ActiveActivityFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -252,7 +253,7 @@ function ActiveKeywordFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -289,7 +290,7 @@ function ActiveLanguageFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -326,7 +327,7 @@ function ActiveSourceFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>

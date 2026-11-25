@@ -11,8 +11,6 @@ node_modules/
 .env.*.local
 
 # caches
-.eslintcache
-.prettiercache
 .stylelintcache
 *.tsbuildinfo
 

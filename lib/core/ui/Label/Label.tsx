@@ -1,12 +1,16 @@
-import type { LabelProps as AriaLabelProps } from "@react-types/label";
+import css from "@/lib/core/ui/Label/Label.module.css";
+
 import type { Alignment, DOMProps, LabelPosition, NecessityIndicator } from "@react-types/shared";
-import type { ForwardedRef, ReactNode } from "react";
+import type { ElementType, ForwardedRef, LabelHTMLAttributes, ReactNode } from "react";
 import { forwardRef } from "react";
 
-import css from "@/lib/core/ui/Label/Label.module.css";
 import { RequiredIndicator } from "@/lib/core/ui/RequiredIndicator/RequiredIndicator";
 
-export interface LabelProps extends AriaLabelProps, DOMProps {
+export interface LabelProps
+	extends
+		Pick<LabelHTMLAttributes<HTMLLabelElement>, "children" | "htmlFor" | "onClick">,
+		DOMProps {
+	elementType?: ElementType;
 	includeNecessityIndicatorInAccessibilityName?: boolean;
 	isRequired?: boolean;
 	/** @default 'start' */

@@ -1,11 +1,11 @@
+import css from "@/lib/core/ui/Menu/Menu.module.css";
+
 import { useMenuSection } from "@react-aria/menu";
 import { useSeparator } from "@react-aria/separator";
 import type { TreeState } from "@react-stately/tree";
 import type { Node } from "@react-types/shared";
 import type { ForwardedRef, Key, ReactNode } from "react";
 import { forwardRef, Fragment } from "react";
-
-import css from "@/lib/core/ui/Menu/Menu.module.css";
 
 import { MenuItem } from "./MenuItem";
 

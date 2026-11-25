@@ -73,6 +73,8 @@ export function useCreateOrUpdateDataset(
 			return createOrUpdateDataset(params, data, session);
 		},
 		{
+			// Save failures belong to the form so edits survive and the user can retry.
+			useErrorBoundary: false,
 			...options,
 			onSuccess(dataset, ...args) {
 				const pathname = `/dataset/${dataset.persistentId}`;

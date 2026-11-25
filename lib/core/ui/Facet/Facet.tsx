@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/Facet/Facet.module.css";
+
 import { useButton } from "@react-aria/button";
 import { mergeProps } from "@react-aria/utils";
 import type { PressEvents } from "@react-types/shared";
@@ -6,13 +8,12 @@ import { Fragment, useRef } from "react";
 
 import type { CheckBoxGroupProps } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
 import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
-import css from "@/lib/core/ui/Facet/Facet.module.css";
 import type { DisclosureAria } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import type { DisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 
 export interface FacetProps extends CheckBoxGroupProps {
 	label: string;

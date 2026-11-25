@@ -14,7 +14,11 @@ import { Field } from "@/lib/core/ui/Field/Field";
 
 export type AllowedFileTypes = "all" | "image" | "video";
 
-export interface FileInputProps extends Omit<AriaTextFieldProps, "onChange" | "value"> {
+export interface FileInputProps extends Omit<
+	AriaTextFieldProps,
+	"onChange" | "value" | "errorMessage"
+> {
+	errorMessage?: ReactNode;
 	color?: ButtonProps["color"];
 	fileTypes?: Array<AllowedFileTypes>;
 	/** @default false */
@@ -108,7 +112,7 @@ export const FileInput = forwardRef(function FileInput(
 					/>
 				</VisuallyHidden>
 				{fileList != null && fileList.length > 0 ? (
-					<ul role="list">
+					<ul >
 						{Array.from(fileList).map((file) => {
 							return (
 								<li key={file.name}>

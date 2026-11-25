@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/ClearButton/ClearButton.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
@@ -8,9 +10,8 @@ import type { CSSProperties, ElementType, ForwardedRef, ReactNode, Ref } from "r
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
-import css from "@/lib/core/ui/ClearButton/ClearButton.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 
 export interface ClearButtonStyleProps {
 	"--clear-button-width"?: CSSProperties["width"];

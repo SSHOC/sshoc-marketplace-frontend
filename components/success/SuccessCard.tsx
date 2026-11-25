@@ -1,7 +1,8 @@
+import css from "@/components/success/SuccessCard.module.css";
+
 import type { ReactNode } from "react";
 
 import { Card } from "@/components/common/Card";
-import css from "@/components/success/SuccessCard.module.css";
 
 export interface SuccessCardProps {
 	children?: ReactNode;

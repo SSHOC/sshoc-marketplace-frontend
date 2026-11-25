@@ -115,5 +115,5 @@ export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 }
 
 const layout = {
-	estimatedRowHeight: 60,
+	estimatedRowSize: 60,
 };

@@ -1,0 +1,46 @@
+diff --git a/dist/react-final-form.cjs.js b/dist/react-final-form.cjs.js
+index 82d660167c1f2597afce0aa8f7c0f43b3ac018d1..608616aaad17c25a65755c2562cc6be8df67236b 100644
+--- a/dist/react-final-form.cjs.js
++++ b/dist/react-final-form.cjs.js
+@@ -590,7 +590,8 @@ function useField(name, config) {
+       var formInitialValue = formState.initialValues ? finalForm.getIn(formState.initialValues, name) : undefined;
+ 
+       // Use Form initialValues if available, otherwise use field initialValue
+-      var initialStateValue = formInitialValue !== undefined ? formInitialValue : initialValue;
++      var currentValue = finalForm.getIn(formState.values, name);
++      var initialStateValue = currentValue !== undefined ? currentValue : formInitialValue !== undefined ? formInitialValue : initialValue;
+       if ((component === "select" || type === "select") && multiple && initialStateValue === undefined) {
+         initialStateValue = [];
+       }
+@@ -637,7 +638,7 @@ function useField(name, config) {
+     // (e.g., by destroyOnUnregister in StrictMode). In this case, we need to 
+     // explicitly set the value before registering to ensure the initial value 
+     // is applied, even if form thinks initialValues haven't changed.
+-    if (!existingFieldState) {
++    if (!existingFieldState && finalForm.getIn(form.getState().values, name) === undefined) {
+       var formState = form.getState();
+       var formInitialValue = formState.initialValues ? finalForm.getIn(formState.initialValues, name) : undefined;
+       var valueToSet = formInitialValue !== undefined ? formInitialValue : initialValue;
+diff --git a/dist/react-final-form.es.js b/dist/react-final-form.es.js
+index cfb2e24a75f91c08f00a1ab51aa42d97016541f2..1a9443f4f2c37dcc25d485be247129443b51fcfd 100644
+--- a/dist/react-final-form.es.js
++++ b/dist/react-final-form.es.js
+@@ -570,7 +570,8 @@ function useField(name, config) {
+       var formInitialValue = formState.initialValues ? getIn(formState.initialValues, name) : undefined;
+ 
+       // Use Form initialValues if available, otherwise use field initialValue
+-      var initialStateValue = formInitialValue !== undefined ? formInitialValue : initialValue;
++      var currentValue = getIn(formState.values, name);
++      var initialStateValue = currentValue !== undefined ? currentValue : formInitialValue !== undefined ? formInitialValue : initialValue;
+       if ((component === "select" || type === "select") && multiple && initialStateValue === undefined) {
+         initialStateValue = [];
+       }
+@@ -617,7 +618,7 @@ function useField(name, config) {
+     // (e.g., by destroyOnUnregister in StrictMode). In this case, we need to 
+     // explicitly set the value before registering to ensure the initial value 
+     // is applied, even if form thinks initialValues haven't changed.
+-    if (!existingFieldState) {
++    if (!existingFieldState && getIn(form.getState().values, name) === undefined) {
+       var formState = form.getState();
+       var formInitialValue = formState.initialValues ? getIn(formState.initialValues, name) : undefined;
+       var valueToSet = formInitialValue !== undefined ? formInitialValue : initialValue;

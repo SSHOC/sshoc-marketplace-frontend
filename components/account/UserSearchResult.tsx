@@ -89,7 +89,8 @@ function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 		},
 	);
 
-	function onUpdateUserRole(role: Key) {
+	function onUpdateUserRole(role: Key | null) {
+		if (role === null) return;
 		updateUserRole.mutate({ role: role as UserRole });
 	}
 
@@ -149,7 +150,8 @@ function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 		},
 	);
 
-	function onUpdateUserStatus(status: Key) {
+	function onUpdateUserStatus(status: Key | null) {
+		if (status === null) return;
 		updateUserStatus.mutate({ status: status as UserStatus });
 	}
 

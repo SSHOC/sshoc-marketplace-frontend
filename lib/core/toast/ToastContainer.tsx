@@ -1,8 +1,8 @@
-/** Needs to be imported in `src/pages/_app.tsx` so we can overwrite custom properties. */
-// import 'react-toastify/dist/ReactToastify.css'
+/** CSS is imported in `pages/_app.tsx` before our theme overrides.
+ * Use the unstyled entry to avoid injecting a second stylesheet at runtime. */
 
 import type { ReactNode } from "react";
-import { ToastContainer as ToastifyContainer } from "react-toastify";
+import { ToastContainer as ToastifyContainer } from "react-toastify/unstyled";
 
 import { toastAutoCloseDelay } from "@/config/site.config";
 

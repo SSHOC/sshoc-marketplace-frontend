@@ -23,7 +23,8 @@ export function DraftItemsSearchSortOrderSelect(): ReactNode {
 		};
 	});
 
-	function onChange(key: Key) {
+	function onChange(key: Key | null) {
+		if (key === null) return;
 		const searchParams = { ...searchFilters, order: key as ItemDraftSortOrder };
 		searchDraftItems(searchParams);
 	}

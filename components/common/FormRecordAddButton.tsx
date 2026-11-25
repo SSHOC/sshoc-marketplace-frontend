@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import type { FormButtonLinkProps } from "@/lib/core/form/FormButtonLink";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import PlusIcon from "@/lib/core/ui/icons/plus.svg?symbol-icon";
+import PlusIcon from "@/lib/core/ui/icons/plus";
 
 export type FormRecordAddButtonProps = FormButtonLinkProps;
 

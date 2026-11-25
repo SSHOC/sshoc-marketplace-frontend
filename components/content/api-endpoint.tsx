@@ -179,7 +179,8 @@ export function ApiParamSelect(props: Readonly<ApiParamSelectProps>): ReactNode 
 
 	const value = params[id] as Key | undefined;
 
-	function onChange(value: Key) {
+	function onChange(value: Key | null) {
+		if (value === null) return;
 		setParams((params) => {
 			return { ...params, [id]: value };
 		});

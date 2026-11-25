@@ -1,8 +1,8 @@
+import css from "@/components/common/TableOfContents.module.css";
+
 import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-
-import css from "@/components/common/TableOfContents.module.css";
 
 export interface TableOfContentsProps {
 	/** @default 2 */
@@ -37,7 +37,7 @@ function Level(props: LevelProps): ReactNode {
 	}
 
 	return (
-		<ol className={css["list"]} data-depth={depth > 1 ? "" : undefined} role="list">
+		<ol className={css["list"]} data-depth={depth > 1 ? "" : undefined} >
 			{entries.map((entry, index) => {
 				return (
 					<li key={entry.id ?? index} className={css["list-item"]}>

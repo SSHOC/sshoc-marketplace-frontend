@@ -1,3 +1,5 @@
+import css from "@/components/account/ModerateItemSearchFilters.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
@@ -5,7 +7,6 @@ import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef } from "react";
 
-import css from "@/components/account/ModerateItemSearchFilters.module.css";
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
 import type { SearchFilters } from "@/components/account/useModerateItemsSearchFilters";
 import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
@@ -32,7 +33,7 @@ import { Facet, FacetDisclosure, Item as FacetValue } from "@/lib/core/ui/Facet/
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
@@ -190,7 +191,7 @@ function ActiveCurationFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t("authenticated.moderate-items.curation")}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -226,7 +227,7 @@ function ActiveItemStatusFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t("common.item.status")}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -263,7 +264,7 @@ function ActiveItemCategoryFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -300,7 +301,7 @@ function ActiveSourceFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -338,7 +339,7 @@ function ActiveInformationContributorFacets(): ReactNode {
 			<h3 className={css["active-facet-title"]}>
 				{t("authenticated.moderate-items.information-contributor.other")}
 			</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -394,7 +395,7 @@ function ActiveOtherFacets(): ReactNode {
 			<h3 className={css["active-facet-title"]}>
 				{t("authenticated.moderate-items.other-facets")}
 			</h3>
-			<ul role="list" className={css["active-facet-values"]}>
+			<ul  className={css["active-facet-values"]}>
 				{fields.lastInfoUpdate.value != null ? (
 					<li className={css["active-facet-value"]}>
 						{t("common.item.last-updated-on", {

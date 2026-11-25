@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/Button/Button.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
@@ -6,8 +8,6 @@ import type { AriaButtonProps } from "@react-types/button";
 import type { CSSProperties, ElementType, ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
-
-import css from "@/lib/core/ui/Button/Button.module.css";
 
 export interface ButtonStyleProps {
 	"--button-color"?: CSSProperties["color"];

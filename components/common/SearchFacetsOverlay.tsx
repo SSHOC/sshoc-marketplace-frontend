@@ -1,8 +1,9 @@
+import css from "@/components/common/SearchFacetsOverlay.module.css";
+
 import { useTranslations } from "next-intl";
 import type { HTMLAttributes, ReactNode } from "react";
 import { useEffect } from "react";
 
-import css from "@/components/common/SearchFacetsOverlay.module.css";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 
 export interface SearchFacetsOverlay {

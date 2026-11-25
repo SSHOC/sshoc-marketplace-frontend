@@ -16,7 +16,6 @@ export function FormCheckBox(props: FormCheckBoxProps): ReactNode {
 
 	return (
 		<CheckBox
-			color="form"
 			{...mergeProps(props, {
 				onBlur: input.onBlur,
 				onFocus: input.onFocus,

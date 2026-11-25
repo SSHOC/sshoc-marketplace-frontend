@@ -1,6 +1,7 @@
+import css from "@/components/account/ModerateItemSearchResultsHeader.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/ModerateItemSearchResultsHeader.module.css";
 import { ModerateItemSearchResultsPageNavigation } from "@/components/account/ModerateItemSearchResultsPageNavigation";
 import { ModerateItemsSearchSortOrderSelect } from "@/components/account/ModerateItemsSearchSortOrderSelect";
 

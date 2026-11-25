@@ -1,8 +1,8 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { chain } from "react-aria";
 import {
@@ -89,7 +89,7 @@ export function PageNavigation(): ReactNode {
 
 	return (
 		<nav>
-			<ul className="flex justify-end text-center text-sm" role="list">
+			<ul className="flex justify-end text-center text-sm" >
 				{items.map((item, index) => {
 					switch (item.type) {
 						case "link": {
@@ -310,7 +310,7 @@ export function MobileNavigationMenu(): ReactNode {
 										</header>
 										<div className="flex flex-1 flex-col text-md">
 											<nav className="h-full overflow-auto py-0.5">
-												<ul className="flex flex-col gap-y-1" role="list">
+												<ul className="flex flex-col gap-y-1" >
 													{items.map((item, index) => {
 														switch (item.type) {
 															case "link": {
@@ -365,7 +365,7 @@ export function MobileNavigationMenu(): ReactNode {
 																				/>
 																			</AriaButton>
 																			<AriaDisclosurePanel>
-																				<ul role="list">
+																				<ul >
 																					{item.children.map((item, index) => {
 																						switch (item.type) {
 																							case "link": {

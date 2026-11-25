@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import type { FormButtonLinkProps } from "@/lib/core/form/FormButtonLink";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 
 export type FormRecordRemoveButtonProps = FormButtonLinkProps;
 

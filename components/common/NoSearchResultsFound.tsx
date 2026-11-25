@@ -1,8 +1,9 @@
+import css from "@/components/common/NoSearchResultsFound.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/common/NoSearchResultsFound.module.css";
-import NothingFoundImage from "@/public/assets/images/search/nothing-found.svg?symbol-icon";
+import NothingFoundImage from "@/lib/core/ui/icons/nothing-found";
 
 export function NoSearchResultsFound(): ReactNode {
 	const t = useTranslations();

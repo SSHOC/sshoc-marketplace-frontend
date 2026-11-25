@@ -1,10 +1,10 @@
+import css from "@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css";
+
 import { useProgressBar } from "@react-aria/progress";
 import type { AriaLabelingProps, DOMProps } from "@react-types/shared";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
-
-import css from "@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css";
 
 export interface ProgressSpinnerStyleProps {
 	"--progress-spinner-color"?: CSSProperties["color"];

@@ -1,7 +1,8 @@
+import css from "@/components/account/ModerateItemSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { ModerateItemSearchResult } from "@/components/account/ModerateItemSearchResult";
-import css from "@/components/account/ModerateItemSearchResults.module.css";
 import { useModerateItemsSearchResults } from "@/components/account/useModerateItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -30,7 +31,7 @@ export function ModerateItemSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul role="list" className={css["search-results"]}>
+			<ul  className={css["search-results"]}>
 				{moderateItemSearch.data.items.map((item) => {
 					if (item.category === "step") {
 						return null;

@@ -1,0 +1,55 @@
+diff --git a/dist/urql.es.js b/dist/urql.es.js
+index c2ef1c7e614e49bad3002c98893ccbc5ed2abc5b..06f985c844c8d818cc9ac55cb229783a8a93209b 100644
+--- a/dist/urql.es.js
++++ b/dist/urql.es.js
+@@ -70,13 +70,18 @@ var hasDepsChanged = (e, r) => {
+   return !1;
+ };
+ 
+-var p = r.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+-
++// Backport urql 5's React 19 compatible dispatch guard.
++var p = false;
+ function deferDispatch(e, r) {
+-  if ("production" !== process.env.NODE_ENV && p && p.ReactCurrentOwner && p.ReactCurrentOwner.current) {
+-    Promise.resolve(r).then(e);
++  if (!p || r === undefined) {
++    try {
++      p = true;
++      return e(r);
++    } finally {
++      p = false;
++    }
+   } else {
+-    e(r);
++    Promise.resolve(r).then(e);
+   }
+ }
+ 
+diff --git a/dist/urql.js b/dist/urql.js
+index 451c160afa348cb1bbe3f3c8fe7db159aa51810a..2b44f690e8ef1d81abb7ed3525e5c79f509aea0d 100644
+--- a/dist/urql.js
++++ b/dist/urql.js
+@@ -115,12 +115,18 @@ var hasDepsChanged = (a, b) => {
+   for (var i = 0, l = b.length; i < l; i++) if (a[i] !== b[i]) return true;
+   return false;
+ };
+-var reactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
++// Backport urql 5's React 19 compatible dispatch guard.
++var isDispatching = false;
+ function deferDispatch(setState, value) {
+-  if (process.env.NODE_ENV !== 'production' && !!reactSharedInternals && !!reactSharedInternals.ReactCurrentOwner && !!reactSharedInternals.ReactCurrentOwner.current) {
+-    Promise.resolve(value).then(setState);
++  if (!isDispatching || value === undefined) {
++    try {
++      isDispatching = true;
++      return setState(value);
++    } finally {
++      isDispatching = false;
++    }
+   } else {
+-    setState(value);
++    Promise.resolve(value).then(setState);
+   }
+ }
+ 

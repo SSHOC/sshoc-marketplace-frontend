@@ -1,8 +1,9 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/item/ItemMetadata.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import { createKey } from "@/lib/utils/create-key";
 
@@ -25,7 +26,7 @@ export function ItemExternalIds(props: ItemExternalIdsProps): ReactNode {
 				<VisuallyHidden>{t("common.item.external-ids.other")}</VisuallyHidden>
 			</dt>
 			<dd>
-				<ul role="list">
+				<ul >
 					{ids.map((id) => {
 						if (internalExternalIds.includes(id.identifierService.code)) {
 							return null;

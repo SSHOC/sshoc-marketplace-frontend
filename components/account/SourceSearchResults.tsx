@@ -1,7 +1,8 @@
+import css from "@/components/account/SourceSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { SourceSearchResult } from "@/components/account/SourceSearchResult";
-import css from "@/components/account/SourceSearchResults.module.css";
 import { useSourceSearchResults } from "@/components/account/useSourceSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -30,7 +31,7 @@ export function SourceSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul role="list" className={css["search-results"]}>
+			<ul  className={css["search-results"]}>
 				{sourceSearch.data.sources.map((source) => {
 					return (
 						<li key={source.id}>

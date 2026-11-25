@@ -1,6 +1,7 @@
+import css from "@/components/account/AccountHelpText.module.css";
+
 import { Fragment, type ReactNode } from "react";
 
-import css from "@/components/account/AccountHelpText.module.css";
 import { Link } from "@/components/common/Link";
 import type { UserRole } from "@/data/sshoc/api/user";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";

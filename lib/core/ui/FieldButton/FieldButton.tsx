@@ -1,13 +1,12 @@
-import { useButton } from "@react-aria/button";
+import css from "@/lib/core/ui/FieldButton/FieldButton.module.css";
+
+import { type AriaButtonProps, useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
-import type { ButtonProps } from "@react-types/button";
 import type { DOMProps, ValidationState } from "@react-types/shared";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
-
-import css from "@/lib/core/ui/FieldButton/FieldButton.module.css";
 
 export interface FieldButtonStyleProps {
 	"--field-button-width"?: CSSProperties["width"];
@@ -36,12 +35,12 @@ export interface FieldButtonStyleProps {
 	"--field-button-line-height"?: CSSProperties["lineHeight"];
 }
 
-export interface FieldButtonProps extends ButtonProps, DOMProps {
+export interface FieldButtonProps extends AriaButtonProps, DOMProps {
 	/** @default 'primary' */
 	color?: "form" | "primary";
 	isActive?: boolean;
 	preventFocusOnPress?: boolean;
-	style?: FieldButtonStyleProps;
+	style?: CSSProperties & FieldButtonStyleProps;
 	validationState?: ValidationState;
 }
 

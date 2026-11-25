@@ -1,5 +1,7 @@
+import css from "@/lib/core/ui/Popover/Popover.module.css";
+
 import { useModal, useOverlay } from "@react-aria/overlays";
-import { mergeProps, useLayoutEffect } from "@react-aria/utils";
+import { mergeProps, useLayoutEffect, useObjectRef } from "@react-aria/utils";
 import type { Axis, PopoverProps as AriaPopoverProps } from "@react-types/overlays";
 import type { CSSProperties, ForwardedRef, ReactNode, SVGProps } from "react";
 import { forwardRef, useRef, useState } from "react";
@@ -7,7 +9,6 @@ import useComposedRef from "use-composed-ref";
 
 import type { TransitionStatus } from "@/lib/core/ui/Overlay/OpenTransition";
 import { Overlay } from "@/lib/core/ui/Overlay/Overlay";
-import css from "@/lib/core/ui/Popover/Popover.module.css";
 
 export interface PopoverProps extends AriaPopoverProps {
 	// TODO: should be positionStyle
@@ -18,6 +19,7 @@ export const Popover = forwardRef(function Popover(
 	props: PopoverProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
+	const objectRef = useObjectRef(forwardedRef);
 	const {
 		arrowProps,
 		children,
@@ -33,9 +35,9 @@ export const Popover = forwardRef(function Popover(
 		...otherProps
 	} = props;
 	return (
-		<Overlay {...otherProps} nodeRef={forwardedRef}>
+		<Overlay {...otherProps} nodeRef={objectRef}>
 			<PopoverWrapper
-				ref={forwardedRef}
+				ref={objectRef}
 				arrowProps={arrowProps}
 				hideArrow={hideArrow}
 				isDismissable={isDismissable}

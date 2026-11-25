@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/lib/core/ui/FullPage/FullPage.module.css";
+
+import type { ReactNode } from "react";
 
 export interface FullPageProps {
 	children?: ReactNode;

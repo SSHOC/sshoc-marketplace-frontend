@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/common/SectionHeader.module.css";
+
+import type { ReactNode } from "react";
 
 export interface SectionHeaderProps {
 	children?: ReactNode;

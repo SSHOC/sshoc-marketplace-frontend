@@ -104,5 +104,5 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): ReactNode 
 }
 
 const layout = {
-	estimatedRowHeight: 60,
+	estimatedRowSize: 60,
 };

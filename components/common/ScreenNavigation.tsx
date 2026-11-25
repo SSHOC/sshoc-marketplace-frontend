@@ -1,9 +1,10 @@
+import css from "@/components/common/ScreenNavigation.module.css";
+
 import type { ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
-import css from "@/components/common/ScreenNavigation.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 
 export interface ScreenNavigationProps {
 	label: string;
@@ -15,7 +16,7 @@ export function ScreenNavigation(props: ScreenNavigationProps): ReactNode {
 
 	return (
 		<nav aria-label={label} className={css["container"]}>
-			<ul role="list">
+			<ul >
 				{items.map((item, index) => {
 					return (
 						<li key={item.id ?? index}>

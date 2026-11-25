@@ -1,8 +1,9 @@
+import css from "@/lib/core/layouts/PageLayout.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import type { SharedPageProps } from "@/lib/core/app/types";
-import css from "@/lib/core/layouts/PageLayout.module.css";
 import { AuthHeader } from "@/lib/core/page/AuthHeader";
 import { PageFooter } from "@/lib/core/page/PageFooter";
 import { PageHeader } from "@/lib/core/page/PageHeader";

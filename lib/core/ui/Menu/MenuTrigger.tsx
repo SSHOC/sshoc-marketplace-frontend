@@ -17,6 +17,10 @@ import { Popover } from "@/lib/core/ui/Popover/Popover";
 
 export interface MenuTriggerProps
 	extends AriaMenuTriggerProps, Pick<ButtonProps, "color" | "style" | "variant"> {
+	align?: "start" | "end";
+	direction?: "bottom" | "end" | "left" | "right" | "start" | "top";
+	shouldFlip?: boolean;
+	closeOnSelect?: boolean;
 	label?: ReactNode;
 	children?: ReactNode;
 }
@@ -137,7 +141,7 @@ export const MenuTrigger = forwardRef(function MenuTrigger(
 					ref={menuPopoverRef}
 					isOpen={state.isOpen}
 					style={style}
-					placement={placement}
+					placement={placement ?? undefined}
 					hideArrow
 					onClose={state.close}
 					shouldCloseOnBlur

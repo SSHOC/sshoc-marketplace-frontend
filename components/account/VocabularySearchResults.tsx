@@ -1,8 +1,9 @@
+import css from "@/components/account/VocabularySearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { useVocabularySearchResults } from "@/components/account/useVocabularySearchResults";
 import { VocabularySearchResult } from "@/components/account/VocabularySearchResult";
-import css from "@/components/account/VocabularySearchResults.module.css";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
@@ -30,7 +31,7 @@ export function VocabularySearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul role="list" className={css["search-results"]}>
+			<ul  className={css["search-results"]}>
 				{vocabularySearch.data.concepts.map((concept) => {
 					return (
 						<li key={concept.uri}>

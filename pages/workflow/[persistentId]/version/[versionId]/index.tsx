@@ -5,8 +5,8 @@ import type {
 	GetStaticPropsContext,
 	GetStaticPropsResult,
 } from "next";
-import { useRouter } from "next/router";
 import { type Messages, useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { Fragment, type ReactNode } from "react";
 
 import { Alert } from "@/components/common/Alert";
@@ -16,8 +16,6 @@ import { ScreenHeader } from "@/components/common/ScreenHeader";
 import { BackgroundImage } from "@/components/item/BackgroundImage";
 import { ItemAccessibleAtLinks } from "@/components/item/ItemAccessibleAtLinks";
 import { ItemActors } from "@/components/item/ItemActors";
-import { ItemDateCreated } from "@/components/item/ItemDateCreated";
-import { ItemDateLastUpdated } from "@/components/item/ItemDateLastUpdated";
 import { ItemDescription } from "@/components/item/ItemDescription";
 import { ItemDetails } from "@/components/item/ItemDetails";
 import { ItemExternalIds } from "@/components/item/ItemExternalIds";
@@ -177,8 +175,7 @@ export default function WorkflowVersionPage(props: WorkflowVersionPage.Props): R
 							<ItemActors actors={workflow.contributors} />
 							<ItemSource source={workflow.source} id={workflow.sourceItemId} />
 							<ItemExternalIds ids={workflow.externalIds} />
-							<ItemDateCreated dateTime={workflow.dateCreated} />
-							<ItemDateLastUpdated dateTime={workflow.dateLastUpdated} />
+
 							{/* <Suspense fallback={<LoadingIndicator />}> */}
 							<WorkflowContentContributors
 								persistentId={workflow.persistentId}

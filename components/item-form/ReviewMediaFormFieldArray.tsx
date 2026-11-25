@@ -92,19 +92,18 @@ export function ReviewMediaFormFieldArray(props: ReviewMediaFormFieldArrayProps)
 								fields={fieldArray.fields}
 								index={index}
 								// eslint-disable-next-line react/no-unstable-nested-components
-								review={({ createLabel, status, value }) => {
+								review={({ status, value }) => {
 									return (
 										<Thumbnail
 											color={`review ${status}`}
 											// isReadOnly
-											label={createLabel(field.itemLabel)}
 											value={value}
 										/>
 									);
 								}}
 							>
 								<Fragment>
-									<FormThumbnail {...field} name={name} label={field.itemLabel} />
+									<FormThumbnail {...field} name={name} />
 									<FormFieldListItemControls>
 										<FormRecordRemoveButton
 											aria-label={t("authenticated.forms.remove-field", {

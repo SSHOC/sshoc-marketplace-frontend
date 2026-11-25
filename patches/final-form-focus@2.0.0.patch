@@ -1,0 +1,123 @@
+diff --git a/dist/final-form-focus.cjs.js b/dist/final-form-focus.cjs.js
+index 7de99a4ecf6258ba6afcd2a375982b43008c29a9..7e2e279ad7502d46222b4d753a81f23136d0985c 100644
+--- a/dist/final-form-focus.cjs.js
++++ b/dist/final-form-focus.cjs.js
+@@ -74,34 +74,24 @@ var createDecorator = function createDecorator() {
+     // Save original submit function
+     var originalSubmit = form.submit;
+ 
+-    // Subscribe to form state changes
+-    var unsubscribe = form.subscribe(function (_ref) {
+-      var submitErrors = _ref.submitErrors,
+-        errors = _ref.errors;
+-      if (errors && Object.keys(errors).length) {
+-        focusOnFirstError(errors);
+-      } else if (submitErrors && Object.keys(submitErrors).length) {
+-        focusOnFirstError(submitErrors);
++    // Keep the latest errors, but focus only after a submission attempt.
++    var state = {};
++    var unsubscribe = form.subscribe(function (nextState) {
++      state = nextState;
++    }, { errors: true, submitErrors: true });
++    var afterSubmit = function () {
++      if (state.errors && Object.keys(state.errors).length) {
++        focusOnFirstError(state.errors);
++      } else if (state.submitErrors && Object.keys(state.submitErrors).length) {
++        focusOnFirstError(state.submitErrors);
+       }
+-    }, {
+-      errors: true,
+-      submitErrors: true
+-    });
+-
+-    // Rewrite submit function
++    };
+     form.submit = function () {
+       var result = originalSubmit.call(form);
+       if (result && typeof result.then === 'function') {
+-        // async
+-        result["catch"](function () {
+-          // Handle async validation errors
+-          var state = form.getState();
+-          if (state.errors && Object.keys(state.errors).length) {
+-            focusOnFirstError(state.errors);
+-          } else if (state.submitErrors && Object.keys(state.submitErrors).length) {
+-            focusOnFirstError(state.submitErrors);
+-          }
+-        });
++        result.then(afterSubmit, function () {});
++      } else {
++        afterSubmit();
+       }
+       return result;
+     };
+diff --git a/dist/final-form-focus.es.js b/dist/final-form-focus.es.js
+index 1383d0a2fa26880f5cb2017c97431804701ea415..75ea82ada42cdb318a252f96b8c164aff68f37e4 100644
+--- a/dist/final-form-focus.es.js
++++ b/dist/final-form-focus.es.js
+@@ -70,34 +70,24 @@ var createDecorator = function createDecorator() {
+     // Save original submit function
+     var originalSubmit = form.submit;
+ 
+-    // Subscribe to form state changes
+-    var unsubscribe = form.subscribe(function (_ref) {
+-      var submitErrors = _ref.submitErrors,
+-        errors = _ref.errors;
+-      if (errors && Object.keys(errors).length) {
+-        focusOnFirstError(errors);
+-      } else if (submitErrors && Object.keys(submitErrors).length) {
+-        focusOnFirstError(submitErrors);
++    // Keep the latest errors, but focus only after a submission attempt.
++    var state = {};
++    var unsubscribe = form.subscribe(function (nextState) {
++      state = nextState;
++    }, { errors: true, submitErrors: true });
++    var afterSubmit = function () {
++      if (state.errors && Object.keys(state.errors).length) {
++        focusOnFirstError(state.errors);
++      } else if (state.submitErrors && Object.keys(state.submitErrors).length) {
++        focusOnFirstError(state.submitErrors);
+       }
+-    }, {
+-      errors: true,
+-      submitErrors: true
+-    });
+-
+-    // Rewrite submit function
++    };
+     form.submit = function () {
+       var result = originalSubmit.call(form);
+       if (result && typeof result.then === 'function') {
+-        // async
+-        result["catch"](function () {
+-          // Handle async validation errors
+-          var state = form.getState();
+-          if (state.errors && Object.keys(state.errors).length) {
+-            focusOnFirstError(state.errors);
+-          } else if (state.submitErrors && Object.keys(state.submitErrors).length) {
+-            focusOnFirstError(state.submitErrors);
+-          }
+-        });
++        result.then(afterSubmit, function () {});
++      } else {
++        afterSubmit();
+       }
+       return result;
+     };
+diff --git a/package.json b/package.json
+index e9e9984ca44cb1bbbd5517827fda0a4d3d8b3c97..9afa68c9d25d60ad5406f3f18063422a5e94e492 100644
+--- a/package.json
++++ b/package.json
+@@ -95,5 +95,11 @@
+       "path": "dist/final-form-focus.cjs.js",
+       "threshold": "1.2kB"
+     }
+-  ]
++  ],
++  "exports": {
++    ".": {
++      "import": "./dist/final-form-focus.es.js",
++      "default": "./dist/final-form-focus.es.js"
++    }
++  }
+ }

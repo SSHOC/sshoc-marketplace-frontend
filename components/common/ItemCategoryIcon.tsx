@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
 import type { ItemCategoryWithWorkflowStep } from "@/data/sshoc/api/item";
-import DatasetIcon from "@/public/assets/images/categories/dataset.svg?symbol-icon";
-import PublicationIcon from "@/public/assets/images/categories/publication.svg?symbol-icon";
-import WorkflowStepIcon from "@/public/assets/images/categories/step.svg?symbol-icon";
-import ToolIcon from "@/public/assets/images/categories/tool-or-service.svg?symbol-icon";
-import TrainingMaterialIcon from "@/public/assets/images/categories/training-material.svg?symbol-icon";
-import WorkflowIcon from "@/public/assets/images/categories/workflow.svg?symbol-icon";
+import DatasetIcon from "@/lib/core/ui/icons/category-dataset";
+import PublicationIcon from "@/lib/core/ui/icons/category-publication";
+import WorkflowStepIcon from "@/lib/core/ui/icons/category-step";
+import ToolIcon from "@/lib/core/ui/icons/category-tool-or-service";
+import TrainingMaterialIcon from "@/lib/core/ui/icons/category-training-material";
+import WorkflowIcon from "@/lib/core/ui/icons/category-workflow";
 
 export interface ItemCategoryIconProps {
 	category: ItemCategoryWithWorkflowStep;

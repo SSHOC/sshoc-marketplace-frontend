@@ -1,63 +1,78 @@
-/* eslint-disable no-restricted-syntax */
-
 import { log } from "@acdh-oeaw/lib";
-import { createEnv } from "@acdh-oeaw/validate-env/next";
+import { createEnv, ValidationError } from "@acdh-oeaw/validate-env/next";
 import * as v from "valibot";
 
+function parseEnvironment<T extends v.GenericSchema>(schema: T, input: unknown): v.InferOutput<T> {
+	try {
+		return v.parse(schema, input);
+	} catch (error) {
+		if (v.isValiError(error)) {
+			const message = "Invalid environment variables";
+			log.error(`${message}:`, v.flatten(error.issues).nested);
+			const validationError = new ValidationError(message);
+			delete validationError.stack;
+			throw validationError;
+		}
+		throw error;
+	}
+}
+
 export const env = createEnv({
-	system(input) {
-		const Schema = v.object({
-			NODE_ENV: v.optional(v.picklist(["development", "production", "test"]), "production"),
-		});
+	schemas: {
+		system(input) {
+			const Schema = v.object({
+				NODE_ENV: v.optional(v.picklist(["development", "production", "test"]), "production"),
+			});
 
-		return v.parse(Schema, input);
-	},
-	private(input) {
-		const Schema = v.object({
-			BUILD_MODE: v.optional(v.picklist(["export", "standalone"])),
-			BUNDLE_ANALYZER: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
-			CI: v.optional(v.pipe(v.unknown(), v.transform(Boolean), v.boolean())),
-			GITHUB_TOKEN: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			KEYSTATIC_GITHUB_CLIENT_ID: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			KEYSTATIC_GITHUB_CLIENT_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			KEYSTATIC_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_RUNTIME: v.optional(v.picklist(["edge", "nodejs"])),
-			REVALIDATION_TOKEN: v.pipe(v.string(), v.nonEmpty()),
-			SMTP_PORT: v.optional(
-				v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
-			),
-			SMTP_SERVER: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			SSHOC_CONTACT_EMAIL_ADDRESS: v.optional(v.pipe(v.string(), v.email())),
-		});
+			return parseEnvironment(Schema, input);
+		},
+		private(input) {
+			const Schema = v.object({
+				BUILD_MODE: v.optional(v.picklist(["export", "standalone"])),
+				BUNDLE_ANALYZER: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
+				CI: v.optional(v.pipe(v.unknown(), v.transform(Boolean), v.boolean())),
+				GITHUB_TOKEN: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				KEYSTATIC_GITHUB_CLIENT_ID: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				KEYSTATIC_GITHUB_CLIENT_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				KEYSTATIC_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				NEXT_RUNTIME: v.optional(v.picklist(["edge", "nodejs"])),
+				REVALIDATION_TOKEN: v.pipe(v.string(), v.nonEmpty()),
+				SMTP_PORT: v.optional(
+					v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
+				),
+				SMTP_SERVER: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				SSHOC_CONTACT_EMAIL_ADDRESS: v.optional(v.pipe(v.string(), v.email())),
+			});
 
-		return v.parse(Schema, input);
-	},
-	public(input) {
-		const Schema = v.object({
-			NEXT_PUBLIC_API_BASE_URL: v.pipe(v.string(), v.url()),
-			NEXT_PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url()),
-			NEXT_PUBLIC_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
-			NEXT_PUBLIC_GITHUB_REPOSITORY: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			// NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url()),
-			NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER: v.optional(v.pipe(v.string(), v.nonEmpty())),
-			NEXT_PUBLIC_KEYSTATIC_MODE: v.optional(v.picklist(["github", "local"]), "local"),
-			NEXT_PUBLIC_MATOMO_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
-			NEXT_PUBLIC_MATOMO_ID: v.optional(
-				v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
-			),
-			// NEXT_PUBLIC_REDMINE_ID: v.pipe(
-			// 	v.string(),
-			// 	v.transform(Number),
-			// 	v.number(),
-			// 	v.integer(),
-			// 	v.minValue(1),
-			// ),
-		});
+			return parseEnvironment(Schema, input);
+		},
+		public(input) {
+			const Schema = v.object({
+				NEXT_PUBLIC_API_BASE_URL: v.pipe(v.string(), v.url()),
+				NEXT_PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url()),
+				NEXT_PUBLIC_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
+				NEXT_PUBLIC_GITHUB_REPOSITORY: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				// NEXT_PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url()),
+				NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				NEXT_PUBLIC_KEYSTATIC_MODE: v.optional(v.picklist(["github", "local"]), "local"),
+				NEXT_PUBLIC_MATOMO_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
+				NEXT_PUBLIC_MATOMO_ID: v.optional(
+					v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
+				),
+				// NEXT_PUBLIC_REDMINE_ID: v.pipe(
+				// 	v.string(),
+				// 	v.transform(Number),
+				// 	v.number(),
+				// 	v.integer(),
+				// 	v.minValue(1),
+				// ),
+			});
 
-		return v.parse(Schema, input);
+			return parseEnvironment(Schema, input);
+		},
 	},
 	environment: {
 		BUILD_MODE: process.env.BUILD_MODE,
@@ -91,18 +106,4 @@ export const env = createEnv({
 		v.optional(v.picklist(["disabled", "enabled", "public"]), "enabled"),
 		process.env.ENV_VALIDATION,
 	),
-	onError(error) {
-		if (v.isValiError(error)) {
-			const message = "Invalid environment variables";
-
-			log.error(`${message}:`, v.flatten(error.issues).nested);
-
-			const validationError = new Error(message);
-			delete validationError.stack;
-
-			throw validationError;
-		}
-
-		throw error;
-	},
 });

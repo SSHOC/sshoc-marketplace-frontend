@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/CloseButton/CloseButton.module.css";
+
 import { useButton } from "@react-aria/button";
 import type { AriaButtonProps } from "@react-types/button";
 import { useTranslations } from "next-intl";
@@ -5,9 +7,8 @@ import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
-import css from "@/lib/core/ui/CloseButton/CloseButton.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CloseIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CloseIcon from "@/lib/core/ui/icons/cross";
 
 export interface CloseButtonStyleProps {
 	"--close-button-color"?: CSSProperties["color"];
@@ -19,7 +20,7 @@ export interface CloseButtonStyleProps {
 export interface CloseButtonProps extends AriaButtonProps {
 	/** @default 'md' */
 	size?: "lg" | "md" | "sm";
-	style?: CloseButtonStyleProps;
+	style?: CSSProperties & CloseButtonStyleProps;
 }
 
 // FIXME: should be <Button variant="ghost" />

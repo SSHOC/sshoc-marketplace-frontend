@@ -5,7 +5,7 @@ import { identity } from "@/lib/utils";
 
 export function useFieldState<T>(
 	name: string,
-	subscription: UseFieldConfig<T>["subscription"] = { value: true },
+	subscription: UseFieldConfig["subscription"] = { value: true },
 ) {
 	// TODO: Use `useForm().getState()` to avoid registering a field.
 	const field = useField<T>(name, {

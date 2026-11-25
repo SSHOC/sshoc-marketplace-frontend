@@ -1,11 +1,12 @@
+import formFieldListCss from "@/components/common/FormFieldList.module.css";
+import formFieldListItemCss from "@/components/common/FormFieldListItem.module.css";
+
 import { useTranslations } from "next-intl";
 import { type ReactNode, useRef } from "react";
 import { useForm } from "react-final-form";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
 import { FormFieldArrayControls } from "@/components/common/FormFieldArrayControls";
-import formFieldListCss from "@/components/common/FormFieldList.module.css";
-import formFieldListItemCss from "@/components/common/FormFieldListItem.module.css";
 import { FormFieldListItemControls } from "@/components/common/FormFieldListItemControls";
 import { FormRecordAddButton } from "@/components/common/FormRecordAddButton";
 import { FormRecordRemoveButton } from "@/components/common/FormRecordRemoveButton";

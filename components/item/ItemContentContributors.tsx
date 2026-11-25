@@ -1,7 +1,8 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/item/ItemMetadata.module.css";
 import type { User } from "@/data/sshoc/api/user";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 
@@ -26,7 +27,7 @@ export function ItemContentContributors(props: ItemContentContributorsProps): Re
 		<div className={css["group"]}>
 			<dt className={css["group-label"]}>{t("common.item.content-contributors.other")}</dt>
 			<dd>
-				<ul role="list" className={css["group-items"]}>
+				<ul  className={css["group-items"]}>
 					{contentContributors.map((contributor) => {
 						return (
 							<li key={contributor.id}>

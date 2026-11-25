@@ -1,11 +1,12 @@
-import { useSearchAutocomplete } from "@react-aria/autocomplete";
+import css from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete.module.css";
+
+import { type AriaSearchAutocompleteProps, useSearchAutocomplete } from "@react-aria/autocomplete";
 import { useFocusRing } from "@react-aria/focus";
 import { useFilter } from "@react-aria/i18n";
 import { useHover } from "@react-aria/interactions";
 import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
 import { mergeProps, useLayoutEffect, useResizeObserver } from "@react-aria/utils";
 import { useComboBoxState } from "@react-stately/combobox";
-import type { SearchAutocompleteProps as AriaSearchAutocompleteProps } from "@react-types/autocomplete";
 import type { AriaButtonProps } from "@react-types/button";
 import type { Placement } from "@react-types/overlays";
 import type { LoadingState } from "@react-types/shared";
@@ -17,19 +18,22 @@ import useComposedRef from "use-composed-ref";
 import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import MagnifierIcon from "@/lib/core/ui/icons/magnifier.svg?symbol-icon";
+import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
 import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import css from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete.module.css";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
-export interface SearchAutocompleteProps<T extends object> extends AriaSearchAutocompleteProps<T> {
+export interface SearchAutocompleteProps<T extends object> extends Omit<
+	AriaSearchAutocompleteProps<T>,
+	"errorMessage"
+> {
+	errorMessage?: ReactNode;
 	/** @default 'bottom' */
 	direction?: "bottom" | "top";
-	layout?: ListBoxHeights<T>;
+	layout?: ListBoxHeights;
 	loadingState?: LoadingState;
 	maxHeight?: number;
 	name?: string;
@@ -76,6 +80,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 	const { contains } = useFilter({ sensitivity: "base" });
 	const state = useComboBoxState<T>({
 		...props,
+		validate: props.validate == null ? undefined : ({ inputValue }) => props.validate!(inputValue),
 		allowsCustomValue: true,
 		allowsEmptyCollection: isAsync,
 		defaultFilter: contains,
@@ -87,13 +92,13 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 		},
 		selectedKey: undefined,
 	});
-	const layout = useListBoxLayout<T>(state, _layout);
+	const layout = useListBoxLayout<T>(_layout);
 
 	const { inputProps, listBoxProps, labelProps, clearButtonProps } = useSearchAutocomplete<T>(
 		{
 			...props,
 			inputRef,
-			keyboardDelegate: layout,
+			layoutDelegate: layout,
 			listBoxRef,
 			menuTrigger,
 			popoverRef,
@@ -162,13 +167,13 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 				isDismissable={false}
 				isNonModal
 				isOpen={state.isOpen}
-				placement={placement}
+				placement={placement ?? undefined}
 				style={style}
 			>
 				<ListBoxBase<T>
 					ref={listBoxRef}
 					{...listBoxProps}
-					autoFocus={state.focusStrategy}
+					autoFocus={state.focusStrategy ?? undefined}
 					disallowEmptySelection
 					focusOnPointerEnter
 					isLoading={loadingState === "loading" || loadingState === "loadingMore"}
@@ -200,7 +205,7 @@ const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T exte
 interface SearchAutocompleteInputProps<T extends object> extends SearchAutocompleteProps<T> {
 	clearButtonProps: AriaButtonProps;
 	inputProps: InputHTMLAttributes<HTMLInputElement>;
-	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>;
+	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 	isOpen?: boolean;
 }
 

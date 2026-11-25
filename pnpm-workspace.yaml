@@ -1,12 +1,26 @@
+engineStrict: true
+pmOnFail: download
+shellEmulator: true
+strictDepBuilds: true
+
+# @see https://github.com/vercel/next.js/issues/68805
+publicHoistPattern:
+  - '*import-in-the-middle*'
+  - '*require-in-the-middle*'
+
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true
   esbuild: true
   sharp: true
-  simple-git-hooks: true
+  lefthook: true
   unrs-resolver: true
 
 patchedDependencies:
-  '@stefanprobst/next-svg': patches/@stefanprobst__next-svg.patch
-  final-form: patches/final-form.patch
+  final-form-focus@2.0.0: patches/final-form-focus@2.0.0.patch
+  final-form@5.0.1: patches/final-form@5.0.1.patch
   next: patches/next.patch
+  react-final-form-arrays@5.0.0: patches/react-final-form-arrays@5.0.0.patch
+  react-final-form@7.0.1: patches/react-final-form@7.0.1.patch
+  urql@4.2.2: patches/urql@4.2.2.patch
+  use-composed-ref@1.4.0: patches/use-composed-ref@1.4.0.patch

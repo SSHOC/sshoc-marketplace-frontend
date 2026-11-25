@@ -1,3 +1,5 @@
+import css from "@/components/item/ItemComments.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -5,7 +7,6 @@ import type { ReactNode } from "react";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { Timestamp } from "@/components/common/Timestamp";
-import css from "@/components/item/ItemComments.module.css";
 import type { Item, ItemComment } from "@/data/sshoc/api/item";
 import { useLastItemComments } from "@/data/sshoc/hooks/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -38,7 +39,7 @@ export function ItemComments(props: ItemCommentsProps): ReactNode {
 			<SectionHeader>
 				<SectionTitle>{t("common.item.comments.other")}</SectionTitle>
 			</SectionHeader>
-			<ol role="list" className={css["comments"]}>
+			<ol  className={css["comments"]}>
 				{comments.data.map((comment) => {
 					return (
 						<li key={comment.id}>

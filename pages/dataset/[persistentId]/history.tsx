@@ -5,8 +5,8 @@ import type {
 	GetStaticPropsContext,
 	GetStaticPropsResult,
 } from "next";
-import { useRouter } from "next/router";
 import { type Messages, useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";

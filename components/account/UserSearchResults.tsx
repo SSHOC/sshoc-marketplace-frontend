@@ -1,7 +1,8 @@
+import css from "@/components/account/UserSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { UserSearchResult } from "@/components/account/UserSearchResult";
-import css from "@/components/account/UserSearchResults.module.css";
 import { useUserSearchResults } from "@/components/account/useUserSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -30,7 +31,7 @@ export function UserSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul role="list" className={css["search-results"]}>
+			<ul  className={css["search-results"]}>
 				{userSearch.data.users.map((user) => {
 					return (
 						<li key={user.id}>

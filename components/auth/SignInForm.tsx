@@ -1,8 +1,9 @@
+import css from "@/components/auth/SignInForm.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useRef } from "react";
 
-import css from "@/components/auth/SignInForm.module.css";
 import { Link } from "@/components/common/Link";
 import type { SignInInput } from "@/data/sshoc/api/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";

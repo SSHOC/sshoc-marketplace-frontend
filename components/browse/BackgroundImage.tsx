@@ -1,7 +1,8 @@
+import css from "@/components/browse/BackgroundImage.module.css";
+
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-import css from "@/components/browse/BackgroundImage.module.css";
 import Clouds from "@/public/assets/images/backgrounds/browse@2x.png";
 
 export function BackgroundImage(): ReactNode {

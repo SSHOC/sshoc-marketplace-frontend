@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/Select/Select.module.css";
+
 import { FocusScope, useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
@@ -15,17 +17,20 @@ import useComposedRef from "use-composed-ref";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import AlertIcon from "@/lib/core/ui/icons/alert.svg?symbol-icon";
-import CheckmarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
-import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
+import AlertIcon from "@/lib/core/ui/icons/alert";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
+import ChevronIcon from "@/lib/core/ui/icons/chevron";
 import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
 import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import css from "@/lib/core/ui/Select/Select.module.css";
 
-export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, "isLoading"> {
+export interface SelectProps<T extends object> extends Omit<
+	AriaSelectProps<T>,
+	"isLoading" | "errorMessage"
+> {
+	errorMessage?: ReactNode;
 	/** @default 'start' */
 	align?: Alignment;
 	autoFocus?: boolean;
@@ -40,9 +45,11 @@ export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 
 	 * (button with `aria-haspopup="listbox"`).
 	 */
 	isReadOnly?: never;
-	layout?: ListBoxHeights<T>;
+	layout?: ListBoxHeights;
 	loadingState?: LoadingState;
 	maxHeight?: number;
+	onLoadMore?: () => void;
+	shouldFlip?: boolean;
 	/** @default 'md' */
 	size?: "md" | "sm";
 }
@@ -86,16 +93,9 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 	const fieldRef = useRef<HTMLDivElement>(null);
 	const ref = useComposedRef(fieldRef, forwardedRef);
 
-	const layout = useListBoxLayout<T>(state, _layout);
+	const layout = useListBoxLayout<T>(_layout);
 	const { labelProps, triggerProps, valueProps, menuProps, descriptionProps, errorMessageProps } =
-		useSelect<T>(
-			{
-				...props,
-				keyboardDelegate: layout,
-			},
-			state,
-			triggerRef,
-		);
+		useSelect<T>(props, state, triggerRef);
 
 	const { overlayProps, placement, updatePosition } = useOverlayPosition({
 		isOpen: state.isOpen,
@@ -178,7 +178,7 @@ const SelectBase = forwardRef(function SelectBase<T extends object>(
 			hideArrow
 			isOpen={state.isOpen}
 			onClose={state.close}
-			placement={placement}
+			placement={placement ?? undefined}
 			shouldCloseOnBlur
 			style={style}
 		>

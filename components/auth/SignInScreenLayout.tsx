@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/auth/SignInScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface SignInScreenLayoutProps {
 	children?: ReactNode;

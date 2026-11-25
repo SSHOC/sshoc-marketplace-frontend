@@ -82,7 +82,6 @@ function createApiEndpointComponent() {
 				const { id, label } = value;
 
 				return (
-					/* @ts-expect-error Fixed in react 19 types. */
 					<NotEditable className="flex flex-col gap-y-1">
 						<div>
 							<span>Parameter:</span> {id}
@@ -119,7 +118,6 @@ function createApiEndpointComponent() {
 				const { id, label } = value;
 
 				return (
-					/* @ts-expect-error Fixed in react 19 types. */
 					<NotEditable className="flex flex-col gap-y-1">
 						<div>
 							<span>Parameter:</span> {id}
@@ -153,7 +151,6 @@ function createApiEndpointComponent() {
 
 				return (
 					<aside className="flex flex-col gap-y-1">
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable className="flex flex-col gap-y-1">
 							<div>
 								<span>Title:</span> {title}
@@ -162,7 +159,7 @@ function createApiEndpointComponent() {
 								<span>Pathname:</span> {pathname}
 							</div>
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<div>{children}</div>
 					</aside>
 				);
@@ -193,7 +190,6 @@ function createAvatarComponent(paths: Paths) {
 
 				return (
 					<figure className="flex flex-col gap-y-1">
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable>
 							{url != null ? (
 								/* eslint-disable-next-line @next/next/no-img-element */
@@ -204,7 +200,7 @@ function createAvatarComponent(paths: Paths) {
 								/>
 							) : null}
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
 					</figure>
 				);
@@ -232,11 +228,10 @@ function createDisclosureComponent() {
 
 				return (
 					<details className="flex flex-col gap-y-1">
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable>
 							<summary className="cursor-pointer">{title}</summary>
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<div>{children}</div>
 					</details>
 				);
@@ -264,7 +259,6 @@ function createEmbedComponent() {
 
 				return (
 					<figure className="flex flex-col gap-y-1">
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable>
 							{src != null ? (
 								/* eslint-disable-next-line jsx-a11y/iframe-has-title */
@@ -277,7 +271,7 @@ function createEmbedComponent() {
 								/>
 							) : null}
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
 					</figure>
 				);
@@ -322,7 +316,6 @@ function createFigureComponent(paths: Paths) {
 							alignment === "center" ? "justify-center" : undefined,
 						)}
 					>
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable>
 							{url != null ? (
 								/* eslint-disable-next-line @next/next/no-img-element */
@@ -336,7 +329,7 @@ function createFigureComponent(paths: Paths) {
 								/>
 							) : null}
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
 					</figure>
 				);
@@ -391,7 +384,6 @@ function createGridComponent() {
 
 				const { alignment = "stretch", layout = "two-columns" } = value;
 
-				/* @ts-expect-error Fixed in react 19 types. */
 				return <div className={gridStyles({ alignment, layout })}>{children}</div>;
 			},
 		}),
@@ -412,7 +404,6 @@ function createGridComponent() {
 
 				const { alignment = "stretch" } = value;
 
-				/* @ts-expect-error Fixed in react 19 types. */
 				return <div className={alignment === "center" ? "self-center" : undefined}>{children}</div>;
 			},
 		}),
@@ -462,7 +453,6 @@ function createVideoComponent() {
 
 				return (
 					<figure className="flex flex-col gap-y-1">
-						{/* @ts-expect-error Fixed in react 19 types. */}
 						<NotEditable>
 							{src != null ? (
 								// eslint-disable-next-line jsx-a11y/iframe-has-title
@@ -475,7 +465,7 @@ function createVideoComponent() {
 								/>
 							) : null}
 						</NotEditable>
-						{/* @ts-expect-error Fixed in react 19 types. */}
+
 						<figcaption className="text-sm text-neutral-700">{children}</figcaption>
 					</figure>
 				);

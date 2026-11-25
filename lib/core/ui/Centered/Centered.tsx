@@ -1,6 +1,6 @@
-import type { ElementType, ReactNode } from "react";
-
 import css from "@/lib/core/ui/Centered/Centered.module.css";
+
+import type { ElementType, ReactNode } from "react";
 
 export interface CenteredProps {
 	elementType?: ElementType;

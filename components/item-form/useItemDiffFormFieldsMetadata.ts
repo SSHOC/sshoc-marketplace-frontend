@@ -160,16 +160,16 @@ function arrayField(
 				setFieldData(field, {
 					diff: {
 						status: status.inserted,
-						suggested: diff.other[name]?.[index],
-						current: diff.item[name]?.[index],
+						suggested: other[index],
+						current: item[index],
 					},
 				});
 			} else {
 				setFieldData(field, {
 					diff: {
 						status: status.changed,
-						suggested: diff.other[name]?.[index],
-						current: diff.item[name]?.[index],
+						suggested: other[index],
+						current: item[index],
 					},
 				});
 			}
@@ -181,8 +181,8 @@ function arrayField(
 		setFieldData(field, {
 			diff: {
 				status: status.deleted,
-				suggested: diff.other[name]?.[index],
-				current: diff.item[name]?.[index],
+				suggested: other[index],
+				current: item[index],
 			},
 		});
 	});

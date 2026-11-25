@@ -1,3 +1,5 @@
+import css from "@/components/item-form/WorkflowFormNavigation.module.css";
+
 import type { FormApi } from "final-form";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -5,7 +7,6 @@ import { useForm } from "react-final-form";
 
 import type { WorkflowFormPage } from "@/components/item-form/useWorkflowFormPage";
 import type { WorkflowFormValues } from "@/components/item-form/WorkflowForm";
-import css from "@/components/item-form/WorkflowFormNavigation.module.css";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
 
 export interface WorkflowFormNavigationProps {

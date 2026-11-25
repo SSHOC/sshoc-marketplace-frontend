@@ -1,7 +1,7 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";

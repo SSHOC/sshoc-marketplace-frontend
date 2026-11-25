@@ -1,3 +1,6 @@
+import css from "@/lib/core/ui/Button/Button.module.css";
+import linkStyles from "@/lib/core/ui/Link/Link.module.css";
+
 import { useFocusable, useFocusRing } from "@react-aria/focus";
 import { useHover, usePress } from "@react-aria/interactions";
 import type { AriaLinkOptions as AriaLinkProps } from "@react-aria/link";
@@ -10,8 +13,6 @@ import useComposedRef from "use-composed-ref";
 
 import type { Locale } from "@/config/i18n.config";
 import type { ButtonProps } from "@/lib/core/ui/Button/Button";
-import css from "@/lib/core/ui/Button/Button.module.css";
-import linkStyles from "@/lib/core/ui/Link/Link.module.css";
 
 export interface LinkButtonProps
 	extends

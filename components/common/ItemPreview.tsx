@@ -1,10 +1,11 @@
+import css from "@/components/common/ItemPreview.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ItemCategoryBadge } from "@/components/common/ItemCategoryBadge";
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
 import { ItemDescription } from "@/components/common/ItemDescription";
-import css from "@/components/common/ItemPreview.module.css";
 import { ItemPreviewMetadata } from "@/components/common/ItemPreviewMetadata";
 import { Link } from "@/components/common/Link";
 import type { ItemSearchResult, RelatedItem } from "@/data/sshoc/api/item";

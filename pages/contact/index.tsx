@@ -89,7 +89,6 @@ export default function ContactPage(props: ContactPage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error This is fone.
 									a: Link,
 								}}
 							/>

@@ -1,7 +1,7 @@
+import css from "@/lib/core/ui/HighlightedText/HighlightedText.module.css";
+
 import { findAll } from "highlight-words-core";
 import { Fragment, type ReactNode } from "react";
-
-import css from "@/lib/core/ui/HighlightedText/HighlightedText.module.css";
 
 export interface HighlightedTextProps {
 	searchPhrase: string;

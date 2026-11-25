@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import type { FormButtonLinkProps } from "@/lib/core/form/FormButtonLink";
 import { FormButtonLink } from "@/lib/core/form/FormButtonLink";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import PencilIcon from "@/lib/core/ui/icons/pencil.svg?symbol-icon";
+import PencilIcon from "@/lib/core/ui/icons/pencil";
 
 export type FormRecordEditButtonProps = FormButtonLinkProps;
 

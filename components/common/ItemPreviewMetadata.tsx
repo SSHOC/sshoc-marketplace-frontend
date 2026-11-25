@@ -1,7 +1,8 @@
+import css from "@/components/common/ItemPreviewMetadata.module.css";
+
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
-import css from "@/components/common/ItemPreviewMetadata.module.css";
 import { Link } from "@/components/common/Link";
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { maxPreviewMetadataValues } from "@/config/sshoc.config";
@@ -90,7 +91,7 @@ function ItemPreviewMetadataValueList(props: ItemPreviewMetadataValueListProps):
 		<Fragment>
 			<dt>{label}</dt>
 			<dd>
-				<ul role="list" className={css["metadata-terms"]}>
+				<ul  className={css["metadata-terms"]}>
 					{properties.map((property) => {
 						const query = { [`f.${facet}`]: [property.concept.label] } as {
 							[K in ItemFacet as `f.${K}`]: Array<string>;

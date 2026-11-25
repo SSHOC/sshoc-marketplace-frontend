@@ -1,7 +1,8 @@
+import css from "@/components/account/DraftItemSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { DraftItemSearchResult } from "@/components/account/DraftItemSearchResult";
-import css from "@/components/account/DraftItemSearchResults.module.css";
 import { useDraftItemsSearchResults } from "@/components/account/useDraftItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import type { ItemCategory, ItemCore } from "@/data/sshoc/api/item";
@@ -31,7 +32,7 @@ export function DraftItemSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul role="list" className={css["search-results"]}>
+			<ul  className={css["search-results"]}>
 				{draftItemSearch.data.items.map((item) => {
 					// FIXME: Check if `getDraftItems` still returns steps or not
 					// Also check any other endpoints returning `ItemCore`.

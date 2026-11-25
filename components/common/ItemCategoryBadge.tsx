@@ -1,8 +1,9 @@
+import css from "@/components/common/ItemCategoryBadge.module.css";
+
 import cx from "clsx";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/common/ItemCategoryBadge.module.css";
 import type { ItemCategoryWithWorkflowStep } from "@/data/sshoc/api/item";
 
 export interface ItemCategoryBadgeProps {

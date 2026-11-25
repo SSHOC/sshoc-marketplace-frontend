@@ -37,7 +37,8 @@ export function ToolOrServiceCreateForm(): ReactNode {
 		const data = removeEmptyItemFieldsOnSubmit(values);
 		delete values["__submitting__"];
 
-		form.pauseValidation();
+		// Keep submission-state notifications flowing while validation is paused.
+		form.pauseValidation(false);
 		createOrUpdateTool.mutate(
 			{ data, draft: shouldSaveAsDraft },
 			{

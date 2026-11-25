@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+
 import { isFocusVisible, useHover } from "@react-aria/interactions";
 import { useOption } from "@react-aria/listbox";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
@@ -6,8 +8,7 @@ import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CheckmarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
-import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import { useListBoxContext } from "@/lib/core/ui/ListBox/useListBoxContext";
 
 export interface ListBoxOptionProps<T extends object> {

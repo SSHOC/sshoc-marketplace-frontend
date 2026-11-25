@@ -6,20 +6,20 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
 	const t = useTranslations();
 
 	const errorMap = useMemo(() => {
-		const errorMap: z.ZodErrorMap = function errorMap(issue, context) {
+		const errorMap: z.ZodErrorMap = function errorMap(issue) {
 			/**
 			 * @see https://github.com/colinhacks/zod/blob/master/ERROR_HANDLING.md#zodissuecode
 			 */
 			switch (issue.code) {
 				case z.ZodIssueCode.invalid_type: {
-					if (issue.received === "undefined") {
+					if (issue.input === undefined) {
 						return { message: t("authenticated.validation.empty-field") };
 					}
 					break;
 				}
 
-				case z.ZodIssueCode.invalid_string: {
-					switch (issue.validation) {
+				case z.ZodIssueCode.invalid_format: {
+					switch (issue.format) {
 						case "email":
 							return { message: t("authenticated.validation.invalid-email") };
 						case "url":
@@ -30,11 +30,7 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
 					break;
 				}
 
-				case z.ZodIssueCode.invalid_date: {
-					break;
-				}
-
-				case z.ZodIssueCode.invalid_enum_value: {
+				case z.ZodIssueCode.invalid_value: {
 					break;
 				}
 
@@ -58,7 +54,7 @@ export function useItemFormErrorMap(): z.ZodErrorMap {
 					break;
 			}
 
-			return { message: context.defaultError };
+			return undefined;
 		};
 
 		return errorMap;

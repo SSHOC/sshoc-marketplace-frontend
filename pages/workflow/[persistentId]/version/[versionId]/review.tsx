@@ -5,8 +5,8 @@ import type {
 	GetStaticPropsContext,
 	GetStaticPropsResult,
 } from "next";
-import { useRouter } from "next/router";
 import { type Messages, useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { Fragment, type ReactNode } from "react";
 
 import { FundingNotice } from "@/components/common/FundingNotice";
@@ -217,7 +217,7 @@ export default function ReviewWorkflowPage(props: ReviewWorkflowPage.Props): Rea
 						<ScreenTitle>{title}</ScreenTitle>
 					</ScreenHeader>
 					<Content>
-						<WorkflowReviewForm<UpdateWorkflowFormValues>
+						<WorkflowReviewForm
 							formFields={formFields}
 							name="review-item"
 							initialValues={workflow}

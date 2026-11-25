@@ -54,7 +54,8 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 		const data = removeEmptyItemFieldsOnSubmit(values);
 		delete values["__submitting__"];
 
-		form.pauseValidation();
+		// Keep submission-state notifications flowing while validation is paused.
+		form.pauseValidation(false);
 		createOrUpdateWorkflow.mutate(
 			{ data, draft: shouldSaveAsDraft, createHandle: shouldCreateHandle },
 			{
@@ -63,10 +64,14 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 						form.batch(() => {
 							form.change("persistentId", workflow.persistentId);
 							form.change("status", workflow.status);
-							workflow.composedOf.forEach((step, index) => {
-								form.change(`composedOf[${index}].persistentId`, step.persistentId);
-								form.change(`composedOf[${index}].status`, step.status);
-							});
+							form.change(
+								"composedOf",
+								values.composedOf?.map((step, index) => ({
+									...step,
+									persistentId: workflow.composedOf[index]?.persistentId,
+									status: workflow.composedOf[index]?.status,
+								})),
+							);
 						});
 						window.scrollTo(0, 0);
 						form.resumeValidation();
@@ -92,7 +97,7 @@ export function WorkflowCreateForm(props: WorkflowCreateFormProps): ReactNode {
 	}
 
 	return (
-		<WorkflowForm<CreateWorkflowFormValues>
+		<WorkflowForm
 			allowHandleCreation={false}
 			formFields={formFields}
 			initialValues={recommendedFields}

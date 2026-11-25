@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/common/MetadataValues.module.css";
+
+import type { ReactNode } from "react";
 
 export interface MetadataValuesProps {
 	children?: ReactNode;

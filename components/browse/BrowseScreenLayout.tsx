@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/browse/BrowseScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface BrowseScreenLayoutProps {
 	children?: ReactNode;

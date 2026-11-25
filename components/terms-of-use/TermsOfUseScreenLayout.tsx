@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/terms-of-use/TermsOfUseScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface TermsOfUseScreenLayoutProps {
 	children?: ReactNode;

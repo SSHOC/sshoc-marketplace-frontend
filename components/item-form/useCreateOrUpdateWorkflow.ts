@@ -267,6 +267,8 @@ export function useCreateOrUpdateWorkflow(
 			return createOrUpdateWorkflow(params, data, session);
 		},
 		{
+			// Save failures belong to the form so edits survive and the user can retry.
+			useErrorBoundary: false,
 			...options,
 			onSuccess(workflow, ...args) {
 				const pathname = `/workflow/${workflow.persistentId}`;

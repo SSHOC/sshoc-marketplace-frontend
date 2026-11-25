@@ -2,7 +2,7 @@ import type { AuthData } from "@/data/sshoc/api/common";
 import type { createQueryKey } from "@/data/sshoc/lib/createQueryKey";
 import { useSession } from "@/data/sshoc/lib/useSession";
 
-export function useQueryKeys<T>(keys: T, auth?: AuthData): T {
+export function useQueryKeys<T extends object>(keys: T, auth?: AuthData): T {
 	const session = useSession(auth);
 
 	const queryKeys = addAuthData(keys, session);
@@ -10,7 +10,7 @@ export function useQueryKeys<T>(keys: T, auth?: AuthData): T {
 	return queryKeys;
 }
 
-function addAuthData<T>(keys: T, session: AuthData): T {
+function addAuthData<T extends object>(keys: T, session: AuthData): T {
 	const queryKeys = {} as any;
 
 	Object.entries(keys).forEach(([key, value]) => {

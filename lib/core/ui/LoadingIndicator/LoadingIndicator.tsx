@@ -1,9 +1,9 @@
+import css from "@/lib/core/ui/LoadingIndicator/LoadingIndicator.module.css";
+
 import type { AriaLabelingProps, DOMProps } from "@react-types/shared";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
-
-import css from "@/lib/core/ui/LoadingIndicator/LoadingIndicator.module.css";
 
 export interface LoadingIndicatorStyleProps {
 	"--loading-indicator-color"?: CSSProperties["color"];

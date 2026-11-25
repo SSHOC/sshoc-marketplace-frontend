@@ -1,6 +1,7 @@
+import css from "@/components/search/SearchResultsHeader.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/search/SearchResultsHeader.module.css";
 import { SearchResultsPageNavigation } from "@/components/search/SearchResultsPageNavigation";
 import { SearchSortOrderSelect } from "@/components/search/SearchSortOrderSelect";
 

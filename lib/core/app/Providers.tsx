@@ -1,7 +1,7 @@
 import { I18nProvider as AriaI18nProvider } from "@react-aria/i18n";
 import { OverlayProvider } from "@react-aria/overlays";
-import { useRouter } from "next/router";
 import { NextIntlClientProvider } from "next-intl";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { RouterProvider } from "react-aria-components";

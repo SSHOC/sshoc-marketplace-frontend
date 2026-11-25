@@ -1,12 +1,13 @@
+import css from "@/components/item/CopyLinkToClipboardButton.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useObjectRef } from "@react-aria/utils";
 import { useTranslations } from "next-intl";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
-import css from "@/components/item/CopyLinkToClipboardButton.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import LinkIcon from "@/lib/core/ui/icons/link.svg?symbol-icon";
+import LinkIcon from "@/lib/core/ui/icons/link";
 import { createSiteUrl } from "@/lib/utils";
 
 export interface CopyLinkToClipboardButtonProps {

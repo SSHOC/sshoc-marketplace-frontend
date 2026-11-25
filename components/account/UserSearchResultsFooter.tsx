@@ -1,6 +1,7 @@
+import css from "@/components/account/UserSearchResultsFooter.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/UserSearchResultsFooter.module.css";
 import { UserSearchResultsPageNavigation } from "@/components/account/UserSearchResultsPageNavigation";
 
 export function UserSearchResultsFooter(): ReactNode {

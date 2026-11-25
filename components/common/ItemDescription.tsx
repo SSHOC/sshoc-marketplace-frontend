@@ -1,6 +1,7 @@
+import css from "@/components/common/ItemDescription.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/common/ItemDescription.module.css";
 import { maxPreviewDescriptionLength } from "@/config/sshoc.config";
 import { usePlaintext } from "@/lib/utils/hooks";
 

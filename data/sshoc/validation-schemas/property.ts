@@ -35,8 +35,8 @@ export const propertyInputScalarSchema = z.lazy(() =>
 		// TODO: Use `superRefine` to add custom error type.
 		// TODO: could also add more types to discriminated union which can be checked individually,
 		// e.g. { type: { type: z.literal('url') }, value: z.string().url() }
-		.refine(
-			(data) => {
+		.superRefine((data, context) => {
+			const isValid = () => {
 				switch (data.type.type) {
 					case "boolean":
 						return booleanString.safeParse(data.value).success;
@@ -53,14 +53,15 @@ export const propertyInputScalarSchema = z.lazy(() =>
 					default:
 						return true;
 				}
-			},
-			(data) => {
-				return {
+			};
+			if (!isValid()) {
+				context.addIssue({
+					code: "custom",
 					path: ["value"],
 					params: { invalidValue: true, type: data.type.type },
-				};
-			},
-		),
+				});
+			}
+		}),
 );
 
 export const propertyInputSchema = propertyInputConceptSchema.or(propertyInputScalarSchema);

@@ -10,7 +10,7 @@ import type { WorkflowStepInput } from "@/data/sshoc/api/workflow-step";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 
 export interface WorkflowStepPreviewProps {
 	name: string;

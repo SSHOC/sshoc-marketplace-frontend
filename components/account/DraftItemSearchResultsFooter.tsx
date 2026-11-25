@@ -1,6 +1,7 @@
+import css from "@/components/account/DraftItemSearchResultsFooter.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/DraftItemSearchResultsFooter.module.css";
 import { DraftItemSearchResultsPageNavigation } from "@/components/account/DraftItemSearchResultsPageNavigation";
 
 export function DraftItemSearchResultsFooter(): ReactNode {

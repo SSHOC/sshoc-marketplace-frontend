@@ -1,9 +1,10 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useMemo } from "react";
 import { useCollator } from "react-aria";
 
-import css from "@/components/item/ItemMetadata.module.css";
 import type { Actor } from "@/data/sshoc/api/actor";
 import type { Item } from "@/data/sshoc/api/item";
 import { createKey } from "@/lib/utils/create-key";
@@ -34,7 +35,7 @@ export function ItemActors(props: ItemActorsProps): ReactNode {
 							<div key={role} className={css["group"]}>
 								<dt className={css["group-label"]}>{role}</dt>
 								<dd>
-									<ul role="list" className={css["group-items"]}>
+									<ul  className={css["group-items"]}>
 										{actors.map(([name, actor]) => {
 											return (
 												<li key={name}>

@@ -1,7 +1,8 @@
+import css from "@/components/item-form/BackgroundImage.module.css";
+
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-import css from "@/components/item-form/BackgroundImage.module.css";
 import Clouds from "@/public/assets/images/backgrounds/item-form@2x.png";
 
 export function BackgroundImage(): ReactNode {

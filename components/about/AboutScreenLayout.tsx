@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/about/AboutScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface AboutScreenLayoutProps {
 	children?: ReactNode;

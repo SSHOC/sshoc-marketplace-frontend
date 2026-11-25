@@ -13,11 +13,11 @@ export function validateSchema<T extends z.ZodType<any, any>>(
 ) {
 	return async function validate(values: unknown) {
 		try {
-			await schema.parseAsync(preprocess(values), { errorMap });
+			await schema.parseAsync(preprocess(values), { error: errorMap });
 			return {};
 		} catch (error) {
 			if (error instanceof z.ZodError) {
-				return formatZodError(error.format());
+				return formatZodError(z.formatError(error));
 			}
 			return error;
 		}

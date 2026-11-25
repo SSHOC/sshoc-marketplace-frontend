@@ -111,7 +111,8 @@ function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 	const t = useTranslations();
 	const itemCategories = useItemCategoryOptions();
 
-	function onSelectionChange(key: Key) {
+	function onSelectionChange(key: Key | null) {
+		if (key === null) return;
 		onSelectItemCategory(key as ItemCategoryOptionId);
 	}
 

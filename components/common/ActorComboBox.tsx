@@ -109,5 +109,5 @@ export function ActorComboBox(props: ActorComboBoxProps): ReactNode {
 }
 
 const layout = {
-	estimatedRowHeight: 60,
+	estimatedRowSize: 60,
 };
