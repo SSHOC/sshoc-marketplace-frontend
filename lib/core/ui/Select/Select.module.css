@@ -1,3 +1,14 @@
+.select {
+	width: 100%;
+}
+
+.popover {
+	display: flex;
+	flex-direction: column;
+	width: var(--trigger-width);
+	outline: none;
+}
+
 .select-input-group {
 	--icon-width: var(--size-2-5);
 	--icon-rotation: 90deg;
@@ -65,4 +76,12 @@
 	padding-inline: var(--space-4);
 	font-size: var(--font-size-4-25);
 	line-height: var(--line-height-6);
+}
+
+.listbox-container {
+	display: contents;
+}
+
+.option[data-focused]:not([data-focus-visible]) {
+	outline: none;
 }

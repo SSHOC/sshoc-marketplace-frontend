@@ -21,8 +21,8 @@ import { userRoles, userStatus } from "@/data/sshoc/api/user";
 import { useUpdateUserRole, useUpdateUserStatus } from "@/data/sshoc/hooks/user";
 import { PASSED_IN_VIA_MUTATION_FUNCTION } from "@/data/sshoc/lib/const";
 import type { MutationMetadata } from "@/lib/core/query/types";
-import { Item } from "@/lib/core/ui/Collection/Item";
 import { Select } from "@/lib/core/ui/Select/Select";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export interface UserSearchResultProps {
 	user: GetUsers.Response["users"][number];
@@ -110,7 +110,7 @@ function UserRoleSelect(props: UserRoleSelectProps): ReactNode {
 				size="sm"
 			>
 				{(item) => {
-					return <Item>{item.label}</Item>;
+					return <SelectItem>{item.label}</SelectItem>;
 				}}
 			</Select>
 		</form>
@@ -171,7 +171,7 @@ function UserStatusSelect(props: UserStatusSelectProps): ReactNode {
 				size="sm"
 			>
 				{(item) => {
-					return <Item>{item.label}</Item>;
+					return <SelectItem>{item.label}</SelectItem>;
 				}}
 			</Select>
 		</form>

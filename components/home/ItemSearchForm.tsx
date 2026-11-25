@@ -8,8 +8,8 @@ import { useSearchItems } from "@/components/common/useSearchItems";
 import type { ItemCategory } from "@/data/sshoc/api/item";
 import { useItemCategories } from "@/data/sshoc/hooks/item";
 import { Button } from "@/lib/core/ui/Button/Button";
-import { Item } from "@/lib/core/ui/Collection/Item";
 import { Select } from "@/lib/core/ui/Select/Select";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 import { isNonEmptyString, keys } from "@/lib/utils";
 
 const allItemCategories = "__all__";
@@ -127,14 +127,14 @@ function ItemCategorySelect(props: ItemCategorySelectProps): ReactNode {
 		>
 			{(item) => {
 				return (
-					<Item textValue={item.label}>
+					<SelectItem textValue={item.label}>
 						<span className="grid grid-cols-[20px_1fr] items-center gap-1.5">
 							<span aria-hidden className="aspect-square">
 								{item.id !== allItemCategories ? <ItemCategoryIcon category={item.id} /> : null}
 							</span>
 							{item.label}
 						</span>
-					</Item>
+					</SelectItem>
 				);
 			}}
 		</Select>

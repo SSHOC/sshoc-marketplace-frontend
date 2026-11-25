@@ -4,7 +4,7 @@ import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import type { PropertyType } from "@/data/sshoc/api/property";
 import type { FormSelectProps } from "@/lib/core/form/FormSelect";
 import { FormSelect } from "@/lib/core/form/FormSelect";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export interface PropertyTypeSelectProps extends Pick<
 	FormSelectProps<PropertyType>,
@@ -24,7 +24,7 @@ export function PropertyTypeSelect(props: PropertyTypeSelectProps): ReactNode {
 			onSelectionChange={onSelectionChange}
 		>
 			{(item) => {
-				return <Item key={item.code}>{item.label}</Item>;
+				return <SelectItem id={item.code}>{item.label}</SelectItem>;
 			}}
 		</FormSelect>
 	);

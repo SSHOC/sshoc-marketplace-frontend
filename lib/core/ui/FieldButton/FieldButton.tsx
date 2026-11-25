@@ -63,7 +63,7 @@ export const FieldButton = forwardRef(function FieldButton(
 			className={css["button"]}
 			data-color={color}
 			data-active={isActive === true || isPressed === true ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
+			data-focus-visible={isFocusVisible ? "" : undefined}
 			data-hovered={isHovered ? "" : undefined}
 			data-validation-state={validationState}
 			style={style as CSSProperties}
