@@ -191,7 +191,7 @@ function ActiveCurationFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t("authenticated.moderate-items.curation")}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -227,7 +227,7 @@ function ActiveItemStatusFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t("common.item.status")}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -264,7 +264,7 @@ function ActiveItemCategoryFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -301,7 +301,7 @@ function ActiveSourceFacets(): ReactNode {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -339,7 +339,7 @@ function ActiveInformationContributorFacets(): ReactNode {
 			<h3 className={css["active-facet-title"]}>
 				{t("authenticated.moderate-items.information-contributor.other")}
 			</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -395,7 +395,7 @@ function ActiveOtherFacets(): ReactNode {
 			<h3 className={css["active-facet-title"]}>
 				{t("authenticated.moderate-items.other-facets")}
 			</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{fields.lastInfoUpdate.value != null ? (
 					<li className={css["active-facet-value"]}>
 						{t("common.item.last-updated-on", {

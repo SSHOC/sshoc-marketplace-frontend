@@ -61,7 +61,7 @@ export function OtherSuggestedItemVersionsFormSection(): ReactNode {
 					{ count: String(items.data.length) },
 				)}
 			</p>
-			<ul className={css["items"]} >
+			<ul className={css["items"]} role="list">
 				{items.data.map((item) => {
 					return (
 						<li key={[item.persistentId, item.id].join("+")}>

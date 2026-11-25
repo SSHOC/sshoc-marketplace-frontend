@@ -39,7 +39,7 @@ export function WorkflowStepsList(props: WorkflowStepsListProps): ReactNode {
 					<ItemsCount count={steps.length} />
 				</SectionTitle>
 			</SectionHeader>
-			<ol  className={css["list"]}>
+			<ol role="list" className={css["list"]}>
 				{steps.map((step, index) => {
 					return (
 						<li key={step.persistentId}>

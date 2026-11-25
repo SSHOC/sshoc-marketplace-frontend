@@ -173,7 +173,7 @@ function ActiveConceptStatusFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t("common.item.status")}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -212,7 +212,7 @@ function ActivePropertyTypesFacets() {
 			<h3 className={css["active-facet-title"]}>
 				{t("authenticated.concepts.property-type.other")}
 			</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					const label = searchResults.data?.types[value]?.label ?? value;
 

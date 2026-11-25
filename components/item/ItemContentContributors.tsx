@@ -27,7 +27,7 @@ export function ItemContentContributors(props: ItemContentContributorsProps): Re
 		<div className={css["group"]}>
 			<dt className={css["group-label"]}>{t("common.item.content-contributors.other")}</dt>
 			<dd>
-				<ul  className={css["group-items"]}>
+				<ul role="list" className={css["group-items"]}>
 					{contentContributors.map((contributor) => {
 						return (
 							<li key={contributor.id}>

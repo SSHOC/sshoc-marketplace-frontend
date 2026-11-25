@@ -39,7 +39,7 @@ export function ItemComments(props: ItemCommentsProps): ReactNode {
 			<SectionHeader>
 				<SectionTitle>{t("common.item.comments.other")}</SectionTitle>
 			</SectionHeader>
-			<ol  className={css["comments"]}>
+			<ol role="list" className={css["comments"]}>
 				{comments.data.map((comment) => {
 					return (
 						<li key={comment.id}>

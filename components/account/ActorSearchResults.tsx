@@ -31,7 +31,7 @@ export function ActorSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{actorSearch.data.actors.map((actor) => {
 					return (
 						<li key={actor.id}>

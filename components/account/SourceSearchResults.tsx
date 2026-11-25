@@ -31,7 +31,7 @@ export function SourceSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{sourceSearch.data.sources.map((source) => {
 					return (
 						<li key={source.id}>

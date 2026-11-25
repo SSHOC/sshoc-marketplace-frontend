@@ -14,7 +14,7 @@ export function Breadcrumbs(props: BreadcrumbsProps): ReactNode {
 
 	return (
 		<nav aria-label={t("common.breadcrumbs")}>
-			<ol  className={css["nav-items"]}>
+			<ol role="list" className={css["nav-items"]}>
 				{props.links.map((link, index) => {
 					return (
 						<Fragment key={link.label}>

@@ -31,7 +31,7 @@ export function ContributedItemSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{contributedItemSearch.data.items.map((item) => {
 					if (item.category === "step") {
 						return null;

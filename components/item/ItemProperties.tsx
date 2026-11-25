@@ -44,7 +44,7 @@ export function ItemProperties(props: ItemPropertiesProps): ReactNode {
 												<div key={label} className={css["value-group"]}>
 													<dt className={css["value-group-label"]}>{label}</dt>
 													<dd>
-														<ul  className={css["value-group-items"]}>
+														<ul role="list" className={css["value-group-items"]}>
 															{values.map((value, index) => {
 																return <li key={index}>{value}</li>;
 															})}

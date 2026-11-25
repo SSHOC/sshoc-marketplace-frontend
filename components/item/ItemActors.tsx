@@ -35,7 +35,7 @@ export function ItemActors(props: ItemActorsProps): ReactNode {
 							<div key={role} className={css["group"]}>
 								<dt className={css["group-label"]}>{role}</dt>
 								<dd>
-									<ul  className={css["group-items"]}>
+									<ul role="list" className={css["group-items"]}>
 										{actors.map(([name, actor]) => {
 											return (
 												<li key={name}>

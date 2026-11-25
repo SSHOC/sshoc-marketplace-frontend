@@ -26,7 +26,7 @@ export function ItemExternalIds(props: ItemExternalIdsProps): ReactNode {
 				<VisuallyHidden>{t("common.item.external-ids.other")}</VisuallyHidden>
 			</dt>
 			<dd>
-				<ul >
+				<ul role="list">
 					{ids.map((id) => {
 						if (internalExternalIds.includes(id.identifierService.code)) {
 							return null;

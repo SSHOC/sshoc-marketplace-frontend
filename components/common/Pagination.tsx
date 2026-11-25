@@ -44,7 +44,7 @@ export function Pagination<
 
 	return (
 		<nav aria-label={t("common.pagination.navigation")}>
-			<ol  className={css["nav-items"]}>
+			<ol role="list" className={css["nav-items"]}>
 				<li className={css["nav-item"]}>
 					<Link
 						{...getSearchItemsLink({ ...searchFilters, page: page - 1 })}

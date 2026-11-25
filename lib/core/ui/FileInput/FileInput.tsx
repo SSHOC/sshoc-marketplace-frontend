@@ -112,7 +112,7 @@ export const FileInput = forwardRef(function FileInput(
 					/>
 				</VisuallyHidden>
 				{fileList != null && fileList.length > 0 ? (
-					<ul >
+					<ul role="list">
 						{Array.from(fileList).map((file) => {
 							return (
 								<li key={file.name}>

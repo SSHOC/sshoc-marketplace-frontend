@@ -12,7 +12,7 @@ export function FormFieldList(props: FormFieldListProps): ReactNode {
 	const { children, variant = "primary" } = props;
 
 	return (
-		<ol  className={css["list"]} data-variant={variant}>
+		<ol role="list" className={css["list"]} data-variant={variant}>
 			{children}
 		</ol>
 	);

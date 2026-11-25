@@ -57,7 +57,7 @@ export function ItemMedia(props: ItemMediaProps): ReactNode {
 				</figure>
 				{hasMultipleMedia ? (
 					<nav aria-label={t("common.item.media.other")}>
-						<ol  className={css["carousel-controls"]}>
+						<ol role="list" className={css["carousel-controls"]}>
 							<li data-direction="prev">
 								<Button onPress={onPreviousMedia} isDisabled={!hasPrevious}>
 									<Icon icon={ChevronIcon} aria-label={t("common.item.previous-media")} />
@@ -95,7 +95,7 @@ function ItemMediaPreviews(props: ItemMediaPreviewsProps): ReactNode {
 	const t = useTranslations();
 
 	return (
-		<ol  className={css["thumbnails"]}>
+		<ol role="list" className={css["thumbnails"]}>
 			{media.map((m, index) => {
 				const hasThumbnail = m.info.hasThumbnail;
 

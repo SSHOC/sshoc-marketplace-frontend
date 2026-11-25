@@ -9,7 +9,7 @@ export function AccountLinks(): ReactNode {
 	const accountLinks = useAccountLinks();
 
 	return (
-		<ul className={css["items"]} >
+		<ul className={css["items"]} role="list">
 			{accountLinks.map((link) => {
 				const Icon = link.icon;
 

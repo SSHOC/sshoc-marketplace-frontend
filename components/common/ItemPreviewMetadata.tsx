@@ -91,7 +91,7 @@ function ItemPreviewMetadataValueList(props: ItemPreviewMetadataValueListProps):
 		<Fragment>
 			<dt>{label}</dt>
 			<dd>
-				<ul  className={css["metadata-terms"]}>
+				<ul role="list" className={css["metadata-terms"]}>
 					{properties.map((property) => {
 						const query = { [`f.${facet}`]: [property.concept.label] } as {
 							[K in ItemFacet as `f.${K}`]: Array<string>;

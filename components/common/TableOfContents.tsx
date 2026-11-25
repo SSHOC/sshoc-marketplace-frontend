@@ -37,7 +37,7 @@ function Level(props: LevelProps): ReactNode {
 	}
 
 	return (
-		<ol className={css["list"]} data-depth={depth > 1 ? "" : undefined} >
+		<ol className={css["list"]} data-depth={depth > 1 ? "" : undefined} role="list">
 			{entries.map((entry, index) => {
 				return (
 					<li key={entry.id ?? index} className={css["list-item"]}>

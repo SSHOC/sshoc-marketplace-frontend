@@ -48,7 +48,7 @@ export function ItemRelatedItems(props: ItemRelatedItemsProps): ReactNode {
 					<ItemsCount count={items.length} />
 				</SectionTitle>
 			</SectionHeader>
-			<ul  className={css["items"]}>
+			<ul role="list" className={css["items"]}>
 				{visibleItems.map((item) => {
 					return (
 						<li key={item.persistentId}>

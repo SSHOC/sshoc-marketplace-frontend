@@ -179,7 +179,7 @@ function ActiveItemCategoryFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -216,7 +216,7 @@ function ActiveActivityFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -253,7 +253,7 @@ function ActiveKeywordFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -290,7 +290,7 @@ function ActiveLanguageFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>
@@ -327,7 +327,7 @@ function ActiveSourceFacets() {
 	return (
 		<div className={css["active-facet"]}>
 			<h3 className={css["active-facet-title"]}>{t(`common.facets.${facet}.other`)}</h3>
-			<ul  className={css["active-facet-values"]}>
+			<ul role="list" className={css["active-facet-values"]}>
 				{values.map((value) => {
 					return (
 						<li key={value} className={css["active-facet-value"]}>

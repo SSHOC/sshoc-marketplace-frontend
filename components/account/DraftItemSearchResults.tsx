@@ -32,7 +32,7 @@ export function DraftItemSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{draftItemSearch.data.items.map((item) => {
 					// FIXME: Check if `getDraftItems` still returns steps or not
 					// Also check any other endpoints returning `ItemCore`.

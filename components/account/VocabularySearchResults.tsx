@@ -31,7 +31,7 @@ export function VocabularySearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{vocabularySearch.data.concepts.map((concept) => {
 					return (
 						<li key={concept.uri}>

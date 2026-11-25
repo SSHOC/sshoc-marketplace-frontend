@@ -16,7 +16,7 @@ export function ScreenNavigation(props: ScreenNavigationProps): ReactNode {
 
 	return (
 		<nav aria-label={label} className={css["container"]}>
-			<ul >
+			<ul role="list">
 				{items.map((item, index) => {
 					return (
 						<li key={item.id ?? index}>

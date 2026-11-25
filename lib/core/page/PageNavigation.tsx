@@ -89,7 +89,7 @@ export function PageNavigation(): ReactNode {
 
 	return (
 		<nav>
-			<ul className="flex justify-end text-center text-sm" >
+			<ul className="flex justify-end text-center text-sm" role="list">
 				{items.map((item, index) => {
 					switch (item.type) {
 						case "link": {
@@ -310,7 +310,7 @@ export function MobileNavigationMenu(): ReactNode {
 										</header>
 										<div className="flex flex-1 flex-col text-md">
 											<nav className="h-full overflow-auto py-0.5">
-												<ul className="flex flex-col gap-y-1" >
+												<ul className="flex flex-col gap-y-1" role="list">
 													{items.map((item, index) => {
 														switch (item.type) {
 															case "link": {
@@ -365,7 +365,7 @@ export function MobileNavigationMenu(): ReactNode {
 																				/>
 																			</AriaButton>
 																			<AriaDisclosurePanel>
-																				<ul >
+																				<ul role="list">
 																					{item.children.map((item, index) => {
 																						switch (item.type) {
 																							case "link": {

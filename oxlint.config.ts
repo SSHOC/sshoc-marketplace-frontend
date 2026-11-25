@@ -6,6 +6,8 @@ export default defineConfig({
 	ignorePatterns: ["content/**", "public/**"],
 	options: { typeAware: true, typeCheck: true },
 	rules: {
+		// Keep explicit list semantics when CSS removes list markers (Safari/VoiceOver).
+		"jsx-a11y/no-redundant-roles": ["warn", { ul: ["list"], ol: ["list"] }],
 		"no-restricted-properties": [
 			"error",
 			{

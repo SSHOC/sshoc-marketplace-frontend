@@ -31,7 +31,7 @@ export function UserSearchResults(): ReactNode {
 
 	return (
 		<section className={css["container"]}>
-			<ul  className={css["search-results"]}>
+			<ul role="list" className={css["search-results"]}>
 				{userSearch.data.users.map((user) => {
 					return (
 						<li key={user.id}>

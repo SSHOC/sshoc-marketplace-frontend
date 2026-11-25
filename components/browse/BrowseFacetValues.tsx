@@ -44,7 +44,7 @@ function FacetValues(props: FacetValuesProps): ReactNode {
 	const grouped = useGroupedFacetValues({ values });
 
 	return (
-		<ul  className={css["groups"]}>
+		<ul role="list" className={css["groups"]}>
 			{grouped.map(([firstCharacter, values]) => {
 				return (
 					<li key={firstCharacter} className={css["group"]}>
@@ -58,7 +58,7 @@ function FacetValues(props: FacetValuesProps): ReactNode {
 								<span aria-hidden>{firstCharacter.toUpperCase()}</span>
 							</SectionTitle>
 						</div>
-						<ul  className={css["list"]}>
+						<ul role="list" className={css["list"]}>
 							{values.map(([value, count]) => {
 								const query = { [`f.${facet}`]: [value] } as {
 									[K in ItemFacet as `f.${K}`]: Array<string>;

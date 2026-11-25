@@ -18,7 +18,7 @@ export function PageFooter(): ReactNode {
 				className="mx-auto w-full max-w-[120rem] px-8"
 				aria-label={t("common.footer-navigation")}
 			>
-				<ul className="flex flex-col py-2 text-md sm:flex-row sm:py-0" >
+				<ul className="flex flex-col py-2 text-md sm:flex-row sm:py-0" role="list">
 					{links.map((link) => {
 						return (
 							<li key={link.label}>
