@@ -1,7 +1,8 @@
+import css from "@/components/auth/SignUpForm.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/auth/SignUpForm.module.css";
 import { Link } from "@/components/common/Link";
 import type { OAuthRegistrationInput } from "@/data/sshoc/api/auth";
 import { useAuth } from "@/lib/core/auth/useAuth";

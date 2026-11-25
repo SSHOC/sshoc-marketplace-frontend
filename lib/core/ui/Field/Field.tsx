@@ -1,15 +1,15 @@
-import { mergeProps } from "@react-aria/utils";
+import css from "@/lib/core/ui/Field/Field.module.css";
+
 import type { LabelPosition } from "@react-types/shared";
 import type { ForwardedRef, HTMLAttributes, ReactNode } from "react";
-import { cloneElement, forwardRef } from "react";
+import { cloneElement, forwardRef, isValidElement } from "react";
 
-import css from "@/lib/core/ui/Field/Field.module.css";
 import type { HelpTextProps } from "@/lib/core/ui/HelpText/HelpText";
 import { HelpText } from "@/lib/core/ui/HelpText/HelpText";
 import type { LabelProps } from "@/lib/core/ui/Label/Label";
 import { Label } from "@/lib/core/ui/Label/Label";
 
-export interface FieldProps extends Omit<LabelProps, "elementType">, HelpTextProps {
+export interface FieldProps extends Omit<LabelProps, "elementType" | "onClick">, HelpTextProps {
 	children: ReactNode;
 	descriptionProps?: HTMLAttributes<HTMLElement>;
 	errorMessageProps?: HTMLAttributes<HTMLElement>;
@@ -80,5 +80,7 @@ export const Field = forwardRef(function Field(
 		);
 	}
 
-	return cloneElement(children, mergeProps(children.props, { ref: forwardedRef }));
+	return isValidElement<{ ref?: ForwardedRef<HTMLDivElement> }>(children)
+		? cloneElement(children, { ref: forwardedRef })
+		: children;
 });

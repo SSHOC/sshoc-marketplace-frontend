@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
+
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
@@ -23,10 +25,9 @@ import { forwardRef } from "react";
 
 import { Field } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import AlertIcon from "@/lib/core/ui/icons/alert.svg?symbol-icon";
-import CheckmarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
+import AlertIcon from "@/lib/core/ui/icons/alert";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
 export interface TextFieldBaseStyleProps {
 	"--textfield-input-background-color"?: CSSProperties["backgroundColor"];
@@ -55,7 +56,21 @@ export interface TextFieldBaseStyleProps {
 	"--textfield-validation-icon-color"?: CSSProperties["color"];
 }
 
-export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, PressEvents {
+export interface TextFieldBaseProps
+	extends
+		Pick<
+			AriaTextFieldProps,
+			| "description"
+			| "label"
+			| "isDisabled"
+			| "isInvalid"
+			| "validationState"
+			| "type"
+			| "autoFocus"
+		>,
+		LabelableProps,
+		PressEvents {
+	errorMessage?: ReactNode;
 	/** @default 'primary' */
 	color?:
 		| "form"
@@ -70,7 +85,7 @@ export interface TextFieldBaseProps extends AriaTextFieldProps, LabelableProps, 
 	errorMessageProps?: HTMLAttributes<HTMLElement>;
 	icon?: ReactNode;
 	inputProps: InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement>;
-	inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement>;
+	inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 	isLoading?: boolean;
 	isRequired?: boolean;
 	/** @default 'start' */

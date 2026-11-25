@@ -1,8 +1,9 @@
+import css from "@/components/common/ItemSearchBar.module.css";
+
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { useState } from "react";
 
-import css from "@/components/common/ItemSearchBar.module.css";
 import { ItemSearchTermAutocomplete } from "@/components/common/ItemSearchTermAutocomplete";
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { useSearchFilters } from "@/components/search/useSearchFilters";

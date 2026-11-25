@@ -1,0 +1,10 @@
+diff --git a/dist/declarations/src/index.d.ts b/dist/declarations/src/index.d.ts
+index 754528d320fca03c259ae2a62175b85a1e20bfd3..9634f556a2cc0f28c7f6a4a6af18d143a88af6d2 100644
+--- a/dist/declarations/src/index.d.ts
++++ b/dist/declarations/src/index.d.ts
+@@ -1,4 +1,4 @@
+ import React from 'react';
+-type UserRef<T> = ((instance: T | null) => void) | React.RefObject<T> | null | undefined;
++type UserRef<T> = ((instance: T | null) => void) | React.RefObject<T | null> | null | undefined;
+ declare const useComposedRef: <T extends HTMLElement>(libRef: React.MutableRefObject<T | null>, userRef: UserRef<T>) => (instance: T | null) => void;
+ export default useComposedRef;

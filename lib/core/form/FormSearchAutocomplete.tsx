@@ -23,7 +23,6 @@ export function FormSearchAutocomplete<T extends object>(
 
 	return (
 		<SearchAutocomplete<T>
-			color="form"
 			{...mergeProps(props, {
 				onBlur: input.onBlur,
 				onFocus: input.onFocus,

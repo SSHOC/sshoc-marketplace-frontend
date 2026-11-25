@@ -86,6 +86,8 @@ export function useCreateOrUpdateTrainingMaterial(
 			return createOrUpdateTrainingMaterial(params, data, session);
 		},
 		{
+			// Save failures belong to the form so edits survive and the user can retry.
+			useErrorBoundary: false,
 			...options,
 			onSuccess(trainingMaterial, ...args) {
 				const pathname = `/training-material/${trainingMaterial.persistentId}`;

@@ -11,8 +11,17 @@ import type { AuthData } from "@/data/sshoc/api/common";
 
 const defaultReponseType = "json" as const;
 
-export const createUrl = (init: Omit<UrlInit, "baseUrl">): URL => {
-	return _createUrl({ baseUrl, ...init });
+type QueryValue = string | number | boolean | null | undefined;
+type QueryParams<T> = { [K in keyof T]: QueryValue | Array<QueryValue> };
+
+export const createUrl = <T extends QueryParams<T>>(
+	init: Omit<UrlInit, "baseUrl" | "searchParams"> & { searchParams?: T },
+): URL => {
+	const searchParams: Record<string, QueryValue | Array<QueryValue>> = {};
+	for (const key in init.searchParams) {
+		searchParams[key] = init.searchParams[key];
+	}
+	return _createUrl({ ...init, baseUrl, searchParams });
 };
 
 export const request = (
@@ -20,7 +29,11 @@ export const request = (
 	init: RequestOptions,
 	auth?: AuthData,
 ): ReturnType<typeof _request> => {
-	const options = { responseType: defaultReponseType, ...init, auth };
+	const options = {
+		responseType: defaultReponseType,
+		...init,
+		auth: auth?.token == null ? undefined : { token: auth.token },
+	};
 
 	/**
 	 * Avoid sending empty query params.

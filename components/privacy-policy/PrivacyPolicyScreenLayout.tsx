@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/privacy-policy/PrivacyPolicyScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface PrivacyPolicyScreenLayoutProps {
 	children?: ReactNode;

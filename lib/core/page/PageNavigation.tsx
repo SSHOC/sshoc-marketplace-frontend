@@ -1,8 +1,8 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 import { chain } from "react-aria";
 import {

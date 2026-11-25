@@ -1,7 +1,8 @@
+import css from "@/components/account/ActorSearchResultsHeader.module.css";
+
 import type { ReactNode } from "react";
 
 import { ActorSearchField } from "@/components/account/ActorSearchField";
-import css from "@/components/account/ActorSearchResultsHeader.module.css";
 import { ActorSearchResultsPageNavigation } from "@/components/account/ActorSearchResultsPageNavigation";
 import { CreateActorButton } from "@/components/common/CreateActorButton";
 

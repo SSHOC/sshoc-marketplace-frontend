@@ -1,7 +1,7 @@
 import { HttpError } from "@stefanprobst/request";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation } from "react-query";

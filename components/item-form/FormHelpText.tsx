@@ -1,7 +1,7 @@
+import css from "@/components/item-form/FormHelpText.module.css";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
-
-import css from "@/components/item-form/FormHelpText.module.css";
 
 export function FormHelpText(): ReactNode {
 	return (

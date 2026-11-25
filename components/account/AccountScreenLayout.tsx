@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/account/AccountScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface AccountScreenLayoutProps {
 	children?: ReactNode;

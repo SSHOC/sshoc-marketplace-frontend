@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import AsteriskIcon from "@/lib/core/ui/icons/asterisk.svg?symbol-icon";
+import AsteriskIcon from "@/lib/core/ui/icons/asterisk";
 
 export interface RequiredIndicatorProps {
 	isRequired?: boolean;

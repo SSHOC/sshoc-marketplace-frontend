@@ -1,10 +1,11 @@
+import css from "@/components/item-history/ItemHistorySearchResults.module.css";
+
 import { HttpError } from "@stefanprobst/request";
 import type { ReactNode } from "react";
 import type { UseQueryResult } from "react-query";
 
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { ItemHistorySearchResult } from "@/components/item-history/ItemHistorySearchResult";
-import css from "@/components/item-history/ItemHistorySearchResults.module.css";
 import type { ItemCategory, ItemHistoryEntry } from "@/data/sshoc/api/item";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";

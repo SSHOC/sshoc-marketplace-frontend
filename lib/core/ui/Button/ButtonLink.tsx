@@ -1,3 +1,6 @@
+import buttonCss from "@/lib/core/ui/Button/Button.module.css";
+import css from "@/lib/core/ui/Link/Link.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
@@ -8,9 +11,7 @@ import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
-import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 import type { LinkProps } from "@/lib/core/ui/Link/Link";
-import css from "@/lib/core/ui/Link/Link.module.css";
 
 export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, "style"> {
 	children: ReactNode;

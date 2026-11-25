@@ -1,12 +1,15 @@
+import css from "@/lib/core/ui/HelpText/HelpText.module.css";
+
 import type { HelpTextProps as AriaHelpTextProps, Validation } from "@react-types/shared";
 import type { ForwardedRef, HTMLAttributes, ReactNode } from "react";
 import { forwardRef, Fragment } from "react";
 
-import css from "@/lib/core/ui/HelpText/HelpText.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import AlertIcon from "@/lib/core/ui/icons/alert.svg?symbol-icon";
+import AlertIcon from "@/lib/core/ui/icons/alert";
 
-export interface HelpTextProps extends AriaHelpTextProps, Validation {
+export interface HelpTextProps
+	extends Omit<AriaHelpTextProps, "errorMessage">, Omit<Validation, "validate"> {
+	errorMessage?: ReactNode;
 	descriptionProps?: HTMLAttributes<HTMLElement>;
 	errorMessageProps?: HTMLAttributes<HTMLElement>;
 	isDisabled?: boolean;

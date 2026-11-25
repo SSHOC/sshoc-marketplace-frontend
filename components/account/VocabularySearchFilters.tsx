@@ -1,3 +1,5 @@
+import css from "@/components/account/VocabularySearchFilters.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
@@ -9,7 +11,6 @@ import { useVocabularySearch } from "@/components/account/useVocabularySearch";
 import type { SearchFilters } from "@/components/account/useVocabularySearchFilters";
 import { useVocabularySearchFilters } from "@/components/account/useVocabularySearchFilters";
 import { useVocabularySearchResults } from "@/components/account/useVocabularySearchResults";
-import css from "@/components/account/VocabularySearchFilters.module.css";
 import { getTopFacetValues } from "@/components/common/getTopFacetValues";
 import { Link } from "@/components/common/Link";
 import { SearchFacetsOverlay } from "@/components/common/SearchFacetsOverlay";
@@ -24,7 +25,7 @@ import { Facet, Item as FacetValue } from "@/lib/core/ui/Facet/Facet";
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { length } from "@/lib/utils";

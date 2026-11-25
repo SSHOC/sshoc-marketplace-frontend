@@ -1,12 +1,13 @@
+import css from "@/components/item-form/ReviewControls.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/item-form/ReviewControls.module.css";
 import type { DiffFieldMetadata } from "@/components/item-form/useItemDiffFormFieldsMetadata";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CheckMarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CheckMarkIcon from "@/lib/core/ui/icons/checkmark";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 
 export interface ReviewControlsProps {
 	metadata: DiffFieldMetadata["diff"];

@@ -83,7 +83,7 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): ReactNode {
 				ref={triggerRef}
 				{...triggerProps}
 				aria-label={t("authenticated.forms.edit-field", {
-					field: field.itemLabel,
+					field: field.label,
 				})}
 				onPress={onOpenDialog}
 			>

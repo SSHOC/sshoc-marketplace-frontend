@@ -16,7 +16,7 @@ export function ActorRoleSelect(props: ActorRoleSelectProps): ReactNode {
 	const items = actorRoles.data ?? [];
 
 	return (
-		<FormSelect {...field} isLoading={actorRoles.isLoading} items={items}>
+		<FormSelect {...field} loadingState={actorRoles.isLoading ? "loading" : "idle"} items={items}>
 			{(item) => {
 				return <Item key={item.code}>{item.label}</Item>;
 			}}

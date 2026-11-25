@@ -1,8 +1,9 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/item/ItemMetadata.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import { createKey } from "@/lib/utils/create-key";
 

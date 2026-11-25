@@ -1,9 +1,10 @@
+import css from "@/components/search/SearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { ItemPreview } from "@/components/common/ItemPreview";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { CopyLinkToClipboardButton } from "@/components/search/CopyLinkToClipboardButton";
-import css from "@/components/search/SearchResults.module.css";
 import { useSearchResults } from "@/components/search/useSearchResults";
 import { itemRoutes as routes } from "@/lib/core/navigation/item-routes";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
@@ -42,7 +43,11 @@ export function SearchResults(): ReactNode {
 										item.category !== "step" ? (
 											<span className={css["controls"]}>
 												<CopyLinkToClipboardButton
-													href={routes.ItemPage(item.category)({ persistentId: item.persistentId })}
+													href={{
+														pathname: routes.ItemPage(item.category)({
+															persistentId: item.persistentId,
+														}),
+													}}
 												/>
 											</span>
 										) : null

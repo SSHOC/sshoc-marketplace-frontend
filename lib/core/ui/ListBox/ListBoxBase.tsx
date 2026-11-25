@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+
 import type { AriaListBoxOptions } from "@react-aria/listbox";
 import { useListBox } from "@react-aria/listbox";
 import { mergeProps, useObjectRef } from "@react-aria/utils";
@@ -7,11 +9,18 @@ import type { ListState } from "@react-stately/list";
 import type { ReusableView } from "@react-stately/virtualizer";
 import type { AsyncLoadable, Node } from "@react-types/shared";
 import { useTranslations } from "next-intl";
-import type { CSSProperties, ForwardedRef, HTMLAttributes, ReactNode } from "react";
+import type {
+	CSSProperties,
+	ForwardedRef,
+	HTMLAttributes,
+	KeyboardEvent,
+	ReactElement,
+	ReactNode,
+} from "react";
 import { forwardRef, useMemo, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
-import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+import { createListBoxCollection } from "@/lib/core/ui/ListBox/createListBoxCollection";
 import { ListBoxContext } from "@/lib/core/ui/ListBox/ListBoxContext";
 import { ListBoxOption } from "@/lib/core/ui/ListBox/ListBoxOption";
 import { ListBoxSection } from "@/lib/core/ui/ListBox/ListBoxSection";
@@ -61,7 +70,6 @@ export interface ListBoxBaseProps<T extends object> extends AriaListBoxOptions<T
 	// shouldSelectOnPressUp?: boolean
 	state: ListState<T>;
 	style?: ListBoxBaseStyleProps;
-	transitionDuration?: number;
 }
 
 export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
@@ -78,7 +86,6 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 		shouldSelectOnPressUp,
 		shouldUseVirtualFocus,
 		state,
-		transitionDuration = 0,
 	} = props;
 
 	const t = useTranslations();
@@ -87,22 +94,25 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 		{
 			...props,
 			isVirtualized: true,
-			keyboardDelegate: layout,
+			layoutDelegate: layout,
 		},
 		state,
 		listBoxRef,
 	);
 
-	layout.isLoading = props.isLoading === true;
+	const collection = useMemo(
+		() => createListBoxCollection(state.collection, props.isLoading === true),
+		[state.collection, props.isLoading],
+	);
 
-	type View = ReusableView<Node<T>, unknown>;
+	type View = ReusableView<Node<T>, ReactNode>;
 	const renderWrapper = (
-		parent: View | undefined,
+		parent: View | null,
 		reusableView: View,
 		children: Array<View>,
-		renderChildren: (views: Array<View>) => Array<ReactNode>,
-	): ReactNode => {
-		if (reusableView.viewType === "section") {
+		renderChildren: (views: Array<View>) => Array<ReactElement>,
+	): ReactElement | null => {
+		if (reusableView.viewType === "section" && reusableView.content != null) {
 			return (
 				<ListBoxSection
 					key={reusableView.key}
@@ -129,7 +139,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 				key={reusableView.key}
 				layoutInfo={reusableView.layoutInfo!}
 				virtualizer={reusableView.virtualizer}
-				parent={parent?.layoutInfo}
+				parent={parent?.layoutInfo ?? undefined}
 			>
 				{reusableView.rendered}
 			</VirtualizerItem>
@@ -148,21 +158,24 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 		<ListBoxContext.Provider value={state}>
 			<Virtualizer
 				ref={ref}
-				{...mergeProps(listBoxProps, domProps)}
+				{...mergeProps(listBoxProps, domProps, {
+					onKeyDown(event: KeyboardEvent) {
+						// Aria moves focus for Home/End, but in toggle mode also permits native
+						// page scrolling, which dismisses the popover. Keep these keys in the list.
+						if (state.collection.size > 0 && (event.key === "Home" || event.key === "End"))
+							event.preventDefault();
+					},
+				})}
 				className={css["listbox"]}
 				persistedKeys={persistedKeys}
-				autoFocus={Boolean(props.autoFocus) || undefined}
 				scrollDirection="vertical"
-				collection={state.collection}
+				collection={collection}
 				data-color={color}
 				layout={layout}
-				// @ts-expect-error I guess it's fine.
 				renderWrapper={renderWrapper}
 				isLoading={props.isLoading}
 				onLoadMore={props.onLoadMore}
 				onScroll={onScroll}
-				sizeToFit="height"
-				transitionDuration={transitionDuration}
 			>
 				{(type, item: Node<T>) => {
 					if (type === "item") {
@@ -174,7 +187,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 								shouldUseVirtualFocus={shouldUseVirtualFocus}
 							/>
 						);
-					} else if (type === "loader") {
+					} else if (type === "loader" && props.isLoading) {
 						return (
 							<div
 								/* eslint-disable-next-line jsx-a11y/role-has-required-aria-props */
@@ -192,7 +205,7 @@ export const ListBoxBase = forwardRef(function ListBoxBase<T extends object>(
 								/>
 							</div>
 						);
-					} else if (type === "placeholder") {
+					} else if (type === "loader") {
 						const emptyState = renderEmptyState?.();
 
 						if (emptyState == null) {

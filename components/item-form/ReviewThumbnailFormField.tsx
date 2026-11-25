@@ -1,11 +1,12 @@
+import formFieldListCss from "@/components/common/FormFieldList.module.css";
+import formFieldListItemCss from "@/components/common/FormFieldListItem.module.css";
+
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode, useRef } from "react";
 import { useForm } from "react-final-form";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
 import { FormFieldArrayControls } from "@/components/common/FormFieldArrayControls";
-import formFieldListCss from "@/components/common/FormFieldList.module.css";
-import formFieldListItemCss from "@/components/common/FormFieldListItem.module.css";
 import { FormFieldListItemControls } from "@/components/common/FormFieldListItemControls";
 import { FormRecordAddButton } from "@/components/common/FormRecordAddButton";
 import { FormRecordRemoveButton } from "@/components/common/FormRecordRemoveButton";
@@ -72,12 +73,11 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 					<ReviewField<ItemsDiff["item"]["thumbnail"]>
 						name={field.name}
 						// eslint-disable-next-line react/no-unstable-nested-components
-						review={({ createLabel, status, value }) => {
+						review={({ status, value }) => {
 							return (
 								<Thumbnail
 									color={`review ${status}`}
 									// isReadOnly
-									label={createLabel(field.label)}
 									value={value}
 								/>
 							);

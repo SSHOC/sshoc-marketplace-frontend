@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/Tray/Tray.module.css";
+
 import { useModal, useOverlay, usePreventScroll } from "@react-aria/overlays";
 import { mergeProps, useObjectRef, useViewportSize } from "@react-aria/utils";
 import type { TrayProps } from "@react-types/overlays";
@@ -6,7 +8,6 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 
 import { Overlay } from "@/lib/core/ui/Overlay/Overlay";
 import { Underlay } from "@/lib/core/ui/Overlay/Underlay";
-import css from "@/lib/core/ui/Tray/Tray.module.css";
 
 interface TrayWrapperProps extends HTMLAttributes<HTMLElement> {
 	children: ReactNode;
@@ -21,18 +22,16 @@ export const Tray = forwardRef(function Tray(
 	props: TrayProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
+	const objectRef = useObjectRef(forwardedRef);
 	const { children, isFixedHeight, isNonModal, onClose, ...otherProps } = props;
 
-	const { overlayProps, underlayProps } = useOverlay(
-		{ ...props, isDismissable: true },
-		forwardedRef,
-	);
+	const { overlayProps, underlayProps } = useOverlay({ ...props, isDismissable: true }, objectRef);
 
 	return (
-		<Overlay {...otherProps} nodeRef={forwardedRef}>
+		<Overlay {...otherProps} nodeRef={objectRef}>
 			<Underlay {...underlayProps} />
 			<TrayWrapper
-				ref={forwardedRef}
+				ref={objectRef}
 				isFixedHeight={isFixedHeight}
 				isNonModal={isNonModal}
 				onClose={onClose}

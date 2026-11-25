@@ -1,7 +1,8 @@
+import css from "@/components/common/LastUpdatedTimestamp.module.css";
+
 import { useFormatter, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/common/LastUpdatedTimestamp.module.css";
 import type { IsoDateString } from "@/lib/core/types";
 
 export interface LastUpdatedTimestampProps {

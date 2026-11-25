@@ -1,7 +1,8 @@
+import css from "@/components/account/ContributedItemSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { ContributedItemSearchResult } from "@/components/account/ContributedItemSearchResult";
-import css from "@/components/account/ContributedItemSearchResults.module.css";
 import { useContributedItemsSearchResults } from "@/components/account/useContributedItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";

@@ -1,7 +1,8 @@
+import css from "@/components/account/ActorSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { ActorSearchResult } from "@/components/account/ActorSearchResult";
-import css from "@/components/account/ActorSearchResults.module.css";
 import { useActorSearchResults } from "@/components/account/useActorSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";

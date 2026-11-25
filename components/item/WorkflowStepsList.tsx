@@ -1,3 +1,5 @@
+import css from "@/components/item/WorkflowStepsList.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useRef } from "react";
@@ -8,12 +10,11 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { ItemDescription } from "@/components/item/ItemDescription";
 import { ItemRelatedItems } from "@/components/item/ItemRelatedItems";
-import css from "@/components/item/WorkflowStepsList.module.css";
 import type { Workflow } from "@/data/sshoc/api/workflow";
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 
 export interface WorkflowStepsListProps {
 	steps: Workflow["composedOf"];

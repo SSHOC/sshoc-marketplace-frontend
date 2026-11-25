@@ -1,3 +1,5 @@
+import css from "@/components/common/Pagination.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
@@ -6,9 +8,8 @@ import type { UseQueryResult } from "react-query";
 
 import { Link } from "@/components/common/Link";
 import { NavLink } from "@/components/common/NavLink";
-import css from "@/components/common/Pagination.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 import { toPositiveInteger } from "@/lib/utils";
 import { usePagination } from "@/lib/utils/hooks";
 

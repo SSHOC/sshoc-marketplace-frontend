@@ -1,0 +1,82 @@
+diff --git a/dist/FieldArray.d.ts b/dist/FieldArray.d.ts
+index 8c313083fbe4f1864294ed71fd069e5e86f2f824..d78f1c64a1ff3df13ec230cf1e6d083e3ad99ee0 100644
+--- a/dist/FieldArray.d.ts
++++ b/dist/FieldArray.d.ts
+@@ -1,6 +1,5 @@
+ import { FieldArrayProps } from './types';
+ import { version } from './version';
+ export { version };
+-declare const FieldArray: ({ name, subscription, defaultValue, initialValue, isEqual, validate, ...rest }: FieldArrayProps) => import("react").ReactNode;
++declare const FieldArray: <FieldValue = any, T extends HTMLElement = HTMLElement>(props: FieldArrayProps<FieldValue, T>) => import("react").ReactNode;
+ export default FieldArray;
+-//# sourceMappingURL=FieldArray.d.ts.map
+\ No newline at end of file
+diff --git a/dist/types.d.ts b/dist/types.d.ts
+index 774214e46adc57f6708369649f9e6722a6e0c37b..ebbf64e0b945a3224d126189d912f969609f8637 100644
+--- a/dist/types.d.ts
++++ b/dist/types.d.ts
+@@ -20,20 +20,21 @@ interface Meta {
+     visited?: boolean;
+     [key: string]: any;
+ }
+-export interface FieldArrayRenderProps {
++export interface FieldArrayRenderProps<FieldValue = any, T extends HTMLElement = HTMLElement> {
+     fields: {
+         forEach: (iterator: (name: string, index: number) => void) => void;
+-        insert: (index: number, value: any) => void;
++        insert: (index: number, value: FieldValue) => void;
+         map: <T>(iterator: (name: string, index: number) => T) => T[];
+         move: (from: number, to: number) => void;
++        update: (index: number, value: FieldValue) => void;
+         name: string;
+-        pop: () => any;
+-        push: (value: any) => void;
+-        remove: (index: number) => any;
+-        shift: () => any;
++        pop: () => FieldValue | undefined;
++        push: (value: FieldValue) => void;
++        remove: (index: number) => FieldValue | undefined;
++        shift: () => FieldValue | undefined;
+         swap: (indexA: number, indexB: number) => void;
+-        unshift: (value: any) => void;
+-        value: any[];
++        unshift: (value: FieldValue) => void;
++        value: FieldValue[];
+         length: number;
+     };
+     meta: Meta;
+@@ -43,15 +44,15 @@ export interface RenderableProps<T> {
+     component?: React.ComponentType<T>;
+     render?: (props: T) => React.ReactNode;
+ }
+-export interface UseFieldArrayConfig {
++export interface UseFieldArrayConfig<FieldValue = any> {
+     subscription?: FieldSubscription;
+-    defaultValue?: any;
+-    initialValue?: any;
+-    isEqual?: (a: any[], b: any[]) => boolean;
+-    validate?: (value: any[] | undefined, allValues: Record<string, unknown>, meta: FieldState | undefined) => any | undefined;
++    defaultValue?: FieldValue[];
++    initialValue?: FieldValue[];
++    isEqual?: (a: FieldValue[], b: FieldValue[]) => boolean;
++    validate?: (value: FieldValue[] | undefined, allValues: Record<string, unknown>, meta: FieldState<FieldValue[]> | undefined) => any | undefined;
+ }
+-export type FieldArrayProps = {
++export type FieldArrayProps<FieldValue = any, T extends HTMLElement = HTMLElement> = {
+     name: string;
+-} & UseFieldArrayConfig & RenderableProps<FieldArrayRenderProps>;
++} & UseFieldArrayConfig<FieldValue> & RenderableProps<FieldArrayRenderProps<FieldValue, T>>;
+ export {};
+ //# sourceMappingURL=types.d.ts.map
+\ No newline at end of file
+diff --git a/dist/useFieldArray.d.ts b/dist/useFieldArray.d.ts
+index 8105df090ba7f7e13761cd8c5f0a11fcd161f9cb..61e8e703ecf49e4ea9179b8e0d01869d712fae8d 100644
+--- a/dist/useFieldArray.d.ts
++++ b/dist/useFieldArray.d.ts
+@@ -1,4 +1,3 @@
+ import { FieldArrayRenderProps, UseFieldArrayConfig } from './types';
+-declare const useFieldArray: (name: string, { subscription, defaultValue, initialValue, isEqual, validate: validateProp }?: UseFieldArrayConfig) => FieldArrayRenderProps;
++declare const useFieldArray: <FieldValue = any, T extends HTMLElement = HTMLElement>(name: string, config?: UseFieldArrayConfig<FieldValue>) => FieldArrayRenderProps<FieldValue, T>;
+ export default useFieldArray;
+-//# sourceMappingURL=useFieldArray.d.ts.map
+\ No newline at end of file

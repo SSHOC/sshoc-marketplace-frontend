@@ -1,6 +1,8 @@
+import css from "@/lib/core/ui/ModalDialog/ModalDialog.module.css";
+
 import { useDialog } from "@react-aria/dialog";
 import { FocusScope } from "@react-aria/focus";
-import type { OverlayProps as AriaOverlayProps } from "@react-aria/overlays";
+import type { AriaOverlayProps } from "@react-aria/overlays";
 import { OverlayContainer, useModal, useOverlay, usePreventScroll } from "@react-aria/overlays";
 import { mergeProps } from "@react-aria/utils";
 import type { AriaDialogProps } from "@react-types/dialog";
@@ -8,7 +10,6 @@ import type { CSSProperties, ReactNode } from "react";
 import { useRef } from "react";
 
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
-import css from "@/lib/core/ui/ModalDialog/ModalDialog.module.css";
 import { Underlay } from "@/lib/core/ui/Overlay/Underlay";
 
 export interface ModalDialogStyleProps {

@@ -1,6 +1,7 @@
+import css from "@/components/account/ContributedItemSearchResultsHeader.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/ContributedItemSearchResultsHeader.module.css";
 import { ContributedItemSearchResultsPageNavigation } from "@/components/account/ContributedItemSearchResultsPageNavigation";
 import { ContributedItemsSearchSortOrderSelect } from "@/components/account/ContributedItemsSearchSortOrderSelect";
 

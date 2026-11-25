@@ -81,6 +81,8 @@ export function useCreateOrUpdatePublication(
 			return createOrUpdatePublication(params, data, session);
 		},
 		{
+			// Save failures belong to the form so edits survive and the user can retry.
+			useErrorBoundary: false,
 			...options,
 			onSuccess(publication, ...args) {
 				const pathname = `/publication/${publication.persistentId}`;

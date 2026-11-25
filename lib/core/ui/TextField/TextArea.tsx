@@ -12,7 +12,9 @@ import { forwardRef, useRef } from "react";
 import type { TextFieldBaseStyleProps } from "@/lib/core/ui/TextField/TextFieldBase";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
-export interface TextAreaProps extends Omit<AriaTextFieldProps, "type">, LabelableProps {
+export interface TextAreaProps
+	extends Omit<AriaTextFieldProps<HTMLTextAreaElement>, "type" | "errorMessage">, LabelableProps {
+	errorMessage?: ReactNode;
 	/** @default 'primary' */
 	color?:
 		| "form"

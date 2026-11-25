@@ -1,7 +1,7 @@
 import { useError } from "@stefanprobst/next-error-boundary";
 import { HttpError } from "@stefanprobst/request";
-import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { type ReactNode, useEffect } from "react";
 
 import { SignInForm } from "@/components/auth/SignInForm";
@@ -53,7 +53,7 @@ export function RootErrorFallback(): ReactNode {
 			<ErrorMessage
 				statusCode={error instanceof HttpError ? error.response.status : undefined}
 				message={error.message}
-				onReset={onReset}
+				onRetry={onReset}
 			/>
 		</FullPage>
 	);

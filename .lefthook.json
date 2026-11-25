@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/lefthook/schema.json",
+	"pre-commit": {
+		"commands": {
+			"oxlint": {
+				"run": "pnpm exec oxlint --fix --type-aware --type-check --no-error-on-unmatched-pattern {staged_files}",
+				"stage_fixed": true,
+				"priority": 1
+			},
+			"stylelint": {
+				"glob": "*.css",
+				"run": "pnpm exec stylelint --fix {staged_files}",
+				"stage_fixed": true,
+				"priority": 2
+			},
+			"oxfmt": {
+				"run": "pnpm exec oxfmt --write --no-error-on-unmatched-pattern {staged_files}",
+				"stage_fixed": true,
+				"priority": 3
+			}
+		}
+	}
+}

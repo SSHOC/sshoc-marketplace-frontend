@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { ReactNode, RefObject } from "react";
 import { Children, cloneElement, isValidElement } from "react";
 import { Transition } from "react-transition-group";
 import type { TransitionActions, TransitionProps } from "react-transition-group/Transition";
@@ -19,19 +19,19 @@ const timeout = { enter: 0, exit: 0 }; // FIXME:
 export interface OpenTransitionProps
 	extends
 		Pick<
-			TransitionProps,
+			TransitionProps<HTMLElement>,
 			"in" | "onEnter" | "onEntered" | "onEntering" | "onExit" | "onExited" | "onExiting"
 		>,
 		Pick<TransitionActions, "appear"> {
 	children: ReactNode;
-	nodeRef: Ref<HTMLElement>;
+	nodeRef: RefObject<HTMLElement | null>;
 }
 
 export function OpenTransition(props: OpenTransitionProps): ReactNode {
 	const { children, nodeRef } = props;
 
 	return (
-		<Transition
+		<Transition<HTMLElement>
 			{...props}
 			// addEndListener={(done) => {
 			//   if (nodeRef?.current != null) {
@@ -44,7 +44,7 @@ export function OpenTransition(props: OpenTransitionProps): ReactNode {
 		>
 			{(state) => {
 				return Children.map(children, (child) => {
-					if (!isValidElement(child)) {
+					if (!isValidElement<{ isOpen: boolean; transitionState: string }>(child)) {
 						return null;
 					}
 

@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/item/ItemVersionScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface ItemVersionScreenLayoutProps {
 	children?: ReactNode;

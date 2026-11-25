@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+
 import { useListBoxSection } from "@react-aria/listbox";
 import {
 	layoutInfoToStyle,
@@ -9,7 +11,6 @@ import type { Node } from "@react-types/shared";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef, Fragment, useRef } from "react";
 
-import css from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
 import { useListBoxContext } from "@/lib/core/ui/ListBox/useListBoxContext";
 
 export interface ListBoxSectionProps<T extends object> extends Omit<

@@ -1,8 +1,9 @@
+import css from "@/components/item-form/ReviewField.module.css";
+
 import type { ReactNode } from "react";
 import type { FieldArrayRenderProps } from "react-final-form-arrays";
 
 import { ReviewControls } from "@/components/item-form/ReviewControls";
-import css from "@/components/item-form/ReviewField.module.css";
 import type { Status } from "@/components/item-form/useItemDiffFormFieldsMetadata";
 import { useReviewFieldLabels } from "@/components/item-form/useReviewFieldLabels";
 import { useReviewFieldListItemMetadata } from "@/components/item-form/useReviewFieldListItemMetadata";

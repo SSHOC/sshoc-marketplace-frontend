@@ -1,8 +1,9 @@
+import css from "@/components/item/ItemTitle.module.css";
+
 import type { ReactNode } from "react";
 
 import { ScreenTitle } from "@/components/common/ScreenTitle";
 import { CopyLinkToClipboardButton } from "@/components/item/CopyLinkToClipboardButton";
-import css from "@/components/item/ItemTitle.module.css";
 import { ItemTitleImage } from "@/components/item/ItemTitleImage";
 import type { Item } from "@/data/sshoc/api/item";
 import { usePathname } from "@/lib/core/navigation/usePathname";

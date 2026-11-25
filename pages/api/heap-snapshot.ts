@@ -16,6 +16,7 @@ export default async function handler(
 		return;
 	}
 
+	// oxlint-disable-next-line no-restricted-properties -- Optional diagnostic secret, separate from app environment validation.
 	const secret = process.env.DEBUG_TOKEN;
 
 	if (!isNonEmptyString(secret)) {

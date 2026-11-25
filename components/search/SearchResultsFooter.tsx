@@ -1,6 +1,7 @@
+import css from "@/components/search/SearchResultsFooter.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/search/SearchResultsFooter.module.css";
 import { SearchResultsPageNavigation } from "@/components/search/SearchResultsPageNavigation";
 
 export function SearchResultsFooter(): ReactNode {

@@ -1,10 +1,11 @@
+import css from "@/components/browse/BrowseFacetValues.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { createUrlSearchParams } from "@stefanprobst/request";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useMemo } from "react";
 import { useCollator } from "react-aria";
 
-import css from "@/components/browse/BrowseFacetValues.module.css";
 import { Link } from "@/components/common/Link";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import type { ItemFacet, ItemSearch } from "@/data/sshoc/api/item";

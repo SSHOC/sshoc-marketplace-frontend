@@ -27,14 +27,18 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
 	return (
 		<SearchResult>
 			<SearchResultTitle>
-				<ItemLink
-					category={item.category}
-					persistentId={item.persistentId}
-					status={item.status}
-					versionId={item.id}
-				>
-					{item.label}
-				</ItemLink>
+				{item.category === "step" ? (
+					item.label
+				) : (
+					<ItemLink
+						category={item.category}
+						persistentId={item.persistentId}
+						status={item.status}
+						versionId={item.id}
+					>
+						{item.label}
+					</ItemLink>
+				)}
 			</SearchResultTitle>
 			<SearchResultMeta>
 				<MetadataValue size="sm">
@@ -57,7 +61,7 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
 				</MetadataValues>
 			</SearchResultContent>
 			<SearchResultControls>
-				{item.status === "approved" ? (
+				{item.category !== "step" && item.status === "approved" ? (
 					<Link
 						href={itemRoutes.ItemEditPage(item.category)({ persistentId: item.persistentId })}
 						aria-label={t("authenticated.contributed-items.edit-item", {
@@ -67,7 +71,7 @@ export function ContributedItemSearchResult(props: ContributedItemSearchResultPr
 						{t("authenticated.controls.edit")}
 					</Link>
 				) : null}
-				{["draft", "suggested", "ingested"].includes(item.status) ? (
+				{item.category !== "step" && ["draft", "suggested", "ingested"].includes(item.status) ? (
 					<Link
 						href={itemRoutes.ItemEditVersionPage(item.category)({
 							persistentId: item.persistentId,

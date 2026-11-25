@@ -1,20 +1,22 @@
+import css from "@/lib/core/ui/Menu/Menu.module.css";
+
 import { useMenu } from "@react-aria/menu";
 import { mergeProps } from "@react-aria/utils";
 import { useTreeState } from "@react-stately/tree";
 import type { AriaMenuProps } from "@react-types/menu";
 import type { Alignment } from "@react-types/shared";
-import type { ForwardedRef, ReactNode } from "react";
+import type { ForwardedRef, Key, ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
-import css from "@/lib/core/ui/Menu/Menu.module.css";
 import { MenuItem } from "@/lib/core/ui/Menu/MenuItem";
 import { MenuSection } from "@/lib/core/ui/Menu/MenuSection";
 import { useMenuContext } from "@/lib/core/ui/Menu/useMenuContext";
 
-export interface MenuProps<T extends object> extends AriaMenuProps<T> {
+export interface MenuProps<T extends object> extends Omit<AriaMenuProps<T>, "onAction"> {
 	/** @default 'start' */
 	align?: Alignment;
+	onAction?: (key: Key) => void;
 	/** @default 'bottom' */
 	direction?: "bottom" | "end" | "left" | "right" | "start" | "top";
 	/** @default true */

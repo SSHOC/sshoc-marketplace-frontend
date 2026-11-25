@@ -1,7 +1,8 @@
+import css from "@/components/item-form/ReviewField.module.css";
+
 import type { ReactNode } from "react";
 
 import { ReviewControls } from "@/components/item-form/ReviewControls";
-import css from "@/components/item-form/ReviewField.module.css";
 import type { Status } from "@/components/item-form/useItemDiffFormFieldsMetadata";
 import { useReviewFieldMetadata } from "@/components/item-form/useReviewFieldMetadata";
 

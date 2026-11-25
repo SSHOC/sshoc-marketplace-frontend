@@ -36,7 +36,7 @@
 			display: grid;
 			padding-right: 0.5em;
 			text-decoration: none;
-			opacity: 0%;
+			opacity: 0;
 			place-items: center;
 			inset-block: 0;
 		}
@@ -44,7 +44,7 @@
 		&:hover > a,
 		& > a:focus,
 		& > a:hover {
-			opacity: 100%;
+			opacity: 1;
 		}
 	}
 

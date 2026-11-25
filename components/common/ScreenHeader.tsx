@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/common/ScreenHeader.module.css";
+
+import type { ReactNode } from "react";
 
 export interface ScreenHeaderProps {
 	children?: ReactNode;

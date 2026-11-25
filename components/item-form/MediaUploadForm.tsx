@@ -35,7 +35,7 @@ export function MediaUploadForm(props: MediaUploadFormProps): ReactNode {
 	const t = useTranslations();
 	const fields = useMediaUploadFormFields();
 
-	const errorMap: z.ZodErrorMap = function errorMap(issue, context) {
+	const errorMap: z.ZodErrorMap = function errorMap(issue) {
 		switch (issue.code) {
 			case z.ZodIssueCode.custom: {
 				const mediaInput = issue.params?.["mediaInput"];
@@ -55,7 +55,7 @@ export function MediaUploadForm(props: MediaUploadFormProps): ReactNode {
 				break;
 		}
 
-		return { message: context.defaultError };
+		return undefined;
 	};
 
 	return (

@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/CheckBox/CheckBoxBase.module.css";
+
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps } from "@react-aria/utils";
@@ -7,15 +9,14 @@ import { forwardRef, useRef } from "react";
 import useComposedRef from "use-composed-ref";
 
 import type { CheckBoxProps } from "@/lib/core/ui/CheckBox/CheckBox";
-import css from "@/lib/core/ui/CheckBox/CheckBoxBase.module.css";
 import { Field } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CheckMarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
-import DashIcon from "@/lib/core/ui/icons/dash.svg?symbol-icon";
+import CheckMarkIcon from "@/lib/core/ui/icons/checkmark";
+import DashIcon from "@/lib/core/ui/icons/dash";
 import { RequiredIndicator } from "@/lib/core/ui/RequiredIndicator/RequiredIndicator";
 
 export interface CheckBoxBaseProps extends CheckBoxProps {
-	checkBoxRef: RefObject<HTMLInputElement>;
+	checkBoxRef: RefObject<HTMLInputElement | null>;
 	inputProps: InputHTMLAttributes<HTMLInputElement>;
 	isDisabled?: boolean;
 	isSelected?: boolean;

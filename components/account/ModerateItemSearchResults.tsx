@@ -1,7 +1,8 @@
+import css from "@/components/account/ModerateItemSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { ModerateItemSearchResult } from "@/components/account/ModerateItemSearchResult";
-import css from "@/components/account/ModerateItemSearchResults.module.css";
 import { useModerateItemsSearchResults } from "@/components/account/useModerateItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import { Centered } from "@/lib/core/ui/Centered/Centered";

@@ -1,8 +1,9 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Timestamp } from "@/components/common/Timestamp";
-import css from "@/components/item/ItemMetadata.module.css";
 import type { IsoDateString } from "@/data/sshoc/lib/types";
 
 export interface ItemDateCreatedProps {

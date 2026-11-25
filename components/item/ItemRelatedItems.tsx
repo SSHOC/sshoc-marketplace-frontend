@@ -1,3 +1,5 @@
+import css from "@/components/item/ItemRelatedItems.module.css";
+
 import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 
@@ -5,7 +7,6 @@ import { ItemPreview } from "@/components/common/ItemPreview";
 import { ItemsCount } from "@/components/common/ItemsCount";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import css from "@/components/item/ItemRelatedItems.module.css";
 import { initialRelatedItemsCount, relatedItemsPage } from "@/config/sshoc.config";
 import type { Item } from "@/data/sshoc/api/item";
 import { Button } from "@/lib/core/ui/Button/Button";

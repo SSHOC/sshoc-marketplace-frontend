@@ -135,7 +135,7 @@ export function ActorIdentifierServiceSelect(props: ActorIdentifierServiceSelect
 	const items = actorSources.data ?? [];
 
 	return (
-		<FormSelect {...field} isLoading={actorSources.isLoading} items={items}>
+		<FormSelect {...field} loadingState={actorSources.isLoading ? "loading" : "idle"} items={items}>
 			{(item) => {
 				return <Item key={item.code}>{item.label}</Item>;
 			}}

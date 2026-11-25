@@ -1,4 +1,4 @@
-import { useIsSSR } from "@react-aria/ssr";
+import { useIsSSR } from "react-aria";
 
 const MOBILE_SCREEN_WIDTH = 640;
 

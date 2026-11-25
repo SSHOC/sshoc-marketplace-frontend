@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+import css from "@/components/item/ItemVersionControls.module.css";
+
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 
 import { LinkButton } from "@/components/common/LinkButton";
-import css from "@/components/item/ItemVersionControls.module.css";
 import type { Item, ItemCategory, ItemStatus } from "@/data/sshoc/api/item";
 import { useDeleteDatasetVersion } from "@/data/sshoc/hooks/dataset";
 import { useDeletePublicationVersion } from "@/data/sshoc/hooks/publication";

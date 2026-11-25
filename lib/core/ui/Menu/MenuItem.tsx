@@ -1,3 +1,5 @@
+import css from "@/lib/core/ui/Menu/Menu.module.css";
+
 import { useFocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { useMenuItem } from "@react-aria/menu";
@@ -10,8 +12,7 @@ import useComposedRef from "use-composed-ref";
 
 import { Link } from "@/components/common/Link";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CheckmarkIcon from "@/lib/core/ui/icons/checkmark.svg?symbol-icon";
-import css from "@/lib/core/ui/Menu/Menu.module.css";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import { useMenuContext } from "@/lib/core/ui/Menu/useMenuContext";
 
 export interface MenuItemProps<T extends object> {

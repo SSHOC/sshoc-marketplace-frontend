@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -40,7 +41,6 @@ import { PageMainContent } from "@/lib/core/page/PageMainContent";
 import type { IsoDateString } from "@/lib/core/types";
 import { Breadcrumbs } from "@/lib/core/ui/Breadcrumbs/Breadcrumbs";
 import { useMdx } from "@/lib/utils/hooks/useMdx";
-import { existsSync } from "node:fs";
 
 export namespace AboutPage {
 	export interface PathParamsInput extends ParamsInput {
@@ -139,7 +139,6 @@ export default function AboutPage(props: AboutPage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error This is fine.
 									a: Link,
 									ApiEndpoint,
 									ApiParamSelect,

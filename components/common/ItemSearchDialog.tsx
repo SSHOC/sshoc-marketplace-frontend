@@ -1,9 +1,10 @@
+import css from "@/components/common/ItemSearchDialog.module.css";
+
 import { useId } from "@react-aria/utils";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef, useState } from "react";
 
-import css from "@/components/common/ItemSearchDialog.module.css";
 import { ItemSearchTermAutocomplete } from "@/components/common/ItemSearchTermAutocomplete";
 import { useSearchItems } from "@/components/common/useSearchItems";
 import { ModalDialog } from "@/components/search/ModalDialog";

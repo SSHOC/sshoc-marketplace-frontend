@@ -7,7 +7,8 @@ import { useRef } from "react";
 
 import { CheckBoxBase } from "@/lib/core/ui/CheckBox/CheckBoxBase";
 
-export interface CheckBoxProps extends AriaCheckboxProps {
+export interface CheckBoxProps extends Omit<AriaCheckboxProps, "errorMessage"> {
+	errorMessage?: ReactNode;
 	validationMessage?: ReactNode;
 	necessityIndicator?: NecessityIndicator;
 	/** @default 'primary' */

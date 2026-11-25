@@ -1,7 +1,8 @@
+import css from "@/components/account/DraftItemSearchResults.module.css";
+
 import type { ReactNode } from "react";
 
 import { DraftItemSearchResult } from "@/components/account/DraftItemSearchResult";
-import css from "@/components/account/DraftItemSearchResults.module.css";
 import { useDraftItemsSearchResults } from "@/components/account/useDraftItemsSearchResults";
 import { NoSearchResultsFound } from "@/components/common/NoSearchResultsFound";
 import type { ItemCategory, ItemCore } from "@/data/sshoc/api/item";

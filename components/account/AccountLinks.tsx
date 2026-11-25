@@ -1,6 +1,7 @@
+import css from "@/components/account/AccountLinks.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/AccountLinks.module.css";
 import { useAccountLinks } from "@/components/account/useAccountLinks";
 import { Link } from "@/components/common/Link";
 

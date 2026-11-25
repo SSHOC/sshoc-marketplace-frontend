@@ -1,7 +1,8 @@
+import css from "@/components/account/VocabularySearchResultsHeader.module.css";
+
 import type { ReactNode } from "react";
 
 import { VocabularySearchField } from "@/components/account/VocabularySearchField";
-import css from "@/components/account/VocabularySearchResultsHeader.module.css";
 import { VocabularySearchResultsPageNavigation } from "@/components/account/VocabularySearchResultsPageNavigation";
 
 export function VocabularySearchResultsHeader(): ReactNode {

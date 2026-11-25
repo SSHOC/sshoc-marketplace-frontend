@@ -1,7 +1,8 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import css from "@/components/item/ItemMetadata.module.css";
 import type { User } from "@/data/sshoc/api/user";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 

@@ -1,0 +1,37 @@
+diff --git a/dist/final-form.cjs.js b/dist/final-form.cjs.js
+index 7c0811cff82376407b360b2adf2200da5714f91c..a63f4deaac975785a18a2245cca4178f5be6c7d8 100644
+--- a/dist/final-form.cjs.js
++++ b/dist/final-form.cjs.js
+@@ -800,6 +800,7 @@ function createForm(config) {
+     var safeFields = _extends({}, fields);
+     var notifyField = function notifyField(name) {
+       var field = safeFields[name];
++      if (field == null) return;
+       var fieldState = publishFieldState(formState, field);
+       var lastFieldState = field.lastFieldState;
+       field.lastFieldState = fieldState;
+diff --git a/dist/final-form.es.js b/dist/final-form.es.js
+index 31e700b1b7528a380a999b354034b8c79713049a..0284ec5edc9acc291fe2fa7d8b5b72bae04d17bf 100644
+--- a/dist/final-form.es.js
++++ b/dist/final-form.es.js
+@@ -798,6 +798,7 @@ function createForm(config) {
+     var safeFields = _extends({}, fields);
+     var notifyField = function notifyField(name) {
+       var field = safeFields[name];
++      if (field == null) return;
+       var fieldState = publishFieldState(formState, field);
+       var lastFieldState = field.lastFieldState;
+       field.lastFieldState = fieldState;
+diff --git a/dist/types.d.ts b/dist/types.d.ts
+index 39a794bbc530707af70969e314bf744c908db5cd..246f5441d75224db81d5fc2af7dc71cc37a3cb1e 100644
+--- a/dist/types.d.ts
++++ b/dist/types.d.ts
+@@ -205,7 +205,7 @@ export interface FormApi<FormValues = Record<string, any>, InitialFormValues ext
+     getRegisteredFields: () => string[];
+     getState: () => FormState<FormValues, InitialFormValues>;
+     mutators: Record<string, (...args: any[]) => any>;
+-    pauseValidation: () => void;
++    pauseValidation: (preventNotification?: boolean) => void;
+     registerField: RegisterField<FormValues>;
+     reset: (initialValues?: InitialFormValues) => void;
+     resetFieldState: (name: keyof FormValues) => void;

@@ -1,7 +1,8 @@
+import css from "@/components/item/ItemDescription.module.css";
+
 import type { ReactNode } from "react";
 
 import { Prose } from "@/components/common/Prose";
-import css from "@/components/item/ItemDescription.module.css";
 import { useMarkdownSync } from "@/lib/utils/hooks";
 
 export interface ItemDescriptionProps {

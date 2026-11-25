@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/common/MetadataLabel.module.css";
+
+import type { ReactNode } from "react";
 
 export interface MetadataLabelProps {
 	children?: ReactNode;

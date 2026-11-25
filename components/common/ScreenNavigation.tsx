@@ -1,9 +1,10 @@
+import css from "@/components/common/ScreenNavigation.module.css";
+
 import type { ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
-import css from "@/components/common/ScreenNavigation.module.css";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import TriangleIcon from "@/lib/core/ui/icons/triangle.svg?symbol-icon";
+import TriangleIcon from "@/lib/core/ui/icons/triangle";
 
 export interface ScreenNavigationProps {
 	label: string;

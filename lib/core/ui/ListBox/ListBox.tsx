@@ -15,7 +15,7 @@ export const ListBox = forwardRef(function ListBox<T extends object>(
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
 	const state = useListState<T>(props);
-	const layout = useListBoxLayout<T>(state);
+	const layout = useListBoxLayout<T>();
 	const ref = useObjectRef(forwardedRef);
 
 	return <ListBoxBase<T> ref={ref} {...props} layout={layout} state={state} />;

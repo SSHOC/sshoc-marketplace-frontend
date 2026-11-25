@@ -1,14 +1,14 @@
+import css from "@/components/search/ModalDialog.module.css";
+
 import { useDialog } from "@react-aria/dialog";
 import { FocusScope } from "@react-aria/focus";
-import type { OverlayProps } from "@react-aria/overlays";
+import type { AriaOverlayProps } from "@react-aria/overlays";
 import { useModal, useOverlay, usePreventScroll } from "@react-aria/overlays";
 import type { AriaDialogProps } from "@react-types/dialog";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 
-import css from "@/components/search/ModalDialog.module.css";
-
-export interface ModalDialogProps extends OverlayProps, AriaDialogProps {
+export interface ModalDialogProps extends AriaOverlayProps, AriaDialogProps {
 	title?: ReactNode;
 	children?: ReactNode;
 }

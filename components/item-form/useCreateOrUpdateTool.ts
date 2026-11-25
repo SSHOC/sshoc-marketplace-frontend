@@ -73,6 +73,8 @@ export function useCreateOrUpdateTool(
 			return createOrUpdateTool(params, data, session);
 		},
 		{
+			// Save failures belong to the form so edits survive and the user can retry.
+			useErrorBoundary: false,
 			...options,
 			onSuccess(tool, ...args) {
 				const pathname = `/tool-or-service/${tool.persistentId}`;

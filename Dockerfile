@@ -9,16 +9,16 @@
 # image optimisation is also disabled temporarily
 
 # build
-FROM node:24-slim AS build
+FROM node:26-slim AS build
 
-RUN corepack enable
+RUN npm install --global pnpm@12.23.0
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 USER node
 
-COPY --chown=node:node .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY ./patches ./patches
 
 ENV CI=true
@@ -65,7 +65,7 @@ RUN --mount=type=secret,id=KEYSTATIC_GITHUB_CLIENT_ID,uid=1000 \
 		pnpm run build
 
 # serve
-FROM node:24-slim AS serve
+FROM node:26-slim AS serve
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app

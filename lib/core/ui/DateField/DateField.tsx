@@ -12,9 +12,16 @@ import { forwardRef, useRef } from "react";
 import type { TextFieldBaseStyleProps } from "@/lib/core/ui/TextField/TextFieldBase";
 import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
-export interface DateFieldProps extends AriaTextFieldProps, LabelableProps {
+export interface DateFieldProps extends Omit<AriaTextFieldProps, "errorMessage">, LabelableProps {
 	/** @default 'primary' */
-	color?: "form" | "primary";
+	color?:
+		| "form"
+		| "primary"
+		| "review changed"
+		| "review deleted"
+		| "review inserted"
+		| "review unchanged";
+	errorMessage?: ReactNode;
 	icon?: ReactNode;
 	isRequired?: boolean;
 	/** @default 'start' */

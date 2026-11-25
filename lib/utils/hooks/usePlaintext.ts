@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import withGfm from "remark-gfm";
 import fromMarkdown from "remark-parse";
 import stripMarkdown from "strip-markdown";
-import { unified } from "unified";
+import { type Processor, unified } from "unified";
 
 const processor = unified()
 	.use(fromMarkdown)
 	.use(withGfm)
 	.use(stripMarkdown)
-	.use(function toPlaintext() {
+	.use(function toPlaintext(this: Processor<Root, Root, Root, Root, string>) {
 		/**
 		 * Avoid escaping character references.
 		 *

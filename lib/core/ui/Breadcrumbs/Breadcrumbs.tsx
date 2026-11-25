@@ -1,8 +1,9 @@
+import css from "@/lib/core/ui/Breadcrumbs/Breadcrumbs.module.css";
+
 import { useTranslations } from "next-intl";
 import { Fragment, type ReactNode } from "react";
 
 import { NavLink } from "@/components/common/NavLink";
-import css from "@/lib/core/ui/Breadcrumbs/Breadcrumbs.module.css";
 
 export interface BreadcrumbsProps {
 	links: Array<{ href: string; label: string; isCurrent?: boolean; isDisabled?: boolean }>;

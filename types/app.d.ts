@@ -1,5 +1,3 @@
-/// <reference types="@stefanprobst/next-svg/types" />
-
 type DeepNonNullable<T> = {
 	[K in keyof T]-?: NonNullable<T[K]>;
 };
@@ -52,57 +50,4 @@ declare module "*.mdx" {
 
 	export default content;
 	export { metadata };
-}
-
-/**
- * Only necessary because TypeScript currently cannot resolve package exports from `@stefanprobst/next-svg/types`.
- */
-declare module "*.svg?symbol-icon" {
-	import type { ReactNode, SVGProps, VFC } from "react";
-
-	const Image: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
-
-	export default Image;
-}
-
-/**
- * Only necessary because TypeScript currently cannot resolve package exports from `@stefanprobst/next-svg/types`.
- */
-declare module "*.svg?symbol-icon" {
-	import type { ReactNode, SVGProps, VFC } from "react";
-
-	const Image: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
-
-	export default Image;
-}
-
-/**
- * Only necessary because TypeScript currently cannot resolve package exports from `@stefanprobst/next-svg/types`.
- */
-declare module "*.svg?inline" {
-	import type { ReactNode, SVGProps, VFC } from "react";
-
-	const Image: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
-
-	export default Image;
-}
-
-/**
- * Only necessary because TypeScript currently cannot resolve package exports from `@stefanprobst/next-svg/types`.
- */
-declare module "*.svg?inline-icon" {
-	import type { ReactNode, SVGProps, VFC } from "react";
-
-	const Image: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
-
-	export default Image;
-}
-
-/**
- * Only necessary because TypeScript currently cannot resolve package exports from `@stefanprobst/next-svg/types`.
- */
-declare module "*.svg" {
-	const content: StaticImageData;
-
-	export default content;
 }

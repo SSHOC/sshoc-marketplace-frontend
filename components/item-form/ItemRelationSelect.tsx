@@ -16,7 +16,11 @@ export function ItemRelationSelect(props: ItemRelationSelectProps): ReactNode {
 	const items = itemRelations.data?.itemRelations ?? [];
 
 	return (
-		<FormSelect {...field} isLoading={itemRelations.isLoading} items={items}>
+		<FormSelect
+			{...field}
+			loadingState={itemRelations.isLoading ? "loading" : "idle"}
+			items={items}
+		>
 			{(item) => {
 				return <Item key={item.code}>{item.label}</Item>;
 			}}

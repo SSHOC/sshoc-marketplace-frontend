@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 
-import type { Item, ItemsDiff } from "@/data/sshoc/api/item";
+import type { ItemInput, ItemsDiff } from "@/data/sshoc/api/item";
 
-export interface UseItemDiffFormInitialValues<T extends Item> {
+export interface UseItemDiffFormInitialValues<T extends Partial<ItemInput>> {
 	diff: ItemsDiff | undefined;
 	item: T | undefined;
 }
 
-export function useItemDiffFormInitialValues<T extends Item>(
+export function useItemDiffFormInitialValues<T extends Partial<ItemInput>>(
 	args: UseItemDiffFormInitialValues<T>,
 ): T | undefined {
 	const { diff, item } = args;
@@ -24,15 +24,16 @@ export function useItemDiffFormInitialValues<T extends Item>(
 		 * diff metadata to them in `useDiffFormFieldMetadata`.
 		 */
 		Object.entries(diff.item).forEach(([key, value]) => {
-			/* @ts-expect-error Not worth fixing types here. */
-			if (Array.isArray(value) && value.length > initialValues[key].length) {
+			if (Array.isArray(value) && key in initialValues) {
 				switch (key) {
 					case "accessibleAt":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill(undefined),
 						);
 						break;
 					case "externalIds":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill({
 								identifier: undefined,
@@ -41,6 +42,7 @@ export function useItemDiffFormInitialValues<T extends Item>(
 						);
 						break;
 					case "contributors":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill({
 								role: { code: undefined },
@@ -49,6 +51,7 @@ export function useItemDiffFormInitialValues<T extends Item>(
 						);
 						break;
 					case "properties":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill({
 								type: { code: undefined, type: undefined },
@@ -58,6 +61,7 @@ export function useItemDiffFormInitialValues<T extends Item>(
 						);
 						break;
 					case "relatedItems":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill({
 								relation: { code: undefined },
@@ -66,6 +70,7 @@ export function useItemDiffFormInitialValues<T extends Item>(
 						);
 						break;
 					case "media":
+						if (initialValues[key] == null || value.length <= initialValues[key].length) break;
 						initialValues[key] = initialValues[key].concat(
 							Array(value.length - initialValues[key].length).fill(undefined),
 						);

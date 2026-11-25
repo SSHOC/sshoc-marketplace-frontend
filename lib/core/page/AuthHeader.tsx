@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { useAuth } from "@/lib/core/auth/useAuth";

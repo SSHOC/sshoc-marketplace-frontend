@@ -4,7 +4,7 @@ import { useField } from "react-final-form";
 
 import { useFormFieldValidationState } from "@/lib/core/form/useFormFieldValidationState";
 import type { CheckBoxGroupProps } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
-import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
+import { CheckBoxGroup, CheckBoxGroupItem } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
 
 export interface FormCheckBoxGroupProps extends Omit<CheckBoxGroupProps, "value"> {
 	name: string;
@@ -16,7 +16,6 @@ export function FormCheckBoxGroup(props: FormCheckBoxGroupProps): ReactNode {
 
 	return (
 		<CheckBoxGroup
-			color="form"
 			{...mergeProps(props, {
 				onBlur: input.onBlur,
 				onFocus: input.onFocus,
@@ -28,4 +27,4 @@ export function FormCheckBoxGroup(props: FormCheckBoxGroupProps): ReactNode {
 	);
 }
 
-FormCheckBoxGroup.Item = CheckBoxGroup.Item;
+FormCheckBoxGroup.Item = CheckBoxGroupItem;

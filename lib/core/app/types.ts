@@ -1,5 +1,5 @@
-import type { AppProps as NextAppProps } from "next/app";
 import type { Messages } from "next-intl";
+import type { AppProps as NextAppProps } from "next/app";
 import type { ReactNode } from "react";
 
 import type { User } from "@/data/sshoc/api/user";

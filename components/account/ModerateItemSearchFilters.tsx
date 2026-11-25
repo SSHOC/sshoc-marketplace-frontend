@@ -1,3 +1,5 @@
+import css from "@/components/account/ModerateItemSearchFilters.module.css";
+
 import { useButton } from "@react-aria/button";
 import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
@@ -5,7 +7,6 @@ import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
 import { Fragment, useRef } from "react";
 
-import css from "@/components/account/ModerateItemSearchFilters.module.css";
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
 import type { SearchFilters } from "@/components/account/useModerateItemsSearchFilters";
 import { useModerateItemsSearchFilters } from "@/components/account/useModerateItemsSearchFilters";
@@ -32,7 +33,7 @@ import { Facet, FacetDisclosure, Item as FacetValue } from "@/lib/core/ui/Facet/
 import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
 import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import CrossIcon from "@/lib/core/ui/icons/cross.svg?symbol-icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
 import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
 import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";

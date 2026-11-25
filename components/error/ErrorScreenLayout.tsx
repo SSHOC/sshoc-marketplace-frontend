@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/error/ErrorScreenLayout.module.css";
+
+import type { ReactNode } from "react";
 
 export interface ErrorScreenLayoutProps {
 	children?: ReactNode;

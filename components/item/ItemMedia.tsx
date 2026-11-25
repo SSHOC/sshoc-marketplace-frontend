@@ -1,15 +1,16 @@
+import css from "@/components/item/ItemMedia.module.css";
+
 import { useButton } from "@react-aria/button";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import type { AriaButtonProps } from "@react-types/button";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useRef, useState } from "react";
 
-import css from "@/components/item/ItemMedia.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl, getMediaUrl, isMediaDetailsUrl } from "@/data/sshoc/api/media";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
-import ChevronIcon from "@/lib/core/ui/icons/chevron.svg?symbol-icon";
-import DocumentIcon from "@/lib/core/ui/icons/document.svg?symbol-icon";
+import ChevronIcon from "@/lib/core/ui/icons/chevron";
+import DocumentIcon from "@/lib/core/ui/icons/document";
 
 export interface ItemMediaProps {
 	media: Item["media"];

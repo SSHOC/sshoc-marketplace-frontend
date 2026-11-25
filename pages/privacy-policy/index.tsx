@@ -93,7 +93,6 @@ export default function PrivacyPolicyPage(props: PrivacyPolicyPage.Props): React
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error This is fine.
 									a: Link,
 								}}
 							/>

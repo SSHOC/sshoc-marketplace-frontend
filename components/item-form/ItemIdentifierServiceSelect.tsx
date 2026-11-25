@@ -16,7 +16,7 @@ export function ItemIdentifierServiceSelect(props: ItemIdentifierServiceSelectPr
 	const items = itemSources.data ?? [];
 
 	return (
-		<FormSelect {...field} isLoading={itemSources.isLoading} items={items}>
+		<FormSelect {...field} loadingState={itemSources.isLoading ? "loading" : "idle"} items={items}>
 			{(item) => {
 				return <Item key={item.code}>{item.label}</Item>;
 			}}

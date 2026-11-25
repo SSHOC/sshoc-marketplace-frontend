@@ -4,8 +4,14 @@ import type { HTMLAttributes } from "react";
 import type { DisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 
 export interface DisclosureAria {
-	triggerProps: HTMLAttributes<HTMLElement>;
-	contentProps: HTMLAttributes<HTMLElement>;
+	triggerProps: Pick<
+		HTMLAttributes<HTMLElement>,
+		"id" | "aria-controls" | "aria-expanded" | "aria-labelledby"
+	>;
+	contentProps: Pick<
+		HTMLAttributes<HTMLElement>,
+		"id" | "aria-controls" | "aria-expanded" | "aria-labelledby"
+	>;
 }
 
 export function useDisclosure(state: DisclosureState): DisclosureAria {

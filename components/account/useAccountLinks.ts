@@ -1,21 +1,21 @@
 import { createUrlSearchParams } from "@stefanprobst/request";
 import { useTranslations } from "next-intl";
-import type { ReactNode, SVGProps, VFC } from "react";
+import type { ReactNode, SVGProps, FC } from "react";
 
 import type { UserRole } from "@/data/sshoc/api/user";
 import { useCurrentUser } from "@/data/sshoc/hooks/auth";
-import ActorsIcon from "@/public/assets/images/account/actors.svg?symbol-icon";
-import ContributedItemsIcon from "@/public/assets/images/account/contributed-items.svg?symbol-icon";
-import DraftItemsIcon from "@/public/assets/images/account/draft-items.svg?symbol-icon";
-import ModerateItemsIcon from "@/public/assets/images/account/moderate-items.svg?symbol-icon";
-import SourcesIcon from "@/public/assets/images/account/sources.svg?symbol-icon";
-import UsersIcon from "@/public/assets/images/account/users.svg?symbol-icon";
-import VocabulariesIcon from "@/public/assets/images/account/vocabularies.svg?symbol-icon";
+import ActorsIcon from "@/lib/core/ui/icons/account-actors";
+import ContributedItemsIcon from "@/lib/core/ui/icons/account-contributed-items";
+import DraftItemsIcon from "@/lib/core/ui/icons/account-draft-items";
+import ModerateItemsIcon from "@/lib/core/ui/icons/account-moderate-items";
+import SourcesIcon from "@/lib/core/ui/icons/account-sources";
+import UsersIcon from "@/lib/core/ui/icons/account-users";
+import VocabulariesIcon from "@/lib/core/ui/icons/account-vocabularies";
 
 export interface AccountLink {
 	href: string;
 	label: string;
-	icon: VFC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
+	icon: FC<SVGProps<SVGSVGElement> & { title?: ReactNode }>;
 	roles: Array<UserRole>;
 }
 

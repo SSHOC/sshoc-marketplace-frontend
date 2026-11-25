@@ -43,7 +43,6 @@ export const mediaUploadSchema =
 				return !(isEmptyFileList(data.file) && data.sourceUrl == null);
 			},
 			{
-				message: "File or URL required",
 				// FIXME: `path: [FORM_ERROR]`
 				path: ["sourceUrl"],
 				params: { mediaInput: [] },
@@ -54,7 +53,6 @@ export const mediaUploadSchema =
 				return !(!isEmptyFileList(data.file) && data.sourceUrl != null);
 			},
 			{
-				message: "Provide either file or URL, not both",
 				// FIXME: `path: [FORM_ERROR]`
 				path: ["sourceUrl"],
 				params: { mediaInput: ["file", "url"] },

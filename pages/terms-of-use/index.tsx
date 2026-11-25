@@ -93,7 +93,6 @@ export default function TermsOfUsePage(props: TermsOfUsePage.Props): ReactNode {
 						<Prose>
 							<PageContent
 								components={{
-									// @ts-expect-error This is fine.
 									a: Link,
 								}}
 							/>

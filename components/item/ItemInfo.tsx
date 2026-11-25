@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/item/ItemInfo.module.css";
+
+import type { ReactNode } from "react";
 
 export interface ItemInfoProps {
 	children?: ReactNode;

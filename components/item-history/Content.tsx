@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-
 import css from "@/components/item-form/Content.module.css";
+
+import type { ReactNode } from "react";
 
 export interface ContentProps {
 	children?: ReactNode;

@@ -1,3 +1,5 @@
+import css from "@/components/item/ItemMetadata.module.css";
+
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
@@ -5,7 +7,6 @@ import { useMemo } from "react";
 import { useCollator } from "react-aria";
 
 import { Timestamp } from "@/components/common/Timestamp";
-import css from "@/components/item/ItemMetadata.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import type { Property } from "@/data/sshoc/api/property";
 import { isPropertyConcept } from "@/data/sshoc/api/property";

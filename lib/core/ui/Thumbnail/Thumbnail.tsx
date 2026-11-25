@@ -1,12 +1,19 @@
+import css from "@/lib/core/ui/Thumbnail/Thumbnail.module.css";
+
 import type { ReactNode } from "react";
 
 import type { ItemMediaInput } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl } from "@/data/sshoc/api/media";
-import css from "@/lib/core/ui/Thumbnail/Thumbnail.module.css";
 
 export interface ThumbnailProps {
 	/** @default 'primary' */
-	color?: "form" | "primary";
+	color?:
+		| "form"
+		| "primary"
+		| "review changed"
+		| "review deleted"
+		| "review inserted"
+		| "review unchanged";
 	value?: ItemMediaInput;
 }
 

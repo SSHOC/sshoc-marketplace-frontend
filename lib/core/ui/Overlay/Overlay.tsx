@@ -1,12 +1,12 @@
-import type { OverlayProps as AriaOverlayProps } from "@react-types/overlays";
-import type { ForwardedRef, Ref } from "react";
+import type { ForwardedRef } from "react";
 import { forwardRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { OpenTransition } from "@/lib/core/ui/Overlay/OpenTransition";
+import { type OpenTransitionProps, OpenTransition } from "@/lib/core/ui/Overlay/OpenTransition";
 
-export interface OverlayProps extends AriaOverlayProps {
-	nodeRef: Ref<HTMLElement>;
+export interface OverlayProps extends Omit<OpenTransitionProps, "in"> {
+	isOpen?: boolean;
+	container?: Element;
 }
 
 export const Overlay = forwardRef(function Overlay(
@@ -27,12 +27,15 @@ export const Overlay = forwardRef(function Overlay(
 	} = props;
 	const [exited, setExited] = useState(isOpen !== true);
 
-	const handleEntered = useCallback(() => {
-		setExited(false);
-		if (onEntered) {
-			onEntered();
-		}
-	}, [onEntered]);
+	const handleEntered = useCallback(
+		(isAppearing: boolean) => {
+			setExited(false);
+			if (onEntered) {
+				onEntered(isAppearing);
+			}
+		},
+		[onEntered],
+	);
 
 	const handleExited = useCallback(() => {
 		setExited(true);

@@ -1,6 +1,7 @@
+import css from "@/components/item/ItemThumbnail.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/item/ItemThumbnail.module.css";
 import type { Item } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl } from "@/data/sshoc/api/media";
 

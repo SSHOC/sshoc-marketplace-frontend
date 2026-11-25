@@ -1,7 +1,7 @@
+import css from "@/components/common/ErrorMessage.module.css";
+
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-
-import css from "@/components/common/ErrorMessage.module.css";
 
 export interface ErrorMessageProps {
 	message?: string;

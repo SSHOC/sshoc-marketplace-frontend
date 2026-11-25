@@ -1,6 +1,7 @@
+import css from "@/components/account/ContributedItemSearchResultsFooter.module.css";
+
 import type { ReactNode } from "react";
 
-import css from "@/components/account/ContributedItemSearchResultsFooter.module.css";
 import { ContributedItemSearchResultsPageNavigation } from "@/components/account/ContributedItemSearchResultsPageNavigation";
 
 export function ContributedItemSearchResultsFooter(): ReactNode {
