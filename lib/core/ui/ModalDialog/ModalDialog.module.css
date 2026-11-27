@@ -2,14 +2,14 @@
 	position: fixed;
 	z-index: var(--z-index-dialog);
 	display: grid;
+	background-color: var(--color-backdrop-muted);
+	animation: fade-in forwards var(--animation-duration);
 	inset: 0;
 	place-items: center;
 }
 
-.dialog {
+.modal {
 	position: relative;
-	display: grid;
-	gap: var(--space-6);
 	overflow-y: auto;
 	min-width: min(var(--dialog-min-width, var(--size-128)), 100%);
 	max-width: 100%;
@@ -20,6 +20,22 @@
 	background: var(--color-background);
 	box-shadow: var(--box-shadow);
 	animation: slide-in forwards var(--animation-duration);
+}
+
+.dialog {
+	display: grid;
+	gap: var(--space-6);
+	outline: none;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes slide-in {

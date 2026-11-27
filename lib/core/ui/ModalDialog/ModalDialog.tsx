@@ -1,64 +1,76 @@
 import css from "@/lib/core/ui/ModalDialog/ModalDialog.module.css";
 
-import { useDialog } from "@react-aria/dialog";
-import { FocusScope } from "@react-aria/focus";
-import type { AriaOverlayProps } from "@react-aria/overlays";
-import { OverlayContainer, useModal, useOverlay, usePreventScroll } from "@react-aria/overlays";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaDialogProps } from "@react-types/dialog";
 import type { CSSProperties, ReactNode } from "react";
-import { useRef } from "react";
+import {
+	Dialog,
+	Heading,
+	Modal,
+	ModalOverlay,
+	type DialogProps,
+	type ModalOverlayProps,
+} from "react-aria-components";
 
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
-import { Underlay } from "@/lib/core/ui/Overlay/Underlay";
 
 export interface ModalDialogStyleProps {
 	"--dialog-min-width"?: CSSProperties["minWidth"];
 }
 
-export interface ModalDialogProps extends AriaOverlayProps, AriaDialogProps {
+export interface ModalDialogProps
+	extends
+		Pick<
+			ModalOverlayProps,
+			"isDismissable" | "isKeyboardDismissDisabled" | "isOpen" | "shouldCloseOnInteractOutside"
+		>,
+		Pick<DialogProps, "id" | "aria-label" | "aria-labelledby"> {
 	children?: ReactNode;
 	style?: ModalDialogStyleProps;
 	title?: ReactNode;
+	onClose?: () => void;
 }
 
 export function ModalDialog(props: ModalDialogProps): ReactNode {
-	const { children, isDismissable = false, isOpen, onClose, style, title } = props;
-
-	const ref = useRef<HTMLDivElement>(null);
-	const { overlayProps, underlayProps } = useOverlay(props, ref);
-	usePreventScroll();
-	const { modalProps } = useModal();
-	const { dialogProps, titleProps } = useDialog(props, ref);
-
-	// FIXME:
-	// if (!isOpen) return null
+	const {
+		children,
+		id,
+		"aria-label": ariaLabel,
+		"aria-labelledby": labelledBy,
+		isDismissable = false,
+		onClose,
+		style,
+		title,
+		...overlayProps
+	} = props;
 
 	return (
-		<OverlayContainer>
-			<Underlay {...underlayProps} isOpen={isOpen} />
-			<div className={css["container"]}>
-				<FocusScope contain restoreFocus autoFocus>
-					<section
-						ref={ref}
-						{...mergeProps(overlayProps, dialogProps, modalProps)}
-						className={css["dialog"]}
-						style={style as CSSProperties}
-					>
-						<header className={css["dialog-header"]}>
-							<h2 {...titleProps} className={css["dialog-title"]} data-dialog-title>
-								{title}
-							</h2>
-							{isDismissable ? (
-								<div className={css["close-button"]}>
-									<CloseButton onPress={onClose} />
-								</div>
-							) : null}
-						</header>
-						{children}
-					</section>
-				</FocusScope>
-			</div>
-		</OverlayContainer>
+		<ModalOverlay
+			{...overlayProps}
+			className={css["container"]}
+			isDismissable={isDismissable}
+			onOpenChange={(isOpen) => {
+				if (!isOpen) onClose?.();
+			}}
+		>
+			<Modal className={css["modal"]} style={style as CSSProperties}>
+				<Dialog
+					id={id}
+					aria-label={ariaLabel}
+					aria-labelledby={labelledBy}
+					className={css["dialog"]}
+				>
+					<header className={css["dialog-header"]}>
+						<Heading level={2} slot="title" className={css["dialog-title"]} data-dialog-title>
+							{title}
+						</Heading>
+						{isDismissable ? (
+							<div className={css["close-button"]}>
+								<CloseButton onPress={onClose} />
+							</div>
+						) : null}
+					</header>
+					{children}
+				</Dialog>
+			</Modal>
+		</ModalOverlay>
 	);
 }
