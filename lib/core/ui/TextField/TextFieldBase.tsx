@@ -1,29 +1,8 @@
 import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps, useObjectRef } from "@react-aria/utils";
-import type {
-	Alignment,
-	LabelableProps,
-	LabelPosition,
-	NecessityIndicator,
-	PressEvents,
-} from "@react-types/shared";
-import type { AriaTextFieldProps } from "@react-types/textfield";
-import type {
-	CSSProperties,
-	ForwardedRef,
-	HTMLAttributes,
-	InputHTMLAttributes,
-	LabelHTMLAttributes,
-	ReactNode,
-	RefObject,
-	TextareaHTMLAttributes,
-} from "react";
-import { forwardRef } from "react";
+import type { ValidationState } from "@react-types/shared";
+import type { CSSProperties, ReactNode } from "react";
 
-import { Field } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import AlertIcon from "@/lib/core/ui/icons/alert";
 import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
@@ -56,22 +35,8 @@ export interface TextFieldBaseStyleProps {
 	"--textfield-validation-icon-color"?: CSSProperties["color"];
 }
 
-export interface TextFieldBaseProps
-	extends
-		Pick<
-			AriaTextFieldProps,
-			| "description"
-			| "label"
-			| "isDisabled"
-			| "isInvalid"
-			| "validationState"
-			| "type"
-			| "autoFocus"
-		>,
-		LabelableProps,
-		PressEvents {
-	errorMessage?: ReactNode;
-	/** @default 'primary' */
+interface TextFieldControlProps {
+	children: ReactNode;
 	color?:
 		| "form"
 		| "primary"
@@ -79,73 +44,14 @@ export interface TextFieldBaseProps
 		| "review deleted"
 		| "review inserted"
 		| "review unchanged";
-	descriptionProps?: HTMLAttributes<HTMLElement>;
-	/** @default 'input' */
-	elementType?: "input" | "textarea";
-	errorMessageProps?: HTMLAttributes<HTMLElement>;
 	icon?: ReactNode;
-	inputProps: InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement>;
-	inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 	isLoading?: boolean;
-	isRequired?: boolean;
-	/** @default 'start' */
-	labelAlign?: Alignment;
-	labelPosition?: LabelPosition;
-	labelProps?: LabelHTMLAttributes<HTMLLabelElement>;
 	loadingIndicator?: ReactNode;
-	/** @default 'icon' */
-	necessityIndicator?: NecessityIndicator;
-	rows?: number;
-	/** @default 'md' */
 	size?: "lg" | "md" | "sm";
 	style?: TextFieldBaseStyleProps;
+	validationState?: ValidationState;
 	wrapperChildren?: ReactNode;
 }
-
-export const TextFieldBase = forwardRef(function TextFieldBase(
-	props: TextFieldBaseProps,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	const {
-		descriptionProps,
-		elementType: ElementType = "input",
-		errorMessageProps,
-		inputProps,
-		inputRef,
-		labelProps,
-		rows,
-		type,
-	} = props;
-
-	const fieldRef = useObjectRef(forwardedRef);
-	const textFieldRef = useObjectRef(inputRef);
-
-	const { focusProps, isFocusVisible } = useFocusRing({ ...props, isTextInput: true });
-	const { hoverProps, isHovered } = useHover(props);
-
-	return (
-		<Field
-			ref={fieldRef}
-			{...props}
-			descriptionProps={descriptionProps}
-			errorMessageProps={errorMessageProps}
-			labelProps={labelProps}
-			showErrorIcon={false}
-		>
-			<TextFieldControl {...props}>
-				<ElementType
-					ref={textFieldRef as any}
-					{...mergeProps(focusProps, hoverProps, inputProps)}
-					className={css["textfield-input"]}
-					rows={ElementType === "textarea" ? rows : undefined}
-					type={ElementType === "textarea" ? undefined : type}
-					data-focused={isFocusVisible ? "" : undefined}
-					data-hovered={isHovered ? "" : undefined}
-				/>
-			</TextFieldControl>
-		</Field>
-	);
-});
 
 export function TextFieldControl({
 	children,
@@ -157,17 +63,7 @@ export function TextFieldControl({
 	style,
 	validationState,
 	wrapperChildren,
-}: Pick<
-	TextFieldBaseProps,
-	| "color"
-	| "icon"
-	| "isLoading"
-	| "loadingIndicator"
-	| "size"
-	| "style"
-	| "validationState"
-	| "wrapperChildren"
-> & { children: ReactNode }): ReactNode {
+}: TextFieldControlProps): ReactNode {
 	const isInvalid = validationState === "invalid";
 	return (
 		<div
