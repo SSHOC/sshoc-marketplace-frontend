@@ -85,7 +85,7 @@ function SearchFacetsDialog(): ReactNode {
 			<ActiveSearchFacets />
 			{state.isOpen ? (
 				<ModalDialog
-					{...(overlayProps as any)}
+					id={overlayProps.id}
 					aria-labelledby={titleId}
 					isDismissable
 					isOpen={state.isOpen}
