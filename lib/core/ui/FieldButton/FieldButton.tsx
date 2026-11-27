@@ -1,12 +1,9 @@
 import css from "@/lib/core/ui/FieldButton/FieldButton.module.css";
 
-import { type AriaButtonProps, useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps, useObjectRef } from "@react-aria/utils";
 import type { DOMProps, ValidationState } from "@react-types/shared";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 export interface FieldButtonStyleProps {
 	"--field-button-width"?: CSSProperties["width"];
@@ -35,7 +32,7 @@ export interface FieldButtonStyleProps {
 	"--field-button-line-height"?: CSSProperties["lineHeight"];
 }
 
-export interface FieldButtonProps extends AriaButtonProps, DOMProps {
+export interface FieldButtonProps extends Omit<AriaButtonProps, "className" | "style">, DOMProps {
 	/** @default 'primary' */
 	color?: "form" | "primary";
 	isActive?: boolean;
@@ -46,29 +43,25 @@ export interface FieldButtonProps extends AriaButtonProps, DOMProps {
 
 export const FieldButton = forwardRef(function FieldButton(
 	props: FieldButtonProps,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
+	ref: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const { children, color = "primary", isActive = false, style, validationState } = props;
-
-	const ref = useObjectRef(forwardedRef);
-	const { buttonProps, isPressed } = useButton(props, ref);
-	const { hoverProps, isHovered } = useHover(props);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
+	const {
+		color = "primary",
+		isActive = false,
+		slot = null,
+		validationState,
+		...buttonProps
+	} = props;
 
 	return (
-		<button
+		<AriaButton
+			{...buttonProps}
 			ref={ref}
-			type="button"
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
+			slot={slot}
 			className={css["button"]}
 			data-color={color}
-			data-active={isActive === true || isPressed === true ? "" : undefined}
-			data-focus-visible={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
+			data-active={isActive ? "" : undefined}
 			data-validation-state={validationState}
-			style={style as CSSProperties}
-		>
-			{children}
-		</button>
+		/>
 	);
 });

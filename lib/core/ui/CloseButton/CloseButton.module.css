@@ -15,12 +15,13 @@
 	}
 
 	&:focus-visible,
-	&[data-focused] {
+	&[data-focus-visible] {
 		color: var(--close-button-color-focus, var(--color-primary-600));
 	}
 
 	&:active,
-	&[data-active] {
+	&[data-active],
+	&[data-pressed] {
 		color: var(--close-button-color-active, var(--color-primary-600));
 	}
 

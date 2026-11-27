@@ -1,13 +1,8 @@
 import css from "@/lib/core/ui/Button/Button.module.css";
 
-import { useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaButtonProps } from "@react-types/button";
-import type { CSSProperties, ElementType, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import type { CSSProperties, ForwardedRef, ReactNode } from "react";
+import { forwardRef } from "react";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 export interface ButtonStyleProps {
 	"--button-color"?: CSSProperties["color"];
@@ -35,7 +30,7 @@ export interface ButtonStyleProps {
 	"--button-cursor"?: CSSProperties["cursor"];
 }
 
-export interface ButtonProps<T extends ElementType = "button"> extends AriaButtonProps<T> {
+export interface ButtonProps extends Omit<AriaButtonProps, "className" | "style" | "children"> {
 	children: ReactNode;
 	/** @default 'primary' */
 	color?: "gradient" | "negative" | "positive" | "primary" | "secondary";
@@ -49,45 +44,33 @@ export interface ButtonProps<T extends ElementType = "button"> extends AriaButto
 	variant?: "border" | "fill" | "nav-mobile-menu-link-secondary" | "nav-mobile-menu-link";
 }
 
-export const Button = forwardRef(function Button<T extends ElementType = "button">(
-	props: ButtonProps<T>,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
+export const Button = forwardRef(function Button(
+	props: ButtonProps,
+	ref: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
 	const {
 		color = "primary",
-		children,
-		elementType: ElementType = "button",
 		isPressed = false,
 		size = "md",
+		slot = null,
 		style,
 		trigger,
 		variant = "fill",
+		...buttonProps
 	} = props;
 
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps, isPressed: isActive } = useButton(props, buttonRef);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
-	const { hoverProps, isHovered } = useHover(props);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
-
 	return (
-		<ElementType
+		<AriaButton
+			{...buttonProps}
 			ref={ref}
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
+			slot={slot}
 			className={css["button"]}
 			data-color={color}
-			data-active={isPressed || isActive ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
+			data-active={isPressed ? "" : undefined}
 			data-size={size}
 			data-variant={variant}
 			data-trigger={trigger}
 			style={style as CSSProperties}
-		>
-			{children}
-		</ElementType>
+		/>
 	);
-}) as <T extends ElementType = "button">(
-	props: ButtonProps<T> & { ref?: ForwardedRef<HTMLElement> },
-) => ReactNode;
+});
