@@ -19,13 +19,10 @@ import type { SearchFilters as ItemSearchFilters } from "@/components/search/use
 import { useSearchFilters } from "@/components/search/useSearchFilters";
 import { useSearchResults } from "@/components/search/useSearchResults";
 import type { ItemCategory } from "@/data/sshoc/api/item";
-import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 import { Facet, Item as FacetValue } from "@/lib/core/ui/Facet/Facet";
-import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
-import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
@@ -449,9 +446,6 @@ function ActivityFacets(): ReactNode {
 	const searchResults = useSearchResults();
 	const { searchItems } = useSearchItems();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -474,64 +468,49 @@ function ActivityFacets(): ReactNode {
 		searchItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t(`common.facets.${facet}.other`)}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...(contentProps as any)}
-						aria-label={t(`common.facets.${facet}.other`)}
-						name={name}
-						value={selectedKeys}
-						onChange={onChange}
-						variant="facet"
-					>
-						{items.map(([value, { count }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{value}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				defaultOpen
-				label={t(`common.facets.${facet}.other`)}
-				name={name}
-				value={selectedKeys}
-				onChange={onChange}
-				controls={hasMoreItems ? controls : undefined}
-			>
-				{items.map(([value, { count }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{value}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t(`common.facets.${facet}.other`)}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					defaultOpen
+					label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					controls={controls}
+				>
+					{items.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					variant="facet"
+				>
+					{all.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }
 
@@ -545,9 +524,6 @@ function KeywordFacets(): ReactNode {
 	const searchResults = useSearchResults();
 	const { searchItems } = useSearchItems();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -570,64 +546,49 @@ function KeywordFacets(): ReactNode {
 		searchItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t(`common.facets.${facet}.other`)}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...contentProps}
-						aria-label={t(`common.facets.${facet}.other`)}
-						name={name}
-						onChange={onChange}
-						value={selectedKeys}
-						variant="facet"
-					>
-						{items.map(([value, { count }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{value}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				defaultOpen
-				label={t(`common.facets.${facet}.other`)}
-				name={name}
-				value={selectedKeys}
-				onChange={onChange}
-				controls={hasMoreItems ? controls : undefined}
-			>
-				{items.map(([value, { count }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{value}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t(`common.facets.${facet}.other`)}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					defaultOpen
+					label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					controls={controls}
+				>
+					{items.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t(`common.facets.${facet}.other`)}
+					name={name}
+					onChange={onChange}
+					value={selectedKeys}
+					variant="facet"
+				>
+					{all.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }
 
@@ -641,9 +602,6 @@ function LanguageFacets(): ReactNode {
 	const searchResults = useSearchResults();
 	const { searchItems } = useSearchItems();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -666,64 +624,49 @@ function LanguageFacets(): ReactNode {
 		searchItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t(`common.facets.${facet}.other`)}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...(contentProps as any)}
-						aria-label={t(`common.facets.${facet}.other`)}
-						name={name}
-						value={selectedKeys}
-						onChange={onChange}
-						variant="facet"
-					>
-						{items.map(([value, { count }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{value}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				defaultOpen
-				label={t(`common.facets.${facet}.other`)}
-				name={name}
-				value={selectedKeys}
-				onChange={onChange}
-				controls={hasMoreItems ? controls : undefined}
-			>
-				{items.map(([value, { count }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{value}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t(`common.facets.${facet}.other`)}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					defaultOpen
+					label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					controls={controls}
+				>
+					{items.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					variant="facet"
+				>
+					{all.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }
 
@@ -737,9 +680,6 @@ function SourceFacets(): ReactNode {
 	const searchResults = useSearchResults();
 	const { searchItems } = useSearchItems();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -762,63 +702,48 @@ function SourceFacets(): ReactNode {
 		searchItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t(`common.facets.${facet}.other`)}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...(contentProps as any)}
-						aria-label={t(`common.facets.${facet}.other`)}
-						name={name}
-						value={selectedKeys}
-						onChange={onChange}
-						variant="facet"
-					>
-						{items.map(([value, { count }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{value}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				defaultOpen
-				label={t(`common.facets.${facet}.other`)}
-				name={name}
-				value={selectedKeys}
-				onChange={onChange}
-				controls={hasMoreItems ? controls : undefined}
-			>
-				{items.map(([value, { count }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{value}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t(`common.facets.${facet}.other`)}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					defaultOpen
+					label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					controls={controls}
+				>
+					{items.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					variant="facet"
+				>
+					{all.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }

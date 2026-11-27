@@ -30,8 +30,6 @@ import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 import { DateField } from "@/lib/core/ui/DateField/DateField";
 import { Facet, FacetDisclosure, Item as FacetValue } from "@/lib/core/ui/Facet/Facet";
-import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
-import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
@@ -604,9 +602,6 @@ function SourceFacets(): ReactNode {
 	const searchResults = useModerateItemsSearchResults();
 	const { searchModerateItems } = useModerateItemsSearch();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -629,64 +624,49 @@ function SourceFacets(): ReactNode {
 		searchModerateItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t(`common.facets.${facet}.other`)}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...(contentProps as any)}
-						aria-label={t(`common.facets.${facet}.other`)}
-						name={name}
-						value={selectedKeys}
-						onChange={onChange}
-						variant="facet"
-					>
-						{items.map(([value, { count }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{value}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				defaultOpen
-				label={t(`common.facets.${facet}.other`)}
-				name={name}
-				value={selectedKeys}
-				onChange={onChange}
-				controls={hasMoreItems ? controls : undefined}
-			>
-				{items.map(([value, { count }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{value}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t(`common.facets.${facet}.other`)}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					defaultOpen
+					label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					controls={controls}
+				>
+					{items.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t(`common.facets.${facet}.other`)}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					variant="facet"
+				>
+					{all.map(([value, { count }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{value}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }
 
@@ -698,9 +678,6 @@ function InformationContributorFacets(): ReactNode {
 	const selectedKeys = searchFilters[name];
 	const users = useUsersInfinite({});
 	const { searchModerateItems } = useModerateItemsSearch();
-
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
 
 	if (users.data == null) {
 		return null;
@@ -746,25 +723,39 @@ function InformationContributorFacets(): ReactNode {
 		searchModerateItems(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t("authenticated.moderate-items.information-contributor.other")}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
+	return (
+		<SearchFacetsOverlay
+			title={t("authenticated.moderate-items.information-contributor.other")}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					controls={controls}
+					defaultOpen
+					label={t("authenticated.moderate-items.information-contributor.other")}
+					name={name}
+					onChange={onChange}
+					value={selectedKeys}
 				>
+					{items.map((user) => {
+						return (
+							<FacetValue key={user.username} value={user.username}>
+								{user.displayName}
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<>
 					<CheckBoxGroup
-						{...(contentProps as any)}
 						aria-label={t("authenticated.moderate-items.information-contributor.other")}
 						name={name}
 						value={selectedKeys}
 						onChange={onChange}
 						variant="facet"
 					>
-						{items.map((user) => {
+						{all.map((user) => {
 							return (
 								<FacetValue key={user.username} value={user.username}>
 									{user.displayName}
@@ -784,36 +775,9 @@ function InformationContributorFacets(): ReactNode {
 							</ButtonLink>
 						</div>
 					) : null}
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
-	return (
-		<div>
-			<Facet
-				controls={hasMoreItems ? controls : undefined}
-				defaultOpen
-				label={t("authenticated.moderate-items.information-contributor.other")}
-				name={name}
-				onChange={onChange}
-				value={selectedKeys}
-			>
-				{items.map((user) => {
-					return (
-						<FacetValue key={user.username} value={user.username}>
-							{user.displayName}
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+				</>
+			)}
+		</SearchFacetsOverlay>
 	);
 }
 

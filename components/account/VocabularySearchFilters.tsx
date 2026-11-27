@@ -18,12 +18,9 @@ import { SearchFacetsOverlay } from "@/components/common/SearchFacetsOverlay";
 import { ModalDialog } from "@/components/search/ModalDialog";
 import type { ConceptStatus } from "@/data/sshoc/utils/concept";
 import { conceptStatus, mapConceptStatusToFacet } from "@/data/sshoc/utils/concept";
-import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 import { Facet, Item as FacetValue } from "@/lib/core/ui/Facet/Facet";
-import { useDisclosure } from "@/lib/core/ui/hooks/useDisclosure";
-import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CrossIcon from "@/lib/core/ui/icons/cross";
 import { length } from "@/lib/utils";
@@ -279,9 +276,6 @@ function PropertyTypesFacets(): ReactNode {
 	const { searchVocabularies } = useVocabularySearch();
 	const searchResults = useVocabularySearchResults();
 
-	const overlay = useDisclosureState({});
-	const { contentProps, triggerProps } = useDisclosure(overlay);
-
 	if (searchResults.data == null) {
 		return null;
 	}
@@ -304,63 +298,48 @@ function PropertyTypesFacets(): ReactNode {
 		searchVocabularies(searchParams);
 	}
 
-	if (overlay.isOpen) {
-		const items = all;
-
-		return (
-			<div>
-				<SearchFacetsOverlay
-					title={t("authenticated.concepts.property-type.other")}
-					onClose={overlay.close}
-					triggerProps={triggerProps}
-				>
-					<CheckBoxGroup
-						{...(contentProps as any)}
-						aria-label={t("authenticated.concepts.property-type.other")}
-						name={name}
-						value={selectedKeys}
-						onChange={onChange}
-						variant="facet"
-					>
-						{items.map(([value, { count, label }]) => {
-							return (
-								<FacetValue key={value} value={value}>
-									{label}
-									<span className={css["secondary"]}>{count}</span>
-								</FacetValue>
-							);
-						})}
-					</CheckBoxGroup>
-				</SearchFacetsOverlay>
-			</div>
-		);
-	}
-
-	const controls = (
-		<ButtonLink {...(triggerProps as any)} onPress={overlay.toggle}>
-			{t("common.search.show-more")}
-		</ButtonLink>
-	);
-
 	return (
-		<div>
-			<Facet
-				controls={hasMoreItems ? controls : undefined}
-				defaultOpen
-				label={t("authenticated.concepts.property-type.other")}
-				name={name}
-				onChange={onChange}
-				value={selectedKeys}
-			>
-				{items.map(([value, { count, label }]) => {
-					return (
-						<FacetValue key={value} value={value}>
-							{label}
-							<span className={css["secondary"]}>{count}</span>
-						</FacetValue>
-					);
-				})}
-			</Facet>
-		</div>
+		<SearchFacetsOverlay
+			title={t("authenticated.concepts.property-type.other")}
+			hasMoreItems={hasMoreItems}
+			renderFacet={(controls) => (
+				<Facet
+					controls={controls}
+					defaultOpen
+					label={t("authenticated.concepts.property-type.other")}
+					name={name}
+					onChange={onChange}
+					value={selectedKeys}
+				>
+					{items.map(([value, { count, label }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{label}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</Facet>
+			)}
+		>
+			{() => (
+				<CheckBoxGroup
+					aria-label={t("authenticated.concepts.property-type.other")}
+					name={name}
+					value={selectedKeys}
+					onChange={onChange}
+					variant="facet"
+				>
+					{all.map(([value, { count, label }]) => {
+						return (
+							<FacetValue key={value} value={value}>
+								{label}
+								<span className={css["secondary"]}>{count}</span>
+							</FacetValue>
+						);
+					})}
+				</CheckBoxGroup>
+			)}
+		</SearchFacetsOverlay>
 	);
 }

@@ -1,50 +1,95 @@
 import css from "@/components/common/SearchFacetsOverlay.module.css";
+import buttonCss from "@/lib/core/ui/Button/Button.module.css";
+import linkCss from "@/lib/core/ui/Link/Link.module.css";
 
+import cx from "clsx";
 import { useTranslations } from "next-intl";
-import type { HTMLAttributes, ReactNode } from "react";
-import { useEffect } from "react";
+import type { ReactNode } from "react";
+import { useCallback, useContext, useRef } from "react";
+import { Button, ButtonContext, Disclosure, DisclosurePanel } from "react-aria-components";
 
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
 
-export interface SearchFacetsOverlay {
+interface SearchFacetsOverlayProps {
 	title: string;
-	onClose: () => void;
-	children?: ReactNode;
-	triggerProps: HTMLAttributes<HTMLElement>;
+	hasMoreItems: boolean;
+	renderFacet: (controls?: ReactNode) => ReactNode;
+	children: () => ReactNode;
 }
 
-export function SearchFacetsOverlay(props: SearchFacetsOverlay): ReactNode {
-	const { title, onClose, triggerProps } = props;
+export function SearchFacetsOverlay(props: SearchFacetsOverlayProps): ReactNode {
+	return (
+		<Disclosure>
+			{({ isExpanded, state }) => (
+				<FacetDisclosureContent {...props} isExpanded={isExpanded} collapse={state.collapse} />
+			)}
+		</Disclosure>
+	);
+}
 
+function FacetDisclosureContent({
+	title,
+	hasMoreItems,
+	renderFacet,
+	children,
+	isExpanded,
+	collapse,
+}: SearchFacetsOverlayProps & { isExpanded: boolean; collapse: () => void }): ReactNode {
 	const t = useTranslations();
-
-	useEffect(() => {
-		function onKeyDown(event: KeyboardEvent) {
-			if (event.key === "Escape") {
-				onClose();
-			}
+	const buttonContext = useContext(ButtonContext);
+	const restoreFocus = useRef(false);
+	const triggerRef = useCallback((button: HTMLButtonElement | null) => {
+		if (button && restoreFocus.current) {
+			restoreFocus.current = false;
+			button.focus();
 		}
+	}, []);
 
-		window.addEventListener("keydown", onKeyDown);
+	function close() {
+		restoreFocus.current = true;
+		collapse();
+	}
 
-		return () => {
-			window.removeEventListener("keydown", onKeyDown);
-		};
-	});
+	const controls = hasMoreItems ? (
+		// The compact facet has its own disclosure and trigger slot.
+		<ButtonContext.Provider value={buttonContext}>
+			<Button
+				ref={triggerRef}
+				slot="trigger"
+				className={cx(linkCss["link"], buttonCss["button-link"])}
+			>
+				{t("common.search.show-more")}
+			</Button>
+		</ButtonContext.Provider>
+	) : undefined;
 
 	return (
-		<div className={css["container"]}>
-			<header className={css["header"]}>
-				<h3 className={css["title"]}>{title}</h3>
-				<CloseButton
-					{...(triggerProps as any)}
-					aria-label={t("common.search.show-less")}
-					autoFocus
-					onPress={onClose}
-					size="lg"
-				/>
-			</header>
-			<div className={css["content"]}>{props.children}</div>
-		</div>
+		<>
+			{isExpanded ? null : renderFacet(controls)}
+			<DisclosurePanel aria-label={title}>
+				{isExpanded ? (
+					<div
+						className={css["container"]}
+						onKeyDown={(event) => {
+							if (event.key === "Escape") {
+								event.stopPropagation();
+								close();
+							}
+						}}
+					>
+						<header className={css["header"]}>
+							<h3 className={css["title"]}>{title}</h3>
+							<CloseButton
+								aria-label={t("common.search.show-less")}
+								autoFocus
+								onPress={close}
+								size="lg"
+							/>
+						</header>
+						<div className={css["content"]}>{children()}</div>
+					</div>
+				) : null}
+			</DisclosurePanel>
+		</>
 	);
 }
