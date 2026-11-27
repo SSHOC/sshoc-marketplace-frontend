@@ -106,26 +106,15 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
 	props: TextFieldBaseProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	const defaultLoadingIndicator = <ProgressSpinner size="sm" />;
-
 	const {
-		color = "primary",
 		descriptionProps,
 		elementType: ElementType = "input",
 		errorMessageProps,
-		icon,
 		inputProps,
 		inputRef,
-		isLoading,
 		labelProps,
-		loadingIndicator = defaultLoadingIndicator,
 		rows,
-		size = "md",
-		style,
 		type,
-		validationState,
-		// TODO: could use less generic name, since it is only used for ClearButton
-		wrapperChildren,
 	} = props;
 
 	const fieldRef = useObjectRef(forwardedRef);
@@ -133,8 +122,6 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
 
 	const { focusProps, isFocusVisible } = useFocusRing({ ...props, isTextInput: true });
 	const { hoverProps, isHovered } = useHover(props);
-
-	const isInvalid = validationState === "invalid";
 
 	return (
 		<Field
@@ -145,22 +132,7 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
 			labelProps={labelProps}
 			showErrorIcon={false}
 		>
-			<div
-				className={css["textfield"]}
-				data-color={color}
-				data-icon={[
-					icon != null ? "left" : undefined,
-					wrapperChildren != null ? "right" : undefined,
-				]
-					.filter(Boolean)
-					.join(" ")}
-				data-loading-state={isLoading === true ? "loading" : undefined}
-				data-size={size}
-				data-validation-state={validationState}
-				data-focused={isFocusVisible ? "" : undefined}
-				data-hovered={isHovered ? "" : undefined}
-				style={style as CSSProperties}
-			>
+			<TextFieldControl {...props}>
 				<ElementType
 					ref={textFieldRef as any}
 					{...mergeProps(focusProps, hoverProps, inputProps)}
@@ -170,18 +142,55 @@ export const TextFieldBase = forwardRef(function TextFieldBase(
 					data-focused={isFocusVisible ? "" : undefined}
 					data-hovered={isHovered ? "" : undefined}
 				/>
-				{icon != null ? <div className={css["icon-left"]}>{icon}</div> : null}
-				{isLoading === true ? (
-					<div className={css["validation-icon"]}>{loadingIndicator}</div>
-				) : validationState ? (
-					<div className={css["validation-icon"]}>
-						<Icon icon={isInvalid ? AlertIcon : CheckmarkIcon} />
-					</div>
-				) : null}
-				{wrapperChildren != null ? (
-					<div className={css["icon-right"]}>{wrapperChildren}</div>
-				) : null}
-			</div>
+			</TextFieldControl>
 		</Field>
 	);
 });
+
+export function TextFieldControl({
+	children,
+	color = "primary",
+	icon,
+	isLoading,
+	loadingIndicator = <ProgressSpinner size="sm" />,
+	size = "md",
+	style,
+	validationState,
+	wrapperChildren,
+}: Pick<
+	TextFieldBaseProps,
+	| "color"
+	| "icon"
+	| "isLoading"
+	| "loadingIndicator"
+	| "size"
+	| "style"
+	| "validationState"
+	| "wrapperChildren"
+> & { children: ReactNode }): ReactNode {
+	const isInvalid = validationState === "invalid";
+	return (
+		<div
+			className={css["textfield"]}
+			data-color={color}
+			data-icon={[icon != null ? "left" : undefined, wrapperChildren != null ? "right" : undefined]
+				.filter(Boolean)
+				.join(" ")}
+			data-loading-state={isLoading === true ? "loading" : undefined}
+			data-size={size}
+			data-validation-state={validationState}
+			style={style as CSSProperties}
+		>
+			{children}
+			{icon != null ? <div className={css["icon-left"]}>{icon}</div> : null}
+			{isLoading === true ? (
+				<div className={css["validation-icon"]}>{loadingIndicator}</div>
+			) : validationState ? (
+				<div className={css["validation-icon"]}>
+					<Icon icon={isInvalid ? AlertIcon : CheckmarkIcon} />
+				</div>
+			) : null}
+			{wrapperChildren != null ? <div className={css["icon-right"]}>{wrapperChildren}</div> : null}
+		</div>
+	);
+}

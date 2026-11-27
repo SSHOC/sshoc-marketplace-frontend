@@ -1,4 +1,5 @@
-import { useTextField } from "@react-aria/textfield";
+import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
+
 import type {
 	Alignment,
 	LabelableProps,
@@ -7,10 +8,12 @@ import type {
 } from "@react-types/shared";
 import type { AriaTextFieldProps } from "@react-types/textfield";
 import type { ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
+import { forwardRef } from "react";
+import { TextField as AriaTextField, TextArea as AriaTextArea } from "react-aria-components";
 
+import { AriaField } from "@/lib/core/ui/Field/AriaField";
 import type { TextFieldBaseStyleProps } from "@/lib/core/ui/TextField/TextFieldBase";
-import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
+import { TextFieldControl } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface TextAreaProps
 	extends Omit<AriaTextFieldProps<HTMLTextAreaElement>, "type" | "errorMessage">, LabelableProps {
@@ -40,22 +43,79 @@ export const TextArea = forwardRef(function TextArea(
 	props: TextAreaProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	const inputRef = useRef<HTMLTextAreaElement>(null);
-	const { descriptionProps, errorMessageProps, inputProps, labelProps } = useTextField<"textarea">(
-		props,
-		inputRef,
-	);
-
+	const {
+		color,
+		icon,
+		size,
+		style,
+		label,
+		description,
+		errorMessage,
+		labelAlign,
+		labelPosition,
+		necessityIndicator,
+		placeholder,
+		validationState,
+		validationBehavior = "aria",
+		rows,
+		onCopy,
+		onCut,
+		onPaste,
+		onCompositionStart,
+		onCompositionEnd,
+		onCompositionUpdate,
+		onSelect,
+		onBeforeInput,
+		onInput,
+		onFocus,
+		onBlur,
+		...fieldProps
+	} = props;
+	const isInvalid = props.isInvalid || validationState === "invalid";
+	const displayValidation = isInvalid ? "invalid" : validationState;
 	return (
-		<TextFieldBase
+		<AriaTextField
+			{...fieldProps}
 			ref={forwardedRef}
-			{...props}
-			descriptionProps={descriptionProps}
-			elementType="textarea"
-			errorMessageProps={errorMessageProps}
-			inputProps={inputProps}
-			inputRef={inputRef}
-			labelProps={labelProps}
-		/>
+			isInvalid={isInvalid}
+			validationBehavior={validationBehavior}
+		>
+			<AriaField
+				label={label}
+				description={description}
+				errorMessage={errorMessage}
+				labelAlign={labelAlign}
+				labelPosition={labelPosition}
+				necessityIndicator={necessityIndicator}
+				isDisabled={props.isDisabled}
+				isRequired={props.isRequired}
+				validationState={displayValidation}
+			>
+				<TextFieldControl
+					color={color}
+					icon={icon}
+					size={size}
+					style={style}
+					validationState={displayValidation}
+				>
+					<AriaTextArea
+						rows={rows}
+						onCopy={onCopy}
+						onCut={onCut}
+						onPaste={onPaste}
+						onCompositionStart={onCompositionStart}
+						onCompositionEnd={onCompositionEnd}
+						onCompositionUpdate={onCompositionUpdate}
+						onSelect={onSelect}
+						onBeforeInput={onBeforeInput}
+						onInput={onInput}
+						onFocus={onFocus}
+						onBlur={onBlur}
+						className={css["textfield-input"]}
+						placeholder={placeholder}
+					/>
+				</TextFieldControl>
+			</AriaField>
+		</AriaTextField>
 	);
 });
