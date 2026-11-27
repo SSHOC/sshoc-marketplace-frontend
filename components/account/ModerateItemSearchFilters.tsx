@@ -834,9 +834,6 @@ function OtherFacets(): ReactNode {
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
 
-	const state = useDisclosureState({ defaultOpen: true });
-	const { triggerProps, contentProps } = useDisclosure(state);
-
 	const fields = {
 		lastInfoUpdate: {
 			name: "d.lastInfoUpdate",
@@ -878,12 +875,8 @@ function OtherFacets(): ReactNode {
 
 	return (
 		<div>
-			<FacetDisclosure
-				label={t("authenticated.moderate-items.other-facets")}
-				state={state}
-				triggerProps={triggerProps}
-			>
-				<div {...contentProps} className={css["other-facet-values"]}>
+			<FacetDisclosure label={t("authenticated.moderate-items.other-facets")} defaultOpen>
+				<div className={css["other-facet-values"]}>
 					<CheckBox
 						name={fields.deprecatedAtSource.name}
 						isSelected={fields.deprecatedAtSource.value}

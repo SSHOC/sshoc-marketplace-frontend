@@ -1,30 +1,32 @@
+import listCss from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
 import css from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete.module.css";
+import textCss from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import { type AriaSearchAutocompleteProps, useSearchAutocomplete } from "@react-aria/autocomplete";
-import { useFocusRing } from "@react-aria/focus";
-import { useFilter } from "@react-aria/i18n";
-import { useHover } from "@react-aria/interactions";
-import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
-import { mergeProps, useLayoutEffect, useResizeObserver } from "@react-aria/utils";
-import { useComboBoxState } from "@react-stately/combobox";
-import type { AriaButtonProps } from "@react-types/button";
-import type { Placement } from "@react-types/overlays";
+import type { AriaSearchAutocompleteProps } from "@react-aria/autocomplete";
 import type { LoadingState } from "@react-types/shared";
 import { useTranslations } from "next-intl";
-import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
-import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
-import useComposedRef from "use-composed-ref";
+import { type ReactNode, type Ref, useContext, useEffect, useRef, useState } from "react";
+import {
+	Collection,
+	ComboBox,
+	ComboBoxStateContext,
+	Group,
+	Input,
+	ListBox,
+	ListBoxLoadMoreItem,
+	ListLayout,
+	Popover,
+	Virtualizer,
+} from "react-aria-components";
 
 import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
-import { Field } from "@/lib/core/ui/Field/Field";
+import { AriaField } from "@/lib/core/ui/Field/AriaField";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
+import AlertIcon from "@/lib/core/ui/icons/alert";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
-import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
-import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
-import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface SearchAutocompleteProps<T extends object> extends Omit<
 	AriaSearchAutocompleteProps<T>,
@@ -44,257 +46,208 @@ export interface SearchAutocompleteProps<T extends object> extends Omit<
 	size?: "md" | "sm";
 }
 
-export const SearchAutocomplete = forwardRef(function SearchAutocomplete<T extends object>(
-	props: SearchAutocompleteProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	return <SearchAutocompleteBase ref={forwardedRef} {...props} />;
-}) as <T extends object>(
-	props: SearchAutocompleteProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => ReactNode;
-
-const SearchAutocompleteBase = forwardRef(function SearchAutocompleteBase<T extends object>(
-	props: SearchAutocompleteProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
+export function SearchAutocomplete<T extends object>(
+	props: SearchAutocompleteProps<T> & { ref?: Ref<HTMLDivElement> },
 ): ReactNode {
 	const {
+		ref,
+		children,
+		description,
 		direction = "bottom",
-		layout: _layout,
+		errorMessage,
+		items,
+		defaultItems,
+		label,
+		layout,
 		loadingState,
 		maxHeight,
-		menuTrigger = "input",
-		onLoadMore,
+		onClear,
 		onSubmit,
+		onLoadMore,
+		placeholder,
 		shouldFlip = true,
+		size = "md",
+		validate,
+		validationState,
+		...comboProps
 	} = props;
-
 	const t = useTranslations();
-
-	const isAsync = loadingState != null;
-	const popoverRef = useRef<HTMLDivElement>(null);
-	const listBoxRef = useRef<HTMLDivElement>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
-	// TODO: Should be focusable ref.
-	const fieldRef = useRef<HTMLDivElement>(null);
-
-	const { contains } = useFilter({ sensitivity: "base" });
-	const state = useComboBoxState<T>({
-		...props,
-		validate: props.validate == null ? undefined : ({ inputValue }) => props.validate!(inputValue),
-		allowsCustomValue: true,
-		allowsEmptyCollection: isAsync,
-		defaultFilter: contains,
-		defaultSelectedKey: undefined,
-		onSelectionChange(key) {
-			if (key != null) {
-				onSubmit?.(null, key);
-			}
-		},
-		selectedKey: undefined,
-	});
-	const layout = useListBoxLayout<T>(_layout);
-
-	const { inputProps, listBoxProps, labelProps, clearButtonProps } = useSearchAutocomplete<T>(
-		{
-			...props,
-			inputRef,
-			layoutDelegate: layout,
-			listBoxRef,
-			menuTrigger,
-			popoverRef,
-		},
-		state,
-	);
-
-	const { overlayProps, placement, updatePosition } = useOverlayPosition({
-		isOpen: state.isOpen,
-		maxHeight,
-		onClose: state.close,
-		overlayRef: popoverRef,
-		placement: `${direction} end` as Placement,
-		scrollRef: listBoxRef,
-		shouldFlip: shouldFlip,
-		targetRef: inputRef,
-	});
-
-	const [menuWidth, setMenuWidth] = useState<number | undefined>(undefined);
-
-	const onResize = useCallback(() => {
-		if (inputRef.current) {
-			const inputWidth = inputRef.current.offsetWidth;
-			setMenuWidth(inputWidth);
-		}
-	}, [inputRef, setMenuWidth]);
-
-	useResizeObserver({ onResize, ref: fieldRef });
-
-	useLayoutEffect(onResize, [onResize]);
-
-	// Update position once the ListBox has rendered. This ensures that
-	// it flips properly when it doesn't fit in the available space.
-	// TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-	useLayoutEffect(() => {
-		if (state.isOpen) {
-			requestAnimationFrame(() => {
-				updatePosition();
-			});
-		}
-	}, [state.isOpen, updatePosition]);
-
-	const style = {
-		...overlayProps.style,
-		minWidth: menuWidth,
-		width: menuWidth,
-	};
-
-	const ref = useComposedRef(fieldRef, forwardedRef);
-
 	return (
-		<Fragment>
-			<Field ref={ref} {...props} labelProps={labelProps}>
-				<SearchAutocompleteInput
-					{...props}
-					clearButtonProps={clearButtonProps}
-					inputProps={inputProps}
-					inputRef={inputRef}
-					isOpen={state.isOpen}
-					loadingState={loadingState}
-				/>
-			</Field>
-			<Popover
-				ref={popoverRef}
-				hideArrow
-				isDismissable={false}
-				isNonModal
-				isOpen={state.isOpen}
-				placement={placement ?? undefined}
-				style={style}
+		<ComboBox<T>
+			{...comboProps}
+			ref={ref}
+			items={items}
+			defaultItems={defaultItems}
+			allowsCustomValue
+			allowsEmptyCollection={loadingState != null}
+			selectedKey={null}
+			onSelectionChange={(key) => {
+				if (key != null) onSubmit?.(null, key);
+			}}
+			validate={validate == null ? undefined : ({ inputValue }) => validate(inputValue)}
+			isInvalid={props.isInvalid || validationState === "invalid"}
+			validationBehavior="aria"
+		>
+			<AriaField
+				{...comboProps}
+				validationState={validationState}
+				label={label}
+				description={description}
+				errorMessage={errorMessage}
 			>
-				<ListBoxBase<T>
-					ref={listBoxRef}
-					{...listBoxProps}
-					autoFocus={state.focusStrategy ?? undefined}
-					disallowEmptySelection
-					focusOnPointerEnter
-					isLoading={loadingState === "loading" || loadingState === "loadingMore"}
-					layout={layout}
-					onLoadMore={onLoadMore}
-					renderEmptyState={() => {
-						if (isAsync !== true) {
-							return null;
-						}
-
-						return <span>{t("common.ui.autocomplete.no-results")}</span>;
-					}}
-					shouldSelectOnPressUp
-					shouldUseVirtualFocus
-					state={state}
+				<SearchInput
+					size={size}
+					placeholder={placeholder}
+					onSubmit={onSubmit}
+					onClear={onClear}
+					isDisabled={props.isDisabled}
+					isReadOnly={props.isReadOnly}
+					validationState={validationState}
+					loadingState={loadingState}
+					menuTrigger={props.menuTrigger}
 				/>
-				<DismissButton
-					onDismiss={() => {
-						state.close();
-					}}
-				/>
-			</Popover>
-		</Fragment>
+				<Popover
+					className={css["popover"]}
+					placement={`${direction} end`}
+					offset={6}
+					maxHeight={maxHeight}
+					shouldFlip={shouldFlip}
+				>
+					<Virtualizer
+						layout={ListLayout}
+						layoutOptions={{
+							estimatedHeadingSize: 26,
+							estimatedRowSize: 36,
+							loaderSize: 40,
+							padding: 8,
+							...layout,
+						}}
+					>
+						<ListBox<T>
+							className={listCss["listbox"]}
+							style={{ padding: 0 }}
+							data-color="primary"
+							renderEmptyState={
+								loadingState == null
+									? undefined
+									: () => (
+											<div className={listCss["listbox-option-empty-state"]}>
+												{loadingState === "loading" || loadingState === "filtering"
+													? t("common.ui.autocomplete.loading")
+													: t("common.ui.autocomplete.no-results")}
+											</div>
+										)
+							}
+						>
+							<Collection items={items ?? defaultItems}>{children}</Collection>
+							{onLoadMore != null || loadingState === "loadingMore" ? (
+								<ListBoxLoadMoreItem
+									onLoadMore={
+										loadingState == null || loadingState === "idle" ? onLoadMore : undefined
+									}
+									isLoading={loadingState === "loadingMore"}
+									className={listCss["listbox-progress-spinner-container"]}
+								>
+									<ProgressSpinner size="sm" aria-label={t("common.ui.listbox.loading-more")} />
+								</ListBoxLoadMoreItem>
+							) : null}
+						</ListBox>
+					</Virtualizer>
+				</Popover>
+			</AriaField>
+		</ComboBox>
 	);
-}) as <T extends object>(
-	props: SearchAutocompleteProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => ReactNode;
-
-interface SearchAutocompleteInputProps<T extends object> extends SearchAutocompleteProps<T> {
-	clearButtonProps: AriaButtonProps;
-	inputProps: InputHTMLAttributes<HTMLInputElement>;
-	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
-	isOpen?: boolean;
 }
 
-const SearchAutocompleteInput = forwardRef(function SearchAutocompleteInput<T extends object>(
-	props: SearchAutocompleteInputProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	const {
-		clearButtonProps,
-		isDisabled,
-		isReadOnly,
-		inputProps,
-		inputRef,
-		isOpen,
-		loadingState,
-		menuTrigger,
-		size = "md",
-		validationState,
-	} = props;
-
-	const { focusProps, isFocusVisible } = useFocusRing({
-		...props,
-		isTextInput: true,
-		within: true,
-	});
-	const { hoverProps, isHovered } = useHover(props);
-	const timeout = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+function SearchInput(
+	props: Pick<
+		SearchAutocompleteProps<object>,
+		| "size"
+		| "placeholder"
+		| "onSubmit"
+		| "onClear"
+		| "isDisabled"
+		| "isReadOnly"
+		| "validationState"
+		| "loadingState"
+		| "menuTrigger"
+	>,
+) {
+	const state = useContext(ComboBoxStateContext);
+	const inputRef = useRef<HTMLInputElement>(null);
+	const value = state?.inputValue ?? "";
+	const pending =
+		state != null && (props.loadingState === "loading" || props.loadingState === "filtering");
 	const [showLoading, setShowLoading] = useState(false);
-
-	const loadingCircle = <ProgressSpinner size="sm" />;
-
-	const searchIcon = <Icon icon={MagnifierIcon} />;
-
-	const clearButton = <ClearButton {...clearButtonProps} isDisabled={isDisabled} preventFocus />;
-
-	const isLoading = loadingState === "loading" || loadingState === "filtering";
-	const inputValue = inputProps.value;
-	const lastInputValue = useRef(inputValue);
-
-	// TODO: check this, also: same as in ComboBox
 	useEffect(() => {
-		if (isLoading && !showLoading) {
-			if (timeout.current == null) {
-				timeout.current = setTimeout(() => {
-					setShowLoading(true);
-				}, 500);
-			}
-
-			if (inputValue !== lastInputValue.current) {
-				clearTimeout(timeout.current);
-				timeout.current = setTimeout(() => {
-					setShowLoading(true);
-				}, 500);
-			}
-		} else if (!isLoading) {
+		if (!pending) return;
+		const timer = setTimeout(() => setShowLoading(true), 500);
+		return () => {
+			clearTimeout(timer);
 			setShowLoading(false);
-			if (timeout.current != null) {
-				clearTimeout(timeout.current);
-				timeout.current = null;
-			}
-		}
-
-		lastInputValue.current = inputValue;
-	}, [isLoading, showLoading, inputValue]);
-
+		};
+	}, [pending, value]);
+	const showSpinner =
+		pending &&
+		showLoading &&
+		(state?.isOpen || props.menuTrigger === "manual" || props.loadingState === "loading");
+	const canClear = value !== "" && !props.isReadOnly;
+	function clear() {
+		state?.setInputValue("");
+		state?.close();
+		inputRef.current?.focus();
+		props.onClear?.();
+	}
 	return (
-		<div
-			ref={forwardedRef}
-			{...mergeProps(focusProps, hoverProps)}
-			className={css["autocomplete-input-group"]}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
-		>
-			<TextFieldBase
-				icon={searchIcon}
-				inputProps={inputProps}
-				inputRef={inputRef}
-				isDisabled={isDisabled}
-				isLoading={
-					// eslint-disable-next-line react/jsx-no-leaked-render
-					showLoading && (isOpen === true || menuTrigger === "manual" || loadingState === "loading")
+		<Group
+			role="presentation"
+			className={`${css["autocomplete-input-group"]} ${textCss["textfield"]}`}
+			data-color="primary"
+			data-size={props.size}
+			data-icon={canClear ? "left right" : "left"}
+			data-validation-state={props.validationState}
+			data-loading-state={showSpinner ? "loading" : undefined}
+			onKeyDownCapture={(event) => {
+				if (event.target !== inputRef.current || event.nativeEvent.isComposing) return;
+				if (
+					event.key === "Enter" &&
+					props.onSubmit &&
+					(!state?.isOpen || state.selectionManager.focusedKey == null)
+				) {
+					event.preventDefault();
+					event.stopPropagation();
+					state?.close();
+					props.onSubmit(value, null);
+				} else if (event.key === "Escape" && !state?.isOpen && canClear && !props.isDisabled) {
+					event.preventDefault();
+					event.stopPropagation();
+					clear();
 				}
-				loadingIndicator={loadingState != null ? loadingCircle : undefined}
-				size={size}
-				validationState={validationState}
-				wrapperChildren={inputValue !== "" && isReadOnly !== true ? clearButton : undefined}
+			}}
+		>
+			<Input
+				ref={inputRef}
+				type="search"
+				className={textCss["textfield-input"]}
+				placeholder={props.placeholder}
 			/>
-		</div>
+			<div className={textCss["icon-left"]}>
+				<Icon icon={MagnifierIcon} />
+			</div>
+			{showSpinner ? (
+				<div className={textCss["validation-icon"]}>
+					<ProgressSpinner size="sm" />
+				</div>
+			) : props.validationState ? (
+				<div className={textCss["validation-icon"]}>
+					<Icon icon={props.validationState === "invalid" ? AlertIcon : CheckmarkIcon} />
+				</div>
+			) : null}
+			{canClear ? (
+				<div className={textCss["icon-right"]}>
+					<ClearButton onPress={clear} isDisabled={props.isDisabled} preventFocus />
+				</div>
+			) : null}
+		</Group>
 	);
-}) as <T extends object>(
-	props: SearchAutocompleteInputProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => ReactNode;
+}
