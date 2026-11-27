@@ -1,9 +1,10 @@
 import css from "@/components/common/ItemSearchDialog.module.css";
+import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 
-import { useId } from "@react-aria/utils";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
-import { Fragment, useRef, useState } from "react";
+import { useState } from "react";
+import { Button as AriaButton, DialogTrigger, Heading } from "react-aria-components";
 
 import { ItemSearchTermAutocomplete } from "@/components/common/ItemSearchTermAutocomplete";
 import { useSearchItems } from "@/components/common/useSearchItems";
@@ -11,60 +12,45 @@ import { ModalDialog } from "@/components/search/ModalDialog";
 import { useSearchFilters } from "@/components/search/useSearchFilters";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { CloseButton } from "@/lib/core/ui/CloseButton/CloseButton";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { isNonEmptyString } from "@/lib/utils";
 
 export function ItemSearchDialog(): ReactNode {
 	const t = useTranslations();
 	const searchFilters = useSearchFilters();
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const state = useModalDialogTriggerState({});
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		state,
-		triggerRef,
-	);
-	const titleId = useId();
-
 	return (
-		<Fragment>
-			<Button
-				ref={triggerRef}
-				{...triggerProps}
-				color="gradient"
+		<DialogTrigger>
+			<AriaButton
+				className={buttonCss["button"]}
+				data-color="gradient"
+				data-size="md"
+				data-variant="fill"
 				data-dialog="search-term"
-				onPress={state.open}
 			>
 				{t("common.search.open-search-dialog")}
-			</Button>
-			{state.isOpen ? (
-				<ModalDialog
-					id={overlayProps.id}
-					aria-labelledby={titleId}
-					isDismissable
-					isOpen={state.isOpen}
-					onClose={state.close}
-				>
-					<header className={css["dialog-header"]}>
-						<h2 className={css["dialog-title"]} id={titleId}>
-							{t("common.search.search-items")}
-						</h2>
-						<CloseButton
-							aria-label={t("common.search.close-search-dialog")}
-							autoFocus
-							onPress={state.close}
-							size="lg"
+			</AriaButton>
+			<ModalDialog isDismissable>
+				{({ close }) => (
+					<>
+						<header className={css["dialog-header"]}>
+							<Heading slot="title" level={2} className={css["dialog-title"]}>
+								{t("common.search.search-items")}
+							</Heading>
+							<CloseButton
+								aria-label={t("common.search.close-search-dialog")}
+								autoFocus
+								onPress={close}
+								size="lg"
+							/>
+						</header>
+						<ItemSearchForm
+							key={searchFilters.q}
+							initialItemSearchTerm={searchFilters.q}
+							onClose={close}
 						/>
-					</header>
-					<ItemSearchForm
-						key={searchFilters.q}
-						initialItemSearchTerm={searchFilters.q}
-						onClose={state.close}
-					/>
-				</ModalDialog>
-			) : null}
-		</Fragment>
+					</>
+				)}
+			</ModalDialog>
+		</DialogTrigger>
 	);
 }
 

@@ -18,8 +18,8 @@ export interface ModalDialogProps
 		>,
 		Pick<DialogProps, "id" | "aria-label" | "aria-labelledby"> {
 	title?: ReactNode;
-	children?: ReactNode;
-	onClose: () => void;
+	children?: DialogProps["children"];
+	onClose?: () => void;
 }
 
 export function ModalDialog({
@@ -34,9 +34,13 @@ export function ModalDialog({
 		<ModalOverlay
 			{...overlayProps}
 			className={css["backdrop"]}
-			onOpenChange={(isOpen) => {
-				if (!isOpen) onClose();
-			}}
+			onOpenChange={
+				onClose
+					? (isOpen) => {
+							if (!isOpen) onClose();
+						}
+					: undefined
+			}
 		>
 			<Modal className={css["container"]}>
 				<Dialog
@@ -45,12 +49,16 @@ export function ModalDialog({
 					aria-labelledby={labelledBy}
 					className={css["dialog"]}
 				>
-					{title != null ? (
-						<Heading slot="title" level={2}>
-							{title}
-						</Heading>
-					) : null}
-					{children}
+					{(dialog) => (
+						<>
+							{title != null ? (
+								<Heading slot="title" level={2}>
+									{title}
+								</Heading>
+							) : null}
+							{typeof children === "function" ? children(dialog) : children}
+						</>
+					)}
 				</Dialog>
 			</Modal>
 		</ModalOverlay>
