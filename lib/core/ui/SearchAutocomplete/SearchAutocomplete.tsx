@@ -25,7 +25,7 @@ import { Icon } from "@/lib/core/ui/Icon/Icon";
 import AlertIcon from "@/lib/core/ui/icons/alert";
 import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
-import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
+import type { ListBoxHeights } from "@/lib/core/ui/ListBox/types";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 
 export interface SearchAutocompleteProps<T extends object> extends Omit<
