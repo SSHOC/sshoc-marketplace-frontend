@@ -1,9 +1,7 @@
 import { I18nProvider as AriaI18nProvider } from "@react-aria/i18n";
 import { NextIntlClientProvider } from "next-intl";
-import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { RouterProvider } from "react-aria-components";
 import { useQueryErrorResetBoundary } from "react-query";
 
 import type { PageComponent, SharedPageProps } from "@/lib/core/app/types";
@@ -66,7 +64,6 @@ export interface ProvidersProps extends KeysAllowUndefined<SharedPageProps> {
 export function Providers(props: ProvidersProps): ReactNode {
 	const { messages = {}, initialQueryState, isPageAccessible, queryClient } = props;
 
-	const router = useRouter();
 	const { locale } = useLocale();
 	const { reset } = useQueryErrorResetBoundary();
 
@@ -88,10 +85,7 @@ export function Providers(props: ProvidersProps): ReactNode {
 				>
 					<PageAccessControl>
 						<AriaI18nProvider locale={locale}>
-							{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-							<RouterProvider navigate={router.push}>
-								<div className="app-content">{props.children}</div>
-							</RouterProvider>
+							<div className="app-content">{props.children}</div>
 						</AriaI18nProvider>
 					</PageAccessControl>
 				</AuthProvider>
