@@ -1,8 +1,8 @@
 import css from "@/components/auth/SignInForm.module.css";
 
-import { useButton } from "@react-aria/button";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useRef } from "react";
+import type { ReactNode } from "react";
+import { Button } from "react-aria-components";
 
 import { Link } from "@/components/common/Link";
 import type { SignInInput } from "@/data/sshoc/api/auth";
@@ -17,17 +17,6 @@ export type SignInFormValues = SignInInput;
 export function SignInForm(): ReactNode {
 	const t = useTranslations();
 	const { signInWithBasicAuth, signInWithOAuth, isSignedOut } = useAuth();
-
-	// TODO: <Button variant>
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(
-		{
-			onPress() {
-				signInWithOAuth();
-			},
-		},
-		buttonRef,
-	);
 
 	function onSubmit(formValues: SignInFormValues) {
 		if (isSignedOut) {
@@ -60,11 +49,11 @@ export function SignInForm(): ReactNode {
 					},
 				})}
 			</p>
-			<button type="button" {...buttonProps} ref={buttonRef} className={css["oauth-button"]}>
+			<Button onPress={signInWithOAuth} className={css["oauth-button"]}>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img src="/assets/images/logo-my-access-id.png" alt="" />
 				Sign in with MyAccessID
-			</button>
+			</Button>
 			<div role="separator" className={css["separator"]}>
 				<span>{t("common.auth.sign-in-alternative")}</span>
 				<div className={css["line"]} />

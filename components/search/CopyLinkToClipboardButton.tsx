@@ -1,10 +1,9 @@
 import css from "@/components/search/CopyLinkToClipboardButton.module.css";
 
-import { useButton } from "@react-aria/button";
-import { useObjectRef } from "@react-aria/utils";
 import { useTranslations } from "next-intl";
 import type { ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
+import { Button } from "react-aria-components";
 
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import LinkIcon from "@/lib/core/ui/icons/link";
@@ -24,22 +23,16 @@ export const CopyLinkToClipboardButton = forwardRef(function CopyLinkToClipboard
 	const { pathname } = props.href;
 
 	const t = useTranslations();
-	const buttonRef = useObjectRef(forwardedRef);
-	const { buttonProps } = useButton(
-		{
-			onPress() {
-				const url = createSiteUrl({ pathname });
-				window.navigator.clipboard.writeText(String(url));
-			},
-		},
-		buttonRef,
-	);
+	function onPress() {
+		const url = createSiteUrl({ pathname });
+		window.navigator.clipboard.writeText(String(url));
+	}
 
 	const label = t("common.search.copy-to-clipboard");
 
 	return (
-		<button type="button" {...buttonProps} className={css["button"]} ref={buttonRef}>
-			<Icon icon={LinkIcon} aria-label={label} title={label} />
-		</button>
+		<Button onPress={onPress} className={css["button"]} ref={forwardedRef} aria-label={label}>
+			<Icon icon={LinkIcon} title={label} />
+		</Button>
 	);
 });

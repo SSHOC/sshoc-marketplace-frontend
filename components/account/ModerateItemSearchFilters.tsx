@@ -1,11 +1,9 @@
 import css from "@/components/account/ModerateItemSearchFilters.module.css";
 import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 
-import { useButton } from "@react-aria/button";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
-import { useRef } from "react";
 import { Button as AriaButton, DialogTrigger, Heading } from "react-aria-components";
 
 import { useModerateItemsSearch } from "@/components/account/useModerateItemsSearch";
@@ -126,39 +124,34 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 
 	const searchFilters = useModerateItemsSearchFilters();
 	const { searchModerateItems } = useModerateItemsSearch();
-	const ref = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(
-		{
-			onPress() {
-				const activeFilters = searchFilters[name];
 
-				if (Array.isArray(activeFilters)) {
-					searchModerateItems({
-						...searchFilters,
-						[name]: activeFilters.filter((v) => {
-							return v !== value;
-						}),
-					});
-				} else if (typeof value === "boolean") {
-					/**
-					 * Usually, value will be a string, and activeFilters an array,
-					 * except for `d.deprecated-at-source` and `d.conflict-at-source` which are free-floating boolean flags.
-					 */
-					searchModerateItems({
-						...searchFilters,
-						[name]: !value,
-					});
-				}
-			},
-		},
-		ref,
-	);
+	function onPress() {
+		const activeFilters = searchFilters[name];
+
+		if (Array.isArray(activeFilters)) {
+			searchModerateItems({
+				...searchFilters,
+				[name]: activeFilters.filter((v) => {
+					return v !== value;
+				}),
+			});
+		} else if (typeof value === "boolean") {
+			/**
+			 * Usually, value will be a string, and activeFilters an array,
+			 * except for `d.deprecated-at-source` and `d.conflict-at-source` which are free-floating boolean flags.
+			 */
+			searchModerateItems({
+				...searchFilters,
+				[name]: !value,
+			});
+		}
+	}
 
 	return (
-		<button type="button" {...buttonProps} ref={ref} className={css["remove-facet-value-button"]}>
+		<AriaButton onPress={onPress} className={css["remove-facet-value-button"]}>
 			<VisuallyHidden>{label}</VisuallyHidden>
 			<Icon icon={CrossIcon} />
-		</button>
+		</AriaButton>
 	);
 }
 

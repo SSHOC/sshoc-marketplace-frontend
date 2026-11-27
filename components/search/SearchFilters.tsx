@@ -1,11 +1,9 @@
 import css from "@/components/search/SearchFilters.module.css";
 import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 
-import { useButton } from "@react-aria/button";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
-import { useRef } from "react";
 import { Button as AriaButton, DialogTrigger, Heading } from "react-aria-components";
 
 import { getTopFacetValues } from "@/components/common/getTopFacetValues";
@@ -125,26 +123,21 @@ function RemoveFacetValueButton(props: RemoveFacetValueButtonProps): ReactNode {
 
 	const searchFilters = useSearchFilters();
 	const { searchItems } = useSearchItems();
-	const ref = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(
-		{
-			onPress() {
-				searchItems({
-					...searchFilters,
-					[name]: searchFilters[name].filter((v) => {
-						return v !== value;
-					}),
-				});
-			},
-		},
-		ref,
-	);
+
+	function onPress() {
+		searchItems({
+			...searchFilters,
+			[name]: searchFilters[name].filter((v) => {
+				return v !== value;
+			}),
+		});
+	}
 
 	return (
-		<button type="button" {...buttonProps} ref={ref} className={css["remove-facet-value-button"]}>
+		<AriaButton onPress={onPress} className={css["remove-facet-value-button"]}>
 			<VisuallyHidden>{label}</VisuallyHidden>
 			<Icon icon={CrossIcon} />
-		</button>
+		</AriaButton>
 	);
 }
 
