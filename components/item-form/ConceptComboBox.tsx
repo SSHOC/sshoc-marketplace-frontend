@@ -10,7 +10,7 @@ import { debounceDelay } from "@/config/sshoc.config";
 import type { PropertyType } from "@/data/sshoc/api/property";
 import { useConceptSearchInfinite } from "@/data/sshoc/hooks/vocabulary";
 import { FormComboBox } from "@/lib/core/form/FormComboBox";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { ListBoxItem } from "@/lib/core/ui/ListBox/ListBoxItem";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
 
@@ -104,10 +104,10 @@ export function ConceptComboBox(props: ConceptComboBoxProps): ReactNode {
 		>
 			{(item) => {
 				return (
-					<Item key={item[idField]} textValue={item[labelField]}>
+					<ListBoxItem id={item[idField]} textValue={item[labelField]}>
 						{item[labelField]}
 						<ItemInfo>{item.uri}</ItemInfo>
-					</Item>
+					</ListBoxItem>
 				);
 			}}
 		</FormComboBox>

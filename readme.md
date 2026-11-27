@@ -40,11 +40,12 @@ TypeScript check and fails if it reports errors. `pnpm run analyze` uses Webpack
 Development uses Next.js's default browser targets to avoid the `next/font` transform issue with
 `last 1` Browserslist queries (https://github.com/vercel/next.js/issues/86792).
 
-## select controls
+## collection controls
 
-`Select` uses React Aria Components. Its children use `SelectItem` from
-`lib/core/ui/Select/SelectItem`, with an explicit `id` for objects identified by a code.
-The shared `Item` component still serves the hook-based combo boxes and other collections.
+`Select` and `ComboBox` use React Aria Components. Their children use the styled `ListBoxItem`
+from `lib/core/ui/ListBox/ListBoxItem`; `SelectItem` remains an alias for Select callers.
+Use an explicit `id` for objects identified by a code, URI, or persistent ID.
+The legacy `Item` component still serves the hook-based search autocomplete and other collections.
 
 ## tooling
 

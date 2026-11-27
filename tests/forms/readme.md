@@ -40,9 +40,11 @@ The suite starts its own frontend at `http://127.0.0.1:3117` and uses the backen
 runtime; the tests do not save browser authentication state in the repository.
 
 The Playwright test signs in, checks virtualized select keyboard navigation and async combo-box
-empty/results states, checks required and URL errors and focus, adds/edits/removes URL fields,
+empty/results states, virtualized pagination and loading-more feedback, checks required and URL errors and focus, adds/edits/removes URL fields,
 simulates a server save failure, retries, then reloads and edits the saved dataset. It also checks
-loading, error, and success toasts and dismissing an error toast.
+loading, error, and success toasts and dismissing an error toast. Pagination uses a controlled local
+response with two pages; those synthetic actors are removed before saving. The component suite
+also checks that required combo boxes retain a named editable input for Final Form's error focus.
 It creates a clearly named disposable dataset in the local backend and retains it for inspection.
 The created ID is attached to the test result. Reordering and review mutators are covered by
 the component suite; the browser flow currently exercises dataset creation and editing only.

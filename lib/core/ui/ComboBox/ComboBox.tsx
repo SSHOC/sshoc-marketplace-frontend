@@ -1,15 +1,9 @@
 import css from "@/lib/core/ui/ComboBox/ComboBox.module.css";
+import buttonCss from "@/lib/core/ui/FieldButton/FieldButton.module.css";
+import listCss from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
+import textCss from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import { useComboBox } from "@react-aria/combobox";
-import { useFocusRing } from "@react-aria/focus";
-import { useFilter } from "@react-aria/i18n";
-import { useHover } from "@react-aria/interactions";
-import { DismissButton, useOverlayPosition } from "@react-aria/overlays";
-import { mergeProps, useLayoutEffect, useResizeObserver } from "@react-aria/utils";
-import { useComboBoxState } from "@react-stately/combobox";
-import type { AriaButtonProps } from "@react-types/button";
 import type { AriaComboBoxProps } from "@react-types/combobox";
-import type { Placement } from "@react-types/overlays";
 import type {
 	Alignment,
 	AriaLabelingProps,
@@ -20,20 +14,29 @@ import type {
 	NecessityIndicator,
 } from "@react-types/shared";
 import { useTranslations } from "next-intl";
-import type { ForwardedRef, InputHTMLAttributes, ReactNode, RefObject } from "react";
-import { forwardRef, Fragment, useCallback, useEffect, useRef, useState } from "react";
-import useComposedRef from "use-composed-ref";
+import type { ForwardedRef, ReactNode } from "react";
+import { forwardRef, useContext, useEffect, useState } from "react";
+import {
+	Button,
+	Collection,
+	ComboBox as AriaComboBox,
+	ComboBoxStateContext,
+	Group,
+	Input,
+	ListBox,
+	ListBoxLoadMoreItem,
+	ListLayout,
+	Popover,
+	Virtualizer,
+} from "react-aria-components";
 
-import { Field } from "@/lib/core/ui/Field/Field";
-import { FieldButton } from "@/lib/core/ui/FieldButton/FieldButton";
+import { AriaField } from "@/lib/core/ui/Field/AriaField";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
+import AlertIcon from "@/lib/core/ui/icons/alert";
+import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
 import ChevronIcon from "@/lib/core/ui/icons/chevron";
-import { ListBoxBase } from "@/lib/core/ui/ListBox/ListBoxBase";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/useListBoxLayout";
-import { useListBoxLayout } from "@/lib/core/ui/ListBox/useListBoxLayout";
-import { Popover } from "@/lib/core/ui/Popover/Popover";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
-import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface ComboBoxProps<T extends object>
 	extends
@@ -63,283 +66,176 @@ export interface ComboBoxProps<T extends object>
 
 export const ComboBox = forwardRef(function ComboBox<T extends object>(
 	props: ComboBoxProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	return <ComboBoxBase ref={forwardedRef} {...props} />;
-}) as <T extends object>(
-	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => ReactNode;
-
-const ComboBoxBase = forwardRef(function ComboBoxBase<T extends object>(
-	props: ComboBoxProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
+	ref: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
 	const {
+		children,
 		color = "primary",
+		defaultItems,
+		description,
 		direction = "bottom",
-		layout: _layout,
+		errorMessage,
+		items,
+		label,
+		layout,
 		loadingState,
 		maxHeight,
 		menuTrigger = "input",
 		onLoadMore,
+		placeholder,
 		shouldFlip = true,
 		size = "md",
+		validationState,
+		...comboBoxProps
 	} = props;
-
 	const t = useTranslations();
 	const isAsync = loadingState != null;
-	const popoverRef = useRef<HTMLDivElement>(null);
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const listBoxRef = useRef<HTMLDivElement>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
-	const fieldRef = useRef<HTMLDivElement>(null);
-
-	const { contains } = useFilter({ sensitivity: "base" });
-	const state = useComboBoxState<T>({
-		...props,
-		allowsEmptyCollection: isAsync,
-		defaultFilter: contains,
-	});
-	const layout = useListBoxLayout<T>(_layout);
-
-	const { buttonProps, inputProps, listBoxProps, labelProps, descriptionProps, errorMessageProps } =
-		useComboBox<T>(
-			{
-				...props,
-				buttonRef,
-				inputRef,
-				layoutDelegate: layout,
-				listBoxRef,
-				menuTrigger,
-				popoverRef,
-			},
-			state,
-		);
-
-	const { overlayProps, placement, updatePosition } = useOverlayPosition({
-		isOpen: state.isOpen,
-		maxHeight,
-		onClose: state.close,
-		overlayRef: popoverRef,
-		placement: `${direction} end` as Placement,
-		scrollRef: listBoxRef,
-		shouldFlip: shouldFlip,
-		targetRef: buttonRef,
-	});
-
-	const [menuWidth, setMenuWidth] = useState<number | undefined>(undefined);
-
-	const onResize = useCallback(() => {
-		if (buttonRef.current && inputRef.current) {
-			const buttonWidth = buttonRef.current.offsetWidth;
-			const inputWidth = inputRef.current.offsetWidth;
-			setMenuWidth(buttonWidth + inputWidth);
-		}
-	}, [buttonRef, inputRef, setMenuWidth]);
-
-	useResizeObserver({ onResize, ref: fieldRef });
-
-	useLayoutEffect(onResize, [onResize]);
-
-	// Update position once the ListBox has rendered. This ensures that
-	// it flips properly when it doesn't fit in the available space.
-	// TODO: add ResizeObserver to useOverlayPosition so we don't need this.
-	useLayoutEffect(() => {
-		if (state.isOpen) {
-			requestAnimationFrame(() => {
-				updatePosition();
-			});
-		}
-	}, [state.isOpen, updatePosition]);
-
-	const style = {
-		...overlayProps.style,
-		minWidth: menuWidth,
-		width: menuWidth,
-	};
-
-	// TODO: Should expose imperative handle to focus input element.
-	const ref = useComposedRef(fieldRef, forwardedRef);
-
 	return (
-		<Fragment>
-			<Field
-				ref={ref}
-				{...props}
-				descriptionProps={descriptionProps}
-				errorMessageProps={errorMessageProps}
-				labelProps={labelProps}
-			>
-				<ComboBoxInput
-					{...props}
-					color={color}
-					size={size}
-					inputProps={inputProps}
-					inputRef={inputRef}
-					isOpen={state.isOpen}
-					loadingState={loadingState}
-					triggerProps={buttonProps}
-					triggerRef={buttonRef}
-				/>
-			</Field>
-			<Popover
-				ref={popoverRef}
-				hideArrow
-				isDismissable={false}
-				isNonModal
-				isOpen={state.isOpen}
-				placement={placement ?? undefined}
-				style={style}
-			>
-				<ListBoxBase<T>
-					ref={listBoxRef}
-					{...listBoxProps}
-					autoFocus={state.focusStrategy ?? undefined}
-					color={color}
-					disallowEmptySelection
-					focusOnPointerEnter
-					isLoading={loadingState === "loadingMore"}
-					layout={layout}
-					onLoadMore={onLoadMore}
-					renderEmptyState={() => {
-						if (isAsync !== true) {
-							return null;
-						}
-
-						return (
-							<span>
-								{loadingState === "loading"
-									? t("common.ui.combobox.loading")
-									: t("common.ui.combobox.no-results")}
-							</span>
-						);
-					}}
-					shouldSelectOnPressUp
-					shouldUseVirtualFocus
-					// size={size}
-					state={state}
-				/>
-				<DismissButton
-					onDismiss={() => {
-						state.close();
-					}}
-				/>
-			</Popover>
-		</Fragment>
+		<AriaComboBox<T>
+			{...comboBoxProps}
+			ref={ref}
+			className={css["combobox"]}
+			// Keep the editable input named for Final Form error focus and native text serialization.
+			formValue="text"
+			items={items}
+			defaultItems={defaultItems}
+			menuTrigger={menuTrigger}
+			allowsEmptyCollection={isAsync}
+			isInvalid={props.isInvalid || validationState === "invalid"}
+			validationBehavior="aria"
+		>
+			{({ isOpen }) => (
+				<AriaField {...props} label={label} description={description} errorMessage={errorMessage}>
+					<Group
+						role="presentation"
+						className={css["combobox-input-group"]}
+						data-color={color}
+						data-open={isOpen}
+						data-size={size}
+					>
+						<ComboBoxInput
+							color={color}
+							size={size}
+							loadingState={loadingState}
+							isOpen={isOpen}
+							menuTrigger={menuTrigger}
+							placeholder={placeholder}
+							validationState={validationState}
+						/>
+						<Button
+							className={buttonCss["button"]}
+							data-color={color}
+							data-validation-state={validationState}
+						>
+							<Icon icon={ChevronIcon} />
+						</Button>
+					</Group>
+					<Popover
+						className={css["popover"]}
+						placement={`${direction} end`}
+						offset={6}
+						maxHeight={maxHeight}
+						shouldFlip={shouldFlip}
+					>
+						<Virtualizer
+							layout={ListLayout}
+							layoutOptions={{
+								estimatedHeadingSize: 26,
+								estimatedRowSize: 36,
+								loaderSize: 40,
+								padding: 8,
+								...layout,
+							}}
+						>
+							<ListBox<T>
+								className={listCss["listbox"]}
+								style={{ padding: 0 }}
+								data-color={color}
+								renderEmptyState={
+									isAsync
+										? () => (
+												<div className={listCss["listbox-option-empty-state"]}>
+													{loadingState === "loading" || loadingState === "filtering"
+														? t("common.ui.combobox.loading")
+														: t("common.ui.combobox.no-results")}
+												</div>
+											)
+										: undefined
+								}
+							>
+								<Collection items={items ?? defaultItems}>{children}</Collection>
+								{onLoadMore != null || loadingState === "loadingMore" ? (
+									<ListBoxLoadMoreItem
+										onLoadMore={loadingState === "loadingMore" ? undefined : onLoadMore}
+										isLoading={loadingState === "loadingMore"}
+										className={listCss["listbox-progress-spinner-container"]}
+									>
+										<ProgressSpinner aria-label={t("common.ui.listbox.loading-more")} size="sm" />
+									</ListBoxLoadMoreItem>
+								) : null}
+							</ListBox>
+						</Virtualizer>
+					</Popover>
+				</AriaField>
+			)}
+		</AriaComboBox>
 	);
 }) as <T extends object>(
 	props: ComboBoxProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
 ) => ReactNode;
 
-interface ComboBoxInputProps<T extends object> extends Omit<AriaComboBoxProps<T>, "errorMessage"> {
-	errorMessage?: ReactNode;
-	/** @default 'primary' */
-	color?: "form" | "primary";
-	inputProps: InputHTMLAttributes<HTMLInputElement>;
-	inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
-	isOpen?: boolean;
+interface ComboBoxInputProps {
+	color: "form" | "primary";
+	size: "md" | "sm";
 	loadingState?: LoadingState;
-	/** @default 'md' */
-	size?: "md" | "sm";
-	triggerProps: AriaButtonProps;
-	triggerRef: RefObject<HTMLButtonElement | null>;
+	isOpen: boolean;
+	menuTrigger: ComboBoxProps<object>["menuTrigger"];
+	placeholder?: string;
+	validationState?: ComboBoxProps<object>["validationState"];
 }
 
-const ComboBoxInput = forwardRef(function ComboBoxInput<T extends object>(
-	props: ComboBoxInputProps<T>,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
-): ReactNode {
-	const {
-		color = "primary",
-		inputProps,
-		inputRef,
-		isDisabled,
-		isOpen,
-		loadingState,
-		menuTrigger,
-		size = "md",
-		triggerProps,
-		triggerRef,
-		validationState,
-	} = props;
-	const { hoverProps, isHovered } = useHover(props);
-	const { focusProps, isFocusVisible } = useFocusRing({
-		...props,
-		isTextInput: true,
-		within: true,
-	});
-	const timeout = useRef<ReturnType<typeof window.setTimeout> | null>(null);
-	const [showLoading, setShowLoading] = useState(false);
-
-	const loadingCircle = <ProgressSpinner size="sm" />;
-
+function ComboBoxInput({
+	color,
+	size,
+	loadingState,
+	isOpen,
+	menuTrigger,
+	placeholder,
+	validationState,
+}: ComboBoxInputProps) {
+	// RAC also renders this subtree while discovering collection items, before state exists.
+	const inputValue = useContext(ComboBoxStateContext)?.inputValue;
+	const t = useTranslations();
 	const isLoading = loadingState === "loading" || loadingState === "filtering";
-	const inputValue = inputProps.value as string;
-	const lastInputValue = useRef<string>(inputValue);
-	// TODO: check this, also: same as in SearchAutocomplete
+	const [showLoading, setShowLoading] = useState(false);
 	useEffect(() => {
-		if (isLoading && !showLoading) {
-			if (timeout.current == null) {
-				timeout.current = setTimeout(() => {
-					setShowLoading(true);
-				}, 500);
-			}
-
-			if (inputValue !== lastInputValue.current) {
-				clearTimeout(timeout.current);
-				timeout.current = setTimeout(() => {
-					setShowLoading(true);
-				}, 500);
-			}
-		} else if (!isLoading) {
+		if (!isLoading || inputValue == null) {
 			setShowLoading(false);
-			if (timeout.current != null) {
-				clearTimeout(timeout.current);
-				timeout.current = null;
-			}
+			return;
 		}
-
-		lastInputValue.current = inputValue;
-	}, [isLoading, showLoading, inputValue]);
-
+		const timer = setTimeout(() => setShowLoading(true), 500);
+		return () => clearTimeout(timer);
+	}, [isLoading, inputValue]);
+	const showSpinner =
+		isLoading && showLoading && (isOpen || menuTrigger === "manual" || loadingState === "loading");
 	return (
 		<div
-			ref={forwardedRef}
-			{...mergeProps(focusProps, hoverProps)}
-			className={css["combobox-input-group"]}
+			className={textCss["textfield"]}
 			data-color={color}
-			data-active={isOpen === true ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
-			data-open={isOpen}
 			data-size={size}
+			data-loading-state={showSpinner ? "loading" : undefined}
+			data-validation-state={validationState}
 		>
-			<TextFieldBase
-				color={color}
-				inputProps={inputProps}
-				inputRef={inputRef}
-				isDisabled={isDisabled}
-				isLoading={
-					// eslint-disable-next-line react/jsx-no-leaked-render
-					showLoading && (isOpen === true || menuTrigger === "manual" || loadingState === "loading")
-				}
-				loadingIndicator={loadingState != null ? loadingCircle : undefined}
-				size={size}
-				validationState={validationState}
-			/>
-			<FieldButton
-				ref={triggerRef}
-				{...triggerProps}
-				color={color}
-				isActive={isOpen}
-				preventFocusOnPress
-				// size={size}
-				validationState={validationState}
-			>
-				<Icon icon={ChevronIcon} />
-			</FieldButton>
+			<Input className={textCss["textfield-input"]} placeholder={placeholder} />
+			{showSpinner ? (
+				<div className={textCss["validation-icon"]}>
+					<ProgressSpinner aria-label={t("common.ui.combobox.loading")} size="sm" />
+				</div>
+			) : validationState ? (
+				<div className={textCss["validation-icon"]}>
+					<Icon icon={validationState === "invalid" ? AlertIcon : CheckmarkIcon} />
+				</div>
+			) : null}
 		</div>
 	);
-}) as <T extends object>(
-	props: ComboBoxInputProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
-) => ReactNode;
+}

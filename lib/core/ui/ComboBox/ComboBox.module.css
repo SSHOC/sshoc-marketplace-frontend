@@ -1,3 +1,14 @@
+.combobox {
+	width: 100%;
+}
+
+.popover {
+	display: flex;
+	flex-direction: column;
+	width: var(--trigger-width);
+	outline: none;
+}
+
 .combobox-input-group {
 	--textfield-input-border-width: 1px 0 1px 1px;
 	--textfield-input-border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);

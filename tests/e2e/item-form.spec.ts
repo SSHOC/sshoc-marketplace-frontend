@@ -1,4 +1,4 @@
-import { expect, type Locator, test } from "@playwright/test";
+import { expect, type Locator, type Route, test } from "@playwright/test";
 
 // Supplied at runtime, never committed or saved as browser storage state.
 // Test credentials are intentionally separate from the application environment schema.
@@ -61,6 +61,72 @@ test("local dataset form: validate, edit repeatable URLs, recover from failed sa
 	await scrollToField(actor);
 	await actor.fill("zzzz-no-actor-regression-test");
 	await expect(page.getByText("No results found", { exact: true })).toBeVisible();
+
+	// Paginated results use a deterministic local response and never reach a save payload.
+	const pagedQuery = "pagination-regression-test";
+	const requestedPages: number[] = [];
+	let releaseNextPage!: () => void;
+	const nextPageGate = new Promise<void>((resolve) => {
+		releaseNextPage = resolve;
+	});
+	const pagedActor = (number: number) => ({
+		id: 900000 + number,
+		name: `Pagination result ${number}`,
+		affiliations: [],
+		externalIds: [],
+	});
+	await page.route(`${apiOrigin}/api/actor-search?**`, async (route) => {
+		const url = new URL(route.request().url());
+		const q = url.searchParams.get("q");
+		const isSelectedQuery = q === pagedActor(31).name;
+		if (q !== pagedQuery && !isSelectedQuery) return route.fallback();
+		const currentPage = Number(url.searchParams.get("page") ?? 1);
+		if (!isSelectedQuery) {
+			requestedPages.push(currentPage);
+			if (currentPage === 2) await nextPageGate;
+		}
+		const actors =
+			isSelectedQuery || currentPage === 2
+				? [pagedActor(31)]
+				: Array.from({ length: 30 }, (_, index) => pagedActor(index + 1));
+		await fulfillLocalJson(route, {
+			q,
+			actors,
+			hits: isSelectedQuery ? 1 : 31,
+			count: actors.length,
+			page: currentPage,
+			perpage: 30,
+			pages: isSelectedQuery ? 1 : 2,
+		});
+	});
+	await page.route(`${apiOrigin}/api/actors/900031`, (route) =>
+		fulfillLocalJson(route, pagedActor(31)),
+	);
+	try {
+		await actor.fill(pagedQuery);
+		await expect(
+			page.getByRole("option", { name: "Pagination result 1", exact: true }),
+		).toBeVisible();
+		await page.getByRole("listbox").evaluate((element) => {
+			element.scrollTop = element.scrollHeight;
+		});
+		await expect.poll(() => requestedPages).toContain(2);
+		await expect(page.getByRole("progressbar", { name: "Loading more..." })).toBeVisible();
+	} finally {
+		releaseNextPage();
+	}
+	const lastPageActor = page.getByRole("option", { name: "Pagination result 31", exact: true });
+	await expect(lastPageActor).toBeVisible();
+	// Appending a page preserves scroll position. Scroll again to reveal the new row.
+	await page.getByRole("listbox").evaluate((element) => {
+		element.scrollTop = element.scrollHeight;
+	});
+	await expect(lastPageActor).toBeInViewport({ ratio: 1 });
+	await expect(lastPageActor).toHaveCSS("pointer-events", "auto");
+	await lastPageActor.click({ timeout: 5000 });
+	await expect(actor).toHaveValue("Pagination result 31");
+	expect(requestedPages).toEqual([1, 2]);
+	await expect(page.getByRole("listbox")).not.toBeVisible();
 	await actor.fill("Smith");
 	const firstActor = page.getByRole("option").first();
 	await expect(firstActor).toContainText("Smith");
@@ -178,4 +244,16 @@ async function scrollToField(field: Locator) {
 				requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
 			),
 	);
+}
+
+function fulfillLocalJson(route: Route, body: unknown) {
+	return route.fulfill({
+		status: 200,
+		contentType: "application/json",
+		body: JSON.stringify(body),
+		headers: {
+			"access-control-allow-origin": "http://127.0.0.1:3117",
+			"access-control-allow-credentials": "true",
+		},
+	});
 }
