@@ -1,16 +1,16 @@
 import css from "@/components/item/ItemAccessibleAtLinks.module.css";
+import buttonCss from "@/lib/core/ui/Button/Button.module.css";
+import menuCss from "@/lib/core/ui/Menu/Menu.module.css";
 
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { Button, Menu, MenuItem, MenuTrigger, Popover } from "react-aria-components";
 
 import type { Item } from "@/data/sshoc/api/item";
-import { Item as MenuItem } from "@/lib/core/ui/Collection/Item";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import ChevronIcon from "@/lib/core/ui/icons/chevron";
 import LinkIcon from "@/lib/core/ui/icons/external-link";
 import { LinkButton } from "@/lib/core/ui/Link/LinkButton";
-import { Menu } from "@/lib/core/ui/Menu/Menu";
-import { MenuTrigger } from "@/lib/core/ui/Menu/MenuTrigger";
 
 export interface ItemAccessibleAtLinksProps {
 	category: Item["category"];
@@ -47,29 +47,36 @@ function ItemAccessibleAtLinksMenuButton(props: ItemAccessibleAtLinksProps): Rea
 
 	const t = useTranslations();
 
-	const items = links.map((link) => {
-		return { id: link, href: link, type: "link" };
-	});
-
 	return (
 		<div className={css["link-button"]}>
-			<MenuTrigger
-				label={
-					<Fragment>
-						{t("common.item.go-to-item", {
-							item: t(`common.item-categories.${category}.one`),
-						})}
-						<Icon icon={ChevronIcon} width="0.75em" />
-					</Fragment>
-				}
-			>
-				<Menu items={items}>
-					{(item) => {
-						const props = { href: item.href, target: "_blank", rel: "noreferrer" };
-
-						return <MenuItem {...props}>{item.href}</MenuItem>;
-					}}
-				</Menu>
+			<MenuTrigger>
+				<Button
+					className={`${buttonCss["button"]} ${menuCss["trigger"]}`}
+					data-color="primary"
+					data-size="md"
+					data-variant="fill"
+				>
+					{t("common.item.go-to-item", {
+						item: t(`common.item-categories.${category}.one`),
+					})}
+					<Icon icon={ChevronIcon} width="0.75em" />
+				</Button>
+				<Popover className={menuCss["popover"]} placement="bottom start" offset={6}>
+					<Menu className={menuCss["menu"]}>
+						{links.map((href, index) => (
+							<MenuItem
+								key={`${href}-${index}`}
+								id={`${href}-${index}`}
+								href={href}
+								target="_blank"
+								rel="noreferrer"
+								className={menuCss["menu-item"]}
+							>
+								{href}
+							</MenuItem>
+						))}
+					</Menu>
+				</Popover>
 			</MenuTrigger>
 		</div>
 	);

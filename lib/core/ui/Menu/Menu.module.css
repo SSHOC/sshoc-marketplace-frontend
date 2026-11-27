@@ -1,3 +1,16 @@
+.trigger {
+	--icon-rotation: 90deg;
+
+	&[aria-expanded="true"] {
+		--icon-rotation: 270deg;
+	}
+}
+
+.popover {
+	min-width: var(--trigger-width);
+	overflow: auto;
+}
+
 .menu {
 	padding-block: var(--menu-padding-block, var(--space-4));
 	padding-inline: var(--menu-padding-inline);
@@ -16,19 +29,8 @@
 	transition-property: var(--transition-property);
 }
 
-.menu-section {
-	padding-block: var(--menu-section-padding-block, var(--space-1));
-	padding-inline: var(--menu-section-padding-inline, var(--space-4));
-	background-color: var(--menu-section-background-color);
-	color: var(--menu-section-color);
-	font-weight: var(--menu-section-font-weight);
-	font-size: var(--menu-section-font-size);
-	transition-timing-function: var(--transition-timing-function);
-	transition-duration: var(--transition-duration);
-	transition-property: var(--transition-property);
-}
-
 .menu-item {
+	overflow-wrap: anywhere;
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: center;
