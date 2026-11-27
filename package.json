@@ -43,7 +43,6 @@
 		"@react-aria/i18n": "^3.13.1",
 		"@react-aria/interactions": "^3.28.1",
 		"@react-aria/link": "^3.9.1",
-		"@react-aria/progress": "^3.5.1",
 		"@react-aria/searchfield": "^3.9.1",
 		"@react-aria/utils": "^3.34.1",
 		"@react-aria/visually-hidden": "^3.9.1",
