@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import type { ActorFormValues } from "@/components/common/ActorForm";
 import { ActorForm } from "@/components/common/ActorForm";
@@ -10,8 +11,6 @@ import { useActor, useUpdateActor } from "@/data/sshoc/hooks/actor";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface EditActorButtonProps {
 	field: ItemFormFields["fields"]["contributors"]["fields"]["actor"];
@@ -41,13 +40,7 @@ interface EditActorDialogTriggerProps {
 function EditActorDialogTrigger(props: EditActorDialogTriggerProps): ReactNode {
 	const { actor, field } = props;
 
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
@@ -65,35 +58,26 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): ReactNode {
 	const updateActor = useUpdateActor({ id: actor.id }, undefined, { meta });
 
 	function onUpdateActor(values: ActorFormValues) {
-		dialog.close();
+		setOpen(false);
 		updateActor.mutate({ data: values });
 	}
 
-	function onOpenDialog() {
-		dialog.open();
-	}
-
 	function onCloseDialog() {
-		dialog.close();
+		setOpen(false);
 	}
 
 	return (
 		<Fragment>
-			<FormRecordEditButton
-				ref={triggerRef}
-				{...triggerProps}
-				aria-label={t("authenticated.forms.edit-field", {
-					field: field.label,
-				})}
-				onPress={onOpenDialog}
-			>
-				{t("authenticated.controls.edit")}
-			</FormRecordEditButton>
-			{dialog.isOpen ? (
+			<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+				<FormRecordEditButton
+					aria-label={t("authenticated.forms.edit-field", {
+						field: field.label,
+					})}
+				>
+					{t("authenticated.controls.edit")}
+				</FormRecordEditButton>
 				<ModalDialog
-					{...(overlayProps as any)}
 					isDismissable
-					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
 					title={t("authenticated.actors.create-actor")}
 				>
@@ -104,7 +88,7 @@ function EditActorDialogTrigger(props: EditActorDialogTriggerProps): ReactNode {
 						onSubmit={onUpdateActor}
 					/>
 				</ModalDialog>
-			) : null}
+			</DialogTrigger>
 		</Fragment>
 	);
 }

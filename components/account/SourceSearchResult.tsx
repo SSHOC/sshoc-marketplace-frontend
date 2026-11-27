@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import { SourceForm } from "@/components/account/SourceForm";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -15,8 +16,6 @@ import { useDeleteSource, useUpdateSource } from "@/data/sshoc/hooks/source";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface SourceSearchResultProps {
 	source: GetSources.Response["sources"][number];
@@ -26,13 +25,7 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	const { source } = props;
 
 	const t = useTranslations();
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 
 	const deleteSourceMeta: MutationMetadata = {
 		messages: {
@@ -69,16 +62,12 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 	}
 
 	function onUpdateSource(source: SourceInput) {
-		dialog.close();
+		setOpen(false);
 		updateSource.mutate({ data: source });
 	}
 
 	function onCloseEditDialog() {
-		dialog.close();
-	}
-
-	function onOpenEditDialog() {
-		dialog.open();
+		setOpen(false);
 	}
 
 	return (
@@ -112,34 +101,29 @@ export function SourceSearchResult(props: SourceSearchResultProps): ReactNode {
 					>
 						{t("authenticated.controls.delete")}
 					</ButtonLink>
-					<ButtonLink
-						ref={triggerRef}
-						{...triggerProps}
-						aria-label={t("authenticated.sources.edit-source", {
-							label: source.label,
-						})}
-						onPress={onOpenEditDialog}
-					>
-						{t("authenticated.controls.edit")}
-					</ButtonLink>
+					<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+						<ButtonLink
+							aria-label={t("authenticated.sources.edit-source", {
+								label: source.label,
+							})}
+						>
+							{t("authenticated.controls.edit")}
+						</ButtonLink>
+						<ModalDialog
+							isDismissable
+							onClose={onCloseEditDialog}
+							title={t("authenticated.sources.edit-source-dialog-title")}
+						>
+							<SourceForm
+								initialValues={source}
+								name="edit-source"
+								onCancel={onCloseEditDialog}
+								onSubmit={onUpdateSource}
+							/>
+						</ModalDialog>
+					</DialogTrigger>
 				</SearchResultControls>
 			</SearchResult>
-			{dialog.isOpen ? (
-				<ModalDialog
-					{...(overlayProps as any)}
-					isDismissable
-					isOpen={dialog.isOpen}
-					onClose={onCloseEditDialog}
-					title={t("authenticated.sources.edit-source-dialog-title")}
-				>
-					<SourceForm
-						initialValues={source}
-						name="edit-source"
-						onCancel={onCloseEditDialog}
-						onSubmit={onUpdateSource}
-					/>
-				</ModalDialog>
-			) : null}
 		</Fragment>
 	);
 }

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import { ActorForm } from "@/components/common/ActorForm";
 import { MetadataLabel } from "@/components/common/MetadataLabel";
@@ -15,8 +16,6 @@ import { AccessControl } from "@/lib/core/auth/AccessControl";
 import type { MutationMetadata } from "@/lib/core/query/types";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface ActorSearchResultProps {
 	actor: SearchActors.Response["actors"][number];
@@ -26,13 +25,7 @@ export function ActorSearchResult(props: ActorSearchResultProps): ReactNode {
 	const { actor } = props;
 
 	const t = useTranslations();
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 
 	const deleteActorMeta: MutationMetadata = {
 		messages: {
@@ -69,16 +62,12 @@ export function ActorSearchResult(props: ActorSearchResultProps): ReactNode {
 	}
 
 	function onUpdateActor(actor: ActorInput) {
-		dialog.close();
+		setOpen(false);
 		updateActor.mutate({ data: actor });
 	}
 
 	function onCloseEditDialog() {
-		dialog.close();
-	}
-
-	function onOpenEditDialog() {
-		dialog.open();
+		setOpen(false);
 	}
 
 	return (
@@ -126,34 +115,29 @@ export function ActorSearchResult(props: ActorSearchResultProps): ReactNode {
 							{t("authenticated.controls.delete")}
 						</ButtonLink>
 					</AccessControl>
-					<ButtonLink
-						ref={triggerRef}
-						{...triggerProps}
-						aria-label={t("authenticated.actors.edit-actor", {
-							name: actor.name,
-						})}
-						onPress={onOpenEditDialog}
-					>
-						{t("authenticated.controls.edit")}
-					</ButtonLink>
+					<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+						<ButtonLink
+							aria-label={t("authenticated.actors.edit-actor", {
+								name: actor.name,
+							})}
+						>
+							{t("authenticated.controls.edit")}
+						</ButtonLink>
+						<ModalDialog
+							isDismissable
+							onClose={onCloseEditDialog}
+							title={t("authenticated.actors.edit-actor-dialog-title")}
+						>
+							<ActorForm
+								initialValues={actor}
+								name="edit-actor"
+								onCancel={onCloseEditDialog}
+								onSubmit={onUpdateActor}
+							/>
+						</ModalDialog>
+					</DialogTrigger>
 				</SearchResultControls>
 			</SearchResult>
-			{dialog.isOpen ? (
-				<ModalDialog
-					{...(overlayProps as any)}
-					isDismissable
-					isOpen={dialog.isOpen}
-					onClose={onCloseEditDialog}
-					title={t("authenticated.actors.edit-actor-dialog-title")}
-				>
-					<ActorForm
-						initialValues={actor}
-						name="edit-actor"
-						onCancel={onCloseEditDialog}
-						onSubmit={onUpdateActor}
-					/>
-				</ModalDialog>
-			) : null}
 		</Fragment>
 	);
 }

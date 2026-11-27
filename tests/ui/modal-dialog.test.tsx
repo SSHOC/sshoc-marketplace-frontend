@@ -2,26 +2,22 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NextIntlClientProvider } from "next-intl";
 import { useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 import { expect, it } from "vitest";
 
+import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
 import common from "@/messages/en/common.json";
 
 function Editor() {
 	const [open, setOpen] = useState(false);
 	return (
-		<>
-			<button type="button" onClick={() => setOpen(true)}>
-				Edit
-			</button>
-			{open ? (
-				<ModalDialog isOpen isDismissable={false} title="Edit item" onClose={() => setOpen(false)}>
-					<button type="button" onClick={() => setOpen(false)}>
-						Cancel
-					</button>
-				</ModalDialog>
-			) : null}
-		</>
+		<DialogTrigger isOpen={open} onOpenChange={setOpen}>
+			<ButtonLink>Edit</ButtonLink>
+			<ModalDialog isDismissable={false} title="Edit item" onClose={() => setOpen(false)}>
+				<ButtonLink onPress={() => setOpen(false)}>Cancel</ButtonLink>
+			</ModalDialog>
+		</DialogTrigger>
 	);
 }
 

@@ -2,7 +2,8 @@ import formFieldListCss from "@/components/common/FormFieldList.module.css";
 import formFieldListItemCss from "@/components/common/FormFieldListItem.module.css";
 
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 import { useForm } from "react-final-form";
 
 import { FormFieldArray } from "@/components/common/FormFieldArray";
@@ -18,8 +19,6 @@ import type { ItemMediaInput, ItemsDiff } from "@/data/sshoc/api/item";
 import { FormThumbnail } from "@/lib/core/form/FormThumbnail";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { Thumbnail } from "@/lib/core/ui/Thumbnail/Thumbnail";
 
 export interface ReviewThumbnailFormFieldProps {
@@ -31,20 +30,10 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 
 	const t = useTranslations();
 	const form = useForm();
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 
 	function onCloseDialog() {
-		dialog.close();
-	}
-
-	function onOpenDialog() {
-		dialog.open();
+		setOpen(false);
 	}
 
 	function onAdd(data: ItemMediaInput) {
@@ -53,7 +42,7 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 
 	const onSubmit = useSubmitMediaUploadForm({
 		onClose() {
-			dialog.close();
+			setOpen(false);
 		},
 		onSuccess(data: ItemMediaInput) {
 			onAdd(data);
@@ -102,16 +91,14 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 				</div>
 			</div>
 			<FormFieldArrayControls>
-				<FormRecordAddButton ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t("authenticated.forms.add-field", {
-						field: field.label,
-					})}
-				</FormRecordAddButton>
-				{dialog.isOpen ? (
+				<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+					<FormRecordAddButton>
+						{t("authenticated.forms.add-field", {
+							field: field.label,
+						})}
+					</FormRecordAddButton>
 					<ModalDialog
-						{...(overlayProps as any)}
 						isDismissable
-						isOpen={dialog.isOpen}
 						onClose={onCloseDialog}
 						title={t("authenticated.media.upload-media-dialog-title")}
 					>
@@ -122,7 +109,7 @@ export function ReviewThumbnailFormField(props: ReviewThumbnailFormFieldProps): 
 							onSubmit={onSubmit}
 						/>
 					</ModalDialog>
-				) : null}
+				</DialogTrigger>
 			</FormFieldArrayControls>
 		</FormFieldArray>
 	);
