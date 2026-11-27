@@ -14,7 +14,7 @@ import { useQuery } from "react-query";
 
 import { baseUrl } from "@/config/sshoc.config";
 import { Button } from "@/lib/core/ui/Button/Button";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 import { Select } from "@/lib/core/ui/Select/Select";
 import { TextField } from "@/lib/core/ui/TextField/TextField";
@@ -195,7 +195,7 @@ export function ApiParamSelect(props: Readonly<ApiParamSelectProps>): ReactNode 
 			onSelectionChange={onChange}
 		>
 			{options.map((option) => {
-				return <Item key={option.id}>{option.label}</Item>;
+				return <SelectItem key={option.id} id={option.id}>{option.label}</SelectItem>;
 			})}
 		</Select>
 	);

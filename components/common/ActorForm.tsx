@@ -17,7 +17,7 @@ import { FormSelect } from "@/lib/core/form/FormSelect";
 import { FormTextField } from "@/lib/core/form/FormTextField";
 import { useFieldState } from "@/lib/core/form/useFieldState";
 import { validateSchema } from "@/lib/core/form/validateSchema";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export type ActorFormValues = ActorInput;
 
@@ -137,7 +137,7 @@ export function ActorIdentifierServiceSelect(props: ActorIdentifierServiceSelect
 	return (
 		<FormSelect {...field} loadingState={actorSources.isLoading ? "loading" : "idle"} items={items}>
 			{(item) => {
-				return <Item key={item.code}>{item.label}</Item>;
+				return <SelectItem id={item.code}>{item.label}</SelectItem>;
 			}}
 		</FormSelect>
 	);

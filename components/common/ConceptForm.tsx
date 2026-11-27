@@ -14,7 +14,7 @@ import { Form } from "@/lib/core/form/Form";
 import { FormSelect } from "@/lib/core/form/FormSelect";
 import { FormTextField } from "@/lib/core/form/FormTextField";
 import { validateSchema } from "@/lib/core/form/validateSchema";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export type ConceptFormValues = ConceptInput & { vocabulary: { code: Vocabulary["code"] } };
 
@@ -54,7 +54,7 @@ export function ConceptForm(props: ConceptFormProps): ReactNode {
 					})}
 				>
 					{(item) => {
-						return <Item key={item.code}>{item.label}</Item>;
+						return <SelectItem id={item.code}>{item.label}</SelectItem>;
 					}}
 				</FormSelect>
 				<FormTextField {...fields.label} />

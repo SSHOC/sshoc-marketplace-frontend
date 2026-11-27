@@ -1,4 +1,3 @@
-import { Item } from "@react-stately/collections";
 import { useTranslations } from "next-intl";
 import type { Key, ReactNode } from "react";
 
@@ -7,6 +6,7 @@ import { useDraftItemsSearchFilters } from "@/components/account/useDraftItemsSe
 import type { ItemDraftSortOrder } from "@/data/sshoc/api/item";
 import { itemDraftSortOrders } from "@/data/sshoc/api/item";
 import { Select } from "@/lib/core/ui/Select/Select";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export function DraftItemsSearchSortOrderSelect(): ReactNode {
 	const t = useTranslations();
@@ -37,7 +37,7 @@ export function DraftItemsSearchSortOrderSelect(): ReactNode {
 			selectedKey={sortOrder}
 		>
 			{(item) => {
-				return <Item>{item.label}</Item>;
+				return <SelectItem>{item.label}</SelectItem>;
 			}}
 		</Select>
 	);

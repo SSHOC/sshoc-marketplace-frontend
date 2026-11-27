@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { ItemFormFields } from "@/components/item-form/useItemFormFields";
 import { useActorRoles } from "@/data/sshoc/hooks/actor";
 import { FormSelect } from "@/lib/core/form/FormSelect";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { SelectItem } from "@/lib/core/ui/Select/SelectItem";
 
 export interface ActorRoleSelectProps {
 	field: ItemFormFields["fields"]["contributors"]["fields"]["role"];
@@ -18,7 +18,7 @@ export function ActorRoleSelect(props: ActorRoleSelectProps): ReactNode {
 	return (
 		<FormSelect {...field} loadingState={actorRoles.isLoading ? "loading" : "idle"} items={items}>
 			{(item) => {
-				return <Item key={item.code}>{item.label}</Item>;
+				return <SelectItem id={item.code}>{item.label}</SelectItem>;
 			}}
 		</FormSelect>
 	);

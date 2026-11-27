@@ -36,7 +36,7 @@
 	}
 
 	&:focus-visible,
-	&[data-focused] {
+	&[data-focus-visible] {
 		border-color: var(--field-button-border-color-focus, var(--color-primary-600));
 		background-color: var(--field-button-background-color-focus);
 		color: var(--field-button-color-focus);
@@ -45,7 +45,8 @@
 	}
 
 	&:active,
-	&[data-active] {
+	&[data-active],
+	&[data-pressed] {
 		border-color: var(--field-button-border-color-active, var(--color-neutral-700));
 		background-color: var(--field-button-background-color-active);
 		color: var(--field-button-color-active);
