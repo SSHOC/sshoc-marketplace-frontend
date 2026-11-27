@@ -2,25 +2,29 @@ import listCss from "@/lib/core/ui/ListBox/ListBoxBase.module.css";
 import css from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete.module.css";
 import textCss from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import type { AriaSearchAutocompleteProps } from "@react-aria/autocomplete";
 import type { LoadingState } from "@react-types/shared";
 import { useTranslations } from "next-intl";
 import { type ReactNode, type Ref, useContext, useEffect, useRef, useState } from "react";
 import {
 	Collection,
 	ComboBox,
+	type ComboBoxProps,
+	type CollectionProps,
 	ComboBoxStateContext,
 	Group,
 	Input,
+	type Key,
 	ListBox,
 	ListBoxLoadMoreItem,
 	ListLayout,
 	Popover,
+	type SearchFieldProps,
 	Virtualizer,
 } from "react-aria-components";
 
 import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
 import { AriaField } from "@/lib/core/ui/Field/AriaField";
+import type { FieldProps } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import AlertIcon from "@/lib/core/ui/icons/alert";
 import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
@@ -28,11 +32,15 @@ import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
 import type { ListBoxHeights } from "@/lib/core/ui/ListBox/types";
 import { ProgressSpinner } from "@/lib/core/ui/ProgressSpinner/ProgressSpinner";
 
-export interface SearchAutocompleteProps<T extends object> extends Omit<
-	AriaSearchAutocompleteProps<T>,
-	"errorMessage"
-> {
-	errorMessage?: ReactNode;
+export interface SearchAutocompleteProps<T extends object>
+	extends
+		Omit<ComboBoxProps<T>, "children" | "render" | "validate">,
+		Pick<CollectionProps<T>, "children">,
+		Pick<FieldProps, "description" | "errorMessage" | "label" | "validationState">,
+		Pick<SearchFieldProps, "onClear" | "validate"> {
+	placeholder?: string;
+	/** Submits either the free-text input or the selected suggestion key. */
+	onSubmit?: (value: string | null, key: Key | null) => void;
 	/** @default 'bottom' */
 	direction?: "bottom" | "top";
 	layout?: ListBoxHeights;
