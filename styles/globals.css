@@ -41,12 +41,12 @@
 	:root,
 	body,
 	#__next,
-	[data-overlay-container] {
+	.app-content {
 		block-size: 100%;
 	}
 
 	#__next,
-	[data-overlay-container] {
+	.app-content {
 		isolation: isolate;
 	}
 

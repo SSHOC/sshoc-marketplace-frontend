@@ -1,5 +1,4 @@
 import { I18nProvider as AriaI18nProvider } from "@react-aria/i18n";
-import { OverlayProvider } from "@react-aria/overlays";
 import { NextIntlClientProvider } from "next-intl";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
@@ -91,7 +90,7 @@ export function Providers(props: ProvidersProps): ReactNode {
 						<AriaI18nProvider locale={locale}>
 							{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
 							<RouterProvider navigate={router.push}>
-								<OverlayProvider>{props.children}</OverlayProvider>
+								<div className="app-content">{props.children}</div>
 							</RouterProvider>
 						</AriaI18nProvider>
 					</PageAccessControl>
