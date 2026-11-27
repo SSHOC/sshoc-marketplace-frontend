@@ -10,7 +10,7 @@ import type { Actor } from "@/data/sshoc/api/actor";
 import { useActorSearchInfinite } from "@/data/sshoc/hooks/actor";
 import { FormComboBox } from "@/lib/core/form/FormComboBox";
 import { useFieldState } from "@/lib/core/form/useFieldState";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { ListBoxItem } from "@/lib/core/ui/ListBox/ListBoxItem";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
 
@@ -94,14 +94,14 @@ export function ActorComboBox(props: ActorComboBoxProps): ReactNode {
 		>
 			{(item) => {
 				return (
-					<Item textValue={item[labelField]}>
+					<ListBoxItem textValue={item[labelField]}>
 						{item[labelField]}
 						<ItemInfo>
 							{item.affiliations.map((actor) => {
 								return actor.name;
 							})}
 						</ItemInfo>
-					</Item>
+					</ListBoxItem>
 				);
 			}}
 		</FormComboBox>

@@ -10,7 +10,7 @@ import type { RelatedItem } from "@/data/sshoc/api/item";
 import { useItemSearchInfinite } from "@/data/sshoc/hooks/item";
 import { FormComboBox } from "@/lib/core/form/FormComboBox";
 import { useFieldState } from "@/lib/core/form/useFieldState";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { ListBoxItem } from "@/lib/core/ui/ListBox/ListBoxItem";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
 
@@ -93,10 +93,10 @@ export function RelatedItemComboBox(props: RelatedItemComboBoxProps): ReactNode 
 		>
 			{(item) => {
 				return (
-					<Item key={item[idField]} textValue={item[labelField]}>
+					<ListBoxItem id={item[idField]} textValue={item[labelField]}>
 						{item[labelField]}
 						<ItemInfo>{t(`common.item-categories.${item.category}.one`)}</ItemInfo>
-					</Item>
+					</ListBoxItem>
 				);
 			}}
 		</FormComboBox>

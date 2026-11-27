@@ -15,7 +15,7 @@ import type { FormFileInputProps } from "@/lib/core/form/FormFileInput";
 import { FormFileInput } from "@/lib/core/form/FormFileInput";
 import { FormTextField } from "@/lib/core/form/FormTextField";
 import { validateSchema } from "@/lib/core/form/validateSchema";
-import { Item } from "@/lib/core/ui/Collection/Item";
+import { ListBoxItem } from "@/lib/core/ui/ListBox/ListBoxItem";
 
 export type MediaUploadFormValues = Pick<ItemMediaInput, "caption" | "concept"> & {
 	file?: FileList | null;
@@ -107,7 +107,7 @@ function LicenceComboBox(props: LicenceComboBoxProps): ReactNode {
 			}
 		>
 			{(item) => {
-				return <Item key={item.uri}>{item.label}</Item>;
+				return <ListBoxItem id={item.uri}>{item.label}</ListBoxItem>;
 			}}
 		</FormComboBox>
 	);

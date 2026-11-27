@@ -81,7 +81,3 @@
 .listbox-container {
 	display: contents;
 }
-
-.option[data-focused]:not([data-focus-visible]) {
-	outline: none;
-}

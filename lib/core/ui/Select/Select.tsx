@@ -10,19 +10,16 @@ import { forwardRef } from "react";
 import {
 	Button,
 	Collection,
-	Label as AriaLabel,
 	ListBox,
 	ListBoxLoadMoreItem,
 	ListLayout,
 	Popover,
 	Select as AriaSelect,
 	SelectValue,
-	TextContext,
-	useSlottedContext,
 	Virtualizer,
 } from "react-aria-components";
 
-import { Field, type FieldProps } from "@/lib/core/ui/Field/Field";
+import { AriaField } from "@/lib/core/ui/Field/AriaField";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import AlertIcon from "@/lib/core/ui/icons/alert";
 import CheckmarkIcon from "@/lib/core/ui/icons/checkmark";
@@ -93,7 +90,13 @@ export const Select = forwardRef(function Select<T extends object>(
 			placeholder={placeholder ?? t("common.ui.select.placeholder")}
 		>
 			{({ isOpen }) => (
-				<SelectField {...props} label={label} description={description} errorMessage={errorMessage}>
+				<AriaField
+					{...props}
+					label={label}
+					description={description}
+					errorMessage={errorMessage}
+					includeNecessityIndicatorInAccessibilityName
+				>
 					<div
 						className={css["select-input-group"]}
 						data-open={isOpen}
@@ -137,11 +140,15 @@ export const Select = forwardRef(function Select<T extends object>(
 									...layout,
 								}}
 							>
-								<ListBox<T> className={listCss["listbox"]} data-color={color}>
+								<ListBox<T>
+									className={listCss["listbox"]}
+									style={{ padding: 0 }}
+									data-color={color}
+								>
 									<Collection items={items}>{children}</Collection>
 									{onLoadMore != null || loadingState === "loadingMore" ? (
 										<ListBoxLoadMoreItem
-											onLoadMore={onLoadMore}
+											onLoadMore={loadingState === "loadingMore" ? undefined : onLoadMore}
 											isLoading={loadingState === "loadingMore"}
 											className={listCss["listbox-progress-spinner-container"]}
 										>
@@ -152,29 +159,13 @@ export const Select = forwardRef(function Select<T extends object>(
 							</Virtualizer>
 						</div>
 					</Popover>
-				</SelectField>
+				</AriaField>
 			)}
 		</AriaSelect>
 	);
 }) as <T extends object>(
 	props: SelectProps<T> & { ref?: ForwardedRef<HTMLDivElement> },
 ) => ReactNode;
-
-/** Bridge RAC's accessible slots to the existing field presentation. */
-function SelectField(props: FieldProps) {
-	const descriptionProps = useSlottedContext(TextContext, "description");
-	const errorMessageProps = useSlottedContext(TextContext, "errorMessage");
-	return (
-		<Field
-			{...props}
-			labelElementType={AriaLabel}
-			descriptionProps={descriptionProps ?? undefined}
-			errorMessageProps={errorMessageProps ?? undefined}
-			includeNecessityIndicatorInAccessibilityName
-			showErrorIcon={false}
-		/>
-	);
-}
 
 function preventPageNavigation(event: KeyboardEvent) {
 	// Aria moves focus for Home/End in toggle mode but also permits native page scrolling.
