@@ -1,13 +1,16 @@
-import { type AriaSearchFieldProps, useSearchField } from "@react-aria/searchfield";
-import { useSearchFieldState } from "@react-stately/searchfield";
-import type { Alignment, LabelPosition, NecessityIndicator } from "@react-types/shared";
-import type { ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
+import clearCss from "@/lib/core/ui/ClearButton/ClearButton.module.css";
+import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import { ClearButton } from "@/lib/core/ui/ClearButton/ClearButton";
+import type { AriaSearchFieldProps } from "@react-aria/searchfield";
+import type { Alignment, LabelPosition, NecessityIndicator } from "@react-types/shared";
+import { forwardRef, type ForwardedRef, type ReactNode } from "react";
+import { Button, Input, SearchField as AriaSearchField } from "react-aria-components";
+
+import { AriaField } from "@/lib/core/ui/Field/AriaField";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
+import CrossIcon from "@/lib/core/ui/icons/cross";
 import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
-import { TextFieldBase } from "@/lib/core/ui/TextField/TextFieldBase";
+import { TextFieldControl } from "@/lib/core/ui/TextField/TextFieldBase";
 
 export interface SearchFieldProps extends Omit<AriaSearchFieldProps, "errorMessage"> {
 	errorMessage?: ReactNode;
@@ -22,31 +25,62 @@ export interface SearchFieldProps extends Omit<AriaSearchFieldProps, "errorMessa
 
 export const SearchField = forwardRef(function SearchField(
 	props: SearchFieldProps,
-	forwardedRef: ForwardedRef<HTMLDivElement>,
+	ref: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	const defaultIcon = <Icon icon={MagnifierIcon} />;
-
-	const { icon = defaultIcon, isDisabled, ...otherProps } = props;
-
-	const state = useSearchFieldState(props);
-	const inputRef = useRef<HTMLInputElement>(null);
-	const { labelProps, inputProps, clearButtonProps, descriptionProps, errorMessageProps } =
-		useSearchField(props, state, inputRef);
-
-	const clearButton = <ClearButton {...clearButtonProps} isDisabled={isDisabled} preventFocus />;
+	const {
+		icon = <Icon icon={MagnifierIcon} />,
+		label,
+		description,
+		errorMessage,
+		labelAlign,
+		labelPosition,
+		necessityIndicator,
+		placeholder,
+		validationState,
+		validationBehavior = "aria",
+		...fieldProps
+	} = props;
+	const isInvalid = props.isInvalid || validationState === "invalid";
+	const displayValidation = isInvalid ? "invalid" : validationState;
 
 	return (
-		<TextFieldBase
-			ref={forwardedRef}
-			{...otherProps}
-			descriptionProps={descriptionProps}
-			errorMessageProps={errorMessageProps}
-			icon={icon}
-			inputProps={inputProps}
-			inputRef={inputRef}
-			isDisabled={isDisabled}
-			labelProps={labelProps}
-			wrapperChildren={state.value !== "" && props.isReadOnly !== true ? clearButton : undefined}
-		/>
+		<AriaSearchField
+			{...fieldProps}
+			ref={ref}
+			isInvalid={isInvalid}
+			validationBehavior={validationBehavior}
+		>
+			{({ isEmpty, isReadOnly }) => (
+				<AriaField
+					label={label}
+					description={description}
+					errorMessage={errorMessage}
+					labelAlign={labelAlign}
+					labelPosition={labelPosition}
+					necessityIndicator={necessityIndicator}
+					isDisabled={props.isDisabled}
+					isRequired={props.isRequired}
+					validationState={displayValidation}
+				>
+					<TextFieldControl
+						icon={icon}
+						validationState={displayValidation}
+						wrapperChildren={
+							!isEmpty && !isReadOnly ? (
+								<Button
+									className={clearCss["clear-button"]}
+									excludeFromTabOrder
+									preventFocusOnPress
+								>
+									<Icon icon={CrossIcon} width="0.5em" />
+								</Button>
+							) : undefined
+						}
+					>
+						<Input className={css["textfield-input"]} placeholder={placeholder} />
+					</TextFieldControl>
+				</AriaField>
+			)}
+		</AriaSearchField>
 	);
 });
