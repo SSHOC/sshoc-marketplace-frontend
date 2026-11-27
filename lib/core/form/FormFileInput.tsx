@@ -21,7 +21,6 @@ export function FormFileInput(props: FormFileInputProps): ReactNode {
 				onBlur: input.onBlur,
 				onFocus: input.onFocus,
 				onChange: input.onChange,
-				value: input.value,
 				...validation,
 			})}
 		/>
