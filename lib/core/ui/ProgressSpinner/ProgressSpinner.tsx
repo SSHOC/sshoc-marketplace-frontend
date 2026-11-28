@@ -1,10 +1,10 @@
 import css from "@/lib/core/ui/ProgressSpinner/ProgressSpinner.module.css";
 
-import { useProgressBar } from "@react-aria/progress";
 import type { AriaLabelingProps, DOMProps } from "@react-types/shared";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
+import { ProgressBar } from "react-aria-components";
 
 export interface ProgressSpinnerStyleProps {
 	"--progress-spinner-color"?: CSSProperties["color"];
@@ -20,16 +20,15 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
 	props: ProgressSpinnerProps,
 	forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactNode {
-	const { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, size = "md", style } = props;
+	const {
+		"aria-label": ariaLabel,
+		"aria-labelledby": ariaLabelledby,
+		size = "md",
+		style,
+		...domProps
+	} = props;
 
 	const t = useTranslations();
-
-	const { progressBarProps } = useProgressBar({
-		...props,
-		isIndeterminate: true,
-		"aria-label":
-			ariaLabel == null && ariaLabelledby == null ? t("common.default-spinner-message") : ariaLabel,
-	});
 
 	function getRadius() {
 		switch (size) {
@@ -50,9 +49,16 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
 	const offset = c - (1 / 4) * c;
 
 	return (
-		<div
+		<ProgressBar
+			{...domProps}
 			ref={forwardedRef}
-			{...progressBarProps}
+			isIndeterminate
+			aria-label={
+				ariaLabel == null && ariaLabelledby == null
+					? t("common.default-spinner-message")
+					: ariaLabel
+			}
+			aria-labelledby={ariaLabelledby}
 			className={css["container"]}
 			style={style as CSSProperties}
 		>
@@ -92,6 +98,6 @@ export const ProgressSpinner = forwardRef(function ProgressSpinner(
 					/>
 				</circle>
 			</svg>
-		</div>
+		</ProgressBar>
 	);
 });
