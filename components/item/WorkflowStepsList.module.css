@@ -111,7 +111,7 @@
 		height: var(--size-2-5);
 	}
 
-	&[data-state="expanded"] {
+	&[aria-expanded="true"] {
 		background-color: var(--color-primary-600);
 		color: var(--color-neutral-50);
 
