@@ -1,19 +1,27 @@
 import clearCss from "@/lib/core/ui/ClearButton/ClearButton.module.css";
 import css from "@/lib/core/ui/TextField/TextFieldBase.module.css";
 
-import type { AriaSearchFieldProps } from "@react-aria/searchfield";
 import type { Alignment, LabelPosition, NecessityIndicator } from "@react-types/shared";
 import { forwardRef, type ForwardedRef, type ReactNode } from "react";
-import { Button, Input, SearchField as AriaSearchField } from "react-aria-components";
+import {
+	Button,
+	Input,
+	SearchField as AriaSearchField,
+	type SearchFieldProps as AriaSearchFieldProps,
+} from "react-aria-components";
 
 import { AriaField } from "@/lib/core/ui/Field/AriaField";
+import type { FieldProps } from "@/lib/core/ui/Field/Field";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CrossIcon from "@/lib/core/ui/icons/cross";
 import MagnifierIcon from "@/lib/core/ui/icons/magnifier";
 import { TextFieldControl } from "@/lib/core/ui/TextField/TextFieldBase";
 
-export interface SearchFieldProps extends Omit<AriaSearchFieldProps, "errorMessage"> {
-	errorMessage?: ReactNode;
+export interface SearchFieldProps
+	extends
+		Omit<AriaSearchFieldProps, "children" | "render">,
+		Pick<FieldProps, "description" | "errorMessage" | "label" | "validationState"> {
+	placeholder?: string;
 	icon?: ReactNode;
 	isRequired?: boolean;
 	/** @default 'start' */

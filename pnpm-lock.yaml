@@ -221,15 +221,9 @@ importers:
       '@next/bundle-analyzer':
         specifier: '16'
         version: 16.4.6
-      '@react-aria/autocomplete':
-        specifier: ^3.0.0-rc.8
-        version: 3.0.0-rc.8(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@react-aria/i18n':
         specifier: ^3.13.1
         version: 3.13.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@react-aria/searchfield':
-        specifier: ^3.9.1
-        version: 3.9.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@react-aria/utils':
         specifier: ^3.34.1
         version: 3.34.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1592,12 +1586,6 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@react-aria/autocomplete@3.0.0-rc.8':
-    resolution: {integrity: sha512-ZXnTJtc/JkdupLNSgW1HOm8Gm0xzVwSeXlgWBnoOXlTZfeUJugznihrDoYwRREkUPPWYpUQjkc4ds+Nr5ELqmw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-
   '@react-aria/checkbox@3.17.1':
     resolution: {integrity: sha512-742B+UhH87TK02SYsFJZOgQ9VZpFEythH5LXRnwxt/xShoKOp+eqXPaVah79s/+B9sxY1mF0wNORQ2RVAQFSKw==}
     peerDependencies:
@@ -1612,12 +1600,6 @@ packages:
 
   '@react-aria/i18n@3.13.1':
     resolution: {integrity: sha512-z56ZYcbfpNmMyiGLhyEjytpmEfoTlBaksk84q4kds3HvNkf7QWKj+DJVfVDrJX+c1LyuBsszLSX7yxJRiHsYKQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-
-  '@react-aria/searchfield@3.9.1':
-    resolution: {integrity: sha512-BBJMq07CCcn7uaAyKKzFPRafX2x16gWluGNwMvpvuK9E0JNeTqQXKxYVzJ6EE39dYN9D97Icc1/2MtUaKJFETA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
@@ -5623,13 +5605,6 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@react-aria/autocomplete@3.0.0-rc.8(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
-    dependencies:
-      '@swc/helpers': 0.5.17
-      react: 19.3.1
-      react-aria: 3.53.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      react-dom: 19.3.1(react@19.3.1)
-
   '@react-aria/checkbox@3.17.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@swc/helpers': 0.5.17
@@ -5649,13 +5624,6 @@ snapshots:
       '@internationalized/date': 3.12.4
       '@internationalized/message': 3.1.10
       '@internationalized/string': 3.2.10
-      '@swc/helpers': 0.5.17
-      react: 19.3.1
-      react-aria: 3.53.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      react-dom: 19.3.1(react@19.3.1)
-
-  '@react-aria/searchfield@3.9.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
-    dependencies:
       '@swc/helpers': 0.5.17
       react: 19.3.1
       react-aria: 3.53.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
