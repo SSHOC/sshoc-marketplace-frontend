@@ -1,23 +1,18 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useState } from "react";
+import { Button, DialogTrigger } from "react-aria-components";
 import { expect, it } from "vitest";
 
 import { ModalDialog } from "@/components/search/ModalDialog";
 
 function SearchDialog() {
-	const [open, setOpen] = useState(false);
 	return (
-		<>
-			<button type="button" onClick={() => setOpen(true)}>
-				Open search
-			</button>
-			{open ? (
-				<ModalDialog isOpen isDismissable title="Search items" onClose={() => setOpen(false)}>
-					<input aria-label="Query" />
-				</ModalDialog>
-			) : null}
-		</>
+		<DialogTrigger>
+			<Button>Open search</Button>
+			<ModalDialog isDismissable title="Search items">
+				<input aria-label="Query" />
+			</ModalDialog>
+		</DialogTrigger>
 	);
 }
 
