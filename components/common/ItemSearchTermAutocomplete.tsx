@@ -6,8 +6,8 @@ import { useSearchItems } from "@/components/common/useSearchItems";
 import { debounceDelay } from "@/config/sshoc.config";
 import type { ItemCategory, ItemSearchSuggestion } from "@/data/sshoc/api/item";
 import { useItemAutocomplete } from "@/data/sshoc/hooks/item";
-import { Item } from "@/lib/core/ui/Collection/Item";
 import { HighlightedText } from "@/lib/core/ui/HighlightedText/HighlightedText";
+import { ListBoxItem } from "@/lib/core/ui/ListBox/ListBoxItem";
 import { SearchAutocomplete } from "@/lib/core/ui/SearchAutocomplete/SearchAutocomplete";
 import { mapBy } from "@/lib/utils";
 import { useDebouncedState } from "@/lib/utils/hooks/useDebouncedState";
@@ -64,9 +64,9 @@ export function ItemSearchTermAutocomplete(props: ItemSearchAutocompleteProps): 
 		>
 			{(item) => {
 				return (
-					<Item key={item.persistentId} textValue={item.phrase}>
+					<ListBoxItem id={item.persistentId} textValue={item.phrase}>
 						<HighlightedText text={item.phrase} searchPhrase={itemSearchTerm} />
-					</Item>
+					</ListBoxItem>
 				);
 			}}
 		</SearchAutocomplete>

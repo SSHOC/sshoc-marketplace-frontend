@@ -2,3 +2,10 @@
 	--clear-button-height: 100%;
 	--clear-button-width: 100%;
 }
+
+.popover {
+	display: flex;
+	flex-direction: column;
+	width: var(--trigger-width);
+	outline: none;
+}

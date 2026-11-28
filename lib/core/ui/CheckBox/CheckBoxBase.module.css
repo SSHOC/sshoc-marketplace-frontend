@@ -10,11 +10,12 @@
 	&[data-hovered] {
 	}
 
-	&[data-focused] {
+	&[data-focus-visible] {
 	}
 
 	&:disabled,
 	&[aria-disabled],
+	&[data-disabled],
 	&[data-state="disabled"] {
 		color: var(--color-neutral-400);
 		pointer-events: none;
@@ -30,7 +31,7 @@
 		background-color: var(--color-neutral-50);
 	}
 
-	&[data-variant="facet"][data-focused] {
+	&[data-variant="facet"][data-focus-visible] {
 		background-color: var(--color-neutral-50);
 	}
 }
@@ -67,6 +68,7 @@
 
 	&:disabled,
 	&[aria-disabled],
+	&[data-disabled],
 	&[data-state="disabled"] {
 		color: var(--color-neutral-400);
 		pointer-events: none;
