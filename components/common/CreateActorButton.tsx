@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import type { ActorFormValues } from "@/components/common/ActorForm";
 import { ActorForm } from "@/components/common/ActorForm";
@@ -8,8 +9,6 @@ import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface CreateActorButtonProps {
 	/** @default 'button' */
@@ -19,13 +18,7 @@ export interface CreateActorButtonProps {
 export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 	const { variant = "button" } = props;
 
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
@@ -43,40 +36,30 @@ export function CreateActorButton(props: CreateActorButtonProps): ReactNode {
 	const createActor = useCreateActor(undefined, { meta });
 
 	function onCreateActor(values: ActorFormValues) {
-		dialog.close();
+		setOpen(false);
 		createActor.mutate({ data: values });
 	}
 
-	function onOpenDialog() {
-		dialog.open();
-	}
-
 	function onCloseDialog() {
-		dialog.close();
+		setOpen(false);
 	}
 
 	return (
 		<Fragment>
-			{variant === "button-link" ? (
-				<ButtonLink ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t("authenticated.actors.create-actor")}
-				</ButtonLink>
-			) : (
-				<Button ref={triggerRef} {...triggerProps} color="gradient" onPress={onOpenDialog}>
-					{t("authenticated.actors.create-actor")}
-				</Button>
-			)}
-			{dialog.isOpen ? (
+			<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+				{variant === "button-link" ? (
+					<ButtonLink>{t("authenticated.actors.create-actor")}</ButtonLink>
+				) : (
+					<Button color="gradient">{t("authenticated.actors.create-actor")}</Button>
+				)}
 				<ModalDialog
-					{...(overlayProps as any)}
 					isDismissable
-					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
 					title={t("authenticated.actors.create-actor")}
 				>
 					<ActorForm name="create-actor" onCancel={onCloseDialog} onSubmit={onCreateActor} />
 				</ModalDialog>
-			) : null}
+			</DialogTrigger>
 		</Fragment>
 	);
 }

@@ -1,6 +1,7 @@
 import { camelCase } from "change-case";
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import type { ConceptFormValues } from "@/components/common/ConceptForm";
 import { ConceptForm } from "@/components/common/ConceptForm";
@@ -11,8 +12,6 @@ import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface SuggestConceptButtonProps {
 	propertyType: PropertyType;
@@ -23,13 +22,7 @@ export interface SuggestConceptButtonProps {
 export function SuggestConceptButton(props: SuggestConceptButtonProps): ReactNode {
 	const { propertyType, variant = "button" } = props;
 
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
@@ -54,34 +47,24 @@ export function SuggestConceptButton(props: SuggestConceptButtonProps): ReactNod
 		const { vocabulary, ...concept } = values;
 		/** Identifier must be provided by the client. */
 		const data = { ...concept, code: camelCase(concept.label) };
-		dialog.close();
+		setOpen(false);
 		createConcept.mutate({ vocabularyCode: vocabulary.code, data });
 	}
 
-	function onOpenDialog() {
-		dialog.open();
-	}
-
 	function onCloseDialog() {
-		dialog.close();
+		setOpen(false);
 	}
 
 	return (
 		<Fragment>
-			{variant === "button-link" ? (
-				<ButtonLink ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t("authenticated.concepts.suggest-concept")}
-				</ButtonLink>
-			) : (
-				<Button ref={triggerRef} {...triggerProps} color="gradient" onPress={onOpenDialog}>
-					{t("authenticated.concepts.suggest-concept")}
-				</Button>
-			)}
-			{dialog.isOpen ? (
+			<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+				{variant === "button-link" ? (
+					<ButtonLink>{t("authenticated.concepts.suggest-concept")}</ButtonLink>
+				) : (
+					<Button color="gradient">{t("authenticated.concepts.suggest-concept")}</Button>
+				)}
 				<ModalDialog
-					{...(overlayProps as any)}
 					isDismissable
-					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
 					title={t("authenticated.concepts.suggest-concept")}
 				>
@@ -92,7 +75,7 @@ export function SuggestConceptButton(props: SuggestConceptButtonProps): ReactNod
 						propertyType={propertyType}
 					/>
 				</ModalDialog>
-			) : null}
+			</DialogTrigger>
 		</Fragment>
 	);
 }

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Fragment, type ReactNode, useRef } from "react";
+import { Fragment, type ReactNode, useState } from "react";
+import { DialogTrigger } from "react-aria-components";
 
 import type { SourceFormValues } from "@/components/account/SourceForm";
 import { SourceForm } from "@/components/account/SourceForm";
@@ -8,8 +9,6 @@ import type { MutationMetadata } from "@/lib/core/query/types";
 import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { ModalDialog } from "@/lib/core/ui/ModalDialog/ModalDialog";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 
 export interface CreateSourceButtonProps {
 	/** @default 'button' */
@@ -19,13 +18,7 @@ export interface CreateSourceButtonProps {
 export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 	const { variant = "button" } = props;
 
-	const dialog = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		dialog,
-		triggerRef,
-	);
+	const [isOpen, setOpen] = useState(false);
 	const t = useTranslations();
 	const meta: MutationMetadata = {
 		messages: {
@@ -43,40 +36,30 @@ export function CreateSourceButton(props: CreateSourceButtonProps): ReactNode {
 	const createSource = useCreateSource(undefined, { meta });
 
 	function onCreateSource(values: SourceFormValues) {
-		dialog.close();
+		setOpen(false);
 		createSource.mutate({ data: values });
 	}
 
-	function onOpenDialog() {
-		dialog.open();
-	}
-
 	function onCloseDialog() {
-		dialog.close();
+		setOpen(false);
 	}
 
 	return (
 		<Fragment>
-			{variant === "button-link" ? (
-				<ButtonLink ref={triggerRef} {...triggerProps} onPress={onOpenDialog}>
-					{t("authenticated.sources.create-source")}
-				</ButtonLink>
-			) : (
-				<Button ref={triggerRef} {...triggerProps} color="gradient" onPress={onOpenDialog}>
-					{t("authenticated.sources.create-source")}
-				</Button>
-			)}
-			{dialog.isOpen ? (
+			<DialogTrigger isOpen={isOpen} onOpenChange={setOpen}>
+				{variant === "button-link" ? (
+					<ButtonLink>{t("authenticated.sources.create-source")}</ButtonLink>
+				) : (
+					<Button color="gradient">{t("authenticated.sources.create-source")}</Button>
+				)}
 				<ModalDialog
-					{...(overlayProps as any)}
 					isDismissable
-					isOpen={dialog.isOpen}
 					onClose={onCloseDialog}
 					title={t("authenticated.sources.create-source")}
 				>
 					<SourceForm name="create-source" onCancel={onCloseDialog} onSubmit={onCreateSource} />
 				</ModalDialog>
-			) : null}
+			</DialogTrigger>
 		</Fragment>
 	);
 }
