@@ -12,14 +12,14 @@ export type FormButtonProps = Pick<
 
 export const FormButton = forwardRef(function FormButton(
 	props: FormButtonProps,
-	forwardeRef: ForwardedRef<HTMLButtonElement>,
+	forwardedRef: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
 	const { children, isDisabled } = props;
 
 	const form = useFormState();
 
 	return (
-		<Button ref={forwardeRef as any} {...props} isDisabled={form.submitting || isDisabled}>
+		<Button ref={forwardedRef} {...props} isDisabled={form.submitting || isDisabled}>
 			{children}
 		</Button>
 	);

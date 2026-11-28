@@ -1,19 +1,15 @@
 import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 import css from "@/lib/core/ui/Link/Link.module.css";
 
-import { useButton } from "@react-aria/button";
-import { useFocusRing } from "@react-aria/focus";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import type { AriaButtonProps } from "@react-types/button";
 import cx from "clsx";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import { forwardRef } from "react";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 import type { LinkProps } from "@/lib/core/ui/Link/Link";
 
-export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, "style"> {
+export interface ButtonLinkProps
+	extends Omit<AriaButtonProps, "className" | "style" | "children">, Pick<LinkProps, "style"> {
 	children: ReactNode;
 	form?: string;
 	isPressed?: boolean;
@@ -22,30 +18,19 @@ export interface ButtonLinkProps extends AriaButtonProps, Pick<LinkProps, "style
 
 export const ButtonLink = forwardRef(function ButtonLink(
 	props: ButtonLinkProps,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
+	ref: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const { children, isPressed = false, style, trigger } = props;
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps, isPressed: isActive } = useButton(props, buttonRef);
-	const { focusProps, isFocusVisible } = useFocusRing(props);
-	const { hoverProps, isHovered } = useHover(props);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
+	const { isPressed = false, slot = null, style, trigger, ...buttonProps } = props;
 
 	return (
-		<button
+		<AriaButton
+			{...buttonProps}
 			ref={ref}
-			type="button"
-			{...mergeProps(buttonProps, focusProps, hoverProps)}
+			slot={slot}
 			className={cx(css["link"], buttonCss["button-link"])}
-			data-active={isPressed || isActive ? "" : undefined}
-			data-focused={isFocusVisible ? "" : undefined}
-			data-hovered={isHovered ? "" : undefined}
+			data-active={isPressed ? "" : undefined}
 			data-trigger={trigger}
 			style={style as CSSProperties}
-		>
-			{children}
-		</button>
+		/>
 	);
 });

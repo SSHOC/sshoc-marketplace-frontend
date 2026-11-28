@@ -14,14 +14,16 @@
 		color: var(--link-color-hover, var(--color-primary-600));
 	}
 
-	&[data-focused] {
+	&:not(button)[data-focused],
+	&[data-focus-visible] {
 		color: var(--link-color-focus, var(--color-primary-600));
 		outline: 2px solid
 			var(--link-color-focus-ring, var(--link-color-focus, var(--color-primary-600)));
 		outline-offset: 2px;
 	}
 
-	&[data-active] {
+	&[data-active],
+	&[data-pressed] {
 		color: var(--link-color-active, var(--color-primary-500));
 	}
 
@@ -69,7 +71,8 @@
 		color: var(--color-link-text-hover);
 	}
 
-	&[data-focused] {
+	&:not(button)[data-focused],
+	&[data-focus-visible] {
 		color: var(--color-link-text-hover);
 	}
 

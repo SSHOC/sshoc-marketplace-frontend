@@ -1,11 +1,9 @@
 import css from "@/lib/core/ui/CloseButton/CloseButton.module.css";
 
-import { useButton } from "@react-aria/button";
-import type { AriaButtonProps } from "@react-types/button";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ForwardedRef, ReactNode } from "react";
-import { forwardRef, useRef } from "react";
-import useComposedRef from "use-composed-ref";
+import { forwardRef } from "react";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CloseIcon from "@/lib/core/ui/icons/cross";
@@ -17,7 +15,10 @@ export interface CloseButtonStyleProps {
 	"--close-button-color-active"?: CSSProperties["color"];
 	"--close-button-color-disabled"?: CSSProperties["color"];
 }
-export interface CloseButtonProps extends AriaButtonProps {
+export interface CloseButtonProps extends Omit<
+	AriaButtonProps,
+	"className" | "style" | "children"
+> {
 	/** @default 'md' */
 	size?: "lg" | "md" | "sm";
 	style?: CSSProperties & CloseButtonStyleProps;
@@ -26,32 +27,26 @@ export interface CloseButtonProps extends AriaButtonProps {
 // FIXME: should be <Button variant="ghost" />
 export const CloseButton = forwardRef(function CloseButton(
 	props: CloseButtonProps,
-	forwardedRef: ForwardedRef<HTMLButtonElement>,
+	ref: ForwardedRef<HTMLButtonElement>,
 ): ReactNode {
-	const { size = "md", style } = props;
-
 	const t = useTranslations();
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(
-		{
-			...props,
-			"aria-label": props["aria-label"] ?? t("common.close"),
-		},
-		buttonRef,
-	);
-
-	const ref = useComposedRef(buttonRef, forwardedRef);
+	const {
+		"aria-label": ariaLabel = t("common.close"),
+		size = "md",
+		slot = null,
+		...buttonProps
+	} = props;
 
 	return (
-		<button
-			ref={ref}
-			type="button"
+		<AriaButton
 			{...buttonProps}
+			ref={ref}
+			slot={slot}
+			aria-label={ariaLabel}
 			className={css["button"]}
 			data-size={size}
-			style={style}
 		>
 			<Icon icon={CloseIcon} />
-		</button>
+		</AriaButton>
 	);
 });

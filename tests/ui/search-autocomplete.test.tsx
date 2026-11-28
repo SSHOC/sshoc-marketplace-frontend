@@ -30,7 +30,9 @@ it("submits free text and keyboard-selected suggestions without submitting the p
 	const input = screen.getByRole("combobox", { name: "Search items" });
 	await user.type(input, "unknown{Enter}");
 	expect(submit.mock.calls).toEqual([["unknown", null]]);
-	await user.click(screen.getByRole("button", { name: "Clear" }));
+	const clear = screen.getByRole("button", { name: "Clear" });
+	expect(clear.tabIndex).toBe(-1);
+	await user.click(clear);
 	expect((input as HTMLInputElement).value).toBe("");
 	expect(document.activeElement).toBe(input);
 	await user.type(input, "data{ArrowDown}{Enter}");
