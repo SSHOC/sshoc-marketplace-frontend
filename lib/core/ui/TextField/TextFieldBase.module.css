@@ -39,6 +39,7 @@
 		}
 	}
 
+	&[data-focus-visible],
 	&[data-focused],
 	&:focus-visible {
 		border-color: var(--textfield-input-border-color-focus, var(--color-primary-600));
