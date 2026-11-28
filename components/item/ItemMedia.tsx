@@ -1,10 +1,9 @@
 import css from "@/components/item/ItemMedia.module.css";
 
-import { useButton } from "@react-aria/button";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
-import type { AriaButtonProps } from "@react-types/button";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useState } from "react";
+import { Button } from "react-aria-components";
 
 import type { Item } from "@/data/sshoc/api/item";
 import { getMediaThumbnailUrl, getMediaUrl, isMediaDetailsUrl } from "@/data/sshoc/api/media";
@@ -59,7 +58,11 @@ export function ItemMedia(props: ItemMediaProps): ReactNode {
 					<nav aria-label={t("common.item.media.other")}>
 						<ol role="list" className={css["carousel-controls"]}>
 							<li data-direction="prev">
-								<Button onPress={onPreviousMedia} isDisabled={!hasPrevious}>
+								<Button
+									className={css["button"]}
+									onPress={onPreviousMedia}
+									isDisabled={!hasPrevious}
+								>
 									<Icon icon={ChevronIcon} aria-label={t("common.item.previous-media")} />
 								</Button>
 							</li>
@@ -72,7 +75,7 @@ export function ItemMedia(props: ItemMediaProps): ReactNode {
 								/>
 							</li>
 							<li data-direction="next">
-								<Button onPress={onNextMedia} isDisabled={!hasNext}>
+								<Button className={css["button"]} onPress={onNextMedia} isDisabled={!hasNext}>
 									<Icon icon={ChevronIcon} aria-label={t("common.item.next-media")} />
 								</Button>
 							</li>
@@ -102,6 +105,7 @@ function ItemMediaPreviews(props: ItemMediaPreviewsProps): ReactNode {
 				return (
 					<li key={m.info.mediaId}>
 						<Button
+							className={css["button"]}
 							onPress={() => {
 								onSelect(index);
 							}}
@@ -192,19 +196,5 @@ function MediaCaption(props: MediaCaptionProps): ReactNode {
 			{caption}
 			{license != null ? <span>({license})</span> : null}
 		</figcaption>
-	);
-}
-
-type ButtonProps = AriaButtonProps;
-
-// TODO: <Button variant="ghost" />
-function Button(props: ButtonProps): ReactNode {
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(props, buttonRef);
-
-	return (
-		<button type="button" {...buttonProps} ref={buttonRef} className={css["button"]}>
-			{props.children}
-		</button>
 	);
 }
