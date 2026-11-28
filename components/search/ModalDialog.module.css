@@ -42,3 +42,9 @@
 		transform: translateY(0);
 	}
 }
+
+.dialog {
+	display: grid;
+	align-content: start;
+	outline: none;
+}
