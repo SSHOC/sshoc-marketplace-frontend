@@ -1,11 +1,12 @@
 import css from "@/components/search/SearchFilters.module.css";
+import buttonCss from "@/lib/core/ui/Button/Button.module.css";
 
 import { useButton } from "@react-aria/button";
-import { useId } from "@react-aria/utils";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { useTranslations } from "next-intl";
 import type { FormEvent, ReactNode } from "react";
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
+import { Button as AriaButton, DialogTrigger, Heading } from "react-aria-components";
 
 import { getTopFacetValues } from "@/components/common/getTopFacetValues";
 import { ItemCategoryIcon } from "@/components/common/ItemCategoryIcon";
@@ -18,7 +19,6 @@ import type { SearchFilters as ItemSearchFilters } from "@/components/search/use
 import { useSearchFilters } from "@/components/search/useSearchFilters";
 import { useSearchResults } from "@/components/search/useSearchResults";
 import type { ItemCategory } from "@/data/sshoc/api/item";
-import { Button } from "@/lib/core/ui/Button/Button";
 import { ButtonLink } from "@/lib/core/ui/Button/ButtonLink";
 import { Centered } from "@/lib/core/ui/Centered/Centered";
 import { CheckBoxGroup } from "@/lib/core/ui/CheckBoxGroup/CheckBoxGroup";
@@ -29,8 +29,6 @@ import { useDisclosureState } from "@/lib/core/ui/hooks/useDisclosureState";
 import { Icon } from "@/lib/core/ui/Icon/Icon";
 import CrossIcon from "@/lib/core/ui/icons/cross";
 import { LoadingIndicator } from "@/lib/core/ui/LoadingIndicator/LoadingIndicator";
-import { useModalDialogTriggerState } from "@/lib/core/ui/ModalDialog/useModalDialogState";
-import { useModalDialogTrigger } from "@/lib/core/ui/ModalDialog/useModalDialogTrigger";
 import { entries, length } from "@/lib/utils";
 
 export function SearchFilters(): ReactNode {
@@ -57,45 +55,35 @@ export function SearchFilters(): ReactNode {
 
 function SearchFacetsDialog(): ReactNode {
 	const t = useTranslations();
-	const state = useModalDialogTriggerState({});
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const { triggerProps, overlayProps } = useModalDialogTrigger(
-		{ type: "dialog" },
-		state,
-		triggerRef,
-	);
-	const titleId = useId();
 
 	return (
-		<Fragment>
-			<Button
-				ref={triggerRef}
-				{...triggerProps}
-				color="gradient"
-				data-dialog="facets"
-				onPress={state.toggle}
-			>
-				{t("common.search.refine-search")}
-			</Button>
-			<ActiveSearchFacets />
-			{state.isOpen ? (
-				<ModalDialog
-					id={overlayProps.id}
-					aria-labelledby={titleId}
-					isDismissable
-					isOpen={state.isOpen}
-					onClose={state.close}
+		<>
+			<DialogTrigger>
+				<AriaButton
+					className={buttonCss["button"]}
+					data-color="gradient"
+					data-size="md"
+					data-variant="fill"
+					data-dialog="facets"
 				>
-					<header className={css["overlay-header"]}>
-						<h2 className={css["overlay-title"]} id={titleId}>
-							{t("common.search.refine-search")}
-						</h2>
-						<CloseButton autoFocus onPress={state.close} size="lg" />
-					</header>
-					<SearchFacetsForm />
+					{t("common.search.refine-search")}
+				</AriaButton>
+				<ModalDialog isDismissable>
+					{({ close }) => (
+						<>
+							<header className={css["overlay-header"]}>
+								<Heading slot="title" level={2} className={css["overlay-title"]}>
+									{t("common.search.refine-search")}
+								</Heading>
+								<CloseButton autoFocus onPress={close} size="lg" />
+							</header>
+							<SearchFacetsForm />
+						</>
+					)}
 				</ModalDialog>
-			) : null}
-		</Fragment>
+			</DialogTrigger>
+			<ActiveSearchFacets />
+		</>
 	);
 }
 
